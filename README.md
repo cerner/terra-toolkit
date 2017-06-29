@@ -10,7 +10,7 @@
 
 [![Build Status](https://travis-ci.org/cerner/terra-core.svg?branch=master)](https://travis-ci.org/cerner/terra-core)
 
-Terra Toolkit is a utility module used to facilitate development of Terra projects. This toolkit is designed to help support nightwatch testing. It provides configuration, as well as helper functions that can be used during test runs of npm packages within [terra-core][@terra-core] and [terra-clinical][@terra-toolkit].
+Terra Toolkit is a utility module used to facilitate development of Terra projects. This toolkit is designed to help support nightwatch testing. It provides configuration, as well as helper functions that can be used during test runs of npm packages within [terra-core][@terra-core] and [terra-clinical][@terra-clinical].
 
 - [Contributing](#contributing)
 - [LICENSE](#license)
