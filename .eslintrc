@@ -1,0 +1,14 @@
+{
+  "extends": "airbnb",
+  "plugins": [
+    "jsx-a11y",
+    "import"
+  ],
+  "env": {
+    "browser": true,
+  },
+  "rules": {
+    "max-len": "off", // Remove warnings on max line length exceeding 100 characters
+    "no-multi-assign": "off" // TODO: Decide if we want to turn this on. It was turned on in eslint-config-airbnb-base v14.1.0
+  },
+}
