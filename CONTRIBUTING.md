@@ -12,7 +12,7 @@ Thanks.
 * Check that the issue has not already been fixed in the `master` branch.
 * Open an issue with a descriptive title and a summary.
 * Please be as clear and explicit as you can in your description of the problem.
-* Please state the version of Operating System, Browser, and terra-core you are using in the description.
+* Please state the version of Operating System, Browser, and terra-toolkit you are using in the description.
 * Include any relevant code in the issue summary.
 
 ## Pull Requests
