@@ -1,6 +1,6 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 
-const screenshot = require('../lib/index').screenshot;
+const screenshot = require('../../lib/index').screenshot;
 
 module.exports = {
   before: (browser, done) => {

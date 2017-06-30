@@ -2,8 +2,7 @@
 // not devDependencies. Disabling this rule in webpack.conig.js
 /* eslint-disable import/no-extraneous-dependencies */
 
-// TO DO: UPDATE THIS FROM RELATIVE PATH
-const config = require('../../../packages/terra-site/webpack.config');
+const config = require('../webpack.config');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
@@ -12,9 +11,5 @@ config.plugins.push(new HtmlWebpackPlugin({
   template: path.join(__dirname, 'nightwatch', 'fixtures', 'index.html'),
   chunks: ['index'],
 }));
-config.output = {
-  filename: '[name].js',
-  path: path.join(__dirname, 'dist'),
-};
 
 module.exports = config;
