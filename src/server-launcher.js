@@ -3,14 +3,14 @@ import WebpackDevServer from 'webpack-dev-server';
 
 exports.launchServer = () => new Promise((resolve) => {
   let compiler;
-  //TODO: UPDATE RELATIVE PATH
+
   if (process.env.WEBPACK_CONFIG_PATH) {
     /* eslint-disable global-require, import/no-dynamic-require */
     compiler = webpack(require(process.env.WEBPACK_CONFIG_PATH));
     /* eslint-enable global-require, import/no-dynamic-require */
   } else {
     /* eslint-disable global-require, import/no-dynamic-require */
-    compiler = webpack(require('../../terra-site/webpack.config'));
+    compiler = webpack(require('./webpack.config'));
     /* eslint-enable global-require, import/no-dynamic-require */
   }
 

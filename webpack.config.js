@@ -8,9 +8,6 @@ const Autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-console.log('DIR NAME: ' + __dirname);
-console.log('LOADER RESOLVE: ' + path.resolve(path.join(__dirname, 'node_modules')))
-
 module.exports = {
   entry: {
     'babel-polyfill': 'babel-polyfill', // eslint-disable-next-line quote-props
