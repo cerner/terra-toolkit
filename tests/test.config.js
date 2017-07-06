@@ -6,9 +6,9 @@ const config = require('../webpack.config');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
-config.entry.index = path.join(__dirname, 'nightwatch', 'fixtures', 'index');
+config.entry.index = path.join(__dirname, 'nightwatch/fixtures/index');
 config.plugins.push(new HtmlWebpackPlugin({
-  template: path.join(__dirname, 'nightwatch', 'fixtures', 'index.html'),
+  template: path.join(__dirname, 'nightwatch/fixtures/index.html'),
   chunks: ['index'],
 }));
 

@@ -16,6 +16,7 @@ Terra Toolkit is a utility module used to facilitate development of Terra projec
 - [Getting Started](#getting-started)
 - [Test Setup](#test-setup)
 - [Test Scripts](#test-scripts)
+- [Versioning](#versioning)
 - [Contributing](#contributing)
 - [LICENSE](#license)
 
@@ -85,6 +86,15 @@ The nightwatch-non-parallel script will run tests at all resolutions for the dri
 ```
 node lib/scripts/nightwatch-non-parallel.js safari
 ```
+
+## Versioning
+
+Terra-toolkit is considered to be stable and will follow [SemVer](http://semver.org/) for versioning.
+1. MAJOR versions represent breaking changes
+2. MINOR versions represent added functionality in a backwards-compatible manner
+3. PATCH versions represent backwards-compatible bug fixes
+
+Consult the component CHANGELOGs, related issues, and PRs for more information.
 
 ## Contributing
 
