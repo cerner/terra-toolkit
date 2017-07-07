@@ -22,7 +22,7 @@ Terra Toolkit is a utility module used to facilitate development of Terra projec
 
 ## Getting Started
 
-- Install with [npm](https://www.npmjs.com): `npm install terra-toolkit`
+- Install with [npm](https://www.npmjs.com): `npm install terra-toolkit --save-dev`
 
 ## Test Setup
 
