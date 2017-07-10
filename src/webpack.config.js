@@ -21,7 +21,7 @@ const sitePackage = `${repositoryName}-site`;
 module.exports = {
   entry: {
     'babel-polyfill': 'babel-polyfill',
-    'terra': path.resolve(path.join(baseDir, 'packages', sitePackage, 'src/Index')),
+    terra: path.resolve(path.join(baseDir, 'packages', sitePackage, 'src/Index')),
   },
   module: {
     loaders: [{

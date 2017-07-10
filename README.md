@@ -11,7 +11,7 @@
 [![NPM version](http://img.shields.io/npm/v/terra-toolkit.svg)](https://www.npmjs.org/package/terra-toolkit)
 [![Build Status](https://travis-ci.org/cerner/terra-toolkit.svg?branch=master)](https://travis-ci.org/cerner/terra-toolkit)
 
-Terra Toolkit is a utility module used to facilitate development of Terra projects. This toolkit is designed to help support nightwatch testing. It provides configuration, as well as helper functions that can be used during test runs of npm packages within [terra-core][@terra-core] and [terra-clinical][@terra-clinical].
+Terra Toolkit is a utility module used to facilitate independent development of Terra projects. This toolkit is designed to help support nightwatch testing by providing configuration, as well as helper functions that can be used during test runs of npm packages. [terra-core][@terra-core] and [terra-clinical][@terra-clinical] are two example mono-repos which are utilizing utilities offered in this package.
 
 - [Getting Started](#getting-started)
 - [Test Setup](#test-setup)
