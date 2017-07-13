@@ -1,6 +1,6 @@
 {
   "name": "terra-toolkit",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Utilities to help when developing terra modules.",
   "main": "lib/index.js",
   "engines": {
