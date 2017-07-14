@@ -88,7 +88,7 @@ module.exports = {
       chunks: ['babel-polyfill', 'terra'],
     }),
     new I18nAggregatorPlugin({
-      baseDirectory: baseDir,
+      baseDirectory: path.join(baseDir, 'packages', sitePackage),
       supportedLocales: i18nSupportedLocales,
     }),
     new webpack.NamedChunksPlugin(),
