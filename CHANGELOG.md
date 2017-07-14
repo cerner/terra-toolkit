@@ -4,6 +4,12 @@ Changelog
 Unreleased
 ----------
 
+
+1.2.2 - (July 14, 2017)
+------------------
+### Changes
+* Update output of aggregated translations to be placed within the site package for testing
+
 1.2.1 - (July 13, 2017)
 ------------------
 ### Changes
