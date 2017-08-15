@@ -1,19 +1,11 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 
-const screenshot = require('../../lib/index').screenshot;
+const resizeTo = require('../../src/nightwatch/responsive').resizeTo;
 
-module.exports = {
-  before: (browser, done) => {
-    browser.resizeWindow(browser.globals.width, browser.globals.height, done);
-  },
-
-  afterEach: (browser, done) => {
-    screenshot(browser, 'terra-toolkit', done);
-  },
-
+module.exports = resizeTo(['small', 'tiny', 'medium', 'large', 'huge', 'enormous'], {
   'Runs the test suite correctly': (browser) => {
     browser
-      .url(`http://localhost:${browser.globals.webpackDevServerPort}/`)
+      .url(browser.launchUrl)
       .assert.containsText('.test', 'Test');
   },
-};
+});
