@@ -1,4 +1,4 @@
-const { resizeTo, screenWidth } = require('../../lib/nightwatch/responsive-helpers');
+const { resizeTo, screenWidth } = require('../../../lib/nightwatch/responsive-helpers');
 
 module.exports = resizeTo(['tiny', 'small', 'medium', 'large', 'huge', 'enormous'], {
   'Runs the test suite correctly when responsive': (browser) => {
