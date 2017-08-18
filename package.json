@@ -36,6 +36,7 @@
     "release:minor": "npm test && node ./scripts/release/release.js minor",
     "release:patch": "npm test && node ./scripts/release/release.js patch",
     "nightwatch": "nightwatch",
+    "nightwatch:port-provided": "nightwatch -c tests/test.nightwatch.conf.js",
     "test": "npm run nightwatch"
   },
   "dependencies": {

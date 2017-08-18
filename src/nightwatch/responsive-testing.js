@@ -1,11 +1,18 @@
-const resize = (breakpoint, test) => (browser, done) => {
-  const size = browser.globals.breakpoints[breakpoint];
+const screenWidth = (browser) => {
+  const breakpoint = browser.currentTest.name.match(/\[@(.*?)\]/)[1];
+  return browser.globals.breakpoints[breakpoint][0];
+};
 
-  if (!size) {
+const resize = (breakpoint, test) => (browser, done) => {
+  const screenSize = browser.globals.breakpoints[breakpoint];
+
+  if (!screenSize) {
+    browser.end(done);
     throw new Error(`${breakpoint} is not defined`);
   }
 
-  browser.resizeWindow(size[0], size[1], () => {
+  browser.url(browser.launchUrl);
+  browser.resizeWindow(screenSize[0], screenSize[1], () => {
     test.apply(browser, [browser, done]);
   });
 };
@@ -18,14 +25,15 @@ const resizeTo = (breakpoints, suite) =>
       if (typeof value === 'function') {
         resizedTests[`${key} [@${breakpoint}]`] = resize(breakpoint, value);
       } else {
-        // Test Tags
+        // Maintains Nightwatch Test Tags
         resizedTests[key] = value;
       }
     });
     resizedTests.after = (browser, done) => {
       browser.end(done);
     };
-    return Object.assign(resizedTests, tests);
+    return Object.assign(tests, resizedTests);
   }, {});
 
 module.exports.resizeTo = resizeTo;
+module.exports.screenWidth = screenWidth;

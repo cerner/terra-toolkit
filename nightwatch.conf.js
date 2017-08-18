@@ -1,9 +1,6 @@
-/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
-const nightwatchConfig = require('./lib/nightwatch/config.js').default;
+const nightwatchConfig = require('./lib/nightwatch/nightwatch.config.js').default;
 const webpackConfig = require('./tests/test.config.js');
 
-const config = Object.assign(nightwatchConfig([], webpackConfig), { src_folders: ['tests'] });
-
-console.log(config);
+const config = nightwatchConfig(webpackConfig, ['/tests/nightwatch/']);
 
 module.exports = config;

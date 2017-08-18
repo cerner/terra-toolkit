@@ -3,7 +3,20 @@ Changelog
 
 Unreleased
 ----------
+### Changed
+* Nighwatch configuration is now available via a single file which allowed for the removal of the testSetting module. Configuration can now be created  by providing the webpack configuration, test folders and (optional) port number to the nightwatchConfig function.
 
+## Added
+* Added responsive nightwatch test helper functions. Functions include 1. resizeTo and 2. screenWidth.
+1. resizeTo: Allows for breakpoint specification within the test suite and handles browser resizing function to allow for test to be run across each breakpoint specified.
+2. screenWidth: returns the screen width grabbing the breakpoint tag specified within the current test description.
+
+### Removed
+* Removed screenshot capabilities
+* Removed sauce capabilities
+* Removed spectre capabilties
+* Removed nightwatch test scripts
+* Removed default webpack configuration
 
 1.2.2 - (July 14, 2017)
 ------------------
