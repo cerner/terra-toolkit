@@ -52,7 +52,7 @@ const nightwatchConfig = (webpackConfig, srcFolders, providedPort) => {
           before: startWebpackDevServer,
           after: stopWebpackDevServer,
         },
-        filter: '*-spec.js',
+        filter: '**/*-spec.js',
         screenshots: {
           enabled: true,
           on_failure: true,
