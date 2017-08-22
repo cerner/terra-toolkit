@@ -1,6 +1,7 @@
 language: node_js
 sudo: required
 jdk: oraclejdk8
+dist: trusty
 addons:
   apt:
     sources:
