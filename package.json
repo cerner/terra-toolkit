@@ -4,7 +4,7 @@
   "description": "Utilities to help when developing terra modules.",
   "main": "lib/index.js",
   "engines": {
-    "node": "6.9.4"
+    "node": "8.4.0"
   },
   "repository": {
     "type": "git",
