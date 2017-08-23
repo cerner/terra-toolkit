@@ -46,6 +46,7 @@ lib-cov
 logs
 node_modules
 npm-debug.log*
+package-lock.json
 pids
 reports
 screenshots
