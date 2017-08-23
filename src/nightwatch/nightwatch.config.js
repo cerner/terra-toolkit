@@ -1,7 +1,7 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 /* eslint no-unused-vars: ["error", { "varsIgnorePattern": "chromedriver" }] */
 
-import chromedriver from 'chromedriver';
+// import chromedriver from 'chromedriver';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import seleniumServerStandaloneJar from 'selenium-server-standalone-jar';
@@ -17,12 +17,13 @@ const nightwatchConfig = (webpackConfig, srcFolders, providedPort) => {
   const stopWebpackDevServer = done => webpackServer.close(() => done());
   const startWebpackDevServer = done => webpackServer.listen(port, '0.0.0.0', () => done());
 
+  // console.log(chromedriver.getCapabilities().getCapability("chrome"));
   const config = {
     selenium: {
       server_path: seleniumServerStandaloneJar.path,
       start_process: true,
       selenium: {
-        cli_args: { 'webdriver.chrome.driver': chromedriver.path },
+        cli_args: { 'webdriver.chrome.driver': './bin/chromedriver' },
       },
     },
     src_folders: srcFolders,
@@ -66,8 +67,9 @@ const nightwatchConfig = (webpackConfig, srcFolders, providedPort) => {
           chromeOptions: {
             args: [
               '--headless',
-              '--disable-gpu ',
-              '--no-sandbox ',
+              '--disable-gpu',
+              '--no-sandbox',
+              'enable-automation',
             ],
           },
         },
