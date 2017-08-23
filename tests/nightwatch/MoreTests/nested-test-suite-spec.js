@@ -14,7 +14,7 @@ module.exports = resizeTo(['tiny', 'small', 'medium', 'large', 'huge', 'enormous
     browser.windowSize('width', (result) => {
       if (result.value.width !== testWidth) {
       // eslint-disable-next-line no-console
-        throw new Error(`The test breakpoint width is: ${testWidth} and the broswer width is ${result.value.width}`);
+        throw new Error(`The test breakpoint width is: ${testWidth} and the browser width is ${result.value.width}`);
       }
     });
   },
