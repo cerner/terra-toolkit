@@ -31,7 +31,7 @@
     "compile:build": "$(npm bin)/babel src --out-dir lib --copy-files",
     "danger": "danger",
     "lint": "eslint --ext .js,.jsx .",
-    "prepublish": "npm run compile",
+    "preinstall": "npm run compile",
     "pretest": "npm run lint",
     "release:major": "npm test && node ./scripts/release/release.js major",
     "release:minor": "npm test && node ./scripts/release/release.js minor",
