@@ -1,46 +1,59 @@
-const breakpointTag = browser => browser.currentTest.name.match(/\[@(.*?)\]/)[1];
+/**
+ * Returns the current screen width.
+ * @param {obj} browser - The current nightwatch session.
+ */
+const screenWidth = (browser) => {
+  const breakpoint = browser.currentTest.name.match(/\[@(.*?)\]/)[1];
+  return browser.globals.breakpoints[breakpoint][0];
+};
 
-const resize = (breakpoint, test) => (browser, done) => {
+/**
+ * Resizes the browser.
+ * @param {string} breakpoint - The breakpoint size to adjust the browser to.
+ *      Accepts tiny, small, medium, large, huge, and enormous.
+ * @param {obj} test - The test step to execute once sizing is complete.
+ */
+const resizeBrowser = (breakpoint, test) => (browser, done) => {
   const screenSize = browser.globals.breakpoints[breakpoint];
 
   if (!screenSize) {
     browser.end(done);
     throw new Error(`${breakpoint} is not defined`);
   }
-
   browser.url(browser.launchUrl);
-  browser.resizeWindow(screenSize[0], screenSize[1], () => {
-    test.apply(browser, [browser, done]);
-  });
+  browser.resizeWindow(screenSize[0], screenSize[1]);
+  test.apply(browser, [browser]);
 };
 
+/**
+ * Duplicates the test steps in the suite and resizes the browser on the first step for each breakpoint provided.
+ * @param {array of strings} breakpoints - The list of breakpoints to adjust the test suite to.
+ *      Accepts tiny, small, medium, large, huge, and enormous.
+ * @param {obj} suite - The nightwatch test suite to resize.
+ */
 const resizeTo = (breakpoints, suite) => {
-  const newTests = {};
+  const breakpointTests = {};
   breakpoints.forEach((breakpoint) => {
     let firstStep = true;
-    Object.keys(suite).reduce((tests, key) => {
+    Object.keys(suite).reduce((testSteps, step) => {
       const resizedTests = {};
-      const value = suite[key];
-      if (typeof value === 'function') {
+      const test = suite[step];
+      if (typeof test === 'function') {
         if (firstStep) {
-          resizedTests[`[@${breakpoint}] ${key}`] = resize(breakpoint, value);
+          resizedTests[`[@${breakpoint}] ${step}`] = resizeBrowser(breakpoint, test);
           firstStep = false;
         } else {
-          resizedTests[`[@${breakpoint}] ${key}`] = value;
+          resizedTests[`[@${breakpoint}] ${step}`] = test;
         }
       } else {
-        // Maintains Nightwatch Test Tags
-        resizedTests[key] = value;
+        // Maintain Nightwatch Test Tags
+        resizedTests[step] = test;
       }
-
-      resizedTests.after = (browser, done) => {
-        browser.end(done);
-      };
-      return Object.assign(tests, resizedTests);
-    }, newTests);
+      return Object.assign(testSteps, resizedTests);
+    }, breakpointTests);
   });
-  return newTests;
+  return breakpointTests;
 };
 
 module.exports.resizeTo = resizeTo;
-module.exports.breakpointTag = breakpointTag;
+module.exports.screenWidth = screenWidth;

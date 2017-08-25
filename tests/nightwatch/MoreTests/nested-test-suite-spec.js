@@ -1,4 +1,4 @@
-const { resizeTo, breakpointTag } = require('../../../lib/nightwatch/responsive-helpers');
+const { resizeTo, screenWidth } = require('../../../lib/nightwatch/responsive-helpers');
 
 module.exports = resizeTo(['tiny', 'small', 'medium', 'large', 'huge', 'enormous'], {
   'Runs the test suite correctly when responsive': (browser) => {
@@ -6,10 +6,10 @@ module.exports = resizeTo(['tiny', 'small', 'medium', 'large', 'huge', 'enormous
       .url(browser.launchUrl)
       .assert.containsText('.test', 'Test');
   },
+
   'Adjusts the screen widths correctly': (browser) => {
     browser.url(browser.launchUrl);
-    const breakpoint = breakpointTag(browser);
-    const testWidth = browser.globals.breakpoints[breakpoint][0];
+    const testWidth = screenWidth(browser);
 
     browser.windowSize('width', (result) => {
       if (result.value.width !== testWidth) {

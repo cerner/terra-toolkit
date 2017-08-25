@@ -4,7 +4,6 @@
 import chromedriver from 'chromedriver';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
-import seleniumServerStandaloneJar from 'selenium-server-standalone-jar';
 
 let port = 8080;
 
@@ -14,16 +13,23 @@ const nightwatchConfig = (webpackConfig, srcFolders, providedPort) => {
   }
 
   const webpackServer = new WebpackDevServer(webpack(webpackConfig), { quiet: true, hot: false, inline: false });
-  const stopWebpackDevServer = done => webpackServer.close(() => done());
-  const startWebpackDevServer = done => webpackServer.listen(port, '0.0.0.0', () => done());
+
+  const startDriverAndServer = (done) => {
+    chromedriver.start();
+    webpackServer.listen(port, '0.0.0.0', () => done());
+  };
+
+  const stopDriverAndServer = (done) => {
+    webpackServer.close();
+    chromedriver.stop();
+    done();
+  };
+
+  const endBrowserSession = (browser, done) => browser.end(done);
 
   const config = {
     selenium: {
-      server_path: seleniumServerStandaloneJar.path,
-      start_process: true,
-      selenium: {
-        cli_args: { 'webdriver.chrome.driver': chromedriver.path },
-      },
+      start_process: false,
     },
     src_folders: srcFolders,
     output_folder: 'reports',
@@ -36,8 +42,9 @@ const nightwatchConfig = (webpackConfig, srcFolders, providedPort) => {
       default: {
         launch_url: `http://localhost:${port}`,
         persist_globals: true,
-        selenium_port: 4444,
+        selenium_port: 9515,
         selenium_host: 'localhost',
+        default_path_prefix: '',
         silent: true,
         globals: {
           breakpoints: {
@@ -49,8 +56,11 @@ const nightwatchConfig = (webpackConfig, srcFolders, providedPort) => {
             enormous: [1500, 768],
           },
           asyncHookTimeout: 30000,
-          before: startWebpackDevServer,
-          after: stopWebpackDevServer,
+          waitForConditionTimeout: 1000,
+          retryAssertionTimeout: 1000,
+          before: startDriverAndServer,
+          after: stopDriverAndServer,
+          afterEach: endBrowserSession,
         },
         filter: '**/*-spec.js',
         screenshots: {
