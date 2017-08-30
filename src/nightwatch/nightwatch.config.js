@@ -76,7 +76,6 @@ const nightwatchConfig = (webpackConfig, srcFolders, providedPort) => {
           chromeOptions: {
             args: [
               '--headless',
-              '--disable-gpu',
               '--no-sandbox',
             ],
           },
