@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+2.0.0 - (August 31, 2017)
+------------------
 ### Changed
 * Nighwatch configuration is now available via a single file which allowed for the removal of the testSetting module. Configuration can now be created  by providing the webpack configuration, test folders and (optional) port number to the nightwatchConfig function.
 
