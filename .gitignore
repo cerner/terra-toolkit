@@ -42,14 +42,13 @@ build/
 build/Release
 coverage
 jspm_packages
+lib
 lib-cov
 logs
 node_modules
 npm-debug.log*
+package-lock.json
 pids
 reports
 screenshots
 target
-**/aggregated-translations/*.*
-lib
-props-table

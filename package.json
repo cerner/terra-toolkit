@@ -4,7 +4,7 @@
   "description": "Utilities to help when developing terra modules.",
   "main": "lib/index.js",
   "engines": {
-    "node": "6.9.4"
+    "node": "8.4.0"
   },
   "repository": {
     "type": "git",
@@ -35,17 +35,15 @@
     "release:major": "npm test && node ./scripts/release/release.js major",
     "release:minor": "npm test && node ./scripts/release/release.js minor",
     "release:patch": "npm test && node ./scripts/release/release.js patch",
-    "test": "npm run test:nightwatch-default",
-    "test:all": "npm run test:nightwatch-default && npm run test:nightwatch-chrome && npm run test:nightwatch-firefox && npm run test:nightwatch-safari",
-    "test:nightwatch-default": "SPECTRE_TEST_SUITE=default WEBPACK_CONFIG_PATH=../tests/test.config node ./lib/scripts/nightwatch-process.js --config tests/nightwatch.conf.js -e default-tiny,default-small,default-medium,default-large,default-huge,default-enormous",
-    "test:nightwatch-chrome": "SPECTRE_TEST_SUITE=chrome WEBPACK_CONFIG_PATH=../tests/test.config node ./lib/scripts/nightwatch-process.js --config tests/nightwatch.conf.js -e chrome-tiny,chrome-small,chrome-medium,chrome-large,chrome-huge,chrome-enormous",
-    "test:nightwatch-firefox": "SPECTRE_TEST_SUITE=firefox WEBPACK_CONFIG_PATH=../tests/test.config node ./lib/scripts/nightwatch-process.js --config tests/nightwatch.conf.js -e firefox-tiny,firefox-small,firefox-medium,firefox-large,firefox-huge,firefox-enormous",
-    "test:nightwatch-safari": "SPECTRE_TEST_SUITE=safari WEBPACK_CONFIG_PATH=../tests/test.config node ./lib/scripts/nightwatch-process.js --config tests/nightwatch.conf.js -e safari-tiny,safari-small,safari-medium,safari-large,safari-huge,safari-enormous"
+    "nightwatch": "nightwatch",
+    "nightwatch:port-provided": "nightwatch -c tests/test.nightwatch.conf.js",
+    "test": "npm run nightwatch && npm run nightwatch:port-provided"
   },
   "dependencies": {
     "autoprefixer": "^6.7.7",
     "babel-loader": "^7.0.0",
     "babel-polyfill": "^6.23.0",
+    "chromedriver": "^2.31.0",
     "css-loader": "^0.28.0",
     "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^0.11.1",
@@ -55,19 +53,11 @@
     "load-json-file": "^2.0.0",
     "nightwatch": "^0.9.12",
     "node-sass": "^4.5.2",
-    "phantomjs-prebuilt": "^2.1.14",
-    "postcss-custom-properties": "^6.0.1",
     "postcss-loader": "^1.3.3",
-    "postcss-rtl": "^0.5.10",
     "raw-loader": "^0.5.1",
-    "request": "^2.81.0",
     "sass-loader": "^6.0.3",
-    "sauce-connect-launcher": "^1.2.0",
-    "selenium-server-standalone-jar": "3.2.0",
     "shelljs": "^0.7.6",
     "style-loader": "^0.16.1",
-    "terra-i18n": "^1.0.0",
-    "terra-i18n-plugin": "^1.0.0",
     "webpack": "^2.6.1",
     "webpack-dev-server": "^2.4.5"
   },
