@@ -30,7 +30,7 @@ Nightwatch.js is an easy to use Node.js based End-to-End (E2E) testing solution 
 
 ### Configuration Setup
 
-Terra-toolkit provides a nightwatch setup function, called `nightwatchCong`, which provides the nightwatch configuration needed to setup the test environment, launch the webpack-dev-server, and run the nightwatch tests. It takes three parameters:
+Terra-toolkit provides a nightwatch setup function, called `nightwatchConfig`, which provides the nightwatch configuration needed to setup the test environment, launch the webpack-dev-server, and run the nightwatch tests. It takes three parameters:
 
 1. the webpack configuration used to start the webpack-dev-server
 2. the src folders where nightwatch searches for the tests
