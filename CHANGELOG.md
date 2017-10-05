@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Changed
+* Refactored dependencies to make webpack and nightwatch peer dependencies.
 
 2.0.0 - (August 31, 2017)
 ------------------
