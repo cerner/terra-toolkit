@@ -3,6 +3,7 @@ Changelog
 
 Unreleased
 ----------
+* Lock webpack-dev-server at latest version that supported IE10 (2.7.1)
 
 2.1.0 - (October 5, 2017)
 ------------------
