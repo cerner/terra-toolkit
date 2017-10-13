@@ -48,7 +48,7 @@
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "webpack": "^3.6.0",
-    "webpack-dev-server": "2.7.1",
+    "webpack-dev-server": "^2.7.1",
     "nightwatch": "^0.9.12"
   },
   "devDependencies": {
