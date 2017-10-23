@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Changed
+* Use path.join to allow for windows development
 
 2.1.0 - (October 5, 2017)
 ------------------
