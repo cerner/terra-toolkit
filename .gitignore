@@ -52,3 +52,5 @@ pids
 reports
 screenshots
 target
+**/specs/__snapshots__/screen
+**/specs/__snapshots__/diff

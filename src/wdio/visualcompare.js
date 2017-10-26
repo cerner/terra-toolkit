@@ -1,5 +1,5 @@
-const path = require('path');
-import VisualRegressionCompare from 'wdio-visual-regression-service/compare';
+import path from 'path';
+import { LocalCompare } from 'wdio-visual-regression-service/compare';
 
 function getScreenshotName(ref) {
   return (context) => {
@@ -11,15 +11,13 @@ function getScreenshotName(ref) {
   };
 }
 
-export default {
-  compare: new VisualRegressionCompare.LocalCompare({
+module.exports = {
+  compare: new LocalCompare({
     referenceName: getScreenshotName('reference'),
     screenshotName: getScreenshotName('screen'),
     diffName: getScreenshotName('diff'),
     misMatchTolerance: 0.01,
   }),
-  viewportChangePause: 300,
+  viewportChangePause: 100,
   widths: [],
 };
-
-export { getScreenshotName };

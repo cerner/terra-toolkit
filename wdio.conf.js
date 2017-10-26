@@ -1,5 +1,7 @@
 const staticServerPort = 4567;
-const TerraToolkit = require('./lib/wdio-terra-service');
+const AxeService = require('./lib/wdio/services').Axe;
+const TerraService = require('./lib/wdio/services').Terra;
+const visualRegression = require('./lib/wdio/visualcompare');
 
 exports.config = {
   specs: ['./tests/specs/**/*.js'],
@@ -40,11 +42,13 @@ exports.config = {
   // Default request retries count
   connectionRetryCount: 3,
 
-  services: ['selenium-standalone', 'static-server', TerraToolkit],
+  services: ['selenium-standalone', 'static-server', 'visual-regression', AxeService, TerraService],
   staticServerPort: 4567,
   staticServerFolders: [
     { mount: '/', path: './tests/fixtures' },
   ],
+
+  visualRegression,
 
   framework: 'mocha',
 
