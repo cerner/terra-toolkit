@@ -9,8 +9,24 @@ exports.config = {
   maxInstances: 10,
 
   capabilities: [{
-    maxInstances: 5,
+    browserName: 'chrome',
+    javascriptEnabled: true,
+    acceptSslCerts: true,
+    chromeOptions: {
+      args: [
+        'headless',
+        'no-sandbox',
+      ],
+    },
+  }, {
     browserName: 'firefox',
+    javascriptEnabled: true,
+    acceptSslCerts: true,
+    firefox_options: {
+      args: [
+        'headless',
+      ],
+    },
   }],
 
   sync: true,
