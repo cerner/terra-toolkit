@@ -25,6 +25,7 @@ export default class TerraLauncher {
       new chai.Assertion(this._obj).to.be.instanceof(Array);
       // eslint-disable-next-line no-underscore-dangle
       const errors = this._obj
+        .filter(test => test.result)
         .reduce((all, test) => all.concat(test.result.violations), [])
         .filter(test => test)
         .map(test => `${JSON.stringify(test, null, 4)}`);
@@ -88,4 +89,4 @@ export default class TerraLauncher {
       return results;
     });
   }
-};
+}

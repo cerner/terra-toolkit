@@ -30,4 +30,13 @@ describe('axe', () => {
     };
     expect(browser.axe({ viewports, runOnly })).to.be.accessible();
   });
+
+  it('runs only specified context', () => {
+    browser.url('/inaccessible-contrast.html');
+    let context = 'h1';
+    expect(browser.axe({ viewports, context })).to.not.be.accessible();
+
+    context = 'h2';
+    expect(browser.axe({ viewports, context })).to.be.accessible();
+  });
 });
