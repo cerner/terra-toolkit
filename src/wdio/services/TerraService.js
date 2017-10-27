@@ -43,6 +43,7 @@ const viewport = (...sizes) => {
 
 
 export default class TerraService {
+  // eslint-disable-next-line class-methods-use-this
   before() {
     global.expect = chai.expect;
     global.viewport = viewport;

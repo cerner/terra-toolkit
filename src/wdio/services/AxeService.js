@@ -5,6 +5,7 @@ let axeCoreSrc = fs.readFileSync('node_modules/axe-core/axe.min.js', 'utf8');
 axeCoreSrc = axeCoreSrc.replace(/^\/\*.*\*\//, '');
 
 export default class AxeService {
+  // eslint-disable-next-line class-methods-use-this
   before() {
     browser.addCommand('axe', (options) => {
       if (browser.execute('return window.axe === undefined;')) {
