@@ -171,7 +171,7 @@ The following options are available:
 describe('Resizing browser', () => {
   // Only test tiny/huge viewports
   const viewports = viewport('tiny', 'huge');
-  it('checks visual comparison', () => {
+  it('switches viewport sizes', () => {
     browser.url('/foo.html');
     viewports.forEach(size, () => {
       // Resize browser to each viewport size
