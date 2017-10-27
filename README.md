@@ -198,7 +198,7 @@ expect(browser.axe()).to.not.be.accessible();
 `matchReference()`
 
 ```js
-// Validate it is accessible
+// Validate it matches
 expect(screenshots).to.matchReference();
 // Validate it does not match
 expect(screenshots).to.not.matchReference();
