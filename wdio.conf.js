@@ -3,6 +3,9 @@ const AxeService = require('./lib/wdio/services').Axe;
 const TerraService = require('./lib/wdio/services').Terra;
 const visualRegression = require('./lib/wdio/visualcompare');
 
+// Force firefox into headless mode
+process.env.MOZ_HEADLESS = '1';
+
 exports.config = {
   specs: ['./tests/specs/**/*.js'],
 
@@ -10,8 +13,6 @@ exports.config = {
 
   capabilities: [{
     browserName: 'chrome',
-    javascriptEnabled: true,
-    acceptSslCerts: true,
     chromeOptions: {
       args: [
         'headless',
@@ -20,13 +21,6 @@ exports.config = {
     },
   }, {
     browserName: 'firefox',
-    javascriptEnabled: true,
-    acceptSslCerts: true,
-    firefox_options: {
-      args: [
-        'headless',
-      ],
-    },
   }],
 
   sync: true,
