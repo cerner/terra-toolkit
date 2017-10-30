@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Changed
+* Removed sauce labs config and install java 8 in a different way for travis ci
 
 2.1.0 - (October 5, 2017)
 ------------------
