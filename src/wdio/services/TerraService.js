@@ -1,6 +1,5 @@
 import chai from 'chai';
-import Docker from 'dockerode';
-import child_process from 'child_process';
+import { exec } from 'child_process';
 
 function accessible() {
   // eslint-disable-next-line no-underscore-dangle
@@ -48,7 +47,7 @@ export default class TerraService {
   // eslint-disable-next-line class-methods-use-this, consistent-return
   onPrepare() {
     if (!process.env.TRAVIS) {
-      this.containerId = child_process.exec('docker run -d -p 4444:4444 selenium/standalone-chrome');
+      this.containerId = exec('docker run -d -p 4444:4444 selenium/standalone-chrome');
       // Sleep a few seconds to let selenium startup
       return new Promise((resolve) => {
         setTimeout(resolve, 2000);
@@ -67,7 +66,7 @@ export default class TerraService {
   // eslint-disable-next-line class-methods-use-this
   onComplete() {
     if (!process.env.TRAVIS) {
-      child_process.exec(`docker stop ${this.containerId} standalone-chrome && docker rm standalone-chrome ${this.containerId}`);
+      exec(`docker stop ${this.containerId} standalone-chrome && docker rm standalone-chrome ${this.containerId}`);
     }
   }
 }
