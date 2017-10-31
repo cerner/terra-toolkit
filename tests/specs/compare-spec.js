@@ -3,7 +3,7 @@ describe('compare', () => {
   const viewports = viewport('tiny', 'huge');
   it('[0] checks visual comparison with shortened id', () => {
     browser.url('/compare.html');
-    const screenshots = browser.checkElement('button', { viewports });
+    const screenshots = browser.checkElement('div', { viewports });
     expect(screenshots).to.matchReference();
   });
 
