@@ -44,7 +44,6 @@
     "axe-core": "^2.4.2",
     "chai": "^4.1.2",
     "chromedriver": "^2.31.0",
-    "dockerode": "^2.5.3",
     "glob": "^7.1.1",
     "ip": "^1.1.5",
     "load-json-file": "^2.0.0",
