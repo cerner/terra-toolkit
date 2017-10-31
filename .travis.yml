@@ -10,6 +10,9 @@ addons:
       - oracle-java8-set-default
 before_script:
   - npm run compile
+before_install:
+  - docker pull selenium/standalone-chrome
+  - docker run -d -p 4444:4444 selenium/standalone-chrome
 script:
   - npm test
   - npm run danger

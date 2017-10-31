@@ -1,4 +1,4 @@
-const localIP = require("ip");
+const localIP = require('ip');
 
 const staticServerPort = 4567;
 const AxeService = require('./lib/wdio/services').Axe;
