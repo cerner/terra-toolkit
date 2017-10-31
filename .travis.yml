@@ -4,7 +4,6 @@ jdk: oraclejdk8
 dist: trusty
 addons:
   chrome: stable
-  firefox: stable
   apt:
     packages:
       - oracle-java8-set-default

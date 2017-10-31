@@ -30,6 +30,6 @@ module.exports = {
     diffName: getScreenshotName('diff'),
     misMatchTolerance: 0.01,
   }),
-  viewportChangePause: 50,
+  viewportChangePause: 100,
   widths: [],
 };
