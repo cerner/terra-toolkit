@@ -38,7 +38,7 @@
     "nightwatch": "nightwatch",
     "nightwatch:port-provided": "nightwatch -c tests/test.nightwatch.conf.js",
     "test": "npm run compile && npm run nightwatch && npm run nightwatch:port-provided && wdio wdio.conf.js",
-    "wdio": "npm run compile && wdio wdio.conf.js"
+    "wdio": "wdio wdio.conf.js"
   },
   "dependencies": {
     "axe-core": "^2.4.2",

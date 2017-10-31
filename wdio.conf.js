@@ -5,8 +5,7 @@ const AxeService = require('./lib/wdio/services').Axe;
 const TerraService = require('./lib/wdio/services').Terra;
 const visualRegression = require('./lib/wdio/visualcompare');
 
-// Force firefox into headless mode
-process.env.MOZ_HEADLESS = '1';
+
 // docker run -d -p 4444:4444 selenium/standalone-chrome
 exports.config = {
   specs: ['./tests/specs/**/*.js'],
