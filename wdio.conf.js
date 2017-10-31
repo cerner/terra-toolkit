@@ -15,12 +15,6 @@ exports.config = {
   capabilities: [
     {
       browserName: 'chrome',
-      chromeOptions: {
-        args: [
-          'headless',
-          'no-sandbox',
-        ],
-      },
     },
   //  {
     //  browserName: 'firefox',
