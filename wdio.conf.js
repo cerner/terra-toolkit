@@ -1,3 +1,5 @@
+const localIP = require("ip");
+
 const staticServerPort = 4567;
 const AxeService = require('./lib/wdio/services').Axe;
 const TerraService = require('./lib/wdio/services').Terra;
@@ -5,23 +7,26 @@ const visualRegression = require('./lib/wdio/visualcompare');
 
 // Force firefox into headless mode
 process.env.MOZ_HEADLESS = '1';
-
+// docker run -d -p 4444:4444 selenium/standalone-chrome
 exports.config = {
   specs: ['./tests/specs/**/*.js'],
 
   maxInstances: 10,
 
-  capabilities: [{
-    browserName: 'chrome',
-    chromeOptions: {
-      args: [
-        'headless',
-        'no-sandbox',
-      ],
+  capabilities: [
+    {
+      browserName: 'chrome',
+      chromeOptions: {
+        args: [
+          'headless',
+          'no-sandbox',
+        ],
+      },
     },
-  }, {
-    browserName: 'firefox',
-  }],
+  //  {
+    //  browserName: 'firefox',
+    //},
+  ],
 
   sync: true,
   //
@@ -40,7 +45,7 @@ exports.config = {
   //
   // Set a base URL in order to shorten url command calls. If your url parameter starts
   // with "/", then the base url gets prepended.
-  baseUrl: `http://localhost:${staticServerPort}`,
+  baseUrl: `http://${localIP.address()}:${staticServerPort}`,
   //
   // Default timeout for all waitFor* commands.
   waitforTimeout: 10000,
@@ -52,7 +57,7 @@ exports.config = {
   // Default request retries count
   connectionRetryCount: 3,
 
-  services: ['selenium-standalone', 'static-server', 'visual-regression', AxeService, TerraService],
+  services: ['static-server', 'visual-regression', AxeService, TerraService],
   staticServerPort: 4567,
   staticServerFolders: [
     { mount: '/', path: './tests/fixtures' },
