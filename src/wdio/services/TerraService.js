@@ -1,4 +1,6 @@
 import chai from 'chai';
+import Docker from 'dockerode';
+import child_process from 'child_process';
 
 function accessible() {
   // eslint-disable-next-line no-underscore-dangle
@@ -43,11 +45,29 @@ const viewport = (...sizes) => {
 
 
 export default class TerraService {
+  // eslint-disable-next-line class-methods-use-this, consistent-return
+  onPrepare() {
+    if (!process.env.TRAVIS) {
+      this.containerId = child_process.exec('docker run -d -p 4444:4444 selenium/standalone-chrome');
+      // Sleep a few seconds to let selenium startup
+      return new Promise((resolve) => {
+        setTimeout(resolve, 2000);
+      });
+    }
+  }
+
   // eslint-disable-next-line class-methods-use-this
   before() {
     global.expect = chai.expect;
     global.viewport = viewport;
     chai.Assertion.addMethod('accessible', accessible);
     chai.Assertion.addMethod('matchReference', matchReference);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  onComplete() {
+    if (!process.env.TRAVIS) {
+      child_process.exec(`docker stop ${this.containerId} standalone-chrome && docker rm standalone-chrome ${this.containerId}`);
+    }
   }
 }
