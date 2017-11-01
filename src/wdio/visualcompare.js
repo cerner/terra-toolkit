@@ -3,23 +3,25 @@ import { LocalCompare } from 'wdio-visual-regression-service/compare';
 
 const testIdRegex = /^\[([^)]+)\]/;
 
-function testName(name) {
-  const matches = testIdRegex.exec(name);
+function testName(parent, title) {
+  const matches = testIdRegex.exec(title);
+  const parentName = parent.replace(/[\s+.]/g, '_');
+  let name = title.trim().replace(/[\s+.]/g, '_');
   if (matches) {
-    return matches[1];
+    name = matches[1];
   }
 
-  return name.replace(/[\s+.]/g, '_');
+  return `${parentName}[${name}]`;
 }
 
 function getScreenshotName(ref) {
   return (context) => {
-    const test = context.test.title;
     const browserName = context.desiredCapabilities.browserName;
     const browserWidth = context.meta.viewport.width;
     const browserHeight = context.meta.viewport.height;
     const testPath = path.dirname(context.test.file);
-    return path.join(testPath, '__snapshots__', ref, browserName, `${testName(test)}.${browserWidth}x${browserHeight}.png`);
+    const name = testName(context.test.parent, context.test.title);
+    return path.join(testPath, '__snapshots__', ref, browserName, `${name}.${browserWidth}x${browserHeight}.png`);
   };
 }
 
