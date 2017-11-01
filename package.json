@@ -24,8 +24,8 @@
   },
   "scripts": {
     "clean:all": "npm run clean:compiled && npm run clean:dependencies",
-    "clean:compiled": "rimraf node lib",
-    "clean:dependencies": "rimraf node node_modules",
+    "clean:compiled": "rimraf lib",
+    "clean:dependencies": "rimraf node_modules",
     "clean:install": "npm run clean:all && npm install && npm run compile:build",
     "compile": "npm run clean:compiled && npm run compile:build",
     "compile:build": "babel src --out-dir lib --copy-files",
