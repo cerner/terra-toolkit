@@ -81,7 +81,7 @@ export default class TerraService {
   }
 
   // eslint-disable-next-line class-methods-use-this, consistent-return
-  onPrepare(config, capabilities) {
+  onPrepare(config) {
     if (!process.env.TRAVIS) {
       exec(`docker run --rm --cidfile ${this.cidfile} -p ${config.port}:4444 selenium/standalone-chrome`);
       return new Promise((resolve, reject) => {
