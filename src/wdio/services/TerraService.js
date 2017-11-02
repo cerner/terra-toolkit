@@ -1,5 +1,37 @@
 import chai from 'chai';
 import { exec } from 'child_process';
+import retry from 'async/retry';
+import http from 'http';
+import path from 'path';
+import fs from 'fs';
+
+const getSeleniumStatus = (hostname, port, url) => (callback) => {
+  http.get({ hostname, port, path: path.join(url || '/wd/hub', 'status') }, (res) => {
+    const { statusCode } = res;
+    if (statusCode !== 200) {
+      callback('Request failed');
+      return;
+    }
+
+    res.setEncoding('utf8');
+    let rawData = '';
+    res.on('data', (chunk) => { rawData += chunk; });
+    res.on('end', () => {
+      try {
+        const status = JSON.parse(rawData);
+        if (status.value && status.value.ready) {
+          callback(null, status);
+        } else {
+          callback(status);
+        }
+      } catch (e) {
+        callback(`Request failed: ${e.message}`);
+      }
+    });
+  }).on('error', (e) => {
+    callback(`Request failed: ${e.message}`);
+  });
+};
 
 function accessible() {
   // eslint-disable-next-line no-underscore-dangle
@@ -32,7 +64,7 @@ const viewport = (...sizes) => {
     medium: { width: 838, height: 768 },
     large: { width: 1000, height: 768 },
     huge: { width: 1300, height: 768 },
-    enormous: { width: 500, hegiht: 768 },
+    enormous: { width: 1500, height: 768 },
   };
 
   if (sizes.length === 0) {
@@ -44,13 +76,23 @@ const viewport = (...sizes) => {
 
 
 export default class TerraService {
+  constructor() {
+    this.cidfile = '.docker_selenium_id';
+  }
+
   // eslint-disable-next-line class-methods-use-this, consistent-return
-  onPrepare() {
+  onPrepare(config, capabilities) {
     if (!process.env.TRAVIS) {
-      this.containerId = exec('docker run -d -p 4444:4444 selenium/standalone-chrome');
-      // Sleep a few seconds to let selenium startup
-      return new Promise((resolve) => {
-        setTimeout(resolve, 2000);
+      exec(`docker run --rm --cidfile ${this.cidfile} -p ${config.port}:4444 selenium/standalone-chrome`);
+      return new Promise((resolve, reject) => {
+        // Retry for 500 times up to 5 seconds for selenium to start
+        retry({ times: 500, interval: 10 }, getSeleniumStatus(config.host, config.port, config.path), (err, result) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(result);
+          }
+        });
       });
     }
   }
@@ -66,7 +108,9 @@ export default class TerraService {
   // eslint-disable-next-line class-methods-use-this
   onComplete() {
     if (!process.env.TRAVIS) {
-      exec(`docker stop ${this.containerId} standalone-chrome && docker rm standalone-chrome ${this.containerId}`);
+      const containerId = fs.readFileSync(this.cidfile, 'utf8');
+      exec(`docker stop ${containerId} standalone-chrome && docker`);
+      fs.unlinkSync(this.cidfile);
     }
   }
 }
