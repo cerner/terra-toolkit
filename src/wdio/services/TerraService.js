@@ -80,11 +80,10 @@ export default class TerraService {
     this.cidfile = '.docker_selenium_id';
   }
 
-  // eslint-disable-next-line class-methods-use-this, consistent-return
   onPrepare(config) {
-    if (!process.env.TRAVIS) {
-      exec(`docker run --rm --cidfile ${this.cidfile} -p ${config.port}:4444 selenium/standalone-chrome`);
-      return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
+      if (!process.env.TRAVIS) {
+        exec(`docker run --rm --cidfile ${this.cidfile} -p ${config.port}:4444 selenium/standalone-chrome`);
         // Retry for 500 times up to 5 seconds for selenium to start
         retry({ times: 500, interval: 10 }, getSeleniumStatus(config.host, config.port, config.path), (err, result) => {
           if (err) {
@@ -93,8 +92,10 @@ export default class TerraService {
             resolve(result);
           }
         });
-      });
-    }
+      } else {
+        resolve();
+      }
+    });
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -105,7 +106,6 @@ export default class TerraService {
     chai.Assertion.addMethod('matchReference', matchReference);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   onComplete() {
     if (!process.env.TRAVIS) {
       const containerId = fs.readFileSync(this.cidfile, 'utf8');
