@@ -8,12 +8,12 @@ const Autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const baseDir = __dirname.split('/tests')[0];
+const baseDir = __dirname.split('tests')[0];
 
 module.exports = {
   entry: {
     'babel-polyfill': 'babel-polyfill', // eslint-disable-next-line quote-props,
-    'index': path.join(__dirname, 'nightwatch/fixtures/index'),
+    'index': path.join(__dirname, 'nightwatch', 'fixtures', 'index'),
   },
   module: {
     loaders: [
@@ -66,7 +66,7 @@ module.exports = {
       chunks: ['babel-polyfill'],
     }),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'nightwatch/fixtures/index.html'),
+      template: path.join(__dirname, 'nightwatch', 'fixtures', 'index.html'),
       chunks: ['index'],
     }),
     new webpack.NamedChunksPlugin(),
@@ -75,10 +75,10 @@ module.exports = {
     // See https://github.com/facebook/react/issues/8026
     extensions: ['.js', '.jsx'],
     alias: {
-      moment: path.resolve(baseDir, 'node_modules/moment'),
-      react: path.resolve(baseDir, 'node_modules/react'),
-      'react-intl': path.resolve(baseDir, 'node_modules/react-intl'),
-      'react-dom': path.resolve(baseDir, 'node_modules/react-dom'),
+      moment: path.resolve(baseDir, 'node_modules', 'moment'),
+      react: path.resolve(baseDir, 'node_modules', 'react'),
+      'react-intl': path.resolve(baseDir, 'node_modules', 'react-intl'),
+      'react-dom': path.resolve(baseDir, 'node_modules', 'react-dom'),
     },
   },
   output: {
