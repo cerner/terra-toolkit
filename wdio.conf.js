@@ -3,6 +3,8 @@ const localIP = require('ip');
 const staticServerPort = 4567;
 const AxeService = require('./lib/wdio/services').Axe;
 const TerraService = require('./lib/wdio/services').Terra;
+const SeleniumDockerService = require('./lib/wdio/services').SeleniumDocker;
+
 const visualRegression = require('./lib/wdio/visualcompare');
 
 
@@ -50,7 +52,7 @@ exports.config = {
   // Default request retries count
   connectionRetryCount: 3,
 
-  services: ['static-server', 'visual-regression', AxeService, TerraService],
+  services: ['static-server', 'visual-regression', AxeService, TerraService, SeleniumDockerService],
   staticServerPort: 4567,
   staticServerFolders: [
     { mount: '/', path: './tests/fixtures' },
@@ -59,6 +61,15 @@ exports.config = {
   visualRegression,
 
   framework: 'mocha',
+
+  axe: {
+    inject: true,
+  },
+
+  seleniumDocker: {
+    cleanup: true,
+    enabled: !process.env.TRAVIS,
+  },
 
   mochaOpts: {
     ui: 'bdd',
