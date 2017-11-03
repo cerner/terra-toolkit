@@ -18,7 +18,7 @@ export default class AxeService {
     browser.addCommand('axe', (options) => {
       // Conditionally inject axe. This allows consumers to inject it themselves
       // in the test examples which would slightly speed up test runs.
-      if (axeConfig.inject !== false) {
+      if (axeConfig.inject) {
         if (!axeCoreSrc) {
           axeCoreSrc = fs.readFileSync(require.resolve('axe-core'), 'utf8');
           axeCoreSrc = axeCoreSrc.replace(/^\/\*.*\*\//, '');
