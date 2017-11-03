@@ -5,8 +5,8 @@ import path from 'path';
 import fs from 'fs';
 
 /**
-* Webdriver.io AxeService
-* provides custom chai assertoins and selenium docker automation.
+* Webdriver.io SeleniuMDockerService
+* provides standalone chrome/firefox selenium docker automation.
 */
 export default class SeleniumDockerService {
   constructor() {
