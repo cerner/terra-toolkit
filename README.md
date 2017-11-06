@@ -63,7 +63,7 @@ Selenium docker is provided as a convenience to make selenium testing easier and
 Under the key `seleniumDocker` in your wdio.conf.js you can pass a configuration object with the following structure:
 
 * **cidfile** - The name of the docker cidfile used to manage the docker instance during tests. Defaults to '.docker_selenium_id',
-* **enabled** - Enabled selenium docker to be disabled; useful for CI environments which can startup the docker instance outside of test runs. Defaults to true
+* **enabled** - Flat to disable selenium docker; useful for CI environments which can startup the docker instance outside of test runs. Defaults to true
 * **cleanup** - Destroy the docker container after the test run. Defaults to false.
 * **image** - The docker image to use for test runs. Defaults to `selenium/standalone-chrome` or `selenium/standalone-firefox` based on browser capabilities specified in config.
 
