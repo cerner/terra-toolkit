@@ -14,7 +14,7 @@
 Terra Toolkit is a utility module used to facilitate independent development of Terra projects. This toolkit provides configuration and helpers needed for nightwatch and webdriver.io testing to streamline development of npm packages. [terra-core][@terra-core] and [terra-clinical][@terra-clinical] are two example mono-repos which are utilizing utilities offered in this package.
 
 - [Getting Started](#getting-started)
-- [Webdriver.io Utility](#webdriver.io-utility)
+- [Webdriver.io Utility](#webdriverio-utility)
 - [Nightwatch Utility](#nightwatch-utility)
 - [Versioning](#versioning)
 - [Contributing](#contributing)
