@@ -11,9 +11,10 @@
 [![NPM version](http://img.shields.io/npm/v/terra-toolkit.svg)](https://www.npmjs.org/package/terra-toolkit)
 [![Build Status](https://travis-ci.org/cerner/terra-toolkit.svg?branch=master)](https://travis-ci.org/cerner/terra-toolkit)
 
-Terra Toolkit is a utility module used to facilitate independent development of Terra projects. This toolkit provides configuration and helpers needed for nightwatch testing to streamline development of npm packages. [terra-core][@terra-core] and [terra-clinical][@terra-clinical] are two example mono-repos which are utilizing utilities offered in this package.
+Terra Toolkit is a utility module used to facilitate independent development of Terra projects. This toolkit provides configuration and helpers needed for nightwatch and webdriver.io testing to streamline development of npm packages. [terra-core][@terra-core] and [terra-clinical][@terra-clinical] are two example mono-repos which are utilizing utilities offered in this package.
 
 - [Getting Started](#getting-started)
+- [Webdriver.io Utility](#webdriver.io-utility)
 - [Nightwatch Utility](#nightwatch-utility)
 - [Versioning](#versioning)
 - [Contributing](#contributing)
@@ -23,43 +24,101 @@ Terra Toolkit is a utility module used to facilitate independent development of 
 
 - Install with [npm](https://www.npmjs.com): `npm install terra-toolkit --save-dev`
 
-## Webdriver.io
+## Webdriver.io Utility
 [Webdriver.io](http://webdriver.io/) is a framework for writing webdriver powered tests to validate functionality in browsers. Webdriver.io also provides easy services for setting up selenium, starting webpack and static servers, as well as accessibilty and visual regression testing.
 
+To make testing easier, Terar toolkit provides default configuration that enables the following:
 
-Install the package
-```sh
-npm install webdriverio --save-dev
+* Selenium docker instances for a consistent testing environment
+* Axe accessibility Utility
+* Visual regression testing
+* Viewport resizing helpers
+* Mocha test framework.
+
+
+1. Install docker on your machine: https://www.docker.com/
+
+2. In your root directory, create a `wdio.conf.js` file that inherits from Terra Toolkit's base config.
+
+```js
+const wdioConf = require('terra-toolkit/wdio/conf');
+const localIP = require('ip');
+
+const staticServerPort = 4567;
+
+const config = {
+  baseUrl: `http://${localIP.address()}:${staticServerPort}`,
+  // TOOD: Custom wdio config goes here. See: http://webdriver.io/guide/testrunner/configurationfile.html
+  ...wdioConf.config,
+};
+
+exports.config = config;
 ```
-Generate a configuration file. [See documentation](http://webdriver.io/guide/testrunner/gettingstarted.html) for more info.
-```sh
-./node_modules/.bin/wdio config
+
+### Selenium Docker
+Selenium docker is provided as a convenience to make selenium testing easier and more stable. Running selenium in a container ensures a consistent testing environment across testing environments which is critical for visual regression testing.
+
+#### Options
+
+Under the key `seleniumDocker` in your wdio.conf.js you can pass a configuration object with the following structure:
+
+* **cidfile** - The name of the docker cidfile used to manage the docker instance during tests. Defaults to '.docker_selenium_id',
+* **enabled** - Enabled selenium docker to be disabled; useful for CI environments which can startup the docker instance outside of test runs. Defaults to true
+* **cleanup** - Destroy the docker container after the test run. Defaults to false.
+* **image** - The docker image to use for test runs. Defaults to `selenium/standalone-chrome` or `selenium/standalone-firefox` based on browser capabilities specified in config.
+
+#### Example
+```js
+// wdio.conf.js
+const wdioConf = require('terra-toolkit/wdio/conf');
+const localIP = require('ip');
+
+const staticServerPort = 4567;
+
+const config = {
+  baseUrl: `http://${localIP.address()}:${staticServerPort}`,
+  seleniumDocker: {
+    // Disable if running in Travis
+    enabled: !process.env.TRAVIS,
+  },
+  ...wdioConf.config,
+};
+
+exports.config = config;
 ```
+
 
 ### Accessibility Tests
-Accessibility testing is done using the [Axe](https://github.com/dequelabs/axe-core) utility.
+Terra toolkit automatically includes a wdio-axe-service which enhances an WebdriverIO instance with commands for accessibility testing using the [Axe](https://github.com/dequelabs/axe-core) utility.
 
+#### Options
 
-#### Config
-Setup wdio-axe-service by adding `AxeService` to the service section of your WebdriverIO config a
+Under the key `axe` in your wdio.conf.js you can pass a configuration object with the following structure:
+
+* **inject** - True if the axe script should be injected by the test running. Disable if axe is already included in the test files which slightly speed up runs. Defaults to true.
+
+#### Example
 ```js
-// Adds accessible() chai assertion
-const TerraService = require('terra-toolkit/wdio/services').Terra;
-
 // wdio.conf.js
-const AxeService = require('terra-toolkit/wdio/services').Axe;
-exports.config = {
-  //...
-  services: [
-    AxeService,
-    TerraService
-  ],
-  //...
+const wdioConf = require('terra-toolkit/wdio/conf');
+const localIP = require('ip');
+
+const staticServerPort = 4567;
+
+const config = {
+  baseUrl: `http://${localIP.address()}:${staticServerPort}`,
+  axe: {
+    // Don't inject axe script, its included in test files
+    inject: false,
+  },
+  ...wdioConf.config,
 };
+
+exports.config = config;
 ```
 
+
 #### Usage
-wdio-axe-service enhances an WebdriverIO instance with the following command:
 
 `browser.axe([{options}]);`
 
@@ -104,33 +163,9 @@ it('runs only specified context', () => {
 ```
 
 ### Visual Regression Tests
-Webdriver.io provides a useful visual regression utility. See [documentation](http://webdriver.io/guide/services/visual-regression.html) for setup instructions. Terra Toolkit provides useful wrappers to make setup easier.
+Terra toolkit provides configuration for a visual regression utility. See [documentation](http://webdriver.io/guide/services/visual-regression.html) for more information. Terra Toolkit provides useful wrappers to make setup easier.
 
-
-
-
-#### Config
-```js
-// wdio.conf.js
-
-// Adds matchReference() chai assertion
-const TerraService = require('terra-toolkit/wdio/services').Terra;
-
-// Use Terra Toolkit visualregression config
-const visualRegression = require('terra-toolkit/wdio/visualcompare');
-
-exports.config = {
-  //...
-  services: [
-    'visual-regression',
-    TerraService
-  ],
-  visualRegression
-  //...
-};
-```
-
-Once added visual regression tests can be written using the commands provided by the [visual regression service](http://webdriver.io/guide/services/visual-regression.html). Example:
+Visual regression tests can be written using the commands provided by the [visual regression service](http://webdriver.io/guide/services/visual-regression.html). Example:
 
 ```js
 /* global browser, describe, it, expect, viewport */
@@ -139,15 +174,21 @@ describe('button test', () => {
   const viewports = viewport('tiny', 'huge');
   it('checks visual comparison', () => {
     browser.url('/buttons.html');
-    const screenshots = browser.checkElement('button', { viewports });
+
+    // Verify the button element matches
+    let screenshots = browser.checkElement('button', { viewports });
+    expect(screenshots).to.matchReference();
+
+    // Verify the whole viewport matches
+    let screenshots = browser.checkViewprot({ viewports });
     expect(screenshots).to.matchReference();
   });
 });
 ```
 
-### TerraToolkit service
+### Test Helpers
 
-The terra toolkit webdriver.io service provides custom assertions and globals to make testing easier.
+The terra toolkit provides custom assertions and globals to make testing easier.
 
 #### Viewports
 
@@ -207,7 +248,7 @@ expect(screenshots).to.not.matchReference();
 
 
 
-## Nightwatch
+## Nightwatch Utility
 Nightwatch.js is an easy to use Node.js based End-to-End (E2E) testing solution for browser based apps and websites. It uses the powerful W3C WebDriver API to perform commands and assertions on DOM elements. Full documentation regarding nightwatch can be found at http://nightwatchjs.org/.
 
 

@@ -25,8 +25,9 @@ function accessible() {
 function matchReference() {
   // eslint-disable-next-line no-underscore-dangle
   new chai.Assertion(this._obj).to.be.instanceof(Array);
+
   // eslint-disable-next-line no-underscore-dangle
-  this.assert(this._obj.every(src => src.isExactSameImage),
+  this.assert(this._obj.every(src => (src && src.isExactSameImage)),
     'expected screenshots to match reference',
     'expected screenshots to not match reference');
 }
