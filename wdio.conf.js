@@ -2,6 +2,7 @@
 const SeleniumDockerService = require('./lib/wdio/services').SeleniumDocker;
 const wdioConf = require('./lib/wdio/conf');
 const localIP = require('ip');
+const path = require('path');
 
 const staticServerPort = 4567;
 
@@ -11,7 +12,7 @@ const config = {
   staticServerPort,
   staticServerLog: false,
   staticServerFolders: [
-    { mount: '/', path: './tests/fixtures' },
+    { mount: '/', path: path.join('.', 'tests', 'fixtures') },
   ],
 
   seleniumDocker: {
