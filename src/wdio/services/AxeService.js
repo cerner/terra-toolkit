@@ -19,11 +19,11 @@ export default class AxeService {
       // Conditionally inject axe. This allows consumers to inject it themselves
       // in the test examples which would slightly speed up test runs.
       if (axeConfig.inject) {
-        if (!axeCoreSrc) {
-          axeCoreSrc = fs.readFileSync(require.resolve('axe-core'), 'utf8');
-          axeCoreSrc = axeCoreSrc.replace(/^\/\*.*\*\//, '');
-        }
         if (browser.execute('return window.axe === undefined;')) {
+          if (!axeCoreSrc) {
+            axeCoreSrc = fs.readFileSync(require.resolve('axe-core'), 'utf8');
+            axeCoreSrc = axeCoreSrc.replace(/^\/\*.*\*\//, '');
+          }
           browser.execute(axeCoreSrc);
         }
       }
@@ -42,6 +42,7 @@ export default class AxeService {
       // Get accessibility results for each viewport size
       const results = options.viewports.map((viewport) => {
         browser.setViewportSize(viewport);
+        // Avoid arrow callback syntax as this function is injected into the browser
         // eslint-disable-next-line func-names, prefer-arrow-callback
         return browser.executeAsync(function (context, opts, done) {
           // eslint-disable-next-line func-names, prefer-arrow-callback
