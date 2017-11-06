@@ -35,7 +35,7 @@ To make testing easier, Terar toolkit provides default configuration that enable
 * Viewport resizing helpers
 * Mocha test framework.
 
-
+### Installation
 1. Install docker on your machine: https://www.docker.com/
 
 2. In your root directory, create a `wdio.conf.js` file that inherits from Terra Toolkit's base config.
