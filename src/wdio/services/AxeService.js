@@ -15,7 +15,7 @@ export default class AxeService {
       ...(config.axe || {}),
     };
 
-    browser.addCommand('axe', (options) => {
+    browser.addCommand('axe', (options = {}) => {
       // Conditionally inject axe. This allows consumers to inject it themselves
       // in the test examples which would slightly speed up test runs.
       if (axeConfig.inject) {
@@ -29,18 +29,15 @@ export default class AxeService {
       }
 
       const currentViewportSize = browser.getViewportSize();
-      const viewports = options.viewports;
+      // use current viewport if none specified
+      const specifiedViewports = options.viewports || [currentViewportSize];
       const axeOptions = {
         runOnly: options.runOnly,
         rules: options.rules,
       };
 
-      if (viewports.length === 0) {
-        viewports.push(currentViewportSize);
-      }
-
       // Get accessibility results for each viewport size
-      const results = options.viewports.map((viewport) => {
+      const results = specifiedViewports.map((viewport) => {
         browser.setViewportSize(viewport);
         // Avoid arrow callback syntax as this function is injected into the browser
         // eslint-disable-next-line func-names, prefer-arrow-callback

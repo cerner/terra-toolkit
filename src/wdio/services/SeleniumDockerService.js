@@ -56,6 +56,8 @@ export default class SeleniumDockerService {
       enabled: true, // True if service enabled, false otherwise
       cleanup: false, // True if docker container should be removed after test
       image: null, // The image name to use, defaults to selenium/standalone-${browser}
+      retries: 500, // Retry count to test for selenium being up
+      retryInterval: 10, // Retry interval in milliseconds to wait between retries for selenium to come up.
       ...(config.seleniumDocker || {}),
     };
     this.host = config.host;
@@ -71,13 +73,15 @@ export default class SeleniumDockerService {
           exec(`docker run --rm --cidfile ${this.cidfile} -p ${config.port}:4444 ${this.getImage()}`);
         }
         // Retry for 500 times up to 5 seconds for selenium to start
-        retry({ times: 500, interval: 10 }, this.getSeleniumStatus, (err, result) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(result);
-          }
-        });
+        retry({ times: this.config.retries, interval: this.config.retryInterval },
+          this.getSeleniumStatus, (err, result) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(result);
+            }
+          },
+        );
       } else {
         resolve();
       }

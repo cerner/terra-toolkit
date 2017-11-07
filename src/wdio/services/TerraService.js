@@ -1,7 +1,7 @@
 import chai from 'chai';
 
 /**
-* accessible chai assertion to be paired with browser.axe() tess.
+* accessible chai assertion to be paired with browser.axe() tests.
 */
 function accessible() {
   // eslint-disable-next-line no-underscore-dangle

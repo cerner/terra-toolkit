@@ -3,7 +3,7 @@ describe('axe', () => {
   const viewports = viewport('tiny', 'huge');
   it('checks accessibility', () => {
     browser.url('/accessible.html');
-    expect(browser.axe({ viewports })).to.be.accessible();
+    expect(browser.axe()).to.be.accessible();
   });
 
   it('checks inaccessibility', () => {

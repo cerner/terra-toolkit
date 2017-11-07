@@ -27,15 +27,15 @@ Terra Toolkit is a utility module used to facilitate independent development of 
 ## Webdriver.io Utility
 [Webdriver.io](http://webdriver.io/) is a framework for writing webdriver powered tests to validate functionality in browsers. Webdriver.io also provides easy services for setting up selenium, starting webpack and static servers, as well as accessibilty and visual regression testing.
 
-To make testing easier, Terar toolkit provides default configuration that enables the following:
+To make testing easier, Terra toolkit provides default configuration that enables the following:
 
 * Selenium docker instances for a consistent testing environment
 * Axe accessibility Utility
 * Visual regression testing
-* Viewport resizing helpers
-* Mocha test framework.
+* Helper to get terra standard viewport sizes
+* Mocha test framework
 
-### Installation
+### Setup
 1. Install docker on your machine: https://www.docker.com/
 
 2. In your root directory, create a `wdio.conf.js` file that inherits from Terra Toolkit's base config.
@@ -62,10 +62,12 @@ Selenium docker is provided as a convenience to make selenium testing easier and
 
 Under the key `seleniumDocker` in your wdio.conf.js you can pass a configuration object with the following structure:
 
-* **cidfile** - The name of the docker cidfile used to manage the docker instance during tests. Defaults to '.docker_selenium_id',
-* **enabled** - Flat to disable selenium docker; useful for CI environments which can startup the docker instance outside of test runs. Defaults to true
+* **cidfile** - The name of the docker cidfile used to manage the docker instance during tests. Defaults to '.docker_selenium_id'.
+* **enabled** - Flag to disable selenium docker; useful for CI environments which can startup the docker instance outside of test runs. Defaults to true.
 * **cleanup** - Destroy the docker container after the test run. Defaults to false.
 * **image** - The docker image to use for test runs. Defaults to `selenium/standalone-chrome` or `selenium/standalone-firefox` based on browser capabilities specified in config.
+* **retries** - Retry count to test for selenium being up. Default 500.
+* **retryInterval** - Retry interval in milliseconds to wait between retries for selenium to come up. Default 10.
 
 #### Example
 ```js
@@ -106,12 +108,12 @@ const localIP = require('ip');
 const staticServerPort = 4567;
 
 const config = {
+  ...wdioConf.config,
   baseUrl: `http://${localIP.address()}:${staticServerPort}`,
   axe: {
     // Don't inject axe script, its included in test files
     inject: false,
   },
-  ...wdioConf.config,
 };
 
 exports.config = config;
@@ -135,6 +137,8 @@ The following options are available:
 
 #### Examples
 ```js
+// Use viewport helper to get { width, height } by name.
+const viewports = viewport('tiny', 'huge');
 it('ignores inaccessibility based on rules', () => {
   browser.url('/inaccessible-contrast.html');
   const rules = {
@@ -180,7 +184,7 @@ describe('button test', () => {
     expect(screenshots).to.matchReference();
 
     // Verify the whole viewport matches
-    let screenshots = browser.checkViewprot({ viewports });
+    let screenshots = browser.checkViewport({ viewports });
     expect(screenshots).to.matchReference();
   });
 });
@@ -223,10 +227,11 @@ describe('Resizing browser', () => {
 ```
 
 #### Assertions
-2 custom assertions are provided to make validating the output of the visual regression and accesibility commands easier.
+Two custom assertions are provided to make validating the output of the visual regression and accesibility commands easier.
 
 
 `accessible()`
+Convenience method to validate the `axe()`` accessibility checks across all tested viewports are successful.
 
 ```js
 // Validate it is accessible
@@ -237,8 +242,10 @@ expect(browser.axe()).to.not.be.accessible();
 
 
 `matchReference()`
+Convenience method to validate the  `checkElement` visual regression checks across all tested viewports are successful.
 
 ```js
+const screenshots = browser.checkViewport();
 // Validate it matches
 expect(screenshots).to.matchReference();
 // Validate it does not match

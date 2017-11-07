@@ -1,6 +1,6 @@
 const AxeService = require('./services').Axe;
 const TerraService = require('./services').Terra;
-const visualRegression = require('./visualcompare');
+const visualRegression = require('./visualRegressionConf');
 const SeleniumDockerService = require('./services').SeleniumDocker;
 const path = require('path');
 
