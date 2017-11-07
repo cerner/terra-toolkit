@@ -47,9 +47,11 @@ const localIP = require('ip');
 const staticServerPort = 4567;
 
 const config = {
-  baseUrl: `http://${localIP.address()}:${staticServerPort}`,
   // TOOD: Custom wdio config goes here. See: http://webdriver.io/guide/testrunner/configurationfile.html
   ...wdioConf.config,
+
+  // Point baseURL to your site to be tested
+  baseUrl: `http://${localIP.address()}:${staticServerPort}`,
 };
 
 exports.config = config;
@@ -78,12 +80,14 @@ const localIP = require('ip');
 const staticServerPort = 4567;
 
 const config = {
+  ...wdioConf.config,
+
+  // Point base URL at the site to be tested
   baseUrl: `http://${localIP.address()}:${staticServerPort}`,
   seleniumDocker: {
     // Disable if running in Travis
     enabled: !process.env.TRAVIS,
   },
-  ...wdioConf.config,
 };
 
 exports.config = config;
@@ -109,6 +113,8 @@ const staticServerPort = 4567;
 
 const config = {
   ...wdioConf.config,
+
+  // Point base URL to the site to be tested
   baseUrl: `http://${localIP.address()}:${staticServerPort}`,
   axe: {
     // Don't inject axe script, its included in test files
@@ -227,11 +233,11 @@ describe('Resizing browser', () => {
 ```
 
 #### Assertions
-Two custom assertions are provided to make validating the output of the visual regression and accesibility commands easier.
+Two custom assertions are provided to make validating the output of the visual regression and accessibility commands easier.
 
 
 `accessible()`
-Convenience method to validate the `axe()`` accessibility checks across all tested viewports are successful.
+Convenience method to validate the `axe()` accessibility checks across all tested viewports are successful.
 
 ```js
 // Validate it is accessible
