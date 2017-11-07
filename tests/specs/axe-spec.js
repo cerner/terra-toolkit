@@ -1,6 +1,6 @@
-/* global browser, describe, it, expect, viewport */
+/* global browser, describe, it, expect, Terra */
 describe('axe', () => {
-  const viewports = viewport('tiny', 'huge');
+  const viewports = Terra.viewports('tiny', 'huge');
   it('checks accessibility', () => {
     browser.url('/accessible.html');
     expect(browser.axe()).to.be.accessible();

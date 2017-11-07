@@ -144,7 +144,7 @@ The following options are available:
 #### Examples
 ```js
 // Use viewport helper to get { width, height } by name.
-const viewports = viewport('tiny', 'huge');
+const viewports = Terra.viewports('tiny', 'huge');
 it('ignores inaccessibility based on rules', () => {
   browser.url('/inaccessible-contrast.html');
   const rules = {
@@ -181,7 +181,7 @@ Visual regression tests can be written using the commands provided by the [visua
 /* global browser, describe, it, expect, viewport */
 describe('button test', () => {
   // Only test tiny/huge viewports
-  const viewports = viewport('tiny', 'huge');
+  const viewports = Terra.viewports('tiny', 'huge');
   it('checks visual comparison', () => {
     browser.url('/buttons.html');
 
@@ -198,16 +198,15 @@ describe('button test', () => {
 
 ### Test Helpers
 
-The terra toolkit provides custom assertions and globals to make testing easier.
+The terra toolkit provides custom assertions and a `Terra` global to make testing easier.
 
 #### Viewports
 
-The `viewports()` function provides a convenience method for fetching an array of viewports to use to resize the browser or even pass directly to the accessibility and visual regression commands.
+The `Terra.viewports()` function provides a convenience method for fetching an array of viewports to use to resize the browser or even pass directly to the accessibility and visual regression commands.
 
 ##### Usage
-wdio-axe-service enhances an WebdriverIO instance with the following command:
 
-`viewports(name);`
+`Terra.viewports(name);`
 
 The following options are available:
 
@@ -221,7 +220,7 @@ The following options are available:
 /* global browser, describe, it, expect, viewport */
 describe('Resizing browser', () => {
   // Only test tiny/huge viewports
-  const viewports = viewport('tiny', 'huge');
+  const viewports = Terra.viewports('tiny', 'huge');
   it('switches viewport sizes', () => {
     browser.url('/foo.html');
     viewports.forEach(size, () => {

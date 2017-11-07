@@ -1,6 +1,6 @@
-/* global browser, describe, it, expect, viewport */
+/* global browser, describe, it, expect, Terra */
 describe('comparing screenshots', () => {
-  const viewports = viewport('tiny', 'huge');
+  const viewports = Terra.viewports('tiny', 'huge');
   it('[0] checks visual comparison with shortened id', () => {
     browser.url('/compare.html');
     const screenshots = browser.checkElement('button', { viewports });

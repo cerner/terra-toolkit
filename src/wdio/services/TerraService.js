@@ -37,7 +37,7 @@ function matchReference() {
 * @param sizes - [String] of viewport sizes.
 * @return [Object] of viewport sizes.
 */
-const viewport = (...sizes) => {
+const viewports = (...sizes) => {
   const widths = {
     tiny: { width: 470, height: 768 },
     small: { width: 622, height: 768 },
@@ -63,7 +63,9 @@ export default class TerraService {
   // eslint-disable-next-line class-methods-use-this
   before() {
     global.expect = chai.expect;
-    global.viewport = viewport;
+    global.Terra = {
+      viewports,
+    };
     chai.Assertion.addMethod('accessible', accessible);
     chai.Assertion.addMethod('matchReference', matchReference);
   }
