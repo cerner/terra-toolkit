@@ -1,27 +1,46 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 /* eslint no-unused-vars: ["error", { "varsIgnorePattern": "chromedriver" }] */
 
-import chromedriver from 'chromedriver';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
+import ip from 'ip';
+
+import SeleniumDockerService from '../wdio/services/SeleniumDockerService';
 
 let port = 8080;
+
+const seleniumPort = 4444;
+const seleniumHost = ip.address();
 
 const nightwatchConfig = (webpackConfig, srcFolders, providedPort) => {
   if (providedPort) {
     port = providedPort;
   }
 
+  const seleniumDocker = new SeleniumDockerService();
   const webpackServer = new WebpackDevServer(webpack(webpackConfig), { quiet: true, hot: false, inline: false });
 
   const startDriverAndServer = (done) => {
-    chromedriver.start();
-    webpackServer.listen(port, '0.0.0.0', () => done());
+    const staticServerPromise = new Promise((resolve) => {
+      webpackServer.listen(port, '0.0.0.0', () => resolve());
+    });
+
+    const dockerPromise = seleniumDocker.onPrepare({
+      host: seleniumHost,
+      port: seleniumPort,
+      path: '/wd/hub',
+      seleniumDocker: {
+        enabled: !process.env.TRAVIS && !process.env.CI,
+        cleanup: true,
+      },
+    }, [{ browserName: 'chrome' }]);
+
+    Promise.all([staticServerPromise, dockerPromise]).then(() => done());
   };
 
   const stopDriverAndServer = (done) => {
     webpackServer.close();
-    chromedriver.stop();
+    seleniumDocker.onComplete();
     done();
   };
 
@@ -40,11 +59,10 @@ const nightwatchConfig = (webpackConfig, srcFolders, providedPort) => {
     test_workers: false,
     test_settings: {
       default: {
-        launch_url: `http://localhost:${port}`,
+        launch_url: `http://${ip.address()}:${port}`,
         persist_globals: true,
-        selenium_port: 9515,
-        selenium_host: 'localhost',
-        default_path_prefix: '',
+        selenium_port: seleniumPort,
+        selenium_host: seleniumHost,
         silent: true,
         globals: {
           breakpoints: {
@@ -73,12 +91,6 @@ const nightwatchConfig = (webpackConfig, srcFolders, providedPort) => {
           browserName: 'chrome',
           javascriptEnabled: true,
           acceptSslCerts: true,
-          chromeOptions: {
-            args: [
-              '--headless',
-              '--no-sandbox',
-            ],
-          },
         },
       },
     },

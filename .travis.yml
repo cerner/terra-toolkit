@@ -2,11 +2,6 @@ language: node_js
 sudo: required
 jdk: oraclejdk8
 dist: trusty
-addons:
-  chrome: stable
-  apt:
-    packages:
-      - oracle-java8-set-default
 before_script:
   - npm run compile
 before_install:
