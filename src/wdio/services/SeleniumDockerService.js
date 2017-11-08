@@ -69,8 +69,18 @@ export default class SeleniumDockerService {
     return new Promise((resolve, reject) => {
       if (this.config.enabled) {
         const containerId = this.getContainerId();
+
+        // Workaround for browser specific docker issues
+        // see https://github.com/SeleniumHQ/docker-selenium#running-the-images
+        let args = '';
+        if (this.browserName === 'chrome') {
+          args = '-v /dev/shm:/dev/shm';
+        } else if (this.browserName === 'firefox') {
+          args = '--shm-size 2g';
+        }
+
         if (!containerId) {
-          exec(`docker run --rm --cidfile ${this.cidfile} -p ${config.port}:4444 ${this.getImage()}`);
+          exec(`docker run -d --rm ${args} --cidfile ${this.cidfile} -p ${config.port}:4444 ${this.getImage()}`);
         }
         // Retry for 500 times up to 5 seconds for selenium to start
         retry({ times: this.config.retries, interval: this.config.retryInterval },

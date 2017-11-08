@@ -22,7 +22,7 @@ const nightwatchConfig = (webpackConfig, srcFolders, providedPort) => {
 
   const startDriverAndServer = (done) => {
     const staticServerPromise = new Promise((resolve) => {
-      webpackServer.listen(port, '0.0.0.0', () => resolve());
+      webpackServer.listen(port, '0.0.0.0', resolve);
     });
 
     const dockerPromise = seleniumDocker.onPrepare({
@@ -35,7 +35,7 @@ const nightwatchConfig = (webpackConfig, srcFolders, providedPort) => {
       },
     }, [{ browserName: 'chrome' }]);
 
-    Promise.all([staticServerPromise, dockerPromise]).then(() => done());
+    Promise.all([staticServerPromise, dockerPromise]).then(done);
   };
 
   const stopDriverAndServer = (done) => {
