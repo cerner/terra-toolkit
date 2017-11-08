@@ -24,7 +24,7 @@ Terra Toolkit is a utility module used to facilitate independent development of 
 
 - Install with [npm](https://www.npmjs.com): `npm install terra-toolkit --save-dev`
 
-Terar toolkit uses docker to run selenium to ensure a consistent testing environment locally and in continuous integration build systems. To use nightwatch with terra toolkit you must install docker on your machine: https://www.docker.com/
+Terra toolkit uses docker to run selenium to ensure a consistent testing environment locally and in continuous integration build systems. To use nightwatch with terra toolkit you must install docker on your machine: https://www.docker.com/
 
 
 ## Webdriver.io Utility
