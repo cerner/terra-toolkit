@@ -24,6 +24,9 @@ Terra Toolkit is a utility module used to facilitate independent development of 
 
 - Install with [npm](https://www.npmjs.com): `npm install terra-toolkit --save-dev`
 
+Terar toolkit uses docker to run selenium to ensure a consistent testing environment locally and in continuous integration build systems. To use nightwatch with terra toolkit you must install docker on your machine: https://www.docker.com/
+
+
 ## Webdriver.io Utility
 [Webdriver.io](http://webdriver.io/) is a framework for writing webdriver powered tests to validate functionality in browsers. Webdriver.io also provides easy services for setting up selenium, starting webpack and static servers, as well as accessibilty and visual regression testing.
 
@@ -36,9 +39,8 @@ To make testing easier, Terra toolkit provides default configuration that enable
 * Mocha test framework
 
 ### Setup
-1. Install docker on your machine: https://www.docker.com/
 
-2. In your root directory, create a `wdio.conf.js` file that inherits from Terra Toolkit's base config.
+1. In your root directory, create a `wdio.conf.js` file that inherits from Terra Toolkit's base config.
 
 ```js
 const wdioConf = require('terra-toolkit/wdio/conf');
@@ -262,10 +264,6 @@ expect(screenshots).to.not.matchReference();
 
 ## Nightwatch Utility
 Nightwatch.js is an easy to use Node.js based End-to-End (E2E) testing solution for browser based apps and websites. It uses the powerful W3C WebDriver API to perform commands and assertions on DOM elements. Full documentation regarding nightwatch can be found at http://nightwatchjs.org/.
-
-### Setup
-
-Nightwatch uses docker to ensure a consistent testing environment locally and in continuous integration build systems. To use nightwatch, install docker on your machine: https://www.docker.com/
 
 ### Configuration Setup
 
