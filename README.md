@@ -263,6 +263,9 @@ expect(screenshots).to.not.matchReference();
 ## Nightwatch Utility
 Nightwatch.js is an easy to use Node.js based End-to-End (E2E) testing solution for browser based apps and websites. It uses the powerful W3C WebDriver API to perform commands and assertions on DOM elements. Full documentation regarding nightwatch can be found at http://nightwatchjs.org/.
 
+### Setup
+
+Nightwatch uses docker to ensure a consistent testing environment locally and in continuous integration build systems. To use nightwatch, install docker on your machine: https://www.docker.com/
 
 ### Configuration Setup
 
