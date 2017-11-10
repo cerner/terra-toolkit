@@ -8,7 +8,6 @@ const staticServerPort = 4567;
 
 const config = {
   baseUrl: `http://${localIP.address()}:${staticServerPort}`,
-
   staticServerPort,
   staticServerLog: false,
   staticServerFolders: [

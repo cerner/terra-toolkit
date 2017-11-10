@@ -50,7 +50,7 @@
     "glob": "^7.1.1",
     "ip": "^1.1.5",
     "load-json-file": "^2.0.0",
-    "webdriverio": "^4.8.0",
+    "webdriverio": "4.8.0",
     "wdio-mocha-framework": "^0.5.11",
     "wdio-visual-regression-service": "^0.8.0",
     "wdio-static-server-service": "^1.0.0"

@@ -7,6 +7,7 @@ Unreleased
 * Use path.join to allow for windows development
 * Removed sauce labs config and install java 8 in a different way for travis ci
 * Added webdriver.io testing utilities
+* Update nightwatch to use docker
 
 2.1.0 - (October 5, 2017)
 ------------------

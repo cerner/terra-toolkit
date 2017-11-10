@@ -7,7 +7,7 @@ const path = require('path');
 exports.config = {
   specs: [path.join('.', 'tests', 'specs', '**', '*.js')],
 
-  maxInstances: 10,
+  maxInstances: 1,
 
   capabilities: [
     {
