@@ -59,9 +59,9 @@ export default class SeleniumDockerService {
   /**
    * Clean up docker container after all workers got shut down and the process is about to exit.
    */
-  onComplete() {
+  async onComplete() {
     if (this.config.cleanup && this.config.enabled) {
-      this.stop();
+      await this.stop();
     }
   }
 
