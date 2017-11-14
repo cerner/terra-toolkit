@@ -163,7 +163,7 @@ export default class SeleniumDockerService {
     return this.config.image || `selenium/standalone-${this.browserName}`;
   }
 
-  async stop() {
+  stop() {
     return new Promise((resolve, reject) => {
       if (this.container) {
         exec(`docker stop ${this.container.id}`, (error, stdout) => {
