@@ -1,5 +1,4 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-const SeleniumDockerService = require('./lib/wdio/services').SeleniumDocker;
 const wdioConf = require('./lib/wdio/conf');
 const localIP = require('ip');
 const path = require('path');
