@@ -31,6 +31,11 @@ export default class SeleniumDockerService {
     this.port = config.port;
     this.path = config.path;
     this.browserName = capabilities[0].browserName;
+
+    if (!this.config.enabled) {
+      return;
+    }
+
     this.container = await this.getRunningContainer();
 
     // There is a running container that doesn't match configuration, stop it
@@ -49,11 +54,9 @@ export default class SeleniumDockerService {
       }
     }
 
-    if (this.config.enabled && !this.container) {
-      await this.pullImage();
-      await this.runImage();
-      await this.ensureSelenium();
-    }
+    await this.pullImage();
+    await this.runImage();
+    await this.ensureSelenium();
   }
 
   /**
