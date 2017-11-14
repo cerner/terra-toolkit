@@ -2,7 +2,6 @@ import { exec } from 'child_process';
 import retry from 'async/retry';
 import http from 'http';
 import path from 'path';
-import fs from 'fs';
 
 /**
 * Webdriver.io SeleniuMDockerService
@@ -13,6 +12,179 @@ export default class SeleniumDockerService {
     this.getSeleniumStatus = this.getSeleniumStatus.bind(this);
   }
 
+  /**
+   * Start up docker container before all workers get launched.
+   * @param {Object} config wdio configuration object
+   * @param {Array.<Object>} capabilities list of capabilities details
+   */
+  async onPrepare(config, capabilities) {
+    this.config = {
+      enabled: true, // True if service enabled, false otherwise
+      cleanup: false, // True if docker container should be removed after test
+      image: null, // The image name to use, defaults to selenium/standalone-${browser}
+      retries: 500, // Retry count to test for selenium being up
+      retryInterval: 10, // Retry interval in milliseconds to wait between retries for selenium to come up.
+      env: {}, // Environment variables to add to the container
+      ...(config.seleniumDocker || {}),
+    };
+    this.host = config.host;
+    this.port = config.port;
+    this.path = config.path;
+    this.browserName = capabilities[0].browserName;
+    this.container = await this.getRunningContainer();
+
+    // There is a running container that doesn't match configuration, stop it
+    // before proceeding
+    if (this.container && this.getImage() !== this.container.image) {
+      console.log('stopping container', this.container, this.getImage());
+      await this.stop();
+
+    // There is a container, verify selenium is running as expected
+    } else if (this.container) {
+      try {
+        await this.ensureSelenium();
+
+      // Selenium isn't responding stop the container;
+      } catch (e) {
+        await this.stop();
+      }
+    }
+
+    if (this.config.enabled && !this.container) {
+      await this.pullImage();
+      await this.runImage();
+      await this.ensureSelenium();
+    }
+  }
+
+  /**
+   * Clean up docker container after all workers got shut down and the process is about to exit.
+   */
+  onComplete() {
+    if (this.config.cleanup && this.config.enabled) {
+      this.stop();
+    }
+  }
+
+  /**
+  * Waits for selenium to startup and be ready within the configured container.
+  * @return {Promise}
+  */
+  ensureSelenium() {
+    return new Promise((resolve, reject) => {
+      console.log('Ensuring selenium status is ready');
+      // Retry for 500 times up to 5 seconds for selenium to start
+      retry({ times: this.config.retries, interval: this.config.retryInterval },
+        this.getSeleniumStatus, (err, result) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(result);
+          }
+        },
+      );
+    });
+  }
+
+  /**
+  * Pulls the configured docker image
+  * @return {Promise}
+  */
+  pullImage() {
+    return new Promise((resolve, reject) => {
+      console.log(`Pulling latest image for ${this.getImage()}`);
+      exec(`docker pull ${this.getImage()}`, (error, stdout, stderr) => {
+        const fail = error || stderr;
+        if (fail) {
+          reject(fail);
+        } else {
+          resolve(stdout);
+        }
+      });
+    });
+  }
+
+  /**
+  * Runs the configured docker image
+  * @return {Promise}
+  */
+  runImage() {
+    let args = '';
+    if (this.browserName === 'chrome') {
+      args = '-v /dev/shm:/dev/shm';
+    } else if (this.browserName === 'firefox') {
+      args = '--shm-size 2g';
+    }
+
+    const env = Object.keys(this.config.env).map(key => `-e ${key}=${this.config.env[key]}`).join(' ');
+    const command = `docker run -l wdio=${this.browserName} -d --rm ${env} ${args} -p ${this.port}:4444 ${this.getImage()}`;
+    return new Promise((resolve, reject) => {
+      console.log(`Running image for ${this.getImage()}`);
+      exec(command, (error, stdout, stderr) => {
+        const fail = error || stderr;
+        if (fail) {
+          reject(fail);
+        } else {
+          resolve(stdout);
+        }
+      });
+    });
+  }
+
+  /**
+  * Gets the running selenium container.
+  * @return {Object} representing the active selenium container, if any.
+  */
+  // eslint-disable-next-line class-methods-use-this
+  getRunningContainer() {
+    return new Promise((resolve, reject) => {
+      exec('docker ps -f "label=wdio" --format "{{.ID}} {{.Image}}"', (error, stdout) => {
+        if (error) {
+          reject(error);
+        } else if (stdout) {
+          const result = stdout.trim().split(' ');
+          resolve({
+            id: result[0],
+            image: result[1],
+          });
+        } else {
+          resolve();
+        }
+      });
+    });
+  }
+
+  /**
+   * Get the docker image to use based on configuration and browser capabilities.
+   * @return The name of the docker image to use.
+   */
+  getImage() {
+    // Use configured image or infer image from browserName (only firefox and safari supported).
+    // TODO: Eventually an entire hub should be stood up which supports all browsers in capabilities config
+    return this.config.image || `selenium/standalone-${this.browserName}`;
+  }
+
+  async stop() {
+    return new Promise((resolve, reject) => {
+      if (this.container) {
+        exec(`docker stop ${this.container.id}`, (error, stdout) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(stdout);
+            this.container = null;
+          }
+        });
+      } else {
+        resolve();
+      }
+    });
+  }
+
+  /**
+  * Gets the status of the selenium server.
+  * @param {function} callback taking (err, result).
+  */
   getSeleniumStatus(callback) {
     http.get({
       host: this.host,
@@ -43,96 +215,5 @@ export default class SeleniumDockerService {
     }).on('error', (e) => {
       callback(`Request failed: ${e.message}`);
     });
-  }
-
-  /**
-   * Start up docker container before all workers get launched.
-   * @param {Object} config wdio configuration object
-   * @param {Array.<Object>} capabilities list of capabilities details
-   */
-  onPrepare(config, capabilities) {
-    this.config = {
-      cidfile: '.docker_selenium_id', // The docker container id file
-      enabled: true, // True if service enabled, false otherwise
-      cleanup: false, // True if docker container should be removed after test
-      image: null, // The image name to use, defaults to selenium/standalone-${browser}
-      retries: 500, // Retry count to test for selenium being up
-      retryInterval: 10, // Retry interval in milliseconds to wait between retries for selenium to come up.
-      env: {}, // Environment variables to add to the container
-      ...(config.seleniumDocker || {}),
-    };
-    this.host = config.host;
-    this.port = config.port;
-    this.path = config.path;
-    this.browserName = capabilities[0].browserName;
-    this.cidfile = this.config.cidfile || this.cidfile;
-
-    return new Promise((resolve, reject) => {
-      if (this.config.enabled) {
-        const containerId = this.getContainerId();
-
-        // Workaround for browser specific docker issues
-        // see https://github.com/SeleniumHQ/docker-selenium#running-the-images
-        let args = '';
-        if (this.browserName === 'chrome') {
-          args = '-v /dev/shm:/dev/shm';
-        } else if (this.browserName === 'firefox') {
-          args = '--shm-size 2g';
-        }
-
-        const env = Object.keys(this.config.env).map(key => `-e ${key}=${this.config.env[key]}`).join(' ');
-
-        if (!containerId) {
-          exec(`docker run -d --rm ${env} ${args} --cidfile ${this.cidfile} -p ${config.port}:4444 ${this.getImage()}`);
-        }
-        // Retry for 500 times up to 5 seconds for selenium to start
-        retry({ times: this.config.retries, interval: this.config.retryInterval },
-          this.getSeleniumStatus, (err, result) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(result);
-            }
-          },
-        );
-      } else {
-        resolve();
-      }
-    });
-  }
-
-  /**
-   * Get the docker image to use based on configuration and browser capabilities.
-   * @return The name of the docker image to use.
-   */
-  getImage() {
-    // Use configured image or infer image from browserName (only firefox and safari supported).
-    // TODO: Eventually an entire hub should be stood up which supports all browsers in capabilities config
-    return this.config.image || `selenium/standalone-${this.browserName}`;
-  }
-
-  /**
-  * Get the contianer id from the cidfile.
-  * @return The docker container id or null if the file does not exist.
-  */
-  getContainerId() {
-    let containerId;
-    if (fs.existsSync(this.cidfile)) {
-      containerId = fs.readFileSync(this.cidfile, 'utf8');
-    }
-    return containerId;
-  }
-
-  /**
-   * Clean up docker container after all workers got shut down and the process is about to exit.
-   */
-  onComplete() {
-    if (this.config.cleanup) {
-      const containerId = this.getContainerId();
-      if (containerId) {
-        exec(`docker stop ${containerId}`);
-        fs.unlinkSync(this.cidfile);
-      }
-    }
   }
 }

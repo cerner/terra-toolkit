@@ -16,11 +16,11 @@ const config = {
 
   seleniumDocker: {
     enabled: !process.env.TRAVIS,
-    cleanup: true,
+    cleanup: false,
   },
   ...wdioConf.config,
 };
 
 
-config.services = wdioConf.config.services.concat(['static-server', SeleniumDockerService]);
+config.services = wdioConf.config.services.concat(['static-server']);
 exports.config = config;
