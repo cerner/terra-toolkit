@@ -54,9 +54,11 @@ export default class SeleniumDockerService {
       }
     }
 
-    await this.pullImage();
-    await this.runImage();
-    await this.ensureSelenium();
+    if (!this.container) {
+      await this.pullImage();
+      await this.runImage();
+      await this.ensureSelenium();
+    }
   }
 
   /**
