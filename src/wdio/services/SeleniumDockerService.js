@@ -36,7 +36,6 @@ export default class SeleniumDockerService {
     // There is a running container that doesn't match configuration, stop it
     // before proceeding
     if (this.container && this.getImage() !== this.container.image) {
-      console.log('stopping container', this.container, this.getImage());
       await this.stop();
 
     // There is a container, verify selenium is running as expected
