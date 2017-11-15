@@ -1,5 +1,4 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
-/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "chromedriver" }] */
 
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';

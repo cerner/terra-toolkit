@@ -22,7 +22,7 @@ export default class SeleniumDockerService {
       enabled: true, // True if service enabled, false otherwise
       cleanup: false, // True if docker container should be removed after test
       image: null, // The image name to use, defaults to selenium/standalone-${browser}
-      retries: 500, // Retry count to test for selenium being up
+      retries: 1000, // Retry count to test for selenium being up
       retryInterval: 10, // Retry interval in milliseconds to wait between retries for selenium to come up.
       env: {}, // Environment variables to add to the container
       ...(config.seleniumDocker || {}),
@@ -77,7 +77,6 @@ export default class SeleniumDockerService {
   ensureSelenium() {
     return new Promise((resolve, reject) => {
       console.log('Ensuring selenium status is ready');
-      // Retry for 500 times up to 5 seconds for selenium to start
       retry({ times: this.config.retries, interval: this.config.retryInterval },
         this.getSeleniumStatus, (err, result) => {
           if (err) {
@@ -91,7 +90,8 @@ export default class SeleniumDockerService {
   }
 
   /**
-  * Pulls the configured docker image
+  * Pulls the configured docker image based on the browserName in config or
+  * configured image.
   * @return {Promise}
   */
   pullImage() {
