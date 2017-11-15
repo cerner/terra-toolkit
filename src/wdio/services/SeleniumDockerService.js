@@ -76,6 +76,7 @@ export default class SeleniumDockerService {
   */
   ensureSelenium() {
     return new Promise((resolve, reject) => {
+      // eslint-disable-next-line no-console
       console.log('Ensuring selenium status is ready');
       retry({ times: this.config.retries, interval: this.config.retryInterval },
         this.getSeleniumStatus, (err, result) => {
@@ -96,6 +97,7 @@ export default class SeleniumDockerService {
   */
   pullImage() {
     return new Promise((resolve, reject) => {
+      // eslint-disable-next-line no-console
       console.log(`Pulling latest image for ${this.getImage()}`);
       exec(`docker pull ${this.getImage()}`, (error, stdout, stderr) => {
         const fail = error || stderr;
@@ -123,6 +125,7 @@ export default class SeleniumDockerService {
     const env = Object.keys(this.config.env).map(key => `-e ${key}=${this.config.env[key]}`).join(' ');
     const command = `docker run -l wdio=${this.browserName} -d --rm ${env} ${args} -p ${this.port}:4444 ${this.getImage()}`;
     return new Promise((resolve, reject) => {
+      // eslint-disable-next-line no-console
       console.log(`Running image for ${this.getImage()}`);
       exec(command, (error, stdout, stderr) => {
         const fail = error || stderr;
