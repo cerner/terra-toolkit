@@ -1,7 +1,7 @@
 import path from 'path';
 import { LocalCompare } from 'wdio-visual-regression-service/compare';
 
-const testIdRegex = /^\[([^)]+)\]/;
+const testIdRegex = /\[([^)]+)\]/;
 
 function testName(parent, title) {
   const matches = testIdRegex.exec(title);
