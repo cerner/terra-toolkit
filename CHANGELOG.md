@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+2.2.0 - (November 15, 2017)
+------------------
 ### Changed
 * Use path.join to allow for windows development
 * Removed sauce labs config and install java 8 in a different way for travis ci
