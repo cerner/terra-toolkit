@@ -1,5 +1,4 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-const SeleniumDockerService = require('./lib/wdio/services').SeleniumDocker;
 const wdioConf = require('./lib/wdio/conf');
 const localIP = require('ip');
 const path = require('path');
@@ -16,11 +15,11 @@ const config = {
 
   seleniumDocker: {
     enabled: !process.env.TRAVIS,
-    cleanup: true,
+    cleanup: false,
   },
   ...wdioConf.config,
 };
 
 
-config.services = wdioConf.config.services.concat(['static-server', SeleniumDockerService]);
+config.services = wdioConf.config.services.concat(['static-server']);
 exports.config = config;
