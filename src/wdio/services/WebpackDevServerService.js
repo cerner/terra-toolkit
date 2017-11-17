@@ -4,6 +4,8 @@ import webpack from 'webpack';
 export default class WebDevServerService {
   async onPrepare(config) {
     if (!config.webpackConfig) {
+      // eslint-disable-next-line no-console
+      console.log('[WebDevService] No webpack configuration provided');
       return;
     }
 
