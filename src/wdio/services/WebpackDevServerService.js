@@ -34,7 +34,7 @@ export default class WebDevServerService {
         resolve();
       });
 
-      this.compiler.plugin('invlaid', () => {
+      this.compiler.plugin('invalid', () => {
         // eslint-disable-next-line no-console
         console.log('[WebDevService] Webpack compiled unsuccessfully');
         reject();
