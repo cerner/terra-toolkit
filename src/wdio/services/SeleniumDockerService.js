@@ -77,7 +77,7 @@ export default class SeleniumDockerService {
   ensureSelenium() {
     return new Promise((resolve, reject) => {
       // eslint-disable-next-line no-console
-      console.log('Ensuring selenium status is ready');
+      console.log('[SeleniumDocker] Ensuring selenium status is ready');
       retry({ times: this.config.retries, interval: this.config.retryInterval },
         this.getSeleniumStatus, (err, result) => {
           if (err) {
@@ -98,7 +98,7 @@ export default class SeleniumDockerService {
   pullImage() {
     return new Promise((resolve, reject) => {
       // eslint-disable-next-line no-console
-      console.log(`Pulling latest image for ${this.getImage()}`);
+      console.log(`[SeleniumDocker] Pulling latest Docker image for ${this.getImage()}`);
       exec(`docker pull ${this.getImage()}`, (error, stdout, stderr) => {
         const fail = error || stderr;
         if (fail) {
@@ -126,7 +126,7 @@ export default class SeleniumDockerService {
     const command = `docker run -l wdio=${this.browserName} -d --rm ${env} ${args} -p ${this.port}:4444 ${this.getImage()}`;
     return new Promise((resolve, reject) => {
       // eslint-disable-next-line no-console
-      console.log(`Running image for ${this.getImage()}`);
+      console.log(`[SeleniumDocker] Running Docker image for ${this.getImage()}`);
       exec(command, (error, stdout, stderr) => {
         const fail = error || stderr;
         if (fail) {
@@ -175,6 +175,8 @@ export default class SeleniumDockerService {
     return new Promise((resolve, reject) => {
       if (this.container) {
         exec(`docker stop ${this.container.id}`, (error, stdout) => {
+          // eslint-disable-next-line no-console
+          console.log('[SeleniumDocker] Stopping Docker');
           if (error) {
             reject(error);
           } else {
