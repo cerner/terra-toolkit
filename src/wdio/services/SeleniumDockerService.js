@@ -2,6 +2,12 @@ import { exec } from 'child_process';
 import retry from 'async/retry';
 import http from 'http';
 import path from 'path';
+import os from 'os';
+
+const DEFAULT_COMPOSE_FILE = path.join(__dirname, '..', 'selenium-grid.yml');
+const DEFAULT_INSTANCES = {
+  chrome: os.cpus().length,
+};
 
 /**
 * Webdriver.io SeleniuMDockerService
@@ -17,46 +23,30 @@ export default class SeleniumDockerService {
    * @param {Object} config wdio configuration object
    * @param {Array.<Object>} capabilities list of capabilities details
    */
-  async onPrepare(config, capabilities) {
+  async onPrepare(config) {
+    // If a custom compose file is provided, dont' default instances as we don't
+    // know the service names.
+    let instances = DEFAULT_INSTANCES;
+    const customComposeFile = (config.seleniumDocker || {}).composeFile;
+    if (customComposeFile && customComposeFile !== DEFAULT_COMPOSE_FILE) {
+      instances = {};
+    }
+
     this.config = {
       enabled: true, // True if service enabled, false otherwise
-      cleanup: false, // True if docker container should be removed after test
-      image: null, // The image name to use, defaults to selenium/standalone-${browser}
-      retries: 1000, // Retry count to test for selenium being up
+      retries: 2000, // Retry count to test for selenium being up
       retryInterval: 10, // Retry interval in milliseconds to wait between retries for selenium to come up.
-      env: {}, // Environment variables to add to the container
+      composeFile: DEFAULT_COMPOSE_FILE,
+      instances,
       ...(config.seleniumDocker || {}),
     };
     this.host = config.host;
     this.port = config.port;
     this.path = config.path;
-    this.browserName = capabilities[0].browserName;
 
-    if (!this.config.enabled) {
-      return;
-    }
-
-    this.container = await this.getRunningContainer();
-
-    // There is a running container that doesn't match configuration, stop it
-    // before proceeding
-    if (this.container && this.getImage() !== this.container.image) {
-      await this.stop();
-
-    // There is a container, verify selenium is running as expected
-    } else if (this.container) {
-      try {
-        await this.ensureSelenium();
-
-      // Selenium isn't responding stop the container;
-      } catch (e) {
-        await this.stop();
-      }
-    }
 
     if (!this.container) {
-      await this.pullImage();
-      await this.runImage();
+      await this.startHub();
       await this.ensureSelenium();
     }
   }
@@ -65,7 +55,7 @@ export default class SeleniumDockerService {
    * Clean up docker container after all workers got shut down and the process is about to exit.
    */
   async onComplete() {
-    if (this.config.cleanup && this.config.enabled) {
+    if (this.config.enabled) {
       await this.stop();
     }
   }
@@ -91,46 +81,19 @@ export default class SeleniumDockerService {
   }
 
   /**
-  * Pulls the configured docker image based on the browserName in config or
-  * configured image.
-  * @return {Promise}
-  */
-  pullImage() {
-    return new Promise((resolve, reject) => {
-      // eslint-disable-next-line no-console
-      console.log(`Pulling latest image for ${this.getImage()}`);
-      exec(`docker pull ${this.getImage()}`, (error, stdout, stderr) => {
-        const fail = error || stderr;
-        if (fail) {
-          reject(fail);
-        } else {
-          resolve(stdout);
-        }
-      });
-    });
-  }
-
-  /**
   * Runs the configured docker image
   * @return {Promise}
   */
-  runImage() {
-    let args = '';
-    if (this.browserName === 'chrome') {
-      args = '-v /dev/shm:/dev/shm';
-    } else if (this.browserName === 'firefox') {
-      args = '--shm-size 2g';
-    }
+  startHub() {
+    const scale = Object.keys(this.config.instances).map(key => `--scale ${key}=${this.config.instances[key]}`).join(' ');
+    const command = `docker-compose -f ${this.config.composeFile} up -d ${scale}`;
 
-    const env = Object.keys(this.config.env).map(key => `-e ${key}=${this.config.env[key]}`).join(' ');
-    const command = `docker run -l wdio=${this.browserName} -d --rm ${env} ${args} -p ${this.port}:4444 ${this.getImage()}`;
     return new Promise((resolve, reject) => {
       // eslint-disable-next-line no-console
-      console.log(`Running image for ${this.getImage()}`);
-      exec(command, (error, stdout, stderr) => {
-        const fail = error || stderr;
-        if (fail) {
-          reject(fail);
+      console.log('Starting selenium hub');
+      exec(command, (error, stdout) => {
+        if (error) {
+          reject(error);
         } else {
           resolve(stdout);
         }
@@ -138,53 +101,17 @@ export default class SeleniumDockerService {
     });
   }
 
-  /**
-  * Gets the running selenium container.
-  * @return {Object} representing the active selenium container, if any.
-  */
-  // eslint-disable-next-line class-methods-use-this
-  getRunningContainer() {
-    return new Promise((resolve, reject) => {
-      exec('docker ps -f "label=wdio" --format "{{.ID}} {{.Image}}"', (error, stdout) => {
-        if (error) {
-          reject(error);
-        } else if (stdout) {
-          const result = stdout.trim().split(' ');
-          resolve({
-            id: result[0],
-            image: result[1],
-          });
-        } else {
-          resolve();
-        }
-      });
-    });
-  }
-
-  /**
-   * Get the docker image to use based on configuration and browser capabilities.
-   * @return The name of the docker image to use.
-   */
-  getImage() {
-    // Use configured image or infer image from browserName (only firefox and safari supported).
-    // TODO: Eventually an entire hub should be stood up which supports all browsers in capabilities config
-    return this.config.image || `selenium/standalone-${this.browserName}`;
-  }
 
   stop() {
     return new Promise((resolve, reject) => {
-      if (this.container) {
-        exec(`docker stop ${this.container.id}`, (error, stdout) => {
-          if (error) {
-            reject(error);
-          } else {
-            resolve(stdout);
-            this.container = null;
-          }
-        });
-      } else {
-        resolve();
-      }
+      exec(`docker-compose -f ${this.config.composeFile} down`, (error, stdout) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(stdout);
+          this.container = null;
+        }
+      });
     });
   }
 

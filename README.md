@@ -66,12 +66,11 @@ Selenium docker is provided as a convenience to make selenium testing easier and
 
 Under the key `seleniumDocker` in your wdio.conf.js you can pass a configuration object with the following structure:
 
+* **composeFile** - The docker compose file to use to standup the hub. Defaults to a compose file with chrome instances on port 4444.
 * **enabled** - Flag to disable selenium docker; useful for CI environments which can startup the docker instance outside of test runs. Defaults to true.
-* **cleanup** - Destroy the docker container after the test run. Defaults to false.
-* **image** - The docker image to use for test runs. Defaults to `selenium/standalone-chrome` or `selenium/standalone-firefox` based on browser capabilities specified in config.
 * **retries** - Retry count to test for selenium being up. Default 1000.
 * **retryInterval** - Retry interval in milliseconds to wait between retries for selenium to come up. Default 10.
-* **env** - An Object representing environment variables to set within the docker instance. Defaults to {}
+* **instances** - A map of services in the docker compose file to scale up. Defaults to scaling chrome and nodes to the count of CPUs on the host machine.
 
 #### Example
 ```js

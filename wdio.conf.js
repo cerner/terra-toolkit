@@ -16,6 +16,9 @@ const config = {
   seleniumDocker: {
     enabled: !process.env.TRAVIS,
     cleanup: false,
+    env: {
+      TZ: 'America/Chicago',
+    },
   },
   ...wdioConf.config,
 };

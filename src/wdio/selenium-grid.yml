@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+  selenium_hub:
+    image: 'selenium/hub:latest'
+    environment:
+      - GRID_THROW_ON_CAPABILITY_NOT_PRESENT=false
+      - GRID_MAX_SESSION=10
+      - GRID_BROWSER_TIMEOUT=100000
+      - GRID_TIMEOUT=90000
+      - GRID_NEW_SESSION_WAIT_TIMEOUT=300000
+    ports:
+      - '4444:4444'
+  chrome:
+    image: 'selenium/node-chrome:latest'
+    depends_on:
+      - selenium_hub
+    environment:
+      HUB_PORT_4444_TCP_ADDR: selenium_hub
+      HUB_PORT_4444_TCP_PORT: 4444
+      TZ: 'America/Chicago'
