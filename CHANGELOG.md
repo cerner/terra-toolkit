@@ -3,6 +3,12 @@ Changelog
 
 Unreleased
 ----------
+### Added
+* Added WebpackDevServerService to webdriver.io services
+
+### Updated
+* Updated nightwatch to use WebpackDevServerService
+* Updated tests to use WebpackDevServerService instead of 'wdio-static-server'
 
 2.2.0 - (November 15, 2017)
 ------------------
