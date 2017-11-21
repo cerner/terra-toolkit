@@ -28,24 +28,27 @@ export default class SeleniumDockerService {
       composeFile: DEFAULT_COMPOSE_FILE,
       ...(config.seleniumDocker || {}),
     };
+
     this.host = config.host;
     this.port = config.port;
     this.path = config.path;
 
-    // Need to activate a docker swarm if one isn't already present
-    // before a docker stack can be deployed
-    const dockerInfo = await this.getDockerInfo();
-    if (dockerInfo.Swarm.LocalNodeState !== 'active') {
-      await this.initSwarm();
-    }
+    if (config.enabled) {
+      // Need to activate a docker swarm if one isn't already present
+      // before a docker stack can be deployed
+      const dockerInfo = await this.getDockerInfo();
+      if (dockerInfo.Swarm.LocalNodeState !== 'active') {
+        await this.initSwarm();
+      }
 
-    // Always start with a fresh stack
-    if (await this.getStack()) {
-      await this.removeStack();
-    }
+      // Always start with a fresh stack
+      if (await this.getStack()) {
+        await this.removeStack();
+      }
 
-    await this.deployStack();
-    await this.ensureSelenium();
+      await this.deployStack();
+      await this.ensureSelenium();
+    }
   }
 
   /**
