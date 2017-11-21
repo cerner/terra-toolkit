@@ -1,13 +1,10 @@
+/* eslint-disable class-methods-use-this */
 import { exec } from 'child_process';
 import retry from 'async/retry';
 import http from 'http';
 import path from 'path';
-import os from 'os';
 
-const DEFAULT_COMPOSE_FILE = path.join(__dirname, '..', 'selenium-grid.yml');
-const DEFAULT_INSTANCES = {
-  chrome: os.cpus().length,
-};
+const DEFAULT_COMPOSE_FILE = path.join(__dirname, '..', 'docker-compose.yml');
 
 /**
 * Webdriver.io SeleniuMDockerService
@@ -24,31 +21,31 @@ export default class SeleniumDockerService {
    * @param {Array.<Object>} capabilities list of capabilities details
    */
   async onPrepare(config) {
-    // If a custom compose file is provided, dont' default instances as we don't
-    // know the service names.
-    let instances = DEFAULT_INSTANCES;
-    const customComposeFile = (config.seleniumDocker || {}).composeFile;
-    if (customComposeFile && customComposeFile !== DEFAULT_COMPOSE_FILE) {
-      instances = {};
-    }
-
     this.config = {
       enabled: true, // True if service enabled, false otherwise
       retries: 2000, // Retry count to test for selenium being up
       retryInterval: 10, // Retry interval in milliseconds to wait between retries for selenium to come up.
       composeFile: DEFAULT_COMPOSE_FILE,
-      instances,
       ...(config.seleniumDocker || {}),
     };
     this.host = config.host;
     this.port = config.port;
     this.path = config.path;
 
-
-    if (!this.container) {
-      await this.startHub();
-      await this.ensureSelenium();
+    // Need to activate a docker swarm if one isn't already present
+    // before a docker stack can be deployed
+    const dockerInfo = await this.getDockerInfo();
+    if (dockerInfo.Swarm.LocalNodeState !== 'active') {
+      await this.initSwarm();
     }
+
+    // Always start with a fresh stack
+    if (await this.getStack()) {
+      await this.removeStack();
+    }
+
+    await this.deployStack();
+    await this.ensureSelenium();
   }
 
   /**
@@ -56,7 +53,7 @@ export default class SeleniumDockerService {
    */
   async onComplete() {
     if (this.config.enabled) {
-      await this.stop();
+      await this.removeStack();
     }
   }
 
@@ -80,14 +77,52 @@ export default class SeleniumDockerService {
     });
   }
 
+  getStack() {
+    return new Promise((resolve, reject) => {
+      exec('docker stack ls | grep wdio', (error, stdout) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(stdout);
+        }
+      });
+    });
+  }
+
+  getDockerInfo() {
+    return new Promise((resolve, reject) => {
+      exec('docker info --format "{{json .}}"', (error, stdout) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(JSON.parse(stdout));
+        }
+      });
+    });
+  }
+
   /**
-  * Runs the configured docker image
+  * Initializes the docker swarm. See https://docs.docker.com/engine/reference/commandline/swarm_init/#related-commands
   * @return {Promise}
   */
-  startHub() {
-    const scale = Object.keys(this.config.instances).map(key => `--scale ${key}=${this.config.instances[key]}`).join(' ');
-    const command = `docker-compose -f ${this.config.composeFile} up -d ${scale}`;
+  initSwarm() {
+    return new Promise((resolve, reject) => {
+      exec('docker swarm init', (error, stdout) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(stdout);
+        }
+      });
+    });
+  }
 
+  /**
+  * Deploys the docker selenium hub stack
+  * @return {Promise}
+  */
+  deployStack() {
+    const command = `docker stack deploy --compose-file ${this.config.composeFile} wdio`;
     return new Promise((resolve, reject) => {
       // eslint-disable-next-line no-console
       console.log('Starting selenium hub');
@@ -101,10 +136,13 @@ export default class SeleniumDockerService {
     });
   }
 
-
-  stop() {
+  /**
+  * Stops the docker stack
+  * @return {Promise}
+  */
+  removeStack() {
     return new Promise((resolve, reject) => {
-      exec(`docker-compose -f ${this.config.composeFile} down`, (error, stdout) => {
+      exec('docker stack rm wdio', (error, stdout) => {
         if (error) {
           reject(error);
         } else {

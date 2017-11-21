@@ -3,11 +3,10 @@ const TerraService = require('./services').Terra;
 const visualRegression = require('./visualRegressionConf');
 const SeleniumDockerService = require('./services').SeleniumDocker;
 const path = require('path');
-const os = require('os');
 
 exports.config = {
   specs: [path.join('.', 'tests', 'specs', '**', '*.js')],
-  maxInstances: os.cpus().length,
+  maxInstances: 5,
   capabilities: [
     {
       browserName: 'chrome',
