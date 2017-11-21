@@ -13,7 +13,7 @@ const baseDir = __dirname.split('tests')[0];
 module.exports = {
   entry: {
     'babel-polyfill': 'babel-polyfill', // eslint-disable-next-line quote-props,
-    'index': path.join(__dirname, 'nightwatch', 'fixtures', 'index'),
+    'index': path.join(__dirname, 'fixtures', 'index'),
   },
   module: {
     loaders: [
@@ -66,8 +66,29 @@ module.exports = {
       chunks: ['babel-polyfill'],
     }),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'nightwatch', 'fixtures', 'index.html'),
+      template: path.join(__dirname, 'fixtures', 'nightwatch.html'),
       chunks: ['index'],
+      filename: './nightwatch.html',
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, 'fixtures', 'accessible.html'),
+      chunks: ['index'],
+      filename: './accessible.html',
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, 'fixtures', 'compare.html'),
+      chunks: ['index'],
+      filename: './compare.html',
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, 'fixtures', 'inaccessible-contrast.html'),
+      chunks: ['index'],
+      filename: './inaccessible-contrast.html',
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, 'fixtures', 'inaccessible-text.html'),
+      chunks: ['index'],
+      filename: './inaccessible-text.html',
     }),
     new webpack.NamedChunksPlugin(),
   ],

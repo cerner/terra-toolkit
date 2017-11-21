@@ -3,12 +3,12 @@ const { resizeTo, screenWidth } = require('../../../lib/nightwatch/responsive-he
 module.exports = resizeTo(['tiny', 'small', 'medium', 'large', 'huge', 'enormous'], {
   'Runs the test suite correctly when responsive': (browser) => {
     browser
-      .url(browser.launchUrl)
+      .url(`${browser.launchUrl}/nightwatch.html`)
       .expect.element('.test').text.to.equal('Test');
   },
 
   'Adjusts the screen widths correctly': (browser) => {
-    browser.url(browser.launchUrl);
+    browser.url(`${browser.launchUrl}/nightwatch.html`);
     const testWidth = screenWidth(browser);
 
     browser.windowSize('width', (result) => {

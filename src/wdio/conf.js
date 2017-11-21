@@ -1,11 +1,11 @@
 const AxeService = require('./services').Axe;
 const TerraService = require('./services').Terra;
-const visualRegression = require('./visualRegressionConf');
 const SeleniumDockerService = require('./services').SeleniumDocker;
+const visualRegression = require('./visualRegressionConf');
 const path = require('path');
 
 exports.config = {
-  specs: [path.join('.', 'tests', 'specs', '**', '*.js')],
+  specs: [path.join('.', 'tests', 'wdio', '**', '*-spec.js')],
   maxInstances: 5,
   capabilities: [
     {
@@ -17,7 +17,7 @@ exports.config = {
   logLevel: 'silent',
   coloredLogs: true,
   bail: 0,
-  screenshotPath: path.join('.', 'errorShots'),
+  screenshotPath: path.join('.', 'errorScreenshots'),
   waitforTimeout: 3000,
   connectionRetryTimeout: 90000,
   connectionRetryCount: 3,

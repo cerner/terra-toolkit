@@ -24,11 +24,11 @@ Terra Toolkit is a utility module used to facilitate independent development of 
 
 - Install with [npm](https://www.npmjs.com): `npm install terra-toolkit --save-dev`
 
-Terra toolkit uses docker to run selenium to ensure a consistent testing environment locally and in continuous integration build systems. To use nightwatch with terra toolkit you must install docker on your machine: https://www.docker.com/
+Terra Toolkit uses docker to setup, run, and tear down selenium to ensure a consistent testing environment locally and in continuous integration build systems. To use Terra Toolkit you must install docker on your machine. Installation instructions can be found at https://www.docker.com/.
 
 
 ## Webdriver.io Utility
-[Webdriver.io](http://webdriver.io/) is a framework for writing webdriver powered tests to validate functionality in browsers. Webdriver.io also provides easy services for setting up selenium, starting webpack and static servers, as well as accessibilty and visual regression testing.
+[Webdriver.io](http://webdriver.io/) is a framework for writing webdriver powered tests to validate functionality in browsers. Webdriver.io also provides easy services for setting up selenium, starting webpack and static servers, as well as accessibility and visual regression testing.
 
 To make testing easier, Terra toolkit provides default configuration that enables the following:
 
@@ -46,25 +46,25 @@ To make testing easier, Terra toolkit provides default configuration that enable
 const wdioConf = require('terra-toolkit/wdio/conf');
 const localIP = require('ip');
 
-const staticServerPort = 4567;
+const port = 8080;
 
 const config = {
   // TOOD: Custom wdio config goes here. See: http://webdriver.io/guide/testrunner/configurationfile.html
   ...wdioConf.config,
 
   // Point baseURL to your site to be tested
-  baseUrl: `http://${localIP.address()}:${staticServerPort}`,
+  baseUrl: `http://${localIP.address()}:${port}`,
 };
 
 exports.config = config;
 ```
 
-### Selenium Docker
+### Selenium Docker Service
 Selenium docker is provided as a convenience to make selenium testing easier and more stable. Running selenium in a container ensures a consistent testing environment across testing environments which is critical for visual regression testing.
 
 #### Options
 
-Under the key `seleniumDocker` in your wdio.conf.js you can pass a configuration object with the following structure:
+Under the key `seleniumDocker` in the wdio.conf.js you can pass a configuration object with the following structure:
 
 * **composeFile** - The docker compose file to use to standup the hub. Defaults to a compose file with chrome instances on port 4444.
 * **enabled** - Flag to disable selenium docker; useful for CI environments which can startup the docker instance outside of test runs. Defaults to true.
@@ -78,13 +78,15 @@ Under the key `seleniumDocker` in your wdio.conf.js you can pass a configuration
 const wdioConf = require('terra-toolkit/wdio/conf');
 const localIP = require('ip');
 
-const staticServerPort = 4567;
+const port = 8080;
 
 const config = {
   ...wdioConf.config,
 
   // Point base URL at the site to be tested
-  baseUrl: `http://${localIP.address()}:${staticServerPort}`,
+  baseUrl: `http://${localIP.address()}:${port}`,
+
+  // Configuration for SeleniumDocker service
   seleniumDocker: {
     // Disable if running in Travis
     enabled: !process.env.TRAVIS,
@@ -97,13 +99,51 @@ const config = {
 exports.config = config;
 ```
 
+### WebpackDevServer Service
+WebpackDevServer Service is provided as a convenience to start a webpack-dev-server and return a promise when the webpack compiler is complete. This enables test setup to be complete before testing is began. This service is utilized by the the default nightwatch configuration and must be provided as a service to webdriver.io if the webpack-dev-server is used to host your test pages.
+
+#### Options
+
+In the wdio.conf.js you can pass a configuration object with the following structure:
+
+* **webpackConfig** - the webpack configuration used to start the webpack-dev-server. Must be provided to use this service.
+* **webpackPort** - the port to start the webpack-dev-server on. Defaults to port 8080.
+* **webpackDevServerConfig** - the webpack-dev-server configuration to be passed to the webpack-dev-server. Defaults to { quiet: true, hot: false, inline: false }.
+
+
+#### Example
+```js
+// wdio.conf.js
+const wdioConf = require('terra-toolkit/wdio/conf');
+const webpackConfig = require('./webpack.config.js');
+const WebpackDevService = require('terra-toolkit/wdio/services/index').WebpackDevService;
+const localIP = require('ip');
+
+const port = 8080;
+
+const config = {
+  ...wdioConf.config,
+
+  // Point base URL at the site to be tested
+  baseUrl: `http://${localIP.address()}:${port}`,
+
+  // Configuration for WebpackDevService
+  webpackConfig,
+  webpackPort: port,
+
+  service = wdioConf.config.services.concat([WebpackDevService]);
+};
+
+exports.config = config;
+```
+
 
 ### Accessibility Tests
 Terra toolkit automatically includes a wdio-axe-service which enhances an WebdriverIO instance with commands for accessibility testing using the [Axe](https://github.com/dequelabs/axe-core) utility.
 
 #### Options
 
-Under the key `axe` in your wdio.conf.js you can pass a configuration object with the following structure:
+Under the key `axe` in the wdio.conf.js you can pass a configuration object with the following structure:
 
 * **inject** - True if the axe script should be injected by the test running. Disable if axe is already included in the test files which slightly speed up runs. Defaults to true.
 
@@ -113,13 +153,13 @@ Under the key `axe` in your wdio.conf.js you can pass a configuration object wit
 const wdioConf = require('terra-toolkit/wdio/conf');
 const localIP = require('ip');
 
-const staticServerPort = 4567;
+const port = 8080;
 
 const config = {
   ...wdioConf.config,
 
   // Point base URL to the site to be tested
-  baseUrl: `http://${localIP.address()}:${staticServerPort}`,
+  baseUrl: `http://${localIP.address()}:${port}`,
   axe: {
     // Don't inject axe script, its included in test files
     inject: false,
