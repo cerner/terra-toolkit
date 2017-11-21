@@ -33,7 +33,7 @@ export default class SeleniumDockerService {
     this.port = config.port;
     this.path = config.path;
 
-    if (config.enabled) {
+    if (this.config.enabled) {
       // Need to activate a docker swarm if one isn't already present
       // before a docker stack can be deployed
       const dockerInfo = await this.getDockerInfo();
@@ -80,13 +80,9 @@ export default class SeleniumDockerService {
   }
 
   getStack() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       exec('docker stack ls | grep wdio', (error, stdout) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(stdout);
-        }
+        resolve(stdout);
       });
     });
   }
@@ -150,7 +146,6 @@ export default class SeleniumDockerService {
           reject(error);
         } else {
           resolve(stdout);
-          this.container = null;
         }
       });
     });
