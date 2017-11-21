@@ -109,7 +109,7 @@ export default class SeleniumDockerService {
   */
   initSwarm() {
     return new Promise((resolve, reject) => {
-      console.log(`[SeleniumDocker] Initializing docker swarm`);
+      console.log('[SeleniumDocker] Initializing docker swarm');
       exec('docker swarm init', (error, stdout) => {
         if (error) {
           reject(error);
@@ -127,7 +127,7 @@ export default class SeleniumDockerService {
   deployStack() {
     const command = `docker stack deploy --compose-file ${this.config.composeFile} wdio`;
     return new Promise((resolve, reject) => {
-      console.log(`[SeleniumDocker] Deploying docker selenium stack`);
+      console.log('[SeleniumDocker] Deploying docker selenium stack');
       exec(command, (error, stdout) => {
         if (error) {
           reject(error);
@@ -144,7 +144,7 @@ export default class SeleniumDockerService {
   */
   removeStack() {
     return new Promise((resolve, reject) => {
-      console.log('[SeleniumDocker] Stopping Docker');
+      console.log('[SeleniumDocker] Removing docker selenium stack');
       exec('docker stack rm wdio', (error, stdout) => {
         if (error) {
           reject(error);
