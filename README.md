@@ -66,11 +66,11 @@ Selenium docker is provided as a convenience to make selenium testing easier and
 
 Under the key `seleniumDocker` in the wdio.conf.js you can pass a configuration object with the following structure:
 
-* **composeFile** - The docker compose file to use to standup the hub. Defaults to a compose file with chrome instances on port 4444.
+* **composeFile** - The docker compose file to use to standup the hub. Defaults to a compose file with 5 chrome instances on port http://localhost:4444/wd/hub.
 * **enabled** - Flag to disable selenium docker; useful for CI environments which can startup the docker instance outside of test runs. Defaults to true.
 * **retries** - Retry count to test for selenium being up. Default 1000.
 * **retryInterval** - Retry interval in milliseconds to wait between retries for selenium to come up. Default 10.
-* **instances** - A map of services in the docker compose file to scale up. Defaults to scaling chrome and nodes to the count of CPUs on the host machine.
+
 
 #### Example
 ```js
@@ -90,9 +90,6 @@ const config = {
   seleniumDocker: {
     // Disable if running in Travis
     enabled: !process.env.TRAVIS,
-    env: {
-      TZ: 'America/Chicago'
-    },
   },
 };
 
