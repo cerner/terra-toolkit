@@ -1,10 +1,8 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
-
-import webpack from 'webpack';
-import WebpackDevServer from 'webpack-dev-server';
 import ip from 'ip';
 
 import SeleniumDockerService from '../wdio/services/SeleniumDockerService';
+import WebpackDevServerService from '../wdio/services/WebpackDevServerService';
 
 let port = 8080;
 
@@ -17,11 +15,12 @@ const nightwatchConfig = (webpackConfig, srcFolders, providedPort) => {
   }
 
   const seleniumDocker = new SeleniumDockerService();
-  const webpackServer = new WebpackDevServer(webpack(webpackConfig), { quiet: true, hot: false, inline: false });
+  const webPackDevService = new WebpackDevServerService();
 
   const startDriverAndServer = (done) => {
-    const staticServerPromise = new Promise((resolve) => {
-      webpackServer.listen(port, '0.0.0.0', resolve);
+    const webPackPromise = webPackDevService.onPrepare({
+      webpackConfig,
+      webpackPort: port,
     });
 
     const dockerPromise = seleniumDocker.onPrepare({
@@ -33,11 +32,11 @@ const nightwatchConfig = (webpackConfig, srcFolders, providedPort) => {
       },
     }, [{ browserName: 'chrome' }]);
 
-    Promise.all([staticServerPromise, dockerPromise]).then(done);
+    Promise.all([webPackPromise, dockerPromise]).then(done);
   };
 
   const stopDriverAndServer = (done) => {
-    webpackServer.close();
+    webPackDevService.onComplete();
     seleniumDocker.onComplete();
     done();
   };

@@ -1,4 +1,4 @@
-/* eslint-disable class-methods-use-this */
+/* eslint-disable class-methods-use-this, no-console */
 import { exec } from 'child_process';
 import retry from 'async/retry';
 import http from 'http';
@@ -66,8 +66,7 @@ export default class SeleniumDockerService {
   */
   ensureSelenium() {
     return new Promise((resolve, reject) => {
-      // eslint-disable-next-line no-console
-      console.log('Ensuring selenium status is ready');
+      console.log('[SeleniumDocker] Ensuring selenium status is ready');
       retry({ times: this.config.retries, interval: this.config.retryInterval },
         this.getSeleniumStatus, (err, result) => {
           if (err) {
@@ -110,6 +109,7 @@ export default class SeleniumDockerService {
   */
   initSwarm() {
     return new Promise((resolve, reject) => {
+      console.log(`[SeleniumDocker] Initializing docker swarm`);
       exec('docker swarm init', (error, stdout) => {
         if (error) {
           reject(error);
@@ -127,8 +127,7 @@ export default class SeleniumDockerService {
   deployStack() {
     const command = `docker stack deploy --compose-file ${this.config.composeFile} wdio`;
     return new Promise((resolve, reject) => {
-      // eslint-disable-next-line no-console
-      console.log('Starting selenium hub');
+      console.log(`[SeleniumDocker] Deploying docker selenium stack`);
       exec(command, (error, stdout) => {
         if (error) {
           reject(error);
@@ -145,6 +144,7 @@ export default class SeleniumDockerService {
   */
   removeStack() {
     return new Promise((resolve, reject) => {
+      console.log('[SeleniumDocker] Stopping Docker');
       exec('docker stack rm wdio', (error, stdout) => {
         if (error) {
           reject(error);
