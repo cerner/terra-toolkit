@@ -9,8 +9,6 @@ In the wdio.conf.js you can pass a configuration object with the following struc
 * **webpackPort** - the port to start the webpack-dev-server on. Defaults to port 8080.
 * **webpackDevServerConfig** - the webpack-dev-server configuration to be passed to the webpack-dev-server. Defaults to { quiet: true, hot: false, inline: false }.
 
-
-## Example
 ```js
 // wdio.conf.js
 const wdioConf = require('terra-toolkit/wdio/conf');

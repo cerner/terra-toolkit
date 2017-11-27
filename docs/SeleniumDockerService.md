@@ -12,7 +12,6 @@ Under the key `seleniumDocker` in the wdio.conf.js one can pass a configuration 
 * **retryInterval** - Retry interval in milliseconds to wait between retries for selenium to come up. Default 10.
 * **env** - An Object representing environment variables to set within the docker instance. Defaults to {}
 
-## Example
 ```js
 // wdio.conf.js
 const wdioConf = require('terra-toolkit/wdio/conf');

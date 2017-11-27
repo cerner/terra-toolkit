@@ -7,7 +7,6 @@ Under the key `axe` in the wdio.conf.js you can pass a configuration object with
 
 * **inject** - True if the axe script should be injected by the test running. Disable if axe is already included in the test files which slightly speed up runs. Defaults to true.
 
-### Example
 ```js
 // wdio.conf.js
 const wdioConf = require('terra-toolkit/wdio/conf');

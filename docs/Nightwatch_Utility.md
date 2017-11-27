@@ -10,9 +10,9 @@ Nightwatch.js is an easy to use Node.js based End-to-End (E2E) testing solution 
 ## Getting Started
 The [nightwatch](https://www.npmjs.com/package/nightwatch), [webpack](https://www.npmjs.com/package/webpack), and [webpack-dev-server](https://www.npmjs.com/package/webpack-dev-server) peerDependencies must be installed to utilize the Nightwatch Utilities.
 
-- Install with [npm](https://www.npmjs.com): `npm install nightwatch --save-dev`
-- Install with [npm](https://www.npmjs.com): `npm install webpack --save-dev`
-- Install with [npm](https://www.npmjs.com): `npm install webpack-dev-server --save-dev`
+- Install with npm: `npm install nightwatch --save-dev`
+- Install with npm: `npm install webpack --save-dev`
+- Install with npm: `npm install webpack-dev-server --save-dev`
 
 ## Configuration Setup
 

@@ -10,9 +10,9 @@
 ## Getting Started
 The [webdriverio](https://www.npmjs.com/package/webdriverio), [wdio-mocha-framework](https://www.npmjs.com/package/wdio-mocha-framework), [wdio-visual-regression-service](https://www.npmjs.com/package/wdio-visual-regression-service) peerDependencies must be installed to utilize the Wdio Utilities.
 
-- Install with [npm](https://www.npmjs.com): `npm install webdriverio --save-dev`
-- Install with [npm](https://www.npmjs.com): `npm install wdio-mocha-framework --save-dev`
-- Install with [npm](https://www.npmjs.com): `npm install wdio-visual-regression-service --save-dev`
+- Install with npm: `npm install webdriverio --save-dev`
+- Install with npm: `npm install wdio-mocha-framework --save-dev`
+- Install with npm: `npm install wdio-visual-regression-service --save-dev`
 
 ## Configuration Setup
 
@@ -25,7 +25,11 @@ Terra-toolkit provides a default [webdriver.io configuration](https://github.com
 * TerraService - provides custom assertions and a Terra global helper to make testing easier
 * Visual Regression Service - provides configuration for wdio visual regression testing
 
-In addition to the default webdriver.io services enabled in the config, a webpack dev server or static server service must be specified to actually run the site. Terra-toolkit provides the [WebpackDevService](https://github.com/cerner/terra-toolkit/blob/master/docs/WebpackDevServerService.md) to start a webpack-dev-server and return a promise when the webpack compiler is completed, while webdriver.io provides the [wdio-static-server-service](https://www.npmjs.com/package/wdio-static-server-service) to run a static file server. Additional configuration will be needed to enable either of these services.
+In addition to the default webdriver.io services enabled in the config, a webpack dev server or static server service must be specified to actually run the site:
+- Terra-toolkit provides the [WebpackDevService](https://github.com/cerner/terra-toolkit/blob/master/docs/WebpackDevServerService.md) to start a webpack-dev-server and return a promise when the webpack compiler is completed
+- Webdriver.io provides the [wdio-static-server-service](https://www.npmjs.com/package/wdio-static-server-service) to run a static file server.
+
+Additional configuration will be needed to enable either of these services.
 
 Finally, the `baseUrl` must be specified to be the site to be tested. Use the [ip](https://www.npmjs.com/package/ip) npm package to obtain the IP address for the SeleniumDocker instance.
 
