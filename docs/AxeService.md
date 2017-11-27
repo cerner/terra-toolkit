@@ -1,13 +1,13 @@
-#### Axe Service
-Terra toolkit automatically includes the wdio-axe-service which enhances an WebdriverIO instance with commands for accessibility testing using the [Axe](https://github.com/dequelabs/axe-core) utility.
+# Axe Service
+Terra toolkit automatically includes the wdio-axe-service which enhances an webdriver.io instance with commands for accessibility testing using the [Axe](https://github.com/dequelabs/axe-core) utility.
 
-#### Options
+## Options
 
 Under the key `axe` in the wdio.conf.js you can pass a configuration object with the following structure:
 
 * **inject** - True if the axe script should be injected by the test running. Disable if axe is already included in the test files which slightly speed up runs. Defaults to true.
 
-#### Example
+### Example
 ```js
 // wdio.conf.js
 const wdioConf = require('terra-toolkit/wdio/conf');
@@ -32,7 +32,7 @@ exports.config = config;
 ```
 
 
-#### Usage
+## Writing Tests
 
 `browser.axe([{options}]);`
 
@@ -47,7 +47,8 @@ The following options are available:
 * **context**:
   A css selector to scope the accessibility test to. See [axe documentation](https://www.axe-core.org/docs/)
 
-#### Examples
+Then, the Axe Service provides the custom custom assertion `accessible()` to make validating the output of accessibility commands easier.
+
 ```js
 // Use viewport helper to get { width, height } by name.
 const viewports = Terra.viewports('tiny', 'huge');
@@ -77,14 +78,4 @@ it('runs only specified context', () => {
   context = 'h2';
   expect(browser.axe({ viewports, context })).to.be.accessible();
 });
-```
-
-
-The Axe Service provides the custom custom assertion `accessible()` to make validating the output of accessibility commands easier.
-
-```js
-// Validate it is accessible
-expect(browser.axe()).to.be.accessible();
-// Validate it is not accessible
-expect(browser.axe()).to.not.be.accessible();
 ```

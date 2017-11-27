@@ -67,7 +67,7 @@ const config = {
 exports.config = config;
 ```
 
-### Writing Tests
+## Writing Tests
 
 There are a few things to note about the webdriver.io configuration provided by Terra-Toolkit:
 
@@ -109,7 +109,7 @@ describe('Basic Test', () => {
 });
 ```
 
-### Running Tests
+## Running Tests
 Installation of webdriver.io, providing access to the wdio test runner. The wdio test runner requires a configuration file to be passed either from the current directory or via the `--config` or `-c` followed by the config path.
 
 ```javascript

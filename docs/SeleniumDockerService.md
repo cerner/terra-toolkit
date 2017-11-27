@@ -1,7 +1,7 @@
-### Selenium Docker Service
+# Selenium Docker Service
 Selenium docker is provided as a convenience to make selenium testing easier and more stable. Running selenium in a container ensures a consistent testing environment across testing environments which is critical for visual regression testing.
 
-#### Options
+## Options
 
 Under the key `seleniumDocker` in the wdio.conf.js one can pass a configuration object with the following structure:
 
@@ -12,7 +12,7 @@ Under the key `seleniumDocker` in the wdio.conf.js one can pass a configuration 
 * **retryInterval** - Retry interval in milliseconds to wait between retries for selenium to come up. Default 10.
 * **env** - An Object representing environment variables to set within the docker instance. Defaults to {}
 
-#### Example
+## Example
 ```js
 // wdio.conf.js
 const wdioConf = require('terra-toolkit/wdio/conf');
