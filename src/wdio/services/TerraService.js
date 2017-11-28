@@ -1,5 +1,14 @@
 import chai from 'chai';
 
+const VIEWPORTS = {
+  tiny: { width: 470, height: 768 },
+  small: { width: 622, height: 768 },
+  medium: { width: 838, height: 768 },
+  large: { width: 1000, height: 768 },
+  huge: { width: 1300, height: 768 },
+  enormous: { width: 1500, height: 768 },
+};
+
 /**
 * accessible chai assertion to be paired with browser.axe() tests.
 */
@@ -37,21 +46,41 @@ function matchReference() {
 * @param sizes - [String] of viewport sizes.
 * @return [Object] of viewport sizes.
 */
-const viewports = (...sizes) => {
-  const widths = {
-    tiny: { width: 470, height: 768 },
-    small: { width: 622, height: 768 },
-    medium: { width: 838, height: 768 },
-    large: { width: 1000, height: 768 },
-    huge: { width: 1300, height: 768 },
-    enormous: { width: 1500, height: 768 },
-  };
+const getViewports = (...sizes) => {
+  let viewportSizes = Object.keys(VIEWPORTS);
+  if (sizes.length) {
+    viewportSizes = sizes;
+  }
+  return viewportSizes.map(size => VIEWPORTS[size]);
+};
 
-  if (sizes.length === 0) {
-    return global.viewport('tiny', 'small', 'medium', 'large', 'huge');
+const resize = (...args) => {
+  const test = args.slice(-1)[0];
+  const viewportSizes = args.slice(0, -1);
+
+  if (typeof test !== 'function') {
+    throw new Error('The last argument must be a function');
   }
 
-  return sizes.map(size => widths[size]);
+  viewportSizes.forEach((name) => {
+    global.browser.setViewportSize(VIEWPORTS[name]);
+    test(name, VIEWPORTS[name]);
+  });
+};
+
+const should = {
+  beAccessible(options) {
+    global.it('is accessible', () => {
+      global.expect(global.browser.axe(options)).to.be.accessible();
+    });
+  },
+
+  beComparable({ name = 'default', css = '[data-reactroot]', viewports = {} }) {
+    global.it(`[${name}] checks visual comparison`, () => {
+      const screenshots = global.browser.checkElement(css, { viewports });
+      global.expect(screenshots).to.matchReference();
+    });
+  },
 };
 
 
@@ -64,7 +93,9 @@ export default class TerraService {
   before() {
     global.expect = chai.expect;
     global.Terra = {
-      viewports,
+      viewports: getViewports,
+      resize,
+      should,
     };
     chai.Assertion.addMethod('accessible', accessible);
     chai.Assertion.addMethod('matchReference', matchReference);
