@@ -1,21 +1,17 @@
-/* global browser, describe, it, expect, before, Terra */
-describe('resize utility', () => {
-  before(() => browser.url('/compare.html'));
-
-  it('resizes to tiny and huge', () => {
-    Terra.resize('tiny', 'huge', (name, viewport) => {
-      const size = browser.getViewportSize();
-      expect(size.height).to.equal(viewport.height);
-      expect(size.width).to.equal(viewport.width);
+/* global browser, it, expect, describe, before, Terra */
+Terra.viewports('tiny', 'small', 'large').forEach((viewport) => {
+  describe('Resize Example', () => {
+    before(() => {
+      browser.setViewportSize(viewport);
+      browser.url('/compare.html');
     });
-  });
 
-  it('resizes to a single viewport', () => {
-    Terra.resize('tiny', (name, viewport) => {
+    Terra.should.beAccessible();
+    Terra.should.matchScreenshot();
+    it(`resizes ${viewport.name}`, () => {
       const size = browser.getViewportSize();
       expect(size.height).to.equal(viewport.height);
       expect(size.width).to.equal(viewport.width);
-      expect(name).to.equal('tiny');
     });
   });
 });
