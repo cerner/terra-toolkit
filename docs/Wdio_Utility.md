@@ -80,7 +80,7 @@ There are a few things to note about the webdriver.io configuration provided by 
 
 
 
-Then, to assist with testing, the TerraService provides custom methods to make testing easier:
+Then, to assist with testing, the TerraService provides the Terra global helper to make testing easier:
 
 - `Terra.viewports(name)` takes the viewport key name(s) and returns an array of { height, width } objects representing the respective terra viewport size(s).
     - Use this function to resize the browser or pass the viewport sizes to the accessibility and visual regression commands.
@@ -107,7 +107,7 @@ describe('Basic Test', () => {
 ```
 
 
-If more control is needed over the assertions, the TerraService provides the custom assertions `accessible` and `matchReference` and a Terra global helper to make testing easier:
+If more control is needed over the assertions, the TerraService also provides the custom assertions `accessible` and `matchReference`:
 
 - `accessible()` validates the `axe()` accessibility assertions on the specified viewports are successful.
 - `matchReference()` validates the `checkElement` visual regression assertions on the specified viewports are successful.
