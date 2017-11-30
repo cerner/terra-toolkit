@@ -82,7 +82,7 @@ Then, to assist with testing, the TerraService provides the custom assertions `a
 
 - `accessible()` validates the `axe()` accessibility assertions on the specified viewports are successful.
 - `matchReference()` validates the `checkElement` visual regression assertions on the specified viewports are successful.
-- `Terra.viewports(name)` takes the viewport key name(s) and returns an array of { height, width}` objects representing the respective terra viewport size(s).
+- `Terra.viewports(name)` takes the viewport key name(s) and returns an array of { height, width } objects representing the respective terra viewport size(s).
     - Use this function to resize the browser or pass the viewport sizes to the accessibility and visual regression commands.
     - By default returns all viewports if not name key are provided.
 
