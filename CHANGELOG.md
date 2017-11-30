@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+2.3.0 - (November 30, 2017)
+------------------
 ### Added
 * Added WebpackDevServerService to webdriver.io services
 
