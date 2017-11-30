@@ -78,19 +78,46 @@ There are a few things to note about the webdriver.io configuration provided by 
 - Test files should use `*-spec.js` naming format. The default spec search path is `./tests/wdio/**/*-spec.js`.
 - Use `/test_url_path` to direct test urls. This is appended to the `baseUrl` provided in the config.
 
-Then, to assist with testing, the TerraService provides the custom assertions `accessible` and `matchReference` and a Terra global helper to make testing easier:
 
-- `accessible()` validates the `axe()` accessibility assertions on the specified viewports are successful.
-- `matchReference()` validates the `checkElement` visual regression assertions on the specified viewports are successful.
+
+Then, to assist with testing, the TerraService provides the Terra global helper to make testing easier:
+
 - `Terra.viewports(name)` takes the viewport key name(s) and returns an array of { height, width } objects representing the respective terra viewport size(s).
     - Use this function to resize the browser or pass the viewport sizes to the accessibility and visual regression commands.
     - By default returns all viewports if not name key are provided.
+- `Terra.should.beAccessible()` convenience method that injects an axe test. Takes the same arguments as the `axe()` utility. See [beAccessible-spec.js](https://github.com/cerner/terra-toolkit/blob/master/tests/wdio/beAccessible-spec.js) for examples.
+- `Terra.should.matchScreenshot(name, options)` convenience method that injects a screenshot test. See [matchScreenshot-spec.js](https://github.com/cerner/terra-toolkit/blob/master/tests/wdio/matchScreenshot-spec.js) for example usage..
 
 ```js
 // These globals are provide via the Terra Service
 /* global browser, describe, it, expect, viewport */
 
 describe('Basic Test', () => {
+  const viewports = Terra.viewports('tiny', 'huge');
+
+  before(() => browser.url('/test.html'));
+
+  Terra.should.beAccessible({ viewports });
+  Terra.should.matchScreenshot({ viewports });
+
+  it('custom test', () => {
+    expect('something').to.equal('something');
+  });
+});
+```
+
+
+If more control is needed over the assertions, the TerraService also provides the custom assertions `accessible` and `matchReference`:
+
+- `accessible()` validates the `axe()` accessibility assertions on the specified viewports are successful.
+- `matchReference()` validates the `checkElement` visual regression assertions on the specified viewports are successful.
+
+```js
+// These globals are provide via the Terra Service
+/* global browser, describe, it, expect, viewport */
+
+
+describe('Advanced Test', () => {
   // Only test tiny and huge viewports
   const viewports = Terra.viewports('tiny', 'huge');
 
@@ -112,6 +139,29 @@ describe('Basic Test', () => {
   });
 });
 ```
+
+### Testing multiple viewports.
+Sometimes its necessary to rerun the test steps in each viewport. To do this, `Terra.viewports` can be used to wrap the `describe` block. Example:
+
+```js
+Terra.viewports('tiny', 'small', 'large').forEach((viewport) => {
+  describe('Resize Example', () => {
+    before(() => {
+      browser.setViewportSize(viewport);
+      browser.url('/test.html');
+    });
+
+    it(`resizes ${viewport.name}`, () => {
+      const size = browser.getViewportSize();
+      expect(size.height).to.equal(viewport.height);
+      expect(size.width).to.equal(viewport.width);
+    });
+  });
+});
+```
+
+This will generate a describe block for each viewport.
+
 
 ## Running Tests
 Installation of webdriver.io, providing access to the wdio test runner. To start the runner, add the wdio npm script to the package.json and then provide the wdio configuration file. The wdio test runner requires a configuration file to be passed either from the current directory or via the `--config` or `-c` followed by the config path.
