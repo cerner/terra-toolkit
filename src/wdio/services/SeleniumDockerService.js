@@ -46,6 +46,10 @@ export default class SeleniumDockerService {
         await this.removeStack();
       }
 
+      // Ensure the docker wdio network isn't present. It can take a second or two
+      // to cleanup and this ensures a new stack is ready to create in the event of a stack cleanup
+      // or running two test runs back-to-back
+      await this.ensureNetworkRemoved();
       await this.deployStack();
       await this.ensureSelenium();
     }
@@ -79,6 +83,10 @@ export default class SeleniumDockerService {
     });
   }
 
+  /**
+  * Gets the stack information.
+  * @return {Promise} which resolves to a string representing the stack, or null if none exists.
+  */
   getStack() {
     return new Promise((resolve) => {
       exec('docker stack ls | grep wdio', (error, stdout) => {
@@ -87,16 +95,21 @@ export default class SeleniumDockerService {
     });
   }
 
+  /**
+  * Gets information about the docker environment.
+  * @return {Promise} which resolves to a JSON object describing the docker environment.
+  */
   getDockerInfo() {
-    return new Promise((resolve, reject) => {
-      exec('docker info --format "{{json .}}"', (error, stdout) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(JSON.parse(stdout));
-        }
-      });
-    });
+    return this.execute('docker info --format "{{json .}}"')
+      .then(result => JSON.parse(result));
+  }
+
+  /**
+  * Gets the stack default network.
+  * @return {Promise} which resolves to a string representing the network, or null if none exists.
+  */
+  getNetwork() {
+    return this.execute('docker network ls --filter name=wdio  --format "{{.ID}}: {{.Driver}}"');
   }
 
   /**
@@ -104,16 +117,8 @@ export default class SeleniumDockerService {
   * @return {Promise}
   */
   initSwarm() {
-    return new Promise((resolve, reject) => {
-      console.log('[SeleniumDocker] Initializing docker swarm');
-      exec('docker swarm init', (error, stdout) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(stdout);
-        }
-      });
-    });
+    console.log('[SeleniumDocker] Initializing docker swarm');
+    return this.execute('docker swarm init');
   }
 
   /**
@@ -121,9 +126,26 @@ export default class SeleniumDockerService {
   * @return {Promise}
   */
   deployStack() {
-    const command = `docker stack deploy --compose-file ${this.config.composeFile} wdio`;
+    console.log('[SeleniumDocker] Deploying docker selenium stack');
+    return this.execute(`docker stack deploy --compose-file ${this.config.composeFile} wdio`);
+  }
+
+  /**
+  * Stops the docker stack
+  * @return {Promise}
+  */
+  removeStack() {
+    console.log('[SeleniumDocker] Removing docker selenium stack');
+    return this.execute('docker stack rm wdio');
+  }
+
+  /**
+  * Executes an arbitrary command and returns a promise.
+  * @param {String} command - The command to execute
+  * @return {Promise}
+  */
+  execute(command) {
     return new Promise((resolve, reject) => {
-      console.log('[SeleniumDocker] Deploying docker selenium stack');
       exec(command, (error, stdout) => {
         if (error) {
           reject(error);
@@ -135,19 +157,23 @@ export default class SeleniumDockerService {
   }
 
   /**
-  * Stops the docker stack
+  * Ensures the stack default network is removed.
   * @return {Promise}
   */
-  removeStack() {
+  ensureNetworkRemoved() {
     return new Promise((resolve, reject) => {
-      console.log('[SeleniumDocker] Removing docker selenium stack');
-      exec('docker stack rm wdio', (error, stdout) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(stdout);
-        }
-      });
+      retry({ times: 1000, interval: 10 },
+        (callback) => {
+          // If there is a network, it will register as an error in the callback
+          this.getNetwork().then(callback).catch(callback);
+        }, (err, result) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(result);
+          }
+        },
+      );
     });
   }
 
