@@ -85,8 +85,8 @@ Then, to assist with testing, the TerraService provides the custom assertions `a
 - `Terra.viewports(name)` takes the viewport key name(s) and returns an array of { height, width } objects representing the respective terra viewport size(s).
     - Use this function to resize the browser or pass the viewport sizes to the accessibility and visual regression commands.
     - By default returns all viewports if not name key are provided.
-- `Terra.should.beAccessible()` convenience method that injects an axe test. Takes the same arguments as the `axe()` utility. See [beAccessible-spec.js](https://github.com/cerner/terra-toolkit/blob/master/tests/wdio/beAccessible-spec.md) for examples.
-- `Terra.should.matchScreenshot(name, options)` convenience method that injects a screenshot test. See [matchScreenshot-spec.js](https://github.com/cerner/terra-toolkit/blob/master/tests/wdio/matchScreenshot-spec.md) for example usage..
+- `Terra.should.beAccessible()` convenience method that injects an axe test. Takes the same arguments as the `axe()` utility. See [beAccessible-spec.js](https://github.com/cerner/terra-toolkit/blob/master/tests/wdio/beAccessible-spec.js) for examples.
+- `Terra.should.matchScreenshot(name, options)` convenience method that injects a screenshot test. See [matchScreenshot-spec.js](https://github.com/cerner/terra-toolkit/blob/master/tests/wdio/matchScreenshot-spec.js) for example usage..
 ```js
 // These globals are provide via the Terra Service
 /* global browser, describe, it, expect, viewport */
