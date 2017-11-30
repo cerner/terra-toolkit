@@ -1,5 +1,15 @@
 import chai from 'chai';
 
+const VIEWPORTS = {
+  tiny: { width: 470, height: 768, name: 'tiny' },
+  small: { width: 622, height: 768, name: 'small' },
+  medium: { width: 838, height: 768, name: 'medium' },
+  large: { width: 1000, height: 768, name: 'large' },
+  huge: { width: 1300, height: 768, name: 'huge' },
+  enormous: { width: 1500, height: 768, name: 'enormous' },
+};
+
+
 /**
 * accessible chai assertion to be paired with browser.axe() tests.
 */
@@ -37,21 +47,37 @@ function matchReference() {
 * @param sizes - [String] of viewport sizes.
 * @return [Object] of viewport sizes.
 */
-const viewports = (...sizes) => {
-  const widths = {
-    tiny: { width: 470, height: 768 },
-    small: { width: 622, height: 768 },
-    medium: { width: 838, height: 768 },
-    large: { width: 1000, height: 768 },
-    huge: { width: 1300, height: 768 },
-    enormous: { width: 1500, height: 768 },
-  };
+const getViewports = (...sizes) => {
+  let viewportSizes = Object.keys(VIEWPORTS);
+  if (sizes.length) {
+    viewportSizes = sizes;
+  }
+  return viewportSizes.map(size => VIEWPORTS[size]);
+};
 
-  if (sizes.length === 0) {
-    return global.viewport('tiny', 'small', 'medium', 'large', 'huge');
+const beAccessible = (options) => {
+  global.it('is accessible', () => {
+    global.expect(global.browser.axe(options)).to.be.accessible();
+  });
+};
+
+const matchScreenshot = (param1, param2) => {
+  let name = 'default';
+  let options = {};
+  if (typeof param1 === 'string') {
+    name = param1;
+    options = param2 || options;
+  } else {
+    options = param1 || options;
   }
 
-  return sizes.map(size => widths[size]);
+  const selector = options.selector || '[data-reactroot]';
+  const viewports = options.viewports || [];
+
+  global.it(`[${name}] matches screenshot`, () => {
+    const screenshots = global.browser.checkElement(selector, { viewports });
+    global.expect(screenshots).to.matchReference();
+  });
 };
 
 
@@ -64,7 +90,11 @@ export default class TerraService {
   before() {
     global.expect = chai.expect;
     global.Terra = {
-      viewports,
+      viewports: getViewports,
+      should: {
+        beAccessible,
+        matchScreenshot,
+      },
     };
     chai.Assertion.addMethod('accessible', accessible);
     chai.Assertion.addMethod('matchReference', matchReference);
