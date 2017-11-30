@@ -18,12 +18,12 @@ The [webdriverio](https://www.npmjs.com/package/webdriverio), [wdio-mocha-framew
 
 Terra-toolkit provides a default [webdriver.io configuration](https://github.com/cerner/terra-toolkit/blob/master/src/wdio/conf.js) that enables the following services for a mocha test framework:
 
-* SeleniumDockerService - starts a Selenium-Docker instance
+* SeleniumDockerService - starts a Selenium-Docker instance.
     - See [here](https://github.com/cerner/terra-toolkit/blob/master/docs/SeleniumDockerService.md) for configuration information.
-* AxeService - provides utilities for accessibility testing
+* AxeService - provides utilities for accessibility testing.
     - See [here](https://github.com/cerner/terra-toolkit/blob/master/docs/AxeService.md) for configuration information.
-* TerraService - provides custom assertions and a Terra global helper to make testing easier
-* Visual Regression Service - provides configuration for wdio visual regression testing
+* TerraService - provides custom assertions and a Terra global helper to make testing easier.
+* Visual Regression Service - provides configuration for wdio visual regression testing.
 
 In addition to the default webdriver.io services enabled in the config, a webpack dev server or static server service must be specified to actually run the site:
 - Terra-toolkit provides the [WebpackDevService](https://github.com/cerner/terra-toolkit/blob/master/docs/WebpackDevServerService.md) to start a webpack-dev-server and return a promise when the webpack compiler is completed
@@ -114,7 +114,7 @@ describe('Basic Test', () => {
 ```
 
 ## Running Tests
-Installation of webdriver.io, providing access to the wdio test runner. To start the runner, the add the wdio npm script to the package.json and then provide the wdio configuration file. The wdio test runner requires a configuration file to be passed either from the current directory or via the `--config` or `-c` followed by the config path.
+Installation of webdriver.io, providing access to the wdio test runner. To start the runner, add the wdio npm script to the package.json and then provide the wdio configuration file. The wdio test runner requires a configuration file to be passed either from the current directory or via the `--config` or `-c` followed by the config path.
 
 ```javascript
 // NPM Script at the root-level of a mono-repo with config in same directory

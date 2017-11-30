@@ -10,7 +10,7 @@ Under the key `seleniumDocker` in the wdio.conf.js one can pass a configuration 
 * **image** - The docker image to use for test runs. Defaults to `selenium/standalone-chrome` or `selenium/standalone-firefox` based on browser capabilities specified in config.
 * **retries** - Retry count to test for selenium being up. Default 1000.
 * **retryInterval** - Retry interval in milliseconds to wait between retries for selenium to come up. Default 10.
-* **env** - An Object representing environment variables to set within the docker instance. Defaults to {}
+* **env** - An Object representing environment variables to set within the docker instance. Defaults to {}.
 
 ```js
 // wdio.conf.js

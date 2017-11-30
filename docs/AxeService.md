@@ -40,11 +40,11 @@ The following options are available:
 * **viewports**:
   An array of viewports `{ width, height }` to run the accessibility test in. If none provided, by default it uses the current viewport.
 * **rules**:
-  The axe rules configuration to test. See [axe documentation](https://www.axe-core.org/docs/)
+  The axe rules configuration to test. See [axe documentation](https://www.axe-core.org/docs/).
 * **runOnly**:
-  The axe tags to filter the validations to run on the accessibility to test. See [axe documentation](https://www.axe-core.org/docs/)
+  The axe tags to filter the validations to run on the accessibility to test. See [axe documentation](https://www.axe-core.org/docs/).
 * **context**:
-  A css selector to scope the accessibility test to. See [axe documentation](https://www.axe-core.org/docs/)
+  A css selector to scope the accessibility test to. See [axe documentation](https://www.axe-core.org/docs/).
 
 Then, the Axe Service provides the custom custom assertion `accessible()` to make validating the output of accessibility commands easier.
 
