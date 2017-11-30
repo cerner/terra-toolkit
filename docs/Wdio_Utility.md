@@ -122,8 +122,6 @@ describe('Advanced Test', () => {
       browser.setViewportSize(size);
     });
   });
-
-  Terra.should.beAccessible();
 });
 ```
 
