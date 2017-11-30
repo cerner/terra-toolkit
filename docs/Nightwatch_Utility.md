@@ -93,12 +93,12 @@ Finally, it is **highly recommended** to use the expect API over the assert API.
  - ChromeDriver's clearValue functions correctly, but does not trigger a change for an element.
 
 ## Running Tests
-Installation of nightwatch, providing access to the nightwatch test runner. The nightwatch test runner requires a configuration file to be passed either from the current directory or via the `--config` or `-c` followed by the config path.
+Installation of nightwatch, providing access to the nightwatch test runner. To start the runner, the add the nightwatch npm script to the package.json and then provide the wdio configuration file. The nightwatch test runner requires a configuration file to be passed either from the current directory or via the `--config` or `-c` followed by the config path.
 
 ```javascript
-// Script at the root-level of a mono-repo with config in same directory
+// NPM Script at the root-level of a mono-repo with config in same directory
 "nightwatch": "nightwatch";
 
-// Script at a package-level of a mono-repo
+// NPM Script at a package-level of a mono-repo
 "nightwatch": "nightwatch -c ../../nightwatch.conf.js";
 ```

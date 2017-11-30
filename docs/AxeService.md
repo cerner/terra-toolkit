@@ -1,11 +1,11 @@
 # Axe Service
-Terra toolkit automatically includes the wdio-axe-service which enhances an webdriver.io instance with commands for accessibility testing using the [Axe](https://github.com/dequelabs/axe-core) utility.
+Terra toolkit automatically includes the wdio-axe-service which enhances a webdriver.io instance with commands for accessibility testing using the [Axe](https://github.com/dequelabs/axe-core) utility.
 
 ## Options
 
 Under the key `axe` in the wdio.conf.js you can pass a configuration object with the following structure:
 
-* **inject** - True if the axe script should be injected by the test running. Disable if axe is already included in the test files which slightly speed up runs. Defaults to true.
+* **inject** - True if the axe script should be injected by the test running. Disable if axe is already included in the test files, which slightly speed up runs. Defaults to true.
 
 ```js
 // wdio.conf.js
@@ -17,7 +17,7 @@ const port = 4567;
 const config = {
   ...wdioConf.config,
 
-  // Point base URL to the site to be tested
+  // Point base URL at the site to be tested for correct webdriver.io setup
   baseUrl: `http://${localIP.address()}:${port}`,
 
   // Configuration for Axe service
@@ -38,7 +38,7 @@ exports.config = config;
 The following options are available:
 
 * **viewports**:
-  An array of viewports `{ width, height }` to run the accessibility test in. If none provided uses the current viewport.
+  An array of viewports `{ width, height }` to run the accessibility test in. If none provided, by default it uses the current viewport.
 * **rules**:
   The axe rules configuration to test. See [axe documentation](https://www.axe-core.org/docs/)
 * **runOnly**:

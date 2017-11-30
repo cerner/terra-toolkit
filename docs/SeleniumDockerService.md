@@ -22,7 +22,7 @@ const port = 8080;
 const config = {
   ...wdioConf.config,
 
-  // Point base URL at the site to be tested
+  // Point base URL at the site to be tested for correct webdriver.io setup
   baseUrl: `http://${localIP.address()}:${port}`,
 
   // Configuration for SeleniumDocker service

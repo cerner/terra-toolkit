@@ -1,6 +1,6 @@
 # Webdriver.io Utility Developer's Guide
 
-[Webdriver.io](http://webdriver.io/) is a framework for writing webdriver powered tests to validate functionality in browsers. The Webdriver.io framework provides services for setting up a selenium server, starting webpack and static servers, running accessibility and visual regression testing and more.
+[Webdriver.io](http://webdriver.io/) is a framework for writing webdriver powered tests to validate functionality in browsers. The Webdriver.io framework provides services for setting up a selenium server, starting webpack and static servers, running accessibility and visual regression testing, and more.
 
 - [Getting Started](#getting-started)
 - [Configuration Setup](#configuration-setup)
@@ -56,7 +56,7 @@ if (isRepoTest) {
 const config = {
   ...wdioConf.config,
 
-  // Point baseURL to the site to be tested
+  // Point base URL at the site to be tested for correct webdriver.io setup
   baseUrl: `http://${localIP.address()}:${port}`,
   specs: [specs],
 
@@ -114,12 +114,12 @@ describe('Basic Test', () => {
 ```
 
 ## Running Tests
-Installation of webdriver.io, providing access to the wdio test runner. The wdio test runner requires a configuration file to be passed either from the current directory or via the `--config` or `-c` followed by the config path.
+Installation of webdriver.io, providing access to the wdio test runner. To start the runner, the add the wdio npm script to the package.json and then provide the wdio configuration file. The wdio test runner requires a configuration file to be passed either from the current directory or via the `--config` or `-c` followed by the config path.
 
 ```javascript
-// Script at the root-level of a mono-repo with config in same directory
+// NPM Script at the root-level of a mono-repo with config in same directory
 "wdio": "wdio";
 
-// Script at a package-level of a mono-repo
+// NPM Script at a package-level of a mono-repo
 "wdio": "wdio -c ../../wdio.conf.js";
 ```
