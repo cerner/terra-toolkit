@@ -36,9 +36,10 @@ const nightwatchConfig = (webpackConfig, srcFolders, providedPort) => {
   };
 
   const stopDriverAndServer = (done) => {
-    webPackDevService.onComplete();
-    seleniumDocker.onComplete();
-    done();
+    Promise.all([
+      webPackDevService.onComplete(),
+      seleniumDocker.onComplete(),
+    ]).then(done);
   };
 
   const endBrowserSession = (browser, done) => browser.end(done);

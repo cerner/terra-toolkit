@@ -44,12 +44,9 @@ export default class SeleniumDockerService {
       // Always start with a fresh stack
       if (await this.getStack()) {
         await this.removeStack();
+        await this.ensureNetworkRemoved();
       }
 
-      // Ensure the docker wdio network isn't present. It can take a second or two
-      // to cleanup and this ensures a new stack is ready to create in the event of a stack cleanup
-      // or running two test runs back-to-back
-      await this.ensureNetworkRemoved();
       await this.deployStack();
       await this.ensureSelenium();
     }
@@ -61,6 +58,7 @@ export default class SeleniumDockerService {
   async onComplete() {
     if (this.config.enabled) {
       await this.removeStack();
+      await this.ensureNetworkRemoved();
     }
   }
 
