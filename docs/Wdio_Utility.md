@@ -85,12 +85,24 @@ Then, to assist with testing, the TerraService provides the custom assertions `a
 - `Terra.viewports(name)` takes the viewport key name(s) and returns an array of { height, width } objects representing the respective terra viewport size(s).
     - Use this function to resize the browser or pass the viewport sizes to the accessibility and visual regression commands.
     - By default returns all viewports if not name key are provided.
-
+- `Terra.should.beAccessible()` convenience method that injects an axe test. Takes the same arguments as the `axe()` utility. See [beAccessible-spec.js](https://github.com/cerner/terra-toolkit/blob/master/tests/wdio/beAccessible-spec.md) for examples.
+- `Terra.should.matchScreenshot(name, options)` convenience method that injects a screenshot test. See [matchScreenshot-spec.js](https://github.com/cerner/terra-toolkit/blob/master/tests/wdio/matchScreenshot-spec.md) for example usage..
 ```js
 // These globals are provide via the Terra Service
 /* global browser, describe, it, expect, viewport */
 
 describe('Basic Test', () => {
+  before(() => browser.url('/test.html'));
+
+  Terra.should.beAccessible();
+  Terra.should.matchScreenshot();
+
+  it('custom test', () => {
+    expect('something').to.equal('something');
+  });
+});
+
+describe('Advanced Test', () => {
   // Only test tiny and huge viewports
   const viewports = Terra.viewports('tiny', 'huge');
 
@@ -110,8 +122,33 @@ describe('Basic Test', () => {
       browser.setViewportSize(size);
     });
   });
+
+  Terra.should.beAccessible();
 });
 ```
+
+### Testing multiple viewports.
+Sometimes its necessary to rerun the test steps in each viewport. To do this, `Terra.viewports` can be used to wrap the `describe` block. Example:
+
+```js
+Terra.viewports('tiny', 'small', 'large').forEach((viewport) => {
+  describe('Resize Example', () => {
+    before(() => {
+      browser.setViewportSize(viewport);
+      browser.url('/test.html');
+    });
+
+    it(`resizes ${viewport.name}`, () => {
+      const size = browser.getViewportSize();
+      expect(size.height).to.equal(viewport.height);
+      expect(size.width).to.equal(viewport.width);
+    });
+  });
+});
+```
+
+This will generate a describe block for each viewport.
+
 
 ## Running Tests
 Installation of webdriver.io, providing access to the wdio test runner. To start the runner, add the wdio npm script to the package.json and then provide the wdio configuration file. The wdio test runner requires a configuration file to be passed either from the current directory or via the `--config` or `-c` followed by the config path.
