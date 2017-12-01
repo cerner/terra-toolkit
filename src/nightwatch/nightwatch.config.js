@@ -29,10 +29,6 @@ const nightwatchConfig = (webpackConfig, srcFolders, providedPort) => {
       path: '/wd/hub',
       seleniumDocker: {
         enabled: !process.env.TRAVIS && !process.env.CI,
-        cleanup: true,
-        env: {
-          TZ: 'America/Chicago',
-        },
       },
     }, [{ browserName: 'chrome' }]);
 
@@ -40,9 +36,10 @@ const nightwatchConfig = (webpackConfig, srcFolders, providedPort) => {
   };
 
   const stopDriverAndServer = (done) => {
-    webPackDevService.onComplete();
-    seleniumDocker.onComplete();
-    done();
+    Promise.all([
+      webPackDevService.onComplete(),
+      seleniumDocker.onComplete(),
+    ]).then(done);
   };
 
   const endBrowserSession = (browser, done) => browser.end(done);

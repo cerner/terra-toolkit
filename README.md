@@ -24,7 +24,8 @@ Terra Toolkit is a utility module used to facilitate independent development of 
 
 - Install with [npm](https://www.npmjs.com): `npm install terra-toolkit --save-dev`
 
-Terra Toolkit uses docker to setup, run, and tear down selenium to ensure a consistent testing environment locally and in continuous integration build systems. To use Terra Toolkit you must install docker on your machine. Installation instructions can be found at https://www.docker.com/.
+Terra Toolkit uses docker to setup, run, and tear down selenium to ensure a consistent testing environment locally and in continuous integration build systems. To use Terra Toolkit you must install docker on your machine. Installation instructions can be found at https://www.docker.com/.  **Requires Docker v17 or higher.**
+
 
 
 ## Webdriver.io Utility

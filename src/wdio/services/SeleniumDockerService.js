@@ -1,7 +1,10 @@
+/* eslint-disable class-methods-use-this, no-console */
 import { exec } from 'child_process';
 import retry from 'async/retry';
 import http from 'http';
 import path from 'path';
+
+const DEFAULT_COMPOSE_FILE = path.join(__dirname, '..', 'docker-compose.yml');
 
 /**
 * Webdriver.io SeleniuMDockerService
@@ -17,46 +20,34 @@ export default class SeleniumDockerService {
    * @param {Object} config wdio configuration object
    * @param {Array.<Object>} capabilities list of capabilities details
    */
-  async onPrepare(config, capabilities) {
+  async onPrepare(config) {
     this.config = {
       enabled: true, // True if service enabled, false otherwise
-      cleanup: false, // True if docker container should be removed after test
-      image: null, // The image name to use, defaults to selenium/standalone-${browser}
-      retries: 1000, // Retry count to test for selenium being up
+      retries: 2000, // Retry count to test for selenium being up
       retryInterval: 10, // Retry interval in milliseconds to wait between retries for selenium to come up.
-      env: {}, // Environment variables to add to the container
+      composeFile: DEFAULT_COMPOSE_FILE,
       ...(config.seleniumDocker || {}),
     };
+
     this.host = config.host;
     this.port = config.port;
     this.path = config.path;
-    this.browserName = capabilities[0].browserName;
 
-    if (!this.config.enabled) {
-      return;
-    }
-
-    this.container = await this.getRunningContainer();
-
-    // There is a running container that doesn't match configuration, stop it
-    // before proceeding
-    if (this.container && this.getImage() !== this.container.image) {
-      await this.stop();
-
-    // There is a container, verify selenium is running as expected
-    } else if (this.container) {
-      try {
-        await this.ensureSelenium();
-
-      // Selenium isn't responding stop the container;
-      } catch (e) {
-        await this.stop();
+    if (this.config.enabled) {
+      // Need to activate a docker swarm if one isn't already present
+      // before a docker stack can be deployed
+      const dockerInfo = await this.getDockerInfo();
+      if (dockerInfo.Swarm.LocalNodeState !== 'active') {
+        await this.initSwarm();
       }
-    }
 
-    if (!this.container) {
-      await this.pullImage();
-      await this.runImage();
+      // Always start with a fresh stack
+      if (await this.getStack()) {
+        await this.removeStack();
+        await this.ensureNetworkRemoved();
+      }
+
+      await this.deployStack();
       await this.ensureSelenium();
     }
   }
@@ -65,8 +56,9 @@ export default class SeleniumDockerService {
    * Clean up docker container after all workers got shut down and the process is about to exit.
    */
   async onComplete() {
-    if (this.config.cleanup && this.config.enabled) {
-      await this.stop();
+    if (this.config.enabled) {
+      await this.removeStack();
+      await this.ensureNetworkRemoved();
     }
   }
 
@@ -76,7 +68,6 @@ export default class SeleniumDockerService {
   */
   ensureSelenium() {
     return new Promise((resolve, reject) => {
-      // eslint-disable-next-line no-console
       console.log('[SeleniumDocker] Ensuring selenium status is ready');
       retry({ times: this.config.retries, interval: this.config.retryInterval },
         this.getSeleniumStatus, (err, result) => {
@@ -91,102 +82,96 @@ export default class SeleniumDockerService {
   }
 
   /**
-  * Pulls the configured docker image based on the browserName in config or
-  * configured image.
-  * @return {Promise}
+  * Gets the stack information.
+  * @return {Promise} which resolves to a string representing the stack, or null if none exists.
   */
-  pullImage() {
-    return new Promise((resolve, reject) => {
-      // eslint-disable-next-line no-console
-      console.log(`[SeleniumDocker] Pulling latest Docker image for ${this.getImage()}`);
-      exec(`docker pull ${this.getImage()}`, (error, stdout, stderr) => {
-        const fail = error || stderr;
-        if (fail) {
-          reject(fail);
-        } else {
-          resolve(stdout);
-        }
+  getStack() {
+    return new Promise((resolve) => {
+      exec('docker stack ls | grep wdio', (error, stdout) => {
+        resolve(stdout);
       });
     });
   }
 
   /**
-  * Runs the configured docker image
-  * @return {Promise}
+  * Gets information about the docker environment.
+  * @return {Promise} which resolves to a JSON object describing the docker environment.
   */
-  runImage() {
-    let args = '';
-    if (this.browserName === 'chrome') {
-      args = '-v /dev/shm:/dev/shm';
-    } else if (this.browserName === 'firefox') {
-      args = '--shm-size 2g';
-    }
-
-    const env = Object.keys(this.config.env).map(key => `-e ${key}=${this.config.env[key]}`).join(' ');
-    const command = `docker run -l wdio=${this.browserName} -d --rm ${env} ${args} -p ${this.port}:4444 ${this.getImage()}`;
-    return new Promise((resolve, reject) => {
-      // eslint-disable-next-line no-console
-      console.log(`[SeleniumDocker] Running Docker image for ${this.getImage()}`);
-      exec(command, (error, stdout, stderr) => {
-        const fail = error || stderr;
-        if (fail) {
-          reject(fail);
-        } else {
-          resolve(stdout);
-        }
-      });
-    });
+  getDockerInfo() {
+    return this.execute('docker info --format "{{json .}}"')
+      .then(result => JSON.parse(result));
   }
 
   /**
-  * Gets the running selenium container.
-  * @return {Object} representing the active selenium container, if any.
+  * Gets the stack default network.
+  * @return {Promise} which resolves to a string representing the network, or null if none exists.
   */
-  // eslint-disable-next-line class-methods-use-this
-  getRunningContainer() {
+  getNetwork() {
+    return this.execute('docker network ls --filter name=wdio  --format "{{.ID}}: {{.Driver}}"');
+  }
+
+  /**
+  * Initializes the docker swarm. See https://docs.docker.com/engine/reference/commandline/swarm_init/#related-commands
+  * @return {Promise}
+  */
+  initSwarm() {
+    console.log('[SeleniumDocker] Initializing docker swarm');
+    return this.execute('docker swarm init');
+  }
+
+  /**
+  * Deploys the docker selenium hub stack
+  * @return {Promise}
+  */
+  deployStack() {
+    console.log('[SeleniumDocker] Deploying docker selenium stack');
+    return this.execute(`docker stack deploy --compose-file ${this.config.composeFile} wdio`);
+  }
+
+  /**
+  * Stops the docker stack
+  * @return {Promise}
+  */
+  removeStack() {
+    console.log('[SeleniumDocker] Removing docker selenium stack');
+    return this.execute('docker stack rm wdio');
+  }
+
+  /**
+  * Executes an arbitrary command and returns a promise.
+  * @param {String} command - The command to execute
+  * @return {Promise}
+  */
+  execute(command) {
     return new Promise((resolve, reject) => {
-      exec('docker ps -f "label=wdio" --format "{{.ID}} {{.Image}}"', (error, stdout) => {
+      exec(command, (error, stdout) => {
         if (error) {
           reject(error);
-        } else if (stdout) {
-          const result = stdout.trim().split(' ');
-          resolve({
-            id: result[0],
-            image: result[1],
-          });
         } else {
-          resolve();
+          resolve(stdout);
         }
       });
     });
   }
 
   /**
-   * Get the docker image to use based on configuration and browser capabilities.
-   * @return The name of the docker image to use.
-   */
-  getImage() {
-    // Use configured image or infer image from browserName (only firefox and safari supported).
-    // TODO: Eventually an entire hub should be stood up which supports all browsers in capabilities config
-    return this.config.image || `selenium/standalone-${this.browserName}`;
-  }
-
-  stop() {
+  * Ensures the stack default network is removed.
+  * @return {Promise}
+  */
+  ensureNetworkRemoved() {
     return new Promise((resolve, reject) => {
-      if (this.container) {
-        exec(`docker stop ${this.container.id}`, (error, stdout) => {
-          // eslint-disable-next-line no-console
-          console.log('[SeleniumDocker] Stopping Docker');
-          if (error) {
-            reject(error);
+      retry({ times: 1000, interval: 10 },
+        (callback) => {
+          // If there is a network, it will register as an error in the callback
+          this.getNetwork().then(callback).catch(callback);
+        }, (err, result) => {
+          if (err) {
+            reject(err);
           } else {
-            resolve(stdout);
-            this.container = null;
+            resolve(result);
           }
-        });
-      } else {
-        resolve();
-      }
+        },
+      );
     });
   }
 
