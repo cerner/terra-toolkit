@@ -19,10 +19,6 @@ const config = {
   // Configuration for SeleniumDocker service
   seleniumDocker: {
     enabled: !process.env.TRAVIS,
-    cleanup: false,
-    env: {
-      TZ: 'America/Chicago',
-    },
   },
 };
 
