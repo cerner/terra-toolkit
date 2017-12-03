@@ -61,6 +61,20 @@ const beAccessible = (options) => {
   });
 };
 
+
+/**
+* Generates a test for each themed property given and runs a screenshot assertion.
+* @property {Object} customProperties - An object containing the CSS custom properties to assert.
+*/
+const themeEachCustomProperty = (customProperties) => {
+  Object.entries(customProperties).forEach(([key, value]) => {
+    global.it(`themed [${key}]`, () => {
+      global.browser.execute(`document.documentElement.style.setProperty('${key}', '${value}')`);
+      global.expect(global.browser.checkElement('[data-reactroot]')).to.matchReference();
+    });
+  });
+};
+
 const matchScreenshot = (param1, param2) => {
   let name = 'default';
   let options = {};
@@ -94,6 +108,7 @@ export default class TerraService {
       should: {
         beAccessible,
         matchScreenshot,
+        themeEachCustomProperty,
       },
     };
     chai.Assertion.addMethod('accessible', accessible);
