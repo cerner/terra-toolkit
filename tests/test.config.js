@@ -81,6 +81,11 @@ module.exports = {
       filename: './compare.html',
     }),
     new HtmlWebpackPlugin({
+      template: path.join(__dirname, 'fixtures', 'theme.html'),
+      chunks: ['index'],
+      filename: './theme.html',
+    }),
+    new HtmlWebpackPlugin({
       template: path.join(__dirname, 'fixtures', 'inaccessible-contrast.html'),
       chunks: ['index'],
       filename: './inaccessible-contrast.html',

@@ -87,6 +87,7 @@ Then, to assist with testing, the TerraService provides the Terra global helper 
     - By default returns all viewports if not name key are provided.
 - `Terra.should.beAccessible()` convenience method that injects an axe test. Takes the same arguments as the `axe()` utility. See [beAccessible-spec.js](https://github.com/cerner/terra-toolkit/blob/master/tests/wdio/beAccessible-spec.js) for examples.
 - `Terra.should.matchScreenshot(name, options)` convenience method that injects a screenshot test. See [matchScreenshot-spec.js](https://github.com/cerner/terra-toolkit/blob/master/tests/wdio/matchScreenshot-spec.js) for example usage..
+- `Terra.should.themeEachCustomProperty(properties)` convenience method that runs a visual comparison test for each custom property given.
 
 ```js
 // These globals are provide via the Terra Service
@@ -99,6 +100,10 @@ describe('Basic Test', () => {
 
   Terra.should.beAccessible({ viewports });
   Terra.should.matchScreenshot({ viewports });
+  Terra.should.themeEachCustomProperty({
+    '--color': 'red',
+    '--font-size': '20px',
+  });
 
   it('custom test', () => {
     expect('something').to.equal('something');
