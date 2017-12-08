@@ -169,12 +169,12 @@ This will generate a describe block for each viewport.
 
 
 ## Running Tests
-Installation of webdriver.io, providing access to the wdio test runner. To start the runner, add the wdio npm script to the package.json and then provide the wdio configuration file. The wdio test runner requires a configuration file to be passed either from the current directory or via the `--config` or `-c` followed by the config path.
+Installation of webdriver.io provides access to the wdio test runner. To start the runner, add the wdio npm script to the package.json and then provide the wdio configuration file. The wdio test runner requires a configuration file to be passed either from the current directory or by path.
 
 ```javascript
 // NPM Script at the root-level of a mono-repo with config in same directory
 "wdio": "wdio";
 
 // NPM Script at a package-level of a mono-repo
-"wdio": "wdio -c ../../wdio.conf.js";
+"wdio": "wdio ../../wdio.conf.js";
 ```
