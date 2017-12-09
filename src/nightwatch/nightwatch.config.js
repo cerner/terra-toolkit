@@ -1,28 +1,45 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
-/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "chromedriver" }] */
+import ip from 'ip';
 
-import chromedriver from 'chromedriver';
-import webpack from 'webpack';
-import WebpackDevServer from 'webpack-dev-server';
+import SeleniumDockerService from '../wdio/services/SeleniumDockerService';
+import WebpackDevServerService from '../wdio/services/WebpackDevServerService';
 
 let port = 8080;
+
+const seleniumPort = 4444;
+const seleniumHost = ip.address();
 
 const nightwatchConfig = (webpackConfig, srcFolders, providedPort) => {
   if (providedPort) {
     port = providedPort;
   }
 
-  const webpackServer = new WebpackDevServer(webpack(webpackConfig), { quiet: true, hot: false, inline: false });
+  const seleniumDocker = new SeleniumDockerService();
+  const webPackDevService = new WebpackDevServerService();
 
   const startDriverAndServer = (done) => {
-    chromedriver.start();
-    webpackServer.listen(port, '0.0.0.0', () => done());
+    const webPackPromise = webPackDevService.onPrepare({
+      webpackConfig,
+      webpackPort: port,
+    });
+
+    const dockerPromise = seleniumDocker.onPrepare({
+      host: seleniumHost,
+      port: seleniumPort,
+      path: '/wd/hub',
+      seleniumDocker: {
+        enabled: !process.env.TRAVIS && !process.env.CI,
+      },
+    }, [{ browserName: 'chrome' }]);
+
+    Promise.all([webPackPromise, dockerPromise]).then(done);
   };
 
   const stopDriverAndServer = (done) => {
-    webpackServer.close();
-    chromedriver.stop();
-    done();
+    Promise.all([
+      webPackDevService.onComplete(),
+      seleniumDocker.onComplete(),
+    ]).then(done);
   };
 
   const endBrowserSession = (browser, done) => browser.end(done);
@@ -40,11 +57,10 @@ const nightwatchConfig = (webpackConfig, srcFolders, providedPort) => {
     test_workers: false,
     test_settings: {
       default: {
-        launch_url: `http://localhost:${port}`,
+        launch_url: `http://${ip.address()}:${port}`,
         persist_globals: true,
-        selenium_port: 9515,
-        selenium_host: 'localhost',
-        default_path_prefix: '',
+        selenium_port: seleniumPort,
+        selenium_host: seleniumHost,
         silent: true,
         globals: {
           breakpoints: {
@@ -73,12 +89,6 @@ const nightwatchConfig = (webpackConfig, srcFolders, providedPort) => {
           browserName: 'chrome',
           javascriptEnabled: true,
           acceptSslCerts: true,
-          chromeOptions: {
-            args: [
-              '--headless',
-              '--no-sandbox',
-            ],
-          },
         },
       },
     },

@@ -5,6 +5,23 @@ Unreleased
 ----------
 * Lock webpack-dev-server at latest version that supported IE10 (2.7.1)
 
+2.3.0 - (November 30, 2017)
+------------------
+### Added
+* Added WebpackDevServerService to webdriver.io services
+
+### Updated
+* Updated nightwatch to use WebpackDevServerService
+* Updated tests to use WebpackDevServerService instead of 'wdio-static-server'
+
+2.2.0 - (November 15, 2017)
+------------------
+### Changed
+* Use path.join to allow for windows development
+* Removed sauce labs config and install java 8 in a different way for travis ci
+* Added webdriver.io testing utilities
+* Update nightwatch to use docker
+
 2.1.0 - (October 5, 2017)
 ------------------
 ### Changed
