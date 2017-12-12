@@ -64,7 +64,7 @@ Then, to assist with testing various browser sizes, Terra-toolkit provides the r
     - This helper must be used in conjunction with `resizeTo`.
 
 ```javascript
-const { resizeTo, screenWidth } = require('terra-tookit/lib/nightwatch/responsive-helpers');
+const { resizeTo, screenWidth } = require('terra-toolkit/lib/nightwatch/responsive-helpers');
 
 module.exports = resizeTo(['tiny', 'small', 'medium', 'large', 'huge', 'enormous'], {
   'Static test path one renders correctly': (browser) => {
