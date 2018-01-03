@@ -6,6 +6,7 @@ Cerner Corporation
 - Ryan Manuel [@ryanthemanuel]
 - Matt Henkes [@mjhenkes]
 - Derek Yu [@yuderekyu]
+- Kevin Schuster [@kschuste]
 
 [@emilyrohrbough]: https://github.com/emilyrohrbough
 [@brettjankord]: https://github.com/bjankord
@@ -13,3 +14,4 @@ Cerner Corporation
 [@ryanthemanuel]: https://github.com/ryanthemanuel
 [@mjhenkes]: https://github.com/mjhenkes
 [@yuderekyu]: https://github.com/yuderekyu
+[@kschuste]: https://github.com/kschuste
