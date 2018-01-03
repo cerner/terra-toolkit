@@ -3,15 +3,19 @@ import { LocalCompare } from 'wdio-visual-regression-service/compare';
 
 const testIdRegex = /\[([^)]+)\]/;
 
-function testName(parent, title) {
+function testName(parent, title, subtitle) {
   const matches = testIdRegex.exec(title);
   const parentName = parent.replace(/[\s+.]/g, '_');
   let name = title.trim().replace(/[\s+.]/g, '_');
   if (matches) {
     name = matches[1];
   }
+  let subtitleName = '';
+  if (subtitle) {
+    subtitleName = `[${subtitle.trim().replace(/[\s+.]/g, '_')}]`;
+  }
 
-  return `${parentName}[${name}]`;
+  return `${parentName}[${name}]${subtitleName}`;
 }
 
 function getScreenshotName(ref) {
@@ -20,7 +24,7 @@ function getScreenshotName(ref) {
     const browserWidth = context.meta.viewport.width;
     const browserHeight = context.meta.viewport.height;
     const testPath = path.dirname(context.test.file);
-    const name = testName(context.test.parent, context.test.title);
+    const name = testName(context.test.parent, context.test.title, context.options.subtitle);
     return path.join(testPath, '__snapshots__', ref, browserName, `${name}.${browserWidth}x${browserHeight}.png`);
   };
 }
