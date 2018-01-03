@@ -3,6 +3,7 @@ Changelog
 
 Unreleased
 ----------
+* Lock axe-core to version 2.5
 
 2.4.0 - (December 12, 2017)
 ------------------
