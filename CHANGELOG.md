@@ -3,6 +3,7 @@ Changelog
 
 Unreleased
 ----------
+* Log reduced nightwatch when running in CI.
 
 2.5.0 - (January 3, 2018)
 ----------
