@@ -10,6 +10,11 @@ exports.config = {
   capabilities: [
     {
       browserName: 'chrome',
+      axe: {
+        rules: {
+          'landmark-one-main': { enabled: false },
+        },
+      },
     },
   ],
 

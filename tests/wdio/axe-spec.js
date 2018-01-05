@@ -3,10 +3,7 @@ describe('axe', () => {
   const viewports = Terra.viewports('tiny', 'huge');
   it('checks accessibility', () => {
     browser.url('/accessible.html');
-    const rules = {
-      'landmark-one-main': { enabled: false },
-    };
-    expect(browser.axe({ rules })).to.be.accessible();
+    expect(browser.axe()).to.be.accessible();
   });
 
   it('checks inaccessibility', () => {
@@ -21,7 +18,6 @@ describe('axe', () => {
     browser.url('/inaccessible-contrast.html');
     const rules = {
       'color-contrast': { enabled: false },
-      'landmark-one-main': { enabled: false },
     };
     expect(browser.axe({ viewports, rules })).to.be.accessible();
   });

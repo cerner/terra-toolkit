@@ -33,7 +33,7 @@ export default class AxeService {
       const specifiedViewports = options.viewports || [currentViewportSize];
       const axeOptions = {
         runOnly: options.runOnly,
-        rules: options.rules,
+        rules: Object.assign({}, axeConfig.rules, options.rules),
       };
 
       // Get accessibility results for each viewport size
