@@ -4,6 +4,10 @@ Changelog
 Unreleased
 ----------
 
+2.6.0 - (January 4, 2018)
+----------
+* Log reduced nightwatch output when running in CI.
+
 2.5.0 - (January 3, 2018)
 ----------
 * Lock axe-core to version 2.5

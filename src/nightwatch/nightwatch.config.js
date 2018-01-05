@@ -55,6 +55,7 @@ const nightwatchConfig = (webpackConfig, srcFolders, providedPort) => {
     page_objects_path: '',
     persist_globals: true,
     test_workers: false,
+    detailed_output: !process.env.TRAVIS && !process.env.CI,
     test_settings: {
       default: {
         launch_url: `http://${ip.address()}:${port}`,
