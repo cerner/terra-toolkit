@@ -1,5 +1,4 @@
 /* global browser, it, expect, describe, before, Terra */
-
 Terra.viewports('tiny', 'small', 'large').forEach((viewport) => {
   describe('Resize Example', () => {
     before(() => {
