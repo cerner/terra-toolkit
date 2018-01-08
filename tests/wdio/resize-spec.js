@@ -1,7 +1,4 @@
 /* global browser, it, expect, describe, before, Terra */
-const ignoredA11y = {
-  'landmark-one-main': { enabled: false },
-};
 
 Terra.viewports('tiny', 'small', 'large').forEach((viewport) => {
   describe('Resize Example', () => {
@@ -10,7 +7,7 @@ Terra.viewports('tiny', 'small', 'large').forEach((viewport) => {
       browser.url('/compare.html');
     });
 
-    Terra.should.beAccessible({ rules: ignoredA11y });
+    Terra.should.beAccessible();
     Terra.should.matchScreenshot();
     it(`resizes ${viewport.name}`, () => {
       const size = browser.getViewportSize();
