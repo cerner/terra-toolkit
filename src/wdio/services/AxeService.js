@@ -11,7 +11,6 @@ export default class AxeService {
   // eslint-disable-next-line class-methods-use-this
   before(config) {
     const axeConfig = {
-      inject: true, // True if axeCore script should be injected on each test page.
       ...(config.axe || {}),
     };
 

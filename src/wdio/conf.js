@@ -11,6 +11,7 @@ exports.config = {
     {
       browserName: 'chrome',
       axe: {
+        inject: true,
         rules: {
           'landmark-one-main': { enabled: false },
         },
@@ -54,10 +55,6 @@ exports.config = {
       });
     });
     global.browser.click('#wdioMouseReset');
-  },
-
-  axe: {
-    inject: true,
   },
 
   mochaOpts: {
