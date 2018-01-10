@@ -12,8 +12,10 @@ exports.config = {
       browserName: 'chrome',
       axe: {
         inject: true,
-        rules: {
-          'landmark-one-main': { enabled: false },
+        options: {
+          rules: {
+            'landmark-one-main': { enabled: false },
+          },
         },
       },
     },

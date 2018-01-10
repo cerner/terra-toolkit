@@ -9,9 +9,9 @@ let axeCoreSrc;
 */
 export default class AxeService {
   // eslint-disable-next-line class-methods-use-this
-  before(config) {
+  before(capabilities) {
     const axeConfig = {
-      ...(config.axe || {}),
+      ...(capabilities.axe || {}),
     };
 
     browser.addCommand('axe', (options = {}) => {
@@ -32,7 +32,7 @@ export default class AxeService {
       const specifiedViewports = options.viewports || [currentViewportSize];
       const axeOptions = {
         runOnly: options.runOnly,
-        rules: Object.assign({}, axeConfig.rules, options.rules),
+        rules: Object.assign({}, axeConfig.options.rules, options.rules),
       };
 
       // Get accessibility results for each viewport size
