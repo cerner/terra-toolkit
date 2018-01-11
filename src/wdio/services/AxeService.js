@@ -10,18 +10,19 @@ let axeCoreSrc;
 export default class AxeService {
   // eslint-disable-next-line class-methods-use-this
   before(capabilities) {
-    const axeConfig = {
-      ...(capabilities.axe || {}),
-    };
-
     browser.addCommand('axe', (options = {}) => {
       // Conditionally inject axe. This allows consumers to inject it themselves
       // in the test examples which would slightly speed up test runs.
-      if (axeConfig.inject) {
+      if (browser.options.axe.inject) {
         if (browser.execute('return window.axe === undefined;')) {
           if (!axeCoreSrc) {
             axeCoreSrc = fs.readFileSync(require.resolve('axe-core'), 'utf8');
             axeCoreSrc = axeCoreSrc.replace(/^\/\*.*\*\//, '');
+
+            const axeOptions = browser.options.axe.options;
+            if (axeOptions) {
+              axeCoreSrc = `${axeCoreSrc}\naxe.configure(${JSON.stringify(axeOptions)});`;
+            }
           }
           browser.execute(axeCoreSrc);
         }
@@ -32,7 +33,7 @@ export default class AxeService {
       const specifiedViewports = options.viewports || [currentViewportSize];
       const axeOptions = {
         runOnly: options.runOnly,
-        rules: Object.assign({}, axeConfig.options.rules, options.rules),
+        rules: Object.assign({}, options.rules),
       };
 
       // Get accessibility results for each viewport size
