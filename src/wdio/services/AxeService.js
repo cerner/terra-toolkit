@@ -9,17 +9,18 @@ let axeCoreSrc;
 */
 export default class AxeService {
   // eslint-disable-next-line class-methods-use-this
-  before(capabilities) {
+  before() {
     browser.addCommand('axe', (options = {}) => {
       // Conditionally inject axe. This allows consumers to inject it themselves
       // in the test examples which would slightly speed up test runs.
-      if (browser.options.axe.inject) {
+      const axeConfig = browser.options.axe;
+      if (axeConfig && axeConfig.inject) {
         if (browser.execute('return window.axe === undefined;')) {
           if (!axeCoreSrc) {
             axeCoreSrc = fs.readFileSync(require.resolve('axe-core'), 'utf8');
             axeCoreSrc = axeCoreSrc.replace(/^\/\*.*\*\//, '');
 
-            const axeOptions = browser.options.axe.options;
+            const axeOptions = axeConfig.options;
             if (axeOptions) {
               axeCoreSrc = `${axeCoreSrc}\naxe.configure(${JSON.stringify(axeOptions)});`;
             }
