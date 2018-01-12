@@ -13,8 +13,11 @@ export default class AxeService {
     browser.addCommand('axe', (options = {}) => {
       // Conditionally inject axe. This allows consumers to inject it themselves
       // in the test examples which would slightly speed up test runs.
-      const axeConfig = browser.options.axe;
-      if (axeConfig && axeConfig.inject) {
+      const axeConfig = {
+        inject: true,
+        ...(browser.options.axe || {}),
+      };
+      if (axeConfig.inject) {
         if (browser.execute('return window.axe === undefined;')) {
           if (!axeCoreSrc) {
             axeCoreSrc = fs.readFileSync(require.resolve('axe-core'), 'utf8');
