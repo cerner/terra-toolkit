@@ -52,8 +52,6 @@
   },
   "peerDependencies": {
     "nightwatch": "^0.9.12",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
     "webdriverio": "^4.9.8",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.7.1",
@@ -84,8 +82,6 @@
     "node-sass": "^4.5.2",
     "postcss-loader": "^2.0.6",
     "raw-loader": "^0.5.1",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
     "rimraf": "^2.6.1",
     "sass-loader": "^6.0.6",
     "shelljs": "^0.7.6",

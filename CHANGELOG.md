@@ -3,6 +3,7 @@ Changelog
 
 Unreleased
 ----------
+* Removed React dependency
 
 2.6.0 - (January 4, 2018)
 ----------
