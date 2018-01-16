@@ -20,6 +20,16 @@ const config = {
   seleniumDocker: {
     enabled: !process.env.TRAVIS,
   },
+
+  axe: {
+    inject: true,
+    options: {
+      rules: [{
+        id: 'landmark-one-main',
+        enabled: false,
+      }],
+    },
+  },
 };
 
 

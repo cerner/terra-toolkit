@@ -8,11 +8,11 @@ describe('axe', () => {
   });
 
   describe('inaccessible contrast', () => {
-    const ignoreContrast = {
+    const ignoredA11y = {
       'color-contrast': { enabled: false },
     };
 
     before(() => browser.url('/inaccessible-contrast.html'));
-    Terra.should.beAccessible({ viewports, rules: ignoreContrast });
+    Terra.should.beAccessible({ viewports, rules: ignoredA11y });
   });
 });

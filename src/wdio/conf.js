@@ -51,10 +51,6 @@ exports.config = {
     global.browser.click('#wdioMouseReset');
   },
 
-  axe: {
-    inject: true,
-  },
-
   mochaOpts: {
     ui: 'bdd',
   },

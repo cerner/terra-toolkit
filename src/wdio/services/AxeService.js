@@ -9,20 +9,25 @@ let axeCoreSrc;
 */
 export default class AxeService {
   // eslint-disable-next-line class-methods-use-this
-  before(config) {
-    const axeConfig = {
-      inject: true, // True if axeCore script should be injected on each test page.
-      ...(config.axe || {}),
-    };
-
+  before() {
     browser.addCommand('axe', (options = {}) => {
       // Conditionally inject axe. This allows consumers to inject it themselves
       // in the test examples which would slightly speed up test runs.
+      const axeConfig = {
+        inject: true,
+        ...(browser.options.axe || {}),
+      };
       if (axeConfig.inject) {
         if (browser.execute('return window.axe === undefined;')) {
           if (!axeCoreSrc) {
             axeCoreSrc = fs.readFileSync(require.resolve('axe-core'), 'utf8');
             axeCoreSrc = axeCoreSrc.replace(/^\/\*.*\*\//, '');
+
+            const axeOptions = axeConfig.options;
+            if (axeOptions) {
+              const axeJsonConfigure = `axe.configure(${JSON.stringify(axeOptions)})`;
+              axeCoreSrc = `${axeCoreSrc}\n${axeJsonConfigure};`;
+            }
           }
           browser.execute(axeCoreSrc);
         }
