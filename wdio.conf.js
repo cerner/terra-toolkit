@@ -22,6 +22,7 @@ const config = {
   },
 
   axe: {
+    inject: true,
     options: {
       rules: [{
         id: 'landmark-one-main',

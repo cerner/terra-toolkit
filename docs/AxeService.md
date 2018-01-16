@@ -5,6 +5,7 @@ Terra toolkit automatically includes the wdio-axe-service which enhances a webdr
 
 Under the key `axe` in the wdio.conf.js you can pass a configuration object with the following structure:
 
+* **inject** - True if the axe script should be injected by the test running. Disable if axe is already included in the test files, which slightly speed up runs. Defaults to true.
 * **options** - Additional configuration options for axe.  See [axe documentation](https://www.axe-core.org/docs/) for the axe.configure api.
   * **rules** - An array of rule objects to add to the existing set of rules or override existing rules.  See [axe documentation](https://www.axe-core.org/docs/) for the axe.configure api.
 

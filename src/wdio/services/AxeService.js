@@ -25,7 +25,8 @@ export default class AxeService {
 
             const axeOptions = axeConfig.options;
             if (axeOptions) {
-              axeCoreSrc = `${axeCoreSrc}\naxe.configure(${JSON.stringify(axeOptions)});`;
+              const axeJsonConfigure = `axe.configure(${JSON.stringify(axeOptions)})`;
+              axeCoreSrc = `${axeCoreSrc}\n${axeJsonConfigure};`;
             }
           }
           browser.execute(axeCoreSrc);
