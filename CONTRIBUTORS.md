@@ -8,6 +8,7 @@ Cerner Corporation
 - Derek Yu [@yuderekyu]
 - Kevin Schuster [@kschuste]
 - Jake LaCombe [@jakelacombe]
+- Matt Schile [@mschile]
 
 [@emilyrohrbough]: https://github.com/emilyrohrbough
 [@brettjankord]: https://github.com/bjankord
@@ -17,3 +18,4 @@ Cerner Corporation
 [@yuderekyu]: https://github.com/yuderekyu
 [@kschuste]: https://github.com/kschuste
 [@jakelacombe]: https://github.com/jakelacombe
+[@mschile]: https://github.com/mschile
