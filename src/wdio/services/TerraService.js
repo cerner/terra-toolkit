@@ -65,12 +65,13 @@ const beAccessible = (options) => {
 /**
 * Generates a test for each themed property given and runs a screenshot assertion.
 * @property {Object} customProperties - An object containing the CSS custom properties to assert.
+* @property {Object} options - Additional options for testing.
 */
-const themeEachCustomProperty = (customProperties) => {
+const themeEachCustomProperty = (customProperties, options = {}) => {
   Object.entries(customProperties).forEach(([key, value]) => {
     global.it(`themed [${key}]`, () => {
       global.browser.execute(`document.documentElement.style.setProperty('${key}', '${value}')`);
-      global.expect(global.browser.checkElement('[data-reactroot]')).to.matchReference();
+      global.expect(global.browser.checkElement(options.selector || '[data-reactroot]')).to.matchReference();
     });
   });
 };

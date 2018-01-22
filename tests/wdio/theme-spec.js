@@ -6,4 +6,11 @@ describe('themeEachCustomProperty', () => {
     '--color': 'red',
     '--font-size': '50px',
   });
+
+  Terra.should.themeEachCustomProperty({
+    '--color': 'red',
+    '--font-size': '50px',
+  }, {
+    selector: '.test',
+  });
 });

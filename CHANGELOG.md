@@ -4,6 +4,7 @@ Changelog
 Unreleased
 ----------
 * Removed React dependency
+* Add options argument to themeEachCustomProperty method
 
 2.6.0 - (January 4, 2018)
 ----------
