@@ -64,28 +64,29 @@ const beAccessible = (options) => {
 
 /**
 * Generates a test for each themed property given and runs a screenshot assertion.
-* @property {Object} customProperties - An object containing the CSS custom properties to assert.
+* @property {Array} args - An object containing the CSS custom properties to assert.
 */
-const themeEachCustomProperty = (customProperties) => {
-  Object.entries(customProperties).forEach(([key, value]) => {
+const themeEachCustomProperty = (...args) => {
+  // If more than 1 argument, selector is first
+  const selector = args.length > 1 ? args[0] : global.browser.options.terra.selector;
+  // Style properties are always last.
+  const styleProperties = args[args.length - 1];
+
+  Object.entries(styleProperties).forEach(([key, value]) => {
     global.it(`themed [${key}]`, () => {
       global.browser.execute(`document.documentElement.style.setProperty('${key}', '${value}')`);
-      global.expect(global.browser.checkElement('[data-reactroot]')).to.matchReference();
+      global.expect(global.browser.checkElement(selector)).to.matchReference();
     });
   });
 };
 
-const matchScreenshot = (param1, param2) => {
-  let name = 'default';
-  let options = {};
-  if (typeof param1 === 'string') {
-    name = param1;
-    options = param2 || options;
-  } else {
-    options = param1 || options;
-  }
+const matchScreenshot = (...args) => {
+  // If more than 1 argument, name is first
+  const name = args.length > 1 ? args[0] : 'default';
+  // test options are always last.
+  const options = args[args.length - 1] || {};
 
-  const selector = options.selector || '[data-reactroot]';
+  const selector = options.selector || global.browser.options.terra.selector;
   const viewports = options.viewports || [];
 
   global.it(`[${name}] matches screenshot`, () => {
