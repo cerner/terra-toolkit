@@ -24,6 +24,9 @@ exports.config = {
   services: ['visual-regression', AxeService, TerraService, SeleniumDockerService],
   visualRegression,
   framework: 'mocha',
+  terra: {
+    selector: '[data-reactroot]',
+  },
 
   beforeHook() {
     // Ensure the mouse starts in upper left corner before every test.

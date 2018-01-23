@@ -30,9 +30,6 @@ const config = {
       }],
     },
   },
-  terra: {
-    selector: '[data-reactroot]',
-  },
 };
 
 
