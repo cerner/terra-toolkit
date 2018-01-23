@@ -64,19 +64,13 @@ const beAccessible = (options) => {
 
 /**
 * Generates a test for each themed property given and runs a screenshot assertion.
-* @property {Object} customProperties - An object containing the CSS custom properties to assert.
-* @property {Object} options - Additional options for testing.
+* @property {Array} args - An object containing the CSS custom properties to assert.
 */
-const themeEachCustomProperty = (customSelector, customProperties) => {
-  let selector = global.browser.options.terra.selector;
-  let styleProperties = {};
-
-  if (typeof customSelector === 'string') {
-    selector = customSelector;
-    styleProperties = customProperties || styleProperties;
-  } else {
-    styleProperties = customSelector || styleProperties;
-  }
+const themeEachCustomProperty = (...args) => {
+  // If more than 1 argument, selector is first
+  const selector = args.length > 1 ? args[0] : global.browser.options.terra.selector;
+  // Style properties are always last.
+  const styleProperties = args[args.length - 1];
 
   Object.entries(styleProperties).forEach(([key, value]) => {
     global.it(`themed [${key}]`, () => {
@@ -86,16 +80,11 @@ const themeEachCustomProperty = (customSelector, customProperties) => {
   });
 };
 
-const matchScreenshot = (param1, param2) => {
-  let name = 'default';
-  let options = {};
-
-  if (typeof param1 === 'string') {
-    name = param1;
-    options = param2 || options;
-  } else {
-    options = param1 || options;
-  }
+const matchScreenshot = (...args) => {
+  // If more than 1 argument, name is first
+  const name = args.length > 1 ? args[0] : 'default';
+  // test options are always last.
+  const options = args[args.length - 1] || {};
 
   const selector = options.selector || global.browser.options.terra.selector;
   const viewports = options.viewports || [];
