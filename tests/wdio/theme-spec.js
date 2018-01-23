@@ -7,10 +7,11 @@ describe('themeEachCustomProperty', () => {
     '--font-size': '50px',
   });
 
-  Terra.should.themeEachCustomProperty({
-    '--color': 'red',
-    '--font-size': '50px',
-  }, {
-    selector: '.test',
-  });
+  Terra.should.themeEachCustomProperty(
+    '.test',
+    {
+      '--color': 'red',
+      '--font-size': '50px',
+    },
+  );
 });

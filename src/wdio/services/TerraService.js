@@ -67,11 +67,21 @@ const beAccessible = (options) => {
 * @property {Object} customProperties - An object containing the CSS custom properties to assert.
 * @property {Object} options - Additional options for testing.
 */
-const themeEachCustomProperty = (customProperties, options = {}) => {
-  Object.entries(customProperties).forEach(([key, value]) => {
+const themeEachCustomProperty = (customSelector, customProperties) => {
+  let selector = global.browser.options.terra.selector;
+  let styleProperties = {};
+
+  if (typeof customSelector === 'string') {
+    selector = customSelector;
+    styleProperties = customProperties || styleProperties;
+  } else {
+    styleProperties = customSelector || styleProperties;
+  }
+
+  Object.entries(styleProperties).forEach(([key, value]) => {
     global.it(`themed [${key}]`, () => {
       global.browser.execute(`document.documentElement.style.setProperty('${key}', '${value}')`);
-      global.expect(global.browser.checkElement(options.selector || '[data-reactroot]')).to.matchReference();
+      global.expect(global.browser.checkElement(selector)).to.matchReference();
     });
   });
 };
@@ -79,6 +89,7 @@ const themeEachCustomProperty = (customProperties, options = {}) => {
 const matchScreenshot = (param1, param2) => {
   let name = 'default';
   let options = {};
+
   if (typeof param1 === 'string') {
     name = param1;
     options = param2 || options;
@@ -86,7 +97,7 @@ const matchScreenshot = (param1, param2) => {
     options = param1 || options;
   }
 
-  const selector = options.selector || '[data-reactroot]';
+  const selector = options.selector || global.browser.options.terra.selector;
   const viewports = options.viewports || [];
 
   global.it(`[${name}] matches screenshot`, () => {
