@@ -81,10 +81,17 @@ const themeEachCustomProperty = (...args) => {
 };
 
 const matchScreenshot = (...args) => {
-  // If more than 1 argument, name is first
-  const name = args.length > 1 ? args[0] : 'default';
-  // test options are always last.
-  const options = args[args.length - 1] || {};
+  const param1 = args.length ? args[0] : undefined;
+  const param2 = args.length > 1 ? args[1] : undefined;
+
+  let name = 'default';
+  let options = {};
+  if (typeof param1 === 'string') {
+    name = param1;
+    options = typeof param2 === 'object' && !Array.isArray(param2) ? param2 : options;
+  } else {
+    options = typeof param1 === 'object' && !Array.isArray(param1) ? param1 : options;
+  }
 
   const selector = options.selector || global.browser.options.terra.selector;
   const viewports = options.viewports || [];
