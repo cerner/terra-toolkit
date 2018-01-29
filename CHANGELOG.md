@@ -3,6 +3,10 @@ Changelog
 
 Unreleased
 ----------
+
+2.7.0 - (January 29, 2018)
+----------
+* Locked down docker selenium chrome version
 * Removed unneeded React dependencies
 * Add selector argument to themeEachCustomProperty method
 * Add a default global document selector to the wdio config which is used in the Terra service
