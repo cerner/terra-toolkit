@@ -12,7 +12,7 @@ services:
     ports:
       - '4444:4444'
   chrome:
-    image: 'selenium/node-chrome:3.8.1-erbium''
+    image: 'selenium/node-chrome:3.8.1-erbium'
     volumes:
       - /dev/shm:/dev/shm
     ports:
