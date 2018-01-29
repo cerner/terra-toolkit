@@ -3,9 +3,9 @@ Changelog
 
 Unreleased
 ----------
-* Removed React dependency
+* Removed unneeded React dependencies
 * Add selector argument to themeEachCustomProperty method
-* Add default document global selector for Terra service to wdio config.
+* Add a default global document selector to the wdio config which is used in the Terra service
 
 2.6.0 - (January 4, 2018)
 ----------
