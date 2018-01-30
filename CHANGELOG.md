@@ -10,6 +10,7 @@ Unreleased
 * Removed unneeded React dependencies
 * Add selector argument to themeEachCustomProperty method
 * Add a default global document selector to the wdio config which is used in the Terra service
+* Unlock axe-core to version ^2.6.1
 
 2.6.0 - (January 4, 2018)
 ----------
