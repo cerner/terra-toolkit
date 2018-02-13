@@ -1,7 +1,11 @@
 import chai from 'chai';
 import chaiMethods from './TerraCommands/chai-methods';
+import accessiblity from './TerraCommands/accessiblity';
 import visualRegression from './TerraCommands/visual-regression';
 
+/**
+* Terra defined viewport sizes.
+*/
 const VIEWPORTS = {
   tiny: { width: 470, height: 768, name: 'tiny' },
   small: { width: 622, height: 768, name: 'small' },
@@ -12,7 +16,7 @@ const VIEWPORTS = {
 };
 
 /**
-* convenience method for getting viewports by name
+* Convenience method for getting viewports by name.
 * @param sizes - [String] of viewport sizes.
 * @return [Object] of viewport sizes.
 */
@@ -22,12 +26,6 @@ const getViewports = (...sizes) => {
     viewportSizes = sizes;
   }
   return viewportSizes.map(size => VIEWPORTS[size]);
-};
-
-const beAccessible = (options) => {
-  global.it('is accessible', () => {
-    global.expect(global.browser.axe(options)).to.be.accessible();
-  });
 };
 
 /**
@@ -45,12 +43,10 @@ export default class TerraService {
     global.Terra = {
       viewports: getViewports,
       should: {
-        beAccessible,
-        matchScreenshot: visualRegression.matchScreenshot,
+        beAccessible: accessiblity.beAccessible,
+        matchScreenshot: visualRegression.matchScreenshotWithinTolerance,
+        matchScreenshotExactly: visualRegression.matchScreenshotExactly,
         themeEachCustomProperty: visualRegression.themeEachCustomProperty,
-      },
-      check: {
-        screenshot: visualRegression.shouldMatchScreenshot,
       },
     };
     chai.Assertion.addMethod('accessible', chaiMethods.accessible);

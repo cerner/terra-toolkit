@@ -1,8 +1,9 @@
 import chai from 'chai';
+import visualRegression from './visual-regression';
 
 /**
-* A accessible chai assertion to be paired with browser.axe() tests.
-*/
+  * A accessible chai assertion to be paired with browser.axe() tests.
+  */
 function accessible() {
   // eslint-disable-next-line no-underscore-dangle
   new chai.Assertion(this._obj).to.be.instanceof(Array);
@@ -18,7 +19,14 @@ function accessible() {
     'expected accessibilty errors but received none');
 }
 
-const getComparisonResults = (screenshots, isExactMatch) => (
+/** Helper method to determine which comparision results are relevant if the chai
+  * screenshot assertion fails.
+  * @property {Array of Objects} screenshots - The list of comparision results. The results
+  *    contain: misMatchPercentage (number), isSameDimensions (bool), isWithinMisMatchTolerance
+  *    (bool) and isExactSameImage (bool).
+  * @property {bool} matchExactly - If the screenshots should be an exact match.
+  */
+const getComparisonResults = (screenshots, matchExactly) => (
   screenshots.map((comparison) => {
     const { misMatchPercentage, isSameDimensions, isExactSameImage } = comparison;
     const relevantInformation = {};
@@ -27,7 +35,7 @@ const getComparisonResults = (screenshots, isExactMatch) => (
       relevantInformation.isSameDimensions = isSameDimensions;
     }
 
-    if (isExactMatch) {
+    if (matchExactly) {
       relevantInformation.isExactSameImage = isExactSameImage;
     } else {
       relevantInformation.misMatchPercentage = misMatchPercentage;
@@ -37,32 +45,39 @@ const getComparisonResults = (screenshots, isExactMatch) => (
   })
 );
 
-/** Checks if the screenshot(s) are the same size and are within the mismatch tolerance match
-  * A chai assertion to be paired with browser.capture() visual regression tests.
+/** A visual regression chai assertion to be paired with browser.capture() visual regression tests.
+  * Checks if the screenshot(s) are the same size and verifies the screenshots are either within
+  * the mismatch tolerance match or an exact match.
+  * @property {String} testName - the test name to include in assetion error descripton. Defaults to
+  *     'screenshots to not match reference'.
+  * @property {String} matchType - Which assertion to make. Either 'withinTolerance' or 'exactly'.
+  *     Defaults to 'withinTolerance'.
   */
 function matchReference(matchType = 'withinTolerance') {
   // eslint-disable-next-line no-underscore-dangle
   new chai.Assertion(this._obj).to.be.instanceof(Array);
 
   if (matchType) {
-    new chai.Assertion(matchType).to.be.oneOf(['withinTolerance', 'exact']);
+    new chai.Assertion(matchType).to.be.oneOf(['withinTolerance', 'exactly']);
   }
+
   // eslint-disable-next-line no-underscore-dangle
   const screenshots = this._obj;
-  const isExactMatch = matchType === 'exact';
+  const matchExactly = matchType === 'exactly';
 
-  const comparisonResults = getComparisonResults(screenshots, isExactMatch);
+  const testDescription = visualRegression.getTestDescription(matchType);
+  const comparisonResults = getComparisonResults(screenshots, matchExactly);
 
   let imagesMatch;
-  if (isExactMatch) {
+  if (matchExactly) {
     imagesMatch = screenshots.every(screenshot => (screenshot && screenshot.isSameDimensions && screenshot.isExactSameImage));
   } else {
     imagesMatch = screenshots.every(screenshot => (screenshot && screenshot.isSameDimensions && screenshot.isWithinMisMatchTolerance));
   }
 
   this.assert(imagesMatch === true,
-    `expected screenshot(s) to be match reference, but recieve the following comparison results \n${comparisonResults}`,
-    `expected screenshot(s) to not match reference, but recieve the following comparison results \n${comparisonResults}`);
+    `expected to ${testDescription}, but recieve the following comparison results \n${comparisonResults}`,
+    `did not expected to ${testDescription}, but recieve the following comparison results \n${comparisonResults}`);
 }
 
 const chaiMedthods = {

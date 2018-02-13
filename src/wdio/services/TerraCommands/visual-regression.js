@@ -1,4 +1,14 @@
-const createScreenshotOptions = (...args) => {
+/**
+* Helper method to determine the screenshot tag name, the element selector, the viewport(s)
+* in which to take the screenshots, as well as the capture screenshot options to be passed
+* to the wdio-visual-regression-service comparison methods. Currently supported VR comparision
+* options are:
+*     - viewports: [{ width: Number, height: Number }]
+*     - misMatchTolerance: Number
+*     - viewportChangePause: Number
+* @property {Array} args - The list of test arguments to parse.
+*/
+const determineScreenshotOptions = (...args) => {
   const param1 = args.length ? args[0] : undefined;
   const param2 = args.length > 1 ? args[1] : undefined;
 
@@ -11,26 +21,33 @@ const createScreenshotOptions = (...args) => {
     options = typeof param1 === 'object' && !Array.isArray(param1) ? param1 : options;
   }
 
-  // Check if custom selector should be used
+  // Check if custom selector should be used, otherwise use the global value.
   const selector = options.selector || global.browser.options.terra.selector;
 
   // Which viewports the screenshoot should adjust to & take screenshot. Supplying [] results in current viewport size.
   const viewports = options.viewports || [];
 
-  const matchType = options.matchType || undefined;
-
   const compareOptions = {};
-  // Check if custom misMatchTolerance should be used, otherwise use the global value
+  // Check if custom misMatchTolerance should be used, otherwise use the global value.
   compareOptions.misMatchTolerance = options.misMatchTolerance || global.browser.options.visualRegression.compare.misMatchTolerance;
 
-  // Check if custom viewportChangePause should be used, otherwise use the global value
-  compareOptions.viewportChangePause = options.viewportChangePause || global.browser.options.visualRegression.compare.viewportChangePause;
+  // Check if custom viewportChangePause should be used, otherwise use the global value.
+  compareOptions.viewportChangePause = options.viewportChangePause || global.browser.options.visualRegression.viewportChangePause;
 
-  return { name, selector, viewports, matchType, options: compareOptions };
+  return { name, selector, viewports, options: compareOptions };
 };
 
-const itMatchesScreenshot = (testCaseName, selector, options, matchType) => {
-  global.it(`${testCaseName}`, () => {
+/**
+* A mocha-chai convenience test case to capture screenshots of a specified element and
+* assert the screenshot comparision results are either within the mismatch tolerance or
+* are an exact match.
+* @property {String} testName - The test case name.
+* @property {String} selector - The element to caputure in the a screenshot.
+* @property {Object} options - The wdio-visual-regression-service capture screenshot options.
+* @property {String} matchType - Specifies the type of matchReference assertion. Either 'withinTolerance' or 'exactly'.
+*/
+const itMatchesScreenshot = (testName, selector, options, matchType) => {
+  global.it(`${testName}`, () => {
     const screenshot = global.browser.checkElement(selector, options);
     global.expect(screenshot).to.matchReference(matchType);
   });
@@ -54,44 +71,70 @@ const themeEachCustomProperty = (...args) => {
   });
 };
 
-const matchScreenshot = (...args) => {
-  const { name, selector, viewports, matchType, options } = createScreenshotOptions(...args);
+/** Helper method to create a useful test descripton.
+  * @property {String} matchType - Specifies the type of matchReference assertion. Either 'withinTolerance'
+  *   or 'exactly'.
+  */
+const getTestDescription = matchType => (
+  matchType === 'withinTolerance' ? 'be within the mismatch tolerance' : 'match screenshot exactly'
+);
+
+/**
+* Determines the screenshot options and test names needed to call the `itMatchesScreenshot`
+* mocha-chai method.
+* @property {Array} testArguments - The test arguments passed to the `matchScreenshotWithinTolerance`
+*    or `matchScreenshotExactly` methods.
+* @property {String} matchType - Specifies the type of matchReference assertion. Either 'withinTolerance'
+*    or 'exactly'.
+*/
+const matchScreenshot = (testArguments, matchType) => {
+  const { name, selector, viewports, options } = determineScreenshotOptions(...testArguments);
+
+  const testDescription = getTestDescription(matchType);
 
   if (viewports.length) {
-    // Create assertion for each viewport so know which screenshots pass/fail comparison
+    // Create assertion for each viewport so know which screenshots-viewport combinations pass/fail comparison
     viewports.forEach((viewport) => {
-      const testCaseName = `[${name}] matches screenshot for ${viewport.name} viewport`;
+      const testName = `[${name}] to ${testDescription} for ${viewport.name} viewport`;
       options.viewports = [viewport];
-      itMatchesScreenshot(testCaseName, selector, options, matchType);
+      itMatchesScreenshot(testName, selector, options, matchType);
     });
   } else {
-    itMatchesScreenshot(`[${name}] matches screenshot`, selector, options, matchType);
+    itMatchesScreenshot(`[${name}] to ${testDescription}`, selector, options, matchType);
   }
 };
 
-const shouldMatchScreenshot = (...args) => {
-  const { name, selector, viewports, matchType, options } = createScreenshotOptions(...args);
+/**
+* Mocha-chai wrapper method to capture screenshots of a specified element and assert the
+* screenshot comparision results are within the mismatch tolerance.
+* @property {Array} args - The list of test arguments to parse. Accepted Arguments:
+*    - String (optional): the test case name. Default name is 'default'
+*    - Object (optional): the test options. Options include selector, viewports,
+*        misMatchTolerance and viewportChangePause.
+*    Note: args list order should be: name, then options when using both.
+*/
+const matchScreenshotWithinTolerance = (...args) => {
+  matchScreenshot(args, 'withinTolerance');
+};
 
-  // if (viewports.length) {
-  //   // Create assertion for each viewport so know which screenshots pass/fail comparison
-  //   viewports.forEach((viewport) => {
-  //     // const testCaseName = `[${name}] matches screenshot for ${viewport.name} viewport`;
-  //     // options.viewports = [viewport];
-  //     // itMatchesScreenshot(testCaseName, selector, options, matchType);
-  //     const screenshot = global.browser.checkElement(selector, options);
-  //     global.expect(screenshot).to.matchReference(matchType);
-  //   });
-  // } else {
-    // itMatchesScreenshot(`[${name}] matches screenshot`, selector, options, matchType);
-    const screenshot = global.browser.checkElement(selector, { ...options, viewports });
-    global.expect(screenshot).to.matchReference(matchType);
-  // }
+/**
+* Mocha-chai wrapper method to capture screenshots of a specified element and assert the
+* screenshot comparision results are an exact match.
+* @property {Array} args - The list of test arguments to parse. Accepted Arguments:
+*    - String (optional): the test case name. Default name is 'default'
+*    - Object (optional): the test options. Options include selector, viewports,
+*        misMatchTolerance and viewportChangePause.
+*     Note: args list order should be: name, then options when using both.
+*/
+const matchScreenshotExactly = (...args) => {
+  matchScreenshot(args, 'exactly');
 };
 
 const methods = {
-  matchScreenshot,
+  matchScreenshotWithinTolerance,
+  matchScreenshotExactly,
   themeEachCustomProperty,
-  shouldMatchScreenshot,
+  getTestDescription,
 };
 
 export default methods;
