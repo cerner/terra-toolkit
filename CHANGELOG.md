@@ -3,6 +3,18 @@ Changelog
 
 Unreleased
 ----------
+### Added
+* Terra.matchScreenshotExactly mocha-chai helper to take screenshots and check for exact matches.
+* Add global should reference to chai should
+* Expanded Terra.matchScreenshot & Terra.matchScreenshotExactly to include the wdio-visual-regression-service caputure screenshot options of `misMatchTolerance` and `viewportChangePause` to allow for custom test step values.
+
+### Changed
+* Enhanced the mocha-chai helper to be more descriptive and to iterate each viewport option for better test failure information
+* For the chai assertion method `matchReference`
+    * Enhanced error message to be more descriptive for fail assertion
+    * Include screenshot compare results for fail assertion
+    * Accepts matchType to make assertion on comparison results to be withinTolerance or to be the exact image. Defaults to 'withinTolerance'. Previous behavior only checked for exact image and did not account for globally defined misMatchTolerance value.
+
 
 2.7.0 - (January 29, 2018)
 ----------

@@ -48,8 +48,6 @@ const getComparisonResults = (screenshots, matchExactly) => (
 /** A visual regression chai assertion to be paired with browser.capture() visual regression tests.
   * Checks if the screenshot(s) are the same size and verifies the screenshots are either within
   * the mismatch tolerance match or an exact match.
-  * @property {String} testName - the test name to include in assetion error descripton. Defaults to
-  *     'screenshots to not match reference'.
   * @property {String} matchType - Which assertion to make. Either 'withinTolerance' or 'exactly'.
   *     Defaults to 'withinTolerance'.
   */
