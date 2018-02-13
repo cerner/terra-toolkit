@@ -48,7 +48,7 @@ describe('matchScreenshotExactly', () => {
       compareOptions.misMatchTolerance = { misMatchTolerance: 5 };
       compareOptions.viewportChangePause = browser.options.visualRegression.viewportChangePause;
 
-      const screenshots = browser.checkViewport(selector, compareOptions);
+      const screenshots = browser.checkElement(selector, compareOptions);
       expect(screenshots).to.not.matchReference('exactly');
     });
   });

@@ -50,7 +50,7 @@ describe('matchScreenshot', () => {
       compareOptions.misMatchTolerance = browser.options.visualRegression.compare.misMatchTolerance;
       compareOptions.viewportChangePause = browser.options.visualRegression.viewportChangePause;
 
-      const screenshots = browser.checkViewport(selector, compareOptions);
+      const screenshots = browser.checkElement(selector, compareOptions);
       expect(screenshots).to.not.matchReference();
     });
   });
