@@ -6,7 +6,7 @@ Unreleased
 ### Added
 * Terra.matchScreenshotExactly mocha-chai helper to take screenshots and check for exact matches.
 * Add global should reference to chai should
-* Expanded Terra.matchScreenshot & Terra.matchScreenshotExactly to include the wdio-visual-regression-service caputure screenshot options of `misMatchTolerance` and `viewportChangePause` to allow for custom test step values.
+* Expanded Terra.matchScreenshot & Terra.matchScreenshotExactly to include the wdio-visual-regression-service capture screenshot options of `misMatchTolerance` and `viewportChangePause` to allow for custom test step values.
 
 ### Changed
 * Enhanced the mocha-chai helper to be more descriptive and to iterate each viewport option for better test failure information
