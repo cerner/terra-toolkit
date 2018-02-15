@@ -93,7 +93,7 @@ const matchScreenshot = (testArguments, matchType) => {
   const testDescription = getTestDescription(matchType);
 
   if (viewports.length) {
-    // Create assertion for each viewport so know which screenshots-viewport combinations pass/fail comparison
+    // Create an assertion for each viewport such that better information is provided if failure occurs for a screenshot
     viewports.forEach((viewport) => {
       const testName = `[${name}] to ${testDescription} for ${viewport.name} viewport`;
       options.viewports = [viewport];
