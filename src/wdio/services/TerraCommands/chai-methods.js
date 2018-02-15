@@ -41,7 +41,7 @@ const getComparisonResults = (screenshots, matchExactly) => (
 
     relevantInformation.misMatchPercentage = misMatchPercentage;
 
-    return `${JSON.stringify(comparison, null, 2)}`;
+    return `${JSON.stringify(relevantInformation, null, 2)}`;
   })
 );
 
