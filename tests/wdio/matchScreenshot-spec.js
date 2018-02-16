@@ -37,7 +37,7 @@ describe('matchScreenshot', () => {
       browser.execute('document.getElementsByClassName("test")[0].style.color = "blue";');
     });
 
-    Terra.should.matchScreenshot({ misMatchTolerance: 5 });
+    Terra.should.matchScreenshot({ misMatchTolerance: 20 });
 
     // Manually verify failure. Create same screenshots as the base screenshots
     it('default', () => {
