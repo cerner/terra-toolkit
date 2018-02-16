@@ -8,6 +8,10 @@ Nightwatch.js is an easy to use Node.js based End-to-End (E2E) testing solution 
 - [Running Tests](#running-tests)
 
 ## Getting Started
+Terra Toolkit uses docker to setup, run, and tear down selenium to ensure a consistent testing environment locally and in continuous integration build systems. To use Terra Toolkit you must install docker on your machine. Installation instructions can be found at https://www.docker.com/.  **Requires Docker v17.09.0 or higher.**
+
+- Install with [npm](https://www.npmjs.com): `npm install terra-toolkit --save-dev`
+
 The [nightwatch](https://www.npmjs.com/package/nightwatch), [webpack](https://www.npmjs.com/package/webpack), and [webpack-dev-server](https://www.npmjs.com/package/webpack-dev-server) peerDependencies must be installed to utilize the Nightwatch Utilities.
 
 - Install with npm: `npm install nightwatch --save-dev`

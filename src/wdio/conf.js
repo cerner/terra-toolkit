@@ -1,7 +1,7 @@
 const AxeService = require('./services').Axe;
 const TerraService = require('./services').Terra;
 const SeleniumDockerService = require('./services').SeleniumDocker;
-const visualRegression = require('./visualRegressionConf');
+const visualRegressionConfig = require('./visualRegressionConf');
 const path = require('path');
 
 exports.config = {
@@ -22,8 +22,9 @@ exports.config = {
   connectionRetryTimeout: 90000,
   connectionRetryCount: 3,
   services: ['visual-regression', AxeService, TerraService, SeleniumDockerService],
-  visualRegression,
-  framework: 'mocha',
+
+  visualRegression: visualRegressionConfig,
+
   terra: {
     selector: '[data-reactroot]',
   },
@@ -54,6 +55,7 @@ exports.config = {
     global.browser.click('#wdioMouseReset');
   },
 
+  framework: 'mocha',
   mochaOpts: {
     ui: 'bdd',
   },

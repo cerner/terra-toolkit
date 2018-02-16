@@ -8,7 +8,11 @@
 - [Running Tests](#running-tests)
 
 ## Getting Started
-The [webdriverio](https://www.npmjs.com/package/webdriverio), [wdio-mocha-framework](https://www.npmjs.com/package/wdio-mocha-framework), [wdio-visual-regression-service](https://www.npmjs.com/package/wdio-visual-regression-service) peerDependencies must be installed to utilize the Wdio Utilities.
+Terra Toolkit uses docker to setup, run, and tear down selenium to ensure a consistent testing environment locally and in continuous integration build systems. To use Terra Toolkit you must install docker on your machine. Installation instructions can be found at https://www.docker.com/.  **Requires Docker v17.09.0 or higher.**
+
+- Install with [npm](https://www.npmjs.com): `npm install terra-toolkit --save-dev`
+
+The [webdriverio](https://www.npmjs.com/package/webdriverio), [wdio-mocha-framework](https://www.npmjs.com/package/wdio-mocha-framework), [wdio-visual-regression-service](https://www.npmjs.com/package/wdio-visual-regression-service) peerDependencies must be installed to utilize the WebDriver Utilities.
 
 - Install with npm: `npm install webdriverio --save-dev`
 - Install with npm: `npm install wdio-mocha-framework --save-dev`
@@ -16,24 +20,24 @@ The [webdriverio](https://www.npmjs.com/package/webdriverio), [wdio-mocha-framew
 
 ## Configuration Setup
 
-Terra-toolkit provides a default [webdriver.io configuration](https://github.com/cerner/terra-toolkit/blob/master/src/wdio/conf.js) that enables the following services for a mocha test framework:
+To run the webdriver.io test running, the [webdriver.io configuration options](http://webdriver.io/guide/testrunner/configurationfile.html) must be specified in the `wdio.config.js` file. Terra-toolkit provides a [default webdriver.io configuration](https://github.com/cerner/terra-toolkit/blob/master/src/wdio/conf.js) that enables the following services for a mocha test framework:
 
-* SeleniumDockerService - starts a Selenium-Docker instance.
+* `SeleniumDockerService` - starts a Selenium-Docker instance.
     - See [here](https://github.com/cerner/terra-toolkit/blob/master/docs/SeleniumDockerService.md) for configuration information.
-* AxeService - provides utilities for accessibility testing.
+* `AxeService` - provides utilities for accessibility testing.
     - See [here](https://github.com/cerner/terra-toolkit/blob/master/docs/AxeService.md) for configuration information.
-* TerraService - provides custom assertions and a Terra global helper to make testing easier.
-* Visual Regression Service - provides configuration for wdio visual regression testing.
+* `TerraService` - provides global access to chai, custom chai assertions and a Terra helper to make testing easier.
+    - To provide a custom global selector, add `terra: { selector: 'selector_name' }` to the configuration.
+* `VisualRegressionService` - uses wdio-screenshot to capture screenshots and run visual regression testing.
+    - See [here](https://github.com/zinserjan/wdio-visual-regression-service#configuration) for configuration information.
 
 In addition to the default webdriver.io services enabled in the config, a webpack dev server or static server service must be specified to actually run the site:
-- Terra-toolkit provides the [WebpackDevService](https://github.com/cerner/terra-toolkit/blob/master/docs/WebpackDevServerService.md) to start a webpack-dev-server and return a promise when the webpack compiler is completed
-- Webdriver.io provides the [wdio-static-server-service](https://www.npmjs.com/package/wdio-static-server-service) to run a static file server.
+- Terra-toolkit provides the `WebpackDevService` to start a webpack-dev-server and returns a promise when the webpack compiler is completed.
+    - See [here](https://github.com/cerner/terra-toolkit/blob/master/docs/TerraService.md) for configuration information.
+- Webdriver.io provides the `wdio-static-server-service` to run a static file server.
+    - See [here](https://github.com/leadpages/wdio-static-server-service#configuration) for configuration information.
 
-Additional configuration will be needed to enable either of these services.
-
-Finally, the `baseUrl` must be specified to be the site to be tested. Use the [ip](https://www.npmjs.com/package/ip) npm package to obtain the IP address for the SeleniumDocker instance.
-
-More information regarding the webdriver.io configuration options can be found [here](http://webdriver.io/guide/testrunner/configurationfile.html).
+Finally, the `baseUrl` of the site to be tested must be specified. Use the [ip](https://www.npmjs.com/package/ip) npm package to obtain the IP address for the SeleniumDocker instance.
 
 ```javascript
 // An example of a full mono-repo configuration file:
@@ -78,16 +82,24 @@ There are a few things to note about the webdriver.io configuration provided by 
 - Test files should use `*-spec.js` naming format. The default spec search path is `./tests/wdio/**/*-spec.js`.
 - Use `/test_url_path` to direct test urls. This is appended to the `baseUrl` provided in the config.
 
-
-
 Then, to assist with testing, the TerraService provides the Terra global helper to make testing easier:
 
 - `Terra.viewports(name)` takes the viewport key name(s) and returns an array of { height, width } objects representing the respective terra viewport size(s).
     - Use this function to resize the browser or pass the viewport sizes to the accessibility and visual regression commands.
     - By default returns all viewports if not name key are provided.
-- `Terra.should.beAccessible()` convenience method that injects an axe test. Takes the same arguments as the `axe()` utility. See [beAccessible-spec.js](https://github.com/cerner/terra-toolkit/blob/master/tests/wdio/beAccessible-spec.js) for examples.
-- `Terra.should.matchScreenshot(name, options)` convenience method that injects a screenshot test. See [matchScreenshot-spec.js](https://github.com/cerner/terra-toolkit/blob/master/tests/wdio/matchScreenshot-spec.js) for example usage..
-- `Terra.should.themeEachCustomProperty(properties)` convenience method that runs a visual comparison test for each custom property given.
+- `Terra.should.beAccessible()` mocha-chai convenience method that runs an axe test for the page. Takes the same arguments as the `axe()` utility.
+    - See [beAccessible-spec.js](https://github.com/cerner/terra-toolkit/blob/master/tests/wdio/beAccessible-spec.js) for examples.
+- `Terra.should.matchScreenshot()` mocha-chai convenience method that takes a screenshot for the specified viewports and verifies the images are within the specified mis-match tolerance. Note: this method provides its own mocha it test case. The methods accepts these arguments (in this order):
+    - String (optional): the test case name. Default name is 'default'
+    - Object (optional): the test options. Options include selector, viewports, misMatchTolerance and viewportChangePause:
+         - selector: the element selector to take a screenshot of. Defaults to the global terra.selector.
+         - viewports: the array of viewports dimensions to take a screenshot in. Defaults to the current viewport size.
+         - misMatchTolerance: number between 0 and 100 that defines the degree of mismatch to consider two images as identical, increasing this value will decrease test coverage. Defaults to the global visualRegression.compare.misMatchTolerance.
+         - viewportChangePause: the number of milliseconds to wait after a viewport change. Defaults to the global visualRegression.viewportChangePause.
+    - See [matchScreenshot-spec.js](https://github.com/cerner/terra-toolkit/blob/master/tests/wdio/matchScreenshot-spec.js) for example usage.
+- `Terra.should.themeEachCustomProperty()` mocha-chai convenience method that runs a visual comparison test for each custom property given. Note: this method provides its own mocha it test case. The methods accepts these arguments (in this order):
+    - String (optional): the element selector to take a screenshot of. Defaults to the global terra.selector.
+    - Object: list of themeable-variable key-value pairs such that the key is the themeable-variable name and the value is the css value to check in the screenshot.
 
 ```js
 // These globals are provide via the Terra Service
@@ -112,10 +124,10 @@ describe('Basic Test', () => {
 ```
 
 
-If more control is needed over the assertions, the TerraService also provides the custom assertions `accessible` and `matchReference`:
+If more control is needed over the assertions, the TerraService also provides the custom chai assertions `accessible` and `matchReference`:
 
 - `accessible()` validates the `axe()` accessibility assertions on the specified viewports are successful.
-- `matchReference()` validates the `checkElement` visual regression assertions on the specified viewports are successful.
+- `matchReference()` validates the `checkElement` visual regression assertions on the specified viewports are either within the mis-match tolerance or are an exact match. This method accepts a string argument of `withinTolerance` or `exactly` to specify the matchType. By default the matchType is `withinTolerance`.
 
 ```js
 // These globals are provide via the Terra Service
