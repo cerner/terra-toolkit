@@ -117,22 +117,8 @@ const matchScreenshotWithinTolerance = (...args) => {
   matchScreenshot(args, 'withinTolerance');
 };
 
-/**
-* Mocha-chai wrapper method to capture screenshots of a specified element and assert the
-* screenshot comparision results are an exact match.
-* @property {Array} args - The list of test arguments to parse. Accepted Arguments:
-*    - String (optional): the test case name. Default name is 'default'
-*    - Object (optional): the test options. Options include selector, viewports,
-*        misMatchTolerance and viewportChangePause.
-*     Note: args list order should be: name, then options when using both.
-*/
-const matchScreenshotExactly = (...args) => {
-  matchScreenshot(args, 'exactly');
-};
-
 const methods = {
   matchScreenshotWithinTolerance,
-  matchScreenshotExactly,
   themeEachCustomProperty,
   getTestDescription,
 };
