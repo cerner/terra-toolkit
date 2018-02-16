@@ -41,7 +41,7 @@ const getComparisonResults = (screenshots, matchExactly) => (
 
     relevantInformation.misMatchPercentage = misMatchPercentage;
 
-    return `${JSON.stringify(comparison, null, 2)}`;
+    return `${JSON.stringify(relevantInformation, null, 2)}`;
   })
 );
 
@@ -74,8 +74,8 @@ function matchReference(matchType = 'withinTolerance') {
   }
 
   this.assert(imagesMatch === true,
-    `expected to ${testDescription}, but recieved the following comparison results \n${comparisonResults}`,
-    `did not expected to ${testDescription}, but recieved the following comparison results \n${comparisonResults}`);
+    `expected to ${testDescription}, but received the following comparison results \n${comparisonResults}`,
+    `did not expected to ${testDescription}, but received the following comparison results \n${comparisonResults}`);
 }
 
 const chaiMedthods = {
