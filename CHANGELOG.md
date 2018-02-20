@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+2.8.0 - (February 20, 2018)
+----------
 ### Added
 * Terra.matchScreenshotExactly mocha-chai helper to take screenshots and check for exact matches.
 * Add global should reference to chai should
