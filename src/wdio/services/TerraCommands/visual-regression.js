@@ -38,7 +38,7 @@ const determineScreenshotOptions = (...args) => {
 };
 
 /**
-* A mocha-chai convenience test case to capture screenshots of a specified element and
+* An assertion test helper to capture screenshots of a specified element and
 * assert the screenshot comparision results are either within the mismatch tolerance or
 * are an exact match.
 * @property {String} testName - The test case name.
@@ -46,11 +46,9 @@ const determineScreenshotOptions = (...args) => {
 * @property {Object} options - The wdio-visual-regression-service capture screenshot options.
 * @property {String} matchType - Specifies the type of matchReference assertion. Either 'withinTolerance' or 'exactly'.
 */
-const itMatchesScreenshot = (testName, selector, options, matchType) => {
-  global.it(`${testName}`, () => {
-    const screenshot = global.browser.checkElement(selector, options);
-    global.expect(screenshot).to.matchReference(matchType);
-  });
+const assertScreenshotsMatch = (testName, selector, options, matchType) => {
+  const screenshot = global.browser.checkElement(selector, options);
+  global.expect(screenshot, testName).to.matchReference(matchType);
 };
 
 /**
@@ -80,8 +78,9 @@ const getTestDescription = matchType => (
 );
 
 /**
-* Determines the screenshot options and test names needed to call the `itMatchesScreenshot`
-* mocha-chai method.
+* A mocha-chai convenience test case to determines the screenshot options and test names needed to
+* capture screenshots of a specified element and assert the screenshot comparision results are
+* either within the mismatch tolerance or are an exact match.
 * @property {Array} testArguments - The test arguments passed to the `matchScreenshotWithinTolerance`
 *    or `matchScreenshotExactly` methods.
 * @property {String} matchType - Specifies the type of matchReference assertion. Either 'withinTolerance'
@@ -91,17 +90,17 @@ const matchScreenshot = (testArguments, matchType) => {
   const { name, selector, viewports, options } = determineScreenshotOptions(...testArguments);
 
   const testDescription = getTestDescription(matchType);
-
-  if (viewports.length) {
-    // Create an assertion for each viewport such that better information is provided if failure occurs for a screenshot
-    viewports.forEach((viewport) => {
-      const testName = `[${name}] to ${testDescription} for ${viewport.name} viewport`;
-      options.viewports = [viewport];
-      itMatchesScreenshot(testName, selector, options, matchType);
-    });
-  } else {
-    itMatchesScreenshot(`[${name}] to ${testDescription}`, selector, options, matchType);
-  }
+  global.it(`[${name}] to ${testDescription}`, () => {
+    if (viewports.length) {
+      // Create an assertion for each viewport such that better information is provided if failure occurs for a screenshot
+      viewports.forEach((viewport) => {
+        options.viewports = [viewport];
+        assertScreenshotsMatch(`For ${viewport.name} viewport`, selector, options, matchType);
+      });
+    } else {
+      assertScreenshotsMatch('For current viewport', selector, options, matchType);
+    }
+  });
 };
 
 /**
