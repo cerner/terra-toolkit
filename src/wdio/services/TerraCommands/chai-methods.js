@@ -28,8 +28,12 @@ function accessible() {
   */
 const getComparisonResults = (screenshots, matchExactly) => (
   screenshots.map((comparison) => {
-    const { misMatchPercentage, isSameDimensions, isExactSameImage } = comparison;
+    const { viewport, misMatchPercentage, isSameDimensions, isExactSameImage } = comparison;
     const relevantInformation = {};
+
+    if (viewport) {
+      relevantInformation.viewport = viewport;
+    }
 
     if (!isSameDimensions) {
       relevantInformation.isSameDimensions = isSameDimensions;
