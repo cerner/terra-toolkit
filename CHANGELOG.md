@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+2.8.1 - (February 23, 2018)
+----------
 ### Fixed
 * Fixed the Terra.matchScreenshot setup to correctly create and compare screenshots for multiple viewports.
 
