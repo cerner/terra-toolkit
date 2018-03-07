@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Fixed
+* Bumped up the wdio timeout to account for long running screenshot comparisons.
 
 2.8.1 - (February 23, 2018)
 ----------
