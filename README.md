@@ -36,6 +36,8 @@ See the [Webdriver.io Utility Developer's Guide](https://github.com/cerner/terra
 
 ## Nightwatch Utility
 
+NOTE: WebdriverIO should be used instead of Nightwatch. Nightwatch will be deprecated in the future.
+
 Nightwatch.js is an easy to use Node.js based End-to-End (E2E) testing solution for browser based apps and websites. It uses the powerful W3C WebDriver API to perform commands and assertions on DOM elements. Full documentation regarding nightwatch can be found at http://nightwatchjs.org/.
 
 See the [Nightwatch Utility Developer's Guide](https://github.com/cerner/terra-toolkit/blob/master/docs/Nightwatch_Utility.md) to get started.
