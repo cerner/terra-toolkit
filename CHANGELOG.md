@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+### Added
+* Added deprecation warning when using Nightwatch.
+
 ### Fixed
 * Bumped up the wdio timeout to account for long running screenshot comparisons.
 
