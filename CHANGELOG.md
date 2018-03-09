@@ -6,6 +6,9 @@ Unreleased
 ### Fixed
 * Bumped up the wdio timeout to account for long running screenshot comparisons.
 
+### Added
+* New Express Dev Server Service for running tests against.
+
 2.8.1 - (February 23, 2018)
 ----------
 ### Fixed
