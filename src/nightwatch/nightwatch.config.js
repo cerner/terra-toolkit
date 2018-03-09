@@ -10,6 +10,8 @@ const seleniumPort = 4444;
 const seleniumHost = ip.address();
 
 const nightwatchConfig = (webpackConfig, srcFolders, providedPort) => {
+  console.error('WARNING: WebdriverIO should be used instead of Nightwatch.  Nightwatch will be deprecated in the future.');
+    
   if (providedPort) {
     port = providedPort;
   }
