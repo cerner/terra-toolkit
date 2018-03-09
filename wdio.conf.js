@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const wdioConf = require('./lib/wdio/conf');
-const WebpackDevService = require('./lib/wdio/services/index').WebpackDevService;
+const ExpressDevService = require('./lib/wdio/services/index').ExpressDevService;
 const webpackConfig = require('./tests/test.config.js');
 const localIP = require('ip');
 const path = require('path');
@@ -12,7 +12,7 @@ const config = {
   baseUrl: `http://${localIP.address()}:${webpackPort}`,
   specs: [path.join('.', 'tests', 'wdio', '**-spec.js')],
 
-  // Configuration for WebpackDevService
+  // Configuration for ExpressDevService
   webpackPort,
   webpackConfig,
 
@@ -32,6 +32,5 @@ const config = {
   },
 };
 
-
-config.services = wdioConf.config.services.concat([WebpackDevService]);
+config.services = wdioConf.config.services.concat([ExpressDevService]);
 exports.config = config;
