@@ -1,4 +1,7 @@
 # WebpackDevServer Service
+
+**This service has been deprecated in favor of the ExpressDevServerService**
+
 WebpackDevServer Service is provided as a convenience to start a webpack-dev-server and return a promise when the webpack compiler is complete. This enables test setup to be complete before testing is began. This service is utilized by the the default nightwatch configuration and must be provided as a service to webdriver.io if the webpack-dev-server is used to host your test pages.
 
 ## Options

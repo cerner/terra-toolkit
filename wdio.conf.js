@@ -5,16 +5,18 @@ const webpackConfig = require('./tests/test.config.js');
 const localIP = require('ip');
 const path = require('path');
 
-const webpackPort = 8080;
+const port = 8080;
 
 const config = {
   ...wdioConf.config,
-  baseUrl: `http://${localIP.address()}:${webpackPort}`,
+  baseUrl: `http://${localIP.address()}:${port}`,
   specs: [path.join('.', 'tests', 'wdio', '**-spec.js')],
 
   // Configuration for ExpressDevService
-  webpackPort,
   webpackConfig,
+  expressDevServer: {
+    port,
+  },
 
   // Configuration for SeleniumDocker service
   seleniumDocker: {
