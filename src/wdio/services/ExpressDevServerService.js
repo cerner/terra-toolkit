@@ -4,19 +4,19 @@ import MemoryFS from 'memory-fs';
 import mime from 'mime-types';
 import path from 'path';
 
-
-export default class WebDevServerService {
+export default class ExpressDevServerService {
   async onPrepare(config) {
     if (!config.webpackConfig) {
       // eslint-disable-next-line no-console
-      console.log('[WebDevService] No webpack configuration provided');
+      console.log('[ExpresDevService] No webpack configuration provided');
       return;
     }
 
     const webpackConfig = config.webpackConfig;
     const port = config.webpackPort || 8080;
+    const index = config.expressDevServer.index || 'index.html';
 
-    await WebDevServerService.startExpressDevServer(webpackConfig, port).then((server) => {
+    await ExpressDevServerService.startExpressDevServer(webpackConfig, port, index).then((server) => {
       this.server = server;
     });
   }
@@ -25,17 +25,16 @@ export default class WebDevServerService {
     await this.stop();
   }
 
-  static startExpressDevServer(webpackConfig, port) {
-    return WebDevServerService.compile(webpackConfig).then((fs) => {
+  static startExpressDevServer(webpackConfig, port, index) {
+    return ExpressDevServerService.compile(webpackConfig).then((fs) => {
       const app = express();
 
-      // Setup a catch all route, we can't use 'static' because we need to use a vfs
+      // Setup a catch all route, we can't use 'static' because we need to use a virtual file system
       app.get('*', (req, res, next) => {
         let filename = req.url;
-        // Setup a default to route / to the index.html file.
-        // Should this be configurable in the future?
+        // Setup a default index for the server.
         if (filename === '/') {
-          filename = '/index.html';
+          filename = `/${index}`;
         }
 
         const filepath = `${webpackConfig.output.path}${filename}`;
@@ -67,7 +66,7 @@ export default class WebDevServerService {
 
       const server = app.listen(port);
       // eslint-disable-next-line no-console
-      console.log('[WebDevService] Express server started');
+      console.log('[ExpresDevService] Express server started');
 
       return server;
     });
@@ -79,17 +78,15 @@ export default class WebDevServerService {
       // setup a virtual file system to write webpack files to.
       compiler.outputFileSystem = new MemoryFS();
       // eslint-disable-next-line no-console
-      console.log('[WebDevService] Webpack compilation started');
+      console.log('[ExpresDevService] Webpack compilation started');
       compiler.run((err, stats) => {
         if (err || stats.hasErrors()) {
-          // console.log(err);
-          // console.log(stats);
           // eslint-disable-next-line no-console
-          console.log('[WebDevService] Webpack compiled unsuccessfully');
+          console.log('[ExpresDevService] Webpack compiled unsuccessfully');
           reject();
         }
         // eslint-disable-next-line no-console
-        console.log('[WebDevService] Webpack compiled successfully');
+        console.log('[ExpresDevService] Webpack compiled successfully');
         resolve(compiler.outputFileSystem);
       });
     });
@@ -98,7 +95,7 @@ export default class WebDevServerService {
   stop() {
     return new Promise((resolve) => {
       // eslint-disable-next-line no-console
-      console.log('[WebDevService] Closing WebpackDevServer');
+      console.log('[ExpresDevService] Closing WebpackDevServer');
       if (this.server) {
         this.server.close();
         this.server = null;
