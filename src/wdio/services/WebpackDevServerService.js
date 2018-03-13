@@ -26,6 +26,8 @@ export default class WebDevServerService {
   startWebpackDevServer() {
     return new Promise((resolve, reject) => {
       // eslint-disable-next-line no-console
+      console.warn('[WebDevService] WARNING: ExpressDevServer service should be used instead of the Terra provided WebpackDevServerService. See https://github.com/cerner/terra-toolkit/blob/master/docs/ExpressDevServerService.md');
+      // eslint-disable-next-line no-console
       console.log('[WebDevService] Starting WebpackDevServer');
 
       this.compiler = webpack(this.webpackConfig);

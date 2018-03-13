@@ -5,6 +5,7 @@ Unreleased
 ----------
 ### Added
 * Added deprecation warning when using Nightwatch.
+* New Express Dev Server Service for running tests against. Webpack-dev-server is in [maintenance mode](https://github.com/webpack/webpack-dev-server#project-in-maintenance).
 
 ### Fixed
 * Bumped up the wdio timeout to account for long running screenshot comparisons.

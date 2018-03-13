@@ -31,11 +31,9 @@ To run the webdriver.io test running, the [webdriver.io configuration options](h
 * `VisualRegressionService` - uses wdio-screenshot to capture screenshots and run visual regression testing.
     - See [here](https://github.com/zinserjan/wdio-visual-regression-service#configuration) for configuration information.
 
-In addition to the default webdriver.io services enabled in the config, a webpack dev server or static server service must be specified to actually run the site:
-- Terra-toolkit provides the `WebpackDevService` to start a webpack-dev-server and returns a promise when the webpack compiler is completed.
-    - See [here](https://github.com/cerner/terra-toolkit/blob/master/docs/TerraService.md) for configuration information.
-- Webdriver.io provides the `wdio-static-server-service` to run a static file server.
-    - See [here](https://github.com/leadpages/wdio-static-server-service#configuration) for configuration information.
+In addition to the default webdriver.io services enabled in the config, a Express dev server must be specified to actually run the site:
+- Terra-toolkit provides the `ExpressDevService` to start an express server and returns a promise when the webpack compiler is completed.
+    - See [here](https://github.com/cerner/terra-toolkit/blob/master/docs/ExpressDevServerService.md) for configuration information.
 
 Finally, the `baseUrl` of the site to be tested must be specified. Use the [ip](https://www.npmjs.com/package/ip) npm package to obtain the IP address for the SeleniumDocker instance.
 
@@ -43,7 +41,7 @@ Finally, the `baseUrl` of the site to be tested must be specified. Use the [ip](
 // An example of a full mono-repo configuration file:
 const wdioConf = require('terra-toolkit/wdio/conf');
 const webpackConfig = require('./webpack.config.js');
-const WebPackDevService = require('terra-toolkit/lib/wdio/services').WebPackDevService;
+const ExpressDevService = require('terra-toolkit/lib/wdio/services').ExpressDevService;
 const localIP = require('ip');
 
 const port = 8080;
@@ -64,12 +62,14 @@ const config = {
   baseUrl: `http://${localIP.address()}:${port}`,
   specs: [specs],
 
-  // Use Terra-toolkit's WebPackDevService
-  services: wdioConf.config.services.concat([WebPackDevService]),
+  // Use Terra-toolkit's ExpressDevService
+  services: wdioConf.config.services.concat([ExpressDevService]),
 
-  // Configuration for WebPackDevService
+  // Configuration for ExpressDevService
   webpackConfig,
-  webpackPort: port,
+  expressDevServer: {
+    port,
+  },
 };
 
 exports.config = config;
