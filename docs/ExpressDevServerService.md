@@ -3,10 +3,10 @@ ExpressDevServer Service is provided as a convenience to start an express server
 
 ## Options
 
-In the wdio.conf.js you can pass a configuration object with the following structure:
-
-* **webpackConfig** - the webpack configuration used to start the express server. Must be provided to use this service.
-* **expressDevServer** - the webpack-dev-server configuration to be passed to the webpack-dev-server. Defaults to { index: 'index.html', port: '8080' }.
+| Name  | Required | Default Value | Description |
+| ------------- | ------------- | ------------- | ------------- |
+| **webpackConfig**  | true | `undefined` | The webpack configuration used to start the express server. |
+| **expressDevServer**  | false | `{ index: 'index.html', port: '8080' }` | The webpack-dev-server configuration to be passed to the webpack-dev-server. |
 
 ```js
 // wdio.conf.js

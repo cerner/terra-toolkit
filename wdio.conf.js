@@ -14,9 +14,6 @@ const config = {
 
   // Configuration for ExpressDevService
   webpackConfig,
-  expressDevServer: {
-    port,
-  },
 
   // Configuration for SeleniumDocker service
   seleniumDocker: {
