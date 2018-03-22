@@ -6,7 +6,7 @@ const path = require('path');
 
 exports.config = {
   specs: [path.join('.', 'tests', 'wdio', '**', '*-spec.js')],
-  maxInstances: 5,
+  maxInstances: 1,
   capabilities: [
     {
       browserName: 'chrome',
