@@ -4,6 +4,10 @@ Changelog
 Unreleased
 ----------
 
+2.9.1 - (March 22, 2018)
+### Fixed
+* Rolled back the number of max selenium instances from 5 to 1 because of a bug in selenium.
+
 2.9.0 - (March 13, 2018)
 ----------
 ### Added
