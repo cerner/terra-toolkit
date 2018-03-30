@@ -2,7 +2,7 @@
 import ip from 'ip';
 
 import SeleniumDockerService from '../wdio/services/SeleniumDockerService';
-import WebpackDevServerService from '../wdio/services/WebpackDevServerService';
+import ExpressDevServerService from '../wdio/services/ExpressDevServerService';
 
 let port = 8080;
 
@@ -18,12 +18,12 @@ const nightwatchConfig = (webpackConfig, srcFolders, providedPort) => {
   }
 
   const seleniumDocker = new SeleniumDockerService();
-  const webPackDevService = new WebpackDevServerService();
+  const expressDevService = new ExpressDevServerService();
 
   const startDriverAndServer = (done) => {
-    const webPackPromise = webPackDevService.onPrepare({
+    const webPackPromise = expressDevService.onPrepare({
       webpackConfig,
-      webpackPort: port,
+      expressDevServer: { port },
     });
 
     const dockerPromise = seleniumDocker.onPrepare({
@@ -40,7 +40,7 @@ const nightwatchConfig = (webpackConfig, srcFolders, providedPort) => {
 
   const stopDriverAndServer = (done) => {
     Promise.all([
-      webPackDevService.onComplete(),
+      expressDevService.onComplete(),
       seleniumDocker.onComplete(),
     ]).then(done);
   };

@@ -3,6 +3,10 @@ Changelog
 
 Unreleased
 ----------
+### Changed
+* Reduced testing webpack config to the bare minimum needed.
+* Nightwatch now uses the Express Dev Server Service.
+* Express Dev Server Service now fails silently for '/favicon.ico' routes when no favicon exists.
 
 2.9.1 - (March 22, 2018)
 ### Fixed
