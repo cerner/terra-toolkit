@@ -16,6 +16,11 @@ export default class ExpressDevServerService {
     const port = ((config || {}).expressDevServer || {}).port || 8080;
     const index = ((config || {}).expressDevServer || {}).index || 'index.html';
 
+    // If no output is provided, define one.
+    if (!(webpackConfig.output || {}).path) {
+      webpackConfig.output = Object.assign({}, webpackConfig.output, { path: '/dist' });
+    }
+
     await ExpressDevServerService.startExpressDevServer(webpackConfig, port, index).then((server) => {
       this.server = server;
     });

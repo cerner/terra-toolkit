@@ -56,8 +56,9 @@
   "peerDependencies": {
     "nightwatch": "^0.9.12",
     "webdriverio": "^4.9.8",
-    "webpack": "^3.6.0",
-    "webpack-dev-server": "^2.7.1",
+    "webpack": "^4.4.1",
+    "webpack-cli": "^2.0.13",
+    "webpack-dev-server": "^3.0.0",
     "wdio-mocha-framework": "^0.5.11",
     "wdio-visual-regression-service": "^0.8.0"
   },
@@ -73,13 +74,14 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.9.0",
-    "html-webpack-plugin": "^2.30.0",
+    "html-webpack-plugin": "^3.1.0",
     "nightwatch": "^0.9.12",
     "rimraf": "^2.6.1",
     "shelljs": "^0.7.6",
     "webdriverio": "^4.9.8",
-    "webpack": "^3.6.0",
-    "webpack-dev-server": "2.7.1",
+    "webpack": "^4.4.1",
+    "webpack-cli": "^2.0.13",
+    "webpack-dev-server": "^3.0.0",
     "wdio-mocha-framework": "^0.5.11",
     "wdio-visual-regression-service": "^0.8.0"
   }

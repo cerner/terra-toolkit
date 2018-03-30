@@ -43,4 +43,5 @@ module.exports = {
       filename: './inaccessible-text.html',
     }),
   ],
+  mode: 'development',
 };
