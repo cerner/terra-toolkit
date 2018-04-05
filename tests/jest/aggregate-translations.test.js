@@ -3,7 +3,7 @@ const fse = require('fs-extra');
 const glob = require('glob');
 const path = require('path');
 const MemoryFileSystem = require('memory-fs');
-const i18nSupportedLocales = require('../../src/i18nSupportedLocales');
+const i18nSupportedLocales = require('../../scripts/aggregate-translations/i18nSupportedLocales');
 const aggregateTranslations = require('../../scripts/aggregate-translations/aggregate-translations');
 
 global.console = { warn: jest.fn() };

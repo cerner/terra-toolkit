@@ -1,5 +1,5 @@
 const path = require('path');
-const supportedLocales = require('../../src/i18nSupportedLocales');
+const supportedLocales = require('./i18nSupportedLocales');
 const generateTranslationFile = require('./generate-translation-file');
 
 const writeAggregatedTranslations = (aggregatedMessages, locales, fileSystem, outputDir) => {

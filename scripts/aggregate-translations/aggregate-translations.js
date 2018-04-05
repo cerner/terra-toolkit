@@ -1,7 +1,7 @@
 const path = require('path');
 const fse = require('fs-extra');
 const glob = require('glob');
-const supportedLocales = require('../../src/i18nSupportedLocales');
+const supportedLocales = require('./i18nSupportedLocales');
 
 const aggregateMessages = require('./aggregate-messages');
 const writeAggregatedTranslations = require('./write-aggregated-translations');
