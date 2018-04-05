@@ -6,7 +6,7 @@ global.console = { warn: jest.fn() };
 
 const translationDirectories = [
   path.resolve(__dirname, 'fixtures', 'translations'),
-  path.resolve(__dirname, 'fixtures', 'node_modules', 'fixtures1', 'translations'),
+  path.resolve(__dirname, 'fixtures', 'ned_modules', 'fixtures1', 'translations'),
 ];
 const locales = ['en', 'es', 'pt'];
 const fileSystem = fs;
