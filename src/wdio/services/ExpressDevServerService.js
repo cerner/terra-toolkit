@@ -42,6 +42,8 @@ export default class ExpressDevServerService {
         if (fs.existsSync(filepath)) {
           res.setHeader('content-type', mime.contentType(path.extname(filename)));
           res.send(fs.readFileSync(filepath));
+        } else if (filename === '/favicon.ico') {
+          res.sendStatus(200);
         } else {
           next();
         }
