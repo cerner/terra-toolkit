@@ -35,12 +35,12 @@ if (!config) {
   config = require('../../src/webpack/webpack.config');
 }
 
-Promise((resolve, reject) => {
-  const compiler = webpack(config);
-  compiler.run((err, stats) => {
-    if (err || stats.hasErrors()) {
-      reject();
-    }
-    resolve(compiler.outputFileSystem);
-  });
+// Promise((resolve, reject) => {
+const compiler = webpack(config);
+compiler.run((err, stats) => {
+  // if (err || stats.hasErrors()) {
+  //   reject();
+  // }
+  // resolve(compiler.outputFileSystem);
 });
+// });
