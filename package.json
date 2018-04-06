@@ -1,10 +1,10 @@
 {
   "name": "terra-toolkit",
-  "version": "^2.9.2",
+  "version": "2.9.2",
   "description": "Utilities to help when developing terra modules.",
   "main": "lib/index.js",
   "engines": {
-    "node": "8.9.2"
+    "node": "^8.9.2"
   },
   "repository": {
     "type": "git",
