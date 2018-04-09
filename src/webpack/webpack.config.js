@@ -8,11 +8,7 @@ const PostCSSCustomProperties = require('postcss-custom-properties');
 const path = require('path');
 const rtl = require('postcss-rtl');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const aggregateTranslations = require('../../scripts/aggregate-translations/aggregate-translations');
-const fs = require('fs');
-
-const isFile = filePath => (fs.existsSync(filePath) && !fs.lstatSync(filePath).isDirectory());
 
 const processPath = process.cwd();
 /* Get the root path of a mono-repo process call */
@@ -20,16 +16,10 @@ const rootPath = processPath.includes('packages') ? processPath.split('packages'
 
 aggregateTranslations({ baseDirectory: rootPath });
 
-/* Get the site configuration to add as a resolve path */
-let devSiteConfigPath = path.resolve(path.join(rootPath, 'dev-site-config'));
-const customSiteConfigPath = path.join(devSiteConfigPath, 'site.config.js');
-devSiteConfigPath = isFile(customSiteConfigPath) ? devSiteConfigPath : path.join('src', 'config');
-
 const defaultWebpackConfig = {
   entry: {
     raf: 'raf/polyfill',
     'babel-polyfill': 'babel-polyfill',
-    'terra-app': path.resolve(path.join(__dirname, '..', 'Index')),
   },
   module: {
     rules: [{
@@ -88,10 +78,6 @@ const defaultWebpackConfig = {
     new MiniCssExtractPlugin({
       filename: '[name]-[hash].css',
     }),
-    new HtmlWebpackPlugin({
-      title: 'Site',
-      template: path.join(__dirname, '..', 'index.html'),
-    }),
     new PostCSSAssetsPlugin({
       test: /\.css$/,
       log: false,
@@ -104,7 +90,6 @@ const defaultWebpackConfig = {
     extensions: ['.js', '.jsx'],
     modules: [
       path.resolve(rootPath, 'aggregated-translations'),
-      devSiteConfigPath,
       'node_modules',
     ],
 
