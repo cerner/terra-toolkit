@@ -17,11 +17,34 @@ const defaultSearchPatterns = baseDirectory => ([
 const customDirectories = (baseDirectory, directories) =>
   (directories.map(dir => path.resolve(baseDirectory, dir)));
 
+const isFile = filePath => (fse.existsSync(filePath) && !fse.lstatSync(filePath).isDirectory());
+
+const configFile = (configPath) => {
+  if (configPath) {
+    // eslint-disable-next-line global-require, import/no-dynamic-require
+    return require(configPath);
+  }
+
+  const localPath = path.resolve(process.cwd(), 'terraI18n.config');
+  if (isFile(localPath)) {
+    // eslint-disable-next-line global-require, import/no-dynamic-require
+    return require(localPath);
+  }
+  return {};
+};
+
+const defaults = (options) => {
+  const config = configFile((options || {}).configPath);
+  return {
+    baseDir: (options || {}).baseDir || config.baseDir || process.cwd(),
+    directories: (options || {}).directories || config.directories || [],
+    fileSystem: (options || {}).outputFileSystem || config.outputFileSystem || fse,
+    locales: (options || {}).locales || config.locales || supportedLocales,
+  };
+};
+
 const aggregatedTranslations = (options) => {
-  const baseDir = (options || {}).baseDir || process.cwd();
-  const directories = (options || {}).directories || [];
-  const fileSystem = (options || {}).outputFileSystem || fse;
-  const locales = (options || {}).locales || supportedLocales;
+  const { baseDir, directories, fileSystem, locales } = defaults(options);
   if (!locales.includes('en')) {
     locales.push('en');
   }

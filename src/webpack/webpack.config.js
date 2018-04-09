@@ -29,7 +29,7 @@ const defaultWebpackConfig = {
   entry: {
     raf: 'raf/polyfill',
     'babel-polyfill': 'babel-polyfill',
-    'terra-dev-site': path.resolve(path.join(__dirname, '..', 'Index')),
+    'terra-app': path.resolve(path.join(__dirname, '..', 'Index')),
   },
   module: {
     rules: [{
