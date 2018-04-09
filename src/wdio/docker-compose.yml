@@ -12,7 +12,7 @@ services:
     ports:
       - '4444:4444'
   chrome:
-    image: 'selenium/node-chrome:3.11'
+    image: 'selenium/node-chrome:3.11.0-anatomy'
     volumes:
       - /dev/shm:/dev/shm
     ports:
