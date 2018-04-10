@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+2.10.0 - (April 10, 2018)
+----------
 ### Changed
 * Reduced testing webpack config to the bare minimum needed.
 * Nightwatch now uses the Express Dev Server Service.
