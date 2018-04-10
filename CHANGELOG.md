@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Changed
+* Improved error logging for the Express Dev Server Service.
 
 2.10.0 - (April 10, 2018)
 ----------
