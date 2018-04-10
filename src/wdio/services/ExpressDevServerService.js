@@ -85,7 +85,7 @@ export default class ExpressDevServerService {
         if (err || stats.hasErrors()) {
           // eslint-disable-next-line no-console
           console.log('[ExpresDevService] Webpack compiled unsuccessfully');
-          reject();
+          reject(err || new Error(stats.toJson().errors));
         }
         // eslint-disable-next-line no-console
         console.log('[ExpresDevService] Webpack compiled successfully');
