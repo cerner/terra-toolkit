@@ -28,4 +28,4 @@ const mergedConfig = merge(webpackConfig, {
 
 delete mergedConfig.devtool;
 
-module.exports = webpackConfig;
+module.exports = mergedConfig;
