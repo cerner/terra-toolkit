@@ -58,12 +58,20 @@ const themeEachCustomProperty = (...args) => {
 
 /**
 * Generates a test for a combination of themed properties given and runs a screenshot assertion.
-* @property {Object} customProperties - An object containing the CSS custom properties to assert.
-* @property {String} testName - Name of the test
+*
+* @property {Array} args - An object containing the options for themeCombinationOfCustomProperties and  CSS custom properties to assert.
 */
-const themeCombinationOfCustomProperties = (customProperties, selector = global.browser.options.terra.selector, testName = 'themed') => {
-  global.it(`[${testName}]`, () => {
-    Object.entries(customProperties).forEach(([key, value]) => {
+const themeCombinationOfCustomProperties = (...args) => {
+  const selector = args[0].selector ? args[0].selector : global.browser.options.terra.selector;
+  const styleProperties = args[0].properties ? args[0].properties : [];
+
+  if (!args[0].testName) {
+    throw new Error(`A test name for themeCombinationOfCustomProperties test is not provided.
+A testName property should be set in the options object passed to the themeCombinationOfCustomProperties to uniquely identify it.`);
+  }
+
+  global.it(`[${args[0].testName}]`, () => {
+    Object.entries(styleProperties).forEach(([key, value]) => {
       global.browser.execute(`document.documentElement.style.setProperty('${key}', '${value}')`);
     });
     global.expect(global.browser.checkElement(selector)).to.matchReference();
