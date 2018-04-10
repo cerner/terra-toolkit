@@ -9,14 +9,11 @@ const path = require('path');
 
 const webpackPort = 8080;
 
-// Flex specs search between local pacakge and repo
-let specs = path.join('tests', 'wdio', '**', '*-spec.js');
-if (__dirname === process.cwd()) {
-  specs = path.join('packages', '*', specs);
-}
-
 exports.config = {
-  specs,
+  specs: [
+    path.join('tests', 'wdio', '**', '*-spec.js'),
+    path.join('packages', '*', 'tests', 'wdio', '**', '*-spec.js'),
+  ],
   maxInstances: 1,
   capabilities: [
     {
