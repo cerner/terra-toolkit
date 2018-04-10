@@ -22,6 +22,9 @@
   "bugs": {
     "url": "https://github.com/cerner/terra-toolkit/issues"
   },
+  "bin": {
+    "tt:aggregate-translations": "./bin/aggregate-translations.js"
+  },
   "scripts": {
     "clean:all": "npm run clean:compiled && npm run clean:dependencies",
     "clean:compiled": "rimraf lib",
@@ -30,26 +33,30 @@
     "compile": "npm run clean:compiled && npm run compile:build",
     "compile:build": "babel src --out-dir lib --copy-files",
     "danger": "danger",
+    "jest": "jest ./tests/jest/* ",
     "lint": "eslint --ext .js,.jsx .",
+    "nightwatch": "nightwatch",
+    "nightwatch:port-provided": "nightwatch -c tests/test.nightwatch.conf.js",
     "prepare": "npm run compile",
     "prepublishOnly": "npm test",
     "pretest": "npm run lint",
     "release:major": "node scripts/release/release.js major",
     "release:minor": "node scripts/release/release.js minor",
     "release:patch": "node scripts/release/release.js patch",
-    "nightwatch": "nightwatch",
-    "nightwatch:port-provided": "nightwatch -c tests/test.nightwatch.conf.js",
-    "test": "npm run compile && npm run nightwatch && npm run nightwatch:port-provided && wdio wdio.conf.js",
+    "test": "npm run jest && npm run compile && npm run nightwatch && npm run nightwatch:port-provided && wdio wdio.conf.js",
     "wdio": "wdio wdio.conf.js"
   },
   "dependencies": {
     "async": "^2.5.0",
     "axe-core": "^2.6.1",
     "chai": "^4.1.2",
+    "commander": "^2.9.0",
     "express": "^4.16.2",
+    "fs-extra": "^5.0.0",
     "glob": "^7.1.1",
     "ip": "^1.1.5",
     "load-json-file": "^2.0.0",
+    "lodash.startcase": "^4.4.0",
     "memory-fs": "^0.4.1",
     "mime-types": "^2.1.18"
   },
@@ -81,6 +88,7 @@
     "webpack": "^3.6.0",
     "webpack-dev-server": "2.7.1",
     "wdio-mocha-framework": "^0.5.11",
+    "jest": "^21.0.2",
     "wdio-visual-regression-service": "^0.8.0"
   }
 }
