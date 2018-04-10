@@ -1,11 +1,22 @@
+const localIP = require('ip');
+
 const AxeService = require('./services').Axe;
 const TerraService = require('./services').Terra;
 const SeleniumDockerService = require('./services').SeleniumDocker;
 const visualRegressionConfig = require('./visualRegressionConf');
+const ExpressDevService = require('./services/index').ExpressDevService;
 const path = require('path');
 
+const webpackPort = 8080;
+
+// Flex specs search between local pacakge and repo
+let specs = path.join('tests', 'wdio', '**', '*-spec.js');
+if (__dirname === process.cwd()) {
+  specs = path.join('packages', '*', specs);
+}
+
 exports.config = {
-  specs: [path.join('.', 'tests', 'wdio', '**', '*-spec.js')],
+  specs,
   maxInstances: 1,
   capabilities: [
     {
@@ -21,12 +32,32 @@ exports.config = {
   waitforTimeout: 3000,
   connectionRetryTimeout: 90000,
   connectionRetryCount: 3,
-  services: ['visual-regression', AxeService, TerraService, SeleniumDockerService],
+  services: ['visual-regression', AxeService, TerraService, SeleniumDockerService, ExpressDevService],
 
   visualRegression: visualRegressionConfig,
 
   terra: {
     selector: '[data-reactroot]',
+  },
+
+  baseUrl: `http://${localIP.address()}:${webpackPort}`,
+
+  // Configuration for SeleniumDocker service
+  seleniumDocker: {
+    enabled: !process.env.TRAVIS,
+  },
+
+  // Ignore deprecation warnings. When chrome supports /actions API we'll update to use those.
+  deprecationWarnings: false,
+
+  axe: {
+    inject: true,
+    options: {
+      rules: [{
+        id: 'landmark-one-main',
+        enabled: false,
+      }],
+    },
   },
 
   beforeHook() {
