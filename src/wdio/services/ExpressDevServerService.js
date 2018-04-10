@@ -8,7 +8,7 @@ export default class ExpressDevServerService {
   async onPrepare(config) {
     if (!config.webpackConfig) {
       // eslint-disable-next-line no-console
-      console.log('[ExpresDevService] No webpack configuration provided');
+      console.log('[ExpressDevService] No webpack configuration provided');
       return;
     }
 
@@ -68,7 +68,7 @@ export default class ExpressDevServerService {
 
       const server = app.listen(port);
       // eslint-disable-next-line no-console
-      console.log('[ExpresDevService] Express server started');
+      console.log('[ExpressDevService] Express server started');
 
       return server;
     });
@@ -80,15 +80,15 @@ export default class ExpressDevServerService {
       // setup a virtual file system to write webpack files to.
       compiler.outputFileSystem = new MemoryFS();
       // eslint-disable-next-line no-console
-      console.log('[ExpresDevService] Webpack compilation started');
+      console.log('[ExpressDevService] Webpack compilation started');
       compiler.run((err, stats) => {
         if (err || stats.hasErrors()) {
           // eslint-disable-next-line no-console
-          console.log('[ExpresDevService] Webpack compiled unsuccessfully');
-          reject();
+          console.log('[ExpressDevService] Webpack compiled unsuccessfully');
+          reject(err || new Error(stats.toJson().errors));
         }
         // eslint-disable-next-line no-console
-        console.log('[ExpresDevService] Webpack compiled successfully');
+        console.log('[ExpressDevService] Webpack compiled successfully');
         resolve(compiler.outputFileSystem);
       });
     });
@@ -97,7 +97,7 @@ export default class ExpressDevServerService {
   stop() {
     return new Promise((resolve) => {
       // eslint-disable-next-line no-console
-      console.log('[ExpresDevService] Closing WebpackDevServer');
+      console.log('[ExpressDevService] Closing WebpackDevServer');
       if (this.server) {
         this.server.close();
         this.server = null;
