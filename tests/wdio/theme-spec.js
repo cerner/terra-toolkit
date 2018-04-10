@@ -14,4 +14,9 @@ describe('themeEachCustomProperty', () => {
       '--font-size': '50px',
     },
   );
+
+  Terra.should.themeCombinationOfCustomProperties({
+    '--color': 'red',
+    '--font-size': '50px',
+  });
 });

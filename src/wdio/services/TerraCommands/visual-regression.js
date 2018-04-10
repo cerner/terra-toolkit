@@ -56,6 +56,20 @@ const themeEachCustomProperty = (...args) => {
   });
 };
 
+/**
+* Generates a test for a combination of themed properties given and runs a screenshot assertion.
+* @property {Object} customProperties - An object containing the CSS custom properties to assert.
+* @property {String} testName - Name of the test
+*/
+const themeCombinationOfCustomProperties = (customProperties, selector = global.browser.options.terra.selector, testName = 'themed') => {
+  global.it(`[${testName}]`, () => {
+    Object.entries(customProperties).forEach(([key, value]) => {
+      global.browser.execute(`document.documentElement.style.setProperty('${key}', '${value}')`);
+    });
+    global.expect(global.browser.checkElement(selector)).to.matchReference();
+  });
+};
+
 /** Helper method to create a useful test descripton.
   * @property {String} matchType - Specifies the type of matchReference assertion. Either 'withinTolerance'
   *   or 'exactly'.
@@ -108,6 +122,7 @@ const matchScreenshotWithinTolerance = (...args) => {
 const methods = {
   matchScreenshotWithinTolerance,
   themeEachCustomProperty,
+  themeCombinationOfCustomProperties,
   getTestDescription,
 };
 
