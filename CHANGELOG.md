@@ -4,10 +4,15 @@ Changelog
 Unreleased
 ----------
 ### Changed
+* Improved error logging for the Express Dev Server Service.
+
+2.10.0 - (April 10, 2018)
+----------
+### Changed
 * Reduced testing webpack config to the bare minimum needed.
 * Nightwatch now uses the Express Dev Server Service.
 * Express Dev Server Service now fails silently for '/favicon.ico' routes when no favicon exists.
-* Updated to use 3.11.0-anatomy of chromedriver
+* Updated to use 3.11 of chromedriver
 
 2.9.1 - (March 22, 2018)
 ----------
