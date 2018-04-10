@@ -5,6 +5,10 @@ const webpackConfig = require('./tests/test.config.js');
 const config = {
   ...wdioConf.config,
 
+  terra: {
+    selector: '[data-terra-toolkit-content]',
+  },
+
   // Configuration for ExpressDevService
   webpackConfig,
 };

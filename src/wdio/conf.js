@@ -33,10 +33,6 @@ exports.config = {
 
   visualRegression: visualRegressionConfig,
 
-  terra: {
-    selector: '[data-reactroot]',
-  },
-
   baseUrl: `http://${localIP.address()}:${webpackPort}`,
 
   // Configuration for SeleniumDocker service
