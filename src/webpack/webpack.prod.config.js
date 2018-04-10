@@ -26,29 +26,6 @@ const mergedConfig = merge(webpackConfig, {
   },
 });
 
-// Clean build before running
-webpackConfig.plugins.push(new CleanPlugin('build', { exclude: ['stats.json'] }));
-
-// Create output file
-webpackConfig.output = {
-  path: path.resolve('build'),
-  filename: '[name]-[hash].js',
-};
-webpackConfig.mode = 'production';
-webpackConfig.devtool = undefined;
-
-webpackConfig.optimization = {
-  minimizer: [
-    new UglifyJsPlugin({
-      cache: true,
-      parallel: true,
-      sourceMap: true, // set to true if you want JS source maps
-    }),
-  ],
-};
-
-console.log('config', webpackConfig);
-console.log('mergedConfig', mergedConfig);
-
+delete mergedConfig.devtool;
 
 module.exports = webpackConfig;
