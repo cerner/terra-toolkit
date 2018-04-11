@@ -30,7 +30,8 @@ const compile = (webpackConfig, vfs) => (
 
 const generateSite = ({ site, config, vfs }) => {
   if (site) {
-    return Promise.resolve(site, fse);
+    const sitePath = path.join(process.cwd(), site);
+    return Promise.resolve(sitePath, fse);
   }
 
   if (config) {
@@ -87,8 +88,7 @@ const virtualApp = (site, index, fs) => {
 
 const staticApp = (site) => {
   const app = express();
-  const sitePath = path.join(process.cwd(), site);
-  app.use('/static', express.static(sitePath));
+  app.use('/static', express.static(site));
   app.get('/', (req, res) => res.redirect('/static'));
   return Promise.resolve(app);
 };
@@ -98,7 +98,7 @@ const serveSite = (site, fs, vfs, index) => {
     return virtualApp(site, index, fs);
   }
 
-  return staticApp;
+  return staticApp(site);
 };
 
 const serve = (options) => {
