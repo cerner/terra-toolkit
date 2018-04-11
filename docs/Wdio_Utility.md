@@ -100,6 +100,11 @@ Then, to assist with testing, the TerraService provides the Terra global helper 
 - `Terra.should.themeEachCustomProperty()` mocha-chai convenience method that runs a visual comparison test for each custom property given. Note: this method provides its own mocha it test case. The methods accepts these arguments (in this order):
     - String (optional): the element selector to take a screenshot of. Defaults to the global terra.selector.
     - Object: list of themeable-variable key-value pairs such that the key is the themeable-variable name and the value is the css value to check in the screenshot.
+  - `Terra.should.themeCombinationOfCustomProperties()` mocha-chai convenience method that runs a visual comparison test for a grouping of custom properties provided. Note: this method provides its own mocha it test case. The methods accepts these arguments (in this order):
+      - Object: the test options. Options include testName, selector and properties:
+           - testName (required): the name associated to the test. Used to create unique screenshots.
+           - properties (required): object of themeable-variable key-value pairs such that the key is the themeable-variable name and the value is the css value to check in the screenshot.
+           - selector (optional): the element selector to take a screenshot of. Defaults to the global terra.selector.
 
 ```js
 // These globals are provide via the Terra Service
