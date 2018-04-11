@@ -4,14 +4,7 @@ const path = require('path');
 const webpack = require('webpack');
 const MemoryFS = require('memory-fs');
 const mime = require('mime-types');
-
-const preBuiltSite = (site) => {
-  const app = express();
-  const sitePath = path.join(process.cwd(), site);
-  app.use('/static', express.static(sitePath));
-  app.get('/', (req, res) => res.redirect('/static'));
-  return Promise.resolve(app);
-};
+const fse = require('fs-extra');
 
 const compile = (webpackConfig, vfs) => (
   new Promise((resolve, reject) => {
@@ -30,82 +23,96 @@ const compile = (webpackConfig, vfs) => (
       }
       // eslint-disable-next-line no-console
       console.log('[ExpresDevService] Webpack compiled successfully');
-      resolve(compiler.outputFileSystem);
+      resolve(webpackConfig.output.path, compiler.outputFileSystem);
     });
   })
 );
 
-const webpackSite = (config, index) => (
-  compile(config, false).then((fs) => {
-    const app = express();
-
-    // Setup a catch all route, we can't use 'static' because we need to use a virtual file system
-    app.get('*', (req, res, next) => {
-      let filename = req.url;
-      // Setup a default index for the server.
-      if (filename === '/') {
-        filename = `/${index}`;
-      }
-
-      const filepath = `${config.output.path}${filename}`;
-
-      if (fs.existsSync(filepath)) {
-        res.setHeader('content-type', mime.contentType(path.extname(filename)));
-        res.send(fs.readFileSync(filepath));
-      } else if (filename === '/favicon.ico') {
-        res.sendStatus(200);
-      } else {
-        next();
-      }
-    });
-
-    app.use((req, res, next) => {
-      const err = new Error(`Not Found: ${req.originalUrl}`);
-      err.status = 404;
-      next(err);
-    });
-
-    // error handler
-    app.use((err, req, res) => {
-      // set locals, only providing error in development
-      res.locals.message = err.message;
-      res.locals.error = err;
-
-      // render the error page
-      res.status(err.status || 500);
-      res.render('error');
-    });
-    // eslint-disable-next-line no-console
-    console.log('[ExpresDevService] Express server started');
-
-    return app;
-  })
-);
-
-const setupSite = (options) => {
-  const { site, config, index } = options;
-
+const generateSite = ({ site, config, vfs }) => {
   if (site) {
-    return preBuiltSite(site);
+    return Promise.resolve(site, fse);
   }
 
   if (config) {
-    return webpackSite(config, index);
+    return compile(config, vfs);
   }
 
   return Promise.reject(new Error('No config provided.'));
+};
+
+const virtualApp = (site, index, fs) => {
+  const app = express();
+
+  // Setup a catch all route, we can't use 'static' because we need to use a virtual file system
+  app.get('*', (req, res, next) => {
+    let filename = req.url;
+    // Setup a default index for the server.
+    if (filename === '/') {
+      filename = `/${index}`;
+    }
+
+    const filepath = `${site}${filename}`;
+
+    if (fs.existsSync(filepath)) {
+      res.setHeader('content-type', mime.contentType(path.extname(filename)));
+      res.send(fs.readFileSync(filepath));
+    } else if (filename === '/favicon.ico') {
+      res.sendStatus(200);
+    } else {
+      next();
+    }
+  });
+
+  app.use((req, res, next) => {
+    const err = new Error(`Not Found: ${req.originalUrl}`);
+    err.status = 404;
+    next(err);
+  });
+
+  // error handler
+  app.use((err, req, res) => {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = err;
+
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
+  });
+  // eslint-disable-next-line no-console
+  console.log('[ExpresDevService] Express server started');
+
+  return app;
+};
+
+const staticApp = (site) => {
+  const app = express();
+  const sitePath = path.join(process.cwd(), site);
+  app.use('/static', express.static(sitePath));
+  app.get('/', (req, res) => res.redirect('/static'));
+  return Promise.resolve(app);
+};
+
+const serveSite = (site, fs, vfs, index) => {
+  if (vfs) {
+    return virtualApp(site, index, fs);
+  }
+
+  return staticApp;
 };
 
 const serve = (options) => {
   const { port } = options;
   const appPort = port || 8080;
 
-  return setupSite(options).then((app) => {
-    const server = app.listen(appPort);
-    console.log(`Listening ${appPort}`);
-    console.log(`Production Environment: ${process.env.NODE_ENV === 'production'}`);
-    return server;
-  });
+  return generateSite(options).then(
+    (site, fs) => serveSite(site, fs)).then(
+    (app) => {
+      const server = app.listen(appPort);
+      console.log(`Listening ${appPort}`);
+      console.log(`Production Environment: ${process.env.NODE_ENV === 'production'}`);
+      return server;
+    });
 };
 
 module.exports = serve;
