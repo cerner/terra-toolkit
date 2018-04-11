@@ -46,6 +46,7 @@ export default class TerraService {
         beAccessible: accessiblity.beAccessible,
         matchScreenshot: visualRegression.matchScreenshotWithinTolerance,
         themeEachCustomProperty: visualRegression.themeEachCustomProperty,
+        themeCombinationOfCustomProperties: visualRegression.themeCombinationOfCustomProperties,
       },
     };
     chai.Assertion.addMethod('accessible', chaiMethods.accessible);

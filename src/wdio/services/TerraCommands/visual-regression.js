@@ -56,6 +56,28 @@ const themeEachCustomProperty = (...args) => {
   });
 };
 
+/**
+* Generates a test for a combination of themed properties given and runs a screenshot assertion.
+*
+* @property {Array} args - An object containing the options for themeCombinationOfCustomProperties and  CSS custom properties to assert.
+*/
+const themeCombinationOfCustomProperties = (...args) => {
+  const selector = args[0].selector ? args[0].selector : global.browser.options.terra.selector;
+  const styleProperties = args[0].properties ? args[0].properties : [];
+
+  if (!args[0].testName) {
+    throw new Error(`A test name for themeCombinationOfCustomProperties test is not provided.
+A testName property should be set in the options object passed to the themeCombinationOfCustomProperties to uniquely identify it.`);
+  }
+
+  global.it(`[${args[0].testName}]`, () => {
+    Object.entries(styleProperties).forEach(([key, value]) => {
+      global.browser.execute(`document.documentElement.style.setProperty('${key}', '${value}')`);
+    });
+    global.expect(global.browser.checkElement(selector)).to.matchReference();
+  });
+};
+
 /** Helper method to create a useful test descripton.
   * @property {String} matchType - Specifies the type of matchReference assertion. Either 'withinTolerance'
   *   or 'exactly'.
@@ -108,6 +130,7 @@ const matchScreenshotWithinTolerance = (...args) => {
 const methods = {
   matchScreenshotWithinTolerance,
   themeEachCustomProperty,
+  themeCombinationOfCustomProperties,
   getTestDescription,
 };
 
