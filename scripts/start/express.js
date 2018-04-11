@@ -82,7 +82,7 @@ const virtualApp = (site, index, fs) => {
   // eslint-disable-next-line no-console
   console.log('[ExpresDevService] Express server started');
 
-  return app;
+  return Promise.resolve(app);
 };
 
 const staticApp = (site) => {
