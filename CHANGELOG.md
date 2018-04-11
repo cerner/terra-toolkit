@@ -3,6 +3,12 @@ Changelog
 
 Unreleased
 ----------
+
+2.11.0 - (April 11, 2018)
+----------
+### Added
+* Added themeCombinationOfCustomProperties method to Terra WDIO service.
+
 ### Changed
 * Improved error logging for the Express Dev Server Service.
 
