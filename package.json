@@ -23,7 +23,9 @@
     "url": "https://github.com/cerner/terra-toolkit/issues"
   },
   "bin": {
-    "tt:aggregate-translations": "./bin/aggregate-translations.js"
+    "tt:aggregate-translations": "./bin/aggregate-translations.js",
+    "tt:start": "./bin/start.js",
+    "tt:start-static": "./bin/start-static.js"
   },
   "scripts": {
     "clean:all": "npm run clean:compiled && npm run clean:dependencies",
@@ -81,7 +83,8 @@
     "webdriverio": "^4.9.8",
     "webpack": "^4.4.1",
     "webpack-cli": "^2.0.13",
-    "webpack-merge": "^4.1.2"
+    "webpack-merge": "^4.1.2",
+    "webpack-serve": "^0.3.1"
   },
   "peerDependencies": {
     "nightwatch": "^0.9.12"
