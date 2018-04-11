@@ -26,7 +26,7 @@ const compile = (webpackConfig, vfs) => (
       if (err || stats.hasErrors()) {
         // eslint-disable-next-line no-console
         console.log('[ExpresDevService] Webpack compiled unsuccessfully');
-        reject();
+        reject(err || new Error(stats.toJson().errors));
       }
       // eslint-disable-next-line no-console
       console.log('[ExpresDevService] Webpack compiled successfully');
@@ -90,10 +90,10 @@ const setupSite = (options) => {
   }
 
   if (config) {
-    return webpackSite();
+    return webpackSite(config, index);
   }
 
-  return Promise.reject(config, index);
+  return Promise.reject(new Error('No config provided.'));
 };
 
 const serve = (options) => {
