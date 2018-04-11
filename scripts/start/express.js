@@ -102,11 +102,11 @@ const serveSite = (site, fs, vfs, index) => {
 };
 
 const serve = (options) => {
-  const { port } = options;
+  const { port, vfs, index } = options;
   const appPort = port || 8080;
 
   return generateSite(options).then(
-    (site, fs) => serveSite(site, fs)).then(
+    (site, fs) => serveSite(site, fs, vfs, index)).then(
     (app) => {
       const server = app.listen(appPort);
       console.log(`Listening ${appPort}`);
