@@ -10,7 +10,8 @@ const packageJson = require('../../package.json');
 commander
   .version(packageJson.version)
   .option('--config <path>', 'The webpack config to serve. Alias for <config>.')
-  .option('--site <path>', 'The relative path to the static site.')
+  .option('--site <path>', 'The relative path to the static site. This takes precidence over webpack config if both are passed.')
+  .option('-vfs, --virtualFileSystem', 'The webpack assets will be written to a virtual file system instead of disk.')
   .parse(process.argv);
 
 // const isFile = filePath => (fs.existsSync(filePath) && !fs.lstatSync(filePath).isDirectory());
@@ -31,4 +32,4 @@ if (commander.config) {
 //   }
 // }
 
-serve({ config, site: commander.site });
+serve({ config, site: commander.site, vfs: commander.virtualFileSystem });
