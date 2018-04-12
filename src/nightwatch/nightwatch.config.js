@@ -31,7 +31,7 @@ const nightwatchConfig = (webpackConfig, srcFolders, providedPort) => {
       port: seleniumPort,
       path: '/wd/hub',
       seleniumDocker: {
-        enabled: !process.env.CI,
+        enabled: process.env.TRAVIS || !process.env.CI,
       },
     }, [{ browserName: 'chrome' }]);
 
