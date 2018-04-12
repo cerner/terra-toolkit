@@ -1,5 +1,4 @@
 const commander = require('commander');
-// const fs = require('fs');
 const path = require('path');
 const serve = require('./serve');
 
@@ -10,10 +9,8 @@ const packageJson = require('../../package.json');
 commander
   .version(packageJson.version)
   .option('--config <path>', 'The webpack config to serve. Alias for <config>.')
+  .option('--port <n>', 'The port the app should listen on', parseInt)
   .parse(process.argv);
-
-// const isFile = filePath => (fs.existsSync(filePath) && !fs.lstatSync(filePath).isDirectory());
-
 
 let config;
 
@@ -30,4 +27,4 @@ if (commander.config) {
 //   }
 // }
 
-serve({ config });
+serve({ config, port: commander.port });

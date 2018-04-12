@@ -1,5 +1,4 @@
 const commander = require('commander');
-// const fs = require('fs');
 const path = require('path');
 const serve = require('./serve-static');
 
@@ -10,12 +9,10 @@ const packageJson = require('../../package.json');
 commander
   .version(packageJson.version)
   .option('--config <path>', 'The webpack config to serve. Alias for <config>.')
+  .option('--port <n>', 'The port the app should listen on', parseInt)
   .option('--site <path>', 'The relative path to the static site. This takes precidence over webpack config if both are passed.')
-  .option('-vfs, --virtualFileSystem', 'The webpack assets will be written to a virtual file system instead of disk.')
+  .option('--vfs', 'The webpack assets will be written to a virtual file system instead of disk.')
   .parse(process.argv);
-
-// const isFile = filePath => (fs.existsSync(filePath) && !fs.lstatSync(filePath).isDirectory());
-
 
 let config;
 
@@ -32,4 +29,4 @@ if (commander.config) {
 //   }
 // }
 
-serve({ config, site: commander.site, vfs: commander.virtualFileSystem });
+serve({ config, site: commander.site, vfs: commander.vfs, port: commander.port });

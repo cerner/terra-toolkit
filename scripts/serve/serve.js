@@ -1,7 +1,11 @@
 const serve = require('webpack-serve');
 
 const webpackServe = (options) => {
-  serve({ config: options.config });
+  const serveConfig = { config: options.config };
+  if (options.port) {
+    serveConfig.port = options.port;
+  }
+  serve(serveConfig);
 };
 
 module.exports = webpackServe;
