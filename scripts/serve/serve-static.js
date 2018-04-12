@@ -4,7 +4,6 @@ const path = require('path');
 const webpack = require('webpack');
 const MemoryFS = require('memory-fs');
 const mime = require('mime-types');
-// const fse = require('fs-extra');
 
 const compile = (webpackConfig, vfs, serviceName) => (
   new Promise((resolve, reject) => {
@@ -13,15 +12,12 @@ const compile = (webpackConfig, vfs, serviceName) => (
     if (vfs) {
       compiler.outputFileSystem = new MemoryFS();
     }
-    // eslint-disable-next-line no-console
     console.log(`[${serviceName}] Webpack compilation started`);
     compiler.run((err, stats) => {
       if (err || stats.hasErrors()) {
-        // eslint-disable-next-line no-console
         console.log(`[${serviceName}] Webpack compiled unsuccessfully`);
         reject(err || new Error(stats.toJson().errors));
       }
-      // eslint-disable-next-line no-console
       console.log(`[${serviceName}] Webpack compiled successfully`);
       resolve([webpackConfig.output.path, compiler.outputFileSystem]);
     });
@@ -80,7 +76,6 @@ const virtualApp = (site, index, fs) => {
     res.status(err.status || 500);
     res.render('error');
   });
-  // eslint-disable-next-line no-console
 
   return Promise.resolve(app);
 };

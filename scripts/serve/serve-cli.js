@@ -8,8 +8,8 @@ const packageJson = require('../../package.json');
 // Parse process arguments
 commander
   .version(packageJson.version)
-  .option('--config <path>', 'The webpack config to serve. Alias for <config>.')
-  .option('--port <n>', 'The port the app should listen on', parseInt)
+  .option('--config <path>', 'The webpack config to serve.')
+  .option('--port <n>', 'The port the server should listen on.', parseInt)
   .parse(process.argv);
 
 let config;
