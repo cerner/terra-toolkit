@@ -35,11 +35,6 @@ exports.config = {
 
   baseUrl: `http://${localIP.address()}:${webpackPort}`,
 
-  // Configuration for SeleniumDocker service
-  seleniumDocker: {
-    enabled: !process.env.TRAVIS,
-  },
-
   // Ignore deprecation warnings. When chrome supports /actions API we'll update to use those.
   deprecationWarnings: false,
 
@@ -53,31 +48,31 @@ exports.config = {
     },
   },
 
-  beforeHook() {
-    // Ensure the mouse starts in upper left corner before every test.
-    // This prevents unwanted hover effects during visual comparison.
-    // Note: moveTo() is deprecated, so this simulates that by creating an
-    // element that webdriver clicks on that is in the upper left corner of the
-    // screen.
-    // eslint-disable-next-line func-names, prefer-arrow-callback
-    global.browser.execute(function () {
-      // eslint-disable-next-line no-var
-      var div = document.createElement('div');
-      document.body.appendChild(div);
-      div.id = 'wdioMouseReset';
-      div.style.position = 'absolute';
-      div.style.top = 0;
-      div.style.left = 0;
-      div.style.width = '1px';
-      div.style.height = '1px';
-      div.style.zIndex = '9999999';
-      // eslint-disable-next-line func-names, prefer-arrow-callback
-      div.addEventListener('click', function () {
-        document.body.removeChild(div);
-      });
-    });
-    global.browser.click('#wdioMouseReset');
-  },
+  // beforeHook() {
+  //   // Ensure the mouse starts in upper left corner before every test.
+  //   // This prevents unwanted hover effects during visual comparison.
+  //   // Note: moveTo() is deprecated, so this simulates that by creating an
+  //   // element that webdriver clicks on that is in the upper left corner of the
+  //   // screen.
+  //   // eslint-disable-next-line func-names, prefer-arrow-callback
+  //   global.browser.execute(function () {
+  //     // eslint-disable-next-line no-var
+  //     var div = document.createElement('div');
+  //     document.body.appendChild(div);
+  //     div.id = 'wdioMouseReset';
+  //     div.style.position = 'absolute';
+  //     div.style.top = 0;
+  //     div.style.left = 0;
+  //     div.style.width = '1px';
+  //     div.style.height = '1px';
+  //     div.style.zIndex = '9999999';
+  //     // eslint-disable-next-line func-names, prefer-arrow-callback
+  //     div.addEventListener('click', function () {
+  //       document.body.removeChild(div);
+  //     });
+  //   });
+  //   global.browser.click('#wdioMouseReset');
+  // },
 
   framework: 'mocha',
   mochaOpts: {
