@@ -15,11 +15,6 @@ const config = {
   // Configuration for ExpressDevService
   webpackConfig,
 
-  // Configuration for SeleniumDocker service
-  seleniumDocker: {
-    enabled: !process.env.TRAVIS,
-  },
-
   axe: {
     inject: true,
     options: {
