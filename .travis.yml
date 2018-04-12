@@ -3,9 +3,6 @@ sudo: required
 dist: trusty
 before_script:
   - npm run compile
-before_install:
-  - docker pull selenium/standalone-chrome:3.8.1-erbium
-  - docker run -d -p 4444:4444 selenium/standalone-chrome
 script:
   - npm test
   - npm run danger
