@@ -23,7 +23,7 @@ const nightwatchConfig = (webpackConfig, srcFolders, providedPort) => {
   const startDriverAndServer = (done) => {
     const webPackPromise = expressDevService.onPrepare({
       webpackConfig,
-      expressDevServer: { port },
+      serveStatic: { port },
     });
 
     const dockerPromise = seleniumDocker.onPrepare({

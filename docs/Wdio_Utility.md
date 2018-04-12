@@ -32,8 +32,8 @@ To run the webdriver.io test running, the [webdriver.io configuration options](h
     - See [here](https://github.com/zinserjan/wdio-visual-regression-service#configuration) for configuration information.
 
 In addition to the default webdriver.io services enabled in the config, a Express dev server must be specified to actually run the site:
-- Terra-toolkit provides the `ExpressDevService` to start an express server and returns a promise when the webpack compiler is completed.
-    - See [here](https://github.com/cerner/terra-toolkit/blob/master/docs/ExpressDevServerService.md) for configuration information.
+- Terra-toolkit provides the `ServeStaticService` to start an express server and returns a promise when the webpack compiler is completed.
+    - See [here](https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitServeStaticService.md) for configuration information.
 
 Finally, the `baseUrl` of the site to be tested must be specified. Use the [ip](https://www.npmjs.com/package/ip) npm package to obtain the IP address for the SeleniumDocker instance.
 
@@ -41,7 +41,7 @@ Finally, the `baseUrl` of the site to be tested must be specified. Use the [ip](
 // An example of a full mono-repo configuration file:
 const wdioConf = require('terra-toolkit/wdio/conf');
 const webpackConfig = require('./webpack.config.js');
-const ExpressDevService = require('terra-toolkit/lib/wdio/services').ExpressDevService;
+const TerraToolkitServeStaticService = require('terra-toolkit/lib/wdio/services').TerraToolkitServeStaticService;
 const localIP = require('ip');
 
 const port = 8080;
@@ -62,12 +62,12 @@ const config = {
   baseUrl: `http://${localIP.address()}:${port}`,
   specs: [specs],
 
-  // Use Terra-toolkit's ExpressDevService
-  services: wdioConf.config.services.concat([ExpressDevService]),
+  // Use Terra-toolkit's ServeStaticService
+  services: wdioConf.config.services.concat([TerraToolkitServeStaticService]),
 
-  // Configuration for ExpressDevService
+  // Configuration for TerraToolkitServeStaticService
   webpackConfig,
-  expressDevServer: {
+  serveStatic: {
     port,
   },
 };

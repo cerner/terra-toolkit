@@ -9,8 +9,8 @@ export default class TerraToolkitServeStaticService {
     }
 
     const webpackConfig = config.webpackConfig;
-    const port = ((config || {}).expressDevServer || {}).port || 8080;
-    const index = ((config || {}).expressDevServer || {}).index || 'index.html';
+    const port = ((config || {}).serveStatic || {}).port || 8080;
+    const index = ((config || {}).serveStatic || {}).index || 'index.html';
 
     // If no output is provided, define one.
     if (!(webpackConfig.output || {}).path) {
