@@ -24,8 +24,8 @@
   },
   "bin": {
     "tt:aggregate-translations": "./bin/aggregate-translations.js",
-    "tt:start": "./bin/start.js",
-    "tt:start-static": "./bin/start-static.js"
+    "tt:serve": "./bin/serve.js",
+    "tt:serve-static": "./bin/serve-static.js"
   },
   "scripts": {
     "clean:all": "npm run clean:compiled && npm run clean:dependencies",

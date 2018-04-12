@@ -1,7 +1,7 @@
 const commander = require('commander');
 // const fs = require('fs');
 const path = require('path');
-const serve = require('./webpack-serve');
+const serve = require('./serve');
 
 const packageJson = require('../../package.json');
 

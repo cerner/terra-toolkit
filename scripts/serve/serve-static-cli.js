@@ -1,7 +1,7 @@
 const commander = require('commander');
 // const fs = require('fs');
 const path = require('path');
-const serve = require('./express');
+const serve = require('./serve-static');
 
 const packageJson = require('../../package.json');
 
