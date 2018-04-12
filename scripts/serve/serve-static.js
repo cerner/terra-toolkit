@@ -24,14 +24,19 @@ const compile = (webpackConfig, vfs, serviceName) => (
   })
 );
 
-const generateSite = (site, config, vfs, serviceName) => {
+const generateSite = (site, config, vfs, serviceName, production) => {
   if (site) {
     const sitePath = path.join(process.cwd(), site);
     return Promise.resolve([sitePath, undefined]);
   }
 
   if (config) {
-    return compile(config, vfs, serviceName);
+    let webpackConfig = config;
+    if (typeof config === 'function') {
+      webpackConfig = config(undefined, { p: production });
+    }
+
+    return compile(webpackConfig, vfs, serviceName);
   }
 
   return Promise.reject(new Error('No config provided.'));
@@ -95,12 +100,12 @@ const serveSite = (site, fs, vfs, index) => {
 };
 
 const serve = (options) => {
-  const { site, config, port, vfs, index, name } = options;
+  const { site, config, port, vfs, index, name, production } = options;
   const appPort = port || 8080;
   const appIndex = index || 'index.html';
   const serviceName = name || 'Terra-Toolkit:serve-static';
 
-  return generateSite(site, config, vfs).then(
+  return generateSite(site, config, vfs, serviceName, production).then(
     ([sitePath, fs]) => serveSite(sitePath, fs, vfs, appIndex)).then(
     (app) => {
       const server = app.listen(appPort);

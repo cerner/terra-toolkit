@@ -30,12 +30,8 @@ To run the webdriver.io test running, the [webdriver.io configuration options](h
     - To provide a custom global selector, add `terra: { selector: 'selector_name' }` to the configuration.
 * `VisualRegressionService` - uses wdio-screenshot to capture screenshots and run visual regression testing.
     - See [here](https://github.com/zinserjan/wdio-visual-regression-service#configuration) for configuration information.
-
-In addition to the default webdriver.io services enabled in the config, a Express dev server must be specified to actually run the site:
-- Terra-toolkit provides the `ServeStaticService` to start an express server and returns a promise when the webpack compiler is completed.
+* `ServeStaticService` - to start a server and returns a promise when the webpack compiler is completed.
     - See [here](https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitServeStaticService.md) for configuration information.
-
-Finally, the `baseUrl` of the site to be tested must be specified. Use the [ip](https://www.npmjs.com/package/ip) npm package to obtain the IP address for the SeleniumDocker instance.
 
 ```javascript
 // An example of a full mono-repo configuration file:

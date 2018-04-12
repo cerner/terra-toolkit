@@ -10,6 +10,7 @@ commander
   .version(packageJson.version)
   .option('--config <path>', 'The webpack config to serve.')
   .option('--port <n>', 'The port the server should listen on.', parseInt)
+  .option('-p, --production', 'Pass the -p flag to the webpack config')
   .parse(process.argv);
 
 let config;
@@ -27,4 +28,4 @@ if (commander.config) {
 //   }
 // }
 
-serve({ config, port: commander.port });
+serve({ config, port: commander.port, production: commander.production });
