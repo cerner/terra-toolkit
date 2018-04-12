@@ -6,7 +6,7 @@ const MemoryFS = require('memory-fs');
 const mime = require('mime-types');
 // const fse = require('fs-extra');
 
-const compile = (webpackConfig, vfs) => (
+const compile = (webpackConfig, vfs, serviceName) => (
   new Promise((resolve, reject) => {
     const compiler = webpack(webpackConfig);
     // setup a virtual file system to write webpack files to.
@@ -14,28 +14,28 @@ const compile = (webpackConfig, vfs) => (
       compiler.outputFileSystem = new MemoryFS();
     }
     // eslint-disable-next-line no-console
-    console.log('[Terra-Toolkit:serve-static] Webpack compilation started');
+    console.log(`[${serviceName}] Webpack compilation started`);
     compiler.run((err, stats) => {
       if (err || stats.hasErrors()) {
         // eslint-disable-next-line no-console
-        console.log('[Terra-Toolkit:serve-static] Webpack compiled unsuccessfully');
+        console.log(`[${serviceName}] Webpack compiled unsuccessfully`);
         reject(err || new Error(stats.toJson().errors));
       }
       // eslint-disable-next-line no-console
-      console.log('[Terra-Toolkit:serve-static] Webpack compiled successfully');
+      console.log(`[${serviceName}] Webpack compiled successfully`);
       resolve([webpackConfig.output.path, compiler.outputFileSystem]);
     });
   })
 );
 
-const generateSite = (site, config, vfs) => {
+const generateSite = (site, config, vfs, serviceName) => {
   if (site) {
     const sitePath = path.join(process.cwd(), site);
     return Promise.resolve([sitePath, undefined]);
   }
 
   if (config) {
-    return compile(config, vfs);
+    return compile(config, vfs, serviceName);
   }
 
   return Promise.reject(new Error('No config provided.'));
@@ -100,15 +100,16 @@ const serveSite = (site, fs, vfs, index) => {
 };
 
 const serve = (options) => {
-  const { site, config, port, vfs, index } = options;
+  const { site, config, port, vfs, index, name } = options;
   const appPort = port || 8080;
   const appIndex = index || 'index.html';
+  const serviceName = name || 'Terra-Toolkit:serve-static';
 
   return generateSite(site, config, vfs).then(
     ([sitePath, fs]) => serveSite(sitePath, fs, vfs, appIndex)).then(
     (app) => {
       const server = app.listen(appPort);
-      console.log(`[Terra-Toolkit:serve-static] Server started listening at port:${appPort}`);
+      console.log(`[${serviceName}] Server started listening at port:${appPort}`);
       return server;
     });
 };
