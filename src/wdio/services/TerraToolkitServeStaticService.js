@@ -1,10 +1,10 @@
-import express from '../../../scripts/serve/serve-static';
+import serve from '../../../scripts/serve/serve-static';
 
-export default class ExpressDevServerService {
+export default class TerraToolkitServeStaticService {
   async onPrepare(config) {
     if (!config.webpackConfig) {
       // eslint-disable-next-line no-console
-      console.log('[ExpressDevService] No webpack configuration provided');
+      console.log('[Terra-Toolkit:serve-static] No webpack configuration provided');
       return;
     }
 
@@ -17,7 +17,7 @@ export default class ExpressDevServerService {
       webpackConfig.output = Object.assign({}, webpackConfig.output, { path: '/dist' });
     }
 
-    await ExpressDevServerService.startExpressDevServer(webpackConfig, port, index).then((server) => {
+    await TerraToolkitServeStaticService.startService(webpackConfig, port, index).then((server) => {
       this.server = server;
     });
   }
@@ -26,14 +26,14 @@ export default class ExpressDevServerService {
     await this.stop();
   }
 
-  static startExpressDevServer(config, port, index) {
-    return express({ config, port, index, vfs: true });
+  static startService(config, port, index) {
+    return serve({ config, port, index, vfs: true });
   }
 
   stop() {
     return new Promise((resolve) => {
       // eslint-disable-next-line no-console
-      console.log('[ExpressDevService] Closing WebpackDevServer');
+      console.log('[Terra-Toolkit:serve-static] Closing Server');
       if (this.server) {
         this.server.close();
         this.server = null;

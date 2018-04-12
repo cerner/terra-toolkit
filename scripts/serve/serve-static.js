@@ -8,24 +8,21 @@ const mime = require('mime-types');
 
 const compile = (webpackConfig, vfs) => (
   new Promise((resolve, reject) => {
-    console.log(webpackConfig);
-    console.log('vfs', vfs);
     const compiler = webpack(webpackConfig);
     // setup a virtual file system to write webpack files to.
     if (vfs) {
       compiler.outputFileSystem = new MemoryFS();
     }
     // eslint-disable-next-line no-console
-    console.log('[ExpresDevService] Webpack compilation started');
+    console.log('[Terra-Toolkit:serve-static] Webpack compilation started');
     compiler.run((err, stats) => {
       if (err || stats.hasErrors()) {
         // eslint-disable-next-line no-console
-        console.log('[ExpresDevService] Webpack compiled unsuccessfully');
-        console.log(err);
+        console.log('[Terra-Toolkit:serve-static] Webpack compiled unsuccessfully');
         reject(err || new Error(stats.toJson().errors));
       }
       // eslint-disable-next-line no-console
-      console.log('[ExpresDevService] Webpack compiled successfully');
+      console.log('[Terra-Toolkit:serve-static] Webpack compiled successfully');
       resolve([webpackConfig.output.path, compiler.outputFileSystem]);
     });
   })
@@ -84,7 +81,6 @@ const virtualApp = (site, index, fs) => {
     res.render('error');
   });
   // eslint-disable-next-line no-console
-  console.log('[ExpresDevService] Express server started');
 
   return Promise.resolve(app);
 };
@@ -104,7 +100,6 @@ const serveSite = (site, fs, vfs, index) => {
 };
 
 const serve = (options) => {
-  console.log(options);
   const { site, config, port, vfs, index } = options;
   const appPort = port || 8080;
   const appIndex = index || 'index.html';
@@ -113,8 +108,7 @@ const serve = (options) => {
     ([sitePath, fs]) => serveSite(sitePath, fs, vfs, appIndex)).then(
     (app) => {
       const server = app.listen(appPort);
-      console.log(`Listening ${appPort}`);
-      console.log(`Production Environment: ${process.env.NODE_ENV === 'production'}`);
+      console.log(`[Terra-Toolkit:serve-static] Server started listening at port:${appPort}`);
       return server;
     });
 };

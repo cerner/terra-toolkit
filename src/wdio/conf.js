@@ -4,7 +4,7 @@ const AxeService = require('./services').Axe;
 const TerraService = require('./services').Terra;
 const SeleniumDockerService = require('./services').SeleniumDocker;
 const visualRegressionConfig = require('./visualRegressionConf');
-const ExpressDevService = require('./services/index').ExpressDevService;
+const TerraToolkitServeStaticService = require('./services/index').TerraToolkitServeStaticService;
 const path = require('path');
 
 const webpackPort = 8080;
@@ -29,7 +29,7 @@ exports.config = {
   waitforTimeout: 3000,
   connectionRetryTimeout: 90000,
   connectionRetryCount: 3,
-  services: ['visual-regression', AxeService, TerraService, SeleniumDockerService, ExpressDevService],
+  services: ['visual-regression', AxeService, TerraService, SeleniumDockerService, TerraToolkitServeStaticService],
 
   visualRegression: visualRegressionConfig,
 
