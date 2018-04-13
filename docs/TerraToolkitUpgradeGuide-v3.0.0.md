@@ -9,6 +9,7 @@ Users of Terra toolkit should not add a direct dependency to webpack in their pa
 
 Terra toolkit now provides a default webpack config. This configs will need to be referenced by the app level webpack config to add in an entry (unless consuming terra-dev-site). We recommed using [webpack-merge](https://github.com/survivejs/webpack-merge) to combine configs.
 The default webpack config is now a function that will flex between production and development modes by passing in the -p flag when compiling with webpack. For more about webpack config as a function go [here](https://webpack.js.org/configuration/configuration-types/).
+If you are consuming this webpack config to create another webpack config, don't forget that you need to execute the function first.
 
 Translation Aggregation has been added to the default webpack config. By default all of the terra supported locales are include. If you need to customize this list, see the I18N aggregation section below. To completely disable translation aggregation within the webpack build to add your own, you can pass the environment variable `--env.disableAggregateTranslations` to the webpack command.
 
@@ -21,12 +22,32 @@ The `webpack` command is available to applications consumeing terra-toolkit.
 The major change with webpack4 plugins is that the mini-css-extract-plugin now replaces extract-text-webpack-plugin which is no longer maintained.
 
 ## I18N aggregation
-In a previous release, the aggregation translations script (`tt:aggregate-translations`) was added to terra-toolkit. In this release a new configuration option has been added. You can specify
+In a previous release, the aggregation translations script (`tt:aggregate-translations`) was added to terra-toolkit. In this release a new configuration option has been added. You can specify the aggregate-translations configuration through a `terraI18n.config.js` file in your root project directory.
 
 ### Example
+```javascript
+const fse = require('fs-extra');
+const i18nConfig = {
+  baseDir: process.cwd(),
+  directories: [./translations],
+  fileSystem: fse,
+  locales: ['ar', 'en', 'en-US', 'en-GB', 'es', 'es-US', 'es-ES', 'de', 'fi-FI', 'fr', 'fr-FR', 'pt', 'pt-BR'],
+};
+
+exports.config = i18nConfig;
+```
 
 ## Serve
+Terra-toolkit now provides a couple of scripts to help serve your site for development, testing, or as a doc site. If you are using tera-dev-site, use the serve scripts provided by that package.
 
+### serve
+Serve is a replacment for webpack-dev-server. Behind the scenes it's using [webpack-serve](https://github.com/webpack-contrib/webpack-serve).
+Serve is a hot reloading server and does not work on IE 10 or below. See [compatible browsers](https://caniuse.com/#feat=websockets). Use serve-static for IE 10 testing.
+
+### serve-static
+Serve static is a non-hot reloading server that uses express behind the scenes. The serve static method can either take a pre-compiled site folder or a webpack config to compile a site for you. It also offers a virtual file system to avoid saving files to disk. This server is also used in `TerraToolkitServeStaticService` to serve sites for wdio visual regression testing.
+
+For more information go [here](https:/github.com/cerner/terra-toolkit/master/scripts/serve/readme.md).
 
 ## WebdriverIO
 More defaults have been added to the default wdio config. The only config that is now required to be provided is your webpack config. (If you are using terra-dev-site, use the provided wdio config from that package which will have the webpack config already provided).
@@ -58,14 +79,16 @@ exports.config = config;
 
 Default axe config
 ```javascript
-axe = {
-    inject: true,
-    options: {
-      rules: [{
-        id: 'landmark-one-main',
-        enabled: false,
-      }],
-    },
+const config = {
+  axe:{
+      inject: true,
+      options: {
+        rules: [{
+          id: 'landmark-one-main',
+          enabled: false,
+        }],
+      },
+    }
   };
  ```
 
