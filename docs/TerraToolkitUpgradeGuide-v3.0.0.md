@@ -21,12 +21,53 @@ The `webpack` command is available to applications consumeing terra-toolkit.
 The major change with webpack4 plugins is that the mini-css-extract-plugin now replaces extract-text-webpack-plugin which is no longer maintained.
 
 ## I18N aggregation
-In a previous release, the aggregation translations script (`tt:aggregate-translations`) was added to terra-toolkit. In this release a new configuration option has been added.
+In a previous release, the aggregation translations script (`tt:aggregate-translations`) was added to terra-toolkit. In this release a new configuration option has been added. You can specify
+
+### Example
 
 ## Serve
 
+
 ## WebdriverIO
-More defaults have been added to the
+More defaults have been added to the default wdio config. The only config that is now required to be provided is your webpack config. (If you are using terra-dev-site, use the provided wdio config from that package which will have the webpack config already provided).
+
+### Required config
+```javascript
+const wdioConf = require('terra-toolkit/lib/wdio/conf');
+const webpackConfig = require('./webpack.config');
+
+const config = {
+  ...wdioConf.config,
+
+  webpackConfig,
+};
+
+exports.config = config;
+```
+
+### New Defaults
+* Port is defaulted to 8080
+* TerraToolkitServeStatic is included by default to host your test site.
+* The default specs search path now supports mono-repos out of the box.
+** `./packages/*/tests/wdio/**/*-spec.js`
+** `./tests/wdio/**/*-spec.js`
+* base url is defaulted to `http://<localIP>:8080`
+* depreciationWarnings are defaulted off
+* axe is setup by default
+* mouse reset default hook has been removed.
+
+Default axe config
+```javascript
+axe = {
+    inject: true,
+    options: {
+      rules: [{
+        id: 'landmark-one-main',
+        enabled: false,
+      }],
+    },
+  };
+ ```
 
 ### ExpressDevServerService
 `ExpresDevServerService` has been renamed to `TerraToolkitServeStaticService`. If you are using the service directly, and not through the new default wdio config, the wdio config you need to setup has also been renamed from `expressDevServer` to `serveStatic` with no other changes.
