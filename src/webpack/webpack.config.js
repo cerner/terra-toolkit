@@ -9,13 +9,17 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const aggregateTranslations = require('../../scripts/aggregate-translations/aggregate-translations');
 const merge = require('webpack-merge');
 
-const defaultWebpackConfig = (env, argv) => {
-  const production = (argv || {}).p;
+const defaultWebpackConfig = (env = {}, argv = {}) => {
+  const production = argv.p;
+  const disableAggregateTranslations = env.disableAggregateTranslations;
   const processPath = process.cwd();
   /* Get the root path of a mono-repo process call */
   const rootPath = processPath.includes('packages') ? processPath.split('packages')[0] : processPath;
 
-  aggregateTranslations({ baseDirectory: rootPath });
+  if (!disableAggregateTranslations) {
+    aggregateTranslations({ baseDirectory: rootPath });
+  }
+
   const devConfig = {
     entry: {
       raf: 'raf/polyfill',

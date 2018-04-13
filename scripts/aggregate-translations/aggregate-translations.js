@@ -33,13 +33,13 @@ const configFile = (configPath) => {
   return {};
 };
 
-const defaults = (options) => {
-  const config = configFile((options || {}).configPath);
+const defaults = (options = {}) => {
+  const config = configFile(options.configPath);
   return {
-    baseDir: (options || {}).baseDir || config.baseDir || process.cwd(),
-    directories: (options || {}).directories || config.directories || [],
-    fileSystem: (options || {}).outputFileSystem || config.outputFileSystem || fse,
-    locales: (options || {}).locales || config.locales || supportedLocales,
+    baseDir: options.baseDir || config.baseDir || process.cwd(),
+    directories: options.directories || config.directories || [],
+    fileSystem: options.outputFileSystem || config.outputFileSystem || fse,
+    locales: options.locales || config.locales || supportedLocales,
   };
 };
 
