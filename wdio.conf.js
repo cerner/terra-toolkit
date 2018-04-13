@@ -9,6 +9,11 @@ const config = {
     selector: '[data-terra-toolkit-content]',
   },
 
+  // Configuration for SeleniumDocker service
+  seleniumDocker: {
+    enabled: !process.env.TRAVIS,
+  },
+
   // Configuration for ExpressDevService
   webpackConfig,
 };
