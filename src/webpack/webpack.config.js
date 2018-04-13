@@ -16,8 +16,10 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
   /* Get the root path of a mono-repo process call */
   const rootPath = processPath.includes('packages') ? processPath.split('packages')[0] : processPath;
 
+  const resolveModules = ['node_modules'];
   if (!disableAggregateTranslations) {
     aggregateTranslations({ baseDirectory: rootPath });
+    resolveModules.unshift(path.resolve(rootPath, 'aggregated-translations'));
   }
 
   const devConfig = {
@@ -92,11 +94,7 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     ],
     resolve: {
       extensions: ['.js', '.jsx'],
-      modules: [
-        path.resolve(rootPath, 'aggregated-translations'),
-        'node_modules',
-      ],
-
+      modules: resolveModules,
       // See https://github.com/facebook/react/issues/8026
       alias: {
         react: path.resolve(rootPath, 'node_modules', 'react'),
