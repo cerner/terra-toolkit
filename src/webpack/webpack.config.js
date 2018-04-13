@@ -1,7 +1,3 @@
-// By default eslint assumes packages imported are supposed to be dependencies,
-// not devDependencies. Disabling this rule in webpack.conig.js
-/* eslint-disable import/no-extraneous-dependencies */
-// const webpack = require('webpack');
 const Autoprefixer = require('autoprefixer');
 const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin');
 const PostCSSCustomProperties = require('postcss-custom-properties');
@@ -13,16 +9,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const aggregateTranslations = require('../../scripts/aggregate-translations/aggregate-translations');
 const merge = require('webpack-merge');
 
-// const processPath = process.cwd();
-// /* Get the root path of a mono-repo process call */
-// const rootPath = processPath.includes('packages') ? processPath.split('packages')[0] : processPath;
-
-// aggregateTranslations({ baseDirectory: rootPath });
-
 const defaultWebpackConfig = (env, argv) => {
-  console.log('env', env);
-  console.log('argv', argv);
-
   const production = (argv || {}).p;
   const processPath = process.cwd();
   /* Get the root path of a mono-repo process call */
@@ -123,8 +110,6 @@ const defaultWebpackConfig = (env, argv) => {
     mode: 'development',
   };
 
-  console.log('devConfig', devConfig);
-
   if (!production) {
     return devConfig;
   }
@@ -147,8 +132,6 @@ const defaultWebpackConfig = (env, argv) => {
       ],
     },
   });
-
-  console.log('prodConfig', prodConfig);
 
   return prodConfig;
 };
