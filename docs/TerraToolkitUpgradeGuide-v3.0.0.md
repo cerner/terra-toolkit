@@ -7,11 +7,11 @@ If you use terra-dev-site please refer to it's upgrade guide as it abstracts awa
 Terra toolkit and it's dependencies have been upgraded to consume webpack 4. Terra toolkit is now intended to provide Webpack to the libraries that consume it.
 Users of Terra toolkit should not add a direct dependency to webpack in their package JSON after updating. We have made this change to provide a single point of upgrading webpack.
 
-Terra toolkit now provides a default webpack config. This configs will need to be referenced by the app level webpack config to add in an entry (unless consuming terra-dev-site). We recommend using [webpack-merge](https://github.com/survivejs/webpack-merge) to combine configs.
+Terra toolkit now provides a default webpack config. This config will need to be referenced by the app level webpack config to add in an entry (unless consuming terra-dev-site). We recommend using [webpack-merge](https://github.com/survivejs/webpack-merge) to combine configs.
 The default webpack config is now a function that will flex between production and development modes by passing in the -p flag when compiling with webpack. For more about webpack config as a function go [here](https://webpack.js.org/configuration/configuration-types/).
 If you are consuming this webpack config to create another webpack config, don't forget that you need to execute the function first.
 
-Translation Aggregation has been added to the default webpack config. By default all of the terra supported locales are include. If you need to customize this list, see the I18N aggregation section below. To completely disable translation aggregation within the webpack build to add your own, you can pass the environment variable `--env.disableAggregateTranslations` to the webpack command.
+Translation Aggregation has been added to the default webpack config. By default all of the terra supported locales are included. If you need to customize this list, see the I18N aggregation section below. To completely disable translation aggregation within the webpack build to add your own, you can pass the environment variable `--env.disableAggregateTranslations` to the webpack command.
 
 ```bash
 webpack --config src/webpack/webpack.config --env.disableAggregateTranslations
