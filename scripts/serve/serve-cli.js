@@ -28,4 +28,8 @@ if (commander.config) {
 //   }
 // }
 
-serve({ config, port: commander.port, production: commander.production });
+serve({
+  config,
+  port: commander.port,
+  production: commander.production,
+});

@@ -17,9 +17,10 @@ const compile = (webpackConfig, vfs, serviceName) => (
       if (err || stats.hasErrors()) {
         console.log(`[${serviceName}] Webpack compiled unsuccessfully`);
         reject(err || new Error(stats.toJson().errors));
+      } else {
+        console.log(`[${serviceName}] Webpack compiled successfully`);
+        resolve([webpackConfig.output.path, compiler.outputFileSystem]);
       }
-      console.log(`[${serviceName}] Webpack compiled successfully`);
-      resolve([webpackConfig.output.path, compiler.outputFileSystem]);
     });
   })
 );
@@ -32,8 +33,8 @@ const generateSite = (site, config, vfs, serviceName, production) => {
 
   if (config) {
     let webpackConfig = config;
-    if (typeof config === 'function') {
-      webpackConfig = config(undefined, { p: production });
+    if (typeof webpackConfig === 'function') {
+      webpackConfig = webpackConfig(undefined, { p: production });
     }
 
     return compile(webpackConfig, vfs, serviceName);

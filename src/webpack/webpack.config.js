@@ -23,7 +23,7 @@ const defaultWebpackConfig = (env, argv) => {
   console.log('env', env);
   console.log('argv', argv);
 
-  const production = argv.p;
+  const production = (argv || {}).p;
   const processPath = process.cwd();
   /* Get the root path of a mono-repo process call */
   const rootPath = processPath.includes('packages') ? processPath.split('packages')[0] : processPath;
