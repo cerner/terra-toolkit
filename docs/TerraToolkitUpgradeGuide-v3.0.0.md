@@ -7,11 +7,14 @@ If you use terra-dev-site please refer to it's upgrade guide as it abstracts awa
 Terra toolkit and it's dependencies have been upgraded to consume webpack 4. Terra toolkit is now intended to provide Webpack to the librarys that consume it. 
 Users of Terra toolkit should not add a direct dependency to webpack in their package JSON after updating. We have made this change to provide a single point of upgrading webpack.
 
-Terra toolkit now provides a default webpack config and prod webpack config. These configs will need to be referenced by the app level webpack config to add in an entry (unless consuming terra-dev-site). We recommed using [webpack-merge](https://github.com/survivejs/webpack-merge).
+Terra toolkit now provides a default webpack config. This configs will need to be referenced by the app level webpack config to add in an entry (unless consuming terra-dev-site). We recommed using [webpack-merge](https://github.com/survivejs/webpack-merge) to combine configs.
+The default webpack config is now a function that will flex between production and development modes by passing in the -p flag when compiling with webpack. For more about webpack config as a function go [here](https://webpack.js.org/configuration/configuration-types/).
 
-Translation Aggregation has been added
+Translation Aggregation has been added to the default webpack config. By default all of the terra supported locales are include. If you need to customize this list, see the I18N aggregation section below.
 
-The `webpack` command
+The `webpack` command is available to applications consumeing terra-toolkit. 
+
+The major change with webpack4 plugins is that the mini-css-extract-plugin now replaces extract-text-webpack-plugin which is no longer maintained.
 
 ## I18N aggregation
 
