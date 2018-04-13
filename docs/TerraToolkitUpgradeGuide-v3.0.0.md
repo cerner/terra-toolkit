@@ -38,7 +38,7 @@ exports.config = i18nConfig;
 ```
 
 ## Serve
-Terra-toolkit now provides a couple of scripts to help serve your site for development, testing, or as a doc site. If you are using tera-dev-site, use the serve scripts provided by that package.
+Terra-toolkit now provides a couple of scripts to help serve your site for development, testing, or as a doc site.
 
 ### serve
 Serve is a replacement for webpack-dev-server. Behind the scenes it's using [webpack-serve](https://github.com/webpack-contrib/webpack-serve).
