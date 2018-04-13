@@ -15,6 +15,7 @@ Serve is offered up as both a cli and a javascript function.
 | ------------- | ------------- | ------------- | ------------- |
 | **--config**  | true | `undefined` | The webpack config to serve. |
 | **--port**  | false | `8080` | The port the server should listen on. |
+| **-p, --production | false | false | Passes the -p flag to the webpack config. |
 #### In your package.json
 ```JSON
 {
@@ -27,6 +28,7 @@ Serve is offered up as both a cli and a javascript function.
 | ------------- | ------------- | ------------- | ------------- |
 | **config**  | true | `undefined` | The webpack config to serve. |
 | **port**  | false | `8080` | The port the server should listen on. |
+| **production | false | false | Passes the -p flag to the webpack config. |
 #### In code
 ```javascript
 const serve = require('terra-toolkit/scripts/serve/serve');
@@ -46,7 +48,8 @@ Serve-static is offered up as both a cli and a javascript function.
 | ------------- | ------------- | ------------- | ------------- |
 | **--config**  | false | `undefined` | The webpack config to serve. |
 | **--port**  | false | `8080` | The port the server should listen on. |
-| **--site** | false | `undefined` | The relative path to the static site. This takes precidence over webpack config if both are passed.|
+| **-p, --production | false | false | Passes the -p flag to the webpack config. |
+| **--site** | false | `undefined` | The relative path to the static site. This takes precedence over webpack config if both are passed.|
 | **--vfs** | false | `false` | The webpack assets will be written to a virtual file system instead of disk. Only used when webpack config is passed |
 #### In your package.json
 ```JSON
@@ -61,7 +64,8 @@ Serve-static is offered up as both a cli and a javascript function.
 | ------------- | ------------- | ------------- | ------------- |
 | **config**  | true | `undefined` | The webpack config to serve. |
 | **port**  | false | `8080` | The port the server should listen on. |
-| **site** | false | `undefined` | The relative path to the static site. This takes precidence over webpack config if both are passed.|
+| **production | false | false | Passes the -p flag to the webpack config. |
+| **site** | false | `undefined` | The relative path to the static site. This takes precedence over webpack config if both are passed.|
 | **vfs** | false | `false` | The webpack assets will be written to a virtual file system instead of disk. Only used when webpack config is passed |
 | **index** | false | `index.html` | The entry point for your site. Only used when webpack config is passed|
 #### In code

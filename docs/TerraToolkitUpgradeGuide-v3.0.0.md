@@ -1,13 +1,13 @@
 # Terra Toolkit Upgrade Guide v3.0.0
 This document will provide information on upgrading from Terra Toolkit 2.x to 3.0.0.
 
-If you use terra-dev-site please refer to it's upgrade guide as it abstracts away fom additional config that is required here.
+If you use terra-dev-site please refer to it's upgrade guide as it abstracts away from additional config that is required here.
 
 ## Webpack 4
-Terra toolkit and it's dependencies have been upgraded to consume webpack 4. Terra toolkit is now intended to provide Webpack to the librarys that consume it. 
+Terra toolkit and it's dependencies have been upgraded to consume webpack 4. Terra toolkit is now intended to provide Webpack to the libraries that consume it.
 Users of Terra toolkit should not add a direct dependency to webpack in their package JSON after updating. We have made this change to provide a single point of upgrading webpack.
 
-Terra toolkit now provides a default webpack config. This configs will need to be referenced by the app level webpack config to add in an entry (unless consuming terra-dev-site). We recommed using [webpack-merge](https://github.com/survivejs/webpack-merge) to combine configs.
+Terra toolkit now provides a default webpack config. This configs will need to be referenced by the app level webpack config to add in an entry (unless consuming terra-dev-site). We recommend using [webpack-merge](https://github.com/survivejs/webpack-merge) to combine configs.
 The default webpack config is now a function that will flex between production and development modes by passing in the -p flag when compiling with webpack. For more about webpack config as a function go [here](https://webpack.js.org/configuration/configuration-types/).
 If you are consuming this webpack config to create another webpack config, don't forget that you need to execute the function first.
 
@@ -17,7 +17,7 @@ Translation Aggregation has been added to the default webpack config. By default
 webpack --config src/webpack/webpack.config --env.disableAggregateTranslations
 ```
 
-The `webpack` command is available to applications consumeing terra-toolkit.
+The `webpack` command is available to applications consuming terra-toolkit.
 
 The major change with webpack4 plugins is that the mini-css-extract-plugin now replaces extract-text-webpack-plugin which is no longer maintained.
 
@@ -41,7 +41,7 @@ exports.config = i18nConfig;
 Terra-toolkit now provides a couple of scripts to help serve your site for development, testing, or as a doc site. If you are using tera-dev-site, use the serve scripts provided by that package.
 
 ### serve
-Serve is a replacment for webpack-dev-server. Behind the scenes it's using [webpack-serve](https://github.com/webpack-contrib/webpack-serve).
+Serve is a replacement for webpack-dev-server. Behind the scenes it's using [webpack-serve](https://github.com/webpack-contrib/webpack-serve).
 Serve is a hot reloading server and does not work on IE 10 or below. See [compatible browsers](https://caniuse.com/#feat=websockets). Use serve-static for IE 10 testing.
 
 ### serve-static
