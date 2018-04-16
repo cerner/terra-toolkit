@@ -25,7 +25,8 @@
   "bin": {
     "tt:aggregate-translations": "./bin/aggregate-translations.js",
     "tt:serve": "./bin/serve.js",
-    "tt:serve-static": "./bin/serve-static.js"
+    "tt:serve-static": "./bin/serve-static.js",
+    "tt:webpack": "./bin/webpack.js"
   },
   "scripts": {
     "clean:all": "npm run clean:compiled && npm run clean:dependencies",
@@ -46,6 +47,7 @@
     "release:minor": "node scripts/release/release.js minor",
     "release:patch": "node scripts/release/release.js patch",
     "test": "npm run jest && npm run compile && npm run nightwatch && npm run nightwatch:port-provided && wdio wdio.conf.js",
+    "pack": "./bin/webpack.js --config src/webpack/webpack.config.js",
     "wdio": "wdio wdio.conf.js"
   },
   "dependencies": {
