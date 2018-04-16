@@ -102,7 +102,7 @@ const serveSite = (site, fs, vfs, index) => {
 
 const serve = (options) => {
   const { site, config, port, vfs, index, name, production } = options;
-  const appPort = port|| process.env.PORT || 8080;
+  const appPort = port || process.env.PORT || 8080;
   const appIndex = index || 'index.html';
   const serviceName = name || 'Terra-Toolkit:serve-static';
 
