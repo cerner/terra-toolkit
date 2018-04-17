@@ -5,6 +5,7 @@ const webpack = require('webpack');
 const MemoryFS = require('memory-fs');
 const mime = require('mime-types');
 
+// Run webpack on the provided webpack config and save to either the vitual file system or disk.
 const compile = (webpackConfig, vfs) => (
   new Promise((resolve, reject) => {
     const compiler = webpack(webpackConfig);
@@ -25,6 +26,7 @@ const compile = (webpackConfig, vfs) => (
   })
 );
 
+// Either build the site or return the path to the provided site.
 const generateSite = (site, config, vfs, production) => {
   if (site) {
     const sitePath = path.join(process.cwd(), site);
@@ -40,9 +42,10 @@ const generateSite = (site, config, vfs, production) => {
     return compile(webpackConfig, vfs);
   }
 
-  return Promise.reject(new Error('No config provided.'));
+  return Promise.reject(new Error('[Terra-Toolkit:serve-static] No webpack configuration provided.'));
 };
 
+// Setup an app server that reads from a filesystem.
 const virtualApp = (site, index, fs) => {
   const app = express();
 
@@ -86,27 +89,30 @@ const virtualApp = (site, index, fs) => {
   return Promise.resolve(app);
 };
 
+// Setup a static express server
 const staticApp = (site) => {
   const app = express();
   app.use(express.static(site));
   return Promise.resolve(app);
 };
 
-const serveSite = (site, fs, vfs, index) => {
-  if (vfs) {
+// Setup an app for either a virtual site or a static site. If a file system is not provided, serve the static site.
+const serveSite = (site, fs, index) => {
+  if (fs) {
     return virtualApp(site, index, fs);
   }
 
   return staticApp(site);
 };
 
+// Generate a site if not provided and spin up an express server to serve the site.
 const serve = (options) => {
   const { site, config, port, vfs, index, production } = options;
-  const appPort = port || process.env.PORT || 8080;
+  const appPort = port || 8080;
   const appIndex = index || 'index.html';
 
   return generateSite(site, config, vfs, production).then(
-    ([sitePath, fs]) => serveSite(sitePath, fs, vfs, appIndex)).then(
+    ([sitePath, fs]) => serveSite(sitePath, fs, appIndex)).then(
     (app) => {
       const server = app.listen(appPort);
       console.log(`[Terra-Toolkit:serve-static] Server started listening at port:${appPort}`);

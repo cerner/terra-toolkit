@@ -11,7 +11,12 @@ const resolve = (filePath) => {
   return undefined;
 };
 
-const defaultWebpackConfig = () => {
+const loadDefaultWebpackConfig = (configPath) => {
+  if (configPath) {
+    // eslint-disable-next-line global-require, import/no-dynamic-require
+    return require(path.resolve(configPath));
+  }
+
   // First try to find the local to process.cwd webpack config
   const localConfig = resolve(path.resolve(process.cwd(), 'webpack.config.js'));
   if (localConfig) {
@@ -22,4 +27,4 @@ const defaultWebpackConfig = () => {
   return resolve(path.resolve(process.cwd(), 'node_modules', 'terra-dev-site', 'src', 'webpack', 'webpack.config.js'));
 };
 
-module.exports = defaultWebpackConfig;
+module.exports = loadDefaultWebpackConfig;

@@ -6,7 +6,7 @@ Terra Toolkit serve-static Service is provided as a convenience to start an expr
 | Name  | Required | Default Value | Description |
 | ------------- | ------------- | ------------- | ------------- |
 | **webpackConfig**  | true | `undefined` | The webpack configuration used to start the express server. |
-| **serveStatic**  | false | `{ index: 'index.html', port: '8080' }` | The webpack-dev-server configuration to be passed to the webpack-dev-server. |
+| **serveStatic**  | false | `{ index: 'index.html', port: '8080' }` | The serveStatic configuration to be passed to the service. The only options are index and port. |
 
 ```js
 // wdio.conf.js
