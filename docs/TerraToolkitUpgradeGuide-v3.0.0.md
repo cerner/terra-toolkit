@@ -2,13 +2,14 @@
 This document will provide information on upgrading from Terra Toolkit 2.x to 3.0.0.
 
 If you use terra-dev-site please also refer to it's upgrade guide as it abstracts away from additional config that is required here.
+[Terra Dev Site Upgrade Guide](https://github.com/cerner/terra-dev-site/blob/master/docs/TerraDevSiteUpgradeGuide-v0.5.0.md)
 
 ## Webpack 4
 Terra toolkit and it's dependencies have been upgraded to consume webpack 4. Terra toolkit is now intended to provide Webpack to the libraries that consume it.
 Users of Terra toolkit should not add a direct dependency to webpack in their package JSON after updating. We have made this change to provide a single point of upgrading webpack.
 
 Terra toolkit now provides a default webpack config. This config will need to be referenced by the app level webpack config to add in an entry (unless consuming terra-dev-site). We recommend using [webpack-merge](https://github.com/survivejs/webpack-merge) to combine configs.
-The default webpack config is now a function that will flex between production and development modes by passing in the -p flag when compiling with webpack. For more about webpack config as a function go [here](https://webpack.js.org/configuration/configuration-types/).
+The default webpack config is now a function that will flex between production and development modes by passing in the -p flag when compiling with webpack. See webpack's documentation on [configuration types](https://webpack.js.org/configuration/configuration-types/) for more information.
 If you are consuming this webpack config to create another webpack config, don't forget that you need to execute the function first.
 
 ```javascript
@@ -39,10 +40,11 @@ In a previous release, the aggregation translations script (`tt:aggregate-transl
 
 ### Example
 ```javascript
+// terrai18n.config.js
 const fse = require('fs-extra');
 const i18nConfig = {
   baseDir: process.cwd(),
-  directories: [./translations],
+  directories: ['./translations'],
   fileSystem: fse,
   locales: ['ar', 'en', 'en-US', 'en-GB', 'es', 'es-US', 'es-ES', 'de', 'fi-FI', 'fr', 'fr-FR', 'nl', 'nl-BE', 'pt', 'pt-BR'],
 };
@@ -51,16 +53,16 @@ exports.config = i18nConfig;
 ```
 
 ## Serve
-Terra-toolkit now provides a couple of scripts to help serve your site for development, testing, or as a doc site.
+Terra-toolkit now provides two ways serve your site for development, testing, or as a doc site.
 
-### serve
+### serve options
 Serve is a replacement for webpack-dev-server. Behind the scenes it's using [webpack-serve](https://github.com/webpack-contrib/webpack-serve).
 Serve is a hot reloading server and does not work on IE 10 or below. See [compatible browsers](https://caniuse.com/#feat=websockets). Use serve-static for IE 10 testing.
 
-### serve-static
-Serve static is a non-hot reloading server that uses express behind the scenes. The serve static method can either take a pre-compiled site folder or a webpack config to compile a site for you. It also offers a virtual file system to avoid saving files to disk. This server is also used in `TerraToolkitServeStaticService` to serve sites for wdio visual regression testing.
+### serve-static options
+Serve static is a non-hot reloading server that uses express behind the scenes. The serve static method can either take a pre-compiled site folder or a webpack config to compile a site for you. It also offers a virtual file system to avoid saving files to disk. This server is also used by the new `ServeStaticService` to serve sites for wdio visual regression testing.
 
-For more information go [here](https:/github.com/cerner/terra-toolkit/master/scripts/serve/readme.md).
+For more information about serve and serve-static and examples go [here](https:/github.com/cerner/terra-toolkit/master/scripts/serve/readme.md).
 
 ## WebdriverIO
 More defaults have been added to the default wdio config. The only config that is now required to be provided is your webpack config. (If you are using terra-dev-site, use the provided wdio config from that package which will have the webpack config already provided).
@@ -79,15 +81,14 @@ const config = {
 exports.config = config;
 ```
 
-### New Defaults
-* Port is defaulted to 8080
-* TerraToolkitServeStatic is included by default to host your test site.
+### New Wdio Config Defaults
+* Port is defaulted to 8080. It is used as the base url and to serve your site.
+* ServeStaticService is included by default to host your test site.
 * The default specs search path now supports mono-repos out of the box.
 ** `./packages/*/tests/wdio/**/*-spec.js`
 ** `./tests/wdio/**/*-spec.js`
 * base url is defaulted to `http://<localIP>:8080`
 * depreciationWarnings are defaulted off
-* axe is setup by default
 * mouse reset default hook has been removed.
 
 Default axe config
