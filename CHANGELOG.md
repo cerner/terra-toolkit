@@ -5,6 +5,9 @@ Unreleased
 ----------
 ### Major Version Bump. See https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitUpgradeBuid-v3.0.0.md.
 
+### Added
+* Added nl and nl-BE to supported locales
+
 ### Changed
 * Enhance the default visual regression configuration
 
