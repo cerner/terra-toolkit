@@ -44,7 +44,7 @@ const i18nConfig = {
   baseDir: process.cwd(),
   directories: [./translations],
   fileSystem: fse,
-  locales: ['ar', 'en', 'en-US', 'en-GB', 'es', 'es-US', 'es-ES', 'de', 'fi-FI', 'fr', 'fr-FR', 'pt', 'pt-BR'],
+  locales: ['ar', 'en', 'en-US', 'en-GB', 'es', 'es-US', 'es-ES', 'de', 'fi-FI', 'fr', 'fr-FR', 'nl', 'nl-BE', 'pt', 'pt-BR'],
 };
 
 exports.config = i18nConfig;
