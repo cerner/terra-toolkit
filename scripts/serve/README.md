@@ -13,9 +13,12 @@ Serve is offered up as both a cli and a javascript function.
 #### API
 | Name  | Required | Default Value | Description |
 | ------------- | ------------- | ------------- | ------------- |
-| **--config**  | true | `undefined` | The webpack config to serve. |
+| **--config**  | false | `undefined` | The webpack config to serve. |
 | **--port**  | false | `8080` | The port the server should listen on. |
 | **-p, --production | false | false | Passes the -p flag to the webpack config. |
+
+If no config is supplied tt:serve will first search for `webpack.config.js` in the working directory, if that is not found it will attempt to use the default webpack config supplied by terra-dev-site.
+
 #### In your package.json
 ```JSON
 {
@@ -51,6 +54,9 @@ Serve-static is offered up as both a cli and a javascript function.
 | **-p, --production | false | false | Passes the -p flag to the webpack config. |
 | **--site** | false | `undefined` | The relative path to the static site. This takes precedence over webpack config if both are passed.|
 | **--vfs** | false | `false` | The webpack assets will be written to a virtual file system instead of disk. Only used when webpack config is passed |
+
+If no config is supplied tt:serve-static will first search for `webpack.config.js` in the working directory, if that is not found it will attempt to use the default webpack config supplied by terra-dev-site.
+
 #### In your package.json
 ```JSON
 {
