@@ -4,3 +4,15 @@ src
 target
 reports
 tests
+errorScreenshots
+.github
+screenshots
+nightwatch.config.js
+dangerfile.js
+wdio.conf.js
+.travis.yml
+.gitattributes
+.babelrc
+.eslintrc
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
