@@ -6,11 +6,11 @@ const MemoryFS = require('memory-fs');
 const mime = require('mime-types');
 
 // Run webpack on the provided webpack config and save to either the vitual file system or disk.
-const compile = (webpackConfig, vfs) => (
+const compile = (webpackConfig, disk) => (
   new Promise((resolve, reject) => {
     const compiler = webpack(webpackConfig);
     // setup a virtual file system to write webpack files to.
-    if (vfs) {
+    if (!disk) {
       compiler.outputFileSystem = new MemoryFS();
     }
     console.log('[Terra-Toolkit:serve-static] Webpack compilation started');
@@ -27,7 +27,7 @@ const compile = (webpackConfig, vfs) => (
 );
 
 // Either build the site or return the path to the provided site.
-const generateSite = (site, config, vfs, production) => {
+const generateSite = (site, config, disk, production) => {
   if (site) {
     const sitePath = path.join(process.cwd(), site);
     return Promise.resolve([sitePath, undefined]);
@@ -39,7 +39,7 @@ const generateSite = (site, config, vfs, production) => {
       webpackConfig = webpackConfig(undefined, { p: production });
     }
 
-    return compile(webpackConfig, vfs);
+    return compile(webpackConfig, disk);
   }
 
   return Promise.reject(new Error('[Terra-Toolkit:serve-static] No webpack configuration provided.'));
@@ -107,11 +107,11 @@ const serveSite = (site, fs, index) => {
 
 // Generate a site if not provided and spin up an express server to serve the site.
 const serve = (options) => {
-  const { site, config, port, vfs, index, production } = options;
+  const { site, config, port, disk, index, production } = options;
   const appPort = port || 8080;
   const appIndex = index || 'index.html';
 
-  return generateSite(site, config, vfs, production).then(
+  return generateSite(site, config, disk, production).then(
     ([sitePath, fs]) => serveSite(sitePath, fs, appIndex)).then(
     (app) => {
       const server = app.listen(appPort);

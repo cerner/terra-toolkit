@@ -53,7 +53,7 @@ Serve-static is offered up as both a cli and a javascript function.
 | **--port**  | false | `8080` | The port the server should listen on. |
 | **-p, --production | false | false | Passes the -p flag to the webpack config. |
 | **--site** | false | `undefined` | The relative path to the static site. This takes precedence over webpack config if both are passed.|
-| **--vfs** | false | `false` | The webpack assets will be written to a virtual file system instead of disk. Only used when webpack config is passed |
+| **--disk** | false | `false` | The webpack assets will be written to disk instead of a virtual file system. Only used when webpack config is passed |
 
 If no config is supplied tt:serve-static will first search for `webpack.config.js` in the working directory, if that is not found it will attempt to use the default webpack config supplied by terra-dev-site.
 
@@ -72,7 +72,7 @@ If no config is supplied tt:serve-static will first search for `webpack.config.j
 | **port**  | false | `8080` | The port the server should listen on. |
 | **production | false | false | Passes the -p flag to the webpack config. |
 | **site** | false | `undefined` | The relative path to the static site. This takes precedence over webpack config if both are passed.|
-| **vfs** | false | `false` | The webpack assets will be written to a virtual file system instead of disk. Only used when webpack config is passed |
+| **disk** | false | `false` | The webpack assets will be written to disk instead of a virtual file system. Only used when webpack config is passed |
 | **index** | false | `index.html` | The entry point for your site. Only used when webpack config is passed|
 #### In code
 ```javascript
