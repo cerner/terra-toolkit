@@ -3,35 +3,53 @@ import { LocalCompare } from 'wdio-visual-regression-service/compare';
 
 const testIdRegex = /\[([^)]+)\]/;
 
-function testName(parent, title) {
-  const matches = testIdRegex.exec(title);
-  const parentName = parent.replace(/[\s+.]/g, '_');
-  let name = title.trim().replace(/[\s+.]/g, '_');
+const screenshotSetup = {
+  diffDir: 'diff',
+  referenceDir: 'reference',
+  screenshotDir: 'latest',
+};
+
+function createTestName(fullName) {
+  const matches = testIdRegex.exec(fullName);
+  let name = fullName.trim().replace(/[\s+.]/g, '_');
   if (matches) {
     name = matches[1];
   }
 
-  return `${parentName}[${name}]`;
+  return name;
 }
 
-function getScreenshotName(ref) {
+function getScreenshotName(context) {
+  const browserWidth = context.meta.viewport.width;
+  const browserHeight = context.meta.viewport.height;
+  const parentName = createTestName(context.test.parent);
+  const testName = createTestName(context.test.title);
+
+  return `${parentName}[${testName}].${browserWidth}x${browserHeight}.png`;
+}
+
+function getScreenshotPath(ref, context) {
+  const refDir = screenshotSetup[`${ref}Dir`];
+  const locale = 'en';
+  const browserName = context.desiredCapabilities.browserName;
+  const testSuite = path.parse(context.test.file).name;
+
+  return path.join(refDir, locale, browserName, testSuite);
+}
+
+function getScreenshot(ref) {
   return (context) => {
-    const browserName = context.desiredCapabilities.browserName;
-    const browserWidth = context.meta.viewport.width;
-    const browserHeight = context.meta.viewport.height;
     const testPath = path.dirname(context.test.file);
-    const name = testName(context.test.parent, context.test.title);
-    return path.join(testPath, '__snapshots__', ref, browserName, `${name}.${browserWidth}x${browserHeight}.png`);
+    return path.join(testPath, '__snapshots__', getScreenshotPath(ref, context), getScreenshotName(context));
   };
 }
 
 module.exports = {
   compare: new LocalCompare({
-    referenceName: getScreenshotName('reference'),
-    screenshotName: getScreenshotName('screen'),
-    diffName: getScreenshotName('diff'),
+    referenceName: getScreenshot('reference'),
+    screenshotName: getScreenshot('screenshot'),
+    diffName: getScreenshot('diff'),
     misMatchTolerance: 0.01,
   }),
   viewportChangePause: 100,
-  widths: [],
 };
