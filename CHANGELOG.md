@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Added
+* Added nl and nl-BE to supported locales
 
 2.11.0 - (April 11, 2018)
 ----------
