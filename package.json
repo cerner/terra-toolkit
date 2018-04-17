@@ -46,7 +46,6 @@
     "release:minor": "node scripts/release/release.js minor",
     "release:patch": "node scripts/release/release.js patch",
     "test": "npm run jest && npm run compile && npm run nightwatch && npm run nightwatch:port-provided && wdio wdio.conf.js",
-    "pack": "./bin/webpack.js --config src/webpack/webpack.config.js",
     "wdio": "wdio wdio.conf.js"
   },
   "dependencies": {

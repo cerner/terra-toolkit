@@ -1,7 +1,7 @@
 import serve from '../../../scripts/serve/serve-static';
 
 export default class TerraToolkitServeStaticService {
-  async onPrepare(config) {
+  async onPrepare(config = {}) {
     if (!config.webpackConfig) {
       // eslint-disable-next-line no-console
       console.warn('[Terra-Toolkit:serve-static] No webpack configuration provided');
@@ -9,8 +9,8 @@ export default class TerraToolkitServeStaticService {
     }
 
     const webpackConfig = config.webpackConfig;
-    const port = ((config || {}).serveStatic || {}).port || 8080;
-    const index = ((config || {}).serveStatic || {}).index || 'index.html';
+    const port = (config.serveStatic || {}).port || 8080;
+    const index = (config.serveStatic || {}).index || 'index.html';
 
     // If no output is provided, define one.
     if (!(webpackConfig.output || {}).path) {

@@ -19,6 +19,7 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
   const resolveModules = ['node_modules'];
   if (!disableAggregateTranslations) {
     aggregateTranslations({ baseDirectory: rootPath });
+    aggregateTranslations(Object.assign({}, { baseDirectory: rootPath }, env.aggregateOptions));
     resolveModules.unshift(path.resolve(rootPath, 'aggregated-translations'));
   }
 
@@ -47,6 +48,7 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
           }, {
             loader: 'postcss-loader',
             options: {
+              // Add unique ident to prevent the loader from searching for a postcss.config file. Additionally see: https://github.com/postcss/postcss-loader#plugins
               ident: 'postcss',
               plugins() {
                 return [
@@ -129,7 +131,7 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
         new UglifyJsPlugin({
           cache: true,
           parallel: true,
-          sourceMap: true, // set to true if you want JS source maps
+          sourceMap: true,
         }),
       ],
     },
