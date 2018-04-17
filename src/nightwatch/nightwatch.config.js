@@ -2,7 +2,7 @@
 import ip from 'ip';
 
 import SeleniumDockerService from '../wdio/services/SeleniumDockerService';
-import TerraToolkitServeStaticService from '../wdio/services/TerraToolkitServeStaticService';
+import ServeStaticService from '../wdio/services/ServeStaticService';
 
 let port = 8080;
 
@@ -18,7 +18,7 @@ const nightwatchConfig = (webpackConfig, srcFolders, providedPort) => {
   }
 
   const seleniumDocker = new SeleniumDockerService();
-  const expressDevService = new TerraToolkitServeStaticService();
+  const expressDevService = new ServeStaticService();
 
   const startDriverAndServer = (done) => {
     const webPackPromise = expressDevService.onPrepare({

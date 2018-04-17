@@ -1,5 +1,5 @@
-# Terra Toolkit serve-static Service
-Terra Toolkit serve-static Service is provided as a convenience to start an express server and return a promise when the webpack compiler is complete. This enables test setup to be complete before testing is began. This service must be provided as a service to webdriver.io to host your test pages.
+# Serve-static Service
+Serve-static Service is provided as a convenience to start an express server and return a promise when the webpack compiler is complete. This enables test setup to be complete before testing is began. This service must be provided as a service to webdriver.io to host your test pages.
 
 ## Options
 
@@ -12,20 +12,20 @@ Terra Toolkit serve-static Service is provided as a convenience to start an expr
 // wdio.conf.js
 const wdioConf = require('terra-toolkit/wdio/conf');
 const webpackConfig = require('./webpack.config.js');
-const TerraToolkitServeStaticService = require('terra-toolkit/wdio/services/index').TerraToolkitServeStaticService;
+const ServeStaticService = require('terra-toolkit/wdio/services/index').ServeStaticService;
 
 const port = 8080;
 
 const config = {
   ...wdioConf.config,
 
-  // Configuration for Terra Toolkit Serve Static service
+  // Configuration for Serve Static service
   webpackConfig,
   serveStatic: {
     port,
   },
 
-  service = wdioConf.config.services.concat([TerraToolkitServeStaticService]);
+  service = wdioConf.config.services.concat([ServeStaticService]);
 };
 
 exports.config = config;

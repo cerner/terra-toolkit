@@ -1,6 +1,6 @@
 import serve from '../../../scripts/serve/serve-static';
 
-export default class TerraToolkitServeStaticService {
+export default class ServeStaticService {
   async onPrepare(config = {}) {
     if (!config.webpackConfig) {
       // eslint-disable-next-line no-console
@@ -17,7 +17,7 @@ export default class TerraToolkitServeStaticService {
       webpackConfig.output = Object.assign({}, webpackConfig.output, { path: '/dist' });
     }
 
-    await TerraToolkitServeStaticService.startService(webpackConfig, port, index).then((server) => {
+    await ServeStaticService.startService(webpackConfig, port, index).then((server) => {
       this.server = server;
     });
   }
