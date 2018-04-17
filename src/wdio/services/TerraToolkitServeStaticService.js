@@ -4,7 +4,7 @@ export default class TerraToolkitServeStaticService {
   async onPrepare(config) {
     if (!config.webpackConfig) {
       // eslint-disable-next-line no-console
-      console.log('[Terra-Toolkit:serve-static] No webpack configuration provided');
+      console.warn('[Terra-Toolkit:serve-static] No webpack configuration provided');
       return;
     }
 

@@ -13,17 +13,13 @@ Terra Toolkit serve-static Service is provided as a convenience to start an expr
 const wdioConf = require('terra-toolkit/wdio/conf');
 const webpackConfig = require('./webpack.config.js');
 const TerraToolkitServeStaticService = require('terra-toolkit/wdio/services/index').TerraToolkitServeStaticService;
-const localIP = require('ip');
 
 const port = 8080;
 
 const config = {
   ...wdioConf.config,
 
-  // Point base URL at the site to be tested for correct webdriver.io setup
-  baseUrl: `http://${localIP.address()}:${port}`,
-
-  // Configuration for WebpackDev service
+  // Configuration for Terra Toolkit Serve Static service
   webpackConfig,
   serveStatic: {
     port,

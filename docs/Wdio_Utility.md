@@ -38,7 +38,6 @@ To run the webdriver.io test running, the [webdriver.io configuration options](h
 const wdioConf = require('terra-toolkit/wdio/conf');
 const webpackConfig = require('./webpack.config.js');
 const TerraToolkitServeStaticService = require('terra-toolkit/lib/wdio/services').TerraToolkitServeStaticService;
-const localIP = require('ip');
 
 const port = 8080;
 
@@ -54,8 +53,6 @@ if (isRepoTest) {
 const config = {
   ...wdioConf.config,
 
-  // Point base URL at the site to be tested for correct webdriver.io setup
-  baseUrl: `http://${localIP.address()}:${port}`,
   specs: [specs],
 
   // Use Terra-toolkit's ServeStaticService

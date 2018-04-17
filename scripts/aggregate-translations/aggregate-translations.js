@@ -35,20 +35,23 @@ const configFile = (configPath) => {
 
 const defaults = (options = {}) => {
   const config = configFile(options.configPath);
-  return {
+  const defaultConfig = {
     baseDir: options.baseDir || config.baseDir || process.cwd(),
     directories: options.directories || config.directories || [],
     fileSystem: options.outputFileSystem || config.outputFileSystem || fse,
     locales: options.locales || config.locales || supportedLocales,
+    outputDir: options.outputDir || './aggregated-translations',
   };
+
+  if (!defaultConfig.locales.includes('en')) {
+    defaultConfig.locales.push('en');
+  }
+
+  return defaultConfig;
 };
 
 const aggregatedTranslations = (options) => {
-  const { baseDir, directories, fileSystem, locales } = defaults(options);
-  if (!locales.includes('en')) {
-    locales.push('en');
-  }
-  const outputDirectory = (options || {}).outputDir || './aggregated-translations';
+  const { baseDir, directories, fileSystem, locales, outputDir } = defaults(options);
 
   const searchPaths = defaultSearchPatterns(baseDir).concat(customDirectories(baseDir, directories));
 
@@ -60,14 +63,14 @@ const aggregatedTranslations = (options) => {
   // Aggregate translation messages for each of the translations directories
   const aggregatedMessages = aggregateMessages(translationDirectories, locales);
 
-  const outputDir = path.resolve(baseDir, outputDirectory);
-  fileSystem.mkdirpSync(outputDir);
+  const outputDirectory = path.resolve(baseDir, outputDir);
+  fileSystem.mkdirpSync(outputDirectory);
 
   // Write aggregated translation messages to a file for each locale
-  writeAggregatedTranslations(aggregatedMessages, locales, fileSystem, outputDir);
+  writeAggregatedTranslations(aggregatedMessages, locales, fileSystem, outputDirectory);
 
   // Write intl and translations loaders for the specified locales
-  writeI18nLoaders(locales, fileSystem, outputDir);
+  writeI18nLoaders(locales, fileSystem, outputDirectory);
 };
 
 module.exports = aggregatedTranslations;
