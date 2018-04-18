@@ -5,7 +5,7 @@ import http from 'http';
 import path from 'path';
 
 const DEFAULT_COMPOSE_FILE = path.join(__dirname, '..', 'docker-compose.yml');
-const dockerInfoError = 'docker-within-a-docker';
+const DOCKER_INFO_ERROR = 'docker-within-a-docker';
 
 /**
 * Webdriver.io SeleniuMDockerService
@@ -40,12 +40,12 @@ export default class SeleniumDockerService {
       const dockerInfo = await this.getDockerInfo();
 
       // add error catching to prevent building a docker container when within docker
-      this.buildPossible = true;
-      if (dockerInfo === dockerInfoError) {
-        this.buildPossible = false;
+      this.seleniumPossible = true;
+      if (dockerInfo === DOCKER_INFO_ERROR) {
+        this.seleniumPossible = false;
       }
 
-      if (this.buildPossible) {
+      if (this.seleniumPossible) {
         if (dockerInfo.Swarm.LocalNodeState !== 'active') {
           await this.initSwarm();
         }
@@ -109,7 +109,7 @@ export default class SeleniumDockerService {
   */
   getDockerInfo() {
     return this.execute('docker info --format "{{json .}}"')
-      .then(result => JSON.parse(result), () => dockerInfoError);
+      .then(result => JSON.parse(result), () => DOCKER_INFO_ERROR);
   }
 
   /**
