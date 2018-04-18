@@ -5,6 +5,7 @@ import http from 'http';
 import path from 'path';
 
 const DEFAULT_COMPOSE_FILE = path.join(__dirname, '..', 'docker-compose.yml');
+const DOCKER_INFO_ERROR = 'docker-within-a-docker';
 
 /**
 * Webdriver.io SeleniuMDockerService
@@ -37,18 +38,28 @@ export default class SeleniumDockerService {
       // Need to activate a docker swarm if one isn't already present
       // before a docker stack can be deployed
       const dockerInfo = await this.getDockerInfo();
-      if (dockerInfo.Swarm.LocalNodeState !== 'active') {
-        await this.initSwarm();
+      console.log(dockerInfo);
+      // add error catching to prevent building a docker container when within docker
+      this.seleniumPossible = true;
+      if (dockerInfo === DOCKER_INFO_ERROR) {
+        console.log('ERROR?');
+        this.seleniumPossible = false;
       }
 
-      // Always start with a fresh stack
-      if (await this.getStack()) {
-        await this.removeStack();
-        await this.ensureNetworkRemoved();
-      }
+      if (this.seleniumPossible) {
+        if (dockerInfo.Swarm.LocalNodeState !== 'active') {
+          await this.initSwarm();
+        }
 
-      await this.deployStack();
-      await this.ensureSelenium();
+        // Always start with a fresh stack
+        if (await this.getStack()) {
+          await this.removeStack();
+          await this.ensureNetworkRemoved();
+        }
+
+        await this.deployStack();
+        await this.ensureSelenium();
+      }
     }
   }
 
@@ -56,7 +67,7 @@ export default class SeleniumDockerService {
    * Clean up docker container after all workers got shut down and the process is about to exit.
    */
   async onComplete() {
-    if (this.config.enabled) {
+    if (this.config.enabled && this.seleniumPossible) {
       await this.removeStack();
       await this.ensureNetworkRemoved();
     }
