@@ -42,7 +42,7 @@ export default class SeleniumDockerService {
       // add error catching to prevent building a docker container when within docker
       this.seleniumPossible = true;
       if (dockerInfo === DOCKER_INFO_ERROR) {
-        console.log('ERROR?");
+        console.log('ERROR?');
         this.seleniumPossible = false;
       }
 
