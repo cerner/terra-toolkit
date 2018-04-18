@@ -38,10 +38,11 @@ export default class SeleniumDockerService {
       // Need to activate a docker swarm if one isn't already present
       // before a docker stack can be deployed
       const dockerInfo = await this.getDockerInfo();
-
+      console.log(dockerInfo);
       // add error catching to prevent building a docker container when within docker
       this.seleniumPossible = true;
       if (dockerInfo === DOCKER_INFO_ERROR) {
+        console.log("ERROR?");
         this.seleniumPossible = false;
       }
 
@@ -66,7 +67,7 @@ export default class SeleniumDockerService {
    * Clean up docker container after all workers got shut down and the process is about to exit.
    */
   async onComplete() {
-    if (this.config.enabled && this.buildPossible) {
+    if (this.config.enabled && this.seleniumPossible) {
       await this.removeStack();
       await this.ensureNetworkRemoved();
     }
