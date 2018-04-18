@@ -110,7 +110,7 @@ export default class SeleniumDockerService {
   */
   getDockerInfo() {
     return this.execute('docker info --format "{{json .}}"')
-      .then(result => JSON.parse(result), () => DOCKER_INFO_ERROR);
+      .then(result => JSON.parse(result));
   }
 
   /**
