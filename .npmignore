@@ -9,7 +9,7 @@ errorScreenshots
 screenshots
 nightwatch.config.js
 dangerfile.js
-wdio.conf.js
+/wdio.conf.js
 .travis.yml
 .gitattributes
 .babelrc
