@@ -35,7 +35,7 @@ To run the webdriver.io test running, the [webdriver.io configuration options](h
 
 ```javascript
 // An example of a full mono-repo configuration file:
-const wdioConf = require('terra-toolkit/config/wdio/conf');
+const wdioConf = require('terra-toolkit/config/wdio/wdio.conf');
 const webpackConfig = require('./webpack.config.js');
 const TerraToolkitServeStaticService = require('terra-toolkit/lib/wdio/services').TerraToolkitServeStaticService;
 

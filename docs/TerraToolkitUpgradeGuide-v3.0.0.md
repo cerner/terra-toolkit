@@ -40,7 +40,7 @@ In a previous release, the aggregation translations script (`tt:aggregate-transl
 
 ### Example
 ```javascript
-// terrai18n.config.js
+// terraI18n.config.js
 const fse = require('fs-extra');
 const i18nConfig = {
   baseDir: process.cwd(),
@@ -49,7 +49,7 @@ const i18nConfig = {
   locales: ['ar', 'en', 'en-US', 'en-GB', 'es', 'es-US', 'es-ES', 'de', 'fi-FI', 'fr', 'fr-FR', 'nl', 'nl-BE', 'pt', 'pt-BR'],
 };
 
-exports.config = i18nConfig;
+module.exports = i18nConfig;
 ```
 
 ## Serve
@@ -67,11 +67,11 @@ For more information about serve and serve-static and examples go [here](https:/
 ## WebdriverIO
 More defaults have been added to the default wdio config. The only config that is now required to be provided is your webpack config. (If you are using terra-dev-site, use the provided wdio config from that package which will have the webpack config already provided).
 
-The conf file has moved from `terra-toolkit/lib/wdio/conf` to `terra-toolkit/config/wdio/conf`. This change was made to provide a consistent location for our reusable config files.
+The conf file has moved from `terra-toolkit/lib/wdio/conf.js` to `terra-toolkit/config/wdio/wdio.conf.js`. This change was made to provide a consistent location for our reusable config files.
 
 ### Required config
 ```javascript
-const wdioConf = require('terra-toolkit/config/wdio/conf');
+const wdioConf = require('terra-toolkit/config/wdio/wdio.conf');
 const webpackConfig = require('./webpack.config');
 
 const config = {
