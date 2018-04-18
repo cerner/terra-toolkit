@@ -16,9 +16,9 @@ const config = {
   webpackConfig,
 
   // Configuration for SeleniumDocker service
-  seleniumDocker: {
-    enabled: !process.env.TRAVIS,
-  },
+//   seleniumDocker: {
+//     enabled: !process.env.TRAVIS,
+//   },
 
   axe: {
     inject: true,
