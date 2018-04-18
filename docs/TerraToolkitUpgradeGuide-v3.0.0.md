@@ -13,7 +13,7 @@ The default webpack config is now a function that will flex between production a
 If you are consuming this webpack config to create another webpack config, don't forget that you need to execute the function first.
 
 ```javascript
-const defaultWebpackFunction = require('terra-toolkit/lib/webpack/webpack.config');
+const defaultWebpackFunction = require('terra-toolkit/config/webpack/webpack.config');
 
 const defaultWebpackConfig = defaultWebpackFunction(); // This will give you the default dev webpack config.
 
@@ -28,7 +28,7 @@ module.exports = defaultWebpackConfig;
 Translation Aggregation has been added to the default webpack config. By default all of the terra supported locales are included. If you need to customize this list, see the I18N aggregation section below. To completely disable translation aggregation within the webpack build to add your own, you can pass the environment variable `--env.disableAggregateTranslations` to the webpack command.
 
 ```bash
-webpack --config src/webpack/webpack.config --env.disableAggregateTranslations
+webpack --config config/webpack/webpack.config --env.disableAggregateTranslations
 ```
 
 The `webpack` command is available to applications consuming terra-toolkit.
@@ -67,9 +67,11 @@ For more information about serve and serve-static and examples go [here](https:/
 ## WebdriverIO
 More defaults have been added to the default wdio config. The only config that is now required to be provided is your webpack config. (If you are using terra-dev-site, use the provided wdio config from that package which will have the webpack config already provided).
 
+The conf file has moved from `terra-toolkit/lib/wdio/conf` to `terra-toolkit/config/wdio/conf`. This change was made to provide a consistent location for our reusable config files.
+
 ### Required config
 ```javascript
-const wdioConf = require('terra-toolkit/lib/wdio/conf');
+const wdioConf = require('terra-toolkit/config/wdio/conf');
 const webpackConfig = require('./webpack.config');
 
 const config = {

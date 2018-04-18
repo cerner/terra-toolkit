@@ -1,10 +1,10 @@
 const localIP = require('ip');
 
-const AxeService = require('./services').Axe;
-const TerraService = require('./services').Terra;
-const SeleniumDockerService = require('./services').SeleniumDocker;
-const visualRegressionConfig = require('./visualRegressionConf');
-const ServeStaticService = require('./services/index').ServeStaticService;
+const AxeService = require('../../lib/wdio/services').Axe;
+const TerraService = require('../../lib/wdio/services').Terra;
+const SeleniumDockerService = require('../../lib/wdio/services').SeleniumDocker;
+const visualRegressionConfig = require('../../lib/wdio/visualRegressionConf');
+const ServeStaticService = require('../../lib/wdio/services/index').ServeStaticService;
 const path = require('path');
 
 const webpackPort = 8080;

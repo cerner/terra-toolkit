@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-const wdioConf = require('./lib/wdio/conf');
+const wdioConf = require('./config/wdio/conf');
 const webpackConfig = require('./tests/test.config.js');
 
 const config = {

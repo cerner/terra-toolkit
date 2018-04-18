@@ -24,7 +24,7 @@ const loadDefaultWebpackConfig = (configPath) => {
   }
 
   // If that is not found look for the terra-dev-site webpack config.
-  return resolve(path.resolve(process.cwd(), 'node_modules', 'terra-dev-site', 'src', 'webpack', 'webpack.config.js'));
+  return resolve(path.resolve(process.cwd(), 'node_modules', 'terra-dev-site', 'config', 'webpack', 'webpack.config.js'));
 };
 
 module.exports = loadDefaultWebpackConfig;
