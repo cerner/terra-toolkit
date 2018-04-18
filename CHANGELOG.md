@@ -5,6 +5,7 @@ Unreleased
 ----------
 ### Added
 * Added nl and nl-BE to supported locales
+* Added services.default-config to quickly reference the default values used by the wdio services
 
 2.11.0 - (April 11, 2018)
 ----------

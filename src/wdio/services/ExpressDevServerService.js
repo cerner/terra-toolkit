@@ -3,6 +3,9 @@ import webpack from 'webpack';
 import MemoryFS from 'memory-fs';
 import mime from 'mime-types';
 import path from 'path';
+import SERVICE_DEFAULTS from '../../../config/wdio/services.default-config';
+
+const EXPRESS_DEFAULTS = SERVICE_DEFAULTS.expressDevServer;
 
 export default class ExpressDevServerService {
   async onPrepare(config) {
@@ -13,8 +16,8 @@ export default class ExpressDevServerService {
     }
 
     const webpackConfig = config.webpackConfig;
-    const port = ((config || {}).expressDevServer || {}).port || 8080;
-    const index = ((config || {}).expressDevServer || {}).index || 'index.html';
+    const port = ((config || {}).expressDevServer || {}).port || EXPRESS_DEFAULTS.port;
+    const index = ((config || {}).expressDevServer || {}).index || EXPRESS_DEFAULTS.index;
 
     await ExpressDevServerService.startExpressDevServer(webpackConfig, port, index).then((server) => {
       this.server = server;

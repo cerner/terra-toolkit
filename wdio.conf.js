@@ -20,6 +20,10 @@ const config = {
     enabled: !process.env.TRAVIS,
   },
 
+  terra: {
+    selector: '[data-terra-toolkit-content]',
+  },
+
   axe: {
     inject: true,
     options: {
