@@ -112,6 +112,7 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
       modules: [path.resolve(path.join(rootPath, 'node_modules'))],
     },
     mode: 'development',
+    stats: { children: false },
   };
 
   if (!production) {
