@@ -17,15 +17,41 @@ const defaultSearchPatterns = baseDirectory => ([
 const customDirectories = (baseDirectory, directories) =>
   (directories.map(dir => path.resolve(baseDirectory, dir)));
 
-const aggregatedTranslations = (options) => {
-  const baseDir = (options || {}).baseDir || process.cwd();
-  const directories = (options || {}).directories || [];
-  const fileSystem = (options || {}).outputFileSystem || fse;
-  const locales = (options || {}).locales || supportedLocales;
-  if (!locales.includes('en')) {
-    locales.push('en');
+const isFile = filePath => (fse.existsSync(filePath) && !fse.lstatSync(filePath).isDirectory());
+
+const configFile = (configPath) => {
+  if (configPath) {
+    // eslint-disable-next-line global-require, import/no-dynamic-require
+    return require(configPath);
   }
-  const outputDirectory = (options || {}).outputDir || './aggregated-translations';
+
+  const localPath = path.resolve(process.cwd(), 'terraI18n.config.js');
+  if (isFile(localPath)) {
+    // eslint-disable-next-line global-require, import/no-dynamic-require
+    return require(localPath);
+  }
+  return {};
+};
+
+const defaults = (options = {}) => {
+  const config = configFile(options.configPath);
+  const defaultConfig = {
+    baseDir: options.baseDir || config.baseDir || process.cwd(),
+    directories: options.directories || config.directories || [],
+    fileSystem: options.outputFileSystem || config.outputFileSystem || fse,
+    locales: options.locales || config.locales || supportedLocales,
+    outputDir: options.outputDir || './aggregated-translations',
+  };
+
+  if (!defaultConfig.locales.includes('en')) {
+    defaultConfig.locales.push('en');
+  }
+
+  return defaultConfig;
+};
+
+const aggregatedTranslations = (options) => {
+  const { baseDir, directories, fileSystem, locales, outputDir } = defaults(options);
 
   const searchPaths = defaultSearchPatterns(baseDir).concat(customDirectories(baseDir, directories));
 
@@ -37,14 +63,14 @@ const aggregatedTranslations = (options) => {
   // Aggregate translation messages for each of the translations directories
   const aggregatedMessages = aggregateMessages(translationDirectories, locales);
 
-  const outputDir = path.resolve(baseDir, outputDirectory);
-  fileSystem.mkdirpSync(outputDir);
+  const outputDirectory = path.resolve(baseDir, outputDir);
+  fileSystem.mkdirpSync(outputDirectory);
 
   // Write aggregated translation messages to a file for each locale
-  writeAggregatedTranslations(aggregatedMessages, locales, fileSystem, outputDir);
+  writeAggregatedTranslations(aggregatedMessages, locales, fileSystem, outputDirectory);
 
   // Write intl and translations loaders for the specified locales
-  writeI18nLoaders(locales, fileSystem, outputDir);
+  writeI18nLoaders(locales, fileSystem, outputDirectory);
 };
 
 module.exports = aggregatedTranslations;

@@ -54,3 +54,4 @@ target
 **/wdio/__snapshots__/screen
 **/wdio/__snapshots__/diff
 errorScreenshots
+**/aggregated-translations/*.*
