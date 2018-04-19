@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+3.0.0 - (April 19, 2018)
+----------
 ### Major Version Bump. See https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitUpgradeBuid-v3.0.0.md.
 
 ### Added
