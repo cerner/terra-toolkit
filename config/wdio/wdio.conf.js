@@ -7,7 +7,8 @@ const visualRegressionConfig = require('../../lib/wdio/visualRegressionConf');
 const ServeStaticService = require('../../lib/wdio/services/index').ServeStaticService;
 const path = require('path');
 
-const webpackPort = 8080;
+const ip = process.env.WDIO_EXTERNAL_HOST || localIP.address();
+const webpackPort = process.env.WDIO_EXTERNAL_PORT || 8080;
 
 exports.config = {
   specs: [
@@ -33,7 +34,7 @@ exports.config = {
 
   visualRegression: visualRegressionConfig,
 
-  baseUrl: `http://${localIP.address()}:${webpackPort}`,
+  baseUrl: `http://${ip}:${webpackPort}`,
 
   // Ignore deprecation warnings. When chrome supports /actions API we'll update to use those.
   deprecationWarnings: false,
