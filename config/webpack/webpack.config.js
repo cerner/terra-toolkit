@@ -126,7 +126,7 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     },
     mode: 'production',
     devtool: undefined,
-    plugins: [new CleanPlugin('build', { exclude: ['stats.json'] })],
+    plugins: [new CleanPlugin(path.resolve(rootPath, 'build'), { exclude: ['stats.json'] })],
     optimization: {
       minimizer: [
         new UglifyJsPlugin({
