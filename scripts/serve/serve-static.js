@@ -5,7 +5,7 @@ const webpack = require('webpack');
 const MemoryFS = require('memory-fs');
 const mime = require('mime-types');
 
-// Run webpack on the provided webpack config and save to either the vitual file system or disk.
+// Run webpack on the provided webpack config and save to either the virtual file system or disk.
 const compile = (webpackConfig, disk) => (
   new Promise((resolve, reject) => {
     const compiler = webpack(webpackConfig);
