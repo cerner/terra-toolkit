@@ -27,7 +27,7 @@ export default class ServeStaticService {
   }
 
   static startService(config, port, index) {
-    return serve({ config, port, index });
+    return serve({ config, port, index, production: true });
   }
 
   stop() {
