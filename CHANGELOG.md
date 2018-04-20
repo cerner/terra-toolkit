@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Changed
+* Removed the exception to transpile terra-dev-site.
 
 3.0.0 - (April 19, 2018)
 ----------
