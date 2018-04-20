@@ -41,12 +41,6 @@ exports.config = {
 
   axe: {
     inject: true,
-    options: {
-      rules: [{
-        id: 'landmark-one-main',
-        enabled: false,
-      }],
-    },
   },
 
   framework: 'mocha',
