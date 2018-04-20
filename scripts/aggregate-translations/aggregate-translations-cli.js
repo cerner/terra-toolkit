@@ -25,6 +25,7 @@ commander
   .option('-d, --directories [directories]', 'Regex pattern to glob search for translations', addCustomDirectory)
   .option('-l, --locales <locales>', 'The list of locale codes aggregate on and combine into a single, respective translation file ', localeList, supportedLocales)
   .option('-o, --outputDir [outputDir]', 'The output location of the generated configuration file', './aggregated-translations')
+  .option('-c, --config [configPath]', 'The path to the terra i18n config')
   .parse(process.argv);
 
 const aggregationOption = {
@@ -32,6 +33,7 @@ const aggregationOption = {
   directories: customSearchDirectories,
   locales: commander.locales,
   outputDir: commander.outputDir,
+  configPath: commander.config,
 };
 
 aggregateTranslations(aggregationOption);

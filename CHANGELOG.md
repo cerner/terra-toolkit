@@ -3,9 +3,15 @@ Changelog
 
 Unreleased
 ----------
+
+3.0.0 - (April 19, 2018)
+----------
+### Major Version Bump. See https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitUpgradeBuid-v3.0.0.md.
+
 ### Added
 * Added nl and nl-BE to supported locales
 * Added services.default-config to quickly reference the default values used by the wdio services
+
 
 2.11.0 - (April 11, 2018)
 ----------

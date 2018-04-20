@@ -68,7 +68,7 @@ export default class SeleniumDockerService {
       retry({ times: this.config.retries, interval: this.config.retryInterval },
         this.getSeleniumStatus, (err, result) => {
           if (err) {
-            reject(err);
+            reject(new Error(err));
           } else {
             resolve(result);
           }

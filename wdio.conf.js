@@ -1,27 +1,17 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-const wdioConf = require('./lib/wdio/conf');
-const ExpressDevService = require('./lib/wdio/services/index').ExpressDevService;
+const wdioConf = require('./config/wdio/wdio.conf');
 const webpackConfig = require('./tests/test.config.js');
-const localIP = require('ip');
-const path = require('path');
-
-const port = 8080;
 
 const config = {
   ...wdioConf.config,
-  baseUrl: `http://${localIP.address()}:${port}`,
-  specs: [path.join('.', 'tests', 'wdio', '**-spec.js')],
 
-  // Configuration for ExpressDevService
-  webpackConfig,
+  terra: {
+    selector: '[data-terra-toolkit-content]',
+  },
 
   // Configuration for SeleniumDocker service
   seleniumDocker: {
     enabled: !process.env.TRAVIS,
-  },
-
-  terra: {
-    selector: '[data-terra-toolkit-content]',
   },
 
   axe: {
@@ -33,7 +23,9 @@ const config = {
       }],
     },
   },
+
+  // Configuration for ExpressDevService
+  webpackConfig,
 };
 
-config.services = wdioConf.config.services.concat([ExpressDevService]);
 exports.config = config;

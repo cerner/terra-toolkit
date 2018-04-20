@@ -1,6 +1,6 @@
 {
   "name": "terra-toolkit",
-  "version": "2.11.0",
+  "version": "3.0.0",
   "description": "Utilities to help when developing terra modules.",
   "main": "lib/index.js",
   "engines": {
@@ -23,7 +23,9 @@
     "url": "https://github.com/cerner/terra-toolkit/issues"
   },
   "bin": {
-    "tt:aggregate-translations": "./bin/aggregate-translations.js"
+    "tt:aggregate-translations": "./bin/aggregate-translations.js",
+    "tt:serve": "./bin/serve.js",
+    "tt:serve-static": "./bin/serve-static.js"
   },
   "scripts": {
     "clean:all": "npm run clean:compiled && npm run clean:dependencies",
@@ -48,25 +50,44 @@
   },
   "dependencies": {
     "async": "^2.5.0",
+    "autoprefixer": "^6.7.7",
     "axe-core": "^2.6.1",
+    "babel-loader": "^7.1.2",
+    "babel-polyfill": "^6.23.0",
     "chai": "^4.1.2",
+    "clean-webpack-plugin": "^0.1.17",
     "commander": "^2.9.0",
+    "css-loader": "^0.28.7",
     "express": "^4.16.2",
+    "file-loader": "^1.1.5",
     "fs-extra": "^5.0.0",
     "glob": "^7.1.1",
     "ip": "^1.1.5",
     "load-json-file": "^2.0.0",
     "lodash.startcase": "^4.4.0",
     "memory-fs": "^0.4.1",
-    "mime-types": "^2.1.18"
+    "mime-types": "^2.1.18",
+    "mini-css-extract-plugin": "^0.4.0",
+    "node-sass": "^4.5.2",
+    "postcss": "^6.0.9",
+    "postcss-assets-webpack-plugin": "^1.1.0",
+    "postcss-custom-properties": "^6.0.1",
+    "postcss-loader": "^2.0.6",
+    "postcss-rtl": "^1.1.2",
+    "raf": "^3.4.0",
+    "raw-loader": "^0.5.1",
+    "sass-loader": "^6.0.6",
+    "uglifyjs-webpack-plugin": "^1.2.4",
+    "wdio-mocha-framework": "^0.5.11",
+    "wdio-visual-regression-service": "^0.9.0",
+    "webdriverio": "^4.9.8",
+    "webpack": "^4.4.1",
+    "webpack-cli": "^2.0.13",
+    "webpack-merge": "^4.1.2",
+    "webpack-serve": "^0.3.1"
   },
   "peerDependencies": {
-    "nightwatch": "^0.9.12",
-    "webdriverio": "^4.9.8",
-    "webpack": "^3.6.0",
-    "webpack-dev-server": "^2.7.1",
-    "wdio-mocha-framework": "^0.5.11",
-    "wdio-visual-regression-service": "^0.8.0"
+    "nightwatch": "^0.9.12"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
@@ -80,15 +101,10 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.9.0",
-    "html-webpack-plugin": "^2.30.0",
+    "html-webpack-plugin": "^3.1.0",
+    "jest": "^21.0.2",
     "nightwatch": "^0.9.12",
     "rimraf": "^2.6.1",
-    "shelljs": "^0.7.6",
-    "webdriverio": "^4.9.8",
-    "webpack": "^3.6.0",
-    "webpack-dev-server": "2.7.1",
-    "wdio-mocha-framework": "^0.5.11",
-    "jest": "^21.0.2",
-    "wdio-visual-regression-service": "^0.8.0"
+    "shelljs": "^0.7.6"
   }
 }

@@ -16,11 +16,17 @@ const modifiedSrcFiles = danger.git.modified_files.filter((filePath) => {
   return srcFilePattern.test(filePath);
 });
 
+const modifiedSriptFiles = danger.git.modified_files.filter((filePath) => {
+  const scriptFilePattern = /\/scripts/i;
+  return scriptFilePattern.test(filePath);
+});
+
 const hasCHANGELOGChanges = modifiedChangelog.length > 0 || newChangelog.length > 0;
 const hasModifiedSrcFiles = modifiedSrcFiles.length > 0;
+const hasModifiedScriptFiles = modifiedSriptFiles.length > 0;
 
 // Fail if there are src code changes without a CHANGELOG update
-if (hasModifiedSrcFiles && !hasCHANGELOGChanges) {
+if ((hasModifiedSrcFiles || hasModifiedScriptFiles) && !hasCHANGELOGChanges) {
   fail('Please include a CHANGELOG entry with this PR.');
 }
 
