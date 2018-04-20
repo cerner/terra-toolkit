@@ -8,8 +8,8 @@ const axe = {
   options: undefined,
 };
 
-/* Express Dev Server Service Defaults */
-const expressDevServer = {
+/* Serve Static Service Defaults */
+const serveStatic = {
   /* The port to start the express server on. */
   port: 8080,
   /* The base html template name. */
@@ -31,6 +31,6 @@ const seleniumDocker = {
 
 module.exports = {
   axe,
-  expressDevServer,
+  serveStatic,
   seleniumDocker,
 };
