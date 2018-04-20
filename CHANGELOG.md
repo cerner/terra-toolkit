@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Added
+* Added documentation on the aggregated-translations tool
 
 3.0.0 - (April 19, 2018)
 ----------
