@@ -31,7 +31,7 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     module: {
       rules: [{
         test: /\.(jsx|js)$/,
-        exclude: /node_modules(?!\/terra-dev-site\/src)/,
+        exclude: /node_modules/,
         use: 'babel-loader',
       },
       {
