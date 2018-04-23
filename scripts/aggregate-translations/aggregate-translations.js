@@ -28,7 +28,7 @@ const loadConfigFile = (configPath) => {
   const localPath = path.resolve(process.cwd(), 'terraI18n.config.js');
   if (isFile(localPath)) {
     // eslint-disable-next-line global-require, import/no-dynamic-require
-    return require(i18nConfigPath);
+    return require(localPath);
   }
   return {};
 };
