@@ -15,7 +15,7 @@ Once all of the translation files are created for the specified locales, the scr
 | outputFileSystem | N/A | File System Module | The filesystem to use to write the translation and loader files. Note: The file system provide must support `mkdirp`. | [fs-extra](https://www.npmjs.com/package/fs-extra) |
 | locales  | -l, --locales | Array of Strings | The list of locale codes to aggregate. Note: 'en' is always added if not specified. | [terra-supported locales](https://github.com/cerner/terra-core/blob/master/packages/terra-i18n/src/i18nSupportedLocales.js) |
 | outputDir | -o, --ouputDir | String | Output directory for the translation and loader files | ./aggregated-translations |
-| configPath | -c, --config | String | The path to the terra i18n configuration file | ./terraI18n.config.js |
+| configPath | -c, --config | String | The path to the terra i18n configuration file | undefined |
 
 #### Setup Example
 The `aggregate-translations` setup function can be used as follows:
@@ -46,7 +46,9 @@ scripts: {
 ```
 
 #### terraI18n.config Example
-Both the setup function and CLI methods allow for the configuration options to be loaded via a config file. The `aggregate-translations` tool will always attempt to load this config by default, but honors the function or CLI specified options before the config file specified options. Add a config file like:
+Both the setup function and CLI methods allow for the configuration options to be loaded via a config file. The `aggregate-translations` tool will always attempt to load this config by default. If no config path is provided, the aggregate-translations tool will attempt to load the configuration from `./terraI18n.config.js`. If this file does not exist, the default configuration is used.
+
+Add a terra-i18n config file like:
 ```js
 const aggregateOptions = {
     baseDir: __dirname,
@@ -58,7 +60,7 @@ const aggregateOptions = {
 module.exports = aggregateOptions;
 ```
 
-To load the config someplace other than `./terraI18n.config.js`, simply add the config path as follows:
+Then, to load the config someplace other than `./terraI18n.config.js`, simply add the config path as follows:
 ```js
 // using setup approach
 aggregateTranslations({ configPath: './config/terraI18n.config.js' });

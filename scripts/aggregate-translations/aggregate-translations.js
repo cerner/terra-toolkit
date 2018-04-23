@@ -20,8 +20,13 @@ const customDirectories = (baseDirectory, directories) =>
 const isFile = filePath => (fse.existsSync(filePath) && !fse.lstatSync(filePath).isDirectory());
 
 const loadConfigFile = (configPath) => {
-  const i18nConfigPath = path.resolve(process.cwd(), configPath);
-  if (isFile(i18nConfigPath)) {
+  if (configPath) {
+    // eslint-disable-next-line global-require, import/no-dynamic-require
+    return require(path.resolve(process.cwd(), configPath));
+  }
+
+  const localPath = path.resolve(process.cwd(), 'terraI18n.config.js');
+  if (isFile(localPath)) {
     // eslint-disable-next-line global-require, import/no-dynamic-require
     return require(i18nConfigPath);
   }
@@ -29,8 +34,7 @@ const loadConfigFile = (configPath) => {
 };
 
 const defaults = (options = {}) => {
-  const configPath = options.configPath || './terraI18n.config.js';
-  const config = loadConfigFile(configPath);
+  const config = loadConfigFile(options.configPath);
 
   const defaultConfig = {
     baseDir: options.baseDir || config.baseDir || process.cwd(),
