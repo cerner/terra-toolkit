@@ -9,6 +9,16 @@ const config = {
     selector: '[data-terra-toolkit-content]',
   },
 
+  axe: {
+    inject: true,
+    options: {
+      rules: [{
+        id: 'landmark-one-main',
+        enabled: false,
+      }],
+    },
+  },
+
   // Configuration for SeleniumDocker service
   seleniumDocker: {
     enabled: !process.env.TRAVIS,
