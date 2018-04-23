@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Fixed
+* Removed disabled axe 'landmark-one-main' rule from the provided default wdio.config
 
 3.0.0 - (April 19, 2018)
 ----------
