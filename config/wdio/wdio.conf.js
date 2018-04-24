@@ -25,7 +25,7 @@ exports.config = {
   sync: true,
   logLevel: 'silent',
   coloredLogs: true,
-  bail: 0,
+  bail: 1,
   screenshotPath: path.join('.', 'errorScreenshots'),
   waitforTimeout: 3000,
   connectionRetryTimeout: 90000,
@@ -47,5 +47,6 @@ exports.config = {
   mochaOpts: {
     ui: 'bdd',
     timeout: 20000,
+    bail: true,
   },
 };
