@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Fixed
+* set a default browser size explicitly.
 
 3.0.1 - (April 24, 2018)
 ----------
