@@ -19,7 +19,7 @@ const customDirectories = (baseDirectory, directories) =>
 
 const isFile = filePath => (fse.existsSync(filePath) && !fse.lstatSync(filePath).isDirectory());
 
-const configFile = (configPath) => {
+const loadConfigFile = (configPath) => {
   if (configPath) {
     // eslint-disable-next-line global-require, import/no-dynamic-require
     return require(configPath);
@@ -34,7 +34,8 @@ const configFile = (configPath) => {
 };
 
 const defaults = (options = {}) => {
-  const config = configFile(options.configPath);
+  const config = loadConfigFile(options.configPath);
+
   const defaultConfig = {
     baseDir: options.baseDir || config.baseDir || process.cwd(),
     directories: options.directories || config.directories || [],
