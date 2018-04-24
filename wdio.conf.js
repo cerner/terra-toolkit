@@ -24,16 +24,6 @@ const config = {
     enabled: !process.env.TRAVIS,
   },
 
-  axe: {
-    inject: true,
-    options: {
-      rules: [{
-        id: 'landmark-one-main',
-        enabled: false,
-      }],
-    },
-  },
-
   // Configuration for ExpressDevService
   webpackConfig,
 };
