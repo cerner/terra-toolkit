@@ -22,7 +22,7 @@ const isFile = filePath => (fse.existsSync(filePath) && !fse.lstatSync(filePath)
 const loadConfigFile = (configPath) => {
   if (configPath) {
     // eslint-disable-next-line global-require, import/no-dynamic-require
-    return require(path.resolve(process.cwd(), configPath));
+    return require(configPath);
   }
 
   const localPath = path.resolve(process.cwd(), 'terraI18n.config.js');
