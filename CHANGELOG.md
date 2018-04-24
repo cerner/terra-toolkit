@@ -5,6 +5,10 @@ Unreleased
 ----------
 ### Added
 * Added services.default-config to quickly reference the default values used by the wdio services
+
+
+3.0.1 - (April 24, 2018)
+----------
 ### Fixed
 * Removed disabled axe 'landmark-one-main' rule from the provided default wdio.config
 
