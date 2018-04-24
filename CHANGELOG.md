@@ -5,6 +5,10 @@ Unreleased
 ----------
 ### Added
 * Added documentation on the aggregated-translations tool
+
+
+3.0.1 - (April 24, 2018)
+----------
 ### Fixed
 * Removed disabled axe 'landmark-one-main' rule from the provided default wdio.config
 
