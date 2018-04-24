@@ -24,3 +24,5 @@ services:
       HUB_PORT_4444_TCP_PORT: 4444
       NODE_MAX_SESSION: 1
       TZ: 'America/Chicago'
+      SCREEN_WIDTH: 1070
+      SCREEN_HEIGHT: 1025

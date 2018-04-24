@@ -48,9 +48,4 @@ exports.config = {
     ui: 'bdd',
     timeout: 20000,
   },
-
-  before: () => {
-    /* global browser */
-    browser.setViewportSize({ width: 1050, height: 895, name: 'default' });
-  },
 };
