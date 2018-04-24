@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Changed
+* WDIO bails at the first failure.
 
 3.0.1 - (April 24, 2018)
 ----------
