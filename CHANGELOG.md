@@ -3,9 +3,15 @@ Changelog
 
 Unreleased
 ----------
-### Added
-* Added services.default-config to quickly reference the default values used by the wdio services
+### Changed
+* WDIO bails at the first failure when running on CI.
 
+### Fixed
+* set a default browser size explicitly.
+
+### Added
+* Added documentation on the aggregated-translations tool
+* Added services.default-config to quickly reference the default values used by the wdio services
 
 3.0.1 - (April 24, 2018)
 ----------

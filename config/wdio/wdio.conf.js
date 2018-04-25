@@ -9,6 +9,7 @@ const path = require('path');
 
 const ip = process.env.WDIO_EXTERNAL_HOST || localIP.address();
 const webpackPort = process.env.WDIO_EXTERNAL_PORT || 8080;
+const ci = process.env.TRAVIS || process.env.CI;
 
 exports.config = {
   specs: [
@@ -25,7 +26,7 @@ exports.config = {
   sync: true,
   logLevel: 'silent',
   coloredLogs: true,
-  bail: 0,
+  bail: ci ? 1 : 0,
   screenshotPath: path.join('.', 'errorScreenshots'),
   waitforTimeout: 3000,
   connectionRetryTimeout: 90000,
@@ -47,5 +48,6 @@ exports.config = {
   mochaOpts: {
     ui: 'bdd',
     timeout: 20000,
+    bail: ci,
   },
 };
