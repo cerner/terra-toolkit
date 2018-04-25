@@ -6,6 +6,9 @@ Unreleased
 ### Changed
 * WDIO bails at the first failure.
 
+### Added
+* Added documentation on the aggregated-translations tool
+
 3.0.1 - (April 24, 2018)
 ----------
 ### Fixed
