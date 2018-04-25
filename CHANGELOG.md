@@ -3,9 +3,10 @@ Changelog
 
 Unreleased
 ----------
+### Fixed
+* set a default browser size explicitly.
 ### Added
 * Added documentation on the aggregated-translations tool
-
 
 3.0.1 - (April 24, 2018)
 ----------
