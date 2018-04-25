@@ -3,6 +3,14 @@ Changelog
 
 Unreleased
 ----------
+
+2.12.1 - (April 25, 2018)
+----------
+### Fixed
+* set a default browser size explicitly.
+
+2.12.0 - (April 11, 2018)
+----------
 ### Added
 * Added nl and nl-BE to supported locales
 
