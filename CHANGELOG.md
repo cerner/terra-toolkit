@@ -6,6 +6,9 @@ Unreleased
 ### Changed
 * WDIO bails at the first failure.
 
+### Fixed
+* set a default browser size explicitly.
+
 ### Added
 * Added documentation on the aggregated-translations tool
 
