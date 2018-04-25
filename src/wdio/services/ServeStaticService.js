@@ -1,4 +1,7 @@
 import serve from '../../../scripts/serve/serve-static';
+import SERVICE_DEFAULTS from '../../../config/wdio/services.default-config';
+
+const SERVE_STATIC_DEFAULTS = SERVICE_DEFAULTS.serveStatic;
 
 export default class ServeStaticService {
   async onPrepare(config = {}) {
@@ -9,8 +12,8 @@ export default class ServeStaticService {
     }
 
     const webpackConfig = config.webpackConfig;
-    const port = (config.serveStatic || {}).port || 8080;
-    const index = (config.serveStatic || {}).index || 'index.html';
+    const port = (config.serveStatic || {}).port || SERVE_STATIC_DEFAULTS.port;
+    const index = (config.serveStatic || {}).index || SERVE_STATIC_DEFAULTS.index;
 
     // If no output is provided, define one.
     if (!(webpackConfig.output || {}).path) {

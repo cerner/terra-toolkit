@@ -1,5 +1,6 @@
 /* global browser, axe */
 import fs from 'fs';
+import SERVICE_DEFAULTS from '../../../config/wdio/services.default-config';
 
 let axeCoreSrc;
 
@@ -14,7 +15,7 @@ export default class AxeService {
       // Conditionally inject axe. This allows consumers to inject it themselves
       // in the test examples which would slightly speed up test runs.
       const axeConfig = {
-        inject: true,
+        ...SERVICE_DEFAULTS.axe,
         ...(browser.options.axe || {}),
       };
       if (axeConfig.inject) {

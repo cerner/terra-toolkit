@@ -3,8 +3,7 @@ import { exec } from 'child_process';
 import retry from 'async/retry';
 import http from 'http';
 import path from 'path';
-
-const DEFAULT_COMPOSE_FILE = path.join(__dirname, '..', 'docker-compose.yml');
+import SERVICE_DEFAULTS from '../../../config/wdio/services.default-config';
 
 /**
 * Webdriver.io SeleniuMDockerService
@@ -22,10 +21,7 @@ export default class SeleniumDockerService {
    */
   async onPrepare(config) {
     this.config = {
-      enabled: true, // True if service enabled, false otherwise
-      retries: 2000, // Retry count to test for selenium being up
-      retryInterval: 10, // Retry interval in milliseconds to wait between retries for selenium to come up.
-      composeFile: DEFAULT_COMPOSE_FILE,
+      ...SERVICE_DEFAULTS.seleniumDocker,
       ...(config.seleniumDocker || {}),
     };
 
