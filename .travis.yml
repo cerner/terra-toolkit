@@ -5,7 +5,7 @@ before_script:
   - npm run compile
 before_install:
   - docker pull selenium/standalone-chrome:3.11.0-californium
-  - docker run -d -p 4444:4444 selenium/standalone-chrome
+  - docker run -d -p 4444:4444 selenium/standalone-chrome:3.11.0-californium
 script:
   - npm test
   - npm run danger
