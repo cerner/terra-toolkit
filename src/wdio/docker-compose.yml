@@ -12,7 +12,7 @@ services:
     ports:
       - '4444:4444'
   chrome:
-    image: 'selenium/node-chrome:3.11'
+    image: 'selenium/node-chrome:3.11.0-californium'
     volumes:
       - /dev/shm:/dev/shm
     ports:
@@ -25,4 +25,4 @@ services:
       NODE_MAX_SESSION: 1
       TZ: 'America/Chicago'
       SCREEN_WIDTH: 1070
-      SCREEN_HEIGHT: 1025
+      SCREEN_HEIGHT: 1020
