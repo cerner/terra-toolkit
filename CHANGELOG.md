@@ -4,7 +4,7 @@ Changelog
 Unreleased
 ----------
 ### Changed
-* WDIO bails at the first failure.
+* WDIO bails at the first failure when running on CI.
 
 ### Fixed
 * set a default browser size explicitly.
