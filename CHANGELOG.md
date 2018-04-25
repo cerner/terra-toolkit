@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+3.1.1 - (April 25, 2018)
+----------
 ### Fixed
 * Lock into a specific version of chrome driver.
 
