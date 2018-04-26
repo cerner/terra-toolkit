@@ -21,7 +21,7 @@ const seleniumDocker = {
   /* Weather or not the service should be ran. */
   enabled: true,
   /* Retry count to test for selenium being up. */
-  retries: 2000,
+  retries: 3000,
   /* The retry interval (in milliseconds) to wait between retries.
    */
   retryInterval: 10,
