@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+3.2.0 - (April 26, 2018)
+----------
 ### Changed
 * Increase the timeout waiting for the selenium docker service to start.
 
