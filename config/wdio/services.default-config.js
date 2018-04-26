@@ -24,7 +24,7 @@ const seleniumDocker = {
   retries: 3000,
   /* The retry interval (in milliseconds) to wait between retries.
    */
-  retryInterval: 10,
+  retryInterval: 20,
   /* Docker compose file reference when deploying the docker selenium hub stack. */
   composeFile: path.join(__dirname, '..', '..', 'lib', 'wdio', 'docker-compose.yml'),
 };
