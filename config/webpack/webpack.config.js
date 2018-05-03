@@ -18,7 +18,6 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
 
   const resolveModules = ['node_modules'];
   if (!disableAggregateTranslations) {
-    aggregateTranslations({ baseDirectory: rootPath });
     aggregateTranslations(Object.assign({}, { baseDirectory: rootPath }, env.aggregateOptions));
     resolveModules.unshift(path.resolve(rootPath, 'aggregated-translations'));
   }
