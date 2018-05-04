@@ -23,9 +23,9 @@
     "url": "https://github.com/cerner/terra-toolkit/issues"
   },
   "bin": {
-    "tt:aggregate-translations": "./bin/aggregate-translations.js",
-    "tt:serve": "./bin/serve.js",
-    "tt:serve-static": "./bin/serve-static.js"
+    "tt:aggregate-translations": "bin/aggregate-translations.js",
+    "tt:serve": "bin/serve.js",
+    "tt:serve-static": "bin/serve-static.js"
   },
   "scripts": {
     "clean:all": "npm run clean:compiled && npm run clean:dependencies",
