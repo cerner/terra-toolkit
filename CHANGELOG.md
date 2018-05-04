@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+3.2.1 - (May 4, 2018)
+----------
 ### Fixed
 * Remove './' from bin paths in package.json
 
