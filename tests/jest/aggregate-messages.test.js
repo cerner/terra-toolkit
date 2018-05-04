@@ -29,7 +29,7 @@ describe('aggregates translations messages', () => {
     aggregateMessages([__dirname], ['en'], fileSystem);
 
     // eslint-disable-next-line no-console
-    expect(console.warn).toBeCalledWith(`Translation file en.json not found for ${__dirname}`);
+    expect(console.warn).toBeCalled();
   });
 
   it('aggregates the messages', () => {
