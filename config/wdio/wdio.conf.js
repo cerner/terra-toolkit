@@ -54,6 +54,10 @@ const config = {
   },
 };
 
+if (ci) {
+  config.host = 'standalone-chrome';
+}
+
 const isRepoTest = !process.cwd().includes('/packages/');
 if (isRepoTest) {
   // eslint-disable-next-line no-underscore-dangle
