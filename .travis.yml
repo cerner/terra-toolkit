@@ -7,8 +7,9 @@ branches:
     - master
 cache: false
 script:
-  - 'docker-compose -f ./config/docker/ci-docker-compose.yml pull'
-  - "docker-compose -f ./config/docker/ci-docker-compose.yml run -e DANGER_GITHUB_API_TOKEN=$DANGER_GITHUB_API_TOKEN -e TRAVIS=$TRAVIS -e CI=$CI -e HAS_JOSH_K_SEAL_OF_APPROVAL=$HAS_JOSH_K_SEAL_OF_APPROVAL -e TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST -e TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG test npm run $TEST_SUITE"
+  - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
+  - 'docker-compose pull'
+  - "docker-compose run -e DANGER_GITHUB_API_TOKEN=$DANGER_GITHUB_API_TOKEN -e TRAVIS=$TRAVIS -e CI=$CI -e HAS_JOSH_K_SEAL_OF_APPROVAL=$HAS_JOSH_K_SEAL_OF_APPROVAL -e TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST -e TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG test npm run $TEST_SUITE"
 env:
   global:
     - DOCKER_IMAGE='ryanthemanuel/terra-toolkit'
@@ -23,8 +24,9 @@ jobs:
     - stage: build
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "ryanthemanuel" --password-stdin
-        - docker-compose -f ./config/docker/ci-docker-compose.yml build
-        - docker-compose -f ./config/docker/ci-docker-compose.yml push
+        - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
+        - docker-compose build
+        - docker-compose push
     - stage: release terra-node
       script:
         - 'docker build -t ryanthemanuel/terra-node:latest --file ./config/docker/Dockerfile ./config/docker'
