@@ -3,7 +3,7 @@ version: '3'
 services:
   base:
     build: ./
-    image: "${DOCKER_IMAGE}:${TAG:-default}"
+    image: "${DOCKER_IMAGE}:${TAG:-latest}"
   standalone-chrome:
     image: 'selenium/standalone-chrome:3.11.0-californium'
     ports:
@@ -18,7 +18,7 @@ services:
       SCREEN_HEIGHT: 1020
   test:
     build: ./
-    image: "${DOCKER_IMAGE}-test:${TAG:-default}"
+    image: "${DOCKER_IMAGE}-test:${TAG:-latest}"
     depends_on:
       - base
       - standalone-chrome
