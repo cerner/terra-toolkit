@@ -24,14 +24,14 @@ jobs:
         - docker-compose push
     - stage: release terra-node
       script:
-        - docker build -t ryanthemanuel/terra-node:latest --file ./config/docker/Dockerfile
+        - docker build -t ryanthemanuel/terra-node:latest --file ./config/docker/Dockerfile ./config/docker
         - docker push ryanthemanuel/terra-node:latest
-      if: branch = master
+      if: NOT env(TRAVIS_PULL_REQUEST)
     - stage: release snapshot of terra-node
       script:
-        - docker build -t ryanthemanuel/terra-node:snapshot --file ./config/docker/Dockerfile
-        - docker push ryanthemanuel/terra-node:snapshot
-      if: NOT branch = master
+        - "docker build -t ryanthemanuel/terra-node:$TRAVIS_PULL_REQUEST_BRANCH --file ./config/docker/Dockerfile" ./config/docker
+        - "docker push ryanthemanuel/terra-node:$TRAVIS_PULL_REQUEST_BRANCH"
+      if: env(TRAVIS_PULL_REQUEST)
 stages:
   - build
   - test
