@@ -61,7 +61,7 @@ if (ci) {
 const isRepoTest = !process.cwd().includes('/packages/');
 if (isRepoTest) {
   // eslint-disable-next-line no-underscore-dangle
-  const packageLocations = PackageUtilities.getPackages(new Repository(path.resolve('.')).map(pkg => pkg._location);
+  const packageLocations = PackageUtilities.getPackages(new Repository(path.resolve('.'))).map(pkg => pkg._location);
 
   const numberOfSuites = 4;
   config.suites = {};
