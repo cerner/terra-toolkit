@@ -6,12 +6,14 @@ const SeleniumDockerService = require('../../lib/wdio/services').SeleniumDocker;
 const visualRegressionConfig = require('../../lib/wdio/visualRegressionConf');
 const ServeStaticService = require('../../lib/wdio/services/index').ServeStaticService;
 const path = require('path');
+const PackageUtilities = require('lerna/lib/PackageUtilities');
+const Repository = require('lerna/lib/Repository');
 
 const ip = process.env.WDIO_EXTERNAL_HOST || localIP.address();
 const webpackPort = process.env.WDIO_EXTERNAL_PORT || 8080;
 const ci = process.env.TRAVIS || process.env.CI;
 
-exports.config = {
+const config = {
   specs: [
     path.join('tests', 'wdio', '**', '*-spec.js'),
     path.join('packages', '*', 'tests', 'wdio', '**', '*-spec.js'),
@@ -51,3 +53,22 @@ exports.config = {
     bail: ci,
   },
 };
+
+const isRepoTest = !process.cwd().includes('/packages/');
+if (isRepoTest) {
+  // eslint-disable-next-line no-underscore-dangle
+  const packageLocations = PackageUtilities.getPackages(new Repository(path.resolve('.')).map(pkg => pkg._location);
+
+  const numberOfSuites = 4;
+  config.suites = {};
+  [...Array(numberOfSuites)].forEach((_, index) => {
+    config.suites[`suite${index + 1}`] = [];
+  });
+  const itemsPerSuite = Math.ceil(packageLocations.length / numberOfSuites);
+  packageLocations.forEach((packageLocation, index) => {
+    const currentSuite = `suite${Math.floor(index / itemsPerSuite) + 1}`;
+    config.suites[currentSuite] = config.suites[currentSuite].concat(`${packageLocation}/tests/wdio/**/*-spec.js`);
+  });
+}
+
+exports.config = config;
