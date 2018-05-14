@@ -22,5 +22,3 @@ services:
     depends_on:
       - base
       - standalone-chrome
-    links:
-      - standalone-chrome
