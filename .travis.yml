@@ -35,8 +35,8 @@ jobs:
     - stage: release snapshot of terra-node
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "ryanthemanuel" --password-stdin
-        - 'docker build -t ryanthemanuel/terra-node:$TRAVIS_PULL_REQUEST_BRANCH --file ./config/docker/Dockerfile ./config/docker'
-        - 'docker push ryanthemanuel/terra-node:$TRAVIS_PULL_REQUEST_BRANCH'
+        - "docker build -t ryanthemanuel/terra-node:$TRAVIS_PULL_REQUEST_BRANCH --file ./config/docker/Dockerfile ./config/docker"
+        - "docker push ryanthemanuel/terra-node:$TRAVIS_PULL_REQUEST_BRANCH"
       if: type = pull_request
 stages:
   - build
