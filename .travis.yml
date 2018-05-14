@@ -10,11 +10,14 @@ script:
   - 'docker-compose -f ./config/docker/ci-docker-compose.yml pull'
   - "docker-compose -f ./config/docker/ci-docker-compose.yml run -e DANGER_GITHUB_API_TOKEN=$DANGER_GITHUB_API_TOKEN -e TRAVIS=$TRAVIS -e CI=$CI -e HAS_JOSH_K_SEAL_OF_APPROVAL=$HAS_JOSH_K_SEAL_OF_APPROVAL -e TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST -e TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG test npm run $TEST_SUITE"
 env:
-  - TEST_SUITE=lint
-  - TEST_SUITE=jest
-  - TEST_SUITE=nightwatch
-  - TEST_SUITE=wdio
-  - TEST_SUITE=danger
+  global:
+    - DOCKER_IMAGE='ryanthemanuel/terra-core'
+  matrix:
+    - TEST_SUITE=lint
+    - TEST_SUITE=jest
+    - TEST_SUITE=nightwatch
+    - TEST_SUITE=wdio
+    - TEST_SUITE=danger
 jobs:
   include:
     - stage: build
