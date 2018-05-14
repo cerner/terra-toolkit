@@ -24,8 +24,8 @@ jobs:
         - docker-compose push
     - stage: release terra-node
       script:
-        - docker build -t ryanthemanuel/terra-node:latest --file ./config/docker/Dockerfile ./config/docker
-        - docker push ryanthemanuel/terra-node:latest
+        - "docker build -t ryanthemanuel/terra-node:latest --file ./config/docker/Dockerfile ./config/docker"
+        - "docker push ryanthemanuel/terra-node:latest"
       if: type != pull_request
     - stage: release snapshot of terra-node
       script:
