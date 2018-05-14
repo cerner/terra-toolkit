@@ -26,7 +26,7 @@ const seleniumDocker = {
    */
   retryInterval: 10,
   /* Docker compose file reference when deploying the docker selenium hub stack. */
-  composeFile: path.join(__dirname, '..', '..', 'lib', 'wdio', 'docker-compose.yml'),
+  composeFile: path.join(__dirname, 'local-docker-compose.yml'),
 };
 
 module.exports = {
