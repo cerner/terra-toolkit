@@ -26,12 +26,12 @@ jobs:
       script:
         - docker build -t ryanthemanuel/terra-node:latest --file ./config/docker/Dockerfile ./config/docker
         - docker push ryanthemanuel/terra-node:latest
-      if: NOT env(TRAVIS_PULL_REQUEST)
+      if: env(TRAVIS_PULL_REQUEST) = false
     - stage: release snapshot of terra-node
       script:
         - "docker build -t ryanthemanuel/terra-node:$TRAVIS_PULL_REQUEST_BRANCH --file ./config/docker/Dockerfile" ./config/docker
         - "docker push ryanthemanuel/terra-node:$TRAVIS_PULL_REQUEST_BRANCH"
-      if: env(TRAVIS_PULL_REQUEST)
+      if: env(TRAVIS_PULL_REQUEST) != false
 stages:
   - build
   - test
