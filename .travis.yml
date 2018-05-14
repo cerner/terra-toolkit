@@ -29,14 +29,15 @@ jobs:
         - docker-compose push
     - stage: release terra-node
       script:
-        - 'docker build -t ryanthemanuel/terra-node:latest --file ./config/docker/Dockerfile ./config/docker'
-        - 'docker push ryanthemanuel/terra-node:latest'
+        - echo "$DOCKER_PASSWORD" | docker login -u "ryanthemanuel" --password-stdin
+        - 'TAG=latest docker-compose -f ./config/docker/build-docker-compose.yml build'
+        - 'TAG=latest docker-compose -f ./config/docker/build-docker-compose.yml push'
       if: type != pull_request
     - stage: release snapshot of terra-node
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "ryanthemanuel" --password-stdin
-        - "docker build -t ryanthemanuel/terra-node:$TRAVIS_PULL_REQUEST_BRANCH --file ./config/docker/Dockerfile ./config/docker"
-        - "docker push ryanthemanuel/terra-node:$TRAVIS_PULL_REQUEST_BRANCH"
+        - "TAG=$TRAVIS_PULL_REQUEST_BRANCH docker-compose -f ./config/docker/build-docker-compose.yml build"
+        - "TAG=$TRAVIS_PULL_REQUEST_BRANCH docker-compose -f ./config/docker/build-docker-compose.yml push"
       if: type = pull_request
 stages:
   - build
