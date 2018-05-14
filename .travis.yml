@@ -29,7 +29,7 @@ jobs:
       if: type != pull_request
     - stage: release snapshot of terra-node
       script:
-        - 'docker build -t ryanthemanuel/terra-node:$TRAVIS_PULL_REQUEST_BRANCH --file ./config/docker/Dockerfile" ./config/docker'
+        - 'docker build -t ryanthemanuel/terra-node:$TRAVIS_PULL_REQUEST_BRANCH --file ./config/docker/Dockerfile ./config/docker'
         - 'docker push ryanthemanuel/terra-node:$TRAVIS_PULL_REQUEST_BRANCH'
       if: type = pull_request
 stages:
