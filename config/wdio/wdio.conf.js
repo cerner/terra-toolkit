@@ -77,7 +77,7 @@ if (isRepoTest) {
   const itemsPerSuite = Math.ceil(packageLocations.length / numberOfSuites);
   packageLocations.forEach((packageLocation, index) => {
     const currentSuite = `suite${Math.floor(index / itemsPerSuite) + 1}`;
-    config.suites[currentSuite] = config.suites[currentSuite].concat(path.join(packageLocation, 'tests', 'wdio', '**', '*-spec.js');
+    config.suites[currentSuite] = config.suites[currentSuite].concat(path.join(packageLocation, 'tests', 'wdio', '**', '*-spec.js'));
   });
 }
 
