@@ -41,7 +41,7 @@ const config = {
 
   seleniumDocker: {
     enabled: !ci,
-  }
+  },
 
   // Ignore deprecation warnings. When chrome supports /actions API we'll update to use those.
   deprecationWarnings: false,
