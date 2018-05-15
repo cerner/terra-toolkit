@@ -13,8 +13,6 @@ script:
 env:
   global:
     - DOCKER_IMAGE='ryanthemanuel/terra-toolkit'
-    # - TERRA_NODE_TAG='if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then "$TRAVIS_PULL_REQUEST_BRANCH"; else "latest"; fi'
-    # - TAG='if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then "$TRAVIS_BUILD_ID"; else "latest"; fi'
     - TERRA_NODE_TAG="${TRAVIS_PULL_REQUEST_BRANCH:=latest}"
     - TAG="${TRAVIS_BUILD_ID:=latest}"
   matrix:
