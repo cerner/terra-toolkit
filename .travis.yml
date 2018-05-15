@@ -21,12 +21,6 @@ env:
     - TEST_SUITE=danger
 jobs:
   include:
-    - stage: build
-      script:
-        - echo "$DOCKER_PASSWORD" | docker login -u "ryanthemanuel" --password-stdin
-        - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
-        - docker-compose build
-        - docker-compose push
     - stage: release terra-node
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "ryanthemanuel" --password-stdin
@@ -38,9 +32,15 @@ jobs:
         - echo "$DOCKER_PASSWORD" | docker login -u "ryanthemanuel" --password-stdin
         - "docker build -t ryanthemanuel/terra-node:$TRAVIS_PULL_REQUEST_BRANCH -f ./docker/terra-node/Dockerfile ./docker/terra-node"
         - "docker push ryanthemanuel/terra-node:$TRAVIS_PULL_REQUEST_BRANCH"
+    - stage: build
+      script:
+        - echo "$DOCKER_PASSWORD" | docker login -u "ryanthemanuel" --password-stdin
+        - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
+        - docker-compose build
+        - docker-compose push
       if: type = pull_request
 stages:
-  - build
-  - test
   - release terra-node
   - release snapshot of terra-node
+  - build
+  - test
