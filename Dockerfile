@@ -1,5 +1,5 @@
 # use node as base image
-FROM ryanthemanuel/terra-node:test_parallel
+FROM cerner/terra-node:$TERRA_NODE_TAG
 
 # run the server
 CMD ["npm", "run", "start"]
