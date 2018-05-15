@@ -1,6 +1,0 @@
-version: '3'
-
-services:
-  terra-node:
-    build: ./
-    image: ryanthemanuel/terra-node:${TAG:-default}
