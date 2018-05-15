@@ -32,7 +32,7 @@ jobs:
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "ryanthemanuel" --password-stdin
         - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
-        - docker-compose build --build-arg TERRA_NODE_TAG=$TERRA_NODE_TAG
+        - docker-compose build --build-arg TERRA_NODE_TAG=$TERRA_NODE_TAG test-chrome
         - docker-compose push
 stages:
   - release terra-node
