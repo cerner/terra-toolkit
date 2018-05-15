@@ -26,13 +26,13 @@ jobs:
     - stage: release terra-node
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "ryanthemanuel" --password-stdin
-        - "docker build --build-arg TERRA_NODE_TAG=$TERRA_NODE_TAG -t cerner/terra-node:$TERRA_NODE_TAG -f ./docker/terra-node/Dockerfile ./docker/terra-node/"
+        - "docker build -t cerner/terra-node:$TERRA_NODE_TAG -f ./docker/terra-node/Dockerfile ./docker/terra-node/"
         - "docker push cerner/terra-node:$TERRA_NODE_TAG"
     - stage: build
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "ryanthemanuel" --password-stdin
         - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
-        - docker-compose build
+        - docker-compose build --build-arg TERRA_NODE_TAG=$TERRA_NODE_TAG
         - docker-compose push
 stages:
   - release terra-node
