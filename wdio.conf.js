@@ -19,7 +19,7 @@ const config = {
     },
   },
 
-  // Configuration for SeleniumDocker service
+  // Configuration for the SeleniumDocker service
   seleniumDocker: {
     enabled: !process.env.TRAVIS,
   },
