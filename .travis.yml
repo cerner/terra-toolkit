@@ -12,7 +12,15 @@ script:
   - "docker-compose run -e DANGER_GITHUB_API_TOKEN=$DANGER_GITHUB_API_TOKEN -e TRAVIS=$TRAVIS -e CI=$CI -e HAS_JOSH_K_SEAL_OF_APPROVAL=$HAS_JOSH_K_SEAL_OF_APPROVAL -e TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST -e TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG base npm run $TEST_SUITE"
 env:
   global:
-    - DOCKER_IMAGE='ryanthemanuel/terra-toolkit'
+    include:
+      - if: type = pull_request
+        - DOCKER_IMAGE='ryanthemanuel/terra-toolkit'
+        - TERRA_NODE_TAG="$TRAVIS_PULL_REQUEST_BRANCH"
+        - TAG="$TRAVIS_BUILD_ID"
+      - if: type != pull_request
+        - DOCKER_IMAGE='ryanthemanuel/terra-toolkit'
+        - TERRA_NODE_TAG=latest
+        - TAG=latest
   matrix:
     - TEST_SUITE=lint
     - TEST_SUITE=jest
@@ -21,14 +29,6 @@ env:
     - TEST_SUITE=danger
 jobs:
   include:
-    - env: 
-        - TERRA_NODE_TAG="$TRAVIS_PULL_REQUEST_BRANCH"
-        - TAG="$TRAVIS_BUILD_ID"
-      if: type = pull_request
-    - env: 
-        - TERRA_NODE_TAG=latest
-        - TAG=latest
-      if: type != pull_request
     - stage: release terra-node
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "ryanthemanuel" --password-stdin
