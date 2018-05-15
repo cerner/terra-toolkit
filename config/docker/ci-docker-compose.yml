@@ -4,6 +4,8 @@ services:
   base:
     build: ./
     image: "${DOCKER_IMAGE}:${TAG:-latest}"
+    depends_on:
+      - standalone-chrome
   standalone-chrome:
     image: 'selenium/standalone-chrome:3.11.0-californium'
     ports:
@@ -16,8 +18,3 @@ services:
       TZ: 'America/Chicago'
       SCREEN_WIDTH: 1070
       SCREEN_HEIGHT: 1020
-  test:
-    build: ./
-    depends_on:
-      - base
-      - standalone-chrome
