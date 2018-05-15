@@ -18,7 +18,6 @@ services:
       SCREEN_HEIGHT: 1020
   test:
     build: ./
-    image: "${DOCKER_IMAGE}-test:${TAG:-latest}"
     depends_on:
       - base
       - standalone-chrome
