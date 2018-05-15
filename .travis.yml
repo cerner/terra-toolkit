@@ -13,26 +13,14 @@ script:
 env:
   global:
     - DOCKER_IMAGE='ryanthemanuel/terra-toolkit'
+    - TERRA_NODE_TAG=$('if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then "$TRAVIS_PULL_REQUEST_BRANCH"; else "latest"; fi')
+    - TAG=$('if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then "$TRAVIS_BUILD_ID"; else "latest"; fi')
   matrix:
-    include:
-      - if: type = pull_request
-        env:
-          - TERRA_NODE_TAG="$TRAVIS_PULL_REQUEST_BRANCH"
-          - TAG="$TRAVIS_BUILD_ID"
-          - TEST_SUITE=lint
-          - TEST_SUITE=jest
-          - TEST_SUITE=nightwatch
-          - TEST_SUITE=wdio
-          - TEST_SUITE=danger
-      - if: type != pull_request
-        env:
-          - TERRA_NODE_TAG=latest
-          - TAG=latest
-          - TEST_SUITE=lint
-          - TEST_SUITE=jest
-          - TEST_SUITE=nightwatch
-          - TEST_SUITE=wdio
-          - TEST_SUITE=danger
+    - TEST_SUITE=lint
+    - TEST_SUITE=jest
+    - TEST_SUITE=nightwatch
+    - TEST_SUITE=wdio
+    - TEST_SUITE=danger
 jobs:
   include:
     - stage: release terra-node
