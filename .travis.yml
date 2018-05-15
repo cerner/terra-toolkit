@@ -21,24 +21,21 @@ env:
     - TEST_SUITE=danger
 jobs:
   include:
+    - env: TAG="$TRAVIS_PULL_REQUEST_BRANCH"
+      if: type = pull_request
+    - env: TAG=latest
+      if: type != pull_request
     - stage: release terra-node
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "ryanthemanuel" --password-stdin
-        - 'docker build -t ryanthemanuel/terra-node -f ./docker/terra-node/Dockerfile ./docker/terra-node'
-        - 'docker push ryanthemanuel/terra-node'
-      if: type != pull_request
-    - stage: release snapshot of terra-node
-      script:
-        - echo "$DOCKER_PASSWORD" | docker login -u "ryanthemanuel" --password-stdin
-        - "docker build -t ryanthemanuel/terra-node:$TRAVIS_PULL_REQUEST_BRANCH -f ./docker/terra-node/Dockerfile ./docker/terra-node"
-        - "docker push ryanthemanuel/terra-node:$TRAVIS_PULL_REQUEST_BRANCH"
+        - "docker build -t ryanthemanuel/terra-node$TAG -f ./docker/terra-node/Dockerfile ./docker/terra-node"
+        - "docker push ryanthemanuel/terra-node:$TAG"
     - stage: build
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "ryanthemanuel" --password-stdin
         - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
         - docker-compose build
         - docker-compose push
-      if: type = pull_request
 stages:
   - release terra-node
   - release snapshot of terra-node
