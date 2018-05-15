@@ -19,7 +19,7 @@ const serveStatic = {
 /* Selenium Docker Service Defaults */
 const seleniumDocker = {
   /* Whether or not the service should be run. */
-  enabled: !process.env.TRAVIS && !process.env.CI,
+  enabled: true,
   /* Retry count to test for selenium being up. */
   retries: 4000,
   /* The retry interval (in milliseconds) to wait between retries.
