@@ -34,7 +34,7 @@ jobs:
     - stage: release terra-node
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "ryanthemanuel" --password-stdin
-        - "docker build -t ryanthemanuel/terra-node$TERRA_NODE_TAG -f ./docker/terra-node/Dockerfile ./docker/terra-node"
+        - "docker build -t ryanthemanuel/terra-node:$TERRA_NODE_TAG -f ./docker/terra-node/Dockerfile ./docker/terra-node"
         - "docker push ryanthemanuel/terra-node:$TERRA_NODE_TAG"
     - stage: build
       script:
@@ -44,6 +44,5 @@ jobs:
         - docker-compose push
 stages:
   - release terra-node
-  - release snapshot of terra-node
   - build
   - test
