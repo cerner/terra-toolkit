@@ -23,15 +23,15 @@ jobs:
         - echo "$DOCKER_PASSWORD" | docker login -u "ryanthemanuel" --password-stdin
         - "travis_wait docker build -t cerner/terra-node:$TERRA_NODE_TAG -f ./docker/terra-node/Dockerfile ./docker/terra-node/"
         - "travis_wait docker push cerner/terra-node:$TERRA_NODE_TAG"
-    - stage: test
+    - stage: lint
       script:
         - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
         - "travis_wait docker-compose run -e DANGER_GITHUB_API_TOKEN=$DANGER_GITHUB_API_TOKEN -e TRAVIS=$TRAVIS -e CI=$CI -e HAS_JOSH_K_SEAL_OF_APPROVAL=$HAS_JOSH_K_SEAL_OF_APPROVAL -e TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST -e TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG test-chrome npm run lint"
-    - 
+    - stage: jest
       script:
         - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
         - "travis_wait docker-compose run -e DANGER_GITHUB_API_TOKEN=$DANGER_GITHUB_API_TOKEN -e TRAVIS=$TRAVIS -e CI=$CI -e HAS_JOSH_K_SEAL_OF_APPROVAL=$HAS_JOSH_K_SEAL_OF_APPROVAL -e TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST -e TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG test-chrome npm run jest"
-    - 
+    - stage: test
       script:
         - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
         - "travis_wait docker-compose run -e DANGER_GITHUB_API_TOKEN=$DANGER_GITHUB_API_TOKEN -e TRAVIS=$TRAVIS -e CI=$CI -e HAS_JOSH_K_SEAL_OF_APPROVAL=$HAS_JOSH_K_SEAL_OF_APPROVAL -e TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST -e TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG test-chrome npm run nightwatch"
@@ -39,7 +39,7 @@ jobs:
       script:
         - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
         - "travis_wait docker-compose run -e DANGER_GITHUB_API_TOKEN=$DANGER_GITHUB_API_TOKEN -e TRAVIS=$TRAVIS -e CI=$CI -e HAS_JOSH_K_SEAL_OF_APPROVAL=$HAS_JOSH_K_SEAL_OF_APPROVAL -e TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST -e TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG test-chrome npm run wdio"
-    - 
+    - stage: danger
       script:
         - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
         - "travis_wait docker-compose run -e DANGER_GITHUB_API_TOKEN=$DANGER_GITHUB_API_TOKEN -e TRAVIS=$TRAVIS -e CI=$CI -e HAS_JOSH_K_SEAL_OF_APPROVAL=$HAS_JOSH_K_SEAL_OF_APPROVAL -e TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST -e TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG test-chrome npm run danger"
@@ -55,4 +55,7 @@ stages:
   - name: release terra-node
     if: type != pull_request
   - build
+  - lint
+  - jest
   - test
+  - danger
