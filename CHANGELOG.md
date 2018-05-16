@@ -3,6 +3,12 @@ Changelog
 
 Unreleased
 ----------
+### Added
+* Created ion-node docker image that can be used by terra repos during builds
+* Added a ci docker compose file that will be used during travis parallel builds
+
+### Updated
+* Updated the wdio config for lerna projects to create a set of suites that can be used when running tests
 
 3.2.1 - (May 4, 2018)
 ----------

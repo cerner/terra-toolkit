@@ -64,7 +64,7 @@ const nightwatchConfig = (webpackConfig, srcFolders, providedPort) => {
         launch_url: `http://${ip.address()}:${port}`,
         persist_globals: true,
         selenium_port: seleniumPort,
-        selenium_host: seleniumHost,
+        selenium_host: process.env.TRAVIS || process.env.CI ? 'standalone-chrome' : seleniumHost,
         silent: true,
         globals: {
           breakpoints: {
