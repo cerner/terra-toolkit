@@ -45,6 +45,6 @@ jobs:
     #     - "docker save -o $HOME/docker/services.img $images"
 stages:
   - name: release terra-node
-    if: type != pull_request
+    if: type = pull_request
   - build
   - test
