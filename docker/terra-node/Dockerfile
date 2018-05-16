@@ -13,4 +13,4 @@ ONBUILD ADD . /app
 EXPOSE 8080
 
 ONBUILD RUN npm config set unsafe-perm true
-ONBUILD RUN npm install
+ONBUILD RUN npm install --silent
