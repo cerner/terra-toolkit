@@ -34,8 +34,7 @@ jobs:
       script:
         - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
         - docker-compose build --build-arg TERRA_NODE_TAG=$TERRA_NODE_TAG test-chrome
-        - "for img in $(docker-compose config | awk '{if ($1 == \"image:\") print $2;}'); do images=\"$images $img\" done"
-        - "docker save -o $HOME/docker/services.img $images"
+        - "docker save -o $HOME/docker/services.img selenium/standalone-chrome:3.11.0-californium ${DOCKER_IMAGE}-test-standalone-chrome:${TAG}"
     # - stage: warm cache
     #   script:
     #     - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
