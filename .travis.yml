@@ -9,7 +9,7 @@ cache:
   directories:
     - $HOME/docker
 script:
-  - docker load -i $HOME/docker/services.img
+  - docker load -i $HOME/docker/services-$TAG.img
   - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
   - "docker-compose --verbose run -e DANGER_GITHUB_API_TOKEN=$DANGER_GITHUB_API_TOKEN -e TRAVIS=$TRAVIS -e CI=$CI -e HAS_JOSH_K_SEAL_OF_APPROVAL=$HAS_JOSH_K_SEAL_OF_APPROVAL -e TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST -e TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG test-chrome npm run $TEST_SUITE"
 env:
@@ -36,7 +36,7 @@ jobs:
         - docker-compose build --build-arg TERRA_NODE_TAG=latest test-chrome
         - docker images
         - docker-compose --verbose pull standalone-chrome
-        - "docker save -o $HOME/docker/services.img selenium/standalone-chrome:3.11.0-californium $DOCKER_IMAGE-test-standalone-chrome:$TAG"
+        - "docker save -o $HOME/docker/services-$TAG.img selenium/standalone-chrome:3.11.0-californium $DOCKER_IMAGE-test-standalone-chrome:$TAG"
     # - stage: warm cache
     #   script:
     #     - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
