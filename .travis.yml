@@ -8,21 +8,11 @@ branches:
 cache:
   directories:
     - $HOME/docker
-script:
-  - "docker load -i $HOME/docker/services-$TAG.img"
-  - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
-  - "travis_wait docker-compose run -e DANGER_GITHUB_API_TOKEN=$DANGER_GITHUB_API_TOKEN -e TRAVIS=$TRAVIS -e CI=$CI -e HAS_JOSH_K_SEAL_OF_APPROVAL=$HAS_JOSH_K_SEAL_OF_APPROVAL -e TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST -e TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG test-chrome npm run $TEST_SUITE"
 env:
   global:
     - DOCKER_IMAGE='cerner/terra-toolkit'
     - TERRA_NODE_TAG="${TRAVIS_PULL_REQUEST_BRANCH:=latest}"
     - TAG="${TRAVIS_PULL_REQUEST_SHA:=latest}"
-  matrix:
-    - TEST_SUITE=lint
-    - TEST_SUITE=jest
-    - TEST_SUITE=nightwatch
-    - TEST_SUITE=wdio
-    - TEST_SUITE=danger
 jobs:
   include:
     - stage: release terra-node
@@ -30,6 +20,31 @@ jobs:
         - echo "$DOCKER_PASSWORD" | docker login -u "ryanthemanuel" --password-stdin
         - "travis_wait docker build -t cerner/terra-node:$TERRA_NODE_TAG -f ./docker/terra-node/Dockerfile ./docker/terra-node/"
         - "travis_wait docker push cerner/terra-node:$TERRA_NODE_TAG"
+    - stage: test
+      script:
+        - "docker load -i $HOME/docker/services-$TAG.img"
+        - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
+        - "travis_wait docker-compose run -e DANGER_GITHUB_API_TOKEN=$DANGER_GITHUB_API_TOKEN -e TRAVIS=$TRAVIS -e CI=$CI -e HAS_JOSH_K_SEAL_OF_APPROVAL=$HAS_JOSH_K_SEAL_OF_APPROVAL -e TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST -e TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG test-chrome npm run lint"
+    - 
+      script:
+        - "docker load -i $HOME/docker/services-$TAG.img"
+        - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
+        - "travis_wait docker-compose run -e DANGER_GITHUB_API_TOKEN=$DANGER_GITHUB_API_TOKEN -e TRAVIS=$TRAVIS -e CI=$CI -e HAS_JOSH_K_SEAL_OF_APPROVAL=$HAS_JOSH_K_SEAL_OF_APPROVAL -e TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST -e TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG test-chrome npm run jest"
+    - 
+      script:
+        - "docker load -i $HOME/docker/services-$TAG.img"
+        - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
+        - "travis_wait docker-compose run -e DANGER_GITHUB_API_TOKEN=$DANGER_GITHUB_API_TOKEN -e TRAVIS=$TRAVIS -e CI=$CI -e HAS_JOSH_K_SEAL_OF_APPROVAL=$HAS_JOSH_K_SEAL_OF_APPROVAL -e TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST -e TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG test-chrome npm run nightwatch"
+    - 
+      script:
+        - "docker load -i $HOME/docker/services-$TAG.img"
+        - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
+        - "travis_wait docker-compose run -e DANGER_GITHUB_API_TOKEN=$DANGER_GITHUB_API_TOKEN -e TRAVIS=$TRAVIS -e CI=$CI -e HAS_JOSH_K_SEAL_OF_APPROVAL=$HAS_JOSH_K_SEAL_OF_APPROVAL -e TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST -e TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG test-chrome npm run wdio"
+    - 
+      script:
+        - "docker load -i $HOME/docker/services-$TAG.img"
+        - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
+        - "travis_wait docker-compose run -e DANGER_GITHUB_API_TOKEN=$DANGER_GITHUB_API_TOKEN -e TRAVIS=$TRAVIS -e CI=$CI -e HAS_JOSH_K_SEAL_OF_APPROVAL=$HAS_JOSH_K_SEAL_OF_APPROVAL -e TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST -e TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG test-chrome npm run danger"
     - stage: build
       script:
         - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
@@ -37,12 +52,6 @@ jobs:
         - docker images
         - travis_wait docker-compose --verbose pull standalone-chrome
         - "docker save -o $HOME/docker/services-$TAG.img selenium/standalone-chrome:3.11.0-californium $DOCKER_IMAGE-test-standalone-chrome:$TAG"
-    # - stage: warm cache
-    #   script:
-    #     - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
-    #     - docker-compose pull
-    #     - "for img in $(docker-compose config | awk '{if ($1 == \"image:\") print $2;}'); do images=\"$images $img\" done"
-    #     - "docker save -o $HOME/docker/services.img $images"
 stages:
   - name: release terra-node
     if: type = pull_request
