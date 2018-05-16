@@ -33,9 +33,9 @@ jobs:
     - stage: build
       script:
         - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
-        - docker-compose --verbose build --build-arg TERRA_NODE_TAG=latest test-chrome
+        - docker-compose build --build-arg TERRA_NODE_TAG=latest test-chrome
         - docker images
-        - docker-compose pull standalone-chrome
+        - docker-compose --verbose pull standalone-chrome
         - "docker save -o $HOME/docker/services.img selenium/standalone-chrome:3.11.0-californium $DOCKER_IMAGE-test-standalone-chrome:$TAG"
     # - stage: warm cache
     #   script:
