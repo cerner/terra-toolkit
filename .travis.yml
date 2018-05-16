@@ -43,6 +43,6 @@ jobs:
     #     - "docker save -o $HOME/docker/services.img $images"
 stages:
   - name: release terra-node
-    if: TRAVIS_PULL_REQUEST = false
+    if: $TRAVIS_PULL_REQUEST = false
   - build
   - test
