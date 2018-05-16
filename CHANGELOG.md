@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+3.3.0 - (May 15, 2018)
+----------
 ### Added
 * Created ion-node docker image that can be used by terra repos during builds
 * Added a ci docker compose file that will be used during travis parallel builds
