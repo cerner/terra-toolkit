@@ -51,7 +51,7 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
               ident: 'postcss',
               plugins() {
                 return [
-                  Autoprefixer(), // Provided by browserslistrc
+                  Autoprefixer(), // Provided by .browserslistrc
                   rtl(),
                 ];
               },
