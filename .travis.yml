@@ -53,6 +53,6 @@ jobs:
           | xargs -n 2 -t sh -c 'test -e $HOME/docker/$1.tar.gz || docker save $0 | gzip -2 > $HOME/docker/$1.tar.gz'
 stages:
   - name: release terra-node
-    if: type = pull_request
+    if: type != pull_request
   - build
   - test
