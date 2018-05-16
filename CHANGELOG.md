@@ -4,6 +4,20 @@ Changelog
 Unreleased
 ----------
 
+3.3.1 - (May 4, 2018)
+----------
+### Fixed
+* Remove './' from bin paths in package.json
+
+3.3.0 - (May 15, 2018)
+----------
+### Added
+* Created ion-node docker image that can be used by terra repos during builds
+* Added a ci docker compose file that will be used during travis parallel builds
+
+### Updated
+* Updated the wdio config for lerna projects to create a set of suites that can be used when running tests
+
 3.2.1 - (May 4, 2018)
 ----------
 ### Fixed
