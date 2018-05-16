@@ -55,6 +55,6 @@ jobs:
         - travis_wait docker-compose --verbose pull standalone-chrome
 stages:
   - name: release terra-node
-    if: type = pull_request
+    if: type != pull_request
   - build
   - test
