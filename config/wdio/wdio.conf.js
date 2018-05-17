@@ -69,7 +69,7 @@ const isRepoTest = !process.cwd().includes('packages');
 if (isRepoTest) {
   const packageLocationsWithTests = PackageUtilities.getPackages(new Repository(path.resolve('.')))
     // eslint-disable-next-line no-underscore-dangle
-    .map(package => path.join(package._location, 'tests', 'wdio', '**', '*-spec.js'))
+    .map(pkg => path.join(pkg._location, 'tests', 'wdio', '**', '*-spec.js'))
     .filter(packageLocation => glob.sync(packageLocation).length > 0);
 
   const numberOfSuites = 4;
