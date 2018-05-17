@@ -79,7 +79,7 @@ if (isRepoTest) {
   });
   const itemsPerSuite = Math.ceil(packageLocationsWithTests.length / numberOfSuites);
   packageLocationsWithTests.forEach((packageLocation, index) => {
-    const currentSuite = `suite${(index % itemsPerSuite) + 1}`;
+    const currentSuite = `suite${Math.floor(index / itemsPerSuite) + 1}`;
     config.suites[currentSuite] = config.suites[currentSuite].concat(packageLocation);
   });
 }
