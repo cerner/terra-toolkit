@@ -55,6 +55,10 @@ jobs:
       before_install: true
       script:
         - docker rmi $(docker images -f "reference=*:$TAG" -q)
+        - 'rm *.targ.gz'
+        - >
+          mkdir -p $HOME/docker && docker images -a --filter='dangling=false' --format '{{.Repository}}:{{.Tag}} {{.ID}}'
+          | xargs -n 2 -t sh -c 'test -e $HOME/docker/$1.tar.gz || docker save $0 | gzip -2 > $HOME/docker/$1.tar.gz'
 stages:
   - name: release terra-node
     if: type != pull_request
