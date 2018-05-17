@@ -52,7 +52,7 @@ We added the default webpack config to provide a base webpack configuration for 
 - sass-loader
 - uglifyjs-webpack-plugin
 
-The major change with webpack v4 plugins is that the `mini-css-extract-plugin` now replaces the  `extract-text-webpack-plugin` since it is no longer maintained. Also, if you desire to use the `HtmlWebpackPlugin` in the app level config, be sure to specify the version to be `^3.2.0` or compile error will occur.
+The major changes with webpack v4 plugins are that the `mini-css-extract-plugin` now replaces the  `extract-text-webpack-plugin` since it is no longer maintained and the `json-loader` was removed. Additionally, if you desire to use the `HtmlWebpackPlugin` in the app level config, be sure to specify the version to be `^3.2.0` or compile error will occur.
 
 ### Adding Translations
 Translation Aggregation has been added to the default webpack config. By default, all of the terra supported locales are included. If you need to customize this list, see the I18N aggregation section below. To completely disable translation aggregation within the webpack build, you can pass the environment variable `--env.disableAggregateTranslations` to the webpack command.
