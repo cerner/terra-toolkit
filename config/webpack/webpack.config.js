@@ -11,7 +11,7 @@ const merge = require('webpack-merge');
 
 const autoprefix = Autoprefixer();
 console.warn('----');
-console.warn(autoprefix.info().browsers)
+console.warn(autoprefix.info())
 
 const defaultWebpackConfig = (env = {}, argv = {}) => {
   const production = argv.p;
