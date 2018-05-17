@@ -17,8 +17,10 @@ const locale = envLocale || 'en';
 
 const config = {
   specs: [
-    path.join('tests?', 'wdio', '**', '*-spec.js'),
-    path.join('packages', '*', 'tests?', 'wdio', '**', '*-spec.js'),
+    path.join('test', 'wdio', '**', '*-spec.js'),
+    path.join('tests', 'wdio', '**', '*-spec.js'),
+    path.join('packages', '*', 'test', 'wdio', '**', '*-spec.js'),
+    path.join('packages', '*', 'tests', 'wdio', '**', '*-spec.js'),
   ],
   maxInstances: 1,
   capabilities: [
