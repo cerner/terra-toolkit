@@ -16,3 +16,11 @@ TypeError: compilation.mainTemplate.applyPluginsWaterfall is not a function
 ```
 
 - Fix this by bumping the `html-webpack-plugin` version to be `^3.2.0`
+
+##  I am using toolkit v3/webpack v4 and want to use the  exract-text-plugin, but am getting the error:
+
+```bash
+Error: Chunk.entrypoints: Use Chunks.groupsIterable and filter by instanceof Entrypoint instead
+```
+
+Fix this by using `mini-css-extract-plugin` instead - at this time, `extract-text-plugin` does not support webpack 4.
