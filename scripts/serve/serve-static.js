@@ -64,7 +64,6 @@ const virtualApp = (site, index, locale, fs) => {
 
     if (fs.existsSync(filepath)) {
       res.setHeader('content-type', mime.contentType(path.extname(filename)));
-      res.send(fs.readFileSync(filepath));
 
       let fileContent = fs.readFileSync(filepath, 'utf8');
 
