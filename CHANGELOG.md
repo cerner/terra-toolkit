@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Fixed
+* Re-enabale cheap-source-map, the source mapping level we had prior to webpack 4.
 
 3.3.1 - (May 4, 2018)
 ----------

@@ -106,7 +106,7 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     output: {
       path: path.join(rootPath, 'build'),
     },
-    devtool: production ? undefined : 'cheap-module-eval-source-map',
+    devtool: production ? undefined : 'cheap-source-map',
     resolveLoader: {
       modules: [path.resolve(path.join(rootPath, 'node_modules'))],
     },
