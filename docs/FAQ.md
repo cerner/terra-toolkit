@@ -7,12 +7,12 @@ There are two fixes for this problem:
 
 ## I am using toolkit v3, using the default webpack configuration and want to use the `html-webpack-plugin`, but I am receiving this error:
 
-``bash
+```bash
 .../node_modules/html-webpack-plugin/lib/compiler.js:81
         var outputName = compilation.mainTemplate.applyPluginsWaterfall('asset-path', outputOptions.filename, {
                                                   ^
 
 TypeError: compilation.mainTemplate.applyPluginsWaterfall is not a function
-``
+```
 
 - Fix this by bumping the `html-webpack-plugin` version to be `^3.2.0`
