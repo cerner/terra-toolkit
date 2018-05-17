@@ -32,7 +32,7 @@ module.exports = mergedConfig;
 
 #### Webpack Configuration Dependencies
 
-We added the default webpack config to provide a base webpack configuration for you to build on and allow us to easily manage dependnecy updates. Below is a list of the webpack config dependencies toolkit provides automatically. Do not add these to your package.json dependencies.
+We added the default webpack config to provide a base webpack configuration for you to build on and allow us to easily manage dependency updates. Below is a list of the webpack config dependencies toolkit provides automatically. Do not add these to your package.json dependencies.
 - autoprefixer
 - babel-loader
 - babel-polyfill
@@ -61,7 +61,7 @@ Translation Aggregation has been added to the default webpack config. By default
 webpack --config config/webpack/webpack.config --env.disableAggregateTranslations
 ```
 
-The `webpack` command is available to applications consuming terra-toolkit.
+###### The `webpack` command is available to applications consuming terra-toolkit.
 
 
 
