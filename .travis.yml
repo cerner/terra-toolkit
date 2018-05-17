@@ -61,5 +61,5 @@ stages:
   - build
   - lint jest and danger
   - test
-  - clean up cache
+  - name: clean up cache
     if: type = pull_request
