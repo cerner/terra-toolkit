@@ -54,7 +54,7 @@ jobs:
     - stage: clean up cache
       before_install: true
       script:
-        - 'rm -f $HOME/docker/*.targ.gz'
+        - 'rm -f $HOME/docker/*.tar.gz'
 stages:
   - name: release terra-node
     if: type != pull_request
