@@ -9,10 +9,6 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const aggregateTranslations = require('../../scripts/aggregate-translations/aggregate-translations');
 const merge = require('webpack-merge');
 
-const autoprefix = Autoprefixer();
-console.warn('----');
-console.warn(autoprefix.info())
-
 const defaultWebpackConfig = (env = {}, argv = {}) => {
   const production = argv.p;
   const disableAggregateTranslations = env.disableAggregateTranslations;
@@ -55,7 +51,18 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
               ident: 'postcss',
               plugins() {
                 return [
-                  autoprefix, // Provided by .browserslistrc
+                  Autoprefixer({
+                    browsers: [
+                      'iOS >= 10',
+                      'last 2 and_chr versions',
+                      'last 2 android versions',
+                      'last 2 chrome versions',
+                      'last 2 edge versions',
+                      'last 2 firefox versions',
+                      'last 2 ie versions',
+                      'last 2 safari versions',
+                    ],
+                  }),
                   rtl(),
                 ];
               },
