@@ -5,22 +5,24 @@ const SERVE_STATIC_DEFAULTS = SERVICE_DEFAULTS.serveStatic;
 
 export default class ServeStaticService {
   async onPrepare(config = {}) {
-    if (!config.webpackConfig) {
+    const webpackConfig = config.webpackConfig;
+
+    if (!webpackConfig) {
       // eslint-disable-next-line no-console
       console.warn('[Terra-Toolkit:serve-static] No webpack configuration provided');
       return;
     }
 
-    const webpackConfig = config.webpackConfig;
     const port = (config.serveStatic || {}).port || SERVE_STATIC_DEFAULTS.port;
     const index = (config.serveStatic || {}).index || SERVE_STATIC_DEFAULTS.index;
+    const locale = (config || {}).locale || 'en';
 
     // If no output is provided, define one.
     if (!(webpackConfig.output || {}).path) {
       webpackConfig.output = Object.assign({}, webpackConfig.output, { path: '/dist' });
     }
 
-    await ServeStaticService.startService(webpackConfig, port, index).then((server) => {
+    await ServeStaticService.startService(webpackConfig, port, index, locale).then((server) => {
       this.server = server;
     });
   }
@@ -29,8 +31,8 @@ export default class ServeStaticService {
     await this.stop();
   }
 
-  static startService(config, port, index) {
-    return serve({ config, port, index, production: true });
+  static startService(config, port, index, locale) {
+    return serve({ config, port, index, production: true, locale });
   }
 
   stop() {

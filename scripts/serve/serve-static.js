@@ -46,7 +46,7 @@ const generateSite = (site, config, disk, production) => {
 };
 
 // Setup an app server that reads from a filesystem.
-const virtualApp = (site, index, fs) => {
+const virtualApp = (site, index, locale, fs) => {
   const app = express();
 
   // Setup a catch all route, we can't use 'static' because we need to use a virtual file system
@@ -55,6 +55,9 @@ const virtualApp = (site, index, fs) => {
     // Setup a default index for the server.
     if (filename === '/') {
       filename = `/${index}`;
+    } else if (filename === '/favicon.ico') {
+      res.sendStatus(200);
+      return;
     }
 
     const filepath = `${site}${filename}`;
@@ -62,8 +65,22 @@ const virtualApp = (site, index, fs) => {
     if (fs.existsSync(filepath)) {
       res.setHeader('content-type', mime.contentType(path.extname(filename)));
       res.send(fs.readFileSync(filepath));
-    } else if (filename === '/favicon.ico') {
-      res.sendStatus(200);
+
+      let fileContent = fs.readFileSync(filepath, 'utf8');
+
+      const langPattern = /lang="[a-zA-Z0-9-]*"/;
+      const langLocale = `lang="${locale}"`;
+
+      const isLanguageSet = fileContent.match(langPattern);
+
+      // Set the test locale for the file
+      if (isLanguageSet) {
+        fileContent = fileContent.replace(langPattern, langLocale);
+      } else {
+        fileContent = fileContent.replace(/<html/, `<html ${langLocale}`);
+      }
+
+      res.send(fileContent);
     } else {
       next();
     }
@@ -97,9 +114,9 @@ const staticApp = (site) => {
 };
 
 // Setup an app for either a virtual site or a static site. If a file system is not provided, serve the static site.
-const serveSite = (site, fs, index) => {
+const serveSite = (site, fs, index, locale) => {
   if (fs) {
-    return virtualApp(site, index, fs);
+    return virtualApp(site, index, locale, fs);
   }
 
   return staticApp(site);
@@ -107,12 +124,13 @@ const serveSite = (site, fs, index) => {
 
 // Generate a site if not provided and spin up an express server to serve the site.
 const serve = (options) => {
-  const { site, config, port, disk, index, production } = options;
+  const { site, config, port, disk, index, locale, production } = options;
   const appPort = port || 8080;
   const appIndex = index || 'index.html';
+  const appLocale = locale || 'en';
 
   return generateSite(site, config, disk, production).then(
-    ([sitePath, fs]) => serveSite(sitePath, fs, appIndex)).then(
+    ([sitePath, fs]) => serveSite(sitePath, fs, appIndex, appLocale)).then(
     (app) => {
       const server = app.listen(appPort);
       console.log(`[Terra-Toolkit:serve-static] Server started listening at port:${appPort}`);
