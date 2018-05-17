@@ -22,6 +22,15 @@ jobs:
         - echo "$DOCKER_PASSWORD" | docker login -u "ryanthemanuel" --password-stdin
         - "travis_wait docker build -t cerner/terra-node -f ./docker/terra-node/Dockerfile ./docker/terra-node/"
         - "travis_wait docker push cerner/terra-node"
+    - stage: build
+      before_install: true
+      script:
+        - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
+        - travis_wait docker-compose build --build-arg TERRA_NODE_TAG=latest test-chrome
+        - travis_wait docker-compose --verbose pull standalone-chrome
+        - >
+          mkdir -p $HOME/docker && docker images -a --filter='dangling=false' --format '{{.Repository}}:{{.Tag}} {{.ID}}'
+          | xargs -n 2 -t sh -c 'test -e $HOME/docker/$1.tar.gz || docker save $0 | gzip -2 > $HOME/docker/$1.tar.gz'
     - stage: lint jest and danger
       script:
         - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
@@ -42,17 +51,15 @@ jobs:
       script:
         - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
         - "travis_wait docker-compose run -e DANGER_GITHUB_API_TOKEN=$DANGER_GITHUB_API_TOKEN -e TRAVIS=$TRAVIS -e CI=$CI -e HAS_JOSH_K_SEAL_OF_APPROVAL=$HAS_JOSH_K_SEAL_OF_APPROVAL -e TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST -e TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG test-chrome npm run wdio"
-    - stage: build
+    - stage: clean up cache
+      before_install: true
       script:
-        - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
-        - travis_wait docker-compose build --build-arg TERRA_NODE_TAG=latest test-chrome
-        - travis_wait docker-compose --verbose pull standalone-chrome
-        - >
-          mkdir -p $HOME/docker && docker images -a --filter='dangling=false' --format '{{.Repository}}:{{.Tag}} {{.ID}}'
-          | xargs -n 2 -t sh -c 'test -e $HOME/docker/$1.tar.gz || docker save $0 | gzip -2 > $HOME/docker/$1.tar.gz'
+        - docker rmi $(docker images -f "reference=*:$TAG" -q)
 stages:
   - name: release terra-node
     if: type != pull_request
   - build
   - lint jest and danger
   - test
+  - clean up cache
+    if: type = pull_request
