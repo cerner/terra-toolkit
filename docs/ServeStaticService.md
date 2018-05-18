@@ -10,9 +10,8 @@ Serve-static Service is provided as a convenience to start an express server and
 
 ```js
 // wdio.conf.js
-const wdioConf = require('terra-toolkit/config/wdio/conf');
+const wdioConf = require('terra-toolkit/config/wdio/wdio.config');
 const webpackConfig = require('./webpack.config.js');
-const ServeStaticService = require('terra-toolkit/wdio/services/index').ServeStaticService;
 
 const port = 8080;
 
@@ -24,8 +23,6 @@ const config = {
   serveStatic: {
     port,
   },
-
-  service = wdioConf.config.services.concat([ServeStaticService]);
 };
 
 exports.config = config;

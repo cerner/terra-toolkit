@@ -1,7 +1,7 @@
 # Terra Toolkit Serve
 
 Terra Toolkit offers up two different commands to serve your client side application, `serve` and `serve-static`.
-If you are using terra-dev-site, use the provided `tds:serve`/`tds:serve-static` commands instead.
+If you are using terra-dev-site, use the provided `tt:serve`/`tt:serve-static` commands instead.
 
 ## serve
 Serve is a replacment for webpack-dev-server. Behind the scenes it's using [webpack-serve](https://github.com/webpack-contrib/webpack-serve).
