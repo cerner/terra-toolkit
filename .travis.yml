@@ -15,8 +15,8 @@ env:
 before_install:
   # Load cached docker images
   - if [[ -d $HOME/docker ]]; then ls $HOME/docker/*.tar.gz | xargs -I {file} sh -c "zcat {file} | docker load"; fi
-after_failure:
-  - 'rm -f $HOME/docker/*.tar.gz'
+before_cache:
+  - if [ $TRAVIS_TEST_RESULT == 1 ]; rm -f $HOME/docker/*.tar.gz; fi
 jobs:
   include:
     - stage: release terra-node
