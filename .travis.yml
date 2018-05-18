@@ -25,6 +25,7 @@ jobs:
     - stage: build
       before_install: true
       script:
+        - 'rm -f $HOME/docker/*.tar.gz'
         - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
         - travis_wait docker-compose build --build-arg TERRA_NODE_TAG=latest test-chrome
         - travis_wait docker-compose --verbose pull standalone-chrome
