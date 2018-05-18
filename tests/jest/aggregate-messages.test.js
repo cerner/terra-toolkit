@@ -20,7 +20,7 @@ describe('aggregates translations messages', () => {
   it('returns empty messages when no translations directories are provided', () => {
     const messages = aggregateMessages([], locales, fileSystem);
 
-    expect(messages).toHaveProperty('en', {});
+    expect(messages).toHaveProperty('enadfadfadsf', {});
     expect(messages).toHaveProperty('es', {});
     expect(messages).toHaveProperty('pt', {});
   });
