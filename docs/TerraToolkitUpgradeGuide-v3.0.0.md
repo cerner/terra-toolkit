@@ -1,7 +1,7 @@
 # Terra Toolkit Upgrade Guide v3.0.0
 This document will provide information on upgrading from terra-toolkit 2.x to 3.0.0.
 
-If you use terra-dev-site, please also refer to the [Terra Dev Site Upgrade Guide](https://github.com/cerner/terra-dev-site/blob/master/docs/TerraDevSiteUpgradeGuide-v0.5.0.md), as it abstracts away from the additional configuration that is required here.
+If you use terra-dev-site, please also refer to the [Terra Dev Site Upgrade Guide](https://github.com/cerner/terra-dev-site/blob/master/docs/TerraDevSiteUpgradeGuide-v0.5.0.md), as it abstracts away additional configuration that is required here.
 
 
 ## Webpack 4
