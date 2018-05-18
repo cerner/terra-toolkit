@@ -15,7 +15,8 @@ env:
 before_install:
   # Load cached docker images
   - if [[ -d $HOME/docker ]]; then ls $HOME/docker/*.tar.gz | xargs -I {file} sh -c "zcat {file} | docker load"; fi
-before_cache:
+before_cache:    
+  - sudo chown -R travis:travis $HOME/docker
   - if [ $TRAVIS_TEST_RESULT == 1 ]; then rm -f $HOME/docker/*.tar.gz; fi
 jobs:
   include:
@@ -27,6 +28,7 @@ jobs:
     - stage: build
       before_install: true
       script:
+        - sudo chown -R travis:travis $HOME/docker
         - 'rm -f $HOME/docker/*.tar.gz'
         - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
         - travis_wait docker-compose build --build-arg TERRA_NODE_TAG=latest test-chrome
@@ -58,6 +60,7 @@ jobs:
       before_install: true
       after_failure: true
       script:
+        - sudo chown -R travis:travis $HOME/docker
         - 'rm -f $HOME/docker/*.tar.gz'
 stages:
   - name: release terra-node
