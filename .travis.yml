@@ -58,7 +58,6 @@ jobs:
         - "travis_wait docker-compose run -e DANGER_GITHUB_API_TOKEN=$DANGER_GITHUB_API_TOKEN -e TRAVIS=$TRAVIS -e CI=$CI -e HAS_JOSH_K_SEAL_OF_APPROVAL=$HAS_JOSH_K_SEAL_OF_APPROVAL -e TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST -e TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG test-chrome npm run wdio"
     - stage: clean up cache
       before_install: true
-      after_failure: true
       script:
         - sudo chown -R travis:travis $HOME/docker
         - 'rm -f $HOME/docker/*.tar.gz'
