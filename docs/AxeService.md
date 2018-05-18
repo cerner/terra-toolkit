@@ -11,16 +11,10 @@ Under the key `axe` in the wdio.conf.js you can pass a configuration object with
 
 ```js
 // wdio.conf.js
-const wdioConf = require('terra-toolkit/wdio/conf');
-const localIP = require('ip');
-
-const port = 4567;
+const wdioConf = require('terra-toolkit/config/wdio/wdio.config');
 
 const config = {
   ...wdioConf.config,
-
-  // Point base URL at the site to be tested for correct webdriver.io setup
-  baseUrl: `http://${localIP.address()}:${port}`,
 
   // Configuration for Axe service
   axe: {

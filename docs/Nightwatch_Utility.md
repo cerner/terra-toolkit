@@ -12,19 +12,17 @@ Terra Toolkit uses docker to setup, run, and tear down selenium to ensure a cons
 
 - Install with [npm](https://www.npmjs.com): `npm install terra-toolkit --save-dev`
 
-The [nightwatch](https://www.npmjs.com/package/nightwatch), [webpack](https://www.npmjs.com/package/webpack), and [webpack-dev-server](https://www.npmjs.com/package/webpack-dev-server) peerDependencies must be installed to utilize the Nightwatch Utilities.
+The [nightwatch](https://www.npmjs.com/package/nightwatch) peerDependency must be installed to utilize the Nightwatch Utilities.
 
 - Install with npm: `npm install nightwatch --save-dev`
-- Install with npm: `npm install webpack --save-dev`
-- Install with npm: `npm install webpack-dev-server --save-dev`
 
 ## Configuration Setup
 
 Terra-toolkit provides a nightwatch setup function, called `nightwatchConfig`, which provides a default [nightwatch configuration](https://github.com/cerner/terra-toolkit/blob/master/src/nightwatch/nightwatch.config.js) that will setup the test environment, launch the webpack-dev-server, and run the nightwatch tests in the chrome browser. It takes three parameters:
 
-1. the webpack configuration used to start the webpack-dev-server
+1. the webpack configuration used to start the serve-static server
 2. the src folders where nightwatch searches for the tests
-3. the [optional] port number to start the webpack-dev-server - defaults to port 8080
+3. the [optional] port number to start the serve-static server - defaults to port 8080
 
 More information regarding the nightwatch configuration options can be found [here](http://nightwatchjs.org/gettingstarted#basic-settings).
 
