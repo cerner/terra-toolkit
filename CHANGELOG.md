@@ -4,6 +4,12 @@ Changelog
 Unreleased
 ----------
 
+3.5.0 - (May 22, 2018)
+----------
+### Updated
+* Documentation updates
+* Build improvements
+
 3.4.0 - (May 17, 2018)
 ----------
 ### Fixed
