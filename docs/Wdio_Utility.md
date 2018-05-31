@@ -14,7 +14,7 @@ Terra Toolkit uses docker to setup, run, and tear down selenium to ensure a cons
 
 ## Configuration Setup
 
-To run the webdriver.io test running, the [webdriver.io configuration options](http://webdriver.io/guide/testrunner/configurationfile.html) must be specified in the `wdio.config.js` file. Terra-toolkit provides a [default webdriver.io configuration](https://github.com/cerner/terra-toolkit/blob/master/config/wdio/wdio.conf.js) that enables the following services for a mocha test framework:
+To run the webdriver.io test running, the [webdriver.io configuration options](http://webdriver.io/guide/testrunner/configurationfile.html) must be specified in the `wdio.conf.js` file. Terra-toolkit provides a [default webdriver.io configuration](https://github.com/cerner/terra-toolkit/blob/master/config/wdio/wdio.conf.js) that enables the following services for a mocha test framework:
 
 * `SeleniumDockerService` - starts a Selenium-Docker instance.
     - See [here](https://github.com/cerner/terra-toolkit/blob/master/docs/SeleniumDockerService.md) for configuration information.
@@ -29,7 +29,7 @@ To run the webdriver.io test running, the [webdriver.io configuration options](h
 
 ```javascript
 // An example of a full mono-repo configuration file:
-const wdioConf = require('terra-toolkit/config/wdio/wdio.config');
+const wdioConf = require('terra-toolkit/config/wdio/wdio.conf');
 const webpackConfig = require('./webpack.config.js');
 
 const config = {
