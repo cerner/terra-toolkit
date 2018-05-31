@@ -66,9 +66,6 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
             },
           }, {
             loader: 'sass-loader',
-            options: {
-              data: '$bundled-themes: mock;',
-            },
           },
         ],
       },
