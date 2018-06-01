@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Updated
+* tt:serve and tt:serve-static now take a --host option.
 
 3.5.0 - (May 22, 2018)
 ----------
