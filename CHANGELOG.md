@@ -3,9 +3,68 @@ Changelog
 
 Unreleased
 ----------
-### Changed
+### Updated
+* tt:serve and tt:serve-static now take a --host option.
 * Removed the exception to transpile terra-dev-site.
 
+3.5.0 - (May 22, 2018)
+----------
+### Updated
+* Documentation updates
+* Build improvements
+
+3.4.0 - (May 17, 2018)
+----------
+### Fixed
+* Re-enabale cheap-source-map, the source mapping level we had prior to webpack 4.
+
+### Updated
+* Improved caching during travis builds
+* Improved suite generation for lerna projects
+
+3.3.1 - (May 4, 2018)
+----------
+### Fixed
+* Remove './' from bin paths in package.json
+
+3.3.0 - (May 15, 2018)
+----------
+### Added
+* Created ion-node docker image that can be used by terra repos during builds
+* Added a ci docker compose file that will be used during travis parallel builds
+
+### Updated
+* Updated the wdio config for lerna projects to create a set of suites that can be used when running tests
+
+3.2.1 - (May 4, 2018)
+----------
+### Fixed
+* Remove './' from bin paths in package.json
+
+3.2.0 - (April 26, 2018)
+----------
+### Changed
+* Increase the timeout waiting for the selenium docker service to start.
+
+3.1.1 - (April 25, 2018)
+----------
+### Fixed
+* Lock into a specific version of chrome driver.
+
+3.1.0 - (April 25, 2018)
+----------
+### Changed
+* WDIO bails at the first failure when running on CI.
+
+### Fixed
+* set a default browser size explicitly.
+
+### Added
+* Added documentation on the aggregated-translations tool
+* Added services.default-config to quickly reference the default values used by the wdio services
+
+3.0.1 - (April 24, 2018)
+----------
 ### Fixed
 * Removed disabled axe 'landmark-one-main' rule from the provided default wdio.config
 
@@ -16,7 +75,6 @@ Unreleased
 
 ### Added
 * Added nl and nl-BE to supported locales
-
 
 2.11.0 - (April 11, 2018)
 ----------

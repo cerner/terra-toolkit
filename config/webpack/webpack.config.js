@@ -18,7 +18,6 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
 
   const resolveModules = ['node_modules'];
   if (!disableAggregateTranslations) {
-    aggregateTranslations({ baseDirectory: rootPath });
     aggregateTranslations(Object.assign({}, { baseDirectory: rootPath }, env.aggregateOptions));
     resolveModules.unshift(path.resolve(rootPath, 'aggregated-translations'));
   }
@@ -67,9 +66,6 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
             },
           }, {
             loader: 'sass-loader',
-            options: {
-              data: '$bundled-themes: mock;',
-            },
           },
         ],
       },
@@ -107,7 +103,7 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     output: {
       path: path.join(rootPath, 'build'),
     },
-    devtool: production ? undefined : 'cheap-module-eval-source-map',
+    devtool: production ? undefined : 'cheap-source-map',
     resolveLoader: {
       modules: [path.resolve(path.join(rootPath, 'node_modules'))],
     },

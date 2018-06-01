@@ -14,16 +14,10 @@ Under the key `seleniumDocker` in the wdio.conf.js one can pass a configuration 
 
 ```js
 // wdio.conf.js
-const wdioConf = require('terra-toolkit/wdio/conf');
-const localIP = require('ip');
-
-const port = 8080;
+const wdioConf = require('terra-toolkit/config/wdio/wdio.config');
 
 const config = {
   ...wdioConf.config,
-
-  // Point base URL at the site to be tested for correct webdriver.io setup
-  baseUrl: `http://${localIP.address()}:${port}`,
 
   // Configuration for SeleniumDocker service
   seleniumDocker: {

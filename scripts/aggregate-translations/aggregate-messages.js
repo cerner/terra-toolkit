@@ -15,7 +15,7 @@ const aggregateTranslationMessages = (translationDirectories, locales) => {
         Object.assign(translations[language], JSON.parse(fs.readFileSync(translationFile, 'utf8')));
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.warn(`Translation file ${language}.json not found for ${dir}`);
+        console.warn(`There was an error reading your translations file ${translationFile}.\n Exception Message: ${e.message} \n`);
       }
     }),
   );

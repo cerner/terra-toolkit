@@ -12,15 +12,9 @@ Terra Toolkit uses docker to setup, run, and tear down selenium to ensure a cons
 
 - Install with [npm](https://www.npmjs.com): `npm install terra-toolkit --save-dev`
 
-The [webdriverio](https://www.npmjs.com/package/webdriverio), [wdio-mocha-framework](https://www.npmjs.com/package/wdio-mocha-framework), [wdio-visual-regression-service](https://www.npmjs.com/package/wdio-visual-regression-service) peerDependencies must be installed to utilize the WebDriver Utilities.
-
-- Install with npm: `npm install webdriverio --save-dev`
-- Install with npm: `npm install wdio-mocha-framework --save-dev`
-- Install with npm: `npm install wdio-visual-regression-service --save-dev`
-
 ## Configuration Setup
 
-To run the webdriver.io test running, the [webdriver.io configuration options](http://webdriver.io/guide/testrunner/configurationfile.html) must be specified in the `wdio.config.js` file. Terra-toolkit provides a [default webdriver.io configuration](https://github.com/cerner/terra-toolkit/blob/master/src/wdio/conf.js) that enables the following services for a mocha test framework:
+To run the webdriver.io test running, the [webdriver.io configuration options](http://webdriver.io/guide/testrunner/configurationfile.html) must be specified in the `wdio.conf.js` file. Terra-toolkit provides a [default webdriver.io configuration](https://github.com/cerner/terra-toolkit/blob/master/config/wdio/wdio.conf.js) that enables the following services for a mocha test framework:
 
 * `SeleniumDockerService` - starts a Selenium-Docker instance.
     - See [here](https://github.com/cerner/terra-toolkit/blob/master/docs/SeleniumDockerService.md) for configuration information.
@@ -37,31 +31,16 @@ To run the webdriver.io test running, the [webdriver.io configuration options](h
 // An example of a full mono-repo configuration file:
 const wdioConf = require('terra-toolkit/config/wdio/wdio.conf');
 const webpackConfig = require('./webpack.config.js');
-const TerraToolkitServeStaticService = require('terra-toolkit/lib/wdio/services').TerraToolkitServeStaticService;
-
-const port = 8080;
-
-let specs;
-const isRepoTest = !process.cwd().includes('/packages/');
-
-if (isRepoTest) {
-  specs = path.join(__dirname, 'packages', 'terra-**', 'tests', 'wdio', '**', '*-spec.js');
-} else {
-  specs = path.join('tests', 'wdio', '**', '*-spec.js');
-}
 
 const config = {
   ...wdioConf.config,
 
-  specs: [specs],
-
-  // Use Terra-toolkit's ServeStaticService
-  services: wdioConf.config.services.concat([TerraToolkitServeStaticService]),
-
-  // Configuration for TerraToolkitServeStaticService
+  // Configuration for ServeStaticService
   webpackConfig,
-  serveStatic: {
-    port,
+
+  // Configuration for TerraService
+  terra: {
+    selector: '[content-wrapper] *:first-child'
   },
 };
 
@@ -72,7 +51,7 @@ exports.config = config;
 
 There are a few things to note about the webdriver.io configuration provided by Terra-Toolkit:
 
-- Test files should use `*-spec.js` naming format. The default spec search path is `./tests/wdio/**/*-spec.js`.
+- Test files should use `*-spec.js` naming format. The default spec search paths are `./tests/wdio/**/*-spec.js` and `./packages/*/tests/wdio/**/*-spec.js`.
 - Use `/test_url_path` to direct test urls. This is appended to the `baseUrl` provided in the config.
 
 Then, to assist with testing, the TerraService provides the Terra global helper to make testing easier:
