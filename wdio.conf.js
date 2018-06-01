@@ -1,6 +1,9 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const wdioConf = require('./config/wdio/wdio.conf');
-const webpackConfig = require('./tests/test.config.js');
+const webpackConfigObject = require('./tests/test.config.js');
+const webpackConfigFunction = require('./tests/test.config.func.js');
+
+const webpackConfig = process.env.TT_TEST_WDIO_FUNCTION ? webpackConfigFunction : webpackConfigObject;
 
 const config = {
   ...wdioConf.config,
@@ -12,10 +15,10 @@ const config = {
   axe: {
     inject: true,
     options: {
-      rules: [{
-        id: 'landmark-one-main',
-        enabled: false,
-      }],
+      rules: [
+        { id: 'landmark-one-main', enabled: false },
+        { id: 'region', enabled: false },
+      ],
     },
   },
 
@@ -24,7 +27,7 @@ const config = {
     enabled: !process.env.TRAVIS,
   },
 
-  // Configuration for ExpressDevService
+  // Configuration for ServeStaticService
   webpackConfig,
 };
 

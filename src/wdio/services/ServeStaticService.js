@@ -13,16 +13,18 @@ export default class ServeStaticService {
       return;
     }
 
+    const verbose = config.logLevel !== 'silent';
     const port = (config.serveStatic || {}).port || SERVE_STATIC_DEFAULTS.port;
     const index = (config.serveStatic || {}).index || SERVE_STATIC_DEFAULTS.index;
-    const locale = (config || {}).locale || 'en';
+    // Explictitly not providing a fallback locale. Providing a fallback will lock the locale for all test runs when using the tt-wdio-runner.
+    const locale = (config || {}).locale;
 
-    // If no output is provided, define one.
-    if (!(webpackConfig.output || {}).path) {
-      webpackConfig.output = Object.assign({}, webpackConfig.output, { path: '/dist' });
+    // Ensure the server was properly shut down.
+    if (this.server) {
+      await this.stop();
     }
 
-    await ServeStaticService.startService(webpackConfig, port, index, locale).then((server) => {
+    await ServeStaticService.startService(webpackConfig, port, index, locale, verbose).then((server) => {
       this.server = server;
     });
   }
@@ -31,8 +33,8 @@ export default class ServeStaticService {
     await this.stop();
   }
 
-  static startService(config, port, index, locale) {
-    return serve({ config, port, index, production: true, locale });
+  static startService(config, port, index, locale, verbose) {
+    return serve({ config, port, index, production: true, locale, verbose });
   }
 
   stop() {

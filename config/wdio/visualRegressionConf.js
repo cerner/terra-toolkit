@@ -1,5 +1,6 @@
 const path = require('path');
 const LocalCompare = require('wdio-visual-regression-service/compare').LocalCompare;
+const viewports = require('./services.default-config').terraViewports;
 
 const testIdRegex = /\[([^)]+)\]/;
 
@@ -7,15 +8,6 @@ const screenshotSetup = {
   diffDir: 'diff',
   referenceDir: 'reference',
   screenshotDir: 'latest',
-};
-
-const viewports = {
-  tiny: { width: 470, height: 768, name: 'tiny' },
-  small: { width: 622, height: 768, name: 'small' },
-  medium: { width: 838, height: 768, name: 'medium' },
-  large: { width: 1000, height: 768, name: 'large' },
-  huge: { width: 1300, height: 768, name: 'huge' },
-  enormous: { width: 1500, height: 768, name: 'enormous' },
 };
 
 function createTestName(fullName) {
@@ -53,10 +45,9 @@ function getFormFactor(context) {
   return formFactor;
 }
 
-
 function getScreenshotPath(ref, context) {
   const refDir = screenshotSetup[`${ref}Dir`];
-  const locale = global.browser.options.locale;
+  const locale = global.browser.options.locale || 'en';
   const browserName = context.desiredCapabilities.browserName;
   const formFactor = getFormFactor(context);
   const testForm = `${browserName}_${formFactor}`;
@@ -67,7 +58,13 @@ function getScreenshotPath(ref, context) {
 
 function getScreenshot(ref) {
   return (context) => {
-    const testPath = path.dirname(context.test.file);
+    let testPath = path.dirname(context.test.file);
+
+    const baseDir = global.browser.options.baseScreenshotDir;
+    if (baseDir) {
+      testPath = baseDir + testPath.split(process.cwd())[1];
+    }
+
     return path.join(testPath, '__snapshots__', getScreenshotPath(ref, context), getScreenshotName(context));
   };
 }

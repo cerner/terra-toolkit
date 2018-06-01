@@ -1,10 +1,19 @@
-/* global browser, describe, it, before, expect */
+/* global browser, describe, it, before, expect, Terra */
+let testLocale;
+let browserLocale;
+
 describe('I18n Locale', () => {
-  before(() => browser.url('/i18n.html'));
+  before(() => {
+    browser.url('/i18n.html');
+    testLocale = browser.options.locale || 'en';
+    browserLocale = browser.getAttribute('html', 'lang');
+  });
 
   it('Express correctly sets the application locale', () => {
-    const browserLocale = browser.getAttribute('html', 'lang');
-    const testLocale = browser.options.locale;
-    expect(browserLocale).to.equal(testLocale);
+    browser.setValue('#input-wdio-defined', testLocale);
+    browser.setValue('#input-actual', browserLocale);
+    expect(testLocale).to.equal(browserLocale);
   });
+
+  Terra.should.matchScreenshot({ selector: '#i18n-validation' });
 });

@@ -29,8 +29,19 @@ const seleniumDocker = {
   composeFile: path.join(__dirname, '..', 'docker', 'local-docker-compose.yml'),
 };
 
+/* Terra defined viewport sizes. */
+const terraViewports = {
+  tiny: { width: 470, height: 768, name: 'tiny' },
+  small: { width: 622, height: 768, name: 'small' },
+  medium: { width: 838, height: 768, name: 'medium' },
+  large: { width: 1000, height: 768, name: 'large' },
+  huge: { width: 1300, height: 768, name: 'huge' },
+  enormous: { width: 1500, height: 768, name: 'enormous' },
+};
+
 module.exports = {
   axe,
   serveStatic,
   seleniumDocker,
+  terraViewports,
 };

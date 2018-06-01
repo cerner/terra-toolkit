@@ -12,8 +12,8 @@ const visualRegressionConfig = require('./visualRegressionConf');
 const ip = process.env.WDIO_EXTERNAL_HOST || localIP.address();
 const webpackPort = process.env.WDIO_EXTERNAL_PORT || 8080;
 const ci = process.env.TRAVIS || process.env.CI;
-const envLocale = process.env.LOCALE;
-const locale = envLocale || 'en';
+const locale = process.env.LOCALE;
+const formFactor = process.env.FORM_FACTOR;
 
 const config = {
   specs: [
@@ -43,7 +43,11 @@ const config = {
 
   baseUrl: `http://${ip}:${webpackPort}`,
 
-  locale,
+  serveStatic: {
+    port: webpackPort,
+  },
+  ...locale && { locale },
+  ...formFactor && { formFactor },
 
   seleniumDocker: {
     enabled: !ci,

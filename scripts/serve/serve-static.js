@@ -2,6 +2,7 @@
 const express = require('express');
 const path = require('path');
 const webpack = require('webpack');
+const clone = require('clone');
 const MemoryFS = require('memory-fs');
 const mime = require('mime-types');
 
@@ -19,6 +20,9 @@ const compile = (webpackConfig, disk) => (
         console.log('[Terra-Toolkit:serve-static] Webpack compiled unsuccessfully');
         reject(err || new Error(stats.toJson().errors));
       } else {
+        if (stats.hasWarnings()) {
+          console.warn(stats.toJson().warnings);
+        }
         console.log('[Terra-Toolkit:serve-static] Webpack compiled successfully');
         resolve([webpackConfig.output.path, compiler.outputFileSystem]);
       }
@@ -34,9 +38,15 @@ const generateSite = (site, config, disk, production) => {
   }
 
   if (config) {
-    let webpackConfig = config;
-    if (typeof webpackConfig === 'function') {
-      webpackConfig = webpackConfig(undefined, { p: production });
+    let webpackConfig;
+    if (typeof config === 'function') {
+      webpackConfig = config(undefined, { p: production });
+    } else {
+      webpackConfig = clone(config);
+    }
+
+    if (!(webpackConfig.output || {}).path) {
+      webpackConfig.output = Object.assign({}, webpackConfig.output, { path: '/dist' });
     }
 
     return compile(webpackConfig, disk);
@@ -46,7 +56,7 @@ const generateSite = (site, config, disk, production) => {
 };
 
 // Setup an app server that reads from a filesystem.
-const virtualApp = (site, index, locale, fs) => {
+const virtualApp = (site, index, locale, fs, verbose) => {
   const app = express();
 
   // Setup a catch all route, we can't use 'static' because we need to use a virtual file system
@@ -85,22 +95,24 @@ const virtualApp = (site, index, locale, fs) => {
     }
   });
 
-  app.use((req, res, next) => {
-    const err = new Error(`Not Found: ${req.originalUrl}`);
-    err.status = 404;
-    next(err);
-  });
+  if (verbose) {
+    app.use((req, res, next) => {
+      const err = new Error(`Not Found: ${req.originalUrl}`);
+      err.status = 404;
+      next(err);
+    });
 
-  // error handler
-  app.use((err, req, res) => {
-    // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = err;
+    // error handler
+    app.use((err, req, res) => {
+      // set locals, only providing error in development
+      res.locals.message = err.message;
+      res.locals.error = err;
 
-    // render the error page
-    res.status(err.status || 500);
-    res.render('error');
-  });
+      // render the error page
+      res.status(err.status || 500);
+      res.render('error');
+    });
+  }
 
   return Promise.resolve(app);
 };
@@ -113,9 +125,9 @@ const staticApp = (site) => {
 };
 
 // Setup an app for either a virtual site or a static site. If a file system is not provided, serve the static site.
-const serveSite = (site, fs, index, locale) => {
+const serveSite = (site, fs, index, locale, verbose) => {
   if (fs) {
-    return virtualApp(site, index, locale, fs);
+    return virtualApp(site, index, locale, fs, verbose);
   }
 
   return staticApp(site);
@@ -123,13 +135,13 @@ const serveSite = (site, fs, index, locale) => {
 
 // Generate a site if not provided and spin up an express server to serve the site.
 const serve = (options) => {
-  const { site, config, port, disk, index, locale, production } = options;
+  const { site, config, port, disk, index, locale, production, verbose } = options;
   const appPort = port || 8080;
   const appIndex = index || 'index.html';
-  const appLocale = locale || 'en';
+  const appLocale = locale || process.env.LOCALE || 'en';
 
   return generateSite(site, config, disk, production).then(
-    ([sitePath, fs]) => serveSite(sitePath, fs, appIndex, appLocale)).then(
+    ([sitePath, fs]) => serveSite(sitePath, fs, appIndex, appLocale, verbose)).then(
     (app) => {
       const server = app.listen(appPort);
       console.log(`[Terra-Toolkit:serve-static] Server started listening at port:${appPort}`);

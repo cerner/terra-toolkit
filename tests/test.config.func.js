@@ -1,7 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {
+// eslint-disable-next-line no-unused-vars
+const webpackConfig = (env = {}, argv = {}) => ({
   entry: {
     index: path.join(__dirname, 'fixtures', 'index'),
   },
@@ -48,4 +49,6 @@ module.exports = {
     }),
   ],
   mode: 'production',
-};
+});
+
+module.exports = webpackConfig;
