@@ -7,7 +7,7 @@ const loadWdioConfig = configPath => require(path.resolve(configPath));
 
 const isDirectory = filePath => (fs.existsSync(filePath) && fs.lstatSync(filePath).isDirectory());
 
-const cleanSnapshots = (configPath, updateReference) => {
+const cleanSnapshots = (configPath, removeReference) => {
   const wdioConfig = loadWdioConfig(configPath).config;
   const baseDir = wdioConfig.baseScreenshotDir || '';
   const errorDir = wdioConfig.screenshotPath || '';
@@ -19,7 +19,7 @@ const cleanSnapshots = (configPath, updateReference) => {
     errorDir,
   ];
 
-  if (updateReference) {
+  if (removeReference) {
     patterns.push(path.join(baseDir, '**', '__snapshots__', 'reference'));
   }
 

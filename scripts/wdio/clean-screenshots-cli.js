@@ -9,14 +9,14 @@ const packageJson = require('../../package.json');
 commander
   .version(packageJson.version)
   .option('--config <path>', 'The wdio config for the tests. Alias for <config>.', undefined)
-  .option('--updateReference <path>', 'runs a certain spec file, can be combined with --suite - overrides specs piped from stdin', undefined)
+  .option('--removeReference <path>', 'runs a certain spec file, can be combined with --suite - overrides specs piped from stdin', undefined)
   .parse(process.argv);
 
 const {
   config,
-  updateReference,
+  removeReference,
 } = commander;
 
 const configPath = getWdioConfigPath(config);
 
-cleanScreenshots(configPath, updateReference);
+cleanScreenshots(configPath, removeReference);
