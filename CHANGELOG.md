@@ -68,7 +68,6 @@ Unreleased
 ### Fixed
 * Removed disabled axe 'landmark-one-main' rule from the provided default wdio.config
 
-
 3.0.0 - (April 19, 2018)
 ----------
 ### Major Version Bump. See https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitUpgradeBuid-v3.0.0.md.
