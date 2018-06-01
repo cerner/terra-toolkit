@@ -5,6 +5,7 @@ Unreleased
 ----------
 ### Updated
 * tt:serve and tt:serve-static now take a --host option.
+* Removed the exception to transpile terra-dev-site.
 
 3.5.0 - (May 22, 2018)
 ----------
