@@ -3,7 +3,7 @@ Changelog
 
 Unreleased
 ----------
-### Major Version Bump. See https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitUpgradeBuid-v4.0.0.md.
+### Major Version Bump. See https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitUpgradeGuide-v4.0.0.md.
 
 ### Added
 - Added `locale`, `formFactor` and `baseScreenshotDir` wdio.config options for i18n and paralyzation support
