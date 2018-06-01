@@ -4,6 +4,21 @@ Changelog
 Unreleased
 ----------
 
+3.5.0 - (May 22, 2018)
+----------
+### Updated
+* Documentation updates
+* Build improvements
+
+3.4.0 - (May 17, 2018)
+----------
+### Fixed
+* Re-enabale cheap-source-map, the source mapping level we had prior to webpack 4.
+
+### Updated
+* Improved caching during travis builds
+* Improved suite generation for lerna projects
+
 3.3.1 - (May 4, 2018)
 ----------
 ### Fixed
