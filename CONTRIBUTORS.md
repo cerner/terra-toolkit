@@ -11,6 +11,7 @@ Cerner Corporation
 - Matt Schile [@mschile]
 - Alex Bezek [@alex-bezek]
 - Noah Benham [@noahbenham]
+- Ben Boersma [@BenBoersma]
 
 [@emilyrohrbough]: https://github.com/emilyrohrbough
 [@brettjankord]: https://github.com/bjankord
@@ -23,3 +24,4 @@ Cerner Corporation
 [@mschile]: https://github.com/mschile
 [@alex-bezek]: https://github.com/alex-bezek
 [@noahbenham]: https://github.com/noahbenham
+[@BenBoersma]: https://github.com/BenBoersma
