@@ -1,3 +1,5 @@
+const browserslist = require('./browserslist');
+
 module.exports = {
   "extends": "stylelint-config-sass-guidelines",
   "plugins": [
@@ -17,7 +19,8 @@ module.exports = {
     "plugin/no-unsupported-browser-features": [
       true,
       {
-        "browsers": ["extends browserslist"],
+        "browsers": browserslist,
+        "severity": "warning"
       },
     ],
   },
