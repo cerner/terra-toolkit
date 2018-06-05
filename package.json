@@ -35,7 +35,7 @@
     "compile": "npm run clean:compiled && npm run compile:build",
     "compile:build": "babel src --out-dir lib --copy-files",
     "danger": "danger",
-    "jest": "jest ./tests/jest/* ",
+    "jest": "jest",
     "lint": "eslint --ext .js,.jsx .",
     "nightwatch": "nightwatch",
     "nightwatch:port-provided": "nightwatch -c tests/test.nightwatch.conf.js",
