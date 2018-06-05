@@ -10,14 +10,20 @@ Unreleased
 * Added tt-wdio bin script called `tt-wdio` which runs wdio test runs for the specified locales and form factors
 * Added clean-screenshots bin script called `tt-clean-screenshot`
 
-### Changed
-* tt:serve and tt:serve-static now take a --host option.
-* Removed the exception to transpile terra-dev-site.
+### Changed    
 * **BREAKING CHANGE** Update screenshot naming to organize screenshots by locale and form factor
     - changed `screen` directory name to `latest`
     - added automatic screenshot name shortening to allow for descriptive describes, but short screenshot names.
+    - ensure screenshot naming does not contain windows
 * **BREAKING CHANGE** Bumped dependencies.
 * Update the default webpack.config's Autoprefixer's browserslist values
+
+3.6.0 - (June 5, 2018)
+----------
+### Updated
+* tt:serve and tt:serve-static now take a --host option.
+* Removed the exception to transpile terra-dev-site.
+
 
 ### Fixed
 * **BREAKING CHANGE** Changed bin scripts from `tt:script_name` to `tt-script_name`. The use of `:` breaks windows. See https://msdn.microsoft.com/en-us/library/ms832054.aspx.
