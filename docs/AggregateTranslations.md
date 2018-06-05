@@ -36,11 +36,11 @@ module.exports = // ...webpack config;
 ```
 
 #### CLI Example
-The `aggregate-translations` CLI is supplied as a bin script, called `tt:aggregate-translations`, and can be used as follows:
+The `aggregate-translations` CLI is supplied as a bin script, called `tt-aggregate-translations`, and can be used as follows:
 ```js
 scripts: {
     // ...other scripts
-    "aggregate-translations": "tt:aggregate-translations -b ./ -d ./src/**/translations -d ./translations -l ['en', 'es'] -o ./aggregated-translations",
+    "aggregate-translations": "tt-aggregate-translations -b ./ -d ./src/**/translations -d ./translations -l ['en', 'es'] -o ./aggregated-translations",
     "start:build": "npm run aggregate-translations && npm run start"
 }
 ```
@@ -66,7 +66,7 @@ Then, to load the config someplace other than `./terraI18n.config.js`, simply ad
 aggregateTranslations({ configPath: './config/terraI18n.config.js' });
 
 // using CLI approach
-"aggregate-translations": "tt:aggregate-translations -c ./config/terraI18n.config.js",
+"aggregate-translations": "tt-aggregate-translations -c ./config/terraI18n.config.js",
 ```
 
 ## Resolving Translations and Loaders

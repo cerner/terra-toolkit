@@ -1,7 +1,7 @@
-# Terra Toolkit Serve
+tt-# Terra Toolkit Serve
 
 Terra Toolkit offers up two different commands to serve your client side application, `serve` and `serve-static`.
-If you are using terra-dev-site, use the provided `tt:serve`/`tt:serve-static` commands instead.
+If you are using terra-dev-site, use the provided `tt-serve`/`tt-serve-static` commands instead.
 
 ## serve
 Serve is a replacment for webpack-dev-server. Behind the scenes it's using [webpack-serve](https://github.com/webpack-contrib/webpack-serve).
@@ -18,12 +18,12 @@ Serve is offered up as both a cli and a javascript function.
 | **-p, --production** | false | false | Passes the -p flag to the webpack config. |
 | **--host** | false |`undefined` | Sets the host that the server will listen on. eg. '10.10.10.1' |
 
-If no config is supplied tt:serve will first search for `webpack.config.js` in the working directory, if that is not found it will attempt to use the default webpack config supplied by terra-dev-site.
+If no config is supplied tt-serve will first search for `webpack.config.js` in the working directory, if that is not found it will attempt to use the default webpack config supplied by terra-dev-site.
 
 #### In your package.json
 ```JSON
 {
-  "start": "tt:serve --config src/webpack/webpack.config"
+  "start": "tt-serve --config src/webpack/webpack.config"
 }
 ```
 ### Function
@@ -59,13 +59,13 @@ Serve-static is offered up as both a cli and a javascript function.
 | **--disk** | false | `false` | The webpack assets will be written to disk instead of a virtual file system. Only used when webpack config is passed |
 | **--host** | false |`undefined` | Sets the host that the server will listen on. eg. '10.10.10.1' |
 
-If no config is supplied tt:serve-static will first search for `webpack.config.js` in the working directory, if that is not found it will attempt to use the default webpack config supplied by terra-dev-site.
+If no config is supplied tt-serve-static will first search for `webpack.config.js` in the working directory, if that is not found it will attempt to use the default webpack config supplied by terra-dev-site.
 
 #### In your package.json
 ```JSON
 {
-  "start-static": "tt:serve-static --config src/webpack/webpack.config --vfs",
-  "start-static": "tt:serve-static --site build"
+  "start-static": "tt-serve-static --config src/webpack/webpack.config --vfs",
+  "start-static": "tt-serve-static --site build"
 }
 ```
 ### Function

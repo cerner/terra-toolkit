@@ -20,7 +20,7 @@ Unreleased
 * Update the default webpack.config's Autoprefixer's browserslist values
 
 ### Fixed
-* **BREAKING CHANGE** Changed bin scripts from `tt:script_name` to `tt-script_name`. The use of `:` breaks windows. (Resolves #96)
+* **BREAKING CHANGE** Changed bin scripts from `tt:script_name` to `tt-script_name`. The use of `:` breaks windows. See https://msdn.microsoft.com/en-us/library/ms832054.aspx.
 
 3.5.0 - (May 22, 2018)
 ----------

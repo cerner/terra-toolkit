@@ -32,7 +32,7 @@ async function wdioRunner(options) {
           (code) => {
             if (code === 1 && !continueOnFail) {
               // eslint-disable-next-line no-console
-              console.log(`[Terra-Tookit:wdio-runner] Running tests for: ${envValues} failed.`);
+              console.error(`[Terra-Tookit:wdio-runner] Running tests for: ${envValues} failed.`);
               process.exit(1);
             }
           },

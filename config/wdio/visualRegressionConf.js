@@ -12,10 +12,15 @@ const screenshotSetup = {
 
 function createTestName(fullName) {
   const matches = testIdRegex.exec(fullName);
-  let name = fullName.trim().replace(/[\s+.]/g, '_');
-  if (matches) {
-    name = matches[1];
-  }
+
+  let name = matches ? matches[1] : fullName.trim();
+
+  // Remove white space
+  name = name.replace(/[\s+.]/g, '_');
+
+  // Remove windows reserved characters. See: https://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx#naming_conventions
+  // eslint-disable-next-line no-useless-escape
+  name = name.replace(/[\?\<\>\/\\|\*\"\:\+\.]/g, '-');
 
   return name;
 }

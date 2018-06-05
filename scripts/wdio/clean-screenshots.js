@@ -1,26 +1,29 @@
 const fs = require('fs-extra');
 const glob = require('glob');
-const path = require('path');
+const path = require('path').posix;
 
 // eslint-disable-next-line global-require, import/no-dynamic-require
 const loadWdioConfig = configPath => require(path.resolve(configPath));
 
 const isDirectory = filePath => (fs.existsSync(filePath) && fs.lstatSync(filePath).isDirectory());
 
-const cleanSnapshots = (configPath, removeReference) => {
+const cleanSnapshots = (options) => {
+  const {
+    configPath, removeReference,
+  } = options;
+
   const wdioConfig = loadWdioConfig(configPath).config;
-  const baseDir = wdioConfig.baseScreenshotDir || '';
   const errorDir = wdioConfig.screenshotPath || '';
 
   const patterns = [
-    path.join(baseDir, '**', '__snapshots__', 'latest'),
-    path.join(baseDir, '**', '__snapshots__', 'diff'),
-    path.join(baseDir, '**', '__snapshots__', 'screen'),
+    `${process.cwd()}/**/__snapshots__/latest`,
+    `${process.cwd()}/**/__snapshots__/diff`,
+    `${process.cwd()}/**/__snapshots__/screen`,
     errorDir,
   ];
 
   if (removeReference) {
-    patterns.push(path.join(baseDir, '**', '__snapshots__', 'reference'));
+    patterns.push(`${process.cwd()}/**/__snapshots__/reference`);
   }
 
   let screenshotDirectories = [];

@@ -1,0 +1,74 @@
+# Terra Toolkit Wdio Helpers
+
+## Wdio Runner
+Terra Toolkit offers its own wdio test runner to help with locale integration testing for various locales and form factors. This runner is a replacment for webdriver's bin scritp `wdio` as it concurrently calls Webdriver.io's test launcher module for each test setup resulting in multiple test runs for the test run setup provided.
+
+Terra's wdio test runner is available via the `tt-wdio` cli or the `wdio-runner` javascript function.
+
+#### API
+| Name  | Default Value | Description |
+| ------------- | ------------- | ------------- |
+| **--config**  | `undefined` | The wdio config path for the tests.  |
+| **--formFactors**  | `undefined` | The list of viewport sizes to test. |
+| **-locales** | `['en']` | The list of locales to test. |
+| **--continueOnFail** | `undefined` | Wheather or not to execute all test runs when a run fails. |
+| **--useSeleniumGrid** |`false` | Whether or not the USE_SELENIUM_GRID process env should be set. |
+| **--updateReference** | `undefined` | Whether or not to remove reference screenshots during screenshot cleanup. CLI use only. |
+| **--port**  | `undefined` | [wdio option] The selenium server port. |
+| **--host** | `undefined` | [wdio option] The selenium server host address. |
+| **--baseUrl** | `undefined` | [wdio option] The base URL. |
+| **--suite** | `undefined  ` | [wdio option] The suite to run. |
+| **--suite** | `undefined` | [wdio option] The spec file to run. |
+
+If no config is supplied to `tt-wdio`, `tt-wdio` will first search for `wdio.conf.js` in the working directory. If that is not found, it will attempt to use the default wdio config supplied by terra-dev-site.
+
+#### CLI Usage
+In your package.json
+```JSON
+{
+  "test:wdio": "tt-wdio --config ./wdio.conf.js --locales ['en','es']"
+}
+```
+
+#### Function Usage
+In your code
+```
+const runner = require('./wdio-runner');
+
+runner({
+  configPath: './wdio.conf.js',
+  continueOnFail: true,
+  formFactors: ['tiny', 'medium']
+  locales: ['en', 'es']
+});
+```
+
+## Wdio Screenshot Cleanup
+Terra Toolkit offers a screenshot cleanup tool to remove `errorScrenshots`, `latest`, `diff` and, if indicated, `reference` screenshots. This is available via the `tt-clean-screenshots` cli or the `clean-screenshots` javascript function.
+
+`tt-wdio` will call this before calling its test runner, such that the generated screenshot within your project are from the only the latest test run(s).
+
+#### API
+| Name  | Default Value | Description |
+| ------------- | ------------- | ------------- |
+| **--config**  | `undefined` | The wdio config path for the tests.  |
+| **--removeReference**  | `false` | The list of viewport sizes to test. |
+
+If no config is supplied to `tt-clean-screenshots`, `tt-clean-screenshots` will first search for `wdio.conf.js` in the working directory. If that is not found, it will attempt to use the default wdio config supplied by terra-dev-site.
+
+#### CLI Usage
+```JSON
+{
+  "clean-screenshots": "tt-clean-screenshots --config ./wdio.conf.js"
+}
+```
+
+#### Function Usage
+```
+const cleanScreenshots = require('./clean-screenshots');
+
+cleanScreenshots({
+    configPath: './wdio.conf.js'
+    updateReference: false,
+});
+```

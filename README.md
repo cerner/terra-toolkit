@@ -15,7 +15,6 @@ Terra Toolkit is a utility module used to facilitate independent development of 
 
 - [Getting Started](#getting-started)
 - [Webdriver.io Utility](#webdriverio-utility)
-- [Nightwatch Utility](#nightwatch-utility)
 - [Versioning](#versioning)
 - [Contributing](#contributing)
 - [LICENSE](#license)
@@ -33,14 +32,6 @@ Terra Toolkit uses docker to setup, run, and tear down selenium to ensure a cons
 [Webdriver.io](http://webdriver.io/) is a framework for writing webdriver powered tests to validate functionality in browsers. The Webdriver.io framework provides services for setting up a selenium server, starting webpack and static servers, running accessibility and visual regression testing, and more.
 
 See the [Webdriver.io Utility Developer's Guide](https://github.com/cerner/terra-toolkit/blob/master/docs/Wdio_Utility.md) to get started.
-
-## Nightwatch Utility
-
-NOTE: WebdriverIO should be used instead of Nightwatch. Nightwatch will be deprecated in the future.
-
-Nightwatch.js is an easy to use Node.js based End-to-End (E2E) testing solution for browser based apps and websites. It uses the powerful W3C WebDriver API to perform commands and assertions on DOM elements. Full documentation regarding nightwatch can be found at http://nightwatchjs.org/.
-
-See the [Nightwatch Utility Developer's Guide](https://github.com/cerner/terra-toolkit/blob/master/docs/Nightwatch_Utility.md) to get started.
 
 ## Versioning
 
