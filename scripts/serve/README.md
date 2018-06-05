@@ -1,4 +1,4 @@
-tt-# Terra Toolkit Serve
+# Terra Toolkit Serve
 
 Terra Toolkit offers up two different commands to serve your client side application, `serve` and `serve-static`.
 If you are using terra-dev-site, use the provided `tt-serve`/`tt-serve-static` commands instead.
