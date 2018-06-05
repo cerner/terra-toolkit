@@ -17,8 +17,7 @@ const aggregateTranslationMessages = (translationDirectories, locales) => {
         // eslint-disable-next-line no-console
         console.warn(`There was an error reading your translations file ${translationFile}.\n Exception Message: ${e.message} \n`);
       }
-    }),
-  );
+    }));
 
   return translations;
 };

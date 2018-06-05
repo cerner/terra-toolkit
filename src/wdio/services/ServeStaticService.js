@@ -34,7 +34,9 @@ export default class ServeStaticService {
   }
 
   static startService(config, port, index, locale, verbose) {
-    return serve({ config, port, index, production: true, locale, verbose });
+    return serve({
+      config, port, index, production: true, locale, verbose,
+    });
   }
 
   stop() {

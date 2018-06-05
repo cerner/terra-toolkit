@@ -1,7 +1,9 @@
 const Launcher = require('webdriverio').Launcher;
 
 async function wdioRunner(options) {
-  const { configPath, locales, formFactors, useSeleniumGrid, continueOnFail, ...testSetup } = options;
+  const {
+    configPath, locales, formFactors, useSeleniumGrid, continueOnFail, ...testSetup
+  } = options;
   const factors = formFactors || [undefined];
 
   process.env.USE_SELENIUM_GRID = useSeleniumGrid;
