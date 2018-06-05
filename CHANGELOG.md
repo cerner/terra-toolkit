@@ -9,13 +9,13 @@ Unreleased
 - Added `locale`, `formFactor` and `baseScreenshotDir` wdio.config options for i18n and paralyzation support
 - Added tt-wdio bin script called `tt-wdio` which runs wdio test runs for the specified locales and form factors
 - Added clean-screenshots bin script called `tt-clean-screenshot`
-- Added default `browserslist`, `eslint` and `stylelint` configurations
 
 ### Changed
 - **BREAKING CHANGE** Update screenshot naming to organize screenshots by locale and form factor
     - changed `screen` directory name to `latest`
     - added automatic screenshot name shortening to allow for descriptive describes, but short screenshot names.
 - **BREAKING CHANGE** Bumped dependencies.
+- Update the default webpack.config's Autoprefixer's browserslist values
 
 ### Fixed
 - **BREAKING CHANGE** Changed bin scripts from `tt:script_name` to `tt-script_name`. The use of `:` breaks windows. (Resolves #96)

@@ -75,9 +75,9 @@ describe('aggregate-translations', () => {
     const translationsFiles = [];
     i18nSupportedLocales.forEach(locale =>
       translationsFiles.push(
-        expect.stringContaining(`aggregated-translations${path.sep}${locale}.js`,
+        expect.stringContaining(`aggregated-translations${path.sep}${locale}.js`),
       ),
-    ));
+    );
 
     aggregateTranslations();
 

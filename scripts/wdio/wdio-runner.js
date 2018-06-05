@@ -23,8 +23,7 @@ async function wdioRunner(options) {
       console.log(`\n> [Terra-Tookit:wdio-runner] Running tests for: ${envValues}\n`);
 
       // eslint-disable-next-line no-await-in-loop
-      await
-        new Launcher(configPath, testSetup)
+      await new Launcher(configPath, testSetup)
         .run()
         .then(
           // eslint-disable-next-line no-loop-func

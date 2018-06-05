@@ -8,7 +8,6 @@ const CleanPlugin = require('clean-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const aggregateTranslations = require('../../scripts/aggregate-translations/aggregate-translations');
 const merge = require('webpack-merge');
-const browserslist = require('../browserslist');
 
 const defaultWebpackConfig = (env = {}, argv = {}) => {
   const production = argv.p;
@@ -52,7 +51,18 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
               ident: 'postcss',
               plugins() {
                 return [
-                  Autoprefixer({ browsers: browserslist }),
+                  Autoprefixer({
+                    browsers: [
+                      'iOS >= 10',
+                      'last 2 and_chr versions',
+                      'last 2 android versions',
+                      'last 2 chrome versions',
+                      'last 2 edge versions',
+                      'last 2 firefox versions',
+                      'last 2 ie versions',
+                      'last 2 safari versions',
+                    ],
+                  }),
                   rtl(),
                 ];
               },
