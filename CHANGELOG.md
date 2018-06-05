@@ -6,19 +6,21 @@ Unreleased
 ### Major Version Bump. See https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitUpgradeGuide-v4.0.0.md.
 
 ### Added
-- Added `locale`, `formFactor` and `baseScreenshotDir` wdio.config options for i18n and paralyzation support
-- Added tt-wdio bin script called `tt-wdio` which runs wdio test runs for the specified locales and form factors
-- Added clean-screenshots bin script called `tt-clean-screenshot`
+* Added `locale`, `formFactor` and `baseScreenshotDir` wdio.config options for i18n and paralyzation support
+* Added tt-wdio bin script called `tt-wdio` which runs wdio test runs for the specified locales and form factors
+* Added clean-screenshots bin script called `tt-clean-screenshot`
 
 ### Changed
-- **BREAKING CHANGE** Update screenshot naming to organize screenshots by locale and form factor
+* tt:serve and tt:serve-static now take a --host option.
+* Removed the exception to transpile terra-dev-site.
+* **BREAKING CHANGE** Update screenshot naming to organize screenshots by locale and form factor
     - changed `screen` directory name to `latest`
     - added automatic screenshot name shortening to allow for descriptive describes, but short screenshot names.
-- **BREAKING CHANGE** Bumped dependencies.
-- Update the default webpack.config's Autoprefixer's browserslist values
+* **BREAKING CHANGE** Bumped dependencies.
+* Update the default webpack.config's Autoprefixer's browserslist values
 
 ### Fixed
-- **BREAKING CHANGE** Changed bin scripts from `tt:script_name` to `tt-script_name`. The use of `:` breaks windows. (Resolves #96)
+* **BREAKING CHANGE** Changed bin scripts from `tt:script_name` to `tt-script_name`. The use of `:` breaks windows. (Resolves #96)
 
 3.5.0 - (May 22, 2018)
 ----------
