@@ -15,7 +15,7 @@ The scripts provided by Terra Toolkit v3 used `tt:` prefixes. It was found `:` c
 The `webpack-serve` dependency was updated from `^0.3.1` to `^1.0.2`.
 
 ### Wdio Runner
-Terra Toolkit now offers its own wdio test runner which runs wdio test runs for specified locales and form factors. This allows for locale test runs that can match paralyzed container test runs by concurrently running the wdio for each test run variation. This runner is a replacement for webdriver's bin script `wdio` by directly calling Webdriver's test launcher module for each test variation.
+Terra Toolkit now offers its own wdio test runner which runs wdio test runs for specified locales and form factors. This allows for locale test runs that can match parallelized container test runs by concurrently running the wdio for each test run variation. This runner is a replacement for webdriver's bin script `wdio` by directly calling Webdriver's test launcher module for each test variation.
 
 Terra's wdio test runner is available via the `tt-wdio` cli or the `wdio-runner` javascript function.
 
@@ -52,15 +52,15 @@ The following dependencies were updated in Terra toolkit's default webpack confi
 
 
 ## WebdriverIO
-Terra Toolkit's configuration and services now have i18n and paralyzation support. These included new config options, as well as changes to screenshot naming to organize screenshots by locale and form factor.
+Terra Toolkit's configuration and services now have i18n and parallelization support. These included new config options, as well as changes to screenshot naming to organize screenshots by locale and form factor.
 
 ### WebdriverIO Configuration
 The following configuration options were added:
 - `locale` - the locale to serve the site in. By default this is `en`.
-- `formFactor` - the terra viewport for the test run. By defualt, the viewport is determined the current browser size.
+- `formFactor` - the terra viewport for the test run. By default, the viewport is determined the current browser size.
 - `baseScreenshotDir` - where snapshots are stored. By default, this will be the test-spec directory.
 
-No updates are required with the additon of the config options.
+No updates are required with the addition of the config options.
 
 #### Screenshot Naming
 The default visual-regression configuration was enhanced in these ways to organize screenshots by locale and form factor. These enhancements were:
@@ -78,10 +78,10 @@ The default visual-regression configuration was enhanced in these ways to organi
 // example-spec.js
 cont viewports = Terra.getViewports('tiny');
 describe('This is a long screenshot name for an [example test], () => {
-      Terra.should.matchScreenshot({ viewports });
+    Terra.should.matchScreenshot({ viewports });
 });
 
-// v3 screenshot result
+// v4 screenshot result
 reference/en/chrome_tiny/example/example_test[default].png
 
 // v3 screenshot result
@@ -95,7 +95,7 @@ reference/chrome/This_is_a_long_screenshot_name_for_an_[example_test][default].4
 2. Run your wdio tests
 3. Add `**/wdio/__snapshots__/latest` to your `.gitignore`
 
-**NOTE:** The default visual-regression conf file has moved from `terra-toolkit/lib/wdio/visualRegressionConf.js` to `terra-toolkit/config/wdio/visualRegressionConf.js`. This change was made to provide a consistent location for our reusable configuration files.
+**NOTE:** The default visual-regression config file has moved from `terra-toolkit/lib/wdio/visualRegressionConf.js` to `terra-toolkit/config/wdio/visualRegressionConf.js`. This change was made to provide a consistent location for our reusable configuration files.
 
 ### AxeService
 The `axe-core` dependency was updated from `^6.7.7` to `^3.0.2`.

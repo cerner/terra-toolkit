@@ -1,7 +1,7 @@
 # Terra Toolkit Wdio Helpers
 
 ## Wdio Runner
-Terra Toolkit offers its own wdio test runner which runs wdio test runs for specified locales and form factors. This allows for locale test runs that can match paralyzed container test runs by concurrently running the wdio for each test run variation. This runner is a replacement for webdriver's bin script `wdio` by directly calling Webdriver's test launcher module for each test variation.
+Terra Toolkit offers its own wdio test runner which runs wdio test runs for specified locales and form factors. This allows for locale test runs that can match parallelized container test runs by synchronously running the wdio for each test run variation. This runner is a replacement for webdriver's bin script `wdio` by directly calling Webdriver's test launcher module for each test variation.
 
 Terra's wdio test runner is available via the `tt-wdio` cli or the `wdio-runner` javascript function.
 
@@ -18,7 +18,7 @@ Terra's wdio test runner is available via the `tt-wdio` cli or the `wdio-runner`
 | **--host** | `undefined` | [wdio option] The selenium server host address. |
 | **--baseUrl** | `undefined` | [wdio option] The base URL. |
 | **--suite** | `undefined  ` | [wdio option] The suite to run. |
-| **--suite** | `undefined` | [wdio option] The spec file to run. |
+| **--spec** | `undefined` | [wdio option] The spec file to run. |
 
 If no config is supplied to `tt-wdio`, `tt-wdio` will first search for `wdio.conf.js` in the working directory. If that is not found, it will attempt to use the default wdio config supplied by terra-dev-site.
 

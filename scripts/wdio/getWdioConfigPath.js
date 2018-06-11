@@ -5,7 +5,6 @@ const isFile = filePath => (fs.existsSync(filePath) && !fs.lstatSync(filePath).i
 
 const getWdioConfigPath = (configPath) => {
   if (configPath) {
-    // eslint-disable-next-line global-require, import/no-dynamic-require
     return path.resolve(configPath);
   }
 

@@ -2,17 +2,18 @@ const path = require('path');
 const LocalCompare = require('wdio-visual-regression-service/compare').LocalCompare;
 const viewports = require('./services.default-config').terraViewports;
 
-const testIdRegex = /\[([^)]+)\]/;
-
 const screenshotSetup = {
   diffDir: 'diff',
   referenceDir: 'reference',
   screenshotDir: 'latest',
 };
 
+const testIdRegex = /\[([^)]+)\]/;
+
 function createTestName(fullName) {
   const matches = testIdRegex.exec(fullName);
 
+  // If test ID is provided, use the ID for a shorter test name, otherwise use the full name
   let name = matches ? matches[1] : fullName.trim();
 
   // Remove white space

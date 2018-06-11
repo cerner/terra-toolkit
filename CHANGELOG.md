@@ -18,15 +18,14 @@ Unreleased
 * **BREAKING CHANGE** Bumped dependencies.
 * Update the default webpack.config's Autoprefixer's browserslist values
 
+### Fixed
+* **BREAKING CHANGE** Changed bin scripts from `tt:script_name` to `tt-script_name`. The use of `:` breaks windows. See https://msdn.microsoft.com/en-us/library/ms832054.aspx.
+
 3.6.0 - (June 5, 2018)
 ----------
 ### Updated
 * tt:serve and tt:serve-static now take a --host option.
 * Removed the exception to transpile terra-dev-site.
-
-
-### Fixed
-* **BREAKING CHANGE** Changed bin scripts from `tt:script_name` to `tt-script_name`. The use of `:` breaks windows. See https://msdn.microsoft.com/en-us/library/ms832054.aspx.
 
 3.5.0 - (May 22, 2018)
 ----------
