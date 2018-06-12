@@ -4,6 +4,11 @@ Changelog
 Unreleased
 ----------
 
+3.7.0 - (June 12, 2018)
+----------
+### Updated
+* PostCSS/UglifyJS corrections
+
 3.6.0 - (June 5, 2018)
 ----------
 ### Updated
