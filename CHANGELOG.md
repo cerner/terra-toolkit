@@ -6,6 +6,9 @@ Unreleased
 ### Fixed
 * Allow serving static assets when they're requested using query params
 
+### Changed
+* Reduce log output for tt-serve (no children)
+
 3.7.0 - (June 12, 2018)
 ----------
 ### Updated
