@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+3.8.0 - (June 15, 2018)
+----------
 ### Fixed
 * Allow serving static assets when they're requested using query params
 
