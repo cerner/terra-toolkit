@@ -99,7 +99,6 @@ const virtualApp = (site, index, locale, fs, verbose) => {
       let fileContent = fs.readFileSync(filepath, 'utf8');
       if (fileExt === '.html') {
         fileContent = setSiteLocale(fileContent, locale);
-        console.log(fileContent)
       }
 
       res.send(fileContent);
