@@ -44,7 +44,7 @@ serve({ config: webpackConfig });
 ```
 
 ## serve-static
-Serve static is a non-hot reloading server that uses express behind the scenes. The serve static method can either take a pre-compiled site folder or a webpack config to compile a site for you. It also offers a virtual file system to avoid saving files to disk. This server is also used in `TerraToolkitServeStaticService` to serve sites for wdio visual regression testing.
+Serve static is a non-hot reloading server that uses express behind the scenes. The serve static method can either take a pre-compiled site folder or a webpack config to compile a site for you. It also offers a virtual file system to avoid saving files to disk. This server is also used in `ServeStaticService` to serve sites for wdio visual regression testing.
 
 Serve-static is offered up as both a cli and a javascript function.
 

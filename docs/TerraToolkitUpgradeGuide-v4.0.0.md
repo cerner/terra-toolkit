@@ -48,11 +48,8 @@ The following dependencies were updated in Terra toolkit's default webpack confi
 - postcss-custom-properties: `^6.0.1` -> `^7.0.0`
 - sass-loader: `^6.0.6` -> `^7.0.1`
 
-
-
-
 ## WebdriverIO
-Terra Toolkit's configuration and services now have i18n and parallelization support. These included new config options, as well as changes to screenshot naming to organize screenshots by locale and form factor.
+Terra Toolkit's configuration and services now have i18n and parallelization support. These include new config options, as well as changes to screenshot naming to organize screenshots by locale and form factor.
 
 ### WebdriverIO Configuration
 The following configuration options were added:
@@ -63,7 +60,7 @@ The following configuration options were added:
 No updates are required with the addition of the config options.
 
 #### Screenshot Naming
-The default visual-regression configuration was enhanced in these ways to organize screenshots by locale and form factor. These enhancements were:
+The default visual-regression configuration was enhanced to organize screenshots by locale and form factor. These enhancements were:
 
 1) The updated screenshot pattern is:
 
@@ -71,12 +68,12 @@ The default visual-regression configuration was enhanced in these ways to organi
 {reference|latest|diff}/locale/browser_formFactor/testSuite/describeBlockTitle[screenshotName].png
 ```
 
-2. The screenshot output directory name `screen` was changed to `latest` to remove confusion on that this directory contained the most recent screenshot(s) taken.
+2. The screenshot output directory name `screen` was changed to `latest` to remove confusion about which directory contains the most recent screenshot(s) taken.
 
-3. Screenshot names will now be shorten to allow for descriptive describes when `[]`s are around the desired key word(s) to save shorter screenshot names. For example:
+3. Screenshot names will now be shortened to allow for descriptive describes when `[]`s are around the desired key word(s). For example:
 ```
 // example-spec.js
-cont viewports = Terra.getViewports('tiny');
+const viewports = Terra.getViewports('tiny');
 describe('This is a long screenshot name for an [example test], () => {
     Terra.should.matchScreenshot({ viewports });
 });

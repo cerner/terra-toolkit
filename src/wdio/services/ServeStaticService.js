@@ -1,4 +1,4 @@
-import serve from '../../../scripts/serve/serve-static';
+import serveStatic from '../../../scripts/serve/serve-static';
 import SERVICE_DEFAULTS from '../../../config/wdio/services.default-config';
 
 const SERVE_STATIC_DEFAULTS = SERVICE_DEFAULTS.serveStatic;
@@ -16,7 +16,7 @@ export default class ServeStaticService {
     const verbose = config.logLevel !== 'silent';
     const port = (config.serveStatic || {}).port || SERVE_STATIC_DEFAULTS.port;
     const index = (config.serveStatic || {}).index || SERVE_STATIC_DEFAULTS.index;
-    // Explictitly not providing a fallback locale. Providing a fallback will lock the locale for all test runs when using the tt-wdio-runner.
+    // Explicitly not providing a fallback locale. Providing a fallback will lock the locale for all test runs when using the tt-wdio-runner.
     const locale = (config || {}).locale;
 
     // Ensure the server was properly shut down.
@@ -34,7 +34,7 @@ export default class ServeStaticService {
   }
 
   static startService(config, port, index, locale, verbose) {
-    return serve({
+    return serveStatic({
       config, port, index, production: true, locale, verbose,
     });
   }

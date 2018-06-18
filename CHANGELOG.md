@@ -6,7 +6,7 @@ Unreleased
 ### Major Version Bump. See https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitUpgradeGuide-v4.0.0.md.
 
 ### Added
-* Added `locale`, `formFactor` and `baseScreenshotDir` wdio.config options for i18n and paralyzation support
+* Added `locale`, `formFactor` and `baseScreenshotDir` wdio.config options for i18n and parallelization support
 * Added tt-wdio bin script called `tt-wdio` which runs wdio test runs for the specified locales and form factors
 * Added clean-screenshots bin script called `tt-clean-screenshot`
 
