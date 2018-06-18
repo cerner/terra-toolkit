@@ -1,10 +1,9 @@
 const localIP = require('ip');
 const glob = require('glob');
 
-const AxeService = require('../../lib/wdio/services').Axe;
-const TerraService = require('../../lib/wdio/services').Terra;
-const SeleniumDockerService = require('../../lib/wdio/services').SeleniumDocker;
-const ServeStaticService = require('../../lib/wdio/services/index').ServeStaticService;
+const {
+  Axe: AxeService, SeleniumDocker: SeleniumDockerService, ServeStaticService, Terra: TerraService,
+} = require('../../lib/wdio/services/index');
 const path = require('path');
 const PackageUtilities = require('lerna/lib/PackageUtilities');
 const Repository = require('lerna/lib/Repository');

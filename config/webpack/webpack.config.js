@@ -6,6 +6,7 @@ const rtl = require('postcss-rtl');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const browserslist = require('browserslist-config-terra');
 const aggregateTranslations = require('../../scripts/aggregate-translations/aggregate-translations');
 const merge = require('webpack-merge');
 
@@ -52,18 +53,7 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
               plugins() {
                 return [
                   rtl(),
-                  Autoprefixer({
-                    browsers: [
-                      'iOS >= 10',
-                      'last 2 and_chr versions',
-                      'last 2 android versions',
-                      'last 2 chrome versions',
-                      'last 2 edge versions',
-                      'last 2 firefox versions',
-                      'last 2 ie versions',
-                      'last 2 safari versions',
-                    ],
-                  }),
+                  Autoprefixer({ browsers: browserslist }),
                 ];
               },
             },

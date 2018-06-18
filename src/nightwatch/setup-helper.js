@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const loadJsonFile = require('load-json-file');
-const globSync = require('glob').sync;
+const { sync: globSync } = require('glob');
 
 const getPackageTestDirectories = lernaJSON =>
   loadJsonFile.sync(lernaJSON).packages

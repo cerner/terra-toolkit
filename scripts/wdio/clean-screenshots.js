@@ -1,6 +1,6 @@
 const fs = require('fs-extra');
 const glob = require('glob');
-const path = require('path').posix;
+const { posix: path } = require('path');
 
 // eslint-disable-next-line global-require, import/no-dynamic-require
 const loadWdioConfig = configPath => require(path.resolve(configPath));

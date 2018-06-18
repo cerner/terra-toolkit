@@ -55,6 +55,23 @@ const generateSite = (site, config, disk, production) => {
   return Promise.reject(new Error('[Terra-Toolkit:serve-static] No webpack configuration provided.'));
 };
 
+// Set the test locale for the html file
+const setSiteLocale = (fileContent, locale) => {
+  const localeComment = `<!-- Terra-toolkit's serve-static set the site locale to ${locale}.-->`;
+  const content = fileContent.replace(/<html/, `${localeComment}\n<html`);
+
+  const langPattern = /lang="[a-zA-Z0-9-]*"/;
+  const langLocale = `lang="${locale}"`;
+
+  const isLanguageSet = content.match(langPattern);
+  if (isLanguageSet) {
+    return content.replace(langPattern, langLocale);
+  }
+
+  return content.replace(/<html/, `<html ${langLocale}`);
+};
+
+
 // Setup an app server that reads from a filesystem.
 const virtualApp = (site, index, locale, fs, verbose) => {
   const app = express();
@@ -65,29 +82,24 @@ const virtualApp = (site, index, locale, fs, verbose) => {
     // Setup a default index for the server.
     if (filename === '/') {
       filename = `/${index}`;
-    } else if (filename === '/favicon.ico') {
-      res.sendStatus(200);
-      return;
     }
 
     // Filter query params
     const filepath = `${site}${filename}`.replace(/(\?).*/, '');
 
     if (fs.existsSync(filepath)) {
-      res.setHeader('content-type', mime.contentType(path.extname(filename)));
+      if (filename === '/favicon.ico') {
+        res.sendStatus(200);
+        return;
+      }
+
+      const fileExt = path.extname(filename);
+      res.setHeader('content-type', mime.contentType(fileExt));
 
       let fileContent = fs.readFileSync(filepath, 'utf8');
-
-      const langPattern = /lang="[a-zA-Z0-9-]*"/;
-      const langLocale = `lang="${locale}"`;
-
-      const isLanguageSet = fileContent.match(langPattern);
-
-      // Set the test locale for the file
-      if (isLanguageSet) {
-        fileContent = fileContent.replace(langPattern, langLocale);
-      } else {
-        fileContent = fileContent.replace(/<html/, `<html ${langLocale}`);
+      if (fileExt === '.html') {
+        fileContent = setSiteLocale(fileContent, locale);
+        console.log(fileContent)
       }
 
       res.send(fileContent);

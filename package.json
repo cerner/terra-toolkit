@@ -27,8 +27,11 @@
     "tt-clean-screenshots": "bin/clean-screenshots.js",
     "tt-serve": "bin/serve.js",
     "tt-serve-static": "bin/serve-static.js",
-    "tt-wdio": "bin/tt-wdio.js"
+    "tt-wdio": "bin/wdio-runner.js"
   },
+  "browserslist": [
+    "extends browserslist-config-terra"
+  ],
   "scripts": {
     "clean:all": "npm run clean:compiled && npm run clean:dependencies",
     "clean:compiled": "rimraf lib",
@@ -60,6 +63,7 @@
     "axe-core": "^3.0.2",
     "babel-loader": "^7.1.2",
     "babel-polyfill": "^6.23.0",
+    "browserslist-config-terra": "^1.0.0",
     "chai": "^4.1.2",
     "clean-webpack-plugin": "^0.1.17",
     "clone": "^2.1.1",
@@ -86,7 +90,6 @@
     "raw-loader": "^0.5.1",
     "sass-loader": "^7.0.1",
     "uglifyjs-webpack-plugin": "^1.2.4",
-    "wdio-mocha-framework": "^0.5.11",
     "wdio-visual-regression-service": "^0.9.0",
     "webdriverio": "^4.9.8",
     "webpack": "^4.4.1",
@@ -97,12 +100,17 @@
   "peerDependencies": {
     "nightwatch": "^0.9.12"
   },
+  "optionalDependencies": {
+    "wdio-mocha-framework": "^0.5.11"
+  },
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
     "babel-plugin-transform-object-assign": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.7.0",
+    "babel-runtime": "^6.26.0",
     "danger": "^3.7.14",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",

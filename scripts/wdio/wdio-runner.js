@@ -1,4 +1,4 @@
-const Launcher = require('webdriverio').Launcher;
+const { Launcher } = require('webdriverio');
 
 async function wdioRunner(options) {
   const {

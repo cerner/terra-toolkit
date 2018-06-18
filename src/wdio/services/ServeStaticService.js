@@ -1,7 +1,7 @@
 import serveStatic from '../../../scripts/serve/serve-static';
 import SERVICE_DEFAULTS from '../../../config/wdio/services.default-config';
 
-const SERVE_STATIC_DEFAULTS = SERVICE_DEFAULTS.serveStatic;
+const { serveStatic: SERVE_STATIC_DEFAULTS } = SERVICE_DEFAULTS;
 
 export default class ServeStaticService {
   async onPrepare(config = {}) {

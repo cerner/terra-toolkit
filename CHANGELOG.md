@@ -14,12 +14,12 @@ Unreleased
 * **BREAKING CHANGE** Update screenshot naming to organize screenshots by locale and form factor
     - changed `screen` directory name to `latest`
     - added automatic screenshot name shortening to allow for descriptive describes, but short screenshot names.
-    - ensure screenshot naming does not contain windows
+    - ensure screenshot naming does not contain Windows
 * **BREAKING CHANGE** Bumped dependencies.
 * Update the default webpack.config's Autoprefixer's browserslist values
 
 ### Fixed
-* **BREAKING CHANGE** Changed bin scripts from `tt:script_name` to `tt-script_name`. The use of `:` breaks windows. See https://msdn.microsoft.com/en-us/library/ms832054.aspx.
+* **BREAKING CHANGE** Changed bin scripts from `tt:script_name` to `tt-script_name`. The use of `:` breaks Windows. See https://msdn.microsoft.com/en-us/library/ms832054.aspx.
 
 3.8.0 - (June 15, 2018)
 ----------
@@ -189,7 +189,7 @@ Unreleased
 2.2.0 - (November 15, 2017)
 ------------------
 ### Changed
-* Use path.join to allow for windows development
+* Use path.join to allow for Windows development
 * Removed sauce labs config and install java 8 in a different way for travis ci
 * Added webdriver.io testing utilities
 * Update nightwatch to use docker

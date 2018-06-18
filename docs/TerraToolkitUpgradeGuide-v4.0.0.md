@@ -2,7 +2,7 @@
 This document will provide information on upgrading from terra-toolkit 3.x to 4.0.0.
 
 ## Terra Scripts
-The scripts provided by Terra Toolkit v3 used `tt:` prefixes. It was found `:` causes incorrect .bin generation on windows devices so these scripts have been updated to use the prefix `tt-`.
+The scripts provided by Terra Toolkit v3 used `tt:` prefixes. It was found `:` causes incorrect .bin generation on Windows devices so these scripts have been updated to use the prefix `tt-`.
 ```diff
 -    "aggregate-translations": "tt:aggregate-translations",
 +    "aggregate-translations": "tt-aggregate-translations",
@@ -29,7 +29,7 @@ This is available via the `tt-clean-screenshots` cli or the `clean-screenshots` 
 
 ## Webpack Configuration
 ### Configuration Changes
-The browsers list provided to the Autoprefixer plugin were updated to:
+The browsers list provided to the Autoprefixer plugin were updated use `browserslist-config-terra`'s list of targeted browsers. This configuration includes:
 - iOS >= 10
 - last 2 and_chr versions
 - last 2 android versions
@@ -85,7 +85,7 @@ reference/en/chrome_tiny/example/example_test[default].png
 reference/chrome/This_is_a_long_screenshot_name_for_an_[example_test][default].470x768.png
 ```
 
-4. Screenshot names will now remove windows reserve character to prevent installation failures.
+4. Screenshot names will now remove Windows reserve character to prevent installation failures.
 
 ##### How to Get These Changes
 1. Delete your reference screenshots
@@ -95,4 +95,4 @@ reference/chrome/This_is_a_long_screenshot_name_for_an_[example_test][default].4
 **NOTE:** The default visual-regression config file has moved from `terra-toolkit/lib/wdio/visualRegressionConf.js` to `terra-toolkit/config/wdio/visualRegressionConf.js`. This change was made to provide a consistent location for our reusable configuration files.
 
 ### AxeService
-The `axe-core` dependency was updated from `^6.7.7` to `^3.0.2`.
+The `axe-core` dependency was updated from `^2.6.1` to `^3.0.2`.

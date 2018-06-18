@@ -1,6 +1,6 @@
 const path = require('path');
-const LocalCompare = require('wdio-visual-regression-service/compare').LocalCompare;
-const viewports = require('./services.default-config').terraViewports;
+const { LocalCompare } = require('wdio-visual-regression-service/compare');
+const { terraViewports: VIEWPORTS } = require('./services.default-config');
 
 const screenshotSetup = {
   diffDir: 'diff',
@@ -38,11 +38,11 @@ function getFormFactor(context) {
 
   if (!formFactor) {
     const browserWidth = context.meta.viewport.width;
-    const viewportSizes = Object.keys(viewports);
+    const viewportSizes = Object.keys(VIEWPORTS);
     for (let i = 0; i < viewportSizes.length; i += 1) {
       const viewport = viewportSizes[i];
-      if (browserWidth <= viewports[viewport].width) {
-        formFactor = viewports[viewport].name;
+      if (browserWidth <= VIEWPORTS[viewport].width) {
+        formFactor = VIEWPORTS[viewport].name;
         break;
       }
     }

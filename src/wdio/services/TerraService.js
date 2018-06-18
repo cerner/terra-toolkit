@@ -2,18 +2,9 @@ import chai from 'chai';
 import chaiMethods from './TerraCommands/chai-methods';
 import accessiblity from './TerraCommands/accessiblity';
 import visualRegression from './TerraCommands/visual-regression';
+import SERVICE_DEFAULTS from '../../../config/wdio/services.default-config';
 
-/**
-* Terra defined viewport sizes.
-*/
-const VIEWPORTS = {
-  tiny: { width: 470, height: 768, name: 'tiny' },
-  small: { width: 622, height: 768, name: 'small' },
-  medium: { width: 838, height: 768, name: 'medium' },
-  large: { width: 1000, height: 768, name: 'large' },
-  huge: { width: 1300, height: 768, name: 'huge' },
-  enormous: { width: 1500, height: 768, name: 'enormous' },
-};
+const { terraViewports: VIEWPORTS } = SERVICE_DEFAULTS;
 
 /**
 * Convenience method for getting viewports by name.
