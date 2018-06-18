@@ -21,6 +21,19 @@ Unreleased
 ### Fixed
 * **BREAKING CHANGE** Changed bin scripts from `tt:script_name` to `tt-script_name`. The use of `:` breaks windows. See https://msdn.microsoft.com/en-us/library/ms832054.aspx.
 
+3.8.0 - (June 15, 2018)
+----------
+### Fixed
+* Allow serving static assets when they're requested using query params
+
+### Changed
+* Reduce log output for tt-serve (no children)
+
+3.7.0 - (June 12, 2018)
+----------
+### Updated
+* PostCSS/UglifyJS corrections
+
 3.6.0 - (June 5, 2018)
 ----------
 ### Updated

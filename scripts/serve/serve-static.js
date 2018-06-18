@@ -70,7 +70,8 @@ const virtualApp = (site, index, locale, fs, verbose) => {
       return;
     }
 
-    const filepath = `${site}${filename}`;
+    // Filter query params
+    const filepath = `${site}${filename}`.replace(/(\?).*/, '');
 
     if (fs.existsSync(filepath)) {
       res.setHeader('content-type', mime.contentType(path.extname(filename)));

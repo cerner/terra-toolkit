@@ -11,6 +11,10 @@ const webpackServe = (options) => {
     config,
     ...(port) && { port },
     ...(host) && { host },
+    dev: { stats: {
+      colors: true,
+      children: false,
+    } },
   };
 
   serve(serveConfig);
