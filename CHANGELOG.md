@@ -21,6 +21,11 @@ Unreleased
 ### Fixed
 * **BREAKING CHANGE** Changed bin scripts from `tt:script_name` to `tt-script_name`. The use of `:` breaks Windows. See https://msdn.microsoft.com/en-us/library/ms832054.aspx.
 
+3.9.0 - (June 19, 2018)
+----------
+### Changed
+* Changed path to use POSIX for SelemiumDockerService to fix Windows issue.
+
 3.8.0 - (June 15, 2018)
 ----------
 ### Fixed
