@@ -2,11 +2,9 @@ const { Launcher } = require('webdriverio');
 
 async function wdioRunner(options) {
   const {
-    configPath, locales, formFactors, useSeleniumGrid, continueOnFail, ...testSetup
+    configPath, locales, formFactors, continueOnFail, ...testSetup
   } = options;
   const factors = formFactors || [undefined];
-
-  process.env.USE_SELENIUM_GRID = useSeleniumGrid;
 
   for (let localeI = 0; localeI < locales.length; localeI += 1) {
     const locale = locales[localeI];

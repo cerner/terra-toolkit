@@ -12,7 +12,6 @@ Terra's wdio test runner is available via the `tt-wdio` cli or the `wdio-runner`
 | **--formFactors**  | `undefined` | The list of viewport sizes to test. |
 | **-locales** | `['en']` | The list of locales to test. |
 | **--continueOnFail** | `undefined` | Whether or not to execute all test runs when a run fails. |
-| **--useSeleniumGrid** |`false` | Whether or not the USE_SELENIUM_GRID process env should be set. |
 | **--updateReference** | `undefined` | Whether or not to remove reference screenshots during screenshot cleanup. CLI use only. |
 | **--port**  | `undefined` | [wdio option] The selenium server port. |
 | **--host** | `undefined` | [wdio option] The selenium server host address. |

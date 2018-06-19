@@ -16,7 +16,6 @@ commander
   .option('--config <path>', 'The wdio config path for the tests', undefined)
   .option('--formFactors <list>', 'The list of viewport sizes to test', listOptions, undefined)
   .option('--locales <list>', 'The list of locales to test', listOptions, ['en'])
-  .option('--useSeleniumGrid', 'Whether or not the USE_SELENIUM_GRID process env should be set', false)
   .option('--continueOnFail', 'Wheather or not to execute all test runs when a run fails', false)
   .option('--updateReference', 'Whether or not to remove reference screenshots during screenshot cleanup', false)
   .option('--host <number>', '[wdio option] The selenium server port', undefined)
@@ -31,7 +30,6 @@ const {
   config,
   formFactors,
   locales,
-  useSeleniumGrid,
   host,
   port,
   baseUrl,
@@ -52,7 +50,6 @@ runner({
   continueOnFail,
   formFactors,
   locales,
-  useSeleniumGrid,
   // honored wdio cli options
   ...host && { host },
   ...port && { port },

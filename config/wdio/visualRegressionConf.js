@@ -51,18 +51,17 @@ function getFormFactor(context) {
   return formFactor;
 }
 
-function getScreenshotPath(ref, context) {
-  const refDir = screenshotSetup[`${ref}Dir`];
+function getScreenshotDir(context) {
   const locale = global.browser.options.locale || 'en';
   const browserName = context.desiredCapabilities.browserName;
   const formFactor = getFormFactor(context);
   const testForm = `${browserName}_${formFactor}`;
   const testSuite = path.parse(context.test.file).name;
 
-  return path.join(refDir, locale, testForm, testSuite);
+  return path.join(locale, testForm, testSuite);
 }
 
-function getScreenshot(ref) {
+function getScreenshotPath(ref) {
   return (context) => {
     let testPath = path.dirname(context.test.file);
 
@@ -70,16 +69,17 @@ function getScreenshot(ref) {
     if (baseDir) {
       testPath = baseDir + testPath.split(process.cwd())[1];
     }
+    const refDir = screenshotSetup[`${ref}Dir`];
 
-    return path.join(testPath, '__snapshots__', getScreenshotPath(ref, context), getScreenshotName(context));
+    return path.join(testPath, '__snapshots__', refDir, getScreenshotDir(context), getScreenshotName(context));
   };
 }
 
 module.exports = {
   compare: new LocalCompare({
-    referenceName: getScreenshot('reference'),
-    screenshotName: getScreenshot('screenshot'),
-    diffName: getScreenshot('diff'),
+    referenceName: getScreenshotPath('reference'),
+    screenshotName: getScreenshotPath('screenshot'),
+    diffName: getScreenshotPath('diff'),
     misMatchTolerance: 0.01,
   }),
   viewportChangePause: 100,
