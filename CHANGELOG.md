@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+3.9.0 - (June 19, 2018)
+----------
 ### Changed
 * Changed path to use POSIX for SelemiumDockerService to fix Windows issue.
 
