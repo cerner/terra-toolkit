@@ -48,6 +48,9 @@ function getFormFactor(context) {
     }
   }
 
+  // If viewport value is undefined due to being larger then the terra defiend viewports, set formFactor to enormous.
+  formFactor = formFactor || 'enormous';
+
   return formFactor;
 }
 
