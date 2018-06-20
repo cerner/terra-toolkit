@@ -20,7 +20,7 @@ Terra Toolkit now offers its own wdio test runner which runs wdio test runs for 
 Terra's wdio test runner is available via the `tt-wdio` cli or the `wdio-runner` javascript function.
 
 ### Clean Screenshots
-Terra Toolkit now offers a screenshot cleanup tool to remove `errorScrenshots`, `latest`, `diff` and, if indicated, `reference` screenshots.
+Terra Toolkit now offers a screenshot cleanup tool to remove `errorScreenshots`, `latest`, `diff` and, if indicated, `reference` screenshots.
 
 This is available via the `tt-clean-screenshots` cli or the `clean-screenshots` javascript function.
 
