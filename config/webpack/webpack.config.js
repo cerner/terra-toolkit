@@ -41,7 +41,7 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
           {
             loader: 'css-loader',
             options: {
-              minimize: false,
+              minimize: false, // Issue logged: https://github.com/cerner/terra-toolkit/issues/122
               sourceMap: true,
               importLoaders: 2,
               localIdentName: '[name]__[local]___[hash:base64:5]',

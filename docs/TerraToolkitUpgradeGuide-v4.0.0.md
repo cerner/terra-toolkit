@@ -39,6 +39,8 @@ The browsers list provided to the Autoprefixer plugin were updated use `browsers
 - last 2 ie versions
 - last 2 safari versions'
 
+For prod compilation, css is no longer minimized via the `css-loader`. There were several issues caused by dependency collision. Discussion can be found [here](https://github.com/cerner/terra-toolkit/issues/121). If you are not using terra's default webpack configuration as the base webpack config, it is highly recommended to disable minimize.
+
 ### Dependencies Updates
 The following dependencies were updated in Terra toolkit's default webpack configuration:
 
