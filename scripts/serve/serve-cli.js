@@ -2,8 +2,7 @@ const commander = require('commander');
 const serve = require('./serve');
 
 const packageJson = require('../../package.json');
-const loadDefaultWebpackConfig = require('./loadDefaultWebpackConfig');
-
+const loadWebpackConfig = require('./loadWebpackConfig');
 
 // Parse process arguments
 commander
@@ -17,7 +16,7 @@ commander
 const port = commander.port || process.env.PORT;
 
 serve({
-  config: loadDefaultWebpackConfig(commander.config),
+  config: loadWebpackConfig(commander.config),
   host: commander.host,
   port,
   production: commander.production,

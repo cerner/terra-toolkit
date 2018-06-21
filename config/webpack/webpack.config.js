@@ -6,6 +6,7 @@ const rtl = require('postcss-rtl');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const browserslist = require('browserslist-config-terra');
 const aggregateTranslations = require('../../scripts/aggregate-translations/aggregate-translations');
 const merge = require('webpack-merge');
 
@@ -40,6 +41,7 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
           {
             loader: 'css-loader',
             options: {
+              minimize: false, // Issue logged: https://github.com/cerner/terra-toolkit/issues/122
               sourceMap: true,
               importLoaders: 2,
               localIdentName: '[name]__[local]___[hash:base64:5]',
@@ -52,15 +54,7 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
               plugins() {
                 return [
                   rtl(),
-                  Autoprefixer({
-                    browsers: [
-                      'ie >= 10',
-                      'last 2 versions',
-                      'last 2 android versions',
-                      'last 2 and_chr versions',
-                      'iOS >= 10',
-                    ],
-                  }),
+                  Autoprefixer({ browsers: browserslist }),
                 ];
               },
             },

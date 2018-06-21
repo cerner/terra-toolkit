@@ -1,22 +1,25 @@
 const localIP = require('ip');
 const glob = require('glob');
 
-const AxeService = require('../../lib/wdio/services').Axe;
-const TerraService = require('../../lib/wdio/services').Terra;
-const SeleniumDockerService = require('../../lib/wdio/services').SeleniumDocker;
-const visualRegressionConfig = require('../../lib/wdio/visualRegressionConf');
-const ServeStaticService = require('../../lib/wdio/services/index').ServeStaticService;
+const {
+  Axe: AxeService, SeleniumDocker: SeleniumDockerService, ServeStaticService, Terra: TerraService,
+} = require('../../lib/wdio/services/index');
 const path = require('path');
 const PackageUtilities = require('lerna/lib/PackageUtilities');
 const Repository = require('lerna/lib/Repository');
+const visualRegressionConfig = require('./visualRegressionConf');
 
 const ip = process.env.WDIO_EXTERNAL_HOST || localIP.address();
 const webpackPort = process.env.WDIO_EXTERNAL_PORT || 8080;
 const ci = process.env.TRAVIS || process.env.CI;
+const locale = process.env.LOCALE;
+const formFactor = process.env.FORM_FACTOR;
 
 const config = {
   specs: [
+    path.join('test', 'wdio', '**', '*-spec.js'),
     path.join('tests', 'wdio', '**', '*-spec.js'),
+    path.join('packages', '*', 'test', 'wdio', '**', '*-spec.js'),
     path.join('packages', '*', 'tests', 'wdio', '**', '*-spec.js'),
   ],
   maxInstances: 1,
@@ -39,6 +42,12 @@ const config = {
   visualRegression: visualRegressionConfig,
 
   baseUrl: `http://${ip}:${webpackPort}`,
+
+  serveStatic: {
+    port: webpackPort,
+  },
+  ...locale && { locale },
+  ...formFactor && { formFactor },
 
   seleniumDocker: {
     enabled: !ci,

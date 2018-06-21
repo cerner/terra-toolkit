@@ -11,7 +11,7 @@ const resolve = (filePath) => {
   return undefined;
 };
 
-const loadDefaultWebpackConfig = (configPath) => {
+const loadWebpackConfig = (configPath) => {
   if (configPath) {
     // eslint-disable-next-line global-require, import/no-dynamic-require
     return require(path.resolve(configPath));
@@ -27,4 +27,4 @@ const loadDefaultWebpackConfig = (configPath) => {
   return resolve(path.resolve(process.cwd(), 'node_modules', 'terra-dev-site', 'config', 'webpack', 'webpack.config.js'));
 };
 
-module.exports = loadDefaultWebpackConfig;
+module.exports = loadWebpackConfig;

@@ -14,9 +14,11 @@ function accessible() {
     .filter(test => test)
     .map(test => `${JSON.stringify(test, null, 2)}`);
 
-  this.assert(errors.length === 0,
+  this.assert(
+    errors.length === 0,
     `expected no accessibility violations but got:\n\t${errors[0]}`,
-    'expected accessibilty errors but received none');
+    'expected accessibilty errors but received none',
+  );
 }
 
 /** Helper method to determine which comparision results are relevant if the chai
@@ -28,7 +30,9 @@ function accessible() {
   */
 const getComparisonResults = (screenshots, matchExactly) => (
   screenshots.map((comparison) => {
-    const { viewport, misMatchPercentage, isSameDimensions, isExactSameImage } = comparison;
+    const {
+      viewport, misMatchPercentage, isSameDimensions, isExactSameImage,
+    } = comparison;
     const relevantInformation = {};
 
     if (viewport) {
@@ -77,9 +81,11 @@ function matchReference(matchType = 'withinTolerance') {
     imagesMatch = screenshots.every(screenshot => (screenshot && screenshot.isSameDimensions && screenshot.isWithinMisMatchTolerance));
   }
 
-  this.assert(imagesMatch === true,
+  this.assert(
+    imagesMatch === true,
     `expected to ${testDescription}, but received the following comparison results \n${comparisonResults}`,
-    `did not expected to ${testDescription}, but received the following comparison results \n${comparisonResults}`);
+    `did not expected to ${testDescription}, but received the following comparison results \n${comparisonResults}`,
+  );
 }
 
 const chaiMedthods = {

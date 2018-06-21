@@ -65,7 +65,8 @@ export default class SeleniumDockerService {
   ensureSelenium() {
     return new Promise((resolve, reject) => {
       console.log('[SeleniumDocker] Ensuring selenium status is ready');
-      retry({ times: this.config.retries, interval: this.config.retryInterval },
+      retry(
+        { times: this.config.retries, interval: this.config.retryInterval },
         this.getSeleniumStatus, (err, result) => {
           if (err) {
             reject(new Error(err));
@@ -156,7 +157,8 @@ export default class SeleniumDockerService {
   */
   ensureNetworkRemoved() {
     return new Promise((resolve, reject) => {
-      retry({ times: 1000, interval: 10 },
+      retry(
+        { times: 1000, interval: 10 },
         (callback) => {
           // If there is a network, it will register as an error in the callback
           this.getNetwork().then(callback).catch(callback);

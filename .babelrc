@@ -1,4 +1,9 @@
 {
-  "presets": ["es2015"],
-  "plugins": ["transform-object-assign", "transform-object-rest-spread"],
+  "presets": [[
+    "env", {
+      "targets": {
+        "browsers": [ "extends browserslist-config-terra" ]
+      }
+    }]],
+  "plugins": ["transform-object-assign", "transform-object-rest-spread", "transform-runtime"],
 }

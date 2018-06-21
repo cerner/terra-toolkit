@@ -3,6 +3,24 @@ Changelog
 
 Unreleased
 ----------
+### Major Version Bump. See https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitUpgradeGuide-v4.0.0.md.
+
+### Added
+* Added `locale`, `formFactor` and `baseScreenshotDir` wdio.config options for i18n support [#69](https://github.com/cerner/terra-toolkit/issues/69) and parallelization support [#70](https://github.com/cerner/terra-toolkit/issues/70)
+* Added tt-wdio bin script called `tt-wdio` which runs wdio test runs for the specified locales and form factors
+* Added clean-screenshots bin script called `tt-clean-screenshot` [#64](https://github.com/cerner/terra-toolkit/issues/64)
+
+### Changed    
+* **BREAKING CHANGE** Update screenshot naming to organize screenshots by locale and form factor
+    - changed `screen` directory name to `latest`
+    - added automatic screenshot name shortening to allow for descriptive describes, but short screenshot names.
+    - ensure screenshot naming does not contain Windows
+* **BREAKING CHANGE** Bumped dependencies.
+* Update the default webpack.config's Autoprefixer's browserslist values
+
+### Fixed
+* **BREAKING CHANGE** Changed bin scripts from `tt:script_name` to `tt-script_name`. The use of `:` breaks Windows. See https://msdn.microsoft.com/en-us/library/ms832054.aspx. [#96](https://github.com/cerner/terra-toolkit/issues/96)
+* Dependency issues seen from using css-loader's minimize option in the production webpack configuration which impacted long-hand CSS properties using CSS custom properties and caused issues with browserlist syntax. [#121](https://github.com/cerner/terra-toolkit/issues/121)
 
 3.9.0 - (June 19, 2018)
 ----------
@@ -177,7 +195,7 @@ Unreleased
 2.2.0 - (November 15, 2017)
 ------------------
 ### Changed
-* Use path.join to allow for windows development
+* Use path.join to allow for Windows development
 * Removed sauce labs config and install java 8 in a different way for travis ci
 * Added webdriver.io testing utilities
 * Update nightwatch to use docker

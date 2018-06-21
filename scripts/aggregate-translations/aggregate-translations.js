@@ -52,7 +52,9 @@ const defaults = (options = {}) => {
 };
 
 const aggregatedTranslations = (options) => {
-  const { baseDir, directories, fileSystem, locales, outputDir } = defaults(options);
+  const {
+    baseDir, directories, fileSystem, locales, outputDir,
+  } = defaults(options);
 
   const searchPaths = defaultSearchPatterns(baseDir).concat(customDirectories(baseDir, directories));
 
