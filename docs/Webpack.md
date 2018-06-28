@@ -1,5 +1,5 @@
 # Webpack
-[Webpack](https://webpack.js.org/) is a module bundler used to compile modules with dependencies and generate static assets. Webpack is a very powerful tool that is highly configuration and Terra components rely on specific polyfills, webpack loaders and plugins to render correctly.
+[Webpack](https://webpack.js.org/) is a module bundler used to compile modules with dependencies and generate static assets. Webpack is a very powerful tool that is highly configurable and Terra components rely on specific polyfills, webpack loaders and plugins to render correctly.
 
 ## Configuring Webpack
 Terra provides a [default webpack configuration](https://github.com/cerner/terra-toolkit/blob/master/config/webpack/webpack.config.js) via the `terra-toolkit` module which we recommend you extend to meet your needs. By using this default, we will manage webpack dependencies and set up translation aggregation. If you choose not to use the default configuration, it can be used as an guide to build your own.

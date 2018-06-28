@@ -49,7 +49,7 @@ See the [Webdriver.io Utility Developer's Guide](https://github.com/cerner/terra
 
 ## Webpack Configuration
 
-[Webpack](https://webpack.js.org/) is a module bundler used to compile modules with dependencies and generate static assets. Webpack is a very powerful tool that is highly configuration and Terra components rely on specific polyfills, webpack loaders and plugins to render correctly. Terra provides a [default webpack configuration](https://github.com/cerner/terra-toolkit/blob/master/config/webpack/webpack.config.js) which we recommend you extend to meet your needs. By using this default, we will manage webpack dependencies and set up translation aggregation.
+[Webpack](https://webpack.js.org/) is a module bundler used to compile modules with dependencies and generate static assets. Webpack is a very powerful tool that is highly configurable and Terra components rely on specific polyfills, webpack loaders and plugins to render correctly. Terra provides a [default webpack configuration](https://github.com/cerner/terra-toolkit/blob/master/config/webpack/webpack.config.js) which we recommend you extend to meet your needs. By using this default, we will manage webpack dependencies and set up translation aggregation.
 
 See the [Webpack Configuration Guide](https://github.com/cerner/terra-toolkit/blob/master/docs/Webpack.md) to get started.
 
