@@ -14,7 +14,7 @@
 Terra Toolkit is a utility module used to facilitate independent development of Terra projects. This toolkit provides build scripts, configurations, and Webdriver Services needed to serve assets, compile webpack, and run webdriver.io tests to streamline development of npm packages. [terra-core][@terra-core], [terra-clinical][@terra-clinical], and [terra-framework][@terra-framework] are a few examples repos which are utilizing the utilities offered in this package, while [terra-dev-site][@terra-dev-site] is a repo that extends the configurations offered by toolkit.
 
 - [Getting Started](#getting-started)
-- [Aggregate Translations Tooly](#aggregate-translations-tool)
+- [Aggregate Translations Tool](#aggregate-translations-tool)
 - [Webdriver.io Utility](#webdriverio-utility)
 - [Webpack Configuration](#webpack-configuration)
 - [Versioning](#versioning)
