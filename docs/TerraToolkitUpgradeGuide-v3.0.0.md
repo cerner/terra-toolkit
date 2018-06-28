@@ -10,7 +10,7 @@ Terra-toolkit's dependencies have been upgraded to consume webpack 4 and it prov
 ### Webpack Configuration
 Terra toolkit now provides a default webpack configuration. The default webpack config is a function that will flex between production and development modes by passing in the -p flag when compiling with webpack. See webpack's documentation on [configuration types](https://webpack.js.org/configuration/configuration-types/) for more information.
 
-Use terra-toolkits configuration in the app level webpack config, where the app level config adds an `entry` (if consuming terra-dev-site, this has been done for you). We recommend using [`webpack-merge`](https://github.com/survivejs/webpack-merge) to combine the app config with terra-toolkit's default config. Don't forget that the default config is an function that will needed to be executed first.
+Use terra-toolkit's configuration in the app level webpack config, where the app level config adds an `entry` and an [`HtmlWebpackPlugin`](https://github.com/jantimon/html-webpack-plugin)- note if consuming terra-dev-site, this has been done for you! We recommend using [`webpack-merge`](https://github.com/survivejs/webpack-merge) to combine the app config with terra-toolkit's default config. Don't forget that the default config is an function that will needed to be executed first.
 
 ```javascript
 const path = require('path');
@@ -21,6 +21,12 @@ const appWebpackConfig = () => ({
   entry: {
     index: path.resolve(path.join(__dirname, 'lib', 'site', 'Index')),
   },
+  plugins: [
+      new HtmlWebpackPlugin({
+        title: 'My App',
+        template: path.join(__dirname, '..', '..', 'lib', 'index.html'),
+      }),
+    ],
 });
 
 const mergedConfig = (env, argv) => (
@@ -62,8 +68,6 @@ webpack --config config/webpack/webpack.config --env.disableAggregateTranslation
 ```
 
 ###### The `webpack` command is available to applications consuming terra-toolkit.
-
-
 
 ## I18N aggregation
 In a previous release, the aggregation translations script (`tt:aggregate-translations`) was added to terra-toolkit. In this release a new configuration option has been added. You can specify the aggregate-translations configuration through a `terraI18n.config.js` file in your root project directory.
