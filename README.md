@@ -15,6 +15,7 @@ Terra Toolkit is a utility module used to facilitate independent development of 
 
 - [Getting Started](#getting-started)
 - [Aggregate Translations Tool](#aggregate-translations-tool)
+- [Serve Options](#serve-options)
 - [Webdriver.io Utility](#webdriverio-utility)
 - [Webpack Configuration](#webpack-configuration)
 - [Versioning](#versioning)
@@ -22,15 +23,23 @@ Terra Toolkit is a utility module used to facilitate independent development of 
 - [LICENSE](#license)
 
 ## Getting Started
-Terra Toolkit uses Docker to setup, run, and tear down selenium to ensure a consistent testing environment locally and in continuous integration build systems. To use Terra Toolkit for webdriver testing, you must install docker on your machine.
 
 - Install with [npm](https://www.npmjs.com): `npm install terra-toolkit --save-dev`
-- Install Docker version 17.09.0 or higher  Installation instructions can be found at https://www.docker.com/.
+
+Terra Toolkit uses Docker to setup, run, and tear down selenium to ensure a consistent testing environment locally and in continuous integration build systems. To use Terra Toolkit for webdriver testing, you must install docker on your machine.
+
+- Install Docker version 17.09.0 or higher. Installation instructions can be found at https://www.docker.com/.
 
 ## Aggregate Translations Tool
 Terra components provide internationalization and localization support via `react-intl`. To use the component translations, the `aggregate-translations` pre-build tool will aggregate the translations, and create the intl loader and translation loader files that are configured for the specified locales.
 
 See the [Aggregating Translations Guide](https://github.com/cerner/terra-toolkit/blob/master/docs/AggregateTranslations.md) to get started.
+
+## Serve Options
+
+Terra Toolkit offers two ways to serve your client side application, `serve` and `serve-static`. Serve is a hot-reloading replacement for webpack-dev-server, which uses [webpack-serve](https://github.com/webpack-contrib/webpack-serve), while serve-static is a non-hot-reloading express server. Serve-static supports IE10 and is used in webdriver testing.
+
+See the [Serve Guide](https://github.com/cerner/terra-toolkit/blob/master/scripts/serve/README.md) to get started.
 
 ## Webdriver.io Utility
 
@@ -42,7 +51,7 @@ See the [Webdriver.io Utility Developer's Guide](https://github.com/cerner/terra
 
 [Webpack](https://webpack.js.org/) is a module bundler used to compile modules with dependencies and generate static assets. Webpack is a very powerful tool that is highly configuration and Terra components rely on specific polyfills, webpack loaders and plugins to render correctly. Terra provides a [default webpack configuration](https://github.com/cerner/terra-toolkit/blob/master/config/webpack/webpack.config.js) which we recommend you extend to meet your needs. By using this default, we will manage webpack dependencies and set up translation aggregation.
 
-See the [Webpack Configurtion's Guide](https://github.com/cerner/terra-toolkit/blob/master/docs/Webpack.md) to get started.
+See the [Webpack Configuration Guide](https://github.com/cerner/terra-toolkit/blob/master/docs/Webpack.md) to get started.
 
 ## Versioning
 
