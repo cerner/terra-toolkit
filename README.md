@@ -11,27 +11,38 @@
 [![NPM version](http://img.shields.io/npm/v/terra-toolkit.svg)](https://www.npmjs.org/package/terra-toolkit)
 [![Build Status](https://travis-ci.org/cerner/terra-toolkit.svg?branch=master)](https://travis-ci.org/cerner/terra-toolkit)
 
-Terra Toolkit is a utility module used to facilitate independent development of Terra projects. This toolkit provides configuration and helpers needed for nightwatch and webdriver.io testing to streamline development of npm packages. [terra-core][@terra-core] and [terra-clinical][@terra-clinical] are two example mono-repos which are utilizing utilities offered in this package.
+Terra Toolkit is a utility module used to facilitate independent development of Terra projects. This toolkit provides build scripts, configurations, and Webdriver Services needed to serve assets, compile webpack, and run webdriver.io tests to streamline development of npm packages. [terra-core][@terra-core], [terra-clinical][@terra-clinical], and [terra-framework][@terra-framework] are a few examples repos which are utilizing the utilities offered in this package, while [terra-dev-site][@terra-dev-site] is a repo that extends the configurations offered by toolkit.
 
 - [Getting Started](#getting-started)
+- [Aggregate Translations Tooly](#aggregate-translations-tool)
 - [Webdriver.io Utility](#webdriverio-utility)
+- [Webpack Configuration](#webpack-configuration)
 - [Versioning](#versioning)
 - [Contributing](#contributing)
 - [LICENSE](#license)
 
 ## Getting Started
+Terra Toolkit uses Docker to setup, run, and tear down selenium to ensure a consistent testing environment locally and in continuous integration build systems. To use Terra Toolkit for webdriver testing, you must install docker on your machine.
 
 - Install with [npm](https://www.npmjs.com): `npm install terra-toolkit --save-dev`
+- Install Docker version 17.09.0 or higher  Installation instructions can be found at https://www.docker.com/.
 
-Terra Toolkit uses docker to setup, run, and tear down selenium to ensure a consistent testing environment locally and in continuous integration build systems. To use Terra Toolkit you must install docker on your machine. Installation instructions can be found at https://www.docker.com/.  **Requires Docker v17.09.0 or higher.**
+## Aggregate Translations Tool
+Terra components provide internationalization and localization support via `react-intl`. To use the component translations, the `aggregate-translations` pre-build tool will aggregate the translations, and create the intl loader and translation loader files that are configured for the specified locales.
 
-
+See the [Aggregating Translations Guide](https://github.com/cerner/terra-toolkit/blob/master/docs/AggregateTranslations.md) to get started.
 
 ## Webdriver.io Utility
 
 [Webdriver.io](http://webdriver.io/) is a framework for writing webdriver powered tests to validate functionality in browsers. The Webdriver.io framework provides services for setting up a selenium server, starting webpack and static servers, running accessibility and visual regression testing, and more.
 
 See the [Webdriver.io Utility Developer's Guide](https://github.com/cerner/terra-toolkit/blob/master/docs/Wdio_Utility.md) to get started.
+
+## Webpack Configuration
+
+[Webpack](https://webpack.js.org/) is a module bundler used to compile modules with dependencies and generate static assets. Webpack is a very powerful tool that is highly configuration and Terra components rely on specific polyfills, webpack loaders and plugins to render correctly. Terra provides a [default webpack configuration](https://github.com/cerner/terra-toolkit/blob/master/config/webpack/webpack.config.js) which we recommend you extend to meet your needs. By using this default, we will manage webpack dependencies and set up translation aggregation.
+
+See the [Webpack Configurtion's Guide](https://github.com/cerner/terra-toolkit/blob/master/docs/Webpack.md) to get started.
 
 ## Versioning
 
@@ -58,3 +69,5 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
 [@terra-core]: https://github.com/cerner/terra-core
 [@terra-clinical]: https://github.com/cerner/terra-clinical
+[@terra-framework]: https://github.com/cerner/terra-framework
+[@terra-dev-site]: https://github.com/cerner/terra-dev-site
