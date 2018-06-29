@@ -2,19 +2,23 @@
 [Webpack](https://webpack.js.org/) is a module bundler used to compile modules with dependencies and generate static assets. Webpack is a very powerful tool that is highly configurable and Terra components rely on specific polyfills, webpack loaders and plugins to render correctly.
 
 ## Configuring Webpack
-Terra provides a [default webpack configuration](https://github.com/cerner/terra-toolkit/blob/master/config/webpack/webpack.config.js) via the `terra-toolkit` module which we recommend you extend to meet your needs. By using this default, we will manage webpack dependencies and set up translation aggregation. If you choose not to use the default configuration, it can be used as an guide to build your own.
+Terra provides a [default webpack configuration](https://github.com/cerner/terra-toolkit/blob/master/config/webpack/webpack.config.js) via the `terra-toolkit` module which we recommend you extend to meet your needs. By using this default configuration, we will manage webpack dependencies and set up translation aggregation. If you choose not to use the default configuration, it can be used as an guide to build your own.
 
 ### Extending the Default Config
 1. Create a `webpack.config.js` file.
 2. Import terra-toolkit's webpack configuration.
-2. Create an app-level webpack configuration which, at a minimum, supplies an entry and an [HtmlWebpackPlugin](https://github.com/jantimon/html-webpack-plugin) entry (version ^3.2.0 or higher).
-3. Use [`webpack-merge`](https://github.com/survivejs/webpack-merge) to combine the app config with terra-toolkit's default config. Note: since the default config is an function, it will need to be executed first.
+3. Create an app-level webpack configuration which, at a minimum, supplies an entry and an [HtmlWebpackPlugin](https://github.com/jantimon/html-webpack-plugin) entry (version ^3.2.0 or higher).
+4. Use [`webpack-merge`](https://github.com/survivejs/webpack-merge) to combine the app config with terra-toolkit's default config. Note: since the default config is an function, it will need to be executed first.
 
+Here is an example app-level webpack configuration:
 ```javascript
 const path = require('path');
 const merge = require('webpack-merge');
+
+// Import the terra-toolkit configuration.
 const defaultWebpackConfig = require('terra-toolkit/config/webpack/webpack.config');
 
+// Create the app-level configuration
 const appWebpackConfig = () => ({
   entry: {
     index: path.resolve(path.join(__dirname, 'lib', 'site', 'Index')),
@@ -27,6 +31,7 @@ const appWebpackConfig = () => ({
     ],
 });
 
+// combine the configurations using webpack-merge
 const mergedConfig = (env, argv) => (
   merge(defaultWebpackConfig(env, argv), appWebpackConfig(env, argv))
 );
@@ -35,7 +40,7 @@ module.exports = mergedConfig;
 ```
 
 #### Translation Aggregation
-Terra's supported locales will be aggregated when using the default webpack configuration through the `aggregate-translations` pre-build tool. To customize which translations are aggregated, refer these docs on [aggregating translations](https://github.com/cerner/terra-toolkit/blob/master/docs/AggregateTranslations.md#terrai18nconfig-example). Alternatively, translations are not desirable, disable translation aggregation within the webpack build by passing the environment variable `--env.disableAggregateTranslations` to the webpack command.
+Terra's supported locales will be aggregated when using the default webpack configuration through the `aggregate-translations` pre-build tool. To customize which translations are aggregated, refer these docs on [aggregating translations](https://github.com/cerner/terra-toolkit/blob/master/docs/AggregateTranslations.md#terrai18nconfig-example). Alternatively, if translations are not required, disable translation aggregation within the webpack build by passing the environment variable `--env.disableAggregateTranslations` to the webpack command.
 
 ```bash
 webpack --env.disableAggregateTranslations
