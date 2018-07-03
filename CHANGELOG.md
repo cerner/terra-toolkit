@@ -4,6 +4,11 @@ Changelog
 Unreleased
 ----------
 
+4.1.0 - (July 3, 2018)
+----------
+### Fixed
+- Serve-static script to serve non-html files "as is". Fixed issues with images not rendering.
+
 4.0.0 - (June 26, 2018)
 ----------
 ### Major Version Bump. See https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitUpgradeGuide-v4.0.0.md.
