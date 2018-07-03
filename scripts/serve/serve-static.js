@@ -57,7 +57,7 @@ const generateSite = (site, config, disk, production) => {
 
 // Set the test locale for the html file
 const setSiteLocale = (fileContent, locale) => {
-  const localeComment = `<!-- Terra-toolkit's serve-static set the site locale to ${locale}.-->`;
+  const localeComment = `<!-- Terra-toolkit's serve-static set the default site locale to ${locale}.-->`;
   const content = fileContent.replace(/<html/, `${localeComment}\n<html`);
 
   const langPattern = /lang="[a-zA-Z0-9-]*"/;
@@ -96,12 +96,13 @@ const virtualApp = (site, index, locale, fs, verbose) => {
       const fileExt = path.extname(filename);
       res.setHeader('content-type', mime.contentType(fileExt));
 
-      let fileContent = fs.readFileSync(filepath, 'utf8');
       if (fileExt === '.html') {
+        let fileContent = fs.readFileSync(filepath, 'utf8');
         fileContent = setSiteLocale(fileContent, locale);
+        res.send(fileContent);
+      } else {
+        res.send(fs.readFileSync(filepath));
       }
-
-      res.send(fileContent);
     } else {
       next();
     }
