@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Fixed
+- Serve-static script to serve non-html files "as is". Fixed issues with images not rendering.
 
 4.0.0 - (June 26, 2018)
 ----------
