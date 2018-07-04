@@ -47,6 +47,14 @@ const config = {
 exports.config = config;
 ```
 
+### Environment Variables
+
+In order to support tests running inside of a container and hitting an external selenium grid, 3 environment variables are provided:
+
+* `WDIO_INTERNAL_PORT` - This specifies the port for the ServeStaticService. This is the port that the server being tested against will actually run on.
+* `WDIO_EXTERNAL_PORT` - This specifies the external port that is mapped on the container to the WDIO_INTERNAL_PORT.
+* `WDIO_EXTERNAL_HOST` - This specifies the externally accessible name for the host on which the container is running.
+
 ## Writing Tests
 
 There are a few things to note about the webdriver.io configuration provided by Terra-Toolkit:
