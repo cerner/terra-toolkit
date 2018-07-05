@@ -10,7 +10,8 @@ const Repository = require('lerna/lib/Repository');
 const visualRegressionConfig = require('./visualRegressionConf');
 
 const ip = process.env.WDIO_EXTERNAL_HOST || localIP.address();
-const webpackPort = process.env.WDIO_EXTERNAL_PORT || 8080;
+const externalPort = process.env.WDIO_EXTERNAL_PORT || 8080;
+const internalPort = process.env.WDIO_INTERNAL_PORT || 8080;
 const ci = process.env.TRAVIS || process.env.CI;
 const locale = process.env.LOCALE;
 const formFactor = process.env.FORM_FACTOR;
@@ -41,10 +42,10 @@ const config = {
 
   visualRegression: visualRegressionConfig,
 
-  baseUrl: `http://${ip}:${webpackPort}`,
+  baseUrl: `http://${ip}:${externalPort}`,
 
   serveStatic: {
-    port: webpackPort,
+    port: internalPort,
   },
   ...locale && { locale },
   ...formFactor && { formFactor },
