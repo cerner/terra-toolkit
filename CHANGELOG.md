@@ -4,6 +4,11 @@ Changelog
 Unreleased
 ----------
 
+4.2.0 - (July 6, 2018)
+----------
+### Fixed
+- Issue with containerized test runs.  Allows for port mapping of an internal port on the container to an external port on the container.
+
 4.1.0 - (July 3, 2018)
 ----------
 ### Fixed
