@@ -13,6 +13,7 @@ Terra provides a [default webpack configuration](https://github.com/cerner/terra
 Here is an example app-level webpack configuration:
 ```javascript
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const merge = require('webpack-merge');
 
 // Import the terra-toolkit configuration.
