@@ -27,7 +27,7 @@ const appWebpackConfig = () => ({
   plugins: [
       new HtmlWebpackPlugin({
         title: 'My App',
-        template: path.join(__dirname, '..', '..', 'lib', 'index.html'),
+        template: path.join(__dirname, 'lib', 'index.html'),
       }),
     ],
 });
