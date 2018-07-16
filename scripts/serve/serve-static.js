@@ -160,7 +160,7 @@ const serve = (options) => {
   return generateSite(site, config, disk, production)
     .then(([sitePath, fs]) => serveSite(sitePath, fs, appIndex, appLocale, verbose))
     .then((app) => {
-      const server = app.listen(appPort, host);
+      const server = app.listen(appPort, appHost);
       console.log(`[Terra-Toolkit:serve-static] Server started listening at port:${appPort}`);
       return server;
     });
