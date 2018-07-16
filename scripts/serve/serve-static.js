@@ -152,6 +152,7 @@ const serve = (options) => {
     site, config, port, disk, index, locale, production, host, verbose,
   } = options;
 
+  const appHost = host || '0.0.0.0';
   const appPort = port || 8080;
   const appIndex = index || 'index.html';
   const appLocale = locale || process.env.LOCALE || 'en';
