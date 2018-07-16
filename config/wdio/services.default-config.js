@@ -12,8 +12,6 @@ const axe = {
 const serveStatic = {
   /* The port to start the express server on. */
   port: 8080,
-  /* The host to start the express server on. */
-  host: '0.0.0.0',
   /* The base html template name. */
   index: 'index.html',
 };
