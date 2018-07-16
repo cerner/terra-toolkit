@@ -6,7 +6,7 @@ Serve-static Service is provided as a convenience to start an express server and
 | Name  | Required | Default Value | Description |
 | ------------- | ------------- | ------------- | ------------- |
 | **webpackConfig**  | true | `undefined` | The webpack configuration used to start the express server. |
-| **serveStatic**  | false | `{ index: 'index.html', port: '8080', host: '0.0.0.0' }` | The serveStatic configuration to be passed to the service. The only options are index and port. |
+| **serveStatic**  | false | `{ index: 'index.html', port: '8080' }` | The serveStatic configuration to be passed to the service. The only options are index and port. |
 
 ```js
 // wdio.conf.js
