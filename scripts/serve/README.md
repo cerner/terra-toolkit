@@ -33,7 +33,7 @@ If no config is supplied tt-serve will first search for `webpack.config.js` in t
 | **config**  | true | `undefined` | The webpack config to serve. |
 | **port**  | false | `8080` | The port the server should listen on. |
 | **production** | false | false | Passes the -p flag to the webpack config. |
-| **host** | false | `0.0.0.0` | Sets the host that the server will listen on. eg. '10.10.10.1' |
+| **host** | false | `undefined` | Sets the host that the server will listen on. eg. '10.10.10.1' |
 
 #### In code
 ```javascript
@@ -78,7 +78,7 @@ If no config is supplied tt-serve-static will first search for `webpack.config.j
 | **site** | false | `undefined` | The relative path to the static site. This takes precedence over webpack config if both are passed.|
 | **disk** | false | `false` | The webpack assets will be written to disk instead of a virtual file system. Only used when webpack config is passed |
 | **index** | false | `index.html` | The entry point for your site. Only used when webpack config is passed|
-| **host** | false | `0.0.0.0` | Sets the host that the server will listen on. eg. '10.10.10.1' |
+| **host** | false | `undefined` | Sets the host that the server will listen on. eg. '10.10.10.1' |
 
 #### In code
 ```javascript
