@@ -6,6 +6,9 @@ Unreleased
 ### Changed
 * Updated the static and static-serve CLI's to default `0.0.0.0` for the host
 
+### Fixed
+* Set the viewport size before test run when formFactor is defined for viewport-unopinionated tests.
+
 4.2.0 - (July 6, 2018)
 ----------
 ### Fixed
