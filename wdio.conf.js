@@ -22,9 +22,18 @@ const config = {
     },
   },
 
-  // Configuration for the SeleniumDocker service
-  seleniumDocker: {
-    enabled: !process.env.TRAVIS,
+  suites: {
+    opinionated: [
+      'tests/wdio/axe-spec.js',
+      'tests/wdio/beAccessible-spec.js',
+      'tests/wdio/compare-spec.js',
+      'tests/wdio/matchScreenshot-spec.js',
+      'tests/wdio/resize-spec.js',
+    ],
+    unopinionated: [
+      'tests/wdio/i18n-spec.js',
+      'tests/wdio/theme-spec.js',
+    ],
   },
 
   // Configuration for ServeStaticService
