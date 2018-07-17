@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+4.3.0 - (July 17, 2018)
+----------
 ### Changed
 * Updated the static and static-serve CLI's to default `0.0.0.0` for the host
 
