@@ -13,11 +13,9 @@ commander
   .option('-p, --production', 'Passes the -p flag to the webpack config')
   .parse(process.argv);
 
-const port = commander.port || process.env.PORT;
-
 serve({
   config: loadWebpackConfig(commander.config),
   host: commander.host,
-  port,
+  port: commander.port,
   production: commander.production,
 });

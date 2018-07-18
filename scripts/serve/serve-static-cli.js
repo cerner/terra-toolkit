@@ -16,13 +16,11 @@ commander
   .option('--disk', 'The webpack assets will be written to disk instead of a virtual file system.')
   .parse(process.argv);
 
-const port = commander.port || process.env.PORT;
-
 serve({
   config: loadWebpackConfig(commander.config),
   disk: commander.disk,
   host: commander.host,
-  port,
+  port: commander.port,
   production: commander.production,
   site: commander.site,
 });
