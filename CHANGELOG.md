@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Changed
+* Removed the environment variable for port from static and static-serve
 
 4.3.0 - (July 17, 2018)
 ----------
