@@ -64,10 +64,10 @@ If no config is supplied to `tt-clean-screenshots`, `tt-clean-screenshots` will 
 
 #### Function Usage
 ```
-const cleanScreenshots = require('./clean-screenshots');
+const cleanScreenshots = require('terra-toolkit/scripts/wdio/clean-screenshots');
 
 cleanScreenshots({
-    configPath: './wdio.conf.js'
-    updateReference: false,
+    configPath: './wdio.conf.js',
+    updateReference: false
 });
 ```
