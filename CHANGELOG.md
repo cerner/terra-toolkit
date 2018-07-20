@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+### Fixed
+* Screenshots CLI accepts flags as expected
+
 
 4.4.0 - (July 18, 2018)
 ----------
