@@ -7,6 +7,11 @@ Unreleased
 * Screenshots CLI accepts flags as expected
 
 
+4.5.0 - (July 20, 2018)
+----------
+### Fixed
+* Added a start static script that is just for heroku builds.
+
 4.4.0 - (July 18, 2018)
 ----------
 ### Changed
