@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const serve = require('../scripts/serve/serve-static');
 const loadWebpackConfig = require('../scripts/serve/loadWebpackConfig');
 
