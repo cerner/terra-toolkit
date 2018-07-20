@@ -1,4 +1,4 @@
-const serve = require('./serve-static');
+const serve = require('../scripts/serve/serve-static');
 const loadWebpackConfig = require('../scripts/serve/loadWebpackConfig');
 
 serve({
