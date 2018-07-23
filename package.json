@@ -1,6 +1,6 @@
 {
   "name": "terra-toolkit",
-  "version": "4.2.0",
+  "version": "4.5.0",
   "description": "Utilities to help when developing terra modules.",
   "main": "lib/index.js",
   "engines": {
@@ -25,6 +25,7 @@
   "bin": {
     "tt-aggregate-translations": "bin/aggregate-translations.js",
     "tt-clean-screenshots": "bin/clean-screenshots.js",
+    "tt-heroku-serve-static": "bin/heroku-serve-static.js",
     "tt-serve": "bin/serve.js",
     "tt-serve-static": "bin/serve-static.js",
     "tt-wdio": "bin/wdio-runner.js"
@@ -51,11 +52,12 @@
     "release:minor": "node scripts/release/release.js minor",
     "release:patch": "node scripts/release/release.js patch",
     "test": "npm run jest && npm run nightwatch && npm run nightwatch:port-provided && npm run wdio",
-    "wdio": "npm run wdio-webpack-obj && npm run wdio-webpack-func && npm run tt-wdio-webpack-obj && npm run tt-wdio-webpack-func",
-    "wdio-webpack-obj": "wdio",
-    "wdio-webpack-func": "TT_TEST_WDIO_FUNCTION=true wdio",
-    "tt-wdio-webpack-obj": "node scripts/wdio/wdio-runner-cli.js",
-    "tt-wdio-webpack-func": "TT_TEST_WDIO_FUNCTION=true node scripts/wdio/wdio-runner-cli.js"
+    "wdio": "npm run wdio-webpack-obj && npm run wdio-webpack-func && npm run tt-wdio-webpack-obj && npm run tt-wdio-webpack-func && npm run tt-wdio-unopinionated",
+    "wdio-webpack-obj": "wdio --suite opinionated",
+    "wdio-webpack-func": "TT_TEST_WDIO_FUNCTION=true wdio --suite opinionated",
+    "tt-wdio-webpack-obj": "node scripts/wdio/wdio-runner-cli.js --suite opinionated",
+    "tt-wdio-webpack-func": "TT_TEST_WDIO_FUNCTION=true node scripts/wdio/wdio-runner-cli.js --suite opinionated",
+    "tt-wdio-unopinionated": "node scripts/wdio/wdio-runner-cli.js --formFactors=['tiny','huge'] --locales=['en','fr'] --suite unopinionated"
   },
   "dependencies": {
     "async": "^2.5.0",

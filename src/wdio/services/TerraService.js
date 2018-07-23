@@ -20,6 +20,21 @@ const getViewports = (...sizes) => {
 };
 
 /**
+* Sets the viewport for the test run if the formFactor config is defined.
+* @param formFactor - [String] the viewport size.
+*/
+const setViewport = (formFactor) => {
+  if (formFactor) {
+    const terraViewport = VIEWPORTS[formFactor];
+    if (terraViewport !== undefined && typeof terraViewport === 'object') {
+      global.browser.setViewportSize(terraViewport);
+    } else {
+      throw new Error('The formFactor supplied is not a Terra-defined viewport size.');
+    }
+  }
+};
+
+/**
 * Webdriver.io TerraService
 * Provides global access to chia, as well as custom chai assertions.
 * Also provides access a global instance of the Terra object which
@@ -28,6 +43,7 @@ const getViewports = (...sizes) => {
 export default class TerraService {
   // eslint-disable-next-line class-methods-use-this
   before() {
+    setViewport(global.browser.options.formFactor);
     chai.config.showDiff = false;
     global.expect = chai.expect;
     global.should = chai.should();

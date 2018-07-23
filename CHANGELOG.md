@@ -6,6 +6,24 @@ Unreleased
 ### Added
 * Added sv and sv-SE to aggregated translations supported locales list
 
+4.5.0 - (July 20, 2018)
+----------
+### Fixed
+* Added a start static script that is just for heroku builds.
+
+4.4.0 - (July 18, 2018)
+----------
+### Changed
+* Removed the environment variable for port from static and static-serve
+
+4.3.0 - (July 17, 2018)
+----------
+### Changed
+* Updated the static and static-serve CLI's to default `0.0.0.0` for the host
+
+### Fixed
+* Set the viewport size before test run when formFactor is defined for viewport-unopinionated tests.
+
 4.2.0 - (July 6, 2018)
 ----------
 ### Fixed
