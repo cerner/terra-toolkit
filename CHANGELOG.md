@@ -4,8 +4,7 @@ Changelog
 Unreleased
 ----------
 ### Fixed
-* Screenshots CLI accepts flags as expected
-
+* Screenshots cleaner CLI accepts flags as expected
 
 4.5.0 - (July 20, 2018)
 ----------
