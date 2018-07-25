@@ -11,8 +11,9 @@ const aggregateTranslations = require('../../scripts/aggregate-translations/aggr
 const merge = require('webpack-merge');
 
 const devConfig = (options) => {
+  const filename = options.filename || '[name]';
   const {
-    rootPath, resolveModules, filename, devtool,
+    rootPath, resolveModules,
   } = options;
 
   return ({
@@ -89,7 +90,7 @@ const devConfig = (options) => {
     output: {
       path: path.join(rootPath, 'build'),
     },
-    devtool,
+    devtool: 'cheap-source-map',
     resolveLoader: {
       modules: [path.resolve(path.join(rootPath, 'node_modules'))],
     },
@@ -99,9 +100,8 @@ const devConfig = (options) => {
 };
 
 const prodConfig = (options) => {
-  const devtool = undefined;
   const filename = '[name]-[chunkhash]';
-  const prodOptions = Object.assign({}, options, { devtool, filename });
+  const prodOptions = Object.assign({}, options, { filename });
 
   return merge(devConfig(prodOptions), {
     output: {
@@ -109,7 +109,7 @@ const prodConfig = (options) => {
       filename: `${filename}.js`,
     },
     mode: 'production',
-    devtool,
+    devtool: undefined,
     plugins: [new CleanPlugin('build', { root: options.rootPath, exclude: ['stats.json'] })],
     optimization: {
       minimizer: [
@@ -145,8 +145,6 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
   const options = {
     rootPath,
     resolveModules,
-    filename: '[name]',
-    devtool: 'cheap-source-map',
   };
 
   if (!production) {
