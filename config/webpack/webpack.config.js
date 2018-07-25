@@ -10,20 +10,12 @@ const browserslist = require('browserslist-config-terra');
 const aggregateTranslations = require('../../scripts/aggregate-translations/aggregate-translations');
 const merge = require('webpack-merge');
 
-const defaultWebpackConfig = (env = {}, argv = {}) => {
-  const production = argv.p;
-  const disableAggregateTranslations = env.disableAggregateTranslations;
-  const processPath = process.cwd();
-  /* Get the root path of a mono-repo process call */
-  const rootPath = processPath.includes('packages') ? processPath.split('packages')[0] : processPath;
+const devConfig = (options) => {
+  const {
+    rootPath, resolveModules, filename, devtool,
+  } = options;
 
-  const resolveModules = ['node_modules'];
-  if (!disableAggregateTranslations) {
-    aggregateTranslations(Object.assign({}, { baseDirectory: rootPath }, env.aggregateOptions));
-    resolveModules.unshift(path.resolve(rootPath, 'aggregated-translations'));
-  }
-
-  const devConfig = {
+  return ({
     entry: {
       raf: 'raf/polyfill',
       'babel-polyfill': 'babel-polyfill',
@@ -74,7 +66,7 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     },
     plugins: [
       new MiniCssExtractPlugin({
-        filename: '[name]-[hash].css',
+        filename: `${filename}.css`,
       }),
       new PostCSSAssetsPlugin({
         test: /\.css$/,
@@ -97,25 +89,25 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     output: {
       path: path.join(rootPath, 'build'),
     },
-    devtool: production ? undefined : 'cheap-source-map',
+    devtool,
     resolveLoader: {
       modules: [path.resolve(path.join(rootPath, 'node_modules'))],
     },
     mode: 'development',
     stats: { children: false },
-  };
+  });
+};
 
-  if (!production) {
-    return devConfig;
-  }
+const prodConfig = (options) => {
+  const { rootPath, devtool, filename } = options;
 
-  const prodConfig = merge(devConfig, {
+  return merge(devConfig(options), {
     output: {
       path: path.resolve('build'),
-      filename: '[name]-[hash].js',
+      filename: `${filename}.js`,
     },
     mode: 'production',
-    devtool: undefined,
+    devtool,
     plugins: [new CleanPlugin('build', { root: rootPath, exclude: ['stats.json'] })],
     optimization: {
       minimizer: [
@@ -132,8 +124,37 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
       ],
     },
   });
+};
 
-  return prodConfig;
+const defaultWebpackConfig = (env = {}, argv = {}) => {
+  const production = argv.p;
+  const disableAggregateTranslations = env.disableAggregateTranslations;
+
+  const processPath = process.cwd();
+  /* Get the root path of a mono-repo process call */
+  const rootPath = processPath.includes('packages') ? processPath.split('packages')[0] : processPath;
+
+  const resolveModules = ['node_modules'];
+  if (!disableAggregateTranslations) {
+    aggregateTranslations(Object.assign({}, { baseDirectory: rootPath }, env.aggregateOptions));
+    resolveModules.unshift(path.resolve(rootPath, 'aggregated-translations'));
+  }
+
+  const options = {
+    rootPath,
+    resolveModules,
+    filename: '[name]',
+    devtool: 'cheap-source-map',
+  };
+
+  if (production) {
+    options.filename = '[name]-[chunkhash]';
+    options.devtool = undefined;
+
+    return prodConfig(options);
+  }
+
+  return devConfig(options);
 };
 
 module.exports = defaultWebpackConfig;

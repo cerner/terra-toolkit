@@ -12,6 +12,11 @@ describe('I18n Locale', () => {
   it('Express correctly sets the application locale', () => {
     browser.setValue('#input-wdio-defined', testLocale);
     browser.setValue('#input-actual', browserLocale);
+    // remove the blinking cursor for the screenshots
+    browser.execute(() => {
+      const inputElement = document.getElementById('input-actual');
+      inputElement.style.caretColor = 'transparent';
+    });
     expect(testLocale).to.equal(browserLocale);
   });
 
