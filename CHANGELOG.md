@@ -5,6 +5,8 @@ Unreleased
 ----------
 ### Fixed
 * Screenshots cleaner CLI accepts flags as expected
+### Added
+* Added sv and sv-SE to aggregated translations supported locales list
 
 4.5.0 - (July 20, 2018)
 ----------
@@ -43,7 +45,7 @@ Unreleased
 * Added tt-wdio bin script called `tt-wdio` which runs wdio test runs for the specified locales and form factors
 * Added clean-screenshots bin script called `tt-clean-screenshot` [#64](https://github.com/cerner/terra-toolkit/issues/64)
 
-### Changed    
+### Changed
 * **BREAKING CHANGE** Update screenshot naming to organize screenshots by locale and form factor
     - changed `screen` directory name to `latest`
     - added automatic screenshot name shortening to allow for descriptive describes, but short screenshot names.
