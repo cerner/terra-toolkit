@@ -99,16 +99,18 @@ const devConfig = (options) => {
 };
 
 const prodConfig = (options) => {
-  const { rootPath, devtool, filename } = options;
+  const devtool = undefined;
+  const filename = '[name]-[chunkhash]';
+  const prodOptions = Object.assign({}, options, { devtool, filename });
 
-  return merge(devConfig(options), {
+  return merge(devConfig(prodOptions), {
     output: {
       path: path.resolve('build'),
       filename: `${filename}.js`,
     },
     mode: 'production',
     devtool,
-    plugins: [new CleanPlugin('build', { root: rootPath, exclude: ['stats.json'] })],
+    plugins: [new CleanPlugin('build', { root: options.rootPath, exclude: ['stats.json'] })],
     optimization: {
       minimizer: [
         new UglifyJsPlugin({
@@ -147,14 +149,11 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     devtool: 'cheap-source-map',
   };
 
-  if (production) {
-    options.filename = '[name]-[chunkhash]';
-    options.devtool = undefined;
-
-    return prodConfig(options);
+  if (!production) {
+    return devConfig(options);
   }
 
-  return devConfig(options);
+  return prodConfig(options);
 };
 
 module.exports = defaultWebpackConfig;
