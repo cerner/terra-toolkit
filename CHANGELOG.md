@@ -6,9 +6,6 @@ Unreleased
 ### Changed
 * Updated the `baseScreenshotDir` option to allow for test reusability from terra repositories
 
-### Fixed
-* Only hash css assets in production mode for webpack config reusability in rails projects
-
 4.6.0 - (July 25, 2018)
 ----------
 ### Added
