@@ -5,6 +5,9 @@ Unreleased
 ----------
 ### Fixed
 * Screenshots cleaner CLI accepts flags as expected
+
+4.6.0 - (July 25, 2018)
+----------
 ### Added
 * Added sv and sv-SE to aggregated translations supported locales list
 
