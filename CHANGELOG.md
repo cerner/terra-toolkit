@@ -3,14 +3,16 @@ Changelog
 
 Unreleased
 ----------
-### Added
-* Added sv and sv-SE to aggregated translations supported locales list
-
 ### Changed
 * Updated the `baseScreenshotDir` option to allow for test reusability from terra repositories
 
 ### Fixed
-* Only hash css assets in production mode for webpack config reusability in rails projects.
+* Only hash css assets in production mode for webpack config reusability in rails projects
+
+4.6.0 - (July 25, 2018)
+----------
+### Added
+* Added sv and sv-SE to aggregated translations supported locales list
 
 4.5.0 - (July 20, 2018)
 ----------
