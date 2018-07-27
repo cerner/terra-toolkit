@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Fixed
+* Updated the `baseScreenshotDir` option to allow for test reusability from terra repositories
 
 4.6.0 - (July 25, 2018)
 ----------
