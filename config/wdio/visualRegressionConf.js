@@ -70,7 +70,12 @@ function getScreenshotPath(ref) {
 
     const baseDir = global.browser.options.baseScreenshotDir;
     if (baseDir) {
-      testPath = baseDir + testPath.split(process.cwd())[1];
+      testPath = testPath.split(process.cwd())[1];
+      // Added to allow for test reusablility from terra repositories
+      if (testPath.includes('node_modules')) {
+        testPath = testPath.split('node_modules')[1];
+      }
+      testPath = baseDir + testPath;
     }
     const refDir = screenshotSetup[`${ref}Dir`];
 
