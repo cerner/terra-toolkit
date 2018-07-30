@@ -19,4 +19,4 @@ const {
 
 const configPath = getWdioConfigPath(config);
 
-cleanScreenshots(configPath, removeReference);
+cleanScreenshots({ configPath, removeReference });
