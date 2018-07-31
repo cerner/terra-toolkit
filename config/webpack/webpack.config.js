@@ -10,20 +10,13 @@ const browserslist = require('browserslist-config-terra');
 const aggregateTranslations = require('../../scripts/aggregate-translations/aggregate-translations');
 const merge = require('webpack-merge');
 
-const defaultWebpackConfig = (env = {}, argv = {}) => {
-  const production = argv.p;
-  const disableAggregateTranslations = env.disableAggregateTranslations;
-  const processPath = process.cwd();
-  /* Get the root path of a mono-repo process call */
-  const rootPath = processPath.includes('packages') ? processPath.split('packages')[0] : processPath;
+const devConfig = (options) => {
+  const filename = options.filename || '[name]';
+  const {
+    rootPath, resolveModules,
+  } = options;
 
-  const resolveModules = ['node_modules'];
-  if (!disableAggregateTranslations) {
-    aggregateTranslations(Object.assign({}, { baseDirectory: rootPath }, env.aggregateOptions));
-    resolveModules.unshift(path.resolve(rootPath, 'aggregated-translations'));
-  }
-
-  const devConfig = {
+  return ({
     entry: {
       raf: 'raf/polyfill',
       'babel-polyfill': 'babel-polyfill',
@@ -74,7 +67,7 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     },
     plugins: [
       new MiniCssExtractPlugin({
-        filename: '[name]-[hash].css',
+        filename: `${filename}.css`,
       }),
       new PostCSSAssetsPlugin({
         test: /\.css$/,
@@ -97,26 +90,27 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     output: {
       path: path.join(rootPath, 'build'),
     },
-    devtool: production ? undefined : 'cheap-source-map',
+    devtool: 'cheap-source-map',
     resolveLoader: {
       modules: [path.resolve(path.join(rootPath, 'node_modules'))],
     },
     mode: 'development',
     stats: { children: false },
-  };
+  });
+};
 
-  if (!production) {
-    return devConfig;
-  }
+const prodConfig = (options) => {
+  const filename = '[name]-[chunkhash]';
+  const prodOptions = Object.assign({}, options, { filename });
 
-  const prodConfig = merge(devConfig, {
+  return merge(devConfig(prodOptions), {
     output: {
       path: path.resolve('build'),
-      filename: '[name]-[hash].js',
+      filename: `${filename}.js`,
     },
     mode: 'production',
     devtool: undefined,
-    plugins: [new CleanPlugin('build', { root: rootPath, exclude: ['stats.json'] })],
+    plugins: [new CleanPlugin('build', { root: options.rootPath, exclude: ['stats.json'] })],
     optimization: {
       minimizer: [
         new UglifyJsPlugin({
@@ -132,8 +126,32 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
       ],
     },
   });
+};
 
-  return prodConfig;
+const defaultWebpackConfig = (env = {}, argv = {}) => {
+  const production = argv.p;
+  const disableAggregateTranslations = env.disableAggregateTranslations;
+
+  const processPath = process.cwd();
+  /* Get the root path of a mono-repo process call */
+  const rootPath = processPath.includes('packages') ? processPath.split('packages')[0] : processPath;
+
+  const resolveModules = ['node_modules'];
+  if (!disableAggregateTranslations) {
+    aggregateTranslations(Object.assign({}, { baseDirectory: rootPath }, env.aggregateOptions));
+    resolveModules.unshift(path.resolve(rootPath, 'aggregated-translations'));
+  }
+
+  const options = {
+    rootPath,
+    resolveModules,
+  };
+
+  if (!production) {
+    return devConfig(options);
+  }
+
+  return prodConfig(options);
 };
 
 module.exports = defaultWebpackConfig;

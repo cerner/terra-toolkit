@@ -12,6 +12,9 @@ Unreleased
 ### Added
 * Added sv and sv-SE to aggregated translations supported locales list
 
+### Fixed
+* Only hash css assets in proudction mode for webpack config reusability in rails projects.
+
 4.5.0 - (July 20, 2018)
 ----------
 ### Fixed
