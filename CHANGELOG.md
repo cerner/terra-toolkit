@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+4.7.0 - (August 1, 2018)
+----------
 ### Fixed
 * Updated the `baseScreenshotDir` option to allow for test reusability from terra repositories
 * Screenshots cleaner CLI accepts flags as expected
