@@ -30,48 +30,48 @@ const devConfig = (options, env, argv) => {
     },
     module: {
       rules: [
-      {
-        test: /\.(jsx|js)$/,
-        exclude: /node_modules/,
-        use: 'babel-loader',
-      },
-      {
-        test: /\.(scss|css)$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            options: {
-              minimize: false, // Issue logged: https://github.com/cerner/terra-toolkit/issues/122
-              sourceMap: true,
-              importLoaders: 2,
-              localIdentName: '[name]__[local]___[hash:base64:5]',
-            },
-          }, {
-            loader: 'postcss-loader',
-            options: {
-              // Add unique ident to prevent the loader from searching for a postcss.config file. Additionally see: https://github.com/postcss/postcss-loader#plugins
-              ident: 'postcss',
-              plugins() {
-                return [
-                  rtl(),
-                  Autoprefixer({ browsers: browserslist }),
-                ];
+        {
+          test: /\.(jsx|js)$/,
+          exclude: /node_modules/,
+          use: 'babel-loader',
+        },
+        {
+          test: /\.(scss|css)$/,
+          use: [
+            MiniCssExtractPlugin.loader,
+            {
+              loader: 'css-loader',
+              options: {
+                minimize: false, // Issue logged: https://github.com/cerner/terra-toolkit/issues/122
+                sourceMap: true,
+                importLoaders: 2,
+                localIdentName: '[name]__[local]___[hash:base64:5]',
               },
+            }, {
+              loader: 'postcss-loader',
+              options: {
+                // Add unique ident to prevent the loader from searching for a postcss.config file. Additionally see: https://github.com/postcss/postcss-loader#plugins
+                ident: 'postcss',
+                plugins() {
+                  return [
+                    rtl(),
+                    Autoprefixer({ browsers: browserslist }),
+                  ];
+                },
+              },
+            }, {
+              loader: 'sass-loader',
             },
-          }, {
-            loader: 'sass-loader',
-          },
-        ],
-      },
-      {
-        test: /\.md$/,
-        use: 'raw-loader',
-      },
-      {
-        test: /\.(png|svg|jpg|gif|otf|eot|ttf|svg|woff|woff2)$/,
-        use: 'file-loader',
-      }],
+          ],
+        },
+        {
+          test: /\.md$/,
+          use: 'raw-loader',
+        },
+        {
+          test: /\.(png|svg|jpg|gif|otf|eot|ttf|svg|woff|woff2)$/,
+          use: 'file-loader',
+        }],
     },
     plugins: [
       new MiniCssExtractPlugin({
@@ -117,7 +117,7 @@ const devConfig = (options, env, argv) => {
     devtool: undefined,
     plugins: [
       // I am hesitant on adding the output path to the clean plugin... I know in rails world they dump into folder with other assets....
-      new CleanPlugin(outputPath, { root: rootPath, exclude: ['stats.json'] })
+      new CleanPlugin(outputPath, { root: rootPath, exclude: ['stats.json'] }),
     ],
     optimization: {
       minimizer: [
@@ -135,39 +135,9 @@ const devConfig = (options, env, argv) => {
     },
   });
 };
-};
-
-// const prodConfig = (argv) => {
-//   const filename = '[name]-[chunkhash]';
-//   const prodOptions = Object.assign({}, { 'output-filename': filename }, argv);
-//
-//   return merge(devConfig(prodOptions), {
-//     mode: 'production',
-//     devtool: undefined,
-//     plugins: [
-//       new CleanPlugin('build', { root: options.rootPath, exclude: ['stats.json'] })
-//     ],
-//     optimization: {
-//       minimizer: [
-//         new UglifyJsPlugin({
-//           cache: true,
-//           parallel: true,
-//           sourceMap: true,
-//           uglifyOptions: {
-//             compress: {
-//               typeofs: false,
-//             },
-//           },
-//         }),
-//       ],
-//     },
-//   });
-// };
 
 const defaultWebpackConfig = (env = {}, argv = {}) => {
-  // const production = argv.p;
   const disableAggregateTranslations = env.disableAggregateTranslations;
-  // const { assetPath, publicPath, outputPath } = argv;
 
   const processPath = process.cwd();
   /* Get the root path of a mono-repo process call */
@@ -180,18 +150,11 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
   }
 
   const options = {
-    // assetPath,
-    // publicPath,
     rootPath,
     resolveModules,
-    // outputPath,
   };
 
-  // if (!production) {
-  return devConfig(options, argv);
-  // }
-
-  // return prodConfig(options);
+  return devConfig(options, env, argv);
 };
 
 module.exports = defaultWebpackConfig;
