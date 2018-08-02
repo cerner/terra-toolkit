@@ -19,9 +19,9 @@ const devConfig = (options, env, argv) => {
 
   const production = argv.p;
   let filename = production ? '[name]-[chunkhash]' : '[name]';
-  let filename = argv['output-filename'] || filename;
+  filename = argv['output-filename'] || filename;
   const outputPath = argv['output-path'] || path.join(rootPath, 'build');
-  const publicPath = argv['output-public-path'];
+  const publicPath = argv['output-public-path'] || '/';
 
   const config = {
     entry: {
@@ -98,7 +98,7 @@ const devConfig = (options, env, argv) => {
     output: {
       filename: `${filename}.js`,
       path: outputPath,
-      ...(publicPath) && { publicPath },
+      publicPath,
     },
     devtool: 'cheap-source-map',
     resolveLoader: {
