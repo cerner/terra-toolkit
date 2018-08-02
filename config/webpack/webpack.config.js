@@ -6,23 +6,31 @@ const rtl = require('postcss-rtl');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const browserslist = require('browserslist-config-terra');
+const terraBrowserslist = require('browserslist-config-terra');
 const aggregateTranslations = require('../../scripts/aggregate-translations/aggregate-translations');
 const merge = require('webpack-merge');
 
-const devConfig = (options) => {
-  const filename = options.filename || '[name]';
+const devConfig = (options, env, argv) => {
   const {
     rootPath, resolveModules,
   } = options;
 
-  return ({
+  const browserslist = env.browserslist || terraBrowserslist;
+
+  const production = argv.p;
+  let filename = production ? '[name]-[chunkhash]' : '[name]';
+  let filename = argv['output-filename'] || filename;
+  const outputPath = argv['output-path'] || path.join(rootPath, 'build');
+  const publicPath = argv['output-public-path'];
+
+  const config = {
     entry: {
       raf: 'raf/polyfill',
       'babel-polyfill': 'babel-polyfill',
     },
     module: {
-      rules: [{
+      rules: [
+      {
         test: /\.(jsx|js)$/,
         exclude: /node_modules/,
         use: 'babel-loader',
@@ -61,7 +69,7 @@ const devConfig = (options) => {
         use: 'raw-loader',
       },
       {
-        test: /\.(png|svg|jpg|gif)$/,
+        test: /\.(png|svg|jpg|gif|otf|eot|ttf|svg|woff|woff2)$/,
         use: 'file-loader',
       }],
     },
@@ -88,7 +96,9 @@ const devConfig = (options) => {
       },
     },
     output: {
-      path: path.join(rootPath, 'build'),
+      filename: `${filename}.js`,
+      path: outputPath,
+      ...(publicPath) && { publicPath },
     },
     devtool: 'cheap-source-map',
     resolveLoader: {
@@ -96,21 +106,17 @@ const devConfig = (options) => {
     },
     mode: 'development',
     stats: { children: false },
-  });
-};
+  };
 
-const prodConfig = (options) => {
-  const filename = '[name]-[chunkhash]';
-  const prodOptions = Object.assign({}, options, { filename });
+  if ()
 
-  return merge(devConfig(prodOptions), {
-    output: {
-      path: path.resolve('build'),
-      filename: `${filename}.js`,
-    },
+  return merge(config, {
     mode: 'production',
     devtool: undefined,
-    plugins: [new CleanPlugin('build', { root: options.rootPath, exclude: ['stats.json'] })],
+    plugins: [
+      // I am hesitant on adding the output path to the clean plugin... I know in rails world they dump into folder with other assets....
+      new CleanPlugin(outputPath, { root: rootPath, exclude: ['stats.json'] })
+    ],
     optimization: {
       minimizer: [
         new UglifyJsPlugin({
@@ -127,10 +133,39 @@ const prodConfig = (options) => {
     },
   });
 };
+};
+
+// const prodConfig = (argv) => {
+//   const filename = '[name]-[chunkhash]';
+//   const prodOptions = Object.assign({}, { 'output-filename': filename }, argv);
+//
+//   return merge(devConfig(prodOptions), {
+//     mode: 'production',
+//     devtool: undefined,
+//     plugins: [
+//       new CleanPlugin('build', { root: options.rootPath, exclude: ['stats.json'] })
+//     ],
+//     optimization: {
+//       minimizer: [
+//         new UglifyJsPlugin({
+//           cache: true,
+//           parallel: true,
+//           sourceMap: true,
+//           uglifyOptions: {
+//             compress: {
+//               typeofs: false,
+//             },
+//           },
+//         }),
+//       ],
+//     },
+//   });
+// };
 
 const defaultWebpackConfig = (env = {}, argv = {}) => {
-  const production = argv.p;
+  // const production = argv.p;
   const disableAggregateTranslations = env.disableAggregateTranslations;
+  // const { assetPath, publicPath, outputPath } = argv;
 
   const processPath = process.cwd();
   /* Get the root path of a mono-repo process call */
@@ -143,15 +178,18 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
   }
 
   const options = {
+    // assetPath,
+    // publicPath,
     rootPath,
     resolveModules,
+    // outputPath,
   };
 
-  if (!production) {
-    return devConfig(options);
-  }
+  // if (!production) {
+  return devConfig(options, argv);
+  // }
 
-  return prodConfig(options);
+  // return prodConfig(options);
 };
 
 module.exports = defaultWebpackConfig;
