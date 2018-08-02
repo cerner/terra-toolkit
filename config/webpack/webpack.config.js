@@ -108,7 +108,9 @@ const devConfig = (options, env, argv) => {
     stats: { children: false },
   };
 
-  if ()
+  if (production) {
+    return config;
+  }
 
   return merge(config, {
     mode: 'production',
