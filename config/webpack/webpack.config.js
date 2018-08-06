@@ -10,10 +10,8 @@ const terraBrowserslist = require('browserslist-config-terra');
 const aggregateTranslations = require('../../scripts/aggregate-translations/aggregate-translations');
 const merge = require('webpack-merge');
 
-const devConfig = (options, env, argv) => {
-  const {
-    rootPath, resolveModules,
-  } = options;
+const webpackConfig = (options, env, argv) => {
+  const { rootPath, resolveModules } = options;
 
   const browserslist = env.browserslist || terraBrowserslist;
 
@@ -23,7 +21,8 @@ const devConfig = (options, env, argv) => {
   const outputPath = argv['output-path'] || path.join(rootPath, 'build');
   const publicPath = argv['output-public-path'] || '/';
 
-  const config = {
+  const devConfig = {
+    mode: 'development',
     entry: {
       raf: 'raf/polyfill',
       'babel-polyfill': 'babel-polyfill',
@@ -104,15 +103,14 @@ const devConfig = (options, env, argv) => {
     resolveLoader: {
       modules: [path.resolve(path.join(rootPath, 'node_modules'))],
     },
-    mode: 'development',
     stats: { children: false },
   };
 
   if (production) {
-    return config;
+    return devConfig;
   }
 
-  return merge(config, {
+  return merge(devConfig, {
     mode: 'production',
     devtool: undefined,
     plugins: [
@@ -149,12 +147,9 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     resolveModules.unshift(path.resolve(rootPath, 'aggregated-translations'));
   }
 
-  const options = {
-    rootPath,
-    resolveModules,
-  };
+  const options = { rootPath, resolveModules };
 
-  return devConfig(options, env, argv);
+  return webpackConfig(options, env, argv);
 };
 
 module.exports = defaultWebpackConfig;
