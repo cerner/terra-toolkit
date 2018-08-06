@@ -6,14 +6,12 @@ const rtl = require('postcss-rtl');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const terraBrowserslist = require('browserslist-config-terra');
+const browserslist = require('browserslist-config-terra');
 const aggregateTranslations = require('../../scripts/aggregate-translations/aggregate-translations');
 const merge = require('webpack-merge');
 
 const webpackConfig = (options, env, argv) => {
   const { rootPath, resolveModules } = options;
-
-  const browserslist = env.browserslist || terraBrowserslist;
 
   const production = argv.p;
   let filename = production ? '[name]-[chunkhash]' : '[name]';
@@ -46,7 +44,8 @@ const webpackConfig = (options, env, argv) => {
                 importLoaders: 2,
                 localIdentName: '[name]__[local]___[hash:base64:5]',
               },
-            }, {
+            },
+            {
               loader: 'postcss-loader',
               options: {
                 // Add unique ident to prevent the loader from searching for a postcss.config file. Additionally see: https://github.com/postcss/postcss-loader#plugins
@@ -58,7 +57,8 @@ const webpackConfig = (options, env, argv) => {
                   ];
                 },
               },
-            }, {
+            },
+            {
               loader: 'sass-loader',
             },
           ],
@@ -99,20 +99,19 @@ const webpackConfig = (options, env, argv) => {
       path: outputPath,
       publicPath,
     },
-    devtool: 'cheap-source-map',
+    devtool: production ? undefined : 'cheap-source-map',
     resolveLoader: {
       modules: [path.resolve(path.join(rootPath, 'node_modules'))],
     },
     stats: { children: false },
   };
 
-  if (production) {
+  if (!production) {
     return devConfig;
   }
 
   return merge(devConfig, {
     mode: 'production',
-    devtool: undefined,
     plugins: [
       // I am hesitant on adding the output path to the clean plugin... I know in rails world they dump into folder with other assets....
       new CleanPlugin(outputPath, { root: rootPath, exclude: ['stats.json'] }),
