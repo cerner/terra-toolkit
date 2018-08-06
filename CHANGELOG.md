@@ -3,12 +3,14 @@ Changelog
 
 Unreleased
 ----------
+### Added
+* Accept 'output-filename', 'output-path' and 'output-public-path' webpack cli argv options to be passed into configuration.
 
 4.7.0 - (August 1, 2018)
 ----------
 ### Fixed
 * Updated the `baseScreenshotDir` option to allow for test reusability from terra repositories
-* Screenshots cleaner CLI accepts flags as expected
+* Pass clean-screenshot CLI flags to the wdio clean-screenshot tool
 
 4.6.0 - (July 25, 2018)
 ----------
