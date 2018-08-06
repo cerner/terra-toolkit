@@ -6,6 +6,12 @@ Unreleased
 ### Added
 * Accept 'output-filename', 'output-path' and 'output-public-path' webpack cli argv options to be passed into configuration.
 
+### Change
+* Extend file-loader to load otf, eot, ttf, svg, woff, woff2 font files
+
+### Fixed
+* Set devTool to undefined when in production mode
+
 4.7.0 - (August 1, 2018)
 ----------
 ### Fixed
