@@ -116,7 +116,6 @@ const webpackConfig = (options, env, argv) => {
     mode: 'production',
     devtool: false,
     plugins: [
-      // I am hesitant on adding the output path to the clean plugin... I know in rails world they dump into folder with other assets....
       new CleanPlugin(outputPath, { root: rootPath, exclude: ['stats.json'] }),
     ],
     optimization: {
