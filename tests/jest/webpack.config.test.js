@@ -166,7 +166,7 @@ describe('webpack config', () => {
     });
 
     it('removes devtool option', () => {
-      expect(config).toHaveProperty('devtool', undefined);
+      expect(config).toHaveProperty('devtool', false);
     });
 
     it('replace the output with prod config', () => {

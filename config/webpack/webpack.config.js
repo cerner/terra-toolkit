@@ -99,7 +99,7 @@ const webpackConfig = (options, env, argv) => {
       path: outputPath,
       publicPath,
     },
-    devtool: production ? undefined : 'cheap-source-map',
+    devtool: 'cheap-source-map',
     resolveLoader: {
       modules: [path.resolve(path.join(rootPath, 'node_modules'))],
     },
@@ -110,8 +110,11 @@ const webpackConfig = (options, env, argv) => {
     return devConfig;
   }
 
-  return merge(devConfig, {
+  return merge.strategy({
+    devtool: 'replace',
+  })(devConfig, {
     mode: 'production',
+    devtool: false,
     plugins: [
       // I am hesitant on adding the output path to the clean plugin... I know in rails world they dump into folder with other assets....
       new CleanPlugin(outputPath, { root: rootPath, exclude: ['stats.json'] }),
