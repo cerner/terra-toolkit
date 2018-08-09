@@ -10,60 +10,67 @@ const browserslist = require('browserslist-config-terra');
 const aggregateTranslations = require('../../scripts/aggregate-translations/aggregate-translations');
 const merge = require('webpack-merge');
 
-const devConfig = (options) => {
-  const filename = options.filename || '[name]';
-  const {
-    rootPath, resolveModules,
-  } = options;
+const webpackConfig = (options, env, argv) => {
+  const { rootPath, resolveModules } = options;
 
-  return ({
+  const production = argv.p;
+  let filename = production ? '[name]-[chunkhash]' : '[name]';
+  filename = argv['output-filename'] || filename;
+  const outputPath = argv['output-path'] || path.join(rootPath, 'build');
+  const publicPath = argv['output-public-path'] || '/';
+
+  const devConfig = {
+    mode: 'development',
     entry: {
       raf: 'raf/polyfill',
       'babel-polyfill': 'babel-polyfill',
     },
     module: {
-      rules: [{
-        test: /\.(jsx|js)$/,
-        exclude: /node_modules/,
-        use: 'babel-loader',
-      },
-      {
-        test: /\.(scss|css)$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            options: {
-              minimize: false, // Issue logged: https://github.com/cerner/terra-toolkit/issues/122
-              sourceMap: true,
-              importLoaders: 2,
-              localIdentName: '[name]__[local]___[hash:base64:5]',
-            },
-          }, {
-            loader: 'postcss-loader',
-            options: {
-              // Add unique ident to prevent the loader from searching for a postcss.config file. Additionally see: https://github.com/postcss/postcss-loader#plugins
-              ident: 'postcss',
-              plugins() {
-                return [
-                  rtl(),
-                  Autoprefixer({ browsers: browserslist }),
-                ];
+      rules: [
+        {
+          test: /\.(jsx|js)$/,
+          exclude: /node_modules/,
+          use: 'babel-loader',
+        },
+        {
+          test: /\.(scss|css)$/,
+          use: [
+            MiniCssExtractPlugin.loader,
+            {
+              loader: 'css-loader',
+              options: {
+                minimize: false, // Issue logged: https://github.com/cerner/terra-toolkit/issues/122
+                sourceMap: true,
+                importLoaders: 2,
+                localIdentName: '[name]__[local]___[hash:base64:5]',
               },
             },
-          }, {
-            loader: 'sass-loader',
-          },
-        ],
-      },
-      {
-        test: /\.md$/,
-        use: 'raw-loader',
-      },
-      {
-        test: /\.(png|svg|jpg|gif)$/,
-        use: 'file-loader',
-      }],
+            {
+              loader: 'postcss-loader',
+              options: {
+                // Add unique ident to prevent the loader from searching for a postcss.config file. Additionally see: https://github.com/postcss/postcss-loader#plugins
+                ident: 'postcss',
+                plugins() {
+                  return [
+                    rtl(),
+                    Autoprefixer({ browsers: browserslist }),
+                  ];
+                },
+              },
+            },
+            {
+              loader: 'sass-loader',
+            },
+          ],
+        },
+        {
+          test: /\.md$/,
+          use: 'raw-loader',
+        },
+        {
+          test: /\.(png|svg|jpg|gif|otf|eot|ttf|svg|woff|woff2)$/,
+          use: 'file-loader',
+        }],
     },
     plugins: [
       new MiniCssExtractPlugin({
@@ -88,29 +95,29 @@ const devConfig = (options) => {
       },
     },
     output: {
-      path: path.join(rootPath, 'build'),
+      filename: `${filename}.js`,
+      path: outputPath,
+      publicPath,
     },
     devtool: 'cheap-source-map',
     resolveLoader: {
       modules: [path.resolve(path.join(rootPath, 'node_modules'))],
     },
-    mode: 'development',
     stats: { children: false },
-  });
-};
+  };
 
-const prodConfig = (options) => {
-  const filename = '[name]-[chunkhash]';
-  const prodOptions = Object.assign({}, options, { filename });
+  if (!production) {
+    return devConfig;
+  }
 
-  return merge(devConfig(prodOptions), {
-    output: {
-      path: path.resolve('build'),
-      filename: `${filename}.js`,
-    },
+  return merge.strategy({
+    devtool: 'replace',
+  })(devConfig, {
     mode: 'production',
-    devtool: undefined,
-    plugins: [new CleanPlugin('build', { root: options.rootPath, exclude: ['stats.json'] })],
+    devtool: false,
+    plugins: [
+      new CleanPlugin(outputPath, { root: rootPath, exclude: ['stats.json'] }),
+    ],
     optimization: {
       minimizer: [
         new UglifyJsPlugin({
@@ -129,7 +136,6 @@ const prodConfig = (options) => {
 };
 
 const defaultWebpackConfig = (env = {}, argv = {}) => {
-  const production = argv.p;
   const disableAggregateTranslations = env.disableAggregateTranslations;
 
   const processPath = process.cwd();
@@ -142,16 +148,9 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     resolveModules.unshift(path.resolve(rootPath, 'aggregated-translations'));
   }
 
-  const options = {
-    rootPath,
-    resolveModules,
-  };
+  const options = { rootPath, resolveModules };
 
-  if (!production) {
-    return devConfig(options);
-  }
-
-  return prodConfig(options);
+  return webpackConfig(options, env, argv);
 };
 
 module.exports = defaultWebpackConfig;
