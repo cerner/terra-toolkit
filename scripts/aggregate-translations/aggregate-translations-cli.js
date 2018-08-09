@@ -15,7 +15,7 @@ const addCustomDirectory = (baseDirectory, searchPattern) => {
 // Parse locale list
 const localeList = list => (
   // eslint-disable-next-line no-useless-escape
-  list.replace(/[\[\]\s\']/g, '').split(',')
+  list.replace(/[\[\]\s]/g, '').split(',').map(String)
 );
 
 // Parse process arguments
@@ -23,7 +23,7 @@ commander
   .version(i18nPackageJson.version)
   .option('-b, --baseDir [baseDir]', 'The directory to start searching from and to prepend to the output directory', process.cwd())
   .option('-d, --directories [directories]', 'Regex pattern to glob search for translations', addCustomDirectory)
-  .option('-l, --locales <locales>', 'A comma-separated list of locale codes aggregate on and combine into a single, respective translation file ', localeList, supportedLocales)
+  .option('-l, --locales <locales>', 'The list of locale codes aggregate on and combine into a single, respective translation file ', localeList, supportedLocales)
   .option('-o, --outputDir [outputDir]', 'The output location of the generated configuration file', './aggregated-translations')
   .option('-c, --config [configPath]', 'The path to the terra i18n configuration file', undefined)
   .parse(process.argv);
