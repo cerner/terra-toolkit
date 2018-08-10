@@ -7,7 +7,7 @@ const aggregateTranslations = require('./aggregate-translations');
 
 // Adds custom search directory paths
 const customSearchDirectories = [];
-const addCustomDirectory = (baseDirectory, searchPattern) => {
+const addCustomDirectory = (searchPattern) => {
   const customDir = searchPattern.split('/').join(path.sep);
   customSearchDirectories.push(customDir);
 };
