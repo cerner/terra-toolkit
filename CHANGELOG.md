@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+4.8.0 - (August 13, 2018)
+----------
 ### Added
 * Accept 'output-filename', 'output-path' and 'output-public-path' webpack cli argv options to be passed into configuration.
 
