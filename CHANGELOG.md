@@ -11,6 +11,7 @@ Unreleased
 
 ### Fixed
 * Set devTool to undefined when in production mode
+* Fixed issue with aggregated-translations CLI parsing directories - https://github.com/cerner/terra-toolkit/issues/148
 
 4.7.0 - (August 1, 2018)
 ----------
