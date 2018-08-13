@@ -12,6 +12,7 @@ Cerner Corporation
 - Alex Bezek [@alex-bezek]
 - Noah Benham [@noahbenham]
 - Ben Boersma [@BenBoersma]
+- Daniel Vu [@dv297]
 
 [@emilyrohrbough]: https://github.com/emilyrohrbough
 [@brettjankord]: https://github.com/bjankord
@@ -25,3 +26,4 @@ Cerner Corporation
 [@alex-bezek]: https://github.com/alex-bezek
 [@noahbenham]: https://github.com/noahbenham
 [@BenBoersma]: https://github.com/BenBoersma
+[@dvv297]: https://github.com/dv297

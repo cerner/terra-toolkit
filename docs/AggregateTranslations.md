@@ -40,7 +40,7 @@ The `aggregate-translations` CLI is supplied as a bin script, called `tt-aggrega
 ```js
 scripts: {
     // ...other scripts
-    "aggregate-translations": "tt-aggregate-translations -b ./ -d ./src/**/translations -d ./translations -l ['en', 'es'] -o ./aggregated-translations",
+    "aggregate-translations": "tt-aggregate-translations -b ./ -d ./src/**/translations -d ./translations -l ['en','es'] -o ./aggregated-translations",
     "start:build": "npm run aggregate-translations && npm run start"
 }
 ```
