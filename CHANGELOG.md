@@ -4,6 +4,11 @@ Changelog
 Unreleased
 ----------
 
+4.9.0 - (August 14, 2018)
+----------
+### Fixed
+* Updated the default output public path to align with webpack's default
+
 4.8.0 - (August 13, 2018)
 ----------
 ### Added
