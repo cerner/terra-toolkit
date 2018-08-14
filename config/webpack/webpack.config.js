@@ -17,7 +17,7 @@ const webpackConfig = (options, env, argv) => {
   let filename = production ? '[name]-[chunkhash]' : '[name]';
   filename = argv['output-filename'] || filename;
   const outputPath = argv['output-path'] || path.join(rootPath, 'build');
-  const publicPath = argv['output-public-path'] || '/';
+  const publicPath = argv['output-public-path'] || '';
 
   const devConfig = {
     mode: 'development',
