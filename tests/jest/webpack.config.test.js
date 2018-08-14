@@ -115,7 +115,7 @@ describe('webpack config', () => {
     it('add the output config', () => {
       expect(config).toHaveProperty('output');
       expect(config.output).toHaveProperty('path', outputPath);
-      expect(config.output).toHaveProperty('publicPath', '/');
+      expect(config.output).toHaveProperty('publicPath', '');
     });
 
     it('disabled stats on children', () => {
