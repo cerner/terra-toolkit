@@ -5,6 +5,7 @@ Unreleased
 ----------
 ### Changed
 * Bumped node-sass dependency to v4.9.3. This version should work better on latest High Sierra OS on mac.
+* Fixed aggregated-translations locales and tt-wdio formFactors and locales flag to not include single quotes in output file names on Windows.
 
 4.9.0 - (August 14, 2018)
 ----------

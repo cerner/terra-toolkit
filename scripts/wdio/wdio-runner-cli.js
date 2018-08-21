@@ -4,18 +4,16 @@ const commander = require('commander');
 const getWdioConfigPath = require('./getWdioConfigPath');
 const cleanScreenshots = require('./clean-screenshots');
 const runner = require('./wdio-runner');
+const parseList = require('../util/parse-list');
 
 const packageJson = require('../../package.json');
-
-// eslint-disable-next-line no-useless-escape
-const listOptions = list => (list.replace(/[\[\]\s]/g, '').split(',').map(String));
 
 // Parse process arguments
 commander
   .version(packageJson.version)
   .option('--config <path>', 'The wdio config path for the tests', undefined)
-  .option('--formFactors <list>', 'The list of viewport sizes to test', listOptions, undefined)
-  .option('--locales <list>', 'The list of locales to test', listOptions, ['en'])
+  .option('--formFactors <list>', 'The list of viewport sizes to test', parseList, undefined)
+  .option('--locales <list>', 'The list of locales to test', parseList, ['en'])
   .option('--continueOnFail', 'Wheather or not to execute all test runs when a run fails', false)
   .option('--updateReference', 'Whether or not to remove reference screenshots during screenshot cleanup', false)
   .option('--host <number>', '[wdio option] The selenium server port', undefined)
