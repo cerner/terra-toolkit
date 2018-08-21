@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+4.10.0 - (August 21, 2018)
+----------
 ### Changed
 * Bumped node-sass dependency to v4.9.3. This version should work better on latest High Sierra OS on mac.
 
