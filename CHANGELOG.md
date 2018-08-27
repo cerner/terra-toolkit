@@ -4,6 +4,11 @@ Changelog
 Unreleased
 ----------
 
+4.10.1 - (August 27, 2018)
+----------
+### Changed
+* Pinned version of axe-core to 3.0.3
+
 4.10.0 - (August 21, 2018)
 ----------
 ### Changed
