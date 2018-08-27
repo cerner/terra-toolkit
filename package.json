@@ -1,6 +1,6 @@
 {
   "name": "terra-toolkit",
-  "version": "4.10.0",
+  "version": "4.10.1",
   "description": "Utilities to help when developing terra modules.",
   "main": "lib/index.js",
   "engines": {
@@ -62,7 +62,7 @@
   "dependencies": {
     "async": "^2.5.0",
     "autoprefixer": "^8.5.2",
-    "axe-core": "^3.0.2",
+    "axe-core": "3.0.3",
     "babel-loader": "^7.1.2",
     "babel-polyfill": "^6.23.0",
     "browserslist-config-terra": "^1.0.0",
