@@ -8,7 +8,6 @@
   Terra Toolkit
 </h1>
 
-[![Cerner OSS](https://badgen.net/badge/Cerner/OSS/blue)](http://engineering.cerner.com/2014/01/cerner-and-open-source/)
 [![License](https://badgen.net/github/license/cerner/terra-toolkit)](https://github.com/cerner/terra-toolkit/blob/master/LICENSE)
 [![Build Status](https://badgen.net/travis/cerner/terra-toolkit)](https://travis-ci.org/cerner/terra-toolkit)
 [![devDependencies status](https://badgen.net/david/dev/cerner/terra-toolkit)](https://david-dm.org/cerner/terra-toolkit?type=dev)
