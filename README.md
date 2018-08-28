@@ -8,6 +8,7 @@
   Terra Toolkit
 </h1>
 
+[![NPM version](https://badgen.net/npm/v/terra-toolkit)](https://www.npmjs.org/package/terra-toolkit)
 [![License](https://badgen.net/github/license/cerner/terra-toolkit)](https://github.com/cerner/terra-toolkit/blob/master/LICENSE)
 [![Build Status](https://badgen.net/travis/cerner/terra-toolkit)](https://travis-ci.org/cerner/terra-toolkit)
 [![devDependencies status](https://badgen.net/david/dev/cerner/terra-toolkit)](https://david-dm.org/cerner/terra-toolkit?type=dev)
