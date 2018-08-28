@@ -62,7 +62,7 @@
   "dependencies": {
     "async": "^2.5.0",
     "autoprefixer": "^8.5.2",
-    "axe-core": "3.0.3",
+    "axe-core": "^3.1.1",
     "babel-loader": "^7.1.2",
     "babel-polyfill": "^6.23.0",
     "browserslist-config-terra": "^1.0.0",
