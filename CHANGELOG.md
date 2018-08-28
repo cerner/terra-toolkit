@@ -3,6 +3,7 @@ Changelog
 
 Unreleased
 ----------
+* Fixed wdio clean-screenshots utility incorrectly resolving path of config file
 
 4.10.1 - (August 27, 2018)
 ----------
