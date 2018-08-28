@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Changed
+* Bump axe-core to ^3.1.1 and unpin the version
 * Fixed wdio clean-screenshots utility incorrectly resolving path of config file
 
 4.10.1 - (August 27, 2018)
