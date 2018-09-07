@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Changed
+* Updated linter and linter plugins
 
 4.11.1 - (August 29, 2018)
 ----------

@@ -1,12 +1,12 @@
 const localIP = require('ip');
 const glob = require('glob');
 
-const {
-  Axe: AxeService, SeleniumDocker: SeleniumDockerService, ServeStaticService, Terra: TerraService,
-} = require('../../lib/wdio/services/index');
 const path = require('path');
 const PackageUtilities = require('lerna/lib/PackageUtilities');
 const Repository = require('lerna/lib/Repository');
+const {
+  Axe: AxeService, SeleniumDocker: SeleniumDockerService, ServeStaticService, Terra: TerraService,
+} = require('../../lib/wdio/services/index');
 const visualRegressionConfig = require('./visualRegressionConf');
 
 const ip = process.env.WDIO_EXTERNAL_HOST || localIP.address();

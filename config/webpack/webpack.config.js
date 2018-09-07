@@ -7,8 +7,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const browserslist = require('browserslist-config-terra');
-const aggregateTranslations = require('../../scripts/aggregate-translations/aggregate-translations');
 const merge = require('webpack-merge');
+const aggregateTranslations = require('../../scripts/aggregate-translations/aggregate-translations');
 
 const webpackConfig = (options, env, argv) => {
   const { rootPath, resolveModules } = options;
