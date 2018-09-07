@@ -33,6 +33,9 @@
   "browserslist": [
     "extends browserslist-config-terra"
   ],
+  "eslintConfig": {
+    "extends": "terra"
+  },
   "scripts": {
     "clean:all": "npm run clean:compiled && npm run clean:dependencies",
     "clean:compiled": "rimraf lib",
@@ -114,11 +117,8 @@
     "babel-preset-env": "^1.7.0",
     "babel-runtime": "^6.26.0",
     "danger": "^3.7.14",
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-plugin-import": "^2.12.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.9.1",
+    "eslint": "^5.0.0",
+    "eslint-config-terra": "^2.1.0",
     "html-webpack-plugin": "^3.1.0",
     "jest": "^23.1.0",
     "nightwatch": "^0.9.12",
