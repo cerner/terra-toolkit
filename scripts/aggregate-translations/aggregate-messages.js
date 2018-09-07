@@ -8,6 +8,7 @@ const aggregateTranslationMessages = (translationDirectories, locales) => {
   });
 
   translationDirectories.forEach(dir => locales.forEach((language) => {
+    // Check the directory for a translation file for each locale
     const translationFile = path.resolve(dir, `${language}.json`);
     try {
       Object.assign(translations[language], JSON.parse(fs.readFileSync(translationFile, 'utf8')));
