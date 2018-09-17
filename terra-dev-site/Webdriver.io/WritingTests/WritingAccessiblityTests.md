@@ -1,37 +1,3 @@
-# Axe Service
-Terra toolkit automatically includes the wdio-axe-service which enhances a webdriver.io instance with commands for accessibility testing using the [Axe](https://github.com/dequelabs/axe-core) utility.
-
-## Options
-
-Under the key `axe` in the wdio.conf.js you can pass a configuration object with the following structure:
-
-* **inject** - True if the axe script should be injected by the test running. Disable if axe is already included in the test files, which slightly speed up runs. Defaults to true.
-* **options** - Additional configuration options for axe.  See [axe documentation](https://www.axe-core.org/docs/) for the axe.configure api.
-  * **rules** - An array of rule objects to add to the existing set of rules or override existing rules.  See [axe documentation](https://www.axe-core.org/docs/) for the axe.configure api.
-
-```js
-// wdio.conf.js
-const wdioConf = require('terra-toolkit/config/wdio/wdio.config');
-
-const config = {
-  ...wdioConf.config,
-
-  // Configuration for Axe service
-  axe: {
-    // disabling specific rules when testing accessibility
-    options: {
-      rules: [{
-        id: 'landmark-one-main',
-        enabled: false,
-      }],
-    }
-  },
-};
-
-exports.config = config;
-```
-
-
 ## Writing Tests
 
 `browser.axe([{options}]);`
