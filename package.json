@@ -97,7 +97,7 @@
     "uglifyjs-webpack-plugin": "^1.2.4",
     "wdio-visual-regression-service": "^0.9.0",
     "webdriverio": "^4.9.8",
-    "webpack": "^4.4.1",
+    "webpack": "4.19.0",
     "webpack-cli": "^2.0.13",
     "webpack-merge": "^4.1.2",
     "webpack-serve": "^1.0.2"
