@@ -28,6 +28,8 @@ const setViewport = (formFactor) => {
     const terraViewport = VIEWPORTS[formFactor];
     if (terraViewport !== undefined && typeof terraViewport === 'object') {
       global.browser.setViewportSize(terraViewport);
+      // eslint-disable-next-line
+      console.log('SET! ', terraViewport);
     } else {
       throw new Error('The formFactor supplied is not a Terra-defined viewport size.');
     }
@@ -43,7 +45,6 @@ const setViewport = (formFactor) => {
 export default class TerraService {
   // eslint-disable-next-line class-methods-use-this
   before() {
-    setViewport(global.browser.options.formFactor);
     chai.config.showDiff = false;
     global.expect = chai.expect;
     global.should = chai.should();
@@ -58,5 +59,6 @@ export default class TerraService {
     };
     chai.Assertion.addMethod('accessible', chaiMethods.accessible);
     chai.Assertion.addMethod('matchReference', chaiMethods.matchReference);
+    setViewport(global.browser.options.formFactor);
   }
 }
