@@ -61,7 +61,9 @@ export default class TerraService {
     chai.Assertion.addMethod('matchReference', chaiMethods.matchReference);
     console.log(global.browser.timeouts());
     global.browser.timeouts({
-        "script": 3000,
+      "implicit": 0,
+      "pageLoad": 300000,
+      "script": 60000
     });
     setViewport(global.browser.options.formFactor);
   }
