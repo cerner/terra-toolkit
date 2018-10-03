@@ -59,6 +59,10 @@ export default class TerraService {
     };
     chai.Assertion.addMethod('accessible', chaiMethods.accessible);
     chai.Assertion.addMethod('matchReference', chaiMethods.matchReference);
+    console.log(global.browser.timeouts());
+    global.browser.timeouts({
+        "script": 3000,
+    });
     setViewport(global.browser.options.formFactor);
   }
 }
