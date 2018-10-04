@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Removed
+* Lerna dependency
 
 4.12.0 - (September 25, 2018)
 ----------
