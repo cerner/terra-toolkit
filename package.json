@@ -46,15 +46,13 @@
     "danger": "danger ci",
     "jest": "jest --config jestConfig.js",
     "lint": "eslint --ext .js,.jsx .",
-    "nightwatch": "nightwatch",
-    "nightwatch:port-provided": "nightwatch -c tests/test.nightwatch.conf.js",
     "prepare": "npm run compile",
     "prepublishOnly": "npm test",
     "pretest": "npm run lint",
     "release:major": "node scripts/release/release.js major",
     "release:minor": "node scripts/release/release.js minor",
     "release:patch": "node scripts/release/release.js patch",
-    "test": "npm run jest && npm run nightwatch && npm run nightwatch:port-provided && npm run wdio",
+    "test": "npm run jest && npm run wdio",
     "wdio": "npm run wdio-webpack-obj && npm run wdio-webpack-func && npm run tt-wdio-webpack-obj && npm run tt-wdio-webpack-func && npm run tt-wdio-unopinionated",
     "wdio-webpack-obj": "wdio --suite opinionated",
     "wdio-webpack-func": "TT_TEST_WDIO_FUNCTION=true wdio --suite opinionated",
@@ -101,9 +99,6 @@
     "webpack-cli": "^2.0.13",
     "webpack-merge": "^4.1.2",
     "webpack-serve": "^1.0.2"
-  },
-  "peerDependencies": {
-    "nightwatch": "^0.9.12"
   },
   "optionalDependencies": {
     "wdio-mocha-framework": "^0.5.11"

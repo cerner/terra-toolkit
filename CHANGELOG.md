@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Removed
+* Removed the nightwatch utility, dependencies, tests and documentations.
 
 4.12.0 - (September 25, 2018)
 ----------
