@@ -59,6 +59,10 @@ export default class TerraService {
     };
     chai.Assertion.addMethod('accessible', chaiMethods.accessible);
     chai.Assertion.addMethod('matchReference', chaiMethods.matchReference);
+    if (global.browser.desiredCapabilities.browserName === 'internet explorer') {
+//       console.log('before delaying...');
+      global.browser.pause(10000);
+    }
     setViewport(global.browser.options.formFactor);
   }
 }
