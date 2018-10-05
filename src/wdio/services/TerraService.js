@@ -28,8 +28,6 @@ const setViewport = (formFactor) => {
     const terraViewport = VIEWPORTS[formFactor];
     if (terraViewport !== undefined && typeof terraViewport === 'object') {
       global.browser.setViewportSize(terraViewport);
-      // eslint-disable-next-line
-      console.log('SET! ', terraViewport);
     } else {
       throw new Error('The formFactor supplied is not a Terra-defined viewport size.');
     }
@@ -59,8 +57,8 @@ export default class TerraService {
     };
     chai.Assertion.addMethod('accessible', chaiMethods.accessible);
     chai.Assertion.addMethod('matchReference', chaiMethods.matchReference);
+    // Selenium 1.14 IE driver takes a longer to be ready for browser interactions
     if (global.browser.desiredCapabilities.browserName === 'internet explorer') {
-//       console.log('before delaying...');
       global.browser.pause(10000);
     }
     setViewport(global.browser.options.formFactor);
