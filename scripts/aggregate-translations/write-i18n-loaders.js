@@ -13,7 +13,7 @@ const createTranslationLoader = (loaderName, locale) => (
   `const ${loaderName} = (callback, scope) => {
   require.ensure([], (require) => {
     // eslint-disable-next-line
-    const i18n = require('${locale}.js');
+    const i18n = require('./${locale}.js');
     callback.call(scope, i18n);
   }, '${locale}-translations');
 };\n

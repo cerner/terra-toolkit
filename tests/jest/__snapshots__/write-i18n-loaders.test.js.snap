@@ -17,7 +17,7 @@ exports[`write i18n loaders for fse fileSystem writes a translation file for a n
 "const loadCyTranslations = (callback, scope) => {
   require.ensure([], (require) => {
     // eslint-disable-next-line
-    const i18n = require('cy.js');
+    const i18n = require('./cy.js');
     callback.call(scope, i18n);
   }, 'cy-translations');
 };
@@ -52,7 +52,7 @@ exports[`write i18n loaders for fse fileSystem writes loader files 2`] = `
 "const loadEnTranslations = (callback, scope) => {
   require.ensure([], (require) => {
     // eslint-disable-next-line
-    const i18n = require('en.js');
+    const i18n = require('./en.js');
     callback.call(scope, i18n);
   }, 'en-translations');
 };
@@ -60,7 +60,7 @@ exports[`write i18n loaders for fse fileSystem writes loader files 2`] = `
 const loadEsTranslations = (callback, scope) => {
   require.ensure([], (require) => {
     // eslint-disable-next-line
-    const i18n = require('es.js');
+    const i18n = require('./es.js');
     callback.call(scope, i18n);
   }, 'es-translations');
 };
@@ -90,7 +90,7 @@ exports[`write i18n loaders for memoryFS fileSystem writes a translation file fo
 "const loadCyTranslations = (callback, scope) => {
   require.ensure([], (require) => {
     // eslint-disable-next-line
-    const i18n = require('cy.js');
+    const i18n = require('./cy.js');
     callback.call(scope, i18n);
   }, 'cy-translations');
 };
@@ -125,7 +125,7 @@ exports[`write i18n loaders for memoryFS fileSystem writes loader files 2`] = `
 "const loadEnTranslations = (callback, scope) => {
   require.ensure([], (require) => {
     // eslint-disable-next-line
-    const i18n = require('en.js');
+    const i18n = require('./en.js');
     callback.call(scope, i18n);
   }, 'en-translations');
 };
@@ -133,7 +133,7 @@ exports[`write i18n loaders for memoryFS fileSystem writes loader files 2`] = `
 const loadEsTranslations = (callback, scope) => {
   require.ensure([], (require) => {
     // eslint-disable-next-line
-    const i18n = require('es.js');
+    const i18n = require('./es.js');
     callback.call(scope, i18n);
   }, 'es-translations');
 };
