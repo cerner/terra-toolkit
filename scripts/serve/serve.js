@@ -23,7 +23,7 @@ const server = (options) => {
 
   // Muck with entries for hot reloading
   WebpackDevServer.addDevServerEntrypoints(config, devServerOptions);
-  // Make localhost hot relaod if 0.0.0.0 is specified.
+  // Make localhost hot reload if 0.0.0.0 is specified.
   if (host === '0.0.0.0') {
     WebpackDevServer.addDevServerEntrypoints(config, Object.assign({}, config.devServer, { host: 'localhost' }));
   }
