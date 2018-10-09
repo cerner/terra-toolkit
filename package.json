@@ -100,8 +100,7 @@
     "webpack": "4.19.0",
     "webpack-cli": "^2.0.13",
     "webpack-dev-server": "^3.1.9",
-    "webpack-merge": "^4.1.2",
-    "webpack-serve": "^1.0.2"
+    "webpack-merge": "^4.1.2"
   },
   "peerDependencies": {
     "nightwatch": "^0.9.12"
