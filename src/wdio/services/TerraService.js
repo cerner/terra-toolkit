@@ -57,7 +57,7 @@ export default class TerraService {
     };
     chai.Assertion.addMethod('accessible', chaiMethods.accessible);
     chai.Assertion.addMethod('matchReference', chaiMethods.matchReference);
-    // Selenium 3.14+ IE driver takes a longer to be ready for browser interactions
+    // IE driver takes a longer to be ready for browser interactions
     if (global.browser.desiredCapabilities.browserName === 'internet explorer') {
       global.browser.pause(10000);
     }
