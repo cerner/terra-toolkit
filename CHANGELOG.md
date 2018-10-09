@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Added
+* Add pause to the Terra service setup for IE browsers when setting the viewport. IE browsers need more time before being interacted with.
 
 4.12.0 - (September 25, 2018)
 ----------
