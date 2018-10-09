@@ -93,7 +93,7 @@ const virtualApp = (site, index, locale, fs, verbose) => {
         return;
       }
 
-      const fileExt = path.extname(filename);
+      const fileExt = path.extname(filename).replace(/(\?).*/, '');
       res.setHeader('content-type', mime.contentType(fileExt));
 
       if (fileExt === '.html') {
