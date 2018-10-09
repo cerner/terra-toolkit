@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Changed
+* Switch back to using webpack-dev-server for tt-serve
 
 4.13.0 - (October 8, 2018)
 ----------
