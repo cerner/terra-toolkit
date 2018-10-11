@@ -3,6 +3,13 @@ Changelog
 
 Unreleased
 ----------
+### Changed
+* Switch back to using webpack-dev-server for tt-serve due to webpack deprecating webpack-serve in favor of webpack-dev-server.
+
+4.13.0 - (October 8, 2018)
+----------
+### Changed
+* Updated aggregated translation loader to load translations relative to generated translations directory
 
 4.12.0 - (September 25, 2018)
 ----------
