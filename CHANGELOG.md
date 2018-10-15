@@ -10,6 +10,7 @@ Unreleased
 ### Changed
 * Switch back to using webpack-dev-server for tt-serve due to webpack deprecating webpack-serve in favor of webpack-dev-server.
 
+* Prevent en from being injected into aggregate-translations when en-US locale is passed
 
 4.13.0 - (October 8, 2018)
 ----------
