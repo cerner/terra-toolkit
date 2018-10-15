@@ -13,7 +13,7 @@ Cerner Corporation
 - Noah Benham [@noahbenham]
 - Ben Boersma [@BenBoersma]
 - Daniel Vu [@dv297]
-- Tyler Biethman [@tb021781]
+- Tyler Biethman [@tbiethman]
 
 [@emilyrohrbough]: https://github.com/emilyrohrbough
 [@brettjankord]: https://github.com/bjankord
@@ -28,4 +28,4 @@ Cerner Corporation
 [@noahbenham]: https://github.com/noahbenham
 [@BenBoersma]: https://github.com/BenBoersma
 [@dv297]: https://github.com/dv297
-[@tb021781]: https://github.com/tb021781
+[@tbiethman]: https://github.com/tbiethman
