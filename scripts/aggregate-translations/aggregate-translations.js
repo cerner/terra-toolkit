@@ -43,7 +43,7 @@ const defaults = (options = {}) => {
     outputDir: options.outputDir || './aggregated-translations',
   };
 
-  if (!defaultConfig.locales.includes('en')) {
+  if (!defaultConfig.locales.includes('en') || !defaultConfig.locales.includes('en-US')) {
     defaultConfig.locales.push('en');
   }
 

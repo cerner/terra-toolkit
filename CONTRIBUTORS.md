@@ -13,6 +13,7 @@ Cerner Corporation
 - Noah Benham [@noahbenham]
 - Ben Boersma [@BenBoersma]
 - Daniel Vu [@dv297]
+- Cory McDonald [@corymcdonald]
 
 [@emilyrohrbough]: https://github.com/emilyrohrbough
 [@brettjankord]: https://github.com/bjankord
@@ -27,3 +28,4 @@ Cerner Corporation
 [@noahbenham]: https://github.com/noahbenham
 [@BenBoersma]: https://github.com/BenBoersma
 [@dvv297]: https://github.com/dv297
+[@corymcdonald]: https://github.com/corymcdonald
