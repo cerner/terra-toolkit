@@ -54,6 +54,7 @@
     "release:major": "node scripts/release/release.js major",
     "release:minor": "node scripts/release/release.js minor",
     "release:patch": "node scripts/release/release.js patch",
+    "start": "node scripts/serve/serve-cli.js --config ./tests/test.config",
     "test": "npm run jest && npm run nightwatch && npm run nightwatch:port-provided && npm run wdio",
     "wdio": "npm run wdio-webpack-obj && npm run wdio-webpack-func && npm run tt-wdio-webpack-obj && npm run tt-wdio-webpack-func && npm run tt-wdio-unopinionated",
     "wdio-webpack-obj": "wdio --suite opinionated",
@@ -79,7 +80,6 @@
     "fs-extra": "^6.0.1",
     "glob": "^7.1.1",
     "ip": "^1.1.5",
-    "lerna": "^2.8.0",
     "load-json-file": "^5.0.0",
     "lodash.startcase": "^4.4.0",
     "memory-fs": "^0.4.1",
@@ -99,8 +99,8 @@
     "webdriverio": "^4.9.8",
     "webpack": "4.19.0",
     "webpack-cli": "^2.0.13",
-    "webpack-merge": "^4.1.2",
-    "webpack-serve": "^1.0.2"
+    "webpack-dev-server": "^3.1.9",
+    "webpack-merge": "^4.1.2"
   },
   "peerDependencies": {
     "nightwatch": "^0.9.12"

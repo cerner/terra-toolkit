@@ -4,8 +4,8 @@ Terra Toolkit offers up two different commands to serve your client side applica
 If you are using terra-dev-site, use the provided `tt-serve`/`tt-serve-static` commands instead.
 
 ## serve
-Serve is a replacement for webpack-dev-server. Behind the scenes it's using [webpack-serve](https://github.com/webpack-contrib/webpack-serve).
-Serve is a hot reloading server and does not work on IE 10 or below. See [compatible browsers](https://caniuse.com/#feat=websockets). Use serve-static for IE 10 testing.
+Serve is an abstraction for [webpack-dev-server](https://github.com/webpack/webpack-dev-server).
+Serve is a hot reloading server and may not work on IE 10 or below. See [browser support](https://github.com/webpack/webpack-dev-server#browser-support). Use serve-static for IE 10 testing.
 
 Serve is offered up as both a cli and a javascript function.
 
@@ -33,7 +33,7 @@ If no config is supplied tt-serve will first search for `webpack.config.js` in t
 | **config**  | true | `undefined` | The webpack config to serve. |
 | **port**  | false | `8080` | The port the server should listen on. |
 | **production** | false | false | Passes the -p flag to the webpack config. |
-| **host** | false | `undefined` | Sets the host that the server will listen on. eg. '10.10.10.1' |
+| **host** | false | `0.0.0.0` | Sets the host that the server will listen on. eg. '10.10.10.1' |
 
 #### In code
 ```javascript
