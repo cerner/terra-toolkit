@@ -43,7 +43,6 @@ const setViewport = (formFactor) => {
 export default class TerraService {
   // eslint-disable-next-line class-methods-use-this
   before() {
-    setViewport(global.browser.options.formFactor);
     chai.config.showDiff = false;
     global.expect = chai.expect;
     global.should = chai.should();
@@ -58,5 +57,10 @@ export default class TerraService {
     };
     chai.Assertion.addMethod('accessible', chaiMethods.accessible);
     chai.Assertion.addMethod('matchReference', chaiMethods.matchReference);
+    // IE driver takes a longer to be ready for browser interactions
+    if (global.browser.desiredCapabilities.browserName === 'internet explorer') {
+      global.browser.pause(10000);
+    }
+    setViewport(global.browser.options.formFactor);
   }
 }
