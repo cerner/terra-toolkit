@@ -86,7 +86,7 @@ if (hasPackages) {
     });
 
     packageLocationsWithTests.forEach((packageLocation, index) => {
-      const currentSuite = `suite${index % numberOfSuites + 1}`;
+      const currentSuite = `suite${(index % numberOfSuites) + 1}`;
       config.suites[currentSuite] = config.suites[currentSuite].concat(packageLocation);
     });
   }
