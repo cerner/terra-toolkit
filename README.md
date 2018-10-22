@@ -40,7 +40,7 @@ See the [Aggregating Translations Guide](https://github.com/cerner/terra-toolkit
 
 ## Serve Options
 
-Terra Toolkit offers two ways to serve your client side application, `serve` and `serve-static`. Serve is a hot-reloading replacement for webpack-dev-server, which uses [webpack-serve](https://github.com/webpack-contrib/webpack-serve), while serve-static is a non-hot-reloading [express](https://expressjs.com/) server. Serve-static supports IE10 and is used in webdriver testing.
+Terra Toolkit offers two ways to serve your client side application, `serve` and `serve-static`. Serve provides a hot-reloading, development only option via [webpack-dev-server](https://github.com/webpack/webpack-dev-server), while serve-static is a non-hot-reloading [express](https://expressjs.com/) server. Serve-static supports IE10 and is used in webdriver testing.
 
 See the [Serve Guide](https://github.com/cerner/terra-toolkit/blob/master/scripts/serve/README.md) to get started.
 

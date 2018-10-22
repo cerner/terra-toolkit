@@ -3,8 +3,17 @@ Changelog
 
 Unreleased
 ----------
+### Added
+* Add pause to the Terra service setup for IE browsers when setting the viewport. IE browsers need more time before being interacted with.
+
+4.14.0 - (October 16, 2018)
+----------
+### Removed
+* Lerna dependency
+
 ### Changed
 * Switch back to using webpack-dev-server for tt-serve due to webpack deprecating webpack-serve in favor of webpack-dev-server.
+
 
 4.13.0 - (October 8, 2018)
 ----------
