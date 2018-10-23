@@ -79,14 +79,14 @@ if (hasPackages) {
 
   const numberOfPackagesWithTests = packageLocationsWithTests.length;
   if (numberOfPackagesWithTests > 0) {
-    const numberOfSuites = 4;
+    const numberOfSuites = Math.min(numberOfPackagesWithTests, 4);
     config.suites = {};
     [...Array(numberOfSuites)].forEach((_, index) => {
       config.suites[`suite${index + 1}`] = [];
     });
-    const itemsPerSuite = Math.ceil(numberOfPackagesWithTests / numberOfSuites);
+
     packageLocationsWithTests.forEach((packageLocation, index) => {
-      const currentSuite = `suite${Math.floor(index / itemsPerSuite) + 1}`;
+      const currentSuite = `suite${(index % numberOfSuites) + 1}`;
       config.suites[currentSuite] = config.suites[currentSuite].concat(packageLocation);
     });
   }
