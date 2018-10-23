@@ -3,8 +3,14 @@ Changelog
 
 Unreleased
 ----------
+
+4.15.0 - (October 23, 2018)
+----------
 ### Added
 * Add pause to the Terra service setup for IE browsers when setting the viewport. IE browsers need more time before being interacted with.
+
+### Fixed
+* Updated test suite determination logic to prevent empty test suites from being created. 
 
 4.14.0 - (October 16, 2018)
 ----------
