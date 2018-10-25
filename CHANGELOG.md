@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Fixed
+* Cast serve-cli port value to be a number to prevent NaN from being passed as the port value for the server. 
 
 4.15.0 - (October 23, 2018)
 ----------
