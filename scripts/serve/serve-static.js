@@ -14,16 +14,17 @@ const compile = (webpackConfig, disk) => (
     if (!disk) {
       compiler.outputFileSystem = new MemoryFS();
     }
-    console.log('[Terra-Toolkit:serve-static] Webpack compilation started');
+    console.log(webpackConfig.mode);
+    console.log('[Terra-Toolkit:serve-static] Starting Webpack compilation');
     compiler.run((err, stats) => {
       if (err || stats.hasErrors()) {
-        console.log('[Terra-Toolkit:serve-static] Webpack compiled unsuccessfully');
+        console.log(`[Terra-Toolkit:serve-static] Webpack failed to compile in ${webpackConfig.mode} mode`);
         reject(err || new Error(stats.toJson().errors));
       } else {
         if (stats.hasWarnings()) {
           console.warn(stats.toJson().warnings);
         }
-        console.log('[Terra-Toolkit:serve-static] Webpack compiled successfully');
+        console.log(`[Terra-Toolkit:serve-static] Webpack compiled successfully in ${webpackConfig.mode} mode`);
         resolve([webpackConfig.output.path, compiler.outputFileSystem]);
       }
     });
