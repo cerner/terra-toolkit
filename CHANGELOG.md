@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Chanded
+* Give more info on webpack mode in serve-static startup
 
 4.15.0 - (October 23, 2018)
 ----------
