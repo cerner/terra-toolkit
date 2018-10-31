@@ -14,7 +14,6 @@ const compile = (webpackConfig, disk) => (
     if (!disk) {
       compiler.outputFileSystem = new MemoryFS();
     }
-    console.log(webpackConfig.mode);
     console.log('[Terra-Toolkit:serve-static] Starting Webpack compilation');
     compiler.run((err, stats) => {
       if (err || stats.hasErrors()) {
