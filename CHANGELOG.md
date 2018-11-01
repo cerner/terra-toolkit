@@ -3,7 +3,10 @@ Changelog
 
 Unreleased
 ----------
-### Chanded
+### Added
+* Added `site` wdio configuration option such that a relative path to a static site can used in the ServeStatic service. This options can be utilized to speed up tt-wdio runs by removing duplicated webpack compilation.
+
+### Changed
 * Give more info on webpack mode in serve-static startup
 
 4.15.0 - (October 23, 2018)

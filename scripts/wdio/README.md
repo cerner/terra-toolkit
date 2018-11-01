@@ -1,7 +1,7 @@
 # Terra Toolkit Wdio Helpers
 
 ## Wdio Runner
-Terra Toolkit offers its own wdio test runner which runs wdio test runs for specified locales and form factors. This allows for locale test runs that can match parallelized container test runs by synchronously running the wdio for each test run variation. This runner is a replacement for webdriver's bin script `wdio` by directly calling Webdriver's test launcher module for each test variation.
+Terra Toolkit offers its own wdio test runner which runs wdio test runs for specified locales and form factors. This allows for locale test runs that can match parallelized container test runs by synchronously running the wdio for each test run variation. This runner is a replacement for webdriver's bin script `wdio` by directly calling Webdriver's test launcher module for each test variation. Before running this script, it is recommended you pack the static site and add the relative path to the `site` key in the wdio configuration. This would only be desired for locally testing with this script.
 
 Terra's wdio test runner is available via the `tt-wdio` cli or the `wdio-runner` javascript function.
 
