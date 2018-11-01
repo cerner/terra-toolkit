@@ -40,7 +40,7 @@ const cleanSnapshots = (options) => {
   });
 
   // eslint-disable-next-line no-console
-  console.log('> [Terra-Tookit:wdio-runner] Cleaned screenshot directories');
+  console.log('> [Terra-Tookit:wdio-clean-screenshots] Cleaned screenshot directories');
   if (wdioConfig.logLevel !== 'silent' && removedDirs.length > 0) {
     // eslint-disable-next-line no-console
     console.log(removedDirs);

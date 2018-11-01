@@ -1,3 +1,4 @@
+import fse from 'fs-extra';
 import serveStatic from '../../../scripts/serve/serve-static';
 import SERVICE_DEFAULTS from '../../../config/wdio/services.default-config';
 
@@ -5,9 +6,10 @@ const { serveStatic: SERVE_STATIC_DEFAULTS } = SERVICE_DEFAULTS;
 
 export default class ServeStaticService {
   async onPrepare(config = {}) {
+    const site = config.site;
     const webpackConfig = config.webpackConfig;
 
-    if (!webpackConfig) {
+    if (!webpackConfig && !site) {
       // eslint-disable-next-line no-console
       console.warn('[Terra-Toolkit:serve-static] No webpack configuration provided');
       return;
@@ -24,7 +26,16 @@ export default class ServeStaticService {
       await this.stop();
     }
 
-    await ServeStaticService.startService(webpackConfig, port, index, locale, verbose).then((server) => {
+    const serveOptions = {
+      ...site && { site, disk: fse },
+      config: webpackConfig,
+      port,
+      index,
+      locale,
+      verbose,
+    };
+
+    await ServeStaticService.startService(serveOptions).then((server) => {
       this.server = server;
     });
   }
@@ -33,9 +44,10 @@ export default class ServeStaticService {
     await this.stop();
   }
 
-  static startService(config, port, index, locale, verbose) {
+  // Options include config, site, port, index, locale, verbose
+  static startService(serveOptions) {
     return serveStatic({
-      config, port, index, production: true, locale, verbose,
+      ...serveOptions, production: true,
     });
   }
 

@@ -34,7 +34,7 @@ const compile = (webpackConfig, disk) => (
 const generateSite = (site, config, disk, production) => {
   if (site) {
     const sitePath = path.join(process.cwd(), site);
-    return Promise.resolve([sitePath, undefined]);
+    return Promise.resolve([sitePath, disk]);
   }
 
   if (config) {
