@@ -54,6 +54,7 @@ const generateSite = (site, config, disk, production) => {
       webpackConfig.output = Object.assign({}, webpackConfig.output, { path: '/dist' });
     }
 
+    // all compile to determine the output file system to ensure compilation since webpack-dev-server is opinioned on the fs methods required
     const outputFileSystem = site ? undefined : disk;
     return compile(webpackConfig, outputFileSystem);
   }
