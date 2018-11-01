@@ -3,8 +3,58 @@ Changelog
 
 Unreleased
 ----------
+### Chanded
+* Give more info on webpack mode in serve-static startup
+
+4.15.0 - (October 23, 2018)
+----------
+### Added
+* Add pause to the Terra service setup for IE browsers when setting the viewport. IE browsers need more time before being interacted with.
+
+### Fixed
+* Updated test suite determination logic to prevent empty test suites from being created. 
+
+4.14.0 - (October 16, 2018)
+----------
+### Removed
+* Lerna dependency
+
+### Changed
+* Switch back to using webpack-dev-server for tt-serve due to webpack deprecating webpack-serve in favor of webpack-dev-server.
+
+
+4.13.0 - (October 8, 2018)
+----------
+### Changed
+* Updated aggregated translation loader to load translations relative to generated translations directory
+
+4.12.0 - (September 25, 2018)
+----------
+### Changed
+* Updated linter and linter plugins
+* Locked webpack version to 4.19.0
+
+4.11.1 - (August 29, 2018)
+----------
+### Changed
+* Pinned version of axe-core to 3.0.3
+
+4.11.0 - (August 29, 2018)
+----------
+### Changed
+* Bump axe-core to ^3.1.1 and unpin the version
+* Fixed wdio clean-screenshots utility incorrectly resolving path of config file
+
+4.10.1 - (August 27, 2018)
+----------
+### Changed
+* Pinned version of axe-core to 3.0.3
+
+4.10.0 - (August 21, 2018)
+----------
 ### Changed
 * Bumped node-sass dependency to v4.9.3. This version should work better on latest High Sierra OS on mac.
+* Fixed aggregated-translations locales and tt-wdio formFactors and locales flag to not include single quotes in output file names on Windows.
 
 4.9.0 - (August 14, 2018)
 ----------

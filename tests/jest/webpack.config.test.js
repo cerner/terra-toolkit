@@ -5,16 +5,16 @@ jest.mock('mini-css-extract-plugin');
 jest.mock('clean-webpack-plugin');
 jest.mock('uglifyjs-webpack-plugin');
 
-const webpackConfig = require('../../config/webpack/webpack.config');
 const path = require('path');
 
 // Import mocked components
-const aggregateTranslations = require('../../scripts/aggregate-translations/aggregate-translations');
 const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin');
 const PostCSSCustomProperties = require('postcss-custom-properties');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const aggregateTranslations = require('../../scripts/aggregate-translations/aggregate-translations');
+const webpackConfig = require('../../config/webpack/webpack.config');
 
 const outputPath = expect.stringContaining('build');
 
