@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 const express = require('express');
+const fse = require('fs-extra');
 const path = require('path');
 const webpack = require('webpack');
 const clone = require('clone');
@@ -34,7 +35,11 @@ const compile = (webpackConfig, disk) => (
 const generateSite = (site, config, disk, production) => {
   if (site) {
     const sitePath = path.join(process.cwd(), site);
-    return Promise.resolve([sitePath, disk]);
+
+    if (fse.existsSync(sitePath) && fse.lstatSync(sitePath).isDirectory()) {
+      return Promise.resolve([sitePath, disk]);
+    }
+    console.log(`[Terra-Toolkit:serve-static] Could not serve static site from ${sitePath}. Attempting to use webpack configuration.`);
   }
 
   if (config) {
@@ -49,7 +54,8 @@ const generateSite = (site, config, disk, production) => {
       webpackConfig.output = Object.assign({}, webpackConfig.output, { path: '/dist' });
     }
 
-    return compile(webpackConfig, disk);
+    const outputFileSystem = site ? undefined : disk;
+    return compile(webpackConfig, outputFileSystem);
   }
 
   return Promise.reject(new Error('[Terra-Toolkit:serve-static] No webpack configuration provided.'));

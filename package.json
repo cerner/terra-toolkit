@@ -48,6 +48,7 @@
     "lint": "eslint --ext .js,.jsx .",
     "nightwatch": "nightwatch",
     "nightwatch:port-provided": "nightwatch -c tests/test.nightwatch.conf.js",
+    "pack": "webpack --config tests/test.config.js",
     "prepare": "npm run compile",
     "prepublishOnly": "npm test",
     "pretest": "npm run lint",
@@ -62,7 +63,7 @@
     "wdio-webpack-func": "TT_TEST_WDIO_FUNCTION=true wdio --suite opinionated",
     "tt-wdio-webpack-obj": "node scripts/wdio/wdio-runner-cli.js --suite opinionated",
     "tt-wdio-webpack-func": "TT_TEST_WDIO_FUNCTION=true node scripts/wdio/wdio-runner-cli.js --suite opinionated",
-    "tt-wdio-unopinionated": "node scripts/wdio/wdio-runner-cli.js --formFactors=['tiny','huge'] --locales=['en','fr'] --suite unopinionated"
+    "tt-wdio-unopinionated": "npm run pack; node scripts/wdio/wdio-runner-cli.js --formFactors=['tiny','huge'] --locales=['en','fr'] --suite unopinionated; rm -rf ./build"
   },
   "dependencies": {
     "async": "^2.5.0",
