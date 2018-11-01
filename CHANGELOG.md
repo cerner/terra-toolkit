@@ -3,7 +3,10 @@ Changelog
 
 Unreleased
 ----------
-### Chanded
+### Fixed
+* Cast serve-cli port value to be a number to prevent NaN from being passed as the port value for the server. 
+
+### Changed
 * Give more info on webpack mode in serve-static startup
 
 4.15.0 - (October 23, 2018)
