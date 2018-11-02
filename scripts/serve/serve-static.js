@@ -39,7 +39,8 @@ const generateSite = (site, config, disk, production) => {
     if (fse.existsSync(sitePath) && fse.lstatSync(sitePath).isDirectory()) {
       return Promise.resolve([sitePath, disk]);
     }
-    console.log(`[Terra-Toolkit:serve-static] Could not serve static site from ${sitePath}. Attempting to use webpack configuration.`);
+
+    return Promise.reject(new Error(`[Terra-Toolkit:serve-static] Could not serve static site from ${sitePath}.`));
   }
 
   if (config) {
@@ -54,9 +55,7 @@ const generateSite = (site, config, disk, production) => {
       webpackConfig.output = Object.assign({}, webpackConfig.output, { path: '/dist' });
     }
 
-    // allow compile() to determine the output file system to ensure compilation since webpack-dev-server is opinioned on the fs methods required
-    const outputFileSystem = site ? undefined : disk;
-    return compile(webpackConfig, outputFileSystem);
+    return compile(webpackConfig, disk);
   }
 
   return Promise.reject(new Error('[Terra-Toolkit:serve-static] No webpack configuration provided.'));

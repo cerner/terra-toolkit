@@ -5,7 +5,7 @@ Terra Toolkit offers its own wdio test runner which runs wdio test runs for spec
 
 Terra's wdio test runner is available via the `tt-wdio` cli or the `wdio-runner` javascript function.
 
-Before running this script, it is recommended you pack the static site in proeudtion mode and add the relative path to the `site` key in the wdio configuration. This would only be desired for locally testing with this script.
+Before running this script, it is recommended you pack the static site in production mode and add the relative path to the `site` key in the wdio configuration. This would only be desired for locally testing with this script.
 
 #### API
 | Name  | Default Value | Description |
