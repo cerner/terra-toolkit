@@ -37,7 +37,8 @@ const generateSite = (site, config, disk, production) => {
     const sitePath = path.join(process.cwd(), site);
 
     if (fse.existsSync(sitePath) && fse.lstatSync(sitePath).isDirectory()) {
-      return Promise.resolve([sitePath, disk]);
+      const fileSystem = disk ? fse : undefined;
+      return Promise.resolve([sitePath, fileSystem]);
     }
 
     return Promise.reject(new Error(`[Terra-Toolkit:serve-static] Could not serve static site from ${sitePath}.`));
@@ -76,7 +77,6 @@ const setSiteLocale = (fileContent, locale) => {
 
   return content.replace(/<html/, `<html ${langLocale}`);
 };
-
 
 // Setup an app server that reads from a filesystem.
 const virtualApp = (site, index, locale, fs, verbose) => {

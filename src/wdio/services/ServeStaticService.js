@@ -1,4 +1,3 @@
-import fse from 'fs-extra';
 import serveStatic from '../../../scripts/serve/serve-static';
 import SERVICE_DEFAULTS from '../../../config/wdio/services.default-config';
 
@@ -27,7 +26,7 @@ export default class ServeStaticService {
     }
 
     const serveOptions = {
-      ...site && { site, disk: fse },
+      ...site && { site, disk: true },
       config: webpackConfig,
       port,
       index,
