@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 const WebpackDevServer = require('webpack-dev-server');
-const Webpack = require('webpack');
+const webpack = require('webpack');
 
 // Create a webpack dev server instance.
 const server = (options) => {
@@ -29,7 +29,7 @@ const server = (options) => {
   }
 
   // get a compiler
-  const compiler = Webpack(config);
+  const compiler = webpack(config);
   // get a server
   const devServer = new WebpackDevServer(compiler, devServerOptions);
 

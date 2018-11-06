@@ -1,7 +1,12 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
+const path = require('path');
+const fs = require('fs');
 const wdioConf = require('./config/wdio/wdio.conf');
 const webpackConfigObject = require('./tests/test.config.js');
 const webpackConfigFunction = require('./tests/test.config.func.js');
+
+const site = path.join('./build');
+const siteExists = fs.existsSync(site) && fs.lstatSync(site).isDirectory();
 
 const webpackConfig = process.env.TT_TEST_WDIO_FUNCTION ? webpackConfigFunction : webpackConfigObject;
 
@@ -35,6 +40,8 @@ const config = {
       'tests/wdio/theme-spec.js',
     ],
   },
+  // Static site for ServeStaticService
+  ...siteExists && { site },
 
   // Configuration for ServeStaticService
   webpackConfig,

@@ -5,6 +5,8 @@ Terra Toolkit offers its own wdio test runner which runs wdio test runs for spec
 
 Terra's wdio test runner is available via the `tt-wdio` cli or the `wdio-runner` javascript function.
 
+Before running this script, it is recommended you pack the static site in production mode and add the relative path to the `site` key in the wdio configuration. This would only be desired for locally testing with this script.
+
 #### API
 | Name  | Default Value | Description |
 | ------------- | ------------- | ------------- |
@@ -25,7 +27,8 @@ If no config is supplied to `tt-wdio`, `tt-wdio` will first search for `wdio.con
 In your package.json
 ```JSON
 {
-  "test:wdio": "tt-wdio --config ./wdio.conf.js --locales ['en','es']"
+  "pack": "NODE_ENV=production webpack --config ./webpack.config.js -p",
+  "test:wdio-locally": "npm run pack; tt-wdio --config ./wdio.conf.js --locales ['en','es']; rm -rf ./build"
 }
 ```
 

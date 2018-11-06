@@ -47,5 +47,8 @@ module.exports = {
       filename: './i18n.html',
     }),
   ],
+  output: {
+    path: path.join(process.cwd(), 'build'),
+  },
   mode: 'production',
 };

@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 const express = require('express');
+const fse = require('fs-extra');
 const path = require('path');
 const webpack = require('webpack');
 const clone = require('clone');
@@ -34,7 +35,13 @@ const compile = (webpackConfig, disk) => (
 const generateSite = (site, config, disk, production) => {
   if (site) {
     const sitePath = path.join(process.cwd(), site);
-    return Promise.resolve([sitePath, undefined]);
+
+    if (fse.existsSync(sitePath) && fse.lstatSync(sitePath).isDirectory()) {
+      const fileSystem = disk ? fse : undefined;
+      return Promise.resolve([sitePath, fileSystem]);
+    }
+
+    return Promise.reject(new Error(`[Terra-Toolkit:serve-static] Could not serve static site from ${sitePath}.`));
   }
 
   if (config) {
@@ -70,7 +77,6 @@ const setSiteLocale = (fileContent, locale) => {
 
   return content.replace(/<html/, `<html ${langLocale}`);
 };
-
 
 // Setup an app server that reads from a filesystem.
 const virtualApp = (site, index, locale, fs, verbose) => {

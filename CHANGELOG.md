@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+### Added
+* Added `site` wdio configuration option such that a relative path to a static site can used in the ServeStatic service. This options can be utilized to speed up tt-wdio runs by removing duplicated webpack compilation.
+
 ### Fixed
 * Cast serve-cli port value to be a number to prevent NaN from being passed as the port value for the server. 
 
