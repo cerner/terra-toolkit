@@ -26,6 +26,7 @@
     "tt-aggregate-translations": "bin/aggregate-translations.js",
     "tt-clean-screenshots": "bin/clean-screenshots.js",
     "tt-heroku-serve-static": "bin/heroku-serve-static.js",
+    "tt-pack": "bin/pack.js",
     "tt-serve": "bin/serve.js",
     "tt-serve-static": "bin/serve-static.js",
     "tt-wdio": "bin/wdio-runner.js"
