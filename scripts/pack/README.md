@@ -14,13 +14,13 @@ If there is an existing tar file it will be overwritten.
 ```JSON
 {
   "scripts": {
-    "pack": "tt-pack"
+    "tt-pack": "tt-pack"
   }
 }
 ```
 ### Running the command
 ```
-npm run pack
+npm run tt-pack
 ```
 ### Output
 package-name.tgz
