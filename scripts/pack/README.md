@@ -5,7 +5,7 @@ Terra Toolkit offers a way to pack individual packages into a tar archive file.
 ## Description
 `tt-pack` utilizes [npm pack](https://docs.npmjs.com/cli/pack) to create a tarball from a package.
 
-The tar archive file will be written to the current working directory in the following format: `<package-name>.tgz`. Assets should be compiled before packing.
+The tar archive file will be written to the current working directory in the following format: `<package-name>.tgz`. Assets should be compiled before packing. Everything except the items declared in the npmignore will be included within the tar archive file.
 
 If there is an existing tar file it will be overwritten.
 
