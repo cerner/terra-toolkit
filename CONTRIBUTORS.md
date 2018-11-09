@@ -14,6 +14,7 @@ Cerner Corporation
 - Ben Boersma [@BenBoersma]
 - Daniel Vu [@dv297]
 - Tyler Biethman [@tbiethman]
+- Stephen Esser [@StephenEsser]
 
 [@emilyrohrbough]: https://github.com/emilyrohrbough
 [@brettjankord]: https://github.com/bjankord
@@ -29,3 +30,4 @@ Cerner Corporation
 [@BenBoersma]: https://github.com/BenBoersma
 [@dv297]: https://github.com/dv297
 [@tbiethman]: https://github.com/tbiethman
+[@StephenEsser]: https://github.com/StephenEsser

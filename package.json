@@ -26,6 +26,7 @@
     "tt-aggregate-translations": "bin/aggregate-translations.js",
     "tt-clean-screenshots": "bin/clean-screenshots.js",
     "tt-heroku-serve-static": "bin/heroku-serve-static.js",
+    "tt-pack": "bin/pack.js",
     "tt-serve": "bin/serve.js",
     "tt-serve-static": "bin/serve-static.js",
     "tt-wdio": "bin/wdio-runner.js"
@@ -96,6 +97,7 @@
     "raf": "^3.4.0",
     "raw-loader": "^0.5.1",
     "sass-loader": "^7.0.1",
+    "shelljs": "^0.8.2",
     "uglifyjs-webpack-plugin": "^1.2.4",
     "wdio-visual-regression-service": "^0.9.0",
     "webdriverio": "^4.9.8",
@@ -124,7 +126,6 @@
     "html-webpack-plugin": "^3.1.0",
     "jest": "^23.1.0",
     "nightwatch": "^0.9.12",
-    "rimraf": "^2.6.1",
-    "shelljs": "^0.8.2"
+    "rimraf": "^2.6.1"
   }
 }

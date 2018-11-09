@@ -4,10 +4,11 @@ Changelog
 Unreleased
 ----------
 ### Added
-* Added `site` wdio configuration option such that a relative path to a static site can used in the ServeStatic service. This options can be utilized to speed up tt-wdio runs by removing duplicated webpack compilation.
+* Added `site` wdio configuration option such that a relative path to a static site can used in the ServeStatic service. This option can be utilized to speed up tt-wdio runs by removing duplicated webpack compilation.
+* Added `tt-pack` script for packing packages into a tar archive file.
 
 ### Fixed
-* Cast serve-cli port value to be a number to prevent NaN from being passed as the port value for the server. 
+* Cast serve-cli port value to be a number to prevent NaN from being passed as the port value for the server.
 
 ### Changed
 * Give more info on webpack mode in serve-static startup
@@ -18,7 +19,7 @@ Unreleased
 * Add pause to the Terra service setup for IE browsers when setting the viewport. IE browsers need more time before being interacted with.
 
 ### Fixed
-* Updated test suite determination logic to prevent empty test suites from being created. 
+* Updated test suite determination logic to prevent empty test suites from being created.
 
 4.14.0 - (October 16, 2018)
 ----------
