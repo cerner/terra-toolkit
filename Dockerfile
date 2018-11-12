@@ -2,4 +2,4 @@
 FROM cerner/terra-node
 
 # run the server
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "start", "--", "--port", "8080"]
