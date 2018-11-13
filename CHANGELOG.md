@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+4.16.1 - (November 13, 2018)
+----------
 ### Fixed
 * Remove parseInt for serve-cli port value. Casting it to a number caused the default value to return NaN.
 
