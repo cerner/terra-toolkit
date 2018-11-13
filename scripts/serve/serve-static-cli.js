@@ -9,7 +9,7 @@ const loadWebpackConfig = require('./loadWebpackConfig');
 commander
   .version(packageJson.version)
   .option('--config [path]', 'The webpack config to serve. Alias for <config>.', undefined)
-  .option('--port [number]', 'The port the app should listen on', parseInt)
+  .option('--port [number]', 'The port the app should listen on', 8080)
   .option('--host [string]', 'Sets the host that the server will listen on. eg. \'10.10.10.1\'', '0.0.0.0')
   .option('-p, --production', 'Passes the -p flag to the webpack config, if available.')
   .option('--site [path]', 'The relative path to the static site. This takes precidence over webpack config if both are passed.', undefined)
@@ -20,7 +20,7 @@ serve({
   config: loadWebpackConfig(commander.config),
   disk: commander.disk,
   host: commander.host,
-  port: commander.port,
+  port: Number(commander.port),
   production: commander.production,
   site: commander.site,
 });
