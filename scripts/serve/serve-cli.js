@@ -9,7 +9,7 @@ commander
   .version(packageJson.version)
   .option('--config [path]', 'The webpack config to serve.', undefined)
   .option('--host [string]', 'Sets the host that the server will listen on. eg. \'10.10.10.1\'', '0.0.0.0')
-  .option('--port [number]', 'The port the server should listen on.', Number(parseInt), 8080)
+  .option('--port [number]', 'The port the server should listen on.', parseInt, 8080)
   .option('-p, --production', 'Passes the -p flag to the webpack config')
   .parse(process.argv);
 

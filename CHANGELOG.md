@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Revert Fix
+* Remove casting serve-cli port value to be a number. Original fix was meant to prevent NaN from being passed as the port value for the server, however now the default port value is failing with NaN. Reverting fix for a quick release.
 
 4.16.0 - (November 9, 2018)
 ----------
