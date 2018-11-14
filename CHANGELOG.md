@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+4.17.0 - (November 14, 2018)
+----------
 ### Changed
 * Loosen node version via npm engine to accept any version over 8.9.2
 * Update .npmrc file to use latest v8.x release (lts/carbon)
