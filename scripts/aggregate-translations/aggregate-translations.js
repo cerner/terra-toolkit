@@ -8,10 +8,7 @@ const writeAggregatedTranslations = require('./write-aggregated-translations');
 const writeI18nLoaders = require('./write-i18n-loaders');
 
 const defaultSearchPatterns = baseDirectory => ([
-  path.resolve(baseDirectory, 'translations'), // root level translations
-  path.resolve(baseDirectory, 'node_modules', 'terra-*', 'translations'), // root level dependency translations
-  path.resolve(baseDirectory, 'packages', 'terra-*', 'translations'), // package level translations
-  path.resolve(baseDirectory, 'packages', 'terra-*', 'node_modules', 'terra-*', 'translations'), // package level dependency translations
+  path.resolve(baseDirectory, '**', 'translations'),
 ]);
 
 const customDirectories = (baseDirectory, directories) => (directories.map(dir => path.resolve(baseDirectory, dir)));
