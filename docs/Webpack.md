@@ -76,6 +76,6 @@ React 16 depends on the collection types ``Map`` and ``Set`` and it depends on `
 ### Production Only Plugins
 - [clean-webpack-plugin](https://github.com/johnagan/clean-webpack-plugin) -
 A webpack plugin to remove/clean your build folder(s) before building.
-- [uglifyjs-webpack-plugin](https://webpack.js.org/plugins/uglifyjs-webpack-plugin/) - minifies your JavaScript.
+- [terser-webpack-plugin](https://webpack.js.org/plugins/terser-webpack-plugin/) - minifies your JavaScript.
 
 ###### \* Required to support IE legacy browsers
