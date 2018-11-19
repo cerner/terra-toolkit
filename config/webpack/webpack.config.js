@@ -5,7 +5,7 @@ const path = require('path');
 const rtl = require('postcss-rtl');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const browserslist = require('browserslist-config-terra');
 const merge = require('webpack-merge');
 const aggregateTranslations = require('../../scripts/aggregate-translations/aggregate-translations');
@@ -120,11 +120,11 @@ const webpackConfig = (options, env, argv) => {
     ],
     optimization: {
       minimizer: [
-        new UglifyJsPlugin({
+        new TerserPlugin({
           cache: true,
           parallel: true,
           sourceMap: true,
-          uglifyOptions: {
+          terserOptions: {
             compress: {
               typeofs: false,
             },
