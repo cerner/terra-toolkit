@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+4.18.0 - (November 19, 2018)
+----------
 ### Changed
 * Replaced uglifyjs-webpack-plugin with terser-webpack-plugin
 
