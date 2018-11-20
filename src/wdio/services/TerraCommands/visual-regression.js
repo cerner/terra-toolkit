@@ -43,6 +43,10 @@ const determineScreenshotOptions = (...args) => {
 * @property {Array} args - An object containing the CSS custom properties to assert.
 */
 const themeEachCustomProperty = (...args) => {
+  if (global.browser.options.terra.disableThemeTests) {
+    return;
+  }
+
   // If more than 1 argument, selector is first
   const selector = args.length > 1 ? args[0] : global.browser.options.terra.selector;
   // Style properties are always last.
@@ -62,6 +66,10 @@ const themeEachCustomProperty = (...args) => {
 * @property {Array} args - An object containing the options for themeCombinationOfCustomProperties and  CSS custom properties to assert.
 */
 const themeCombinationOfCustomProperties = (...args) => {
+  if (global.browser.options.terra.disableThemeTests) {
+    return;
+  }
+
   const selector = args[0].selector ? args[0].selector : global.browser.options.terra.selector;
   const styleProperties = args[0].properties ? args[0].properties : [];
 
