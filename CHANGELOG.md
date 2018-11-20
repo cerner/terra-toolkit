@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+4.19.0 - (December 20, 2018)
+----------
 ### Changed
 * Added configuration option (disableThemeTests) to disable theme functions in wdio tests
 
