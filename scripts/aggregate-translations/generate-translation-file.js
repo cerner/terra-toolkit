@@ -16,7 +16,7 @@ const sortMessages = (messages) => {
   return sortedMessages;
 };
 
-const translationFile = (locale, messages) => (
+const translationFile = (locale, baseLocale, messages) => (
   `'use strict';\n
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -25,25 +25,26 @@ exports.messages = exports.locale = exports.areTranslationsLoaded = undefined;
 
 var _reactIntl = require('react-intl');
 
-var _${locale} = require('react-intl/locale-data/${locale}');
+var _${baseLocale} = require('react-intl/locale-data/${baseLocale}');
 
-var _${locale}2 = _interopRequireDefault(_${locale});
+var _${baseLocale}2 = _interopRequireDefault(_${baseLocale});
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-(0, _reactIntl.addLocaleData)(_${locale}2.default);
+(0, _reactIntl.addLocaleData)(_${baseLocale}2.default);
 
 var messages = ${JSON.stringify(messages, null, 2)};
 var areTranslationsLoaded = true;
 var locale = '${locale}';
-export.areTranslationsLoaded = areTranslationsLoaded;
-export.locale = locale;
-export.messages = messages;
+exports.areTranslationsLoaded = areTranslationsLoaded;
+exports.locale = locale;
+exports.messages = messages;
 `);
 
 const generateTranslationFile = (locale, messages) => {
   const sortedMessages = sortMessages(messages);
-  return translationFile(locale, sortedMessages);
+  const baseLocale = locale.split('-')[0];
+  return translationFile(locale, baseLocale, sortedMessages);
 };
 
 module.exports = generateTranslationFile;

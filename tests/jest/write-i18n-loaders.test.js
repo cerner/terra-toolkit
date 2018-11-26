@@ -6,7 +6,7 @@ const writeI18nLoaders = require('../../scripts/aggregate-translations/write-i18
 
 global.console = { warn: jest.fn() };
 
-const locales = ['en', 'es'];
+const locales = ['en', 'en-US', 'es'];
 const memoryFS = new MemoryFileSystem();
 const testFileSystems = { fse, memoryFS };
 
@@ -38,6 +38,7 @@ Object.keys(testFileSystems).forEach((testFS) => {
       expect(writtenFilePaths).toEqual(outputFiles);
       expect(writtenFiles[0]).toMatchSnapshot();
       expect(writtenFiles[1]).toMatchSnapshot();
+      expect(writtenFiles[2]).toMatchSnapshot();
     });
 
     it('logs a warning message if a locale is not a terra-supported locale', () => {
@@ -54,6 +55,7 @@ Object.keys(testFileSystems).forEach((testFS) => {
 
       expect(writtenFiles[0]).toMatchSnapshot();
       expect(writtenFiles[1]).toMatchSnapshot();
+      expect(writtenFiles[2]).toMatchSnapshot();
     });
   });
 });

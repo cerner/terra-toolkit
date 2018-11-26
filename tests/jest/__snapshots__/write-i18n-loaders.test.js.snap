@@ -33,6 +33,8 @@ var translationsLoaders = {
 module.exports = translationsLoaders;"
 `;
 
+exports[`write compiled i18n loaders for fse fileSystem writes a translation file for a non-terra-supported locale 3`] = `undefined`;
+
 exports[`write compiled i18n loaders for fse fileSystem writes compiled loader files 1`] = `
 "'use strict';
 
@@ -43,6 +45,13 @@ require.ensure([], function (require) {
 
 'use strict';
 
+var loadEnUSIntl = function loadEnUSIntl() {
+require.ensure([], function (require) {
+  return require('intl/locale-data/jsonp/en-US.js');
+}, 'en-US-intl-local');
+
+'use strict';
+
 var loadEsIntl = function loadEsIntl() {
 require.ensure([], function (require) {
   return require('intl/locale-data/jsonp/es.js');
@@ -50,6 +59,7 @@ require.ensure([], function (require) {
 
 var intlLoaders = {
   'en': loadEnIntl,
+  'en-US': loadEnUSIntl,
   'es': loadEsIntl
 };
 
@@ -69,6 +79,16 @@ var loadEnTranslations = function loadEnTranslations(callback, scope) {
 
 'use strict';
 
+var loadEnUSTranslations = function loadEnUSTranslations(callback, scope) {
+  require.ensure([], function (require) {
+    // eslint-disable-next-line
+    var i18n = require('./en-US.js');
+    callback.call(scope, i18n);
+  }, 'en-US-translations');
+};
+
+'use strict';
+
 var loadEsTranslations = function loadEsTranslations(callback, scope) {
   require.ensure([], function (require) {
     // eslint-disable-next-line
@@ -79,11 +99,14 @@ var loadEsTranslations = function loadEsTranslations(callback, scope) {
 
 var translationsLoaders = {
   'en': loadEnTranslations,
+  'en-US': loadEnUSTranslations,
   'es': loadEsTranslations
 };
 
 module.exports = translationsLoaders;"
 `;
+
+exports[`write compiled i18n loaders for fse fileSystem writes compiled loader files 3`] = `undefined`;
 
 exports[`write compiled i18n loaders for memoryFS fileSystem writes a translation file for a non-terra-supported locale 1`] = `
 "'use strict';
@@ -118,6 +141,8 @@ var translationsLoaders = {
 module.exports = translationsLoaders;"
 `;
 
+exports[`write compiled i18n loaders for memoryFS fileSystem writes a translation file for a non-terra-supported locale 3`] = `undefined`;
+
 exports[`write compiled i18n loaders for memoryFS fileSystem writes compiled loader files 1`] = `
 "'use strict';
 
@@ -128,6 +153,13 @@ require.ensure([], function (require) {
 
 'use strict';
 
+var loadEnUSIntl = function loadEnUSIntl() {
+require.ensure([], function (require) {
+  return require('intl/locale-data/jsonp/en-US.js');
+}, 'en-US-intl-local');
+
+'use strict';
+
 var loadEsIntl = function loadEsIntl() {
 require.ensure([], function (require) {
   return require('intl/locale-data/jsonp/es.js');
@@ -135,6 +167,7 @@ require.ensure([], function (require) {
 
 var intlLoaders = {
   'en': loadEnIntl,
+  'en-US': loadEnUSIntl,
   'es': loadEsIntl
 };
 
@@ -154,6 +187,16 @@ var loadEnTranslations = function loadEnTranslations(callback, scope) {
 
 'use strict';
 
+var loadEnUSTranslations = function loadEnUSTranslations(callback, scope) {
+  require.ensure([], function (require) {
+    // eslint-disable-next-line
+    var i18n = require('./en-US.js');
+    callback.call(scope, i18n);
+  }, 'en-US-translations');
+};
+
+'use strict';
+
 var loadEsTranslations = function loadEsTranslations(callback, scope) {
   require.ensure([], function (require) {
     // eslint-disable-next-line
@@ -164,8 +207,11 @@ var loadEsTranslations = function loadEsTranslations(callback, scope) {
 
 var translationsLoaders = {
   'en': loadEnTranslations,
+  'en-US': loadEnUSTranslations,
   'es': loadEsTranslations
 };
 
 module.exports = translationsLoaders;"
 `;
+
+exports[`write compiled i18n loaders for memoryFS fileSystem writes compiled loader files 3`] = `undefined`;
