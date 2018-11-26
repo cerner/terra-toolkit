@@ -11,7 +11,7 @@ const memoryFS = new MemoryFileSystem();
 const testFileSystems = { fse, memoryFS };
 
 Object.keys(testFileSystems).forEach((testFS) => {
-  describe(`write i18n loaders for ${testFS} fileSystem`, () => {
+  describe(`write compiled i18n loaders for ${testFS} fileSystem`, () => {
     const fileSystem = testFileSystems[testFS];
     const outputDir = '/aggregated-translations';
     let writtenFilePaths;
@@ -27,7 +27,7 @@ Object.keys(testFileSystems).forEach((testFS) => {
       console.warn.mockClear();
     });
 
-    it('writes loader files', () => {
+    it('writes compiled loader files', () => {
       const outputFiles = [
         path.resolve(process.cwd(), outputDir, 'intlLoaders.js'),
         path.resolve(process.cwd(), outputDir, 'translationsLoaders.js'),

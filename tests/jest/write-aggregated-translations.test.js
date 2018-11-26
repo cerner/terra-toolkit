@@ -12,7 +12,7 @@ const memoryFS = new MemoryFileSystem();
 const testFileSystems = { fse, memoryFS };
 
 Object.keys(testFileSystems).forEach((testFS) => {
-  describe(`write aggregated translations for ${testFS} fileSystem`, () => {
+  describe(`write compiled aggregated translations for ${testFS} fileSystem`, () => {
     const fileSystem = testFileSystems[testFS];
     const outputDir = '/aggregated-translations';
     let writtenFiles;
@@ -24,7 +24,7 @@ Object.keys(testFileSystems).forEach((testFS) => {
       });
     });
 
-    it('writes translations files', () => {
+    it('writes compiled translations files', () => {
       const outputFiles = [
         path.resolve(process.cwd(), outputDir, 'en.js'),
         path.resolve(process.cwd(), outputDir, 'es.js'),
@@ -46,7 +46,7 @@ Object.keys(testFileSystems).forEach((testFS) => {
       expect(console.warn).toBeCalledWith(expect.stringContaining('WARNING: cy is NOT a Terra supported locale. Creating an aggregate translation file for cy, but'));
     });
 
-    it('writes a translation file for a non-terra-supported locale', () => {
+    it('writes a compiled translation file for a non-terra-supported locale', () => {
       const outputFiles = [
         path.resolve(process.cwd(), outputDir, 'cy.js'),
       ];

@@ -1,46 +1,54 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`write i18n loaders for fse fileSystem writes a translation file for a non-terra-supported locale 1`] = `
-"const loadCyIntl = () =>
-require.ensure([],
-  require => require('intl/locale-data/jsonp/cy.js'),
-  'cy-intl-local');
+exports[`write compiled i18n loaders for fse fileSystem writes a translation file for a non-terra-supported locale 1`] = `
+"'use strict';
 
-const intlLoaders = {
+var loadCyIntl = function loadCyIntl() {
+require.ensure([], function (require) {
+  return require('intl/locale-data/jsonp/cy.js');
+}, 'cy-intl-local');
+
+var intlLoaders = {
   'cy': loadCyIntl
 };
 
 module.exports = intlLoaders;"
 `;
 
-exports[`write i18n loaders for fse fileSystem writes a translation file for a non-terra-supported locale 2`] = `
-"const loadCyTranslations = (callback, scope) => {
-  require.ensure([], (require) => {
+exports[`write compiled i18n loaders for fse fileSystem writes a translation file for a non-terra-supported locale 2`] = `
+"'use strict';
+
+var loadCyTranslations = function loadCyTranslations(callback, scope) {
+  require.ensure([], function (require) {
     // eslint-disable-next-line
-    const i18n = require('./cy.js');
+    var i18n = require('./cy.js');
     callback.call(scope, i18n);
   }, 'cy-translations');
 };
 
-const translationsLoaders = {
+var translationsLoaders = {
   'cy': loadCyTranslations
 };
 
 module.exports = translationsLoaders;"
 `;
 
-exports[`write i18n loaders for fse fileSystem writes loader files 1`] = `
-"const loadEnIntl = () =>
-require.ensure([],
-  require => require('intl/locale-data/jsonp/en.js'),
-  'en-intl-local');
+exports[`write compiled i18n loaders for fse fileSystem writes compiled loader files 1`] = `
+"'use strict';
 
-const loadEsIntl = () =>
-require.ensure([],
-  require => require('intl/locale-data/jsonp/es.js'),
-  'es-intl-local');
+var loadEnIntl = function loadEnIntl() {
+require.ensure([], function (require) {
+  return require('intl/locale-data/jsonp/en.js');
+}, 'en-intl-local');
 
-const intlLoaders = {
+'use strict';
+
+var loadEsIntl = function loadEsIntl() {
+require.ensure([], function (require) {
+  return require('intl/locale-data/jsonp/es.js');
+}, 'es-intl-local');
+
+var intlLoaders = {
   'en': loadEnIntl,
   'es': loadEsIntl
 };
@@ -48,24 +56,28 @@ const intlLoaders = {
 module.exports = intlLoaders;"
 `;
 
-exports[`write i18n loaders for fse fileSystem writes loader files 2`] = `
-"const loadEnTranslations = (callback, scope) => {
-  require.ensure([], (require) => {
+exports[`write compiled i18n loaders for fse fileSystem writes compiled loader files 2`] = `
+"'use strict';
+
+var loadEnTranslations = function loadEnTranslations(callback, scope) {
+  require.ensure([], function (require) {
     // eslint-disable-next-line
-    const i18n = require('./en.js');
+    var i18n = require('./en.js');
     callback.call(scope, i18n);
   }, 'en-translations');
 };
 
-const loadEsTranslations = (callback, scope) => {
-  require.ensure([], (require) => {
+'use strict';
+
+var loadEsTranslations = function loadEsTranslations(callback, scope) {
+  require.ensure([], function (require) {
     // eslint-disable-next-line
-    const i18n = require('./es.js');
+    var i18n = require('./es.js');
     callback.call(scope, i18n);
   }, 'es-translations');
 };
 
-const translationsLoaders = {
+var translationsLoaders = {
   'en': loadEnTranslations,
   'es': loadEsTranslations
 };
@@ -73,47 +85,55 @@ const translationsLoaders = {
 module.exports = translationsLoaders;"
 `;
 
-exports[`write i18n loaders for memoryFS fileSystem writes a translation file for a non-terra-supported locale 1`] = `
-"const loadCyIntl = () =>
-require.ensure([],
-  require => require('intl/locale-data/jsonp/cy.js'),
-  'cy-intl-local');
+exports[`write compiled i18n loaders for memoryFS fileSystem writes a translation file for a non-terra-supported locale 1`] = `
+"'use strict';
 
-const intlLoaders = {
+var loadCyIntl = function loadCyIntl() {
+require.ensure([], function (require) {
+  return require('intl/locale-data/jsonp/cy.js');
+}, 'cy-intl-local');
+
+var intlLoaders = {
   'cy': loadCyIntl
 };
 
 module.exports = intlLoaders;"
 `;
 
-exports[`write i18n loaders for memoryFS fileSystem writes a translation file for a non-terra-supported locale 2`] = `
-"const loadCyTranslations = (callback, scope) => {
-  require.ensure([], (require) => {
+exports[`write compiled i18n loaders for memoryFS fileSystem writes a translation file for a non-terra-supported locale 2`] = `
+"'use strict';
+
+var loadCyTranslations = function loadCyTranslations(callback, scope) {
+  require.ensure([], function (require) {
     // eslint-disable-next-line
-    const i18n = require('./cy.js');
+    var i18n = require('./cy.js');
     callback.call(scope, i18n);
   }, 'cy-translations');
 };
 
-const translationsLoaders = {
+var translationsLoaders = {
   'cy': loadCyTranslations
 };
 
 module.exports = translationsLoaders;"
 `;
 
-exports[`write i18n loaders for memoryFS fileSystem writes loader files 1`] = `
-"const loadEnIntl = () =>
-require.ensure([],
-  require => require('intl/locale-data/jsonp/en.js'),
-  'en-intl-local');
+exports[`write compiled i18n loaders for memoryFS fileSystem writes compiled loader files 1`] = `
+"'use strict';
 
-const loadEsIntl = () =>
-require.ensure([],
-  require => require('intl/locale-data/jsonp/es.js'),
-  'es-intl-local');
+var loadEnIntl = function loadEnIntl() {
+require.ensure([], function (require) {
+  return require('intl/locale-data/jsonp/en.js');
+}, 'en-intl-local');
 
-const intlLoaders = {
+'use strict';
+
+var loadEsIntl = function loadEsIntl() {
+require.ensure([], function (require) {
+  return require('intl/locale-data/jsonp/es.js');
+}, 'es-intl-local');
+
+var intlLoaders = {
   'en': loadEnIntl,
   'es': loadEsIntl
 };
@@ -121,24 +141,28 @@ const intlLoaders = {
 module.exports = intlLoaders;"
 `;
 
-exports[`write i18n loaders for memoryFS fileSystem writes loader files 2`] = `
-"const loadEnTranslations = (callback, scope) => {
-  require.ensure([], (require) => {
+exports[`write compiled i18n loaders for memoryFS fileSystem writes compiled loader files 2`] = `
+"'use strict';
+
+var loadEnTranslations = function loadEnTranslations(callback, scope) {
+  require.ensure([], function (require) {
     // eslint-disable-next-line
-    const i18n = require('./en.js');
+    var i18n = require('./en.js');
     callback.call(scope, i18n);
   }, 'en-translations');
 };
 
-const loadEsTranslations = (callback, scope) => {
-  require.ensure([], (require) => {
+'use strict';
+
+var loadEsTranslations = function loadEsTranslations(callback, scope) {
+  require.ensure([], function (require) {
     // eslint-disable-next-line
-    const i18n = require('./es.js');
+    var i18n = require('./es.js');
     callback.call(scope, i18n);
   }, 'es-translations');
 };
 
-const translationsLoaders = {
+var translationsLoaders = {
   'en': loadEnTranslations,
   'es': loadEsTranslations
 };

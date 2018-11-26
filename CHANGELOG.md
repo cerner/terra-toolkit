@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Changes
+* Aggregrate-translation tool will output pre-compiles tranlstaions jsons, intl loaders and translations loaders to prevent the need for the compilation during webpack.
 
 4.19.0 - (December 20, 2018)
 ----------
