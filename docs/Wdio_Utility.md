@@ -22,6 +22,7 @@ To run the webdriver.io test running, the [webdriver.io configuration options](h
     - See [here](https://github.com/cerner/terra-toolkit/blob/master/docs/AxeService.md) for configuration information.
 * `TerraService` - provides global access to chai, custom chai assertions and a Terra helper to make testing easier.
     - To provide a custom global selector, add `terra: { selector: 'selector_name' }` to the configuration.
+    - To disable theme testing add `terra: { disableThemeTests: true }` to the configuration. This will skip the following functions during testing: `themeEachCustomProperty` and `themeCombinationOfCustomProperties`. 
 * `VisualRegressionService` - uses wdio-screenshot to capture screenshots and run visual regression testing.
     - See [here](https://github.com/zinserjan/wdio-visual-regression-service#configuration) for configuration information.
 * `ServeStaticService` - to start a server and returns a promise when the webpack compiler is completed.

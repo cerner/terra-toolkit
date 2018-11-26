@@ -3,6 +3,25 @@ Changelog
 
 Unreleased
 ----------
+
+4.19.0 - (December 20, 2018)
+----------
+### Changed
+* Added configuration option (disableThemeTests) to disable theme functions in wdio tests
+
+4.18.0 - (November 19, 2018)
+----------
+### Changed
+* Replaced uglifyjs-webpack-plugin with terser-webpack-plugin
+
+4.17.0 - (November 14, 2018)
+----------
+### Changed
+* Loosen node version via npm engine to accept any version over 8.9.2
+* Update .npmrc file to use latest v8.x release (lts/carbon)
+
+4.16.1 - (November 13, 2018)
+----------
 ### Fixed
 * Remove parseInt for serve-cli port value. Casting it to a number caused the default value to return NaN.
 

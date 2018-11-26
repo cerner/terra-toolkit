@@ -13,7 +13,7 @@ Once all of the translation files are created for the specified locales, the scr
 | baseDir | -b, --baseDir | Path | Directory to search from and to prepend to the output directory. | current working directory |
 | directories | -d, --directories | Array of Strings | Translation directory regex pattern(s) to glob, in addition to the default search patterns. | [ ] |
 | outputFileSystem | N/A | File System Module | The filesystem to use to write the translation and loader files. Note: The file system provide must support `mkdirp`. | [fs-extra](https://www.npmjs.com/package/fs-extra) |
-| locales  | -l, --locales | Array of Strings | The list of locale codes to aggregate. Note: 'en' is always added if not specified. | [terra-supported locales](https://github.com/cerner/terra-core/blob/master/packages/terra-i18n/src/i18nSupportedLocales.js) |
+| locales  | -l, --locales | Array of Strings | The list of locale codes to aggregate. **Note: 'en' is always added if not specified.** | [terra-supported locales](https://github.com/cerner/terra-core/blob/master/packages/terra-i18n/src/i18nSupportedLocales.js) |
 | outputDir | -o, --ouputDir | String | Output directory for the translation and loader files | ./aggregated-translations |
 | configPath | -c, --config | String | The path to the terra i18n configuration file | undefined |
 
