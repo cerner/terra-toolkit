@@ -4,9 +4,10 @@ exports[`write compiled i18n loaders for fse fileSystem writes a translation fil
 "'use strict';
 
 var loadCyIntl = function loadCyIntl() {
-require.ensure([], function (require) {
-  return require('intl/locale-data/jsonp/cy.js');
-}, 'cy-intl-local');
+  return require.ensure([], function (require) {
+    return require('intl/locale-data/jsonp/cy.js');
+  }, 'cy-intl-local');
+};
 
 var intlLoaders = {
   'cy': loadCyIntl
@@ -19,7 +20,7 @@ exports[`write compiled i18n loaders for fse fileSystem writes a translation fil
 "'use strict';
 
 var loadCyTranslations = function loadCyTranslations(callback, scope) {
-  require.ensure([], function (require) {
+  return require.ensure([], function (require) {
     // eslint-disable-next-line
     var i18n = require('./cy.js');
     callback.call(scope, i18n);
@@ -39,23 +40,22 @@ exports[`write compiled i18n loaders for fse fileSystem writes compiled loader f
 "'use strict';
 
 var loadEnIntl = function loadEnIntl() {
-require.ensure([], function (require) {
-  return require('intl/locale-data/jsonp/en.js');
-}, 'en-intl-local');
-
-'use strict';
+  return require.ensure([], function (require) {
+    return require('intl/locale-data/jsonp/en.js');
+  }, 'en-intl-local');
+};
 
 var loadEnUSIntl = function loadEnUSIntl() {
-require.ensure([], function (require) {
-  return require('intl/locale-data/jsonp/en-US.js');
-}, 'en-US-intl-local');
-
-'use strict';
+  return require.ensure([], function (require) {
+    return require('intl/locale-data/jsonp/en-US.js');
+  }, 'en-US-intl-local');
+};
 
 var loadEsIntl = function loadEsIntl() {
-require.ensure([], function (require) {
-  return require('intl/locale-data/jsonp/es.js');
-}, 'es-intl-local');
+  return require.ensure([], function (require) {
+    return require('intl/locale-data/jsonp/es.js');
+  }, 'es-intl-local');
+};
 
 var intlLoaders = {
   'en': loadEnIntl,
@@ -70,27 +70,23 @@ exports[`write compiled i18n loaders for fse fileSystem writes compiled loader f
 "'use strict';
 
 var loadEnTranslations = function loadEnTranslations(callback, scope) {
-  require.ensure([], function (require) {
+  return require.ensure([], function (require) {
     // eslint-disable-next-line
     var i18n = require('./en.js');
     callback.call(scope, i18n);
   }, 'en-translations');
 };
 
-'use strict';
-
 var loadEnUSTranslations = function loadEnUSTranslations(callback, scope) {
-  require.ensure([], function (require) {
+  return require.ensure([], function (require) {
     // eslint-disable-next-line
     var i18n = require('./en-US.js');
     callback.call(scope, i18n);
   }, 'en-US-translations');
 };
 
-'use strict';
-
 var loadEsTranslations = function loadEsTranslations(callback, scope) {
-  require.ensure([], function (require) {
+  return require.ensure([], function (require) {
     // eslint-disable-next-line
     var i18n = require('./es.js');
     callback.call(scope, i18n);
@@ -112,9 +108,10 @@ exports[`write compiled i18n loaders for memoryFS fileSystem writes a translatio
 "'use strict';
 
 var loadCyIntl = function loadCyIntl() {
-require.ensure([], function (require) {
-  return require('intl/locale-data/jsonp/cy.js');
-}, 'cy-intl-local');
+  return require.ensure([], function (require) {
+    return require('intl/locale-data/jsonp/cy.js');
+  }, 'cy-intl-local');
+};
 
 var intlLoaders = {
   'cy': loadCyIntl
@@ -127,7 +124,7 @@ exports[`write compiled i18n loaders for memoryFS fileSystem writes a translatio
 "'use strict';
 
 var loadCyTranslations = function loadCyTranslations(callback, scope) {
-  require.ensure([], function (require) {
+  return require.ensure([], function (require) {
     // eslint-disable-next-line
     var i18n = require('./cy.js');
     callback.call(scope, i18n);
@@ -147,23 +144,22 @@ exports[`write compiled i18n loaders for memoryFS fileSystem writes compiled loa
 "'use strict';
 
 var loadEnIntl = function loadEnIntl() {
-require.ensure([], function (require) {
-  return require('intl/locale-data/jsonp/en.js');
-}, 'en-intl-local');
-
-'use strict';
+  return require.ensure([], function (require) {
+    return require('intl/locale-data/jsonp/en.js');
+  }, 'en-intl-local');
+};
 
 var loadEnUSIntl = function loadEnUSIntl() {
-require.ensure([], function (require) {
-  return require('intl/locale-data/jsonp/en-US.js');
-}, 'en-US-intl-local');
-
-'use strict';
+  return require.ensure([], function (require) {
+    return require('intl/locale-data/jsonp/en-US.js');
+  }, 'en-US-intl-local');
+};
 
 var loadEsIntl = function loadEsIntl() {
-require.ensure([], function (require) {
-  return require('intl/locale-data/jsonp/es.js');
-}, 'es-intl-local');
+  return require.ensure([], function (require) {
+    return require('intl/locale-data/jsonp/es.js');
+  }, 'es-intl-local');
+};
 
 var intlLoaders = {
   'en': loadEnIntl,
@@ -178,27 +174,23 @@ exports[`write compiled i18n loaders for memoryFS fileSystem writes compiled loa
 "'use strict';
 
 var loadEnTranslations = function loadEnTranslations(callback, scope) {
-  require.ensure([], function (require) {
+  return require.ensure([], function (require) {
     // eslint-disable-next-line
     var i18n = require('./en.js');
     callback.call(scope, i18n);
   }, 'en-translations');
 };
 
-'use strict';
-
 var loadEnUSTranslations = function loadEnUSTranslations(callback, scope) {
-  require.ensure([], function (require) {
+  return require.ensure([], function (require) {
     // eslint-disable-next-line
     var i18n = require('./en-US.js');
     callback.call(scope, i18n);
   }, 'en-US-translations');
 };
 
-'use strict';
-
 var loadEsTranslations = function loadEsTranslations(callback, scope) {
-  require.ensure([], function (require) {
+  return require.ensure([], function (require) {
     // eslint-disable-next-line
     var i18n = require('./es.js');
     callback.call(scope, i18n);
