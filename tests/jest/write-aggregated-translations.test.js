@@ -6,13 +6,13 @@ const writeAggregatedTranslations = require('../../scripts/aggregate-translation
 
 global.console = { warn: jest.fn() };
 
-const defaultMessages = { en: {}, es: {} };
-const locales = ['en', 'es'];
+const defaultMessages = { en: {}, 'en-US': {}, es: {} };
+const locales = ['en', 'en-US', 'es'];
 const memoryFS = new MemoryFileSystem();
 const testFileSystems = { fse, memoryFS };
 
 Object.keys(testFileSystems).forEach((testFS) => {
-  describe(`write aggregated translations for ${testFS} fileSystem`, () => {
+  describe(`write compiled aggregated translations for ${testFS} fileSystem`, () => {
     const fileSystem = testFileSystems[testFS];
     const outputDir = '/aggregated-translations';
     let writtenFiles;
@@ -24,9 +24,10 @@ Object.keys(testFileSystems).forEach((testFS) => {
       });
     });
 
-    it('writes translations files', () => {
+    it('writes compiled translations files', () => {
       const outputFiles = [
         path.resolve(process.cwd(), outputDir, 'en.js'),
+        path.resolve(process.cwd(), outputDir, 'en-US.js'),
         path.resolve(process.cwd(), outputDir, 'es.js'),
       ];
 
@@ -36,7 +37,7 @@ Object.keys(testFileSystems).forEach((testFS) => {
 
     it('thows an error if a locale was not aggregated on', () => {
       const errorRegex = /Translations aggregated for es locale, but messages were not loaded correctly./;
-      expect(() => writeAggregatedTranslations({ en: {} }, locales, fileSystem, outputDir)).toThrowError(errorRegex);
+      expect(() => writeAggregatedTranslations({ en: {}, 'en-US': {} }, locales, fileSystem, outputDir)).toThrowError(errorRegex);
     });
 
     it('logs a warning message if a locale is not a terra-supported locale', () => {
@@ -46,7 +47,7 @@ Object.keys(testFileSystems).forEach((testFS) => {
       expect(console.warn).toBeCalledWith(expect.stringContaining('WARNING: cy is NOT a Terra supported locale. Creating an aggregate translation file for cy, but'));
     });
 
-    it('writes a translation file for a non-terra-supported locale', () => {
+    it('writes a compiled translation file for a non-terra-supported locale', () => {
       const outputFiles = [
         path.resolve(process.cwd(), outputDir, 'cy.js'),
       ];

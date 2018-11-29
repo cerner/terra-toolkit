@@ -3,17 +3,18 @@ const startCase = require('lodash.startcase');
 const supportedLocales = require('./i18nSupportedLocales');
 
 const createIntlLoader = (loaderName, locale) => (
-  `const ${loaderName} = () =>
-require.ensure([],
-  require => require('intl/locale-data/jsonp/${locale}.js'),
-  '${locale}-intl-local');\n
+  `var ${loaderName} = function ${loaderName}() {
+  return require.ensure([], function (require) {
+    return require('intl/locale-data/jsonp/${locale}.js');
+  }, '${locale}-intl-local');
+};\n
 `);
 
 const createTranslationLoader = (loaderName, locale) => (
-  `const ${loaderName} = (callback, scope) => {
-  require.ensure([], (require) => {
+  `var ${loaderName} = function ${loaderName}(callback, scope) {
+  return require.ensure([], function (require) {
     // eslint-disable-next-line
-    const i18n = require('./${locale}.js');
+    var i18n = require('./${locale}.js');
     callback.call(scope, i18n);
   }, '${locale}-translations');
 };\n
@@ -21,7 +22,7 @@ const createTranslationLoader = (loaderName, locale) => (
 
 const writeLoaders = (type, locales, fileSystem, outputDir) => {
   const loaders = {};
-  let loaderFile = '';
+  let loaderFile = "'use strict';\n\n";
 
   // Create the intl and translations loaders for each locale
   locales.forEach((locale) => {
@@ -43,7 +44,7 @@ const writeLoaders = (type, locales, fileSystem, outputDir) => {
 
   // Create the loader exports
   const loaderString = JSON.stringify(loaders, null, 2).replace(/"/g, '');
-  loaderFile += `const ${type}Loaders = ${loaderString};\n\nmodule.exports = ${type}Loaders;`;
+  loaderFile += `var ${type}Loaders = ${loaderString};\n\nmodule.exports = ${type}Loaders;`;
 
   // Write the loaders file
   const loaderPath = path.resolve(outputDir, `${type}Loaders.js`);

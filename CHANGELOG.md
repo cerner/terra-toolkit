@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Changed
+* Aggregrate-translations tool now outputs pre-compiled tranlstaions jsons, intl loaders and translations loaders to prevent the need for the compilation during webpack. This resolves SCRIPT1002: Syntax error with IE.
 
 4.19.0 - (December 20, 2018)
 ----------

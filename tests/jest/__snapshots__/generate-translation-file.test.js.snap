@@ -1,22 +1,65 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`generate translations file creates the translation file 1`] = `
-"import { addLocaleData } from 'react-intl';
-import localeData from 'react-intl/locale-data/en';
+exports[`generate en translations file creates the compiled en translation file 1`] = `
+"'use strict';
 
-addLocaleData(localeData);
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.messages = exports.locale = exports.areTranslationsLoaded = undefined;
 
-const messages = {
+var _reactIntl = require('react-intl');
+
+var _en = require('react-intl/locale-data/en');
+
+var _en2 = _interopRequireDefault(_en);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+(0, _reactIntl.addLocaleData)(_en2.default);
+
+var messages = {
   \\"Terra.fixtures.test\\": \\"Test...\\",
   \\"Terra.Fixtures1.test\\": \\"Test...\\",
   \\"Terra.More.fixtures.test\\": \\"Test...\\",
   \\"Terra.test.fixtures.test\\": \\"Test...\\"
 };
-const areTranslationsLoaded = true;
-const locale = 'en';
-export {
-  areTranslationsLoaded,
-  locale,
-  messages
-};"
+var areTranslationsLoaded = true;
+var locale = 'en';
+exports.areTranslationsLoaded = areTranslationsLoaded;
+exports.locale = locale;
+exports.messages = messages;
+"
+`;
+
+exports[`generate en-US translations file creates the compiled en-US translation file 1`] = `
+"'use strict';
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.messages = exports.locale = exports.areTranslationsLoaded = undefined;
+
+var _reactIntl = require('react-intl');
+
+var _en = require('react-intl/locale-data/en');
+
+var _en2 = _interopRequireDefault(_en);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+(0, _reactIntl.addLocaleData)(_en2.default);
+
+var messages = {
+  \\"Terra.fixtures.test\\": \\"Test...\\",
+  \\"Terra.Fixtures1.test\\": \\"Test...\\",
+  \\"Terra.More.fixtures.test\\": \\"Test...\\",
+  \\"Terra.test.fixtures.test\\": \\"Test...\\"
+};
+var areTranslationsLoaded = true;
+var locale = 'en-US';
+exports.areTranslationsLoaded = areTranslationsLoaded;
+exports.locale = locale;
+exports.messages = messages;
+"
 `;
