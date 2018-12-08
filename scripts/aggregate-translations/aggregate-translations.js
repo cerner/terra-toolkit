@@ -53,7 +53,7 @@ const defaults = (options = {}) => {
 
 const excludeThesePaths = (paths) => {
   const pathsSet = new Set(paths);
-  return (path => !pathsSet.has(path));
+  return (p => !pathsSet.has(p));
 };
 
 const aggregatedTranslations = (options) => {
@@ -68,10 +68,7 @@ const aggregatedTranslations = (options) => {
     ...resolve(directories),
   ].filter(excludeThesePaths(resolve(excludes)));
 
-  let translationDirectories = [];
-  searchPaths.forEach((searchPath) => {
-    translationDirectories = translationDirectories.concat(glob.sync(searchPath));
-  });
+  const translationDirectories = searchPaths.map(searchPath => glob.sync(searchPath));
 
   // Aggregate translation messages for each of the translations directories
   const aggregatedMessages = aggregateMessages(translationDirectories, locales);
