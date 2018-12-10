@@ -6,11 +6,17 @@ const parseCLIList = require('../utils/parse-cli-list');
 
 const aggregateTranslations = require('./aggregate-translations');
 
+const convertDirectoryPath = directoryPath => directoryPath.split('/').join(path.sep);
+
 // Adds custom search directory paths
 const customSearchDirectories = [];
 const addCustomDirectory = (searchPattern) => {
-  const customDir = searchPattern.split('/').join(path.sep);
-  customSearchDirectories.push(customDir);
+  customSearchDirectories.push(convertDirectoryPath(searchPattern));
+};
+
+const customExcludeDirectories = [];
+const addCustomExclude = (searchPattern) => {
+  customExcludeDirectories.push(convertDirectoryPath(searchPattern));
 };
 
 // Parse process arguments
@@ -21,11 +27,13 @@ commander
   .option('-l, --locales [locales]', 'The list of locale codes aggregate on and combine into a single, respective translation file ', parseCLIList, supportedLocales)
   .option('-o, --outputDir [outputDir]', 'The output location of the generated configuration file', './aggregated-translations')
   .option('-c, --config [configPath]', 'The path to the terra i18n configuration file', undefined)
+  .option('-e, --exclude [exclude]', 'Regex pattern to glob filter out directories', addCustomExclude)
   .parse(process.argv);
 
 const aggregationOption = {
   baseDirectory: commander.baseDir,
   directories: customSearchDirectories,
+  exclude: customExcludeDirectories,
   locales: commander.locales,
   outputDir: commander.outputDir,
   configPath: commander.config,

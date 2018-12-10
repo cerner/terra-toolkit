@@ -52,10 +52,12 @@ describe('aggregate-translations', () => {
   it('aggregates on the default search patterns and custom directory patterns while excluding the custom excludes directory patterns', () => {
     aggregateTranslations({ directories: ['./test/*/pattern', './foo/*/bar', './baz/*/buzz'], excludes: ['./foo/*/bar'] });
 
+    const expected = (pathParts = []) => [expect.stringContaining(pathParts.join(path.sep))];
+
     expect(globSpy).toHaveBeenCalledTimes(6);
-    expect(searchedDirectories).toEqual(expect.arrayContaining([`${process.cwd()}${path.sep}test${path.sep}*${path.sep}pattern`]));
-    expect(searchedDirectories).toEqual(expect.arrayContaining([`${process.cwd()}${path.sep}baz${path.sep}*${path.sep}buzz`]));
-    expect(searchedDirectories).toEqual(expect.not.arrayContaining([`${process.cwd()}${path.sep}foo${path.sep}*${path.sep}bar`]));
+    expect(searchedDirectories).toEqual(expect.arrayContaining(expected(['test', '*', 'pattern'])));
+    expect(searchedDirectories).toEqual(expect.arrayContaining(expected(['baz', '*', 'buzz'])));
+    expect(searchedDirectories).toEqual(expect.not.arrayContaining(expected(['foo', '*', 'bar'])));
   });
 
   it('uses the custom base directory', () => {
