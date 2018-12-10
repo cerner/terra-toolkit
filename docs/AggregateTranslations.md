@@ -7,6 +7,12 @@ for each specified locale, the message-translation pairs from each translation j
 
 Once all of the translation files are created for the specified locales, the script will create an intl loader and translation loader that is specific to the specified locales. This is utilized by the by terra-i18n's `I18nLoader` to load on-demand locale information.
 
+### Order of Operations
+
+* Start with [default search patterns](https://github.com/cerner/terra-toolkit/blob/master/scripts/aggregate-translations/aggregate-translations.js#L10-L15)
+* Add any `custom directories` to the list of `default search patterns` to get an intermediate list of `directories to search`
+* Filter out any directories provided in the `exclude` option from the intermediate list of `directories to search`
+
 ### `aggregate-translations` Options
 | Option | CLI Option | Type | Description | Default |
 |-|-|-|-|-|
