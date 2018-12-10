@@ -1,4 +1,3 @@
-const path = require('path');
 const commander = require('commander');
 const i18nPackageJson = require('../../package.json');
 const supportedLocales = require('./i18nSupportedLocales');
@@ -6,17 +5,15 @@ const parseCLIList = require('../utils/parse-cli-list');
 
 const aggregateTranslations = require('./aggregate-translations');
 
-const convertDirectoryPath = directoryPath => directoryPath.split('/').join(path.sep);
-
 // Adds custom search directory paths
 const customSearchDirectories = [];
 const addCustomDirectory = (searchPattern) => {
-  customSearchDirectories.push(convertDirectoryPath(searchPattern));
+  customSearchDirectories.push(searchPattern);
 };
 
 const customExcludeDirectories = [];
 const addCustomExclude = (searchPattern) => {
-  customExcludeDirectories.push(convertDirectoryPath(searchPattern));
+  customExcludeDirectories.push(searchPattern);
 };
 
 // Parse process arguments
