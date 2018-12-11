@@ -9,9 +9,9 @@ const aggregateTranslations = require('../../scripts/aggregate-translations/aggr
 global.console = { warn: jest.fn() };
 const defaultSearchPatterns = baseDirectory => ([
   `${baseDirectory}${path.sep}translations`,
-  `${baseDirectory}${path.sep}node_modules${path.sep}terra-*${path.sep}translations`,
+  `${baseDirectory}${path.sep}node_modules${path.sep}**${path.sep}translations`,
   `${baseDirectory}${path.sep}packages${path.sep}terra-*${path.sep}translations`,
-  `${baseDirectory}${path.sep}packages${path.sep}terra-*${path.sep}node_modules${path.sep}terra-*${path.sep}translations`,
+  `${baseDirectory}${path.sep}packages${path.sep}**${path.sep}node_modules${path.sep}**${path.sep}translations`,
 ]);
 
 const nestedOutputDir = './translations/folder';
@@ -47,6 +47,17 @@ describe('aggregate-translations', () => {
 
     expect(globSpy).toHaveBeenCalledTimes(5);
     expect(searchedDirectories).toEqual(expect.arrayContaining([`${process.cwd()}${path.sep}test${path.sep}*${path.sep}pattern`]));
+  });
+
+  it('aggregates on the default search patterns and custom directory patterns while excluding the custom excludes directory patterns', () => {
+    aggregateTranslations({ directories: ['./test/*/pattern', './foo/*/bar', './baz/*/buzz'], excludes: ['./foo/*/bar'] });
+
+    const expected = (pathParts = []) => [expect.stringContaining(pathParts.join(path.sep))];
+
+    expect(globSpy).toHaveBeenCalledTimes(6);
+    expect(searchedDirectories).toEqual(expect.arrayContaining(expected(['test', '*', 'pattern'])));
+    expect(searchedDirectories).toEqual(expect.arrayContaining(expected(['baz', '*', 'buzz'])));
+    expect(searchedDirectories).toEqual(expect.not.arrayContaining(expected(['foo', '*', 'bar'])));
   });
 
   it('uses the custom base directory', () => {

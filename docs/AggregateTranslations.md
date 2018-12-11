@@ -7,11 +7,18 @@ for each specified locale, the message-translation pairs from each translation j
 
 Once all of the translation files are created for the specified locales, the script will create an intl loader and translation loader that is specific to the specified locales. This is utilized by the by terra-i18n's `I18nLoader` to load on-demand locale information.
 
+### Order of Operations
+
+* Start with [default search patterns](https://github.com/cerner/terra-toolkit/blob/master/scripts/aggregate-translations/aggregate-translations.js#L10-L15)
+* Add any `custom directories` to the list of `default search patterns` to get an intermediate list of `directories to search`
+* Filter out any directories provided in the `exclude` option from the intermediate list of `directories to search`
+
 ### `aggregate-translations` Options
 | Option | CLI Option | Type | Description | Default |
 |-|-|-|-|-|
 | baseDir | -b, --baseDir | Path | Directory to search from and to prepend to the output directory. | current working directory |
 | directories | -d, --directories | Array of Strings | Translation directory regex pattern(s) to glob, in addition to the default search patterns. | [ ] |
+| exclude | -e, --exclude | Array of Strings | Translation directory regex pattern(s) to glob exclude from the search patterns. | [ ] |
 | outputFileSystem | N/A | File System Module | The filesystem to use to write the translation and loader files. Note: The file system provide must support `mkdirp`. | [fs-extra](https://www.npmjs.com/package/fs-extra) |
 | locales  | -l, --locales | Array of Strings | The list of locale codes to aggregate. **Note: 'en' is always added if not specified.** | [terra-supported locales](https://github.com/cerner/terra-core/blob/master/packages/terra-i18n/src/i18nSupportedLocales.js) |
 | outputDir | -o, --ouputDir | String | Output directory for the translation and loader files | ./aggregated-translations |
@@ -26,6 +33,7 @@ const aggregateTranslations = require('terra-toolkit/scripts/aggregate-translati
 const aggregateOptions = {
     baseDir: __dirname,
     directories: ['./src/**/translations', './translations'],
+    exclude: ['./node_modules/packageToExclude'],
     locales: ['en', 'en-US'],
     outputDir: './aggregated-translations',
 };
@@ -40,7 +48,7 @@ The `aggregate-translations` CLI is supplied as a bin script, called `tt-aggrega
 ```js
 scripts: {
     // ...other scripts
-    "aggregate-translations": "tt-aggregate-translations -b ./ -d ./src/**/translations -d ./translations -l ['en','es'] -o ./aggregated-translations",
+    "aggregate-translations": "tt-aggregate-translations -b ./ -d ./src/**/translations -d ./translations -l ['en','es'] -e ./node_modules/packageToExclude -o ./aggregated-translations",
     "start:build": "npm run aggregate-translations && npm run start"
 }
 ```
@@ -53,6 +61,7 @@ Add a terra-i18n config file like:
 const aggregateOptions = {
     baseDir: __dirname,
     directories: ['./src/**/translations', './translations'],
+    exclude: ['./node_modules/packageToExclude'],
     locales: ['en', 'en-US'],
     outputDir: './aggregated-translations',
 };

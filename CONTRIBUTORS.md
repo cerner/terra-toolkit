@@ -16,6 +16,7 @@ Cerner Corporation
 - Tyler Biethman [@tbiethman]
 - Stephen Esser [@StephenEsser]
 - Jaime Mackey [@jmsv6d]
+- Cody Price [@dev-cprice]
 
 [@emilyrohrbough]: https://github.com/emilyrohrbough
 [@brettjankord]: https://github.com/bjankord
@@ -33,3 +34,4 @@ Cerner Corporation
 [@tbiethman]: https://github.com/tbiethman
 [@StephenEsser]: https://github.com/StephenEsser
 [@jmsv6d]: https://github.com/jmsv6d
+[@dev-cprice]: https://github.com/dev-cprice
