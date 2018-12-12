@@ -9,9 +9,9 @@ const writeI18nLoaders = require('./write-i18n-loaders');
 
 const defaultSearchPatterns = baseDirectory => ([
   path.resolve(baseDirectory, 'translations'), // root level translations
-  path.resolve(baseDirectory, 'node_modules', '**', 'translations'), // root level dependency translations
+  path.resolve(baseDirectory, 'node_modules', '*', 'translations'), // root level dependency translations
   path.resolve(baseDirectory, 'packages', 'terra-*', 'translations'), // package level translations
-  path.resolve(baseDirectory, 'packages', '**', 'node_modules', '**', 'translations'), // package level dependency translations
+  path.resolve(baseDirectory, 'packages', '*', 'node_modules', '*', 'translations'), // package level dependency translations
 ]);
 
 const resolveDirectories = baseDirectory => directories => (directories.map(dir => path.resolve(baseDirectory, dir)));
@@ -68,7 +68,10 @@ const aggregatedTranslations = (options) => {
     ...resolve(directories),
   ].filter(excludeThesePaths(resolve(excludes)));
 
-  const translationDirectories = searchPaths.map(searchPath => glob.sync(searchPath));
+  let translationDirectories = [];
+  searchPaths.forEach((searchPath) => {
+    translationDirectories = translationDirectories.concat(glob.sync(searchPath));
+  });
 
   // Aggregate translation messages for each of the translations directories
   const aggregatedMessages = aggregateMessages(translationDirectories, locales);
