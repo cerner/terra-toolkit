@@ -4,6 +4,7 @@ Changelog
 Unreleased
 ----------
 ### Added
+* Add local and network address display to tt-serve
 * Add exclude directories option to aggregateTranslations script and cli
 
 4.20.0 - (December 6, 2018)
