@@ -75,7 +75,7 @@ const aggregatedTranslations = (options) => {
 
   // eslint-disable-next-line no-console
   console.log(`[terra-toolkit:aggregate-translations] Aggregating translations for ${locales} locales.`);
-  
+
   // Aggregate translation messages for each of the translations directories
   const aggregatedMessages = aggregateMessages(translationDirectories, locales);
 

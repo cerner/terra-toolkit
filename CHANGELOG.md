@@ -4,7 +4,7 @@ Changelog
 Unreleased
 ----------
 ### Added
-* Add exclude directories option to aggregateTranslations script and cli
+* Add exclude directories option to aggregate translations tool
 
 4.20.0 - (December 6, 2018)
 ----------

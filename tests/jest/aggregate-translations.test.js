@@ -6,12 +6,12 @@ const MemoryFileSystem = require('memory-fs');
 const i18nSupportedLocales = require('../../scripts/aggregate-translations/i18nSupportedLocales');
 const aggregateTranslations = require('../../scripts/aggregate-translations/aggregate-translations');
 
-global.console = { warn: jest.fn() };
+global.console = { warn: jest.fn(), log: jest.fn() };
 const defaultSearchPatterns = baseDirectory => ([
-  `${baseDirectory}${path.sep}translations`,
-  `${baseDirectory}${path.sep}node_modules${path.sep}**${path.sep}translations`,
-  `${baseDirectory}${path.sep}packages${path.sep}terra-*${path.sep}translations`,
-  `${baseDirectory}${path.sep}packages${path.sep}**${path.sep}node_modules${path.sep}**${path.sep}translations`,
+  `${baseDirectory}/translations`,
+  `${baseDirectory}/node_modules/*/translations`,
+  `${baseDirectory}/packages/terra-*/translations`,
+  `${baseDirectory}/packages/*/node_modules/*/translations`,
 ]);
 
 const nestedOutputDir = './translations/folder';
@@ -22,6 +22,7 @@ describe('aggregate-translations', () => {
   let fseSpy;
   let fseMakeDirSpy;
   let globSpy;
+
   beforeEach(() => {
     searchedDirectories = [];
     writtenFilePaths = [];
