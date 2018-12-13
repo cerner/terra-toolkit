@@ -43,33 +43,26 @@ const defaults = (options = {}) => {
   return defaultConfig;
 };
 
-const excludeThesePaths = (paths) => {
-  const pathsSet = new Set(paths);
-  return (p => !pathsSet.has(p));
-};
-
 const aggregatedTranslations = (options) => {
   const {
     baseDir, directories, fileSystem, locales, outputDir, excludes,
   } = defaults(options);
 
-  const resolve = resolveDirectories(baseDir);
-
   const searchPaths = [
-    ...defaultSearchPatterns(baseDir),
-    ...resolve(directories),
-  ].filter(excludeThesePaths(resolve(excludes)));
+    ...defaultSearchPatterns,
+    ...directories,
+  ];
 
   let translationDirectories = [];
   searchPaths.forEach((searchPath) => {
-    translationDirectories = translationDirectories.concat(glob.sync(searchPath));
+    translationDirectories = translationDirectories.concat(glob.sync(searchPath, { cwd: baseDir, ignore: excludes, follow: true }));
   });
 
   // eslint-disable-next-line no-console
   console.log(`[terra-toolkit:aggregate-translations] Aggregating translations for ${locales} locales.`);
 
   // Aggregate translation messages for each of the translations directories
-  const aggregatedMessages = aggregateMessages(translationDirectories, locales);
+  const aggregatedMessages = aggregateMessages(translationDirectories, locales, fileSystem);
 
   const outputDirectory = path.resolve(baseDir, outputDir);
   fileSystem.mkdirpSync(outputDirectory);
