@@ -44,7 +44,7 @@ const server = (options) => {
 
   // start that server.
   devServer.listen(port, host, () => {
-    const localAddress = `http://${host}:${port}`;
+    const localAddress = `http://${host}:${port}/`;
     const networkAddress = `http://${ip.address()}:${port}/`;
     displayServer(localAddress, networkAddress);
   });
