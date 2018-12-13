@@ -7,7 +7,7 @@ Unreleased
 * Add exclude directories option to aggregate translations tool
 
 ### Updated
-* Opened up default search patterns to include all first level `node_module/*/translations paths` for monorepos and non-monorepos.
+* Opened up default search patterns to include all first level `node_module/*/translations` paths for monorepos and non-monorepos.
 
 4.20.0 - (December 6, 2018)
 ----------
