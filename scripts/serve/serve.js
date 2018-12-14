@@ -1,6 +1,15 @@
 /* eslint-disable no-console */
 const WebpackDevServer = require('webpack-dev-server');
 const webpack = require('webpack');
+const ip = require('ip');
+const chalk = require('chalk');
+const { version: ttVersion } = require('../../package.json');
+
+const displayServer = (localAddress, networkAddress) => {
+  console.log(chalk.greenBright(`Terra-Toolkit ${chalk.bold(ttVersion)} started`));
+  console.log(`* Local:            ${chalk.cyan(localAddress)}`);
+  console.log(`* On your network:  ${chalk.cyan(networkAddress)}\n`);
+};
 
 // Create a webpack dev server instance.
 const server = (options) => {
@@ -35,8 +44,9 @@ const server = (options) => {
 
   // start that server.
   devServer.listen(port, host, () => {
-    // profit
-    console.log(`Starting server on http://${host}:${port}`);
+    const localAddress = `http://${host}:${port}/`;
+    const networkAddress = `http://${ip.address()}:${port}/`;
+    displayServer(localAddress, networkAddress);
   });
 };
 
