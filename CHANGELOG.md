@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+4.21.0 - (December 14, 2018)
+----------
 ### Added
 * Add exclude directories option to aggregate translations tool
 * Add local and network address display to tt-serve
