@@ -5,9 +5,10 @@ Unreleased
 ----------
 ### Added
 * Add exclude directories option to aggregate translations tool
+* Glob option to follow symlinked node_modules while aggreagating trasnlations
 
 ### Updated
-* Opened up default search patterns to include all first level `node_module/*/translations` paths for monorepos and non-monorepos.
+* Opened up default search patterns to search all first-, second- and third-level `node_module/*/translations` patterns for monorepos and non-monorepos instead of the first-level `node_modules/terra-*/translations` patterns.
 
 4.20.0 - (December 6, 2018)
 ----------
