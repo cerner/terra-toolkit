@@ -4,8 +4,12 @@ Changelog
 Unreleased
 ----------
 ### Added
+* Add exclude directories option to aggregate translations tool
 * Add local and network address display to tt-serve
-* Add exclude directories option to aggregateTranslations script and cli
+* Add glob option to follow symlinked node_modules while aggreagating trasnlations
+
+### Changed
+* Opened up default search patterns to search all first-, second- and third-level `node_module/*/translations` patterns for monorepos and non-monorepos instead of the first-level `node_modules/terra-*/translations` patterns.
 
 4.20.0 - (December 6, 2018)
 ----------

@@ -6,15 +6,7 @@ const supportedLocales = require('./i18nSupportedLocales');
 const aggregateMessages = require('./aggregate-messages');
 const writeAggregatedTranslations = require('./write-aggregated-translations');
 const writeI18nLoaders = require('./write-i18n-loaders');
-
-const defaultSearchPatterns = baseDirectory => ([
-  path.resolve(baseDirectory, 'translations'), // root level translations
-  path.resolve(baseDirectory, 'node_modules', '**', 'translations'), // root level dependency translations
-  path.resolve(baseDirectory, 'packages', 'terra-*', 'translations'), // package level translations
-  path.resolve(baseDirectory, 'packages', '**', 'node_modules', '**', 'translations'), // package level dependency translations
-]);
-
-const resolveDirectories = baseDirectory => directories => (directories.map(dir => path.resolve(baseDirectory, dir)));
+const defaultSearchPatterns = require('./defaultSearchPatterns');
 
 const isFile = filePath => (fse.existsSync(filePath) && !fse.lstatSync(filePath).isDirectory());
 
@@ -51,27 +43,26 @@ const defaults = (options = {}) => {
   return defaultConfig;
 };
 
-const excludeThesePaths = (paths) => {
-  const pathsSet = new Set(paths);
-  return (p => !pathsSet.has(p));
-};
-
 const aggregatedTranslations = (options) => {
   const {
     baseDir, directories, fileSystem, locales, outputDir, excludes,
   } = defaults(options);
 
-  const resolve = resolveDirectories(baseDir);
-
   const searchPaths = [
-    ...defaultSearchPatterns(baseDir),
-    ...resolve(directories),
-  ].filter(excludeThesePaths(resolve(excludes)));
+    ...defaultSearchPatterns,
+    ...directories,
+  ];
 
-  const translationDirectories = searchPaths.map(searchPath => glob.sync(searchPath));
+  let translationDirectories = [];
+  searchPaths.forEach((searchPath) => {
+    translationDirectories = translationDirectories.concat(glob.sync(searchPath, { cwd: baseDir, ignore: excludes, follow: true }));
+  });
+
+  // eslint-disable-next-line no-console
+  console.log(`[terra-toolkit:aggregate-translations] Aggregating translations for ${locales} locales.`);
 
   // Aggregate translation messages for each of the translations directories
-  const aggregatedMessages = aggregateMessages(translationDirectories, locales);
+  const aggregatedMessages = aggregateMessages(translationDirectories, locales, fileSystem);
 
   const outputDirectory = path.resolve(baseDir, outputDir);
   fileSystem.mkdirpSync(outputDirectory);
