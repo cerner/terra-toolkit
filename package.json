@@ -45,6 +45,7 @@
     "compile": "npm run clean:compiled && npm run compile:build",
     "compile:build": "babel src --out-dir lib --copy-files",
     "danger": "danger ci",
+    "danger:local": "danger local",
     "jest": "jest --config jestConfig.js",
     "lint": "eslint --ext .js,.jsx .",
     "nightwatch": "nightwatch",

@@ -10,6 +10,7 @@ const modifiedChangelog = danger.git.modified_files.filter((filePath) => {
   const srcFilePattern = /CHANGELOG.md/i;
   return srcFilePattern.test(filePath);
 });
+console.log('DAN...GER', danger.git.commits)
 
 const modifiedSrcFiles = danger.git.modified_files.filter((filePath) => {
   const srcFilePattern = /\/src/i;
