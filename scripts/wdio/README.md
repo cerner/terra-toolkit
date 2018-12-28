@@ -24,6 +24,7 @@ Before running this script, it is recommended you pack the static site in produc
 If no config is supplied to `tt-wdio`, `tt-wdio` will first search for `wdio.conf.js` in the working directory. If that is not found, it will attempt to use the default wdio config supplied by terra-dev-site.
 
 #### CLI Usage
+// MODIFCATION!
 In your package.json
 ```JSON
 {

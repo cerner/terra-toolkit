@@ -17,5 +17,5 @@ const getWdioConfigPath = (configPath) => {
   // If that is not found look for the terra-dev-site webpack config.
   return path.resolve(process.cwd(), 'node_modules', 'terra-dev-site', 'config', 'wdio', 'wdio.conf.js');
 };
-
+// MODIFCATION!
 module.exports = getWdioConfigPath;
