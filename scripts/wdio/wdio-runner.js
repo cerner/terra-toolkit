@@ -26,7 +26,6 @@ async function wdioRunner(options) {
       await new Launcher(configPath, testSetup)
         .run()
         .then(
-          // eslint-disable-next-line no-loop-func
           (code) => {
             if (code === 1 && !continueOnFail) {
               // eslint-disable-next-line no-console
