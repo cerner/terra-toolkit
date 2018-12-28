@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 const path = require('path');
 const fs = require('fs');
 const wdioConf = require('./config/wdio/wdio.conf');
