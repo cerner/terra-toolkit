@@ -15,8 +15,7 @@ const locale = process.env.LOCALE;
 const formFactor = process.env.FORM_FACTOR;
 
 const hasPackages = glob.sync((path.join(process.cwd(), 'packages'))).length > 0;
-// MODIFCATION!
-const hello = '123';
+
 const config = {
   specs: hasPackages ? [
     path.join('packages', '*', 'test*', 'wdio', '**', '*-spec.js'),
