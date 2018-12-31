@@ -78,4 +78,4 @@ React 16 depends on the collection types ``Map`` and ``Set`` and it depends on `
 A webpack plugin to remove/clean your build folder(s) before building.
 - [terser-webpack-plugin](https://webpack.js.org/plugins/terser-webpack-plugin/) - minifies your JavaScript.
 
-###### \* Required to support IE legacy browsers
+_\* Required to support IE legacy browsers_
