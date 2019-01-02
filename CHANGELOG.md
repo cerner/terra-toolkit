@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Changed
+* Updated docs to have logically nested headers.
 
 4.21.0 - (December 14, 2018)
 ----------
