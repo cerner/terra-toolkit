@@ -5,5 +5,5 @@
         "browsers": [ "extends browserslist-config-terra" ]
       }
     }]],
-  "plugins": ["transform-object-assign", "transform-object-rest-spread", "transform-runtime"],
+  "plugins": ["transform-object-assign", "transform-object-rest-spread", "transform-runtime", "syntax-dynamic-import"],
 }
