@@ -23,6 +23,7 @@ Once all of the translation files are created for the specified locales, the scr
 | locales  | -l, --locales | Array of Strings | The list of locale codes to aggregate. **Note: 'en' is always added if not specified.** | [terra-supported locales](https://github.com/cerner/terra-core/blob/master/packages/terra-i18n/src/i18nSupportedLocales.js) |
 | outputDir | -o, --ouputDir | String | Output directory for the translation and loader files | ./aggregated-translations |
 | configPath | -c, --config | String | The path to the terra i18n configuration file | undefined |
+| format | -f, --format | String | The format of syntax to output the translations with. Setting to undefined outputs the syntax with ES5 format. Setting format to 'modern' outputs the translations with ES6 modern syntax | undefined |
 
 #### Setup Example
 The `aggregate-translations` setup function can be used as follows:
@@ -36,6 +37,7 @@ const aggregateOptions = {
     exclude: ['./node_modules/packageToExclude'],
     locales: ['en', 'en-US'],
     outputDir: './aggregated-translations',
+    format: 'modern',
 };
 
 aggregateTranslations(aggregateOptions);
@@ -88,3 +90,7 @@ To provide the aggregated-translations files and loaders as modules to the terra
 This `resolve.modules` configuration indicates module resolving occurs in this order:
 1. `./aggregated_translations` (or indicated output directory)
 2. `./node_modules`
+
+## Syntax Format
+
+The aggregated-translations script provides the ability of either writing the files with ES5 syntax that is IE11 compatible, and ES6 syntax more inline with modern JavaScript. Note that if you plan on using Create React App version 2, you will need to use ES6 syntax by setting format to 'modern'.
