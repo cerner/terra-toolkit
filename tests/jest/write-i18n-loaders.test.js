@@ -41,6 +41,20 @@ Object.keys(testFileSystems).forEach((testFS) => {
       expect(writtenFiles[2]).toMatchSnapshot();
     });
 
+    it('writes compiled loader files with modern format if specified', () => {
+      const outputFiles = [
+        path.resolve(process.cwd(), outputDir, 'intlLoaders.js'),
+        path.resolve(process.cwd(), outputDir, 'translationsLoaders.js'),
+      ];
+
+      writeI18nLoaders(locales, fileSystem, outputDir, 'modern');
+
+      expect(writtenFilePaths).toEqual(outputFiles);
+      expect(writtenFiles[0]).toMatchSnapshot();
+      expect(writtenFiles[1]).toMatchSnapshot();
+      expect(writtenFiles[2]).toMatchSnapshot();
+    });
+
     it('logs a warning message if a locale is not a terra-supported locale', () => {
       writeI18nLoaders(['cy'], fileSystem, outputDir);
 

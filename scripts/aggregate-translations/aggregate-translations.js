@@ -34,6 +34,7 @@ const defaults = (options = {}) => {
     locales: options.locales || config.locales || supportedLocales,
     outputDir: options.outputDir || './aggregated-translations',
     excludes: options.excludes || config.excludes || [],
+    format: options.format,
   };
 
   if (!defaultConfig.locales.includes('en')) {
@@ -45,7 +46,7 @@ const defaults = (options = {}) => {
 
 const aggregatedTranslations = (options) => {
   const {
-    baseDir, directories, fileSystem, locales, outputDir, excludes,
+    baseDir, directories, fileSystem, locales, outputDir, excludes, format,
   } = defaults(options);
 
   const searchPaths = [
@@ -71,7 +72,7 @@ const aggregatedTranslations = (options) => {
   writeAggregatedTranslations(aggregatedMessages, locales, fileSystem, outputDirectory);
 
   // Write intl and translations loaders for the specified locales
-  writeI18nLoaders(locales, fileSystem, outputDirectory);
+  writeI18nLoaders(locales, fileSystem, outputDirectory, format);
 };
 
 module.exports = aggregatedTranslations;
