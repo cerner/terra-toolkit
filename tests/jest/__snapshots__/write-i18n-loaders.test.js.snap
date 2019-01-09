@@ -109,15 +109,15 @@ exports[`write compiled i18n loaders for fse fileSystem writes compiled loader f
 
 const loadEnIntl = () =>
    import('intl/locale-data/jsonp/en.js')
-   .catch(error => console.log('An error occurred while loading intl/locale-data/jsonp/en.js'));
+   .catch(error => console.log('An error occurred while loading intl/locale-data/jsonp/en.js' + \\"\\\\n\\" + error));
 
 const loadEnUSIntl = () =>
    import('intl/locale-data/jsonp/en-US.js')
-   .catch(error => console.log('An error occurred while loading intl/locale-data/jsonp/en-US.js'));
+   .catch(error => console.log('An error occurred while loading intl/locale-data/jsonp/en-US.js' + \\"\\\\n\\" + error));
 
 const loadEsIntl = () =>
    import('intl/locale-data/jsonp/es.js')
-   .catch(error => console.log('An error occurred while loading intl/locale-data/jsonp/es.js'));
+   .catch(error => console.log('An error occurred while loading intl/locale-data/jsonp/es.js' + \\"\\\\n\\" + error));
 
 var intlLoaders = {
   'en': loadEnIntl,
@@ -134,17 +134,17 @@ exports[`write compiled i18n loaders for fse fileSystem writes compiled loader f
 const loadEnTranslations = (callback, scope) =>
    import( /* webpackChunkName: \\"en-translations\\" */ 'en.js')
      .then((module) => { callback.call(scope, module);})
-     .catch(error => console.log('An error occurred while loading en.js'));
+     .catch(error => console.log('An error occurred while loading en.js' + \\"\\\\n\\" + error));
 
 const loadEnUSTranslations = (callback, scope) =>
    import( /* webpackChunkName: \\"en-US-translations\\" */ 'en-US.js')
      .then((module) => { callback.call(scope, module);})
-     .catch(error => console.log('An error occurred while loading en-US.js'));
+     .catch(error => console.log('An error occurred while loading en-US.js' + \\"\\\\n\\" + error));
 
 const loadEsTranslations = (callback, scope) =>
    import( /* webpackChunkName: \\"es-translations\\" */ 'es.js')
      .then((module) => { callback.call(scope, module);})
-     .catch(error => console.log('An error occurred while loading es.js'));
+     .catch(error => console.log('An error occurred while loading es.js' + \\"\\\\n\\" + error));
 
 var translationsLoaders = {
   'en': loadEnTranslations,
@@ -266,15 +266,15 @@ exports[`write compiled i18n loaders for memoryFS fileSystem writes compiled loa
 
 const loadEnIntl = () =>
    import('intl/locale-data/jsonp/en.js')
-   .catch(error => console.log('An error occurred while loading intl/locale-data/jsonp/en.js'));
+   .catch(error => console.log('An error occurred while loading intl/locale-data/jsonp/en.js' + \\"\\\\n\\" + error));
 
 const loadEnUSIntl = () =>
    import('intl/locale-data/jsonp/en-US.js')
-   .catch(error => console.log('An error occurred while loading intl/locale-data/jsonp/en-US.js'));
+   .catch(error => console.log('An error occurred while loading intl/locale-data/jsonp/en-US.js' + \\"\\\\n\\" + error));
 
 const loadEsIntl = () =>
    import('intl/locale-data/jsonp/es.js')
-   .catch(error => console.log('An error occurred while loading intl/locale-data/jsonp/es.js'));
+   .catch(error => console.log('An error occurred while loading intl/locale-data/jsonp/es.js' + \\"\\\\n\\" + error));
 
 var intlLoaders = {
   'en': loadEnIntl,
@@ -291,17 +291,17 @@ exports[`write compiled i18n loaders for memoryFS fileSystem writes compiled loa
 const loadEnTranslations = (callback, scope) =>
    import( /* webpackChunkName: \\"en-translations\\" */ 'en.js')
      .then((module) => { callback.call(scope, module);})
-     .catch(error => console.log('An error occurred while loading en.js'));
+     .catch(error => console.log('An error occurred while loading en.js' + \\"\\\\n\\" + error));
 
 const loadEnUSTranslations = (callback, scope) =>
    import( /* webpackChunkName: \\"en-US-translations\\" */ 'en-US.js')
      .then((module) => { callback.call(scope, module);})
-     .catch(error => console.log('An error occurred while loading en-US.js'));
+     .catch(error => console.log('An error occurred while loading en-US.js' + \\"\\\\n\\" + error));
 
 const loadEsTranslations = (callback, scope) =>
    import( /* webpackChunkName: \\"es-translations\\" */ 'es.js')
      .then((module) => { callback.call(scope, module);})
-     .catch(error => console.log('An error occurred while loading es.js'));
+     .catch(error => console.log('An error occurred while loading es.js' + \\"\\\\n\\" + error));
 
 var translationsLoaders = {
   'en': loadEnTranslations,

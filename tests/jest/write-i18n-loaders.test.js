@@ -47,7 +47,7 @@ Object.keys(testFileSystems).forEach((testFS) => {
         path.resolve(process.cwd(), outputDir, 'translationsLoaders.js'),
       ];
 
-      writeI18nLoaders(locales, fileSystem, outputDir, 'modern');
+      writeI18nLoaders(locales, fileSystem, outputDir, 'es6');
 
       expect(writtenFilePaths).toEqual(outputFiles);
       expect(writtenFiles[0]).toMatchSnapshot();

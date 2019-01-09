@@ -23,7 +23,7 @@ Once all of the translation files are created for the specified locales, the scr
 | locales  | -l, --locales | Array of Strings | The list of locale codes to aggregate. **Note: 'en' is always added if not specified.** | [terra-supported locales](https://github.com/cerner/terra-core/blob/master/packages/terra-i18n/src/i18nSupportedLocales.js) |
 | outputDir | -o, --ouputDir | String | Output directory for the translation and loader files | ./aggregated-translations |
 | configPath | -c, --config | String | The path to the terra i18n configuration file | undefined |
-| format | -f, --format | String | The format of syntax to output the translations with. Setting to undefined outputs the syntax with ES5 format. Setting format to 'modern' outputs the translations with ES6 modern syntax | undefined |
+| format | -f, --format | String | The format of syntax to output the translations with. Possible values are 'es5' and 'es6' | 'es5' |
 
 #### Setup Example
 The `aggregate-translations` setup function can be used as follows:
@@ -37,7 +37,7 @@ const aggregateOptions = {
     exclude: ['./node_modules/packageToExclude'],
     locales: ['en', 'en-US'],
     outputDir: './aggregated-translations',
-    format: 'modern',
+    format: 'es6',
 };
 
 aggregateTranslations(aggregateOptions);

@@ -3,11 +3,11 @@ const startCase = require('lodash.startcase');
 const supportedLocales = require('./i18nSupportedLocales');
 
 const createIntlLoader = (loaderName, locale, format) => {
-  if (format === 'modern') {
+  if (format === 'es6') {
     return (
       `const ${loaderName} = () =>
    import('intl/locale-data/jsonp/${locale}.js')
-   .catch(error => console.log('An error occurred while loading intl/locale-data/jsonp/${locale}.js'));\n
+   .catch(error => console.log('An error occurred while loading intl/locale-data/jsonp/${locale}.js' + "\\n" + error));\n
 `
     );
   }
@@ -23,12 +23,12 @@ const createIntlLoader = (loaderName, locale, format) => {
 };
 
 const createTranslationLoader = (loaderName, locale, format) => {
-  if (format === 'modern') {
+  if (format === 'es6') {
     return (
       `const ${loaderName} = (callback, scope) =>
    import( /* webpackChunkName: "${locale}-translations" */ '${locale}.js')
      .then((module) => { callback.call(scope, module);})
-     .catch(error => console.log('An error occurred while loading ${locale}.js'));\n
+     .catch(error => console.log('An error occurred while loading ${locale}.js' + "\\n" + error));\n
 `
     );
   }

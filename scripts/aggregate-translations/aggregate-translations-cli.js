@@ -25,7 +25,7 @@ commander
   .option('-o, --outputDir [outputDir]', 'The output location of the generated configuration file', './aggregated-translations')
   .option('-c, --config [configPath]', 'The path to the terra i18n configuration file', undefined)
   .option('-e, --exclude [exclude]', 'Regex pattern to glob filter out directories', addCustomExclude)
-  .option('-f, --format [format]', 'Format to output the aggregated translations to. Defaults to ES5 syntax. Options are [modern]', undefined)
+  .option('-f, --format [format]', 'Format to output the aggregated translations to. Options are [es5, es6]', 'es5')
   .parse(process.argv);
 
 const aggregationOption = {
