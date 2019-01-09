@@ -90,7 +90,3 @@ To provide the aggregated-translations files and loaders as modules to the terra
 This `resolve.modules` configuration indicates module resolving occurs in this order:
 1. `./aggregated_translations` (or indicated output directory)
 2. `./node_modules`
-
-## Syntax Format
-
-The aggregated-translations script provides the ability of either writing the files with ES5 syntax that is IE11 compatible, and ES6 syntax more inline with modern JavaScript. Note that if you plan on using Create React App version 2, you will need to use ES6 syntax by setting format to 'modern'.
