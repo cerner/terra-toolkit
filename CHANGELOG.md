@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Changed
+* Update the `connectionRetryCount` to 1 in the default wdio configuraiton
 
 4.22.0 - (January 2, 2019)
 ----------
