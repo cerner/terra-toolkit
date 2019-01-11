@@ -85,7 +85,7 @@ export default class LocalScreenshotProcessor extends TerraCompare {
 
   static async getReferenceScreenshotData(context) {
     const referenceScreenshotPath = LocalScreenshotProcessor.getScreenshotPath('reference', context);
-    return fs.readFile(referenceScreenshotPath);
+    return await fs.pathExists(referenceScreenshotPath) ? fs.readFile(referenceScreenshotPath) : null;
   }
 
   static async saveLatestScreenshotData(context, latestScreenshotData) {
@@ -99,8 +99,13 @@ export default class LocalScreenshotProcessor extends TerraCompare {
   }
 
   static async handleNoReferenceScreenshot(context, latestScreenshotData, failInCIOnMissingReferenceShots, createResultReport) {
-    const referenceScreenshotPath = LocalScreenshotProcessor.getScreenshotPath('reference', context);
-    await fs.outputFile(referenceScreenshotPath, latestScreenshotData);
+    if (!(failInCIOnMissingReferenceShots && process.env.CI)) {
+      const referenceScreenshotPath = LocalScreenshotProcessor.getScreenshotPath('reference', context);
+      await fs.outputFile(referenceScreenshotPath, latestScreenshotData);
+      return createResultReport(0, true, true);
+    }
+    const diffScreenshotPath = LocalScreenshotProcessor.getScreenshotPath('diff', context);
+    await fs.outputFile(diffScreenshotPath, latestScreenshotData);
     return createResultReport(0, !(failInCIOnMissingReferenceShots && process.env.CI), true);
   }
 }
