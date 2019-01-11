@@ -90,3 +90,7 @@ To provide the aggregated-translations files and loaders as modules to the terra
 This `resolve.modules` configuration indicates module resolving occurs in this order:
 1. `./aggregated_translations` (or indicated output directory)
 2. `./node_modules`
+
+# Compiling with ES6 syntax.
+
+The aggregate-translations script has the ability to compile with ES6 syntax by setting the format prop to 'es6'. To get these to work properly with Jest and the rest of your configuration, you need to add the [babel-plugin-syntax-dynamic-import](https://www.npmjs.com/package/babel-plugin-syntax-dynamic-import) plugin to your babel configuration. Since we are not using Babel 7 in Terra, you need to use version 6.18.0 to be compatible with our code base.
