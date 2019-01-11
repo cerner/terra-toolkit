@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Changed
+* Refactored the screenshot comparison code so that different storage implementations can be swapped out.
 
 4.22.0 - (January 2, 2019)
 ----------
