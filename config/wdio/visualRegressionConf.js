@@ -2,6 +2,6 @@ const TerraCompare = require('../../lib/wdio/services/compare/TerraCompare').def
 const LocalScreenshotProcessor = require('../../lib/wdio/services/compare/LocalScreenshotProcessor').default;
 
 module.exports = {
-  compare: new TerraCompare(LocalScreenshotProcessor),
+  compare: new TerraCompare({ screenshotProcessor: LocalScreenshotProcessor, failOnMissingReferenceShots: true }),
   viewportChangePause: 100,
 };

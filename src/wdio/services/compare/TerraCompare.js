@@ -3,9 +3,10 @@ import resemble from 'node-resemble-js';
 import get from 'lodash.get';
 
 export default class TerraCompare extends BaseCompare {
-  constructor(screenshotProcessor) {
+  constructor(config) {
     super();
-    this.screenshotProcessor = screenshotProcessor;
+    this.screenshotProcessor = config.screenshotProcessor;
+    this.failInCIOnMissingReferenceShots = config.failInCIOnMissingReferenceShots;
   }
 
   async processScreenshot(context, base64Screenshot) {
@@ -27,7 +28,7 @@ export default class TerraCompare extends BaseCompare {
       }
       return this.createResultReport(misMatchPercentage, true, isSameDimensions);
     }
-    return this.screenshotProcessor.handleNoReferenceScreenshot(context, latestScreenshotData, this.createResultReport);
+    return this.screenshotProcessor.handleNoReferenceScreenshot(context, latestScreenshotData, this.failInCIOnMissingReferenceShots, this.createResultReport);
   }
 
   static async compareImages(reference, screenshot) {
