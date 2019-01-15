@@ -36,7 +36,7 @@ const config = {
   screenshotPath: path.join('.', 'errorScreenshots'),
   waitforTimeout: 3000,
   connectionRetryTimeout: 90000,
-  connectionRetryCount: 3,
+  connectionRetryCount: 1,
   services: ['visual-regression', AxeService, TerraService, SeleniumDockerService, ServeStaticService],
 
   visualRegression: visualRegressionConfig,
