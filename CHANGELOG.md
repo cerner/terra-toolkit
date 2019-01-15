@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Added
+* Added format option to aggregate-translations to output modern syntax
 
 4.22.0 - (January 2, 2019)
 ----------
