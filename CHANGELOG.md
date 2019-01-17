@@ -8,6 +8,8 @@ Unreleased
 
 ### Added
 * Added format option to aggregate-translations to output modern syntax
+* Added script to collect terra CSS Custom Properties as a JSON file
+* Added script to spell check CSS Custom Properties
 
 4.22.0 - (January 2, 2019)
 ----------
