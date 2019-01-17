@@ -25,6 +25,8 @@
   "bin": {
     "tt-aggregate-translations": "bin/aggregate-translations.js",
     "tt-clean-screenshots": "bin/clean-screenshots.js",
+    "tt-custom-properties-generate-json": "bin/custom-properties-generate-generate-json.js",
+    "tt-custom-properties-spell-check": "bin/custom-properties-spell-check.js",
     "tt-heroku-serve-static": "bin/heroku-serve-static.js",
     "tt-pack": "bin/pack.js",
     "tt-serve": "bin/serve.js",
