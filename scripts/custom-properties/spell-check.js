@@ -27,7 +27,7 @@ customPropertyWords.forEach((word) => {
   retext()
     .use(spell, {
       dictionary: enUSDictionary,
-      personal: fs.readFileSync('./custom-properties-spell-check-dictionary.txt').toString(),
+      personal: (fs.readFileSync('./custom-properties-spell-check-dictionary.txt').toString() || ''),
     })
     .process(word, (err, files) => {
       if (report(err || files) !== 'no issues found') {
