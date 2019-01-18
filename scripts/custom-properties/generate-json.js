@@ -1,9 +1,15 @@
 const fs = require('fs');
-const customPropertiesCollection = require('./collect-custom-properties');
+const commander = require('commander');
+const collectCustomProperties = require('./collect-custom-properties');
+
+// Parse process arguments
+commander
+  .option('-f, --files [files]', 'Glob path to search for SCSS files', 'src/**/*.scss')
+  .parse(process.argv);
 
 const customProperties = {};
 
-customPropertiesCollection.forEach((cssValue) => {
+collectCustomProperties(commander.files).forEach((cssValue) => {
   // eslint-disable-next-line prefer-destructuring
   customProperties[cssValue[0]] = cssValue[1];
 });
