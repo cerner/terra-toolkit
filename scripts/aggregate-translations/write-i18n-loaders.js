@@ -2,25 +2,50 @@ const path = require('path');
 const startCase = require('lodash.startcase');
 const supportedLocales = require('./i18nSupportedLocales');
 
-const createIntlLoader = (loaderName, locale) => (
-  `var ${loaderName} = function ${loaderName}() {
+const createIntlLoader = (loaderName, locale, format) => {
+  if (format === 'es6') {
+    return (
+      `const ${loaderName} = () =>
+   import('intl/locale-data/jsonp/${locale}.js')
+   .catch(error => console.log('An error occurred while loading intl/locale-data/jsonp/${locale}.js' + "\\n" + error));\n
+`
+    );
+  }
+
+  return (
+    `var ${loaderName} = function ${loaderName}() {
   return require.ensure([], function (require) {
     return require('intl/locale-data/jsonp/${locale}.js');
   }, '${locale}-intl-local');
 };\n
-`);
+`
+  );
+};
 
-const createTranslationLoader = (loaderName, locale) => (
-  `var ${loaderName} = function ${loaderName}(callback, scope) {
+const createTranslationLoader = (loaderName, locale, format) => {
+  if (format === 'es6') {
+    return (
+      `const ${loaderName} = (callback, scope) =>
+   import( /* webpackChunkName: "${locale}-translations" */ '${locale}.js')
+     .then((module) => { callback.call(scope, module);})
+     .catch(error => console.log('An error occurred while loading ${locale}.js' + "\\n" + error));\n
+`
+    );
+  }
+
+  return (
+    `var ${loaderName} = function ${loaderName}(callback, scope) {
   return require.ensure([], function (require) {
     // eslint-disable-next-line
     var i18n = require('./${locale}.js');
     callback.call(scope, i18n);
   }, '${locale}-translations');
 };\n
-`);
+`
+  );
+};
 
-const writeLoaders = (type, locales, fileSystem, outputDir) => {
+const writeLoaders = (type, locales, fileSystem, outputDir, format) => {
   const loaders = {};
   let loaderFile = "'use strict';\n\n";
 
@@ -36,9 +61,9 @@ const writeLoaders = (type, locales, fileSystem, outputDir) => {
     loaders[`'${locale}'`] = loaderName;
 
     if (type === 'intl') {
-      loaderFile += createIntlLoader(loaderName, locale);
+      loaderFile += createIntlLoader(loaderName, locale, format);
     } else {
-      loaderFile += createTranslationLoader(loaderName, locale);
+      loaderFile += createTranslationLoader(loaderName, locale, format);
     }
   });
 
@@ -51,9 +76,9 @@ const writeLoaders = (type, locales, fileSystem, outputDir) => {
   fileSystem.writeFileSync(loaderPath, loaderFile);
 };
 
-const writeI18nLoaders = (locales, fileSystem, outputDir) => {
-  writeLoaders('intl', locales, fileSystem, outputDir);
-  writeLoaders('translations', locales, fileSystem, outputDir);
+const writeI18nLoaders = (locales, fileSystem, outputDir, format) => {
+  writeLoaders('intl', locales, fileSystem, outputDir, format);
+  writeLoaders('translations', locales, fileSystem, outputDir, format);
 };
 
 module.exports = writeI18nLoaders;

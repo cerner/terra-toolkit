@@ -3,6 +3,12 @@ Changelog
 
 Unreleased
 ----------
+### Changed
+* Update the `connectionRetryCount` to 1 in the default wdio configuraiton
+
+### Added
+* Added format option to aggregate-translations to output modern syntax
+
 ### Fixed
 * Adjust AxeService implementation to only resize the viewport if viewport options are passed.
 
