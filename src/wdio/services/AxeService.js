@@ -56,7 +56,7 @@ export default class AxeService {
         rules: options.rules,
       };
 
-      // analyze for the specified viepworts
+      // analyze the specified viepworts
       if (specifiedViewports) {
         // get the current viewport
         const currentViewportSize = browser.getViewportSize();
@@ -73,7 +73,7 @@ export default class AxeService {
         return results;
       }
 
-      // analyze for the current viewport
+      // analyze the current viewport
       return [runAxeTest(options.context, axeOptions)];
     });
   }
