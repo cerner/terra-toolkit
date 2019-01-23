@@ -35,13 +35,6 @@ export default class AxeService {
         }
       }
 
-      // use current viewport if none specified
-      const specifiedViewports = options.viewports;
-      const axeOptions = {
-        runOnly: options.runOnly,
-        rules: options.rules,
-      };
-
       const runAxeTest = (wdioContext, wdioOptions) => {
         // Avoid arrow callback syntax as this function is injected into the browser
         // eslint-disable-next-line func-names, prefer-arrow-callback
@@ -57,7 +50,15 @@ export default class AxeService {
       };
 
       let results;
+      const specifiedViewports = options.viewports;
+      const axeOptions = {
+        runOnly: options.runOnly,
+        rules: options.rules,
+      };
+
+      // analyze for the specified viepworts
       if (specifiedViewports) {
+        // get the current viewport
         const currentViewportSize = browser.getViewportSize();
 
         // Get accessibility results for each viewport size
@@ -66,12 +67,13 @@ export default class AxeService {
           return runAxeTest(options.context, axeOptions);
         });
 
-        // set viewport back
+        // reset viewport back to the current viewport
         browser.setViewportSize(currentViewportSize);
 
         return results;
       }
 
+      // analyze for the current viewport
       return [runAxeTest(options.context, axeOptions)];
     });
   }
