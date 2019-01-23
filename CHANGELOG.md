@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Fixed
+* Adjust AxeService implementation to only resize the viewport if viewport options are passed.
 
 4.22.0 - (January 2, 2019)
 ----------
