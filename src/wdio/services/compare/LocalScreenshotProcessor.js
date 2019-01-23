@@ -1,6 +1,5 @@
 import path from 'path';
 import fs from 'fs-extra';
-import TerraCompare from './TerraCompare';
 import { terraViewports as VIEWPORTS } from '../../../../config/wdio/services.default-config';
 
 const screenshotSetup = {
@@ -11,7 +10,7 @@ const screenshotSetup = {
 
 const testIdRegex = /\[([^)]+)\]/;
 
-export default class LocalScreenshotProcessor extends TerraCompare {
+export default class LocalScreenshotProcessor {
   static createTestName(fullName) {
     const matches = testIdRegex.exec(fullName);
 
