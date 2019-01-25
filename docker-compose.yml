@@ -31,4 +31,4 @@ services:
 
   term:
     <<: *dev
-    command: "/bin/zsh"npm
+    command: "/bin/zsh"
