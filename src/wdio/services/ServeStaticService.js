@@ -11,7 +11,7 @@ export default class ServeStaticService {
     const webpackConfig = config.webpackConfig;
 
     if (!webpackConfig && !site) {
-      consoleWarn({ context, message: 'No webpack configuration provided');
+      consoleWarn({ context, message: 'No webpack configuration provided' });
       return;
     }
 
