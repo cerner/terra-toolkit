@@ -21,7 +21,7 @@ async function wdioRunner(options) {
         process.env.FORM_FACTOR = form;
         envValues += `FORM_FACTOR=${form}`;
       }
-      envValues = chalk.bold.cyan(envValues)
+      envValues = chalk.bold.cyan(envValues);
       consoleLog({ context: `${context}`, message: `Running tests for: ${envValues}` });
 
       // eslint-disable-next-line no-await-in-loop

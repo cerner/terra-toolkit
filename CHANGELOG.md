@@ -3,11 +3,12 @@ Changelog
 
 Unreleased
 ----------
-### Changed
-* Update the `connectionRetryCount` to 1 in the default wdio configuraiton
-
 ### Added
 * Added format option to aggregate-translations to output modern syntax
+* Added formated & colored console output for toolkit services and scripts
+
+### Changed
+* Update the `connectionRetryCount` to 1 in the default wdio configuraiton
 
 4.22.0 - (January 2, 2019)
 ----------
