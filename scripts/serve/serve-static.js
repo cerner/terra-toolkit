@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const express = require('express');
 const fse = require('fs-extra');
 const path = require('path');
@@ -6,6 +5,10 @@ const webpack = require('webpack');
 const clone = require('clone');
 const MemoryFS = require('memory-fs');
 const mime = require('mime-types');
+
+const { consoleLog, consoleWarn, chalk } = require('../../lib/logger');
+
+const context = '[Terra-Toolkit:serve-static]';
 
 // Run webpack on the provided webpack config and save to either the virtual file system or disk.
 const compile = (webpackConfig, disk) => (
@@ -15,16 +18,16 @@ const compile = (webpackConfig, disk) => (
     if (!disk) {
       compiler.outputFileSystem = new MemoryFS();
     }
-    console.log('[Terra-Toolkit:serve-static] Starting Webpack compilation');
+    consoleLog({ context, message: 'Starting Webpack compilation' });
     compiler.run((err, stats) => {
       if (err || stats.hasErrors()) {
-        console.log(`[Terra-Toolkit:serve-static] Webpack failed to compile in ${webpackConfig.mode} mode`);
+        consoleLog({ context, message: `Webpack failed to compile in ${webpackConfig.mode} mode` });
         reject(err || new Error(stats.toJson().errors));
       } else {
         if (stats.hasWarnings()) {
-          console.warn(stats.toJson().warnings);
+          consoleWarn({ context, message: stats.toJson().warnings });
         }
-        console.log(`[Terra-Toolkit:serve-static] Webpack compiled successfully in ${webpackConfig.mode} mode`);
+        consoleLog({ context, message: `Webpack compiled successfully in ${chalk.bold.cyan(webpackConfig.mode.toUpperCase())} mode` });
         resolve([webpackConfig.output.path, compiler.outputFileSystem]);
       }
     });
@@ -166,7 +169,7 @@ const serve = (options) => {
     .then(([sitePath, fs]) => serveSite(sitePath, fs, appIndex, appLocale, verbose))
     .then((app) => {
       const server = app.listen(appPort, host);
-      console.log(`[Terra-Toolkit:serve-static] Server started listening at port:${appPort}`);
+      consoleLog({ context, message: `Server started listening at port:${appPort}` });
       return server;
     });
 };

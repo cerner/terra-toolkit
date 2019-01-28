@@ -1,7 +1,9 @@
 import serveStatic from '../../../scripts/serve/serve-static';
 import SERVICE_DEFAULTS from '../../../config/wdio/services.default-config';
+import { consoleLog, consoleWarn } from '../../logger';
 
 const { serveStatic: SERVE_STATIC_DEFAULTS } = SERVICE_DEFAULTS;
+const context = '[Terra-Toolkit:serve-static-service]';
 
 export default class ServeStaticService {
   async onPrepare(config = {}) {
@@ -52,8 +54,7 @@ export default class ServeStaticService {
 
   stop() {
     return new Promise((resolve) => {
-      // eslint-disable-next-line no-console
-      console.log('[Terra-Toolkit:serve-static] Closing Server');
+      consoleLog({ context, message: 'Closing Server' });
       if (this.server) {
         this.server.close();
         this.server = null;

@@ -1,14 +1,12 @@
-/* eslint-disable no-console */
 const WebpackDevServer = require('webpack-dev-server');
 const webpack = require('webpack');
 const ip = require('ip');
-const chalk = require('chalk');
-const { version: ttVersion } = require('../../package.json');
+const { consoleLog, chalk } = require('../../lib/logger');
 
 const displayServer = (localAddress, networkAddress) => {
-  console.log(chalk.greenBright(`Terra-Toolkit ${chalk.bold(ttVersion)} started`));
-  console.log(`* Local:            ${chalk.cyan(localAddress)}`);
-  console.log(`* On your network:  ${chalk.cyan(networkAddress)}\n`);
+  consoleLog({ context: '[Terra-Toolkit:serve]', message: 'Server started listening at' });
+  consoleLog(`* Local:            ${chalk.cyan(localAddress)}`);
+  consoleLog(`* On your network:  ${chalk.cyan(networkAddress)}`);
 };
 
 // Create a webpack dev server instance.

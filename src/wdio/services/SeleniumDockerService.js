@@ -1,10 +1,12 @@
-/* eslint-disable class-methods-use-this, no-console */
+/* eslint-disable class-methods-use-this */
 import { exec } from 'child_process';
 import retry from 'async/retry';
 import http from 'http';
 import path from 'path';
 import SERVICE_DEFAULTS from '../../../config/wdio/services.default-config';
+import { consoleLog } from '../../logger';
 
+const context = '[Terra-Toolkit:selenium-docker]';
 /**
 * Webdriver.io SeleniuMDockerService
 * provides standalone chrome/firefox selenium docker automation.
@@ -64,7 +66,7 @@ export default class SeleniumDockerService {
   */
   ensureSelenium() {
     return new Promise((resolve, reject) => {
-      console.log('[SeleniumDocker] Ensuring selenium status is ready');
+      consoleLog({ context, message: 'Ensuring selenium status is ready' });
       retry(
         { times: this.config.retries, interval: this.config.retryInterval },
         this.getSeleniumStatus, (err, result) => {
@@ -112,7 +114,7 @@ export default class SeleniumDockerService {
   * @return {Promise}
   */
   initSwarm() {
-    console.log('[SeleniumDocker] Initializing docker swarm');
+    consoleLog({ context, message: 'Initializing docker swarm' });
     return this.execute('docker swarm init');
   }
 
@@ -121,7 +123,7 @@ export default class SeleniumDockerService {
   * @return {Promise}
   */
   deployStack() {
-    console.log('[SeleniumDocker] Deploying docker selenium stack');
+    consoleLog({ context, message: 'Deploying docker selenium stack' });
     return this.execute(`docker stack deploy --compose-file ${this.config.composeFile} wdio`);
   }
 
@@ -130,7 +132,7 @@ export default class SeleniumDockerService {
   * @return {Promise}
   */
   removeStack() {
-    console.log('[SeleniumDocker] Removing docker selenium stack');
+    consoleLog({ context, message: 'Removing docker selenium stack' });
     return this.execute('docker stack rm wdio');
   }
 
