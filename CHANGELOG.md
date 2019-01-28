@@ -5,7 +5,7 @@ Unreleased
 ----------
 ### Added
 * Added format option to aggregate-translations to output modern syntax
-* Added formated & colored console output for toolkit services and scripts
+* Added formatted & colored console output for toolkit services and scripts
 
 ### Changed
 * Update the `connectionRetryCount` to 1 in the default wdio configuraiton
