@@ -11,8 +11,7 @@ export default class ServeStaticService {
     const webpackConfig = config.webpackConfig;
 
     if (!webpackConfig && !site) {
-      // eslint-disable-next-line no-console
-      console.warn('[Terra-Toolkit:serve-static] No webpack configuration provided');
+      consoleWarn({ context, message: 'No webpack configuration provided');
       return;
     }
 
