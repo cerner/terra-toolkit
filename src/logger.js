@@ -32,12 +32,12 @@ class Logger {
 
   static log(message, details) {
     /* eslint-disable-next-line no-console */
-    console.warn(this.getMessage(message, details, 'grey'));
+    console.log(this.getMessage(message, details, 'grey'));
   }
 
   static warn(message, details) {
     /* eslint-disable-next-line no-console */
-    console.log(this.getMessage(message, details, 'yellow'));
+    console.warn(this.getMessage(message, details, 'yellow'));
   }
 
   static error(message, details) {
