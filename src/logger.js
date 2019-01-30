@@ -1,39 +1,49 @@
 const chalk = require('chalk');
 
-const messageDetails = (details) => {
-  if (typeof details !== 'object') {
-    return { message: details };
+class Logger {
+  static format(style, message) {
+    if (chalk[style] !== undefined) {
+      return chalk[style](message);
+    }
+    return message;
   }
 
-  return { context: details.context, message: details.message || '' };
-};
-
-const getMessage = (details, color) => {
-  const { context, message } = messageDetails(details);
-  let logMessage = '';
-
-  if (context) {
-    logMessage += `${chalk.bold.dim(context)} `;
+  static getMessageDetails(details) {
+    if (typeof details !== 'object') {
+      return { message: details };
+    }
+    return { context: details.context, message: details.message || '' };
   }
-  logMessage += chalk[color](message);
 
-  return logMessage;
-};
+  static getMessage(details, color) {
+    const { context, message } = this.getMessageDetails(details);
+    let logMessage = '';
 
-const consoleError = details => (
-  new Error(getMessage(details, 'red'))
-);
+    if (context) {
+      logMessage += `${this.format('bold', this.format('dim', context))} `;
+    }
+    logMessage += this.format(color, message);
 
-const consoleLog = details => (
-  /* eslint-disable-next-line no-console */
-  console.log(getMessage(details, 'grey'))
-);
+    return logMessage;
+  }
 
-const consoleWarn = details => (
-  /* eslint-disable-next-line no-console */
-  console.warn(getMessage(details, 'magenta'))
-);
+  static emphasis(message) {
+    return this.format('bold', this.format('cyan', message));
+  }
 
-module.exports = {
-  consoleError, consoleLog, consoleWarn, chalk,
-};
+  static log(details) {
+    /* eslint-disable-next-line no-console */
+    console.warn(this.getMessage(details, 'grey'));
+  }
+
+  static warn(details) {
+    /* eslint-disable-next-line no-console */
+    console.log(this.getMessage(details, 'yellow'));
+  }
+
+  static error(details) {
+    return new Error(this.getMessage(details, 'red'));
+  }
+}
+
+module.exports = Logger;

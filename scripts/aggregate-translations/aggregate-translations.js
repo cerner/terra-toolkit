@@ -2,7 +2,7 @@ const path = require('path');
 const fse = require('fs-extra');
 const glob = require('glob');
 const supportedLocales = require('./i18nSupportedLocales');
-const { consoleLog, chalk } = require('../../lib/logger');
+const Logger = require('../../lib/logger');
 
 const aggregateMessages = require('./aggregate-messages');
 const writeAggregatedTranslations = require('./write-aggregated-translations');
@@ -61,7 +61,7 @@ const aggregatedTranslations = (options) => {
     translationDirectories = translationDirectories.concat(glob.sync(searchPath, { cwd: baseDir, ignore: excludes, follow: true }));
   });
 
-  consoleLog({ context, message: `Aggregating translations for ${chalk.cyan(locales)} locales.` });
+  Logger.log({ context, message: `Aggregating translations for ${Logger.emphasis(locales)} locales.` });
 
   // Aggregate translation messages for each of the translations directories
   const aggregatedMessages = aggregateMessages(translationDirectories, locales, fileSystem);

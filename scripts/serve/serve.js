@@ -1,12 +1,12 @@
 const WebpackDevServer = require('webpack-dev-server');
 const webpack = require('webpack');
 const ip = require('ip');
-const { consoleLog, chalk } = require('../../lib/logger');
+const Logger = require('../../lib/logger');
 
 const displayServer = (localAddress, networkAddress) => {
-  consoleLog({ context: '[Terra-Toolkit:serve]', message: 'Server started listening at' });
-  consoleLog(`* Local:            ${chalk.cyan(localAddress)}`);
-  consoleLog(`* On your network:  ${chalk.cyan(networkAddress)}`);
+  Logger.log({ context: '[Terra-Toolkit:serve]', message: 'Server started listening at' });
+  Logger.log(`* Local:            ${Logger.emphasis(localAddress)}`);
+  Logger.log(`* On your network:  ${Logger.emphasis(networkAddress)}`);
 };
 
 // Create a webpack dev server instance.

@@ -1,7 +1,7 @@
 const path = require('path');
 const startCase = require('lodash.startcase');
 const supportedLocales = require('./i18nSupportedLocales');
-const { consoleWarn } = require('../../lib/logger');
+const Logger = require('../../lib/logger');
 
 const createIntlLoader = (loaderName, locale, format) => {
   if (format === 'es6') {
@@ -53,7 +53,7 @@ const writeLoaders = (type, locales, fileSystem, outputDir, format) => {
   // Create the intl and translations loaders for each locale
   locales.forEach((locale) => {
     if (type === 'intl' && !supportedLocales.includes(locale)) {
-      consoleWarn(`WARNING: ${locale} is NOT a Terra supported locale. Creating a translation and intl loader for ${locale}, but be sure the lanaguage specified is supported by intl, otherwise no locale-date will exist and the import will result in an error.`);
+      Logger.warn(`WARNING: ${locale} is NOT a Terra supported locale. Creating a translation and intl loader for ${locale}, but be sure the lanaguage specified is supported by intl, otherwise no locale-date will exist and the import will result in an error.`);
     }
 
     const localeLoaderName = startCase(locale).replace(' ', '');

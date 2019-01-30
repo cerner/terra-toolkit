@@ -6,7 +6,7 @@ const clone = require('clone');
 const MemoryFS = require('memory-fs');
 const mime = require('mime-types');
 
-const { consoleLog, consoleWarn, chalk } = require('../../lib/logger');
+const Logger = require('../../lib/logger');
 
 const context = '[Terra-Toolkit:serve-static]';
 
@@ -18,16 +18,16 @@ const compile = (webpackConfig, disk) => (
     if (!disk) {
       compiler.outputFileSystem = new MemoryFS();
     }
-    consoleLog({ context, message: 'Starting Webpack compilation' });
+    Logger.log({ context, message: 'Starting Webpack compilation' });
     compiler.run((err, stats) => {
       if (err || stats.hasErrors()) {
-        consoleLog({ context, message: `Webpack failed to compile in ${webpackConfig.mode} mode` });
-        reject(err || new Error(stats.toJson().errors));
+        Logger.log({ context, message: `Webpack failed to compile in ${webpackConfig.mode} mode` });
+        reject(err || Logger.error((stats.toJson().errors)));
       } else {
         if (stats.hasWarnings()) {
-          consoleWarn({ context, message: stats.toJson().warnings });
+          Logger.warn({ context, message: stats.toJson().warnings });
         }
-        consoleLog({ context, message: `Webpack compiled successfully in ${chalk.bold.cyan(webpackConfig.mode.toUpperCase())} mode` });
+        Logger.log({ context, message: `Webpack compiled successfully in ${Logger.emphasis(webpackConfig.mode.toUpperCase())} mode` });
         resolve([webpackConfig.output.path, compiler.outputFileSystem]);
       }
     });
@@ -44,7 +44,7 @@ const generateSite = (site, config, disk, production) => {
       return Promise.resolve([sitePath, fileSystem]);
     }
 
-    return Promise.reject(new Error(`[Terra-Toolkit:serve-static] Could not serve static site from ${sitePath}.`));
+    return Promise.reject(Logger.error({ context, message: `Could not serve static site from ${sitePath}.` }));
   }
 
   if (config) {
@@ -62,7 +62,7 @@ const generateSite = (site, config, disk, production) => {
     return compile(webpackConfig, disk);
   }
 
-  return Promise.reject(new Error('[Terra-Toolkit:serve-static] No webpack configuration provided.'));
+  return Promise.reject(Logger.error({ context, message: 'No webpack configuration provided.' }));
 };
 
 // Set the test locale for the html file
@@ -119,7 +119,7 @@ const virtualApp = (site, index, locale, fs, verbose) => {
 
   if (verbose) {
     app.use((req, res, next) => {
-      const err = new Error(`Not Found: ${req.originalUrl}`);
+      const err = Logger.error({ context, message: `Not Found: ${req.originalUrl}` });
       err.status = 404;
       next(err);
     });
@@ -169,7 +169,7 @@ const serve = (options) => {
     .then(([sitePath, fs]) => serveSite(sitePath, fs, appIndex, appLocale, verbose))
     .then((app) => {
       const server = app.listen(appPort, host);
-      consoleLog({ context, message: `Server started listening at port:${appPort}` });
+      Logger.log({ context, message: `Server started listening at port:${appPort}` });
       return server;
     });
 };
