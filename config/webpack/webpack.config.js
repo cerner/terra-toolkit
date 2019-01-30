@@ -8,8 +8,8 @@ const CleanPlugin = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const browserslist = require('browserslist-config-terra');
 const merge = require('webpack-merge');
+const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
 const aggregateTranslations = require('../../scripts/aggregate-translations/aggregate-translations');
-const DuplicatePackageCheckerPlugin = require("duplicate-package-checker-webpack-plugin");
 
 const webpackConfig = (options, env, argv) => {
   const { rootPath, resolveModules } = options;
