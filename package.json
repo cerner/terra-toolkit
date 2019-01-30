@@ -123,6 +123,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-runtime": "^6.26.0",
     "danger": "^3.7.14",
+    "duplicate-package-checker-webpack-plugin": "^3.0.0",
     "eslint": "^5.12.0",
     "eslint-config-terra": "^2.2.0",
     "html-webpack-plugin": "^3.1.0",
