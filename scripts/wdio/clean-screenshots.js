@@ -40,7 +40,7 @@ const cleanSnapshots = (options) => {
     }
   });
 
-  Logger.log({ context: '[Terra-Tookit:wdio-clean-screenshots]', message: 'Cleaned screenshot directories\n' });
+  Logger.log('Cleaned screenshot directories\n', { context: '[Terra-Tookit:wdio-clean-screenshots]' });
   if (wdioConfig.logLevel !== 'silent' && removedDirs.length > 0) {
     Logger.log(removedDirs);
   }

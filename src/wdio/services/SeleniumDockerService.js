@@ -66,12 +66,12 @@ export default class SeleniumDockerService {
   */
   ensureSelenium() {
     return new Promise((resolve, reject) => {
-      Logger.log({ context, message: 'Ensuring selenium status is ready' });
+      Logger.log('Ensuring selenium status is ready', { context });
       retry(
         { times: this.config.retries, interval: this.config.retryInterval },
         this.getSeleniumStatus, (err, result) => {
           if (err) {
-            reject(new Error(err));
+            reject(Logger.error(err, { context }));
           } else {
             resolve(result);
           }
@@ -114,7 +114,7 @@ export default class SeleniumDockerService {
   * @return {Promise}
   */
   initSwarm() {
-    Logger.log({ context, message: 'Initializing docker swarm' });
+    Logger.log('Initializing docker swarm', { context });
     return this.execute('docker swarm init');
   }
 
@@ -123,7 +123,7 @@ export default class SeleniumDockerService {
   * @return {Promise}
   */
   deployStack() {
-    Logger.log({ context, message: 'Deploying docker selenium stack' });
+    Logger.log('Deploying docker selenium stack', { context });
     return this.execute(`docker stack deploy --compose-file ${this.config.composeFile} wdio`);
   }
 
@@ -132,7 +132,7 @@ export default class SeleniumDockerService {
   * @return {Promise}
   */
   removeStack() {
-    Logger.log({ context, message: 'Removing docker selenium stack' });
+    Logger.log('Removing docker selenium stack', { context });
     return this.execute('docker stack rm wdio');
   }
 

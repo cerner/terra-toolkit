@@ -18,16 +18,16 @@ const compile = (webpackConfig, disk) => (
     if (!disk) {
       compiler.outputFileSystem = new MemoryFS();
     }
-    Logger.log({ context, message: 'Starting Webpack compilation' });
+    Logger.log('Starting Webpack compilation', { context });
     compiler.run((err, stats) => {
       if (err || stats.hasErrors()) {
-        Logger.log({ context, message: `Webpack failed to compile in ${webpackConfig.mode} mode` });
+        Logger.log(`Webpack failed to compile in ${webpackConfig.mode} mode`, { context });
         reject(err || Logger.error((stats.toJson().errors)));
       } else {
         if (stats.hasWarnings()) {
-          Logger.warn({ context, message: stats.toJson().warnings });
+          Logger.warn(stats.toJson().warnings, { context });
         }
-        Logger.log({ context, message: `Webpack compiled successfully in ${Logger.emphasis(webpackConfig.mode.toUpperCase())} mode` });
+        Logger.log(`Webpack compiled successfully in ${Logger.emphasis(webpackConfig.mode.toUpperCase())} mode`, { context });
         resolve([webpackConfig.output.path, compiler.outputFileSystem]);
       }
     });
@@ -44,7 +44,7 @@ const generateSite = (site, config, disk, production) => {
       return Promise.resolve([sitePath, fileSystem]);
     }
 
-    return Promise.reject(Logger.error({ context, message: `Could not serve static site from ${sitePath}.` }));
+    return Promise.reject(Logger.error(`Could not serve static site from ${sitePath}.`, { context }));
   }
 
   if (config) {
@@ -62,7 +62,7 @@ const generateSite = (site, config, disk, production) => {
     return compile(webpackConfig, disk);
   }
 
-  return Promise.reject(Logger.error({ context, message: 'No webpack configuration provided.' }));
+  return Promise.reject(Logger.error('No webpack configuration provided.', { context }));
 };
 
 // Set the test locale for the html file
@@ -119,7 +119,7 @@ const virtualApp = (site, index, locale, fs, verbose) => {
 
   if (verbose) {
     app.use((req, res, next) => {
-      const err = Logger.error({ context, message: `Not Found: ${req.originalUrl}` });
+      const err = Logger.error(`Not Found: ${req.originalUrl}`, { context });
       err.status = 404;
       next(err);
     });
@@ -169,7 +169,7 @@ const serve = (options) => {
     .then(([sitePath, fs]) => serveSite(sitePath, fs, appIndex, appLocale, verbose))
     .then((app) => {
       const server = app.listen(appPort, host);
-      Logger.log({ context, message: `Server started listening at port:${appPort}` });
+      Logger.log(`Server started listening at port:${appPort}`, { context });
       return server;
     });
 };

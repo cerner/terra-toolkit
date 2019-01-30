@@ -8,41 +8,40 @@ class Logger {
     return message;
   }
 
-  static getMessageDetails(details) {
-    if (typeof details !== 'object') {
-      return { message: details };
+  static setContext(context) {
+    if (context) {
+      return `${this.format('bold', this.format('dim', context))} `;
     }
-    return { context: details.context, message: details.message || '' };
+
+    return '';
   }
 
-  static getMessage(details, color) {
-    const { context, message } = this.getMessageDetails(details);
-    let logMessage = '';
+  static getDetails(details) {
+    return { context: this.setContext((details || {}).context) };
+  }
 
-    if (context) {
-      logMessage += `${this.format('bold', this.format('dim', context))} `;
-    }
-    logMessage += this.format(color, message);
+  static getMessage(message, details, color) {
+    const { context } = this.getDetails(details);
 
-    return logMessage;
+    return context + this.format(color, message);
   }
 
   static emphasis(message) {
     return this.format('bold', this.format('cyan', message));
   }
 
-  static log(details) {
+  static log(message, details) {
     /* eslint-disable-next-line no-console */
-    console.warn(this.getMessage(details, 'grey'));
+    console.warn(this.getMessage(message, details, 'grey'));
   }
 
-  static warn(details) {
+  static warn(message, details) {
     /* eslint-disable-next-line no-console */
-    console.log(this.getMessage(details, 'yellow'));
+    console.log(this.getMessage(message, details, 'yellow'));
   }
 
-  static error(details) {
-    return new Error(this.getMessage(details, 'red'));
+  static error(message, details) {
+    return new Error(this.getMessage(message, details, 'red'));
   }
 }
 

@@ -11,7 +11,7 @@ export default class ServeStaticService {
     const webpackConfig = config.webpackConfig;
 
     if (!webpackConfig && !site) {
-      Logger.warn({ context, message: 'No webpack configuration provided' });
+      Logger.warn('No webpack configuration provided', { context });
       return;
     }
 
@@ -53,7 +53,7 @@ export default class ServeStaticService {
 
   stop() {
     return new Promise((resolve) => {
-      Logger.log({ context, message: 'Closing Server' });
+      Logger.log('Closing Server', { context });
       if (this.server) {
         this.server.close();
         this.server = null;

@@ -22,7 +22,7 @@ async function wdioRunner(options) {
         envValues += `FORM_FACTOR=${form}`;
       }
       envValues = Logger.emphasis(envValues);
-      Logger.log({ context: `${context}`, message: `Running tests for: ${envValues}` });
+      Logger.log(`Running tests for: ${envValues}`, { context });
 
       // eslint-disable-next-line no-await-in-loop
       await new Launcher(configPath, testSetup)
@@ -30,14 +30,14 @@ async function wdioRunner(options) {
         .then(
           (code) => {
             if (code === 1 && !continueOnFail) {
-              Logger.error({ context, message: `Running tests for: ${envValues} failed.` });
+              Logger.error(`Running tests for: ${envValues} failed.`, { context });
               process.exit(1);
             } else {
-              Logger.log({ context: `${context}`, message: `Finished tests for: ${envValues}\n\n---------------------------------------\n` });
+              Logger.log(`Finished tests for: ${envValues}\n\n---------------------------------------\n`, { context });
             }
           },
           (error) => {
-            Logger.error({ context, message: `Launcher failed to start the test ${error.stacktrace}` });
+            Logger.error(`Launcher failed to start the test ${error.stacktrace}`, { context });
             process.exit(1);
           },
         );

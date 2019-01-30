@@ -4,7 +4,7 @@ const ip = require('ip');
 const Logger = require('../../lib/logger');
 
 const displayServer = (localAddress, networkAddress) => {
-  Logger.log({ context: '[Terra-Toolkit:serve]', message: 'Server started listening at' });
+  Logger.log('Server started listening at', { context: '[Terra-Toolkit:serve]' });
   Logger.log(`* Local:            ${Logger.emphasis(localAddress)}`);
   Logger.log(`* On your network:  ${Logger.emphasis(networkAddress)}`);
 };

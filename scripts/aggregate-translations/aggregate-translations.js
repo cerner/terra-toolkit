@@ -61,7 +61,7 @@ const aggregatedTranslations = (options) => {
     translationDirectories = translationDirectories.concat(glob.sync(searchPath, { cwd: baseDir, ignore: excludes, follow: true }));
   });
 
-  Logger.log({ context, message: `Aggregating translations for ${Logger.emphasis(locales)} locales.` });
+  Logger.log(`Aggregating translations for ${Logger.emphasis(locales)} locales.`, { context });
 
   // Aggregate translation messages for each of the translations directories
   const aggregatedMessages = aggregateMessages(translationDirectories, locales, fileSystem);
