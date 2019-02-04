@@ -1,7 +1,7 @@
 const fs = require('fs-extra');
 const glob = require('glob');
 const path = require('path');
-const Logger = require('../../lib/logger');
+const Logger = require('../utils/logger');
 
 // eslint-disable-next-line global-require, import/no-dynamic-require
 const loadWdioConfig = configPath => require(path.resolve(configPath));
