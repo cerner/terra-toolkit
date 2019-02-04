@@ -17,6 +17,7 @@ Cerner Corporation
 - Stephen Esser [@StephenEsser]
 - Jaime Mackey [@jmsv6d]
 - Cody Price [@dev-cprice]
+- Justin Wisniewski [@JustinWisniewski]
 
 [@emilyrohrbough]: https://github.com/emilyrohrbough
 [@brettjankord]: https://github.com/bjankord
@@ -35,3 +36,4 @@ Cerner Corporation
 [@StephenEsser]: https://github.com/StephenEsser
 [@jmsv6d]: https://github.com/jmsv6d
 [@dev-cprice]: https://github.com/dev-cprice
+[@JustinWisniewski]: https://github.com/JustinWisniewski
