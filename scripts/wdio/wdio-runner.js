@@ -1,5 +1,5 @@
 const { Launcher } = require('webdriverio');
-const Logger = require('../../lib/logger');
+const Logger = require('../utils/logger');
 
 const context = '[Terra-Tookit:wdio-runner]';
 

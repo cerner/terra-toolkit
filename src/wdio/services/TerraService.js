@@ -2,7 +2,7 @@ import chai from 'chai';
 import chaiMethods from './TerraCommands/chai-methods';
 import accessiblity from './TerraCommands/accessiblity';
 import visualRegression from './TerraCommands/visual-regression';
-import Logger from '../../logger';
+import Logger from '../../../scripts/utils/logger';
 import SERVICE_DEFAULTS from '../../../config/wdio/services.default-config';
 
 const { terraViewports: VIEWPORTS } = SERVICE_DEFAULTS;

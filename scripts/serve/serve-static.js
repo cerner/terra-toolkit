@@ -6,7 +6,7 @@ const clone = require('clone');
 const MemoryFS = require('memory-fs');
 const mime = require('mime-types');
 
-const Logger = require('../../lib/logger');
+const Logger = require('../utils/logger');
 
 const context = '[Terra-Toolkit:serve-static]';
 

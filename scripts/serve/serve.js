@@ -1,7 +1,7 @@
 const WebpackDevServer = require('webpack-dev-server');
 const webpack = require('webpack');
 const ip = require('ip');
-const Logger = require('../../lib/logger');
+const Logger = require('../utils/logger');
 
 const displayServer = (localAddress, networkAddress) => {
   Logger.log('Server started listening at', { context: '[Terra-Toolkit:serve]' });

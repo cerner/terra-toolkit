@@ -1,4 +1,4 @@
-import Logger from '../../../logger';
+import Logger from '../../../../scripts/utils/logger';
 
 /**
 * Helper method to determine the screenshot tag name, the element selector, the viewport(s)

@@ -1,7 +1,7 @@
 const path = require('path');
 const startCase = require('lodash.startcase');
 const supportedLocales = require('./i18nSupportedLocales');
-const Logger = require('../../lib/logger');
+const Logger = require('../utils/logger');
 
 const createIntlLoader = (loaderName, locale, format) => {
   if (format === 'es6') {

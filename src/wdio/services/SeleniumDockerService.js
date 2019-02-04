@@ -4,7 +4,7 @@ import retry from 'async/retry';
 import http from 'http';
 import path from 'path';
 import SERVICE_DEFAULTS from '../../../config/wdio/services.default-config';
-import Logger from '../../logger';
+import Logger from '../../../scripts/utils/logger';
 
 const context = '[Terra-Toolkit:selenium-docker]';
 /**

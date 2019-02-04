@@ -1,6 +1,6 @@
 import serveStatic from '../../../scripts/serve/serve-static';
 import SERVICE_DEFAULTS from '../../../config/wdio/services.default-config';
-import Logger from '../../logger';
+import Logger from '../../../scripts/utils/logger';
 
 const { serveStatic: SERVE_STATIC_DEFAULTS } = SERVICE_DEFAULTS;
 const context = '[Terra-Toolkit:serve-static-service]';

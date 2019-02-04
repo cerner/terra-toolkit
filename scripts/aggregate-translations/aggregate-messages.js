@@ -1,5 +1,5 @@
 const path = require('path');
-const Logger = require('../../lib/logger');
+const Logger = require('../utils/logger');
 
 const aggregateTranslationMessages = (translationDirectories, locales, fileSystem) => {
   const translations = {};

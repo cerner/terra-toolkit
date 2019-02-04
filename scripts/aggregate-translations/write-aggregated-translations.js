@@ -1,7 +1,7 @@
 const path = require('path');
 const supportedLocales = require('./i18nSupportedLocales');
 const generateTranslationFile = require('./generate-translation-file');
-const Logger = require('../../lib/logger');
+const Logger = require('../utils/logger');
 
 const writeAggregatedTranslations = (aggregatedMessages, locales, fileSystem, outputDir) => {
   // Create a file of aggregated translation messages for each locale

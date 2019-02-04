@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const shell = require('shelljs');
-const Logger = require('../../lib/logger');
+const Logger = require('../utils/logger');
 
 const packageName = path.basename(process.cwd());
 const archiveName = `${packageName}.tgz`;
