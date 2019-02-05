@@ -5,11 +5,11 @@ Unreleased
 ----------
 ### Added
 * Added format option to aggregate-translations to output modern syntax
+* Added the Duplicate Package Checker Plugin to the default webpack config. The duplicate package checker plugin will warn if duplicate packages (different versions) are included in your webpack bundle.
 * Added formatted & colored console output for toolkit services and scripts
 
 ### Changed
 * Update the `connectionRetryCount` to 1 in the default wdio configuraiton
-* Added the Duplicate Package Checker Plugin to the default webpack config. The duplicate package checker plugin will warn if duplicate packages (different versions) are included in your webpack bundle.
 
 ### Fixed
 * Adjust AxeService implementation to only resize the viewport if viewport options are passed.
