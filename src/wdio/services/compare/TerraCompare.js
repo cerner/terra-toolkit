@@ -12,7 +12,7 @@ export default class TerraCompare extends BaseCompare {
   async processScreenshot(context, base64Screenshot) {
     const referenceScreenshotData = await this.screenshotProcessor.getReferenceScreenshotData(context);
     const latestScreenshotData = Buffer.from(base64Screenshot, 'base64');
-    await this.screenshotProcessor.saveLatestScreenshotData(context, latestScreenshotData);
+    const pendingAsyncMethods = [async () => this.screenshotProcessor.saveLatestScreenshotData(context, latestScreenshotData)];
     if (referenceScreenshotData) {
       const comparisonData = await TerraCompare.compareImages(referenceScreenshotData, latestScreenshotData);
       const { isSameDimensions } = comparisonData;
@@ -22,13 +22,15 @@ export default class TerraCompare extends BaseCompare {
       if (misMatchPercentage > misMatchTolerance) {
         const png = comparisonData.getDiffImage().pack();
         const diffImageData = await TerraCompare.createDiff(png);
-        await this.screenshotProcessor.saveDiffFileData(context, diffImageData);
+        pendingAsyncMethods.push(async () => this.screenshotProcessor.saveDiffFileData(context, diffImageData));
+        await Promise.all(pendingAsyncMethods);
 
         return this.createResultReport(misMatchPercentage, false, isSameDimensions);
       }
       return this.createResultReport(misMatchPercentage, true, isSameDimensions);
     }
-    return this.screenshotProcessor.handleNoReferenceScreenshot(context, latestScreenshotData, this.failInCIOnMissingReferenceShots, this.createResultReport);
+    pendingAsyncMethods.push(async () => this.screenshotProcessor.handleNoReferenceScreenshot(context, latestScreenshotData, this.failInCIOnMissingReferenceShots, this.createResultReport));
+    return (await Promise.all(pendingAsyncMethods))[pendingAsyncMethods.length - 1];
   }
 
   static async compareImages(reference, screenshot) {
