@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+4.23.0 - (February 5, 2019)
+----------
 ### Added
 * Added format option to aggregate-translations to output modern syntax
 * Added the Duplicate Package Checker Plugin to the default webpack config. The duplicate package checker plugin will warn if duplicate packages (different versions) are included in your webpack bundle.
