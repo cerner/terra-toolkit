@@ -1,6 +1,6 @@
 # Webdriver.io Utility Developer's Guide
 
-[Webdriver.io](http://webdriver.io/) is a framework for writing webdriver powered tests to validate functionality in browsers. The Webdriver.io framework provides services for setting up a selenium server, starting webpack and static servers, running accessibility and visual regression testing, and more.
+[Webdriver.io](http://v4.webdriver.io/) is a framework for writing webdriver powered tests to validate functionality in browsers. The Webdriver.io framework provides services for setting up a selenium server, starting webpack and static servers, running accessibility and visual regression testing, and more.
 
 - [Getting Started](#getting-started)
 - [Configuration Setup](#configuration-setup)
@@ -14,7 +14,7 @@ Terra Toolkit uses docker to setup, run, and tear down selenium to ensure a cons
 
 ## Configuration Setup
 
-To run the webdriver.io test running, the [webdriver.io configuration options](http://webdriver.io/guide/testrunner/configurationfile.html) must be specified in the `wdio.conf.js` file. Terra-toolkit provides a [default webdriver.io configuration](https://github.com/cerner/terra-toolkit/blob/master/config/wdio/wdio.conf.js) that enables the following services for a mocha test framework:
+To run the webdriver.io test running, the [webdriver.io configuration options](http://v4.webdriver.io/guide/testrunner/configurationfile.html) must be specified in the `wdio.conf.js` file. Terra-toolkit provides a [default webdriver.io configuration](https://github.com/cerner/terra-toolkit/blob/master/config/wdio/wdio.conf.js) that enables the following services for a mocha test framework:
 
 * `SeleniumDockerService` - starts a Selenium-Docker instance.
     - See [here](https://github.com/cerner/terra-toolkit/blob/master/docs/SeleniumDockerService.md) for configuration information.
