@@ -4,6 +4,11 @@ Changelog
 Unreleased
 ----------
 
+4.23.1 - (February 5, 2019)
+----------
+### Fixed
+* Issue with duplicate-package-checker-webpack-plugin being listed as a devDependency
+
 4.23.0 - (February 5, 2019)
 ----------
 ### Added
