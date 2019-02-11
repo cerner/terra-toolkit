@@ -17,9 +17,7 @@ class Logger {
     }
 
     // Apply all chalk options to the message. Bold, Color, Underline, etc...
-    const decoratedText = decorations.reduce((acc, option) => {
-      return chalk[option](acc);
-    }, text);
+    const decoratedText = decorations.reduce((acc, option) => chalk[option](acc), text);
 
     return decoratedText;
   }
