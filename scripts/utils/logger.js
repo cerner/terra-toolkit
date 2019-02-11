@@ -8,7 +8,7 @@ const chalk = require('chalk');
 class Logger {
   /**
    * Decorates a message with the provided options.
-   * @param {string} message - The message to decorate.
+   * @param {string} text - The text to decorate.
    * @param {string[]} options.decorations - The chalk decoration options (bold, underline, color, etc...).
    */
   static decorateText(text, decorations = []) {
@@ -18,17 +18,14 @@ class Logger {
 
     // Apply all chalk options to the message. Bold, Color, Underline, etc...
     const decoratedText = decorations.reduce((acc, option) => {
-      if (chalk[option]) {
-        return chalk[option](acc);
-      }
-      return acc;
+      return chalk[option](acc);
     }, text);
 
     return decoratedText;
   }
 
   /**
-   * Logs a message with bold and cyan decorations.
+   * Logs a message with emphasis decoration.
    * @param {string} message - The message to emphasis.
    */
   static emphasis(message) {
@@ -46,17 +43,14 @@ class Logger {
   static format(message, options) {
     const { context, decorations } = options;
 
+    const decoratedContext = Logger.decorateText(context, ['bold', 'dim']);
     const decoratedMessage = Logger.decorateText(message, decorations);
 
-    if (context) {
-      const decoratedContext = Logger.decorateText(context, ['bold', 'dim']);
-      return `${decoratedContext} ${decoratedMessage}`.trim();
-    }
-    return decoratedMessage.trim();
+    return `${decoratedContext} ${decoratedMessage}`.trim();
   }
 
   /**
-   * Logs a message with grey decoration by default.
+   * Logs a message with default decoration.
    * @param {string} message - The log message.
    * @param {Object} options - The message options.
    * @param {string} options.context - The message context to prepend the message.
@@ -68,7 +62,7 @@ class Logger {
   }
 
   /**
-   * Logs a warning with yellow decoration.
+   * Logs a warning with default decoration.
    * @param {string} message - The warning message.
    * @param {Object} options - The message options.
    * @param {string} options.context - The message context to prepend the message.
@@ -79,7 +73,7 @@ class Logger {
   }
 
   /**
-   * Creates an error message with red decoration.
+   * Creates an error message with default decoration.
    * @param {string} message - The error message.
    * @param {Object} options - The message options.
    * @param {string} options.context - The message context to prepend the message.
