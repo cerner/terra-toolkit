@@ -1,48 +1,95 @@
 const chalk = require('chalk');
 
+/**
+ * Terra logger for consistently formatted and decorated log, warning and error messages.
+ * Uses `chalk` module for decoration and gives direct access to chalk for complex message
+ * styling. See chalk's docs for decoration options: https://github.com/chalk/chalk.
+ */
 class Logger {
-  static format(style, message) {
-    if (chalk[style] !== undefined) {
-      return chalk[style](message);
-    }
-    return message;
-  }
-
-  static setContext(context) {
-    if (context) {
-      return `${this.format('bold', this.format('dim', context))} `;
+  /**
+   * Decorates a message with the provided options.
+   * @param {string} message - The message to decorate.
+   * @param {string[]} options.decorations - The chalk decoration options (bold, underline, color, etc...).
+   */
+  static decorateText(text, decorations = []) {
+    if (!text) {
+      return '';
     }
 
-    return '';
+    // Apply all chalk options to the message. Bold, Color, Underline, etc...
+    const decoratedText = decorations.reduce((acc, option) => {
+      if (chalk[option]) {
+        return chalk[option](acc);
+      }
+      return acc;
+    }, text);
+
+    return decoratedText;
   }
 
-  static getDetails(details) {
-    return { context: this.setContext((details || {}).context) };
-  }
-
-  static getMessage(message, details, color) {
-    const { context } = this.getDetails(details);
-
-    return context + this.format(color, message);
-  }
-
+  /**
+   * Logs a message with bold and cyan decorations.
+   * @param {string} message - The message to emphasis.
+   */
   static emphasis(message) {
-    return this.format('bold', this.format('cyan', message));
+    return Logger.decorateText(message, ['bold', 'cyan']);
   }
 
-  static log(message, details) {
+  /**
+   * Formats a message.
+   * @param {string} message - The message to format.
+   * @param {Object} options - The message options.
+   * @param {string} options.context - The message context to prepend the message.
+   * @param {string[]} options.decorations - The chalk decoration options (bold, underline, color, etc...).
+   * @returns - A formatted message.
+   */
+  static format(message, options) {
+    const { context, decorations } = options;
+
+    const decoratedMessage = Logger.decorateText(message, decorations);
+
+    if (context) {
+      const decoratedContext = Logger.decorateText(context, ['bold', 'dim']);
+      return `${decoratedContext} ${decoratedMessage}`.trim();
+    }
+    return decoratedMessage.trim();
+  }
+
+  /**
+   * Logs a message with grey decoration by default.
+   * @param {string} message - The log message.
+   * @param {Object} options - The message options.
+   * @param {string} options.context - The message context to prepend the message.
+   * @param {string[]} options.decorations - The chalk decoration options (bold, underline, color, etc...).
+   */
+  static log(message, options) {
     /* eslint-disable-next-line no-console */
-    console.log(this.getMessage(message, details, 'grey'));
+    console.log(Logger.format(message, Object.assign({}, { decorations: ['grey'] }, options)));
   }
 
-  static warn(message, details) {
+  /**
+   * Logs a warning with yellow decoration.
+   * @param {string} message - The warning message.
+   * @param {Object} options - The message options.
+   * @param {string} options.context - The message context to prepend the message.
+   */
+  static warn(message, options) {
     /* eslint-disable-next-line no-console */
-    console.warn(this.getMessage(message, details, 'yellow'));
+    console.warn(Logger.format(message, Object.assign({}, options, { decorations: ['yellow'] })));
   }
 
-  static error(message, details) {
-    return new Error(this.getMessage(message, details, 'red'));
+  /**
+   * Creates an error message with red decoration.
+   * @param {string} message - The error message.
+   * @param {Object} options - The message options.
+   * @param {string} options.context - The message context to prepend the message.
+   * @returns - A formatted error object.
+   */
+  static error(message, options) {
+    return new Error(Logger.format(message, Object.assign({}, options, { decorations: ['red'] })));
   }
 }
+
+Logger.chalk = chalk;
 
 module.exports = Logger;
