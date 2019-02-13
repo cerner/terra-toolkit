@@ -4,7 +4,6 @@ const serve = require('./serve-static');
 const packageJson = require('../../package.json');
 const loadWebpackConfig = require('./loadWebpackConfig');
 
-
 // Parse process arguments
 commander
   .version(packageJson.version)

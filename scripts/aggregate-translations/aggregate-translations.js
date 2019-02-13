@@ -2,6 +2,7 @@ const path = require('path');
 const fse = require('fs-extra');
 const glob = require('glob');
 const supportedLocales = require('./i18nSupportedLocales');
+const Logger = require('../utils/logger');
 
 const aggregateMessages = require('./aggregate-messages');
 const writeAggregatedTranslations = require('./write-aggregated-translations');
@@ -9,6 +10,7 @@ const writeI18nLoaders = require('./write-i18n-loaders');
 const defaultSearchPatterns = require('./defaultSearchPatterns');
 
 const isFile = filePath => (fse.existsSync(filePath) && !fse.lstatSync(filePath).isDirectory());
+const context = '[terra-toolkit:aggregate-translations]';
 
 const loadConfigFile = (configPath) => {
   if (configPath) {
@@ -59,8 +61,7 @@ const aggregatedTranslations = (options) => {
     translationDirectories = translationDirectories.concat(glob.sync(searchPath, { cwd: baseDir, ignore: excludes, follow: true }));
   });
 
-  // eslint-disable-next-line no-console
-  console.log(`[terra-toolkit:aggregate-translations] Aggregating translations for ${locales} locales.`);
+  Logger.log(`Aggregating translations for ${Logger.emphasis(locales)} locales.`, { context });
 
   // Aggregate translation messages for each of the translations directories
   const aggregatedMessages = aggregateMessages(translationDirectories, locales, fileSystem);

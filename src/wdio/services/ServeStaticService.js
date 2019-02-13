@@ -1,7 +1,9 @@
 import serveStatic from '../../../scripts/serve/serve-static';
 import SERVICE_DEFAULTS from '../../../config/wdio/services.default-config';
+import Logger from '../../../scripts/utils/logger';
 
 const { serveStatic: SERVE_STATIC_DEFAULTS } = SERVICE_DEFAULTS;
+const context = '[Terra-Toolkit:serve-static-service]';
 
 export default class ServeStaticService {
   async onPrepare(config = {}) {
@@ -9,8 +11,7 @@ export default class ServeStaticService {
     const webpackConfig = config.webpackConfig;
 
     if (!webpackConfig && !site) {
-      // eslint-disable-next-line no-console
-      console.warn('[Terra-Toolkit:serve-static] No webpack configuration provided');
+      Logger.warn('No webpack configuration provided', { context });
       return;
     }
 
@@ -52,8 +53,7 @@ export default class ServeStaticService {
 
   stop() {
     return new Promise((resolve) => {
-      // eslint-disable-next-line no-console
-      console.log('[Terra-Toolkit:serve-static] Closing Server');
+      Logger.log('Closing Server', { context });
       if (this.server) {
         this.server.close();
         this.server = null;
