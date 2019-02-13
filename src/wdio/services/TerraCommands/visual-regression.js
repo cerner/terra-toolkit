@@ -1,3 +1,5 @@
+import accessibilityMethods from './accessiblity';
+
 /**
 * Helper method to determine the screenshot tag name, the element selector, the viewport(s)
 * in which to take the screenshots, as well as the capture screenshot options to be passed
@@ -34,6 +36,11 @@ const determineScreenshotOptions = (...args) => {
 
   // Check if custom viewportChangePause should be used, otherwise use the global value.
   compareOptions.viewportChangePause = options.viewportChangePause || global.browser.options.visualRegression.viewportChangePause;
+
+  // Check if accessibility testing should be done based on the passed in options, otherwise use the global value.
+  compareOptions.doAccessibilityTestingOnScreenshot = options.doAccessibilityTestingOnScreenshot || global.browser.options.visualRegression.doAccessibilityTestingOnScreenshot;
+
+  compareOptions.axeOptions = options.axeOptions;
 
   return { name, selector, options: compareOptions };
 };
@@ -120,6 +127,10 @@ const matchScreenshot = (testArguments, matchType) => {
 
     global.expect(screenshots).to.matchReference(matchType);
   });
+
+  if (global.browser.axe && options.doAccessibilityTestingOnScreenshot) {
+    accessibilityMethods.beAccessible(options.axeOptions);
+  }
 };
 
 /**
