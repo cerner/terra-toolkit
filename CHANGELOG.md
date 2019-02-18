@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Added
+* Added a script to aggregate dependency themes into a single file
 
 4.23.1 - (February 5, 2019)
 ----------
