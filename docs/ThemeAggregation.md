@@ -20,7 +20,7 @@ Within this file declare and export an object containing your theme configuratio
 
 This configuration will be used to aggregate nested dependency themes and output a single `aggregated-themes.js` file. This file will be automatically included as an entry point within your application if you are using the webpack configuration provided by terra-toolkit.
 
-Theme files must follow naming conventions to be aggregated. Theme files are expected be within in a namespaced directory within a `themes` directory.
+Theme files must follow naming conventions to be aggregated. Theme files are expected be within a namespaced directory within a `themes` directory.
 
 ```
 project

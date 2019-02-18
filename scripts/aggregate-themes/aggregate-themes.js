@@ -18,7 +18,7 @@ const DISCLAIMER = fs.readFileSync(path.resolve(__dirname, 'disclaimer.txt'), 'u
 class ThemeAggregator {
   /**
    * Aggregates theme assets.
-   * @returns {string} - The output path of the aggregated theme file.
+   * @returns {string|null} - The output path of the aggregated theme file. Null if not generated.
    */
   static aggregate() {
     const defaultConfig = path.resolve(process.cwd(), CONFIG);
