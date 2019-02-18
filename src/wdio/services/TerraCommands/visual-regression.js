@@ -35,11 +35,6 @@ const determineScreenshotOptions = (...args) => {
   // Check if custom viewportChangePause should be used, otherwise use the global value.
   compareOptions.viewportChangePause = options.viewportChangePause || global.browser.options.visualRegression.viewportChangePause;
 
-  // Check if accessibility testing should be done based on the passed in options, otherwise use the global value.
-  compareOptions.doAccessibilityTestingOnScreenshot = options.doAccessibilityTestingOnScreenshot || global.browser.options.visualRegression.doAccessibilityTestingOnScreenshot;
-
-  compareOptions.axeOptions = options.axeOptions;
-
   return { name, selector, options: compareOptions };
 };
 
