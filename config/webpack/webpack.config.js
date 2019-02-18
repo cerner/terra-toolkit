@@ -140,7 +140,7 @@ const webpackConfig = (options, env, argv) => {
 };
 
 const defaultWebpackConfig = (env = {}, argv = {}) => {
-  const disableAggregateTranslations = env.disableAggregateTranslations;
+  const { disableAggregateTranslations } = env;
 
   const processPath = process.cwd();
   /* Get the root path of a mono-repo process call */

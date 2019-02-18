@@ -1,4 +1,3 @@
-/* global browser, describe, it, before, expect, Terra */
 let testLocale;
 let browserLocale;
 

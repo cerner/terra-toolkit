@@ -1,5 +1,3 @@
-/* global describe, before, browser, it, expect, Terra */
-
 const accessibility = require('../../lib/wdio/services/TerraCommands/accessiblity').default;
 const visualRegressions = require('../../lib/wdio/services/TerraCommands/visual-regression').default;
 

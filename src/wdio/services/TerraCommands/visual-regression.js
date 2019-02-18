@@ -101,7 +101,7 @@ const matchScreenshotImplementation = (name, matchType, selector, options) => {
   global.it(`[${name}] to ${testDescription}`, () => {
     const screenshots = global.browser.checkElement(selector, options);
 
-    const viewports = options.viewports;
+    const { viewports } = options;
     if (viewports && viewports.length) {
       global.expect(screenshots, 'the number of screenshot results to match the number of specified viewports').to.have.lengthOf(viewports.length);
       viewports.forEach((viewport, index) => {

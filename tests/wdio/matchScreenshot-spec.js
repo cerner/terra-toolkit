@@ -1,5 +1,3 @@
-/* global browser, describe, it, before, after, expect, Terra */
-
 describe('matchScreenshot', () => {
   const viewports = Terra.viewports('tiny', 'huge');
 
@@ -43,7 +41,7 @@ describe('matchScreenshot', () => {
     // Manually verify failure. Create same screenshots as the base screenshots
     it('default', () => {
       // create default screenshot selector
-      const selector = browser.options.terra.selector;
+      const { selector } = browser.options.terra;
 
       // create default screenshot options
       const compareOptions = {};

@@ -12,7 +12,7 @@ const displayServer = (localAddress, networkAddress) => {
 // Create a webpack dev server instance.
 const server = (options) => {
   const { port, host } = options;
-  let config = options.config;
+  let { config } = options;
   // if config is a function, execute it with prod mode if applicable.
   if (typeof config === 'function') {
     config = config(undefined, { p: options.production });

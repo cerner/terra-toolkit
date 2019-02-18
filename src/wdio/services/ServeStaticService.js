@@ -7,8 +7,8 @@ const context = '[Terra-Toolkit:serve-static-service]';
 
 export default class ServeStaticService {
   async onPrepare(config = {}) {
-    const site = config.site;
-    const webpackConfig = config.webpackConfig;
+    const { site } = config;
+    const { webpackConfig } = config;
 
     if (!webpackConfig && !site) {
       Logger.warn('No webpack configuration provided', { context });
@@ -19,7 +19,7 @@ export default class ServeStaticService {
     const port = (config.serveStatic || {}).port || SERVE_STATIC_DEFAULTS.port;
     const index = (config.serveStatic || {}).index || SERVE_STATIC_DEFAULTS.index;
     // Explicitly not providing a fallback locale. Providing a fallback will lock the locale for all test runs when using the tt-wdio-runner.
-    const locale = (config || {}).locale;
+    const { locale } = (config || {});
 
     // Ensure the server was properly shut down.
     if (this.server) {

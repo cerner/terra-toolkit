@@ -1,4 +1,3 @@
-/* global browser, describe, it, expect, before, Terra */
 describe('comparing screenshots', () => {
   const viewports = Terra.viewports('tiny', 'huge');
 
