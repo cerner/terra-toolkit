@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const shell = require('shelljs');
+const Logger = require('../utils/logger');
 
 const packageName = path.basename(process.cwd());
 const archiveName = `${packageName}.tgz`;
@@ -13,8 +14,7 @@ if (fs.existsSync(archiveName)) {
 // Pack the package.
 shell.exec('npm pack --ignore-scripts', { silent: true }, (code, stdout, stderr) => {
   if (code !== 0) {
-    /* eslint-disable-next-line no-console */
-    console.log(stderr);
+    Logger.log(stderr);
     shell.exit(-1);
   }
 
