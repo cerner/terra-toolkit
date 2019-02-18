@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Added
+* Added a new method `matchScreenshotAndTestStandards` to both do a screenshot comparison and test accessibility
 
 4.23.1 - (February 5, 2019)
 ----------
