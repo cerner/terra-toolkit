@@ -1,7 +1,5 @@
 /* global browser, describe, it, before, after, expect, Terra */
 
-const accessibilityMethods = require('../../lib/wdio/services/TerraCommands/accessiblity').default;
-
 describe('matchScreenshot', () => {
   const viewports = Terra.viewports('tiny', 'huge');
 
@@ -26,29 +24,6 @@ describe('matchScreenshot', () => {
 
   describe('matchScreenshot-options--selector', () => {
     Terra.should.matchScreenshot({ selector: 'button' });
-  });
-
-  describe('matchScreenshot-options--doAccessibilityTestingOnScreenshot-false', () => {
-    let called = false;
-    const oldAccessible = accessibilityMethods.beAccessible;
-    accessibilityMethods.beAccessible = () => {
-      called = true;
-    };
-    Terra.should.matchScreenshot({ doAccessibilityTestingOnScreenshot: false });
-    expect(called).to.equal(false);
-    accessibilityMethods.beAccessible = oldAccessible;
-  });
-
-  describe('matchScreenshot-options--doAccessibilityTestingOnScreenshot-true', () => {
-    let calledWithParameters;
-    const oldAccessible = accessibilityMethods.beAccessible;
-    accessibilityMethods.beAccessible = (parameters) => {
-      calledWithParameters = parameters;
-    };
-    const axeOptions = { a: 1, b: 10 };
-    Terra.should.matchScreenshot({ doAccessibilityTestingOnScreenshot: true, axeOptions });
-    expect(calledWithParameters).to.equal(axeOptions);
-    accessibilityMethods.beAccessible = oldAccessible;
   });
 
   describe('matchScreenshot-options--misMatchTolerance', () => {

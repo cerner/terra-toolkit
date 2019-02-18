@@ -2,6 +2,7 @@ import chai from 'chai';
 import chaiMethods from './TerraCommands/chai-methods';
 import accessiblity from './TerraCommands/accessiblity';
 import visualRegression from './TerraCommands/visual-regression';
+import matchScreenshotAndTestStandards from './TerraCommands/match-screenshot-and-test-standards';
 import SERVICE_DEFAULTS from '../../../config/wdio/services.default-config';
 
 const { terraViewports: VIEWPORTS } = SERVICE_DEFAULTS;
@@ -53,6 +54,7 @@ export default class TerraService {
         matchScreenshot: visualRegression.matchScreenshotWithinTolerance,
         themeEachCustomProperty: visualRegression.themeEachCustomProperty,
         themeCombinationOfCustomProperties: visualRegression.themeCombinationOfCustomProperties,
+        matchScreenshotAndTestStandards,
       },
     };
     chai.Assertion.addMethod('accessible', chaiMethods.accessible);

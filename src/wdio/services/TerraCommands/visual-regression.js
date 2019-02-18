@@ -1,5 +1,3 @@
-import accessibilityMethods from './accessiblity';
-
 /**
 * Helper method to determine the screenshot tag name, the element selector, the viewport(s)
 * in which to take the screenshots, as well as the capture screenshot options to be passed
@@ -101,6 +99,23 @@ const getTestDescription = matchType => (
   matchType === 'withinTolerance' ? 'be within the mismatch tolerance' : 'match screenshot exactly'
 );
 
+const matchScreenshotImplementation = (name, matchType, selector, options) => {
+  const testDescription = getTestDescription(matchType);
+  global.it(`[${name}] to ${testDescription}`, () => {
+    const screenshots = global.browser.checkElement(selector, options);
+
+    const viewports = options.viewports;
+    if (viewports && viewports.length) {
+      global.expect(screenshots, 'the number of screenshot results to match the number of specified viewports').to.have.lengthOf(viewports.length);
+      viewports.forEach((viewport, index) => {
+        screenshots[index].viewport = viewport.name;
+      });
+    }
+
+    global.expect(screenshots).to.matchReference(matchType);
+  });
+};
+
 /**
 * A mocha-chai convenience test case to determines the screenshot options and test names needed to
 * capture screenshots of a specified element and assert the screenshot comparision results are
@@ -112,25 +127,7 @@ const getTestDescription = matchType => (
 */
 const matchScreenshot = (testArguments, matchType) => {
   const { name, selector, options } = determineScreenshotOptions(...testArguments);
-
-  const testDescription = getTestDescription(matchType);
-  global.it(`[${name}] to ${testDescription}`, () => {
-    const screenshots = global.browser.checkElement(selector, options);
-
-    const viewports = options.viewports;
-    if (viewports.length) {
-      global.expect(screenshots, 'the number of screenshot results to match the number of specified viewports').to.have.lengthOf(viewports.length);
-      viewports.forEach((viewport, index) => {
-        screenshots[index].viewport = viewport.name;
-      });
-    }
-
-    global.expect(screenshots).to.matchReference(matchType);
-  });
-
-  if (global.browser.axe && options.doAccessibilityTestingOnScreenshot) {
-    accessibilityMethods.beAccessible(options.axeOptions);
-  }
+  matchScreenshotImplementation(name, matchType, selector, options);
 };
 
 /**
@@ -148,6 +145,7 @@ const matchScreenshotWithinTolerance = (...args) => {
 
 const methods = {
   matchScreenshotWithinTolerance,
+  matchScreenshotImplementation,
   themeEachCustomProperty,
   themeCombinationOfCustomProperties,
   getTestDescription,

@@ -32,6 +32,7 @@ const config = {
       'tests/wdio/beAccessible-spec.js',
       'tests/wdio/compare-spec.js',
       'tests/wdio/matchScreenshot-spec.js',
+      'tests/wdio/matchScreenshotAndTestStandards-spec.js',
       'tests/wdio/resize-spec.js',
     ],
     unopinionated: [
