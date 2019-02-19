@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Added
+* Add en-AU to supported translations list
 
 4.23.1 - (February 5, 2019)
 ----------
