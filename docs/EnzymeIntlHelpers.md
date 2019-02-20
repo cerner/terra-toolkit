@@ -5,7 +5,7 @@ Enzyme helpers for fortifying tests that depend on react-intl by decoupling the 
 ## Usage
 
 ```jsx
-import { shallowWithIntl, mountWithIntl } from 'terra-toolkit/lib/enzyme-intl';
+import { shallowWithIntl, mountWithIntl } from 'terra-toolkit';
 
 const shallowWrapper = shallowWithIntl(<CustomComponent />);
 const mountWrapper = mountWithIntl(<CustomComponent />);
@@ -19,7 +19,7 @@ expect(mountWrapper).toMatchSnapshot(); // OK, doesn't depend on real translatio
 For testing methods that depend on `react-intl` `intlShape`:
 
 ```js
-import { mockIntl } from 'terra-toolkit/lib/enzyme-intl';
+import { mockIntl } from 'terra-toolkit';
 import foo from '../foo';
 
 const result = foo(mockIntl);
