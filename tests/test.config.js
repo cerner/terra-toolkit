@@ -7,44 +7,9 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'fixtures', 'nightwatch.html'),
+      template: path.join(__dirname, 'fixtures', 'test.html'),
       chunks: ['index'],
-      filename: './nightwatch.html',
-    }),
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'fixtures', 'accessible.html'),
-      chunks: ['index'],
-      filename: './accessible.html',
-    }),
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'fixtures', 'accessible.html'),
-      chunks: ['index'],
-      filename: './index.html',
-    }),
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'fixtures', 'compare.html'),
-      chunks: ['index'],
-      filename: './compare.html',
-    }),
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'fixtures', 'theme.html'),
-      chunks: ['index'],
-      filename: './theme.html',
-    }),
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'fixtures', 'inaccessible-contrast.html'),
-      chunks: ['index'],
-      filename: './inaccessible-contrast.html',
-    }),
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'fixtures', 'inaccessible-text.html'),
-      chunks: ['index'],
-      filename: './inaccessible-text.html',
-    }),
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'fixtures', 'i18n.html'),
-      chunks: ['index'],
-      filename: './i18n.html',
+      filename: './test.html',
     }),
   ],
   output: {

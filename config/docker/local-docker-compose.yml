@@ -26,3 +26,18 @@ services:
       TZ: 'America/Chicago'
       SCREEN_WIDTH: 1070
       SCREEN_HEIGHT: 1020
+  firefox:
+    image: 'selenium/node-firefox:3.11.0-californium'
+    volumes:
+      - /dev/shm:/dev/shm
+    ports:
+      - '5556:5556'
+    deploy:
+      replicas: 5
+    environment:
+      HUB_PORT_4444_TCP_ADDR: selenium_hub
+      HUB_PORT_4444_TCP_PORT: 4444
+      NODE_MAX_SESSION: 1
+      TZ: 'America/Chicago'
+      SCREEN_WIDTH: 1070
+      SCREEN_HEIGHT: 1020
