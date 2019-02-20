@@ -28,7 +28,7 @@ const determineOptions = (...args) => {
     name,
     selector,
     misMatchTolerance,
-    axeOptions: { ...options.axeRules, context: selector },
+    axeOptions: { ...options.axeRules, ...selector && { context: selector } },
   };
 };
 

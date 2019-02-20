@@ -31,9 +31,6 @@
     "tt-serve-static": "bin/serve-static.js",
     "tt-wdio": "bin/wdio-runner.js"
   },
-  "browserslist": [
-    "extends browserslist-config-terra"
-  ],
   "eslintConfig": {
     "extends": "terra",
     "settings": {

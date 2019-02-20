@@ -42,4 +42,36 @@ describe('validateElement', () => {
     accessibility.beAccessible = oldAccessible;
     visualRegressions.screenshotItBlock = oldScreenshotItBlock;
   });
+
+  it('calls the appropriate methods downstream with defaults', () => {
+    const oldAccessible = accessibility.beAccessible;
+
+    let accessibilityOptions;
+    accessibility.beAccessible = (options) => {
+      accessibilityOptions = options;
+    };
+
+    const oldScreenshotItBlock = visualRegressions.screenshotItBlock;
+    let screenshotItBlockName;
+    let screenshotItBlockMatchType;
+    let screenshotItBlockSelector;
+    let screenshotItBlockOptions;
+    visualRegressions.screenshotItBlock = (name, matchType, selector, options) => {
+      screenshotItBlockName = name;
+      screenshotItBlockMatchType = matchType;
+      screenshotItBlockSelector = selector;
+      screenshotItBlockOptions = options;
+    };
+
+    Terra.should.validateElement();
+
+    expect(accessibilityOptions).to.deep.equal({ context: '[data-terra-toolkit-content]' });
+    expect(screenshotItBlockName).to.equal('default');
+    expect(screenshotItBlockMatchType).to.equal('withinTolerance');
+    expect(screenshotItBlockSelector).to.equal('[data-terra-toolkit-content]');
+    expect(screenshotItBlockOptions).to.deep.equal({ misMatchTolerance: 0.01 });
+
+    accessibility.beAccessible = oldAccessible;
+    visualRegressions.screenshotItBlock = oldScreenshotItBlock;
+  });
 });
