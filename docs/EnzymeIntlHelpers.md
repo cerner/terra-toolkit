@@ -24,3 +24,4 @@ import foo from '../foo';
 
 const result = foo(mockIntl);
 expect(result).toMatchSnapshot(); // OK, doesn't depend on real translations
+```
