@@ -56,6 +56,12 @@ See the [Webdriver.io Utility Developer's Guide](https://github.com/cerner/terra
 
 See the [Webpack Configuration Guide](https://github.com/cerner/terra-toolkit/blob/master/docs/Webpack.md) to get started.
 
+## Enzyme Intl Helpers
+
+Terra Toolkit provides Enzyme helpers for fortifying tests that depend on react-intl by decoupling the need for actual translations.
+
+See the [Enzyme Intl Helpers Guide](https://github.com/cerner/terra-toolkit/blob/master/docs/EnzymeIntlHelpers.md) to get started.
+
 ## Versioning
 
 Terra-toolkit is considered to be stable and will follow [SemVer](http://semver.org/) for versioning.
