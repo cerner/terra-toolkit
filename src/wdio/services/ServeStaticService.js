@@ -7,8 +7,7 @@ const context = '[Terra-Toolkit:serve-static-service]';
 
 export default class ServeStaticService {
   async onPrepare(config = {}) {
-    const { site } = config;
-    const { webpackConfig } = config;
+    const { site, webpackConfig } = config;
 
     if (!webpackConfig && !site) {
       Logger.warn('No webpack configuration provided', { context });

@@ -8,7 +8,7 @@ import Logger from '../../../../scripts/utils/logger';
 *     - viewports: [{ width: Number, height: Number }]
 *     - misMatchTolerance: Number
 *     - viewportChangePause: Number
-* @property {Array} args - The list of test arguments to parse.
+* @param {Array} args - The list of test arguments to parse.
 */
 const determineScreenshotOptions = (...args) => {
   const param1 = args.length ? args[0] : undefined;
@@ -42,7 +42,7 @@ const determineScreenshotOptions = (...args) => {
 
 /**
 * Generates a test for each themed property given and runs a screenshot assertion.
-* @property {Array} args - An object containing the CSS custom properties to assert.
+* @param {Array} args - An object containing the CSS custom properties to assert.
 */
 const themeEachCustomProperty = (...args) => {
   if (global.browser.options.terra.disableThemeTests) {
@@ -65,7 +65,7 @@ const themeEachCustomProperty = (...args) => {
 /**
 * Generates a test for a combination of themed properties given and runs a screenshot assertion.
 *
-* @property {Array} args - An object containing the options for themeCombinationOfCustomProperties and  CSS custom properties to assert.
+* @param {Array} args - An object containing the options for themeCombinationOfCustomProperties and  CSS custom properties to assert.
 */
 const themeCombinationOfCustomProperties = (...args) => {
   if (global.browser.options.terra.disableThemeTests) {
@@ -89,14 +89,23 @@ A testName property should be set in the options object passed to the themeCombi
 };
 
 /** Helper method to create a useful test descripton.
-  * @property {String} matchType - Specifies the type of matchReference assertion. Either 'withinTolerance'
+  * @param {String} matchType - Specifies the type of matchReference assertion. Either 'withinTolerance'
   *   or 'exactly'.
   */
 const getTestDescription = matchType => (
   matchType === 'withinTolerance' ? 'be within the mismatch tolerance' : 'match screenshot exactly'
 );
 
-const matchScreenshotImplementation = (name, matchType, selector, options) => {
+/**
+ * The actual it block for the screenshot comparisons.  It will capture screenshots of a specified element
+ * and assert the screenshot comparison results are within the mismatch tolerance or are an exact match
+ * @param {String} name the test case name
+ * @param {String} matchType the type of matchReference assertion. Either 'withinTolerance'
+*    or 'exactly'.
+ * @param {String} selector the selector to use when capturing the screenshot.
+ * @param {Object} options the test options. Options include viewports, misMatchTolerance and viewportChangePause.
+ */
+const screenshotItBlock = (name, matchType, selector, options) => {
   const testDescription = getTestDescription(matchType);
   global.it(`[${name}] to ${testDescription}`, () => {
     const screenshots = global.browser.checkElement(selector, options);
@@ -117,20 +126,20 @@ const matchScreenshotImplementation = (name, matchType, selector, options) => {
 * A mocha-chai convenience test case to determines the screenshot options and test names needed to
 * capture screenshots of a specified element and assert the screenshot comparision results are
 * either within the mismatch tolerance or are an exact match.
-* @property {Array} testArguments - The test arguments passed to the `matchScreenshotWithinTolerance`
+* @param {Array} testArguments - The test arguments passed to the `matchScreenshotWithinTolerance`
 *    or `matchScreenshotExactly` methods.
-* @property {String} matchType - Specifies the type of matchReference assertion. Either 'withinTolerance'
+* @param {String} matchType - Specifies the type of matchReference assertion. Either 'withinTolerance'
 *    or 'exactly'.
 */
 const matchScreenshot = (testArguments, matchType) => {
   const { name, selector, options } = determineScreenshotOptions(...testArguments);
-  matchScreenshotImplementation(name, matchType, selector, options);
+  screenshotItBlock(name, matchType, selector, options);
 };
 
 /**
 * Mocha-chai wrapper method to capture screenshots of a specified element and assert the
 * screenshot comparision results are within the mismatch tolerance.
-* @property {Array} args - The list of test arguments to parse. Accepted Arguments:
+* @param {Array} args - The list of test arguments to parse. Accepted Arguments:
 *    - String (optional): the test case name. Default name is 'default'
 *    - Object (optional): the test options. Options include selector, viewports,
 *        misMatchTolerance and viewportChangePause.
@@ -142,7 +151,7 @@ const matchScreenshotWithinTolerance = (...args) => {
 
 const methods = {
   matchScreenshotWithinTolerance,
-  matchScreenshotImplementation,
+  screenshotItBlock,
   themeEachCustomProperty,
   themeCombinationOfCustomProperties,
   getTestDescription,

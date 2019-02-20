@@ -31,9 +31,16 @@
     "tt-serve-static": "bin/serve-static.js",
     "tt-wdio": "bin/wdio-runner.js"
   },
-  "browserslist": [],
+  "browserslist": [
+    "extends browserslist-config-terra"
+  ],
   "eslintConfig": {
-    "extends": "terra"
+    "extends": "terra",
+    "settings": {
+      "polyfills": [
+        "promises"
+      ]
+    }
   },
   "scripts": {
     "clean:all": "npm run clean:compiled && npm run clean:dependencies",
