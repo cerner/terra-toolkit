@@ -70,7 +70,7 @@ Then, to assist with testing, the TerraService provides the Terra global helper 
     - By default returns all viewports if not name key are provided.
 - `Terra.should.beAccessible()` mocha-chai convenience method that runs an axe test for the page. Takes the same arguments as the `axe()` utility.
     - See [beAccessible-spec.js](https://github.com/cerner/terra-toolkit/blob/master/tests/wdio/beAccessible-spec.js) for examples.
-- `Terra.should.matchScreenshot()` mocha-chai convenience method that takes a screenshot for the specified viewports and verifies the images are within the specified mis-match tolerance. Note: this method provides its own mocha it test case. The methods accepts these arguments (in this order):
+- `Terra.should.matchScreenshot()` **Note - It is preferred to use Terra.should.validateElement().  Terra.should.matchScreenshot() may eventually be deprecated** mocha-chai convenience method that takes a screenshot for the specified viewports and verifies the images are within the specified mis-match tolerance. Note: this method provides its own mocha it test case. The methods accepts these arguments (in this order):
     - String (optional): the test case name. Default name is 'default'
     - Object (optional): the test options. Options include selector, viewports, misMatchTolerance and viewportChangePause:
          - selector: the element selector to take a screenshot of. Defaults to the global terra.selector.
