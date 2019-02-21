@@ -7,6 +7,7 @@ Unreleased
 * Add en-AU to supported translations list
 * Add enzyme i18n helpers: shallowWithIntl, mountWithIntl, renderWithIntl, and mockIntl
 * Add doc on enzyme intl helpers, update Readme
+* Add enzyme intl helpers tests
 
 4.23.1 - (February 5, 2019)
 ----------

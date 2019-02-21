@@ -1,0 +1,245 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mountWithIntl using FormattedMessage should match the snapshot 1`] = `
+<FormattedMessageSubject
+  foo="bar"
+  intl={
+    Object {
+      "defaultFormats": Object {},
+      "defaultLocale": "en",
+      "formatDate": [Function],
+      "formatHTMLMessage": [Function],
+      "formatMessage": [Function],
+      "formatNumber": [Function],
+      "formatPlural": [Function],
+      "formatRelative": [Function],
+      "formatTime": [Function],
+      "formats": Object {},
+      "formatters": Object {
+        "getDateTimeFormat": [Function],
+        "getMessageFormat": [Function],
+        "getNumberFormat": [Function],
+        "getPluralFormat": [Function],
+        "getRelativeFormat": [Function],
+      },
+      "locale": "en",
+      "messages": null,
+      "now": [Function],
+      "onError": [Function],
+      "textComponent": "span",
+      "timeZone": null,
+    }
+  }
+>
+  <div>
+    <FormattedMessage
+      id="TerraToolkit.helloWorld"
+      values={Object {}}
+    >
+      <span>
+        TerraToolkit.helloWorld
+      </span>
+    </FormattedMessage>
+    <FormattedMessage
+      id="TerraToolkit.buttonText"
+      values={Object {}}
+    >
+      <button
+        type="button"
+      >
+        TerraToolkit.buttonText
+      </button>
+    </FormattedMessage>
+    {
+  "foo": "bar",
+  "intl": {
+    "locale": "en",
+    "messages": {},
+    "formats": {},
+    "timeZone": null,
+    "textComponent": "span",
+    "defaultLocale": "en",
+    "defaultFormats": {},
+    "formatters": {}
+  }
+}
+  </div>
+</FormattedMessageSubject>
+`;
+
+exports[`mountWithIntl using injectIntl should match the snapshot 1`] = `
+<InjectIntl(Component)
+  foo="bar"
+  intl={
+    Object {
+      "defaultFormats": Object {},
+      "defaultLocale": "en",
+      "formatDate": [Function],
+      "formatHTMLMessage": [Function],
+      "formatMessage": [Function],
+      "formatNumber": [Function],
+      "formatPlural": [Function],
+      "formatRelative": [Function],
+      "formatTime": [Function],
+      "formats": Object {},
+      "formatters": Object {
+        "getDateTimeFormat": [Function],
+        "getMessageFormat": [Function],
+        "getNumberFormat": [Function],
+        "getPluralFormat": [Function],
+        "getRelativeFormat": [Function],
+      },
+      "locale": "en",
+      "messages": null,
+      "now": [Function],
+      "onError": [Function],
+      "textComponent": "span",
+      "timeZone": null,
+    }
+  }
+>
+  <Component
+    foo="bar"
+    intl={
+      Object {
+        "defaultFormats": Object {},
+        "defaultLocale": "en",
+        "formatDate": [Function],
+        "formatHTMLMessage": [Function],
+        "formatMessage": [Function],
+        "formatNumber": [Function],
+        "formatPlural": [Function],
+        "formatRelative": [Function],
+        "formatTime": [Function],
+        "formats": Object {},
+        "formatters": Object {
+          "getDateTimeFormat": [Function],
+          "getMessageFormat": [Function],
+          "getNumberFormat": [Function],
+          "getPluralFormat": [Function],
+          "getRelativeFormat": [Function],
+        },
+        "locale": "en",
+        "messages": null,
+        "now": [Function],
+        "onError": [Function],
+        "textComponent": "span",
+        "timeZone": null,
+      }
+    }
+  >
+    <div>
+      TerraToolkit.helloWorld
+      <button
+        type="button"
+      >
+        TerraToolkit.buttonText
+      </button>
+      {
+  "foo": "bar"
+}
+    </div>
+  </Component>
+</InjectIntl(Component)>
+`;
+
+exports[`renderWithIntl using FormattedMessage should match the snapshot 1`] = `
+<div>
+  <span>
+    TerraToolkit.helloWorld
+  </span>
+  <button
+    type="button"
+  >
+    TerraToolkit.buttonText
+  </button>
+  {
+  "foo": "bar",
+  "intl": {
+    "locale": "en",
+    "messages": {},
+    "formats": {},
+    "timeZone": null,
+    "textComponent": "span",
+    "defaultLocale": "en",
+    "defaultFormats": {},
+    "formatters": {}
+  }
+}
+</div>
+`;
+
+exports[`renderWithIntl using injectIntl should match the snapshot 1`] = `
+<div>
+  TerraToolkit.helloWorld
+  <button
+    type="button"
+  >
+    TerraToolkit.buttonText
+  </button>
+  {
+  "foo": "bar"
+}
+</div>
+`;
+
+exports[`shallowWithIntl using FormattedMessage should match the snapshot 1`] = `
+<div>
+  <FormattedMessage
+    id="TerraToolkit.helloWorld"
+    values={Object {}}
+  />
+  <FormattedMessage
+    id="TerraToolkit.buttonText"
+    values={Object {}}
+  >
+    <Component />
+  </FormattedMessage>
+  {
+  "foo": "bar",
+  "intl": {
+    "locale": "en",
+    "messages": {},
+    "formats": {},
+    "timeZone": null,
+    "textComponent": "span",
+    "defaultLocale": "en",
+    "defaultFormats": {},
+    "formatters": {}
+  }
+}
+</div>
+`;
+
+exports[`shallowWithIntl using injectIntl should match the snapshot 1`] = `
+<Component
+  foo="bar"
+  intl={
+    Object {
+      "defaultFormats": Object {},
+      "defaultLocale": "en",
+      "formatDate": [Function],
+      "formatHTMLMessage": [Function],
+      "formatMessage": [Function],
+      "formatNumber": [Function],
+      "formatPlural": [Function],
+      "formatRelative": [Function],
+      "formatTime": [Function],
+      "formats": Object {},
+      "formatters": Object {
+        "getDateTimeFormat": [Function],
+        "getMessageFormat": [Function],
+        "getNumberFormat": [Function],
+        "getPluralFormat": [Function],
+        "getRelativeFormat": [Function],
+      },
+      "locale": "en",
+      "messages": null,
+      "now": [Function],
+      "onError": [Function],
+      "textComponent": "span",
+      "timeZone": null,
+    }
+  }
+/>
+`;
