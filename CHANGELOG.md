@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+### Changed
+* Updated aggregate translations script fallback to base locale if translation is missing for regional locale on a string-by-string basis.
+
 ### Added
 * Add en-AU to supported translations list
 
