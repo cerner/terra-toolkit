@@ -33,7 +33,7 @@ describe('validateElement', () => {
 
     Terra.should.validateElement('test name', { selector: 'test-selector', misMatchTolerance: 0.05, axeRules: { a: 'b', c: 'd' } });
 
-    expect(accessibilityOptions).to.deep.equal({ a: 'b', c: 'd', context: 'test-selector' });
+    expect(accessibilityOptions).to.deep.equal({ rules: { a: 'b', c: 'd' }, restoreScroll: true, context: 'test-selector' });
     expect(screenshotItBlockName).to.equal('test name');
     expect(screenshotItBlockMatchType).to.equal('withinTolerance');
     expect(screenshotItBlockSelector).to.equal('test-selector');
