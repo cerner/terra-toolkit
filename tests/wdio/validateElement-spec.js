@@ -65,7 +65,7 @@ describe('validateElement', () => {
 
     Terra.should.validateElement();
 
-    expect(accessibilityOptions).to.deep.equal({ context: '[data-terra-toolkit-content]' });
+    expect(accessibilityOptions).to.deep.equal({ restoreScroll: true, context: '[data-terra-toolkit-content]' });
     expect(screenshotItBlockName).to.equal('default');
     expect(screenshotItBlockMatchType).to.equal('withinTolerance');
     expect(screenshotItBlockSelector).to.equal('[data-terra-toolkit-content]');
