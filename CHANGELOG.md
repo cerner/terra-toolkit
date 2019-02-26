@@ -5,6 +5,7 @@ Unreleased
 ----------
 ### Added
 * Added a script to aggregate dependency themes into a single file
+* Add en-AU to supported translations list
 
 4.23.1 - (February 5, 2019)
 ----------
