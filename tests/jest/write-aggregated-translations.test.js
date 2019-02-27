@@ -68,7 +68,7 @@ Object.keys(testFileSystems).forEach((testFS) => {
 
       writeAggregatedTranslations(testMessages, testLocales, fileSystem, outputDir);
       // eslint-disable-next-line no-console
-      expect(console.warn).toBeCalledWith(expect.stringContaining('en-AU translations missing for Terra.test.fixtures.test, en translation string will be used instead.'));
+      expect(console.warn).toBeCalledWith(expect.stringContaining('en-AU translation missing for Terra.test.fixtures.test, en translation string will be used instead.'));
     });
 
     it('thows an error if a locale was not aggregated on', () => {
