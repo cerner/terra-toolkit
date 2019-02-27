@@ -25,7 +25,7 @@ const writeAggregatedTranslations = (aggregatedMessages, locales, fileSystem, ou
             }
           });
 
-          // Merge baseLocale messages into regionalLocale messages, regionalLocale messages listed last so they will take precedence.
+          // Merge base locale messages into regional locale messages, regional locale messages listed last so they will take precedence.
           mergedMessages = Object.assign({}, baseLocaleMessages, messages);
         }
       }
