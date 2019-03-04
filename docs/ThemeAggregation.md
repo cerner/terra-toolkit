@@ -35,24 +35,6 @@ project
         └── scoped-theme.scss
 ```
 
-### Root Theme Example
-
-The `root-theme.scss` file should include all the necessary imports for the theme.
-
-```scss
-@import 'component-1.scss';
-@import 'component-2.scss';
-```
-
-### Scoped Theme Example
-
-The `scoped-theme.scss` file should include a selector to enable scoping.
-
-```scss
-$selector: '.terra-dark-theme';
-@import 'root-theme';
-```
-
 ## Configuration
 
 ### terra-theme.config.js
