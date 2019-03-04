@@ -64,10 +64,13 @@ class ThemeAggregator {
   static aggregateThemes(options) {
     ThemeAggregator.validate(options);
 
+    const assets = [];
     const { theme, scoped = [] } = options;
 
     // Aggregate the default theme.
-    const assets = ThemeAggregator.aggregateTheme(theme, options);
+    if (theme) {
+      assets.push(...ThemeAggregator.aggregateTheme(theme, options));
+    }
 
     // Aggregate the scoped themes.
     scoped.forEach((name) => {

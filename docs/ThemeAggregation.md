@@ -46,7 +46,7 @@ The `root-theme.scss` file should include all the necessary imports for the them
 
 ### Scoped Theme Example
 
-The `scoped-theme.scss` file should include a selector to enable a scoping.
+The `scoped-theme.scss` file should include a selector to enable scoping.
 
 ```scss
 $selector: '.terra-dark-theme';
