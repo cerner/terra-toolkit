@@ -10,7 +10,7 @@ const browserslist = require('browserslist-config-terra');
 const merge = require('webpack-merge');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
 const aggregateTranslations = require('../../scripts/aggregate-translations/aggregate-translations');
-const aggregateThemes = require('../../scripts/aggregate-themes/aggregate-themes');
+const ThemeAggregator = require('../../scripts/aggregate-themes/theme-aggregator');
 
 const webpackConfig = (options, env, argv) => {
   const { rootPath, resolveModules, themeFile } = options;
@@ -154,7 +154,7 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     resolveModules.unshift(path.resolve(rootPath, 'aggregated-translations'));
   }
 
-  const themeFile = aggregateThemes();
+  const themeFile = ThemeAggregator.aggregate();
 
   const options = { rootPath, resolveModules, themeFile };
 

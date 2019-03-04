@@ -2,17 +2,17 @@
 
 Terra Toolkit provides a built-in mechanism for aggregating themes.
 
-By default, the terra-toolkit webpack configuration enables theme aggregation when it detects the presence of a `theme.config.js` file.
+By default, the terra-toolkit webpack configuration enables theme aggregation when it detects the presence of a `terra-theme.config.js` file.
 
 ## Getting started
 
 Create a new file within the same directory as your webpack configuration file.
 
-The file must be named `theme.config.js`.
+The file must be named `terra-theme.config.js`.
 
 ```
 project
-├── theme.config.js
+├── terra-theme.config.js
 ├── webpack.config.js
 ```
 
@@ -22,7 +22,7 @@ This configuration will be used to aggregate nested dependency themes and output
 
 Theme files must follow naming conventions to be aggregated. Theme files are expected be within a namespaced directory within a `themes` directory.
 
-```
+```txt
 project
 └── themes
     ├── terra-dark-theme
@@ -35,9 +35,27 @@ project
         └── scoped-theme.scss
 ```
 
+### Root Theme Example
+
+The `root-theme.scss` file should include all the necessary imports for the theme.
+
+```scss
+@import 'component-1.scss';
+@import 'component-2.scss';
+```
+
+### Scoped Theme Example
+
+The `scoped-theme.scss` file should include a selector to enable a scoping.
+
+```scss
+$selector: '.terra-dark-theme';
+@import 'root-theme';
+```
+
 ## Configuration
 
-### theme.config.js
+### terra-theme.config.js
 
 ```js
 const themeConfig = {
@@ -53,7 +71,7 @@ module.exports = themeConfig;
 
 #### Exclude (Optional)
 
-The `exclude` option accepts an array of glob patterns to exclude from being aggregated.
+The `exclude` option accepts an array of files to exclude from being aggregated.
 
 #### Theme (Optional)
 
