@@ -17,7 +17,7 @@ describe('Theme Aggregator', () => {
       const options = { theme: 'terra-mock-dark-theme' };
 
       const files = ThemeAggregator.aggregateTheme('terra-mock-dark-theme', options);
-      const expected = ['tests/jest/fixtures/themes/terra-mock-dark-theme/root-theme.scss'];
+      const expected = ['./tests/jest/fixtures/themes/terra-mock-dark-theme/root-theme.scss'];
 
       expect(files).toEqual(expected);
     });
@@ -26,7 +26,7 @@ describe('Theme Aggregator', () => {
       const options = { scoped: ['terra-mock-dark-theme'] };
 
       const files = ThemeAggregator.aggregateTheme('terra-mock-dark-theme', options);
-      const expected = ['tests/jest/fixtures/themes/terra-mock-dark-theme/scoped-theme.scss'];
+      const expected = ['./tests/jest/fixtures/themes/terra-mock-dark-theme/scoped-theme.scss'];
 
       expect(files).toEqual(expected);
     });
@@ -83,9 +83,9 @@ describe('Theme Aggregator', () => {
     });
 
     it('resolves a relative file path', () => {
-      const resolvedFile = ThemeAggregator.resolve('./fixtures/themes/terra-mock-dark-theme/root-file.scss');
+      const resolvedFile = ThemeAggregator.resolve('fixtures/themes/terra-mock-dark-theme/root-file.scss');
 
-      expect(resolvedFile).toEqual('fixtures/themes/terra-mock-dark-theme/root-file.scss');
+      expect(resolvedFile).toEqual('./fixtures/themes/terra-mock-dark-theme/root-file.scss');
     });
   });
 

@@ -106,7 +106,7 @@ class ThemeAggregator {
 
     // Constructs the relative path.
     const outputPath = path.resolve(process.cwd());
-    return path.relative(outputPath, path.resolve(process.cwd(), filePath));
+    return `./${path.relative(outputPath, path.resolve(process.cwd(), filePath))}`;
   }
 
   /**
