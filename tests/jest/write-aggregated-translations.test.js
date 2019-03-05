@@ -16,10 +16,13 @@ Object.keys(testFileSystems).forEach((testFS) => {
     const fileSystem = testFileSystems[testFS];
     const outputDir = '/aggregated-translations';
     let writtenFiles;
+    let fileContent;
     beforeEach(() => {
       writtenFiles = [];
+      fileContent = {};
       spyOn(fileSystem, 'writeFileSync').and.callFake((fileName, hash) => {
         writtenFiles.push(fileName);
+        fileContent[fileName] = hash;
         return hash;
       });
     });
@@ -33,6 +36,39 @@ Object.keys(testFileSystems).forEach((testFS) => {
 
       writeAggregatedTranslations(defaultMessages, locales, fileSystem, outputDir);
       expect(writtenFiles).toEqual(outputFiles);
+    });
+
+    it('merges missing translations from base locale', () => {
+      const testMessages = { en: { 'Terra.test.fixtures.test': 'Test...' }, 'en-AU': {} };
+      const testLocales = ['en', 'en-AU'];
+
+      const expectedOutput = { 'Terra.test.fixtures.test': 'Test...' };
+
+      const outputFile = path.resolve(process.cwd(), outputDir, 'en-AU.js');
+
+      writeAggregatedTranslations(testMessages, testLocales, fileSystem, outputDir);
+      expect(fileContent[outputFile]).toMatch(JSON.stringify(expectedOutput, null, 2));
+    });
+
+    it('base locale does not overwrite regional locale translations', () => {
+      const testMessages = { en: { 'Terra.test.fixtures.test': 'Test...' }, 'en-AU': { 'Terra.test.fixtures.test': 'en-AU test' } };
+      const testLocales = ['en', 'en-AU'];
+
+      const expectedOutput = { 'Terra.test.fixtures.test': 'en-AU test' };
+
+      const outputFile = path.resolve(process.cwd(), outputDir, 'en-AU.js');
+
+      writeAggregatedTranslations(testMessages, testLocales, fileSystem, outputDir);
+      expect(fileContent[outputFile]).toMatch(JSON.stringify(expectedOutput, null, 2));
+    });
+
+    it('logs warning when regional locale translation is missing', () => {
+      const testMessages = { en: { 'Terra.test.fixtures.test': 'Test...' }, 'en-AU': {} };
+      const testLocales = ['en', 'en-AU'];
+
+      writeAggregatedTranslations(testMessages, testLocales, fileSystem, outputDir);
+      // eslint-disable-next-line no-console
+      expect(console.warn).toBeCalledWith(expect.stringContaining('en-AU translation missing for Terra.test.fixtures.test, en translation string will be used instead.'));
     });
 
     it('thows an error if a locale was not aggregated on', () => {

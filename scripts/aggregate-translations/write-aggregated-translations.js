@@ -12,7 +12,24 @@ const writeAggregatedTranslations = (aggregatedMessages, locales, fileSystem, ou
       }
 
       const translationFilePath = path.resolve(outputDir, `${locale}.js`);
-      fileSystem.writeFileSync(translationFilePath, generateTranslationFile(locale, aggregatedMessages[locale]));
+      const messages = aggregatedMessages[locale];
+      const [baseLocale, region] = locale.split('-');
+      let mergedMessages = messages;
+
+      if (region) {
+        const baseLocaleMessages = aggregatedMessages[baseLocale];
+        if (baseLocaleMessages) {
+          Object.keys(baseLocaleMessages).forEach((key) => {
+            if (!messages[key]) {
+              Logger.warn(`${locale} translation missing for ${key}, ${baseLocale} translation string will be used instead.`);
+            }
+          });
+
+          // Merge base locale messages into regional locale messages, regional locale messages listed last so they will take precedence.
+          mergedMessages = Object.assign({}, baseLocaleMessages, messages);
+        }
+      }
+      fileSystem.writeFileSync(translationFilePath, generateTranslationFile(locale, mergedMessages));
     } else {
       throw Logger.error(`Translations aggregated for ${locale} locale, but messages were not loaded correctly. Please check that your translated modules were installed correctly.`);
     }
