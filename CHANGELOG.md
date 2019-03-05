@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Fixed
+* Issue with false warnings on aggregating translations with blank strings.
 
 4.24.0 - (March 5, 2019)
 ----------

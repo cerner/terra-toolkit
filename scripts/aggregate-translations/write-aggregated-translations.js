@@ -20,7 +20,7 @@ const writeAggregatedTranslations = (aggregatedMessages, locales, fileSystem, ou
         const baseLocaleMessages = aggregatedMessages[baseLocale];
         if (baseLocaleMessages) {
           Object.keys(baseLocaleMessages).forEach((key) => {
-            if (!messages[key]) {
+            if (messages[key] === undefined) {
               Logger.warn(`${locale} translation missing for ${key}, ${baseLocale} translation string will be used instead.`);
             }
           });
