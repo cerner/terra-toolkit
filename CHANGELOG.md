@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+4.24.0 - (March 5, 2019)
+----------
 ### Changed
 * Updated aggregate translations script fallback to base locale if translation is missing for regional locale on a string-by-string basis.
 
