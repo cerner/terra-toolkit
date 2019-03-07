@@ -3,8 +3,20 @@ Changelog
 
 Unreleased
 ----------
+
+4.25.0 - (March 5, 2019)
+----------
+### Fixed
+* Issue with false warnings on aggregating translations with blank strings.
+
+4.24.0 - (March 5, 2019)
+----------
+### Changed
+* Updated aggregate translations script fallback to base locale if translation is missing for regional locale on a string-by-string basis.
+
 ### Added
 * Added a new method `validateElement` to both do a screenshot comparison and test accessibility
+* Added a script to aggregate dependency themes into a single file
 * Add en-AU to supported translations list
 
 4.23.1 - (February 5, 2019)
