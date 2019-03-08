@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Added
+* Log information on what selenium version is being used for the test run.
 
 4.25.0 - (March 5, 2019)
 ----------
