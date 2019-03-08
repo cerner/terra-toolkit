@@ -43,6 +43,11 @@ const setViewport = (formFactor) => {
 */
 export default class TerraService {
   // eslint-disable-next-line class-methods-use-this
+  onPrepare(config) {
+    Logger.log(`Running tests against ${Logger.emphasis(`Selenium ${config.seleniumVersion}`)}`, { context: '[Terra-Toolkit:terra-service]' });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
   before() {
     chai.config.showDiff = false;
     global.expect = chai.expect;
