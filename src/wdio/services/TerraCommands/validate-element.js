@@ -31,7 +31,7 @@ const determineOptions = (...args) => {
     axeOptions: {
       ...options.axeRules && { rules: options.axeRules },
       restoreScroll: true,
-      ...selector && { context: selector },
+      context: selector,
     },
   };
 };
