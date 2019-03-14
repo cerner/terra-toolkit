@@ -1,4 +1,7 @@
 const { Launcher } = require('webdriverio');
+const Logger = require('../utils/logger');
+
+const context = '[Terra-Tookit:wdio-runner]';
 
 async function wdioRunner(options) {
   const {
@@ -18,25 +21,23 @@ async function wdioRunner(options) {
         process.env.FORM_FACTOR = form;
         envValues += `FORM_FACTOR=${form}`;
       }
-
-      // eslint-disable-next-line no-console
-      console.log(`\n> [Terra-Tookit:wdio-runner] Running tests for: ${envValues}\n`);
+      envValues = Logger.emphasis(envValues);
+      Logger.log(`Running tests for: ${envValues}`, { context });
 
       // eslint-disable-next-line no-await-in-loop
       await new Launcher(configPath, testSetup)
         .run()
         .then(
-          // eslint-disable-next-line no-loop-func
           (code) => {
             if (code === 1 && !continueOnFail) {
-              // eslint-disable-next-line no-console
-              console.error(`[Terra-Tookit:wdio-runner] Running tests for: ${envValues} failed.`);
+              Logger.error(`Running tests for: ${envValues} failed.`, { context });
               process.exit(1);
+            } else {
+              Logger.log(`Finished tests for: ${envValues}\n\n---------------------------------------\n`, { context });
             }
           },
           (error) => {
-            // eslint-disable-next-line no-console
-            console.error('Launcher failed to start the test', error.stacktrace);
+            Logger.error(`Launcher failed to start the test ${error.stacktrace}`, { context });
             process.exit(1);
           },
         );

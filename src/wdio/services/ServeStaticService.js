@@ -1,15 +1,17 @@
 import serveStatic from '../../../scripts/serve/serve-static';
 import SERVICE_DEFAULTS from '../../../config/wdio/services.default-config';
+import Logger from '../../../scripts/utils/logger';
 
 const { serveStatic: SERVE_STATIC_DEFAULTS } = SERVICE_DEFAULTS;
+const context = '[Terra-Toolkit:serve-static-service]';
 
 export default class ServeStaticService {
   async onPrepare(config = {}) {
+    const site = config.site;
     const webpackConfig = config.webpackConfig;
 
-    if (!webpackConfig) {
-      // eslint-disable-next-line no-console
-      console.warn('[Terra-Toolkit:serve-static] No webpack configuration provided');
+    if (!webpackConfig && !site) {
+      Logger.warn('No webpack configuration provided', { context });
       return;
     }
 
@@ -24,7 +26,16 @@ export default class ServeStaticService {
       await this.stop();
     }
 
-    await ServeStaticService.startService(webpackConfig, port, index, locale, verbose).then((server) => {
+    const serveOptions = {
+      ...site && { site, disk: true },
+      config: webpackConfig,
+      port,
+      index,
+      locale,
+      verbose,
+    };
+
+    await ServeStaticService.startService(serveOptions).then((server) => {
       this.server = server;
     });
   }
@@ -33,16 +44,16 @@ export default class ServeStaticService {
     await this.stop();
   }
 
-  static startService(config, port, index, locale, verbose) {
+  // Options include config, site, port, index, locale, verbose
+  static startService(serveOptions) {
     return serveStatic({
-      config, port, index, production: true, locale, verbose,
+      ...serveOptions, production: true,
     });
   }
 
   stop() {
     return new Promise((resolve) => {
-      // eslint-disable-next-line no-console
-      console.log('[Terra-Toolkit:serve-static] Closing Server');
+      Logger.log('Closing Server', { context });
       if (this.server) {
         this.server.close();
         this.server = null;

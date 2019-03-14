@@ -8,7 +8,7 @@ const translationDirectories = [
   path.resolve(__dirname, 'fixtures', 'translations'),
   path.resolve(__dirname, 'fixtures', 'ned_modules', 'fixtures1', 'translations'),
 ];
-const locales = ['en', 'es', 'pt'];
+const locales = ['en', 'en-US', 'es'];
 const fileSystem = fs;
 
 const expectedMessages = {
@@ -21,8 +21,8 @@ describe('aggregates translations messages', () => {
     const messages = aggregateMessages([], locales, fileSystem);
 
     expect(messages).toHaveProperty('en', {});
+    expect(messages).toHaveProperty('en-US', {});
     expect(messages).toHaveProperty('es', {});
-    expect(messages).toHaveProperty('pt', {});
   });
 
   it('logs a warning message if a translation file is not found', () => {
@@ -36,7 +36,7 @@ describe('aggregates translations messages', () => {
     const messages = aggregateMessages(translationDirectories, locales, fileSystem);
 
     expect(messages).toHaveProperty('en', expectedMessages);
+    expect(messages).toHaveProperty('en-US', expectedMessages);
     expect(messages).toHaveProperty('es', expectedMessages);
-    expect(messages).toHaveProperty('pt', expectedMessages);
   });
 });

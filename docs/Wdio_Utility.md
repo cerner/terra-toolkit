@@ -1,6 +1,6 @@
 # Webdriver.io Utility Developer's Guide
 
-[Webdriver.io](http://webdriver.io/) is a framework for writing webdriver powered tests to validate functionality in browsers. The Webdriver.io framework provides services for setting up a selenium server, starting webpack and static servers, running accessibility and visual regression testing, and more.
+[Webdriver.io](http://v4.webdriver.io/) is a framework for writing webdriver powered tests to validate functionality in browsers. The Webdriver.io framework provides services for setting up a selenium server, starting webpack and static servers, running accessibility and visual regression testing, and more.
 
 - [Getting Started](#getting-started)
 - [Configuration Setup](#configuration-setup)
@@ -14,7 +14,7 @@ Terra Toolkit uses docker to setup, run, and tear down selenium to ensure a cons
 
 ## Configuration Setup
 
-To run the webdriver.io test running, the [webdriver.io configuration options](http://webdriver.io/guide/testrunner/configurationfile.html) must be specified in the `wdio.conf.js` file. Terra-toolkit provides a [default webdriver.io configuration](https://github.com/cerner/terra-toolkit/blob/master/config/wdio/wdio.conf.js) that enables the following services for a mocha test framework:
+To run the webdriver.io test running, the [webdriver.io configuration options](http://v4.webdriver.io/guide/testrunner/configurationfile.html) must be specified in the `wdio.conf.js` file. Terra-toolkit provides a [default webdriver.io configuration](https://github.com/cerner/terra-toolkit/blob/master/config/wdio/wdio.conf.js) that enables the following services for a mocha test framework:
 
 * `SeleniumDockerService` - starts a Selenium-Docker instance.
     - See [here](https://github.com/cerner/terra-toolkit/blob/master/docs/SeleniumDockerService.md) for configuration information.
@@ -22,6 +22,7 @@ To run the webdriver.io test running, the [webdriver.io configuration options](h
     - See [here](https://github.com/cerner/terra-toolkit/blob/master/docs/AxeService.md) for configuration information.
 * `TerraService` - provides global access to chai, custom chai assertions and a Terra helper to make testing easier.
     - To provide a custom global selector, add `terra: { selector: 'selector_name' }` to the configuration.
+    - To disable theme testing add `terra: { disableThemeTests: true }` to the configuration. This will skip the following functions during testing: `themeEachCustomProperty` and `themeCombinationOfCustomProperties`. 
 * `VisualRegressionService` - uses wdio-screenshot to capture screenshots and run visual regression testing.
     - See [here](https://github.com/zinserjan/wdio-visual-regression-service#configuration) for configuration information.
 * `ServeStaticService` - to start a server and returns a promise when the webpack compiler is completed.

@@ -3,31 +3,33 @@ const fse = require('fs-extra');
 const glob = require('glob');
 const path = require('path');
 const MemoryFileSystem = require('memory-fs');
+const defaultSearchPatterns = require('../../scripts/aggregate-translations/defaultSearchPatterns');
 const i18nSupportedLocales = require('../../scripts/aggregate-translations/i18nSupportedLocales');
 const aggregateTranslations = require('../../scripts/aggregate-translations/aggregate-translations');
 
-global.console = { warn: jest.fn() };
-const defaultSearchPatterns = baseDirectory => ([
-  `${baseDirectory}${path.sep}translations`,
-  `${baseDirectory}${path.sep}node_modules${path.sep}terra-*${path.sep}translations`,
-  `${baseDirectory}${path.sep}packages${path.sep}terra-*${path.sep}translations`,
-  `${baseDirectory}${path.sep}packages${path.sep}terra-*${path.sep}node_modules${path.sep}terra-*${path.sep}translations`,
-]);
+global.console = { warn: jest.fn(), log: jest.fn() };
 
+const numOfDefaultSearchPatterns = defaultSearchPatterns.length;
 const nestedOutputDir = './translations/folder';
 
 describe('aggregate-translations', () => {
   let searchedDirectories;
+  let globOptions;
   let writtenFilePaths;
   let fseSpy;
   let fseMakeDirSpy;
   let globSpy;
+
   beforeEach(() => {
     searchedDirectories = [];
+    globOptions = null;
     writtenFilePaths = [];
-    globSpy = spyOn(glob, 'sync').and.callFake((fileName) => {
-      searchedDirectories.push(fileName); return fileName;
+    globSpy = spyOn(glob, 'sync').and.callFake((...args) => {
+      searchedDirectories.push(args[0]);
+      globOptions = args[1];
+      return args[0];
     });
+
     fseSpy = spyOn(fse, 'writeFileSync').and.callFake((fileName) => {
       writtenFilePaths.push(fileName);
     });
@@ -38,21 +40,35 @@ describe('aggregate-translations', () => {
   it('aggregates on the default search patterns', () => {
     aggregateTranslations();
 
-    expect(globSpy).toHaveBeenCalledTimes(4);
-    expect(searchedDirectories).toEqual(expect.arrayContaining(defaultSearchPatterns(process.cwd())));
+    expect(globSpy).toHaveBeenCalledTimes(numOfDefaultSearchPatterns);
+    // expect(searchedDirectories).toEqual(expect.arrayContaining(defaultSearchPatterns(process.cwd())));
+    expect(searchedDirectories).toEqual(expect.arrayContaining(defaultSearchPatterns));
   });
 
   it('aggregates on the default search patterns and custom directory patterns', () => {
-    aggregateTranslations({ directories: ['./test/*/pattern'] });
+    const directories = ['./test/*/pattern'];
+    aggregateTranslations({ directories });
 
-    expect(globSpy).toHaveBeenCalledTimes(5);
-    expect(searchedDirectories).toEqual(expect.arrayContaining([`${process.cwd()}${path.sep}test${path.sep}*${path.sep}pattern`]));
+    expect(globSpy).toHaveBeenCalledTimes(numOfDefaultSearchPatterns + 1);
+    expect(searchedDirectories).toEqual(expect.arrayContaining(directories));
+  });
+
+  it('aggregates on the default search patterns and custom directory patterns while excluding the custom excludes directory patterns', () => {
+    const includePattern = './test/*/pattern';
+    const excludePattern = './foo/*/bar';
+    aggregateTranslations({ directories: [includePattern, excludePattern], excludes: [excludePattern] });
+
+    expect(globSpy).toHaveBeenCalledTimes(numOfDefaultSearchPatterns + 2);
+    expect(searchedDirectories).toEqual(expect.arrayContaining([includePattern]));
+    expect(globOptions.ignore).toEqual([excludePattern]);
   });
 
   it('uses the custom base directory', () => {
-    aggregateTranslations({ baseDir: './fixtures' });
+    const baseDir = './fixtures';
+    aggregateTranslations({ baseDir });
 
-    expect(searchedDirectories).toEqual(defaultSearchPatterns(path.resolve('./fixtures')));
+    expect(searchedDirectories).toEqual(defaultSearchPatterns);
+    expect(globOptions.cwd).toEqual(baseDir);
   });
 
   it('uses the fs fileSystem for output by default', () => {

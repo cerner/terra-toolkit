@@ -6,6 +6,116 @@ Unreleased
 ### Removed
 * Removed the nightwatch utility, dependencies, tests and documentations.
 
+4.25.0 - (March 5, 2019)
+----------
+### Fixed
+* Issue with false warnings on aggregating translations with blank strings.
+
+4.24.0 - (March 5, 2019)
+----------
+### Changed
+* Updated aggregate translations script fallback to base locale if translation is missing for regional locale on a string-by-string basis.
+
+### Added
+* Added a script to aggregate dependency themes into a single file
+* Add en-AU to supported translations list
+
+4.23.1 - (February 5, 2019)
+----------
+### Fixed
+* Issue with duplicate-package-checker-webpack-plugin being listed as a devDependency
+
+4.23.0 - (February 5, 2019)
+----------
+### Added
+* Added format option to aggregate-translations to output modern syntax
+* Added the Duplicate Package Checker Plugin to the default webpack config. The duplicate package checker plugin will warn if duplicate packages (different versions) are included in your webpack bundle.
+* Added formatted & colored console output for toolkit services and scripts
+
+### Changed
+* Update the `connectionRetryCount` to 1 in the default wdio configuraiton
+
+### Fixed
+* Adjust AxeService implementation to only resize the viewport if viewport options are passed.
+
+4.22.0 - (January 2, 2019)
+----------
+### Changed
+* Updated docs to have logically nested headers.
+
+4.21.0 - (December 14, 2018)
+----------
+### Added
+* Add exclude directories option to aggregate translations tool
+* Add local and network address display to tt-serve
+* Add glob option to follow symlinked node_modules while aggreagating trasnlations
+
+### Changed
+* Opened up default search patterns to search all first-, second- and third-level `node_module/*/translations` patterns for monorepos and non-monorepos instead of the first-level `node_modules/terra-*/translations` patterns.
+
+4.20.0 - (December 6, 2018)
+----------
+### Changed
+* Upgraded webpack-cli to 3.0.0 and unlocked webpack version.
+
+### Changed
+* Aggregrate-translations tool now outputs pre-compiled tranlstaions jsons, intl loaders and translations loaders to prevent the need for the compilation during webpack. This resolves SCRIPT1002: Syntax error with IE.
+
+4.19.0 - (November 20, 2018)
+----------
+### Changed
+* Added configuration option (disableThemeTests) to disable theme functions in wdio tests
+
+4.18.0 - (November 19, 2018)
+----------
+### Changed
+* Replaced uglifyjs-webpack-plugin with terser-webpack-plugin
+
+4.17.0 - (November 14, 2018)
+----------
+### Changed
+* Loosen node version via npm engine to accept any version over 8.9.2
+* Update .npmrc file to use latest v8.x release (lts/carbon)
+
+4.16.1 - (November 13, 2018)
+----------
+### Fixed
+* Remove parseInt for serve-cli port value. Casting it to a number caused the default value to return NaN.
+
+4.16.0 - (November 9, 2018)
+----------
+### Added
+* Added `site` wdio configuration option such that a relative path to a static site can used in the ServeStatic service. This option can be utilized to speed up tt-wdio runs by removing duplicated webpack compilation.
+* Added `tt-pack` script for packing packages into a tar archive file.
+
+### Fixed
+* Cast serve-cli port value to be a number to prevent NaN from being passed as the port value for the server.
+
+### Changed
+* Give more info on webpack mode in serve-static startup
+
+4.15.0 - (October 23, 2018)
+----------
+### Added
+* Add pause to the Terra service setup for IE browsers when setting the viewport. IE browsers need more time before being interacted with.
+
+### Fixed
+* Updated test suite determination logic to prevent empty test suites from being created.
+
+4.14.0 - (October 16, 2018)
+----------
+### Removed
+* Lerna dependency
+
+### Changed
+* Switch back to using webpack-dev-server for tt-serve due to webpack deprecating webpack-serve in favor of webpack-dev-server.
+
+
+4.13.0 - (October 8, 2018)
+----------
+### Changed
+* Updated aggregated translation loader to load translations relative to generated translations directory
+
 4.12.0 - (September 25, 2018)
 ----------
 ### Changed

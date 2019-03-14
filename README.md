@@ -38,15 +38,21 @@ Terra components provide internationalization and localization support via `reac
 
 See the [Aggregating Translations Guide](https://github.com/cerner/terra-toolkit/blob/master/docs/AggregateTranslations.md) to get started.
 
+## Theme Aggregation
+
+Terra Toolkit provides a built-in mechanism for aggregating themes.
+
+See the [Theme Aggregation](https://github.com/cerner/terra-toolkit/blob/master/docs/ThemeAggregation.md) to get started.
+
 ## Serve Options
 
-Terra Toolkit offers two ways to serve your client side application, `serve` and `serve-static`. Serve is a hot-reloading replacement for webpack-dev-server, which uses [webpack-serve](https://github.com/webpack-contrib/webpack-serve), while serve-static is a non-hot-reloading [express](https://expressjs.com/) server. Serve-static supports IE10 and is used in webdriver testing.
+Terra Toolkit offers two ways to serve your client side application, `serve` and `serve-static`. Serve provides a hot-reloading, development only option via [webpack-dev-server](https://github.com/webpack/webpack-dev-server), while serve-static is a non-hot-reloading [express](https://expressjs.com/) server. Serve-static supports IE10 and is used in webdriver testing.
 
 See the [Serve Guide](https://github.com/cerner/terra-toolkit/blob/master/scripts/serve/README.md) to get started.
 
 ## Webdriver.io Utility
 
-[Webdriver.io](http://webdriver.io/) is a framework for writing webdriver powered tests to validate functionality in browsers. The Webdriver.io framework provides services for setting up a selenium server, starting webpack and static servers, running accessibility and visual regression testing, and more.
+[Webdriver.io](http://v4.webdriver.io/) is a framework for writing webdriver powered tests to validate functionality in browsers. The Webdriver.io framework provides services for setting up a selenium server, starting webpack and static servers, running accessibility and visual regression testing, and more.
 
 See the [Webdriver.io Utility Developer's Guide](https://github.com/cerner/terra-toolkit/blob/master/docs/Wdio_Utility.md) to get started.
 
@@ -71,7 +77,7 @@ Please read through our [contributing guidelines](CONTRIBUTING.md). Included are
 
 ## LICENSE
 
-Copyright 2017 Cerner Innovation, Inc.
+Copyright 2017 - 2019 Cerner Innovation, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 

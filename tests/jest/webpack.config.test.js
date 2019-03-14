@@ -3,7 +3,7 @@ jest.mock('postcss-assets-webpack-plugin');
 jest.mock('postcss-custom-properties');
 jest.mock('mini-css-extract-plugin');
 jest.mock('clean-webpack-plugin');
-jest.mock('uglifyjs-webpack-plugin');
+jest.mock('terser-webpack-plugin');
 
 const path = require('path');
 
@@ -12,7 +12,7 @@ const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin');
 const PostCSSCustomProperties = require('postcss-custom-properties');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const aggregateTranslations = require('../../scripts/aggregate-translations/aggregate-translations');
 const webpackConfig = require('../../config/webpack/webpack.config');
 
@@ -63,7 +63,7 @@ describe('webpack config', () => {
 
     it('adds the plugins', () => {
       expect(config).toHaveProperty('plugins');
-      expect(config.plugins).toHaveLength(2);
+      expect(config.plugins).toHaveLength(3);
 
       expect(MiniCssExtractPlugin).toBeCalled();
 
@@ -155,7 +155,7 @@ describe('webpack config', () => {
 
     it('adds the CleanPlugin', () => {
       expect(config).toHaveProperty('plugins');
-      expect(config.plugins).toHaveLength(3);
+      expect(config.plugins).toHaveLength(4);
 
       expect(MiniCssExtractPlugin).toBeCalled();
       expect(PostCSSAssetsPlugin).toBeCalled();
@@ -177,7 +177,7 @@ describe('webpack config', () => {
     it('optimizes production assets', () => {
       expect(config.optimization).toHaveProperty('minimizer');
       expect(config.optimization.minimizer).toHaveLength(1);
-      expect(UglifyJsPlugin).toBeCalled();
+      expect(TerserPlugin).toBeCalled();
     });
   });
 

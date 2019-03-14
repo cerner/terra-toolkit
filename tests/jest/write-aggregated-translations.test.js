@@ -6,27 +6,31 @@ const writeAggregatedTranslations = require('../../scripts/aggregate-translation
 
 global.console = { warn: jest.fn() };
 
-const defaultMessages = { en: {}, es: {} };
-const locales = ['en', 'es'];
+const defaultMessages = { en: {}, 'en-US': {}, es: {} };
+const locales = ['en', 'en-US', 'es'];
 const memoryFS = new MemoryFileSystem();
 const testFileSystems = { fse, memoryFS };
 
 Object.keys(testFileSystems).forEach((testFS) => {
-  describe(`write aggregated translations for ${testFS} fileSystem`, () => {
+  describe(`write compiled aggregated translations for ${testFS} fileSystem`, () => {
     const fileSystem = testFileSystems[testFS];
     const outputDir = '/aggregated-translations';
     let writtenFiles;
+    let fileContent;
     beforeEach(() => {
       writtenFiles = [];
+      fileContent = {};
       spyOn(fileSystem, 'writeFileSync').and.callFake((fileName, hash) => {
         writtenFiles.push(fileName);
+        fileContent[fileName] = hash;
         return hash;
       });
     });
 
-    it('writes translations files', () => {
+    it('writes compiled translations files', () => {
       const outputFiles = [
         path.resolve(process.cwd(), outputDir, 'en.js'),
+        path.resolve(process.cwd(), outputDir, 'en-US.js'),
         path.resolve(process.cwd(), outputDir, 'es.js'),
       ];
 
@@ -34,9 +38,42 @@ Object.keys(testFileSystems).forEach((testFS) => {
       expect(writtenFiles).toEqual(outputFiles);
     });
 
+    it('merges missing translations from base locale', () => {
+      const testMessages = { en: { 'Terra.test.fixtures.test': 'Test...' }, 'en-AU': {} };
+      const testLocales = ['en', 'en-AU'];
+
+      const expectedOutput = { 'Terra.test.fixtures.test': 'Test...' };
+
+      const outputFile = path.resolve(process.cwd(), outputDir, 'en-AU.js');
+
+      writeAggregatedTranslations(testMessages, testLocales, fileSystem, outputDir);
+      expect(fileContent[outputFile]).toMatch(JSON.stringify(expectedOutput, null, 2));
+    });
+
+    it('base locale does not overwrite regional locale translations', () => {
+      const testMessages = { en: { 'Terra.test.fixtures.test': 'Test...' }, 'en-AU': { 'Terra.test.fixtures.test': 'en-AU test' } };
+      const testLocales = ['en', 'en-AU'];
+
+      const expectedOutput = { 'Terra.test.fixtures.test': 'en-AU test' };
+
+      const outputFile = path.resolve(process.cwd(), outputDir, 'en-AU.js');
+
+      writeAggregatedTranslations(testMessages, testLocales, fileSystem, outputDir);
+      expect(fileContent[outputFile]).toMatch(JSON.stringify(expectedOutput, null, 2));
+    });
+
+    it('logs warning when regional locale translation is missing', () => {
+      const testMessages = { en: { 'Terra.test.fixtures.test': 'Test...' }, 'en-AU': {} };
+      const testLocales = ['en', 'en-AU'];
+
+      writeAggregatedTranslations(testMessages, testLocales, fileSystem, outputDir);
+      // eslint-disable-next-line no-console
+      expect(console.warn).toBeCalledWith(expect.stringContaining('en-AU translation missing for Terra.test.fixtures.test, en translation string will be used instead.'));
+    });
+
     it('thows an error if a locale was not aggregated on', () => {
       const errorRegex = /Translations aggregated for es locale, but messages were not loaded correctly./;
-      expect(() => writeAggregatedTranslations({ en: {} }, locales, fileSystem, outputDir)).toThrowError(errorRegex);
+      expect(() => writeAggregatedTranslations({ en: {}, 'en-US': {} }, locales, fileSystem, outputDir)).toThrowError(errorRegex);
     });
 
     it('logs a warning message if a locale is not a terra-supported locale', () => {
@@ -46,7 +83,7 @@ Object.keys(testFileSystems).forEach((testFS) => {
       expect(console.warn).toBeCalledWith(expect.stringContaining('WARNING: cy is NOT a Terra supported locale. Creating an aggregate translation file for cy, but'));
     });
 
-    it('writes a translation file for a non-terra-supported locale', () => {
+    it('writes a compiled translation file for a non-terra-supported locale', () => {
       const outputFiles = [
         path.resolve(process.cwd(), outputDir, 'cy.js'),
       ];

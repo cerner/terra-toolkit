@@ -5,13 +5,15 @@ const path = require('path');
 const rtl = require('postcss-rtl');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const browserslist = require('browserslist-config-terra');
 const merge = require('webpack-merge');
+const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
 const aggregateTranslations = require('../../scripts/aggregate-translations/aggregate-translations');
+const ThemeAggregator = require('../../scripts/aggregate-themes/theme-aggregator');
 
 const webpackConfig = (options, env, argv) => {
-  const { rootPath, resolveModules } = options;
+  const { rootPath, resolveModules, themeFile } = options;
 
   const production = argv.p;
   let filename = production ? '[name]-[chunkhash]' : '[name]';
@@ -24,6 +26,7 @@ const webpackConfig = (options, env, argv) => {
     entry: {
       raf: 'raf/polyfill',
       'babel-polyfill': 'babel-polyfill',
+      ...themeFile && { theme: themeFile },
     },
     module: {
       rules: [
@@ -83,6 +86,9 @@ const webpackConfig = (options, env, argv) => {
           PostCSSCustomProperties({ preserve: true }),
         ],
       }),
+      new DuplicatePackageCheckerPlugin({
+        showHelp: false,
+      }),
     ],
     resolve: {
       extensions: ['.js', '.jsx'],
@@ -120,11 +126,11 @@ const webpackConfig = (options, env, argv) => {
     ],
     optimization: {
       minimizer: [
-        new UglifyJsPlugin({
+        new TerserPlugin({
           cache: true,
           parallel: true,
           sourceMap: true,
-          uglifyOptions: {
+          terserOptions: {
             compress: {
               typeofs: false,
             },
@@ -148,7 +154,9 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     resolveModules.unshift(path.resolve(rootPath, 'aggregated-translations'));
   }
 
-  const options = { rootPath, resolveModules };
+  const themeFile = ThemeAggregator.aggregate();
+
+  const options = { rootPath, resolveModules, themeFile };
 
   return webpackConfig(options, env, argv);
 };

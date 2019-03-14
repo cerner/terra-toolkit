@@ -1,7 +1,7 @@
 const path = require('path');
-const fs = require('fs');
+const Logger = require('../utils/logger');
 
-const aggregateTranslationMessages = (translationDirectories, locales) => {
+const aggregateTranslationMessages = (translationDirectories, locales, fileSystem) => {
   const translations = {};
   locales.forEach((language) => {
     translations[language] = {};
@@ -11,10 +11,9 @@ const aggregateTranslationMessages = (translationDirectories, locales) => {
     // Check the directory for a translation file for each locale
     const translationFile = path.resolve(dir, `${language}.json`);
     try {
-      Object.assign(translations[language], JSON.parse(fs.readFileSync(translationFile, 'utf8')));
+      Object.assign(translations[language], JSON.parse(fileSystem.readFileSync(translationFile, 'utf8')));
     } catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn(`There was an error reading your translations file ${translationFile}.\n Exception Message: ${e.message} \n`);
+      Logger.warn(`There was an error reading your translations file ${translationFile}.\n Exception Message: ${e.message} \n`);
     }
   }));
 

@@ -2,8 +2,6 @@ const localIP = require('ip');
 const glob = require('glob');
 
 const path = require('path');
-const PackageUtilities = require('lerna/lib/PackageUtilities');
-const Repository = require('lerna/lib/Repository');
 const {
   Axe: AxeService, SeleniumDocker: SeleniumDockerService, ServeStaticService, Terra: TerraService,
 } = require('../../lib/wdio/services/index');
@@ -16,12 +14,13 @@ const ci = process.env.TRAVIS || process.env.CI;
 const locale = process.env.LOCALE;
 const formFactor = process.env.FORM_FACTOR;
 
+const hasPackages = glob.sync((path.join(process.cwd(), 'packages'))).length > 0;
+
 const config = {
-  specs: [
-    path.join('test', 'wdio', '**', '*-spec.js'),
-    path.join('tests', 'wdio', '**', '*-spec.js'),
-    path.join('packages', '*', 'test', 'wdio', '**', '*-spec.js'),
-    path.join('packages', '*', 'tests', 'wdio', '**', '*-spec.js'),
+  specs: hasPackages ? [
+    path.join('packages', '*', 'test*', 'wdio', '**', '*-spec.js'),
+  ] : [
+    path.join('test*', 'wdio', '**', '*-spec.js'),
   ],
   maxInstances: 1,
   capabilities: [
@@ -37,7 +36,7 @@ const config = {
   screenshotPath: path.join('.', 'errorScreenshots'),
   waitforTimeout: 3000,
   connectionRetryTimeout: 90000,
-  connectionRetryCount: 3,
+  connectionRetryCount: 1,
   services: ['visual-regression', AxeService, TerraService, SeleniumDockerService, ServeStaticService],
 
   visualRegression: visualRegressionConfig,
@@ -75,23 +74,22 @@ if (ci) {
 
 // This code only executes for monorepos.  It will create a set of suites that can then be executed
 // independently and/or in parallel via 'wdio --suite suite1' for example
-const isRepoTest = !process.cwd().includes('packages');
-if (isRepoTest) {
-  const packageLocationsWithTests = PackageUtilities.getPackages(new Repository(path.resolve('.')))
-    // eslint-disable-next-line no-underscore-dangle
-    .map(pkg => path.join(pkg._location, 'tests', 'wdio', '**', '*-spec.js'))
-    .filter(packageLocation => glob.sync(packageLocation).length > 0);
+if (hasPackages) {
+  const packageLocationsWithTests = glob.sync((path.join(process.cwd(), 'packages', '*', 'test*', 'wdio', '**', '*-spec.js')));
 
-  const numberOfSuites = 4;
-  config.suites = {};
-  [...Array(numberOfSuites)].forEach((_, index) => {
-    config.suites[`suite${index + 1}`] = [];
-  });
-  const itemsPerSuite = Math.ceil(packageLocationsWithTests.length / numberOfSuites);
-  packageLocationsWithTests.forEach((packageLocation, index) => {
-    const currentSuite = `suite${Math.floor(index / itemsPerSuite) + 1}`;
-    config.suites[currentSuite] = config.suites[currentSuite].concat(packageLocation);
-  });
+  const numberOfPackagesWithTests = packageLocationsWithTests.length;
+  if (numberOfPackagesWithTests > 0) {
+    const numberOfSuites = Math.min(numberOfPackagesWithTests, 4);
+    config.suites = {};
+    [...Array(numberOfSuites)].forEach((_, index) => {
+      config.suites[`suite${index + 1}`] = [];
+    });
+
+    packageLocationsWithTests.forEach((packageLocation, index) => {
+      const currentSuite = `suite${(index % numberOfSuites) + 1}`;
+      config.suites[currentSuite] = config.suites[currentSuite].concat(packageLocation);
+    });
+  }
 }
 
 exports.config = config;
