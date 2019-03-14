@@ -151,7 +151,7 @@ describe('Advanced Test', () => {
 ```
 
 ### Testing multiple viewports.
-Sometimes its necessary to rerun the test steps in each viewport. Some build systems support running viewports in parallel and control the viewport via the FORM_FACTOR environment variable. In the open source world which uses travis and doesn't support that method, `Terra.viewports` can be used to wrap the `describe` block. Example:
+Sometimes its necessary to rerun the test steps in each viewport. Some build systems support running viewports in parallel and control the viewport via the FORM_FACTOR environment variable. For build systems that don't support parallelization, `Terra.viewports` can be used to wrap the `describe` block. Example:
 
 ```js
 Terra.viewports('tiny', 'small', 'large').forEach((viewport) => {
