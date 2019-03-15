@@ -34,7 +34,7 @@ function getScreenshotName(context) {
 }
 
 function getFormFactor(context) {
-  let formFactor = global.browser.options.formFactor;
+  let { formFactor } = global.browser.options;
 
   if (!formFactor) {
     const browserWidth = context.meta.viewport.width;
@@ -56,7 +56,7 @@ function getFormFactor(context) {
 
 function getScreenshotDir(context) {
   const locale = global.browser.options.locale || 'en';
-  const browserName = context.desiredCapabilities.browserName;
+  const { browserName } = context.desiredCapabilities;
   const formFactor = getFormFactor(context);
   const testForm = `${browserName}_${formFactor}`;
   const testSuite = path.parse(context.test.file).name;
@@ -70,10 +70,10 @@ function getScreenshotPath(ref) {
 
     const baseDir = global.browser.options.baseScreenshotDir;
     if (baseDir) {
-      testPath = testPath.split(process.cwd())[1];
+      [, testPath] = testPath.split(process.cwd());
       // Added to allow for test reusablility from terra repositories
       if (testPath.includes('node_modules')) {
-        testPath = testPath.split('node_modules')[1];
+        [, testPath] = testPath.split('node_modules');
       }
       testPath = baseDir + testPath;
     }

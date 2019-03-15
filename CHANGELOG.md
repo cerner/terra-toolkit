@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Added
+* Added a new method `validateElement` to both do a screenshot comparison and test accessibility
 
 4.25.0 - (March 5, 2019)
 ----------
