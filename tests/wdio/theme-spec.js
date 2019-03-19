@@ -1,4 +1,3 @@
-/* global browser, describe, beforeEach, Terra */
 describe('themeEachCustomProperty', () => {
   beforeEach(() => browser.url('/theme.html'));
 
@@ -17,7 +16,6 @@ describe('themeEachCustomProperty', () => {
 });
 
 
-/* global browser, describe, beforeEach, Terra */
 describe('themeCombinationOfCustomProperties', () => {
   beforeEach(() => browser.url('/theme.html'));
 
