@@ -5,6 +5,7 @@ Unreleased
 ----------
 ### Added
 * Added a new method `validateElement` to both do a screenshot comparison and test accessibility
+* Log information on what selenium version is being used for the test run.
 
 4.25.0 - (March 5, 2019)
 ----------
