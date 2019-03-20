@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+4.26.0 - (March 20, 2019)
+----------
 ### Added
 * Added a new method `validateElement` to both do a screenshot comparison and test accessibility
 * Log information on what selenium version is being used for the test run.
