@@ -18,6 +18,7 @@ Cerner Corporation
 - Jaime Mackey [@jmsv6d]
 - Cody Price [@dev-cprice]
 - Justin Wisniewski [@JustinWisniewski]
+- Lalitha Kalidindi[@lalitha94] 
 
 [@emilyrohrbough]: https://github.com/emilyrohrbough
 [@brettjankord]: https://github.com/bjankord
@@ -37,3 +38,4 @@ Cerner Corporation
 [@jmsv6d]: https://github.com/jmsv6d
 [@dev-cprice]: https://github.com/dev-cprice
 [@JustinWisniewski]: https://github.com/JustinWisniewski
+[@lalitha94]: https://github.com/lalitha94

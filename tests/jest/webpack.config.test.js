@@ -133,7 +133,7 @@ describe('webpack config', () => {
     });
 
     it('add devtool option', () => {
-      expect(config).toHaveProperty('devtool', 'cheap-source-map');
+      expect(config).toHaveProperty('devtool', 'eval-source-map');
     });
 
     it('replace the output with dev config', () => {
