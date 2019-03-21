@@ -49,6 +49,7 @@ const config = {
   ...locale && { locale },
   ...formFactor && { formFactor },
 
+  seleniumVersion: '3.11',
   seleniumDocker: {
     enabled: !ci,
   },

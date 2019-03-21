@@ -2,6 +2,7 @@ import chai from 'chai';
 import chaiMethods from './TerraCommands/chai-methods';
 import accessiblity from './TerraCommands/accessiblity';
 import visualRegression from './TerraCommands/visual-regression';
+import validateElement from './TerraCommands/validate-element';
 import Logger from '../../../scripts/utils/logger';
 import SERVICE_DEFAULTS from '../../../config/wdio/services.default-config';
 
@@ -43,6 +44,11 @@ const setViewport = (formFactor) => {
 */
 export default class TerraService {
   // eslint-disable-next-line class-methods-use-this
+  onPrepare(config) {
+    Logger.log(`Running tests against ${Logger.emphasis(`Selenium ${config.seleniumVersion}`)}`, { context: '[Terra-Toolkit:terra-service]' });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
   before() {
     chai.config.showDiff = false;
     global.expect = chai.expect;
@@ -54,6 +60,7 @@ export default class TerraService {
         matchScreenshot: visualRegression.matchScreenshotWithinTolerance,
         themeEachCustomProperty: visualRegression.themeEachCustomProperty,
         themeCombinationOfCustomProperties: visualRegression.themeCombinationOfCustomProperties,
+        validateElement,
       },
     };
     chai.Assertion.addMethod('accessible', chaiMethods.accessible);
