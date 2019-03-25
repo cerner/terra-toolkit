@@ -24,14 +24,14 @@ commander
   .option('-l, --locales [locales]', `The list of locale codes aggregate on and combine into a single, respective translation file. Default: ${supportedLocales}`, parseCLIList)
   .option('-o, --outputDir [outputDir]', 'The output location of the generated configuration file. Default: ./aggregated-translations')
   .option('-c, --config [configPath]', 'The path to the terra i18n configuration file.')
-  .option('-e, --exclude [exclude]', 'Regex pattern to glob filter out directories. Default: []', addCustomExclude)
+  .option('-e, --excludes [excludes]', 'Regex pattern to glob filter out directories. Default: []', addCustomExclude)
   .option('-f, --format [format]', 'Format to output the aggregated translations to. Options are [es5, es6]. Default: es5')
   .parse(process.argv);
 
 const aggregationOption = {
   baseDirectory: commander.baseDir,
   directories: customSearchDirectories,
-  exclude: customExcludeDirectories,
+  excludes: customExcludeDirectories,
   locales: commander.locales,
   outputDir: commander.outputDir,
   configPath: commander.config,
