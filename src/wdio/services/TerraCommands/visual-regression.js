@@ -1,3 +1,5 @@
+import Logger from '../../../../scripts/utils/logger';
+
 /**
 * Helper method to determine the screenshot tag name, the element selector, the viewport(s)
 * in which to take the screenshots, as well as the capture screenshot options to be passed
@@ -6,7 +8,7 @@
 *     - viewports: [{ width: Number, height: Number }]
 *     - misMatchTolerance: Number
 *     - viewportChangePause: Number
-* @property {Array} args - The list of test arguments to parse.
+* @param {Array} args - The list of test arguments to parse.
 */
 const determineScreenshotOptions = (...args) => {
   const param1 = args.length ? args[0] : undefined;
@@ -40,7 +42,7 @@ const determineScreenshotOptions = (...args) => {
 
 /**
 * Generates a test for each themed property given and runs a screenshot assertion.
-* @property {Array} args - An object containing the CSS custom properties to assert.
+* @param {Array} args - An object containing the CSS custom properties to assert.
 */
 const themeEachCustomProperty = (...args) => {
   if (global.browser.options.terra.disableThemeTests) {
@@ -63,7 +65,7 @@ const themeEachCustomProperty = (...args) => {
 /**
 * Generates a test for a combination of themed properties given and runs a screenshot assertion.
 *
-* @property {Array} args - An object containing the options for themeCombinationOfCustomProperties and  CSS custom properties to assert.
+* @param {Array} args - An object containing the options for themeCombinationOfCustomProperties and  CSS custom properties to assert.
 */
 const themeCombinationOfCustomProperties = (...args) => {
   if (global.browser.options.terra.disableThemeTests) {
@@ -74,7 +76,7 @@ const themeCombinationOfCustomProperties = (...args) => {
   const styleProperties = args[0].properties ? args[0].properties : [];
 
   if (!args[0].testName) {
-    throw new Error(`A test name for themeCombinationOfCustomProperties test is not provided.
+    throw Logger.error(`A test name for themeCombinationOfCustomProperties test is not provided.
 A testName property should be set in the options object passed to the themeCombinationOfCustomProperties to uniquely identify it.`);
   }
 
@@ -87,7 +89,7 @@ A testName property should be set in the options object passed to the themeCombi
 };
 
 /** Helper method to create a useful test descripton.
-  * @property {String} matchType - Specifies the type of matchReference assertion. Either 'withinTolerance'
+  * @param {String} matchType - Specifies the type of matchReference assertion. Either 'withinTolerance'
   *   or 'exactly'.
   */
 const getTestDescription = matchType => (
@@ -95,23 +97,21 @@ const getTestDescription = matchType => (
 );
 
 /**
-* A mocha-chai convenience test case to determines the screenshot options and test names needed to
-* capture screenshots of a specified element and assert the screenshot comparision results are
-* either within the mismatch tolerance or are an exact match.
-* @property {Array} testArguments - The test arguments passed to the `matchScreenshotWithinTolerance`
-*    or `matchScreenshotExactly` methods.
-* @property {String} matchType - Specifies the type of matchReference assertion. Either 'withinTolerance'
+ * The actual it block for the screenshot comparisons.  It will capture screenshots of a specified element
+ * and assert the screenshot comparison results are within the mismatch tolerance or are an exact match
+ * @param {String} name the test case name
+ * @param {String} matchType the type of matchReference assertion. Either 'withinTolerance'
 *    or 'exactly'.
-*/
-const matchScreenshot = (testArguments, matchType) => {
-  const { name, selector, options } = determineScreenshotOptions(...testArguments);
-
+ * @param {String} selector the selector to use when capturing the screenshot.
+ * @param {Object} options the test options. Options include viewports, misMatchTolerance and viewportChangePause.
+ */
+const screenshotItBlock = (name, matchType, selector, options) => {
   const testDescription = getTestDescription(matchType);
   global.it(`[${name}] to ${testDescription}`, () => {
     const screenshots = global.browser.checkElement(selector, options);
 
-    const viewports = options.viewports;
-    if (viewports.length) {
+    const { viewports } = options;
+    if (viewports && viewports.length) {
       global.expect(screenshots, 'the number of screenshot results to match the number of specified viewports').to.have.lengthOf(viewports.length);
       viewports.forEach((viewport, index) => {
         screenshots[index].viewport = viewport.name;
@@ -123,9 +123,23 @@ const matchScreenshot = (testArguments, matchType) => {
 };
 
 /**
+* A mocha-chai convenience test case to determines the screenshot options and test names needed to
+* capture screenshots of a specified element and assert the screenshot comparision results are
+* either within the mismatch tolerance or are an exact match.
+* @param {Array} testArguments - The test arguments passed to the `matchScreenshotWithinTolerance`
+*    or `matchScreenshotExactly` methods.
+* @param {String} matchType - Specifies the type of matchReference assertion. Either 'withinTolerance'
+*    or 'exactly'.
+*/
+const matchScreenshot = (testArguments, matchType) => {
+  const { name, selector, options } = determineScreenshotOptions(...testArguments);
+  screenshotItBlock(name, matchType, selector, options);
+};
+
+/**
 * Mocha-chai wrapper method to capture screenshots of a specified element and assert the
 * screenshot comparision results are within the mismatch tolerance.
-* @property {Array} args - The list of test arguments to parse. Accepted Arguments:
+* @param {Array} args - The list of test arguments to parse. Accepted Arguments:
 *    - String (optional): the test case name. Default name is 'default'
 *    - Object (optional): the test options. Options include selector, viewports,
 *        misMatchTolerance and viewportChangePause.
@@ -137,6 +151,7 @@ const matchScreenshotWithinTolerance = (...args) => {
 
 const methods = {
   matchScreenshotWithinTolerance,
+  screenshotItBlock,
   themeEachCustomProperty,
   themeCombinationOfCustomProperties,
   getTestDescription,

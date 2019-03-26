@@ -26,7 +26,7 @@ describe('aggregate-translations', () => {
     writtenFilePaths = [];
     globSpy = spyOn(glob, 'sync').and.callFake((...args) => {
       searchedDirectories.push(args[0]);
-      globOptions = args[1];
+      [, globOptions] = args;
       return args[0];
     });
 

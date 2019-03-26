@@ -3,7 +3,7 @@ Terra-toolkit provides the `aggregate-translations` pre-build tool to assist wit
 
 ## How It Works
 This script globs the specified translation directory regex pattern(s) to locate the translation directories. Then,
-for each specified locale, the message-translation pairs from each translation json is extracted and added to the locale's message hash. When all messages have been extracted, the `aggregate-translations` script will create a single translation javascript file for each locale that exports the `messages` object, `areTranslationsLoaded` boolean and `locale` string. When a translation file is requested by terra-i18n's `I18nProvider`, this information is returned and used to provide the locale information.
+for each specified locale, the message-translation pairs from each translation json is extracted and added to the locale's message hash. When all messages have been extracted, the `aggregate-translations` script will create a single translation javascript file for each locale that exports the `messages` object, `areTranslationsLoaded` boolean and `locale` string. When a translation is missing for a region-specific locale, the message will fallback to the translation defined by the base locale. When a translation file is requested by terra-i18n's `I18nProvider`, this information is returned and used to provide the locale information.
 
 Once all of the translation files are created for the specified locales, the script will create an intl loader and translation loader that is specific to the specified locales. This is utilized by the by terra-i18n's `I18nLoader` to load on-demand locale information.
 
@@ -23,6 +23,7 @@ Once all of the translation files are created for the specified locales, the scr
 | locales  | -l, --locales | Array of Strings | The list of locale codes to aggregate. **Note: 'en' is always added if not specified.** | [terra-supported locales](https://github.com/cerner/terra-core/blob/master/packages/terra-i18n/src/i18nSupportedLocales.js) |
 | outputDir | -o, --ouputDir | String | Output directory for the translation and loader files | ./aggregated-translations |
 | configPath | -c, --config | String | The path to the terra i18n configuration file | undefined |
+| format | -f, --format | String | The format of syntax to output the translations with. Possible values are 'es5' and 'es6' | 'es5' |
 
 #### Setup Example
 The `aggregate-translations` setup function can be used as follows:
@@ -36,6 +37,7 @@ const aggregateOptions = {
     exclude: ['./node_modules/packageToExclude'],
     locales: ['en', 'en-US'],
     outputDir: './aggregated-translations',
+    format: 'es6',
 };
 
 aggregateTranslations(aggregateOptions);
@@ -88,3 +90,7 @@ To provide the aggregated-translations files and loaders as modules to the terra
 This `resolve.modules` configuration indicates module resolving occurs in this order:
 1. `./aggregated_translations` (or indicated output directory)
 2. `./node_modules`
+
+# Compiling with ES6 syntax.
+
+The aggregate-translations script has the ability to compile with ES6 syntax by setting the format prop to 'es6'. To get these to work properly with Jest and the rest of your configuration, you need to add the [babel-plugin-syntax-dynamic-import](https://www.npmjs.com/package/babel-plugin-syntax-dynamic-import) plugin to your babel configuration. Since we are not using Babel 7 in Terra, you need to use version 6.18.0 to be compatible with our code base.

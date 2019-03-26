@@ -6,6 +6,44 @@ Unreleased
 ### Changed
 * Refactored the screenshot comparison code so that different storage implementations can be swapped out.
 
+4.26.0 - (March 20, 2019)
+----------
+### Added
+* Added a new method `validateElement` to both do a screenshot comparison and test accessibility
+* Log information on what selenium version is being used for the test run.
+
+4.25.0 - (March 5, 2019)
+----------
+### Fixed
+* Issue with false warnings on aggregating translations with blank strings.
+
+4.24.0 - (March 5, 2019)
+----------
+### Changed
+* Updated aggregate translations script fallback to base locale if translation is missing for regional locale on a string-by-string basis.
+
+### Added
+* Added a script to aggregate dependency themes into a single file
+* Add en-AU to supported translations list
+
+4.23.1 - (February 5, 2019)
+----------
+### Fixed
+* Issue with duplicate-package-checker-webpack-plugin being listed as a devDependency
+
+4.23.0 - (February 5, 2019)
+----------
+### Added
+* Added format option to aggregate-translations to output modern syntax
+* Added the Duplicate Package Checker Plugin to the default webpack config. The duplicate package checker plugin will warn if duplicate packages (different versions) are included in your webpack bundle.
+* Added formatted & colored console output for toolkit services and scripts
+
+### Changed
+* Update the `connectionRetryCount` to 1 in the default wdio configuraiton
+
+### Fixed
+* Adjust AxeService implementation to only resize the viewport if viewport options are passed.
+
 4.22.0 - (January 2, 2019)
 ----------
 ### Changed

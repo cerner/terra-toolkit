@@ -12,12 +12,13 @@ export default class AxeService {
   // eslint-disable-next-line class-methods-use-this
   before() {
     browser.addCommand('axe', (options = {}) => {
-      // Conditionally inject axe. This allows consumers to inject it themselves
-      // in the test examples which would slightly speed up test runs.
       const axeConfig = {
         ...SERVICE_DEFAULTS.axe,
         ...(browser.options.axe || {}),
       };
+
+      // Conditionally inject axe. This allows consumers to inject it themselves
+      // in the test examples which would slightly speed up test runs.
       if (axeConfig.inject) {
         if (browser.execute('return window.axe === undefined;')) {
           if (!axeCoreSrc) {
@@ -34,35 +35,47 @@ export default class AxeService {
         }
       }
 
-      const currentViewportSize = browser.getViewportSize();
-      // use current viewport if none specified
-      const specifiedViewports = options.viewports || [currentViewportSize];
+      const runAxeTest = (wdioContext, wdioOptions) => {
+        // Avoid arrow callback syntax as this function is injected into the browser
+        // eslint-disable-next-line func-names, prefer-arrow-callback
+        const axeResult = browser.executeAsync(function (context, opts, done) {
+        // eslint-disable-next-line func-names, prefer-arrow-callback
+          axe.run(context || document, opts, function (error, result) {
+            /* eslint-disable-next-line object-shorthand */
+            done({ error: error, result: result });
+          });
+        }, wdioContext, wdioOptions);
+
+        return axeResult.value;
+      };
+
+      let results;
+      const specifiedViewports = options.viewports;
       const axeOptions = {
         runOnly: options.runOnly,
         rules: options.rules,
+        restoreScroll: options.restoreScroll,
       };
 
-      // Get accessibility results for each viewport size
-      const results = specifiedViewports.map((viewport) => {
-        browser.setViewportSize(viewport);
-        // Avoid arrow callback syntax as this function is injected into the browser
-        // eslint-disable-next-line func-names, prefer-arrow-callback
-        return browser.executeAsync(function (context, opts, done) {
-          // eslint-disable-next-line func-names, prefer-arrow-callback
-          axe.run(context || document, opts, function (error, result) {
-            done({
-              // eslint-disable-next-line object-shorthand
-              error: error,
-              // eslint-disable-next-line object-shorthand
-              result: result,
-            });
-          });
-        }, options.context, axeOptions).value;
-      });
+      // analyze the specified viepworts
+      if (specifiedViewports) {
+        // get the current viewport
+        const currentViewportSize = browser.getViewportSize();
 
-      // set viewport back
-      browser.setViewportSize(currentViewportSize);
-      return results;
+        // Get accessibility results for each viewport size
+        results = specifiedViewports.map((viewport) => {
+          browser.setViewportSize(viewport);
+          return runAxeTest(options.context, axeOptions);
+        });
+
+        // reset viewport back to the current viewport
+        browser.setViewportSize(currentViewportSize);
+
+        return results;
+      }
+
+      // analyze the current viewport
+      return [runAxeTest(options.context, axeOptions)];
     });
   }
 }

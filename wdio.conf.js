@@ -33,6 +33,7 @@ const config = {
       'tests/wdio/compare-spec.js',
       'tests/wdio/matchScreenshot-spec.js',
       'tests/wdio/resize-spec.js',
+      'tests/wdio/validateElement-spec.js',
     ],
     unopinionated: [
       'tests/wdio/i18n-spec.js',

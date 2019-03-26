@@ -36,7 +36,7 @@ const config = {
   screenshotPath: path.join('.', 'errorScreenshots'),
   waitforTimeout: 3000,
   connectionRetryTimeout: 90000,
-  connectionRetryCount: 3,
+  connectionRetryCount: 1,
   services: [TerraVisualRegressionService, AxeService, TerraService, SeleniumDockerService, ServeStaticService],
 
   visualRegression: visualRegressionConfig,
@@ -49,6 +49,7 @@ const config = {
   ...locale && { locale },
   ...formFactor && { formFactor },
 
+  seleniumVersion: '3.11',
   seleniumDocker: {
     enabled: !ci,
   },

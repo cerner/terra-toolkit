@@ -1,6 +1,6 @@
 {
   "name": "terra-toolkit",
-  "version": "4.22.0",
+  "version": "4.26.0",
   "description": "Utilities to help when developing terra modules.",
   "main": "lib/index.js",
   "engines": {
@@ -31,11 +31,13 @@
     "tt-serve-static": "bin/serve-static.js",
     "tt-wdio": "bin/wdio-runner.js"
   },
-  "browserslist": [
-    "extends browserslist-config-terra"
-  ],
   "eslintConfig": {
-    "extends": "terra"
+    "extends": "terra",
+    "settings": {
+      "polyfills": [
+        "promises"
+      ]
+    }
   },
   "scripts": {
     "clean:all": "npm run clean:compiled && npm run clean:dependencies",
@@ -79,6 +81,7 @@
     "clone": "^2.1.1",
     "commander": "^2.19.0",
     "css-loader": "^0.28.7",
+    "duplicate-package-checker-webpack-plugin": "^3.0.0",
     "express": "^4.16.4",
     "file-loader": "^1.1.5",
     "fs-extra": "^6.0.1",

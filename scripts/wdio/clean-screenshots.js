@@ -1,6 +1,7 @@
 const fs = require('fs-extra');
 const glob = require('glob');
 const path = require('path');
+const Logger = require('../utils/logger');
 
 // eslint-disable-next-line global-require, import/no-dynamic-require
 const loadWdioConfig = configPath => require(path.resolve(configPath));
@@ -39,11 +40,9 @@ const cleanSnapshots = (options) => {
     }
   });
 
-  // eslint-disable-next-line no-console
-  console.log('> [Terra-Tookit:wdio-clean-screenshots] Cleaned screenshot directories');
+  Logger.log('Cleaned screenshot directories\n', { context: '[Terra-Tookit:wdio-clean-screenshots]' });
   if (wdioConfig.logLevel !== 'silent' && removedDirs.length > 0) {
-    // eslint-disable-next-line no-console
-    console.log(removedDirs);
+    Logger.log(removedDirs);
   }
 };
 

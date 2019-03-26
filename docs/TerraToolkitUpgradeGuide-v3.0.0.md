@@ -16,6 +16,7 @@ Use terra-toolkit's configuration in the app level webpack config, where the app
 const path = require('path');
 const merge = require('webpack-merge');
 const defaultWebpackConfig = require('terra-toolkit/config/webpack/webpack.config');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const appWebpackConfig = () => ({
   entry: {
