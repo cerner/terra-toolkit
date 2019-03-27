@@ -36,7 +36,7 @@
     "clean:all": "lerna clean --yes && shx rm -rf node_modules",
     "clean:install": "npm run clean:all && npm install",
     "danger": "lerna run danger ci",
-    "postinstall": "npm run bootstrap:hoist",
+    "prepare": "npm run bootstrap:hoist",
     "publish": "npm whoami && npm test && lerna publish",
     "test": "npm run test:lint && npm run test:unit",
     "test:lint": "lerna run test:lint",
