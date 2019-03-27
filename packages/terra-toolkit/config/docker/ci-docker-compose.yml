@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  test-chrome:
+    build: ./
+    image: "${DOCKER_IMAGE}-test-standalone-chrome:${TAG:-latest}"
+    depends_on:
+      - standalone-chrome
+  standalone-chrome:
+    image: 'selenium/standalone-chrome:3.11.0-californium'
+    ports:
+      - '4444'
+    # Necessary due to some issues with chrome in docker.  See https://github.com/SeleniumHQ/docker-selenium#running-the-images
+    volumes:
+      - '/dev/shm:/dev/shm'
+    # Necessary to lock down screen sizes for our screen shot comparisons.
+    environment:
+      TZ: 'America/Chicago'
+      SCREEN_WIDTH: 1070
+      SCREEN_HEIGHT: 1020
