@@ -12,7 +12,7 @@ Unreleased
 
 ### Fixed
 * Fixed the issue with Aggregate Translations CLI default options overriding the configuration file options.
-* Fixed an issue with the 'exclude' option in Aggregate Translations setup function.
+* Fixed an issue with the 'exclude' option in Aggregate Translations setup function. [#264](https://github.com/cerner/terra-toolkit/issues/264)
 
 4.25.0 - (March 5, 2019)
 ----------
