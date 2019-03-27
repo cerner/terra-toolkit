@@ -1,5 +1,5 @@
 {
-  "name": "terra-toolkit-repo",
+  "name": "terra-toolkit",
   "private": true,
   "description": "Utilities to help when developing terra modules.",
   "main": "lib/index.js",
