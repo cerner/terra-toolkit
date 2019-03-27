@@ -45,7 +45,7 @@
     "clean:dependencies": "rimraf node_modules",
     "clean:install": "npm run clean:all && npm install && npm run compile:build",
     "compile": "npm run clean:compiled && npm run compile:build",
-    "compile:build": "babel src --out-dir lib --copy-files",
+    "compile:build": "ls; babel src --out-dir lib --copy-files",
     "danger": "danger ci",
     "jest": "jest --config jestConfig.js",
     "lint": "eslint --ext .js,.jsx .",

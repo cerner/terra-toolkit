@@ -32,13 +32,13 @@
     }
   },
   "bin": {
-    "tt-aggregate-translations": "../packages/terra-toolkit/bin/aggregate-translations.js",
-    "tt-clean-screenshots": "../packages/terra-toolkit/bin/clean-screenshots.js",
-    "tt-heroku-serve-static": "../packages/terra-toolkit/bin/heroku-serve-static.js",
-    "tt-pack": "../packages/terra-toolkit/bin/pack.js",
-    "tt-serve": "../packages/terra-toolkit/bin/serve.js",
-    "tt-serve-static": "../packages/terra-toolkit/bin/serve-static.js",
-    "tt-wdio": "../packages/terra-toolkit/bin/wdio-runner.js"
+    "tt-aggregate-translations": "./packages/terra-toolkit/bin/aggregate-translations.js",
+    "tt-clean-screenshots": "./packages/terra-toolkit/bin/clean-screenshots.js",
+    "tt-heroku-serve-static": "./packages/terra-toolkit/bin/heroku-serve-static.js",
+    "tt-pack": "./packages/terra-toolkit/bin/pack.js",
+    "tt-serve": "./packages/terra-toolkit/bin/serve.js",
+    "tt-serve-static": "./packages/terra-toolkit/bin/serve-static.js",
+    "tt-wdio": "./packages/terra-toolkit/bin/wdio-runner.js"
   },
   "scripts": {
     "bootstrap:hoist": "lerna bootstrap --hoist",
