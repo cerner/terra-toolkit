@@ -1,8 +1,8 @@
 {
-  "name": "terra-toolkit",
+  "name": "terra-toolkit-utils",
   "version": "4.26.0",
   "description": "Utilities to help when developing terra modules.",
-  "main": "lib/index.js",
+  "main": "index.js",
   "engines": {
     "node": ">=8.9.2"
   },
@@ -24,12 +24,7 @@
   },
   "bin": {
     "tt-aggregate-translations": "bin/aggregate-translations.js",
-    "tt-clean-screenshots": "bin/clean-screenshots.js",
-    "tt-heroku-serve-static": "bin/heroku-serve-static.js",
-    "tt-pack": "bin/pack.js",
-    "tt-serve": "bin/serve.js",
-    "tt-serve-static": "bin/serve-static.js",
-    "tt-wdio": "bin/wdio-runner.js"
+    "tt-pack": "bin/pack.js"
   },
   "scripts": {
     "clean:all": "npm run clean:compiled && npm run clean:dependencies",
@@ -42,9 +37,13 @@
     "jest": "jest --config jestConfig.js",
     "lint": "eslint --ext .js,.jsx ."
   },
-  "peerDependencies": {
-    "terra-toolkit-utils": "../terra-toolkit-utils",
-    "terra-wdio": "../terra-wdio",
-    "terra-webpack": "../terra-webpack"
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "commander": "^2.19.0",
+    "fs-extra": "^6.0.1",
+    "glob": "^7.1.1",
+    "lodash.startcase": "^4.4.0",
+    "memory-fs": "^0.4.1",
+    "shelljs": "^0.8.3"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "terra-toolkit",
+  "name": "terra-wdio",
   "version": "4.26.0",
   "description": "Utilities to help when developing terra modules.",
   "main": "lib/index.js",
@@ -31,20 +31,40 @@
     "tt-serve-static": "bin/serve-static.js",
     "tt-wdio": "bin/wdio-runner.js"
   },
+  "eslintConfig": {
+    "extends": "terra",
+    "settings": {
+      "polyfills": [
+        "promises"
+      ]
+    }
+  },
   "scripts": {
     "clean:all": "npm run clean:compiled && npm run clean:dependencies",
     "clean:compiled": "rimraf lib",
     "clean:dependencies": "rimraf node_modules",
     "clean:install": "npm run clean:all && npm install && npm run compile:build",
     "compile": "npm run clean:compiled && npm run compile:build",
-    "compile:build": "ls; cd node_modules; ls; cd ../; babel src --out-dir lib --copy-files",
-    "danger": "danger ci",
+    "compile:build": "babel src --out-dir lib --copy-files",
     "jest": "jest --config jestConfig.js",
-    "lint": "eslint --ext .js,.jsx ."
+    "lint": "eslint --ext .js,.jsx .",
+    "test": "npm run lint && npm run jest && npm run wdio",
+    "wdio": "npm run wdio-webpack-opinionated && npm run tt-wdio-webpack-opinionated && npm run tt-wdio-unopinionated",
+    "wdio-opinionated": "wdio --suite opinionated",
+    "tt-wdio-opinionated": "node scripts/wdio/wdio-runner-cli.js --suite opinionated",
+    "tt-wdio-unopinionated": "npm run pack; node scripts/wdio/wdio-runner-cli.js --formFactors=['tiny','huge'] --locales=['en','fr'] --suite unopinionated; rm -rf ./build"
   },
-  "peerDependencies": {
-    "terra-toolkit-utils": "../terra-toolkit-utils",
-    "terra-wdio": "../terra-wdio",
-    "terra-webpack": "../terra-webpack"
+  "dependencies": {
+    "async": "^2.5.0",
+    "axe-core": "3.0.3",
+    "chai": "^4.2.0",
+    "glob": "^7.1.1",
+    "ip": "^1.1.5",
+    "memory-fs": "^0.4.1",
+    "wdio-mocha-framework": "^0.5.11",
+    "wdio-visual-regression-service": "^0.9.0"
+  },
+  "peerDepenendcies": {
+    "webdriverio": "^4.14.1"
   }
 }
