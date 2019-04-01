@@ -34,21 +34,19 @@ function getScreenshotName(context) {
 }
 
 function getFormFactor(context) {
-  let { formFactor } = global.browser.options;
+  let formFactor;
 
-  if (!formFactor) {
-    const browserWidth = context.meta.viewport.width;
-    const viewportSizes = Object.keys(VIEWPORTS);
-    for (let i = 0; i < viewportSizes.length; i += 1) {
-      const viewport = viewportSizes[i];
-      if (browserWidth <= VIEWPORTS[viewport].width) {
-        formFactor = VIEWPORTS[viewport].name;
-        break;
-      }
+  const browserWidth = context.meta.viewport.width;
+  const viewportSizes = Object.keys(VIEWPORTS);
+  for (let i = 0; i < viewportSizes.length; i += 1) {
+    const viewport = viewportSizes[i];
+    if (browserWidth <= VIEWPORTS[viewport].width) {
+      formFactor = VIEWPORTS[viewport].name;
+      break;
     }
   }
 
-  // If viewport value is undefined due to being larger then the terra defiend viewports, set formFactor to enormous.
+  // If viewport value is undefined due to being larger than the terra defined viewports, set formFactor to enormous.
   formFactor = formFactor || 'enormous';
 
   return formFactor;
