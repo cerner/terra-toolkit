@@ -19,6 +19,7 @@ Cerner Corporation
 - Cody Price [@dev-cprice]
 - Justin Wisniewski [@JustinWisniewski]
 - Naveen Kumar Ramamurthy [@nramamurth]
+- Lalitha Kalidindi[@lalitha94]
 
 [@emilyrohrbough]: https://github.com/emilyrohrbough
 [@brettjankord]: https://github.com/bjankord
@@ -39,3 +40,4 @@ Cerner Corporation
 [@dev-cprice]: https://github.com/dev-cprice
 [@JustinWisniewski]: https://github.com/JustinWisniewski
 [@nramamurth]: https://github.com/nramamurth
+[@lalitha94]: https://github.com/lalitha94

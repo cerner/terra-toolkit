@@ -105,7 +105,7 @@ const webpackConfig = (options, env, argv) => {
       path: outputPath,
       publicPath,
     },
-    devtool: 'cheap-source-map',
+    devtool: 'eval-source-map',
     resolveLoader: {
       modules: [path.resolve(path.join(rootPath, 'node_modules'))],
     },

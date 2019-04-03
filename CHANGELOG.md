@@ -4,6 +4,9 @@ Changelog
 Unreleased
 ----------
 
+### Changed
+* Updated devtool sourceMap from cheap-source-map to eval-source-map
+
 4.26.0 - (March 20, 2019)
 ----------
 ### Added
