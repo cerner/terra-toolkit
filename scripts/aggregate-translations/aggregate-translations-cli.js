@@ -19,19 +19,19 @@ const addCustomExclude = (searchPattern) => {
 // Parse process arguments
 commander
   .version(i18nPackageJson.version)
-  .option('-b, --baseDir [baseDir]', 'The directory to start searching from and to prepend to the output directory', process.cwd())
-  .option('-d, --directories [directories]', 'Regex pattern to glob search for translations', addCustomDirectory)
-  .option('-l, --locales [locales]', 'The list of locale codes aggregate on and combine into a single, respective translation file ', parseCLIList, supportedLocales)
-  .option('-o, --outputDir [outputDir]', 'The output location of the generated configuration file', './aggregated-translations')
-  .option('-c, --config [configPath]', 'The path to the terra i18n configuration file', undefined)
-  .option('-e, --exclude [exclude]', 'Regex pattern to glob filter out directories', addCustomExclude)
-  .option('-f, --format [format]', 'Format to output the aggregated translations to. Options are [es5, es6]', 'es5')
+  .option('-b, --baseDir [baseDir]', `The directory to start searching from and to prepend to the output directory. Default: ${process.cwd()}`)
+  .option('-d, --directories [directories]', 'Regex pattern to glob search for translations. Default: []', addCustomDirectory)
+  .option('-l, --locales [locales]', `The list of locale codes aggregate on and combine into a single, respective translation file. Default: ${supportedLocales}`, parseCLIList)
+  .option('-o, --outputDir [outputDir]', 'The output location of the generated configuration file. Default: ./aggregated-translations')
+  .option('-c, --config [configPath]', 'The path to the terra i18n configuration file.')
+  .option('-e, --excludes [excludes]', 'Regex pattern to glob filter out directories. Default: []', addCustomExclude)
+  .option('-f, --format [format]', 'Format to output the aggregated translations to. Options are [es5, es6]. Default: es5')
   .parse(process.argv);
 
 const aggregationOption = {
   baseDirectory: commander.baseDir,
   directories: customSearchDirectories,
-  exclude: customExcludeDirectories,
+  excludes: customExcludeDirectories,
   locales: commander.locales,
   outputDir: commander.outputDir,
   configPath: commander.config,

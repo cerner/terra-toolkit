@@ -36,7 +36,7 @@ const defaults = (options = {}) => {
     locales: options.locales || config.locales || supportedLocales,
     outputDir: options.outputDir || './aggregated-translations',
     excludes: options.excludes || config.excludes || [],
-    format: options.format,
+    format: options.format || 'es5',
   };
 
   if (!defaultConfig.locales.includes('en')) {

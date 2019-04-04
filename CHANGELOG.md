@@ -3,17 +3,23 @@ Changelog
 
 Unreleased
 ----------
-
 ### Breaking
 * Deprecated serve javascript function
 * Serve-static no longer builds webpack config
 * Serve-static no longer injects locale.
+
+### Changed
+* Updated devtool sourceMap from cheap-source-map to eval-source-map
 
 4.26.0 - (March 20, 2019)
 ----------
 ### Added
 * Added a new method `validateElement` to both do a screenshot comparison and test accessibility
 * Log information on what selenium version is being used for the test run.
+
+### Fixed
+* Fixed the issue with Aggregate Translations CLI default options overriding the configuration file options.
+* Fixed an issue with the 'exclude' option in Aggregate Translations setup function. [#264](https://github.com/cerner/terra-toolkit/issues/264)
 
 4.25.0 - (March 5, 2019)
 ----------
