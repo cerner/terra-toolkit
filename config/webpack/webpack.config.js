@@ -105,6 +105,13 @@ const webpackConfig = (options, env, argv) => {
       path: outputPath,
       publicPath,
     },
+    devServer: {
+      host: '0.0.0.0',
+      stats: {
+        colors: true,
+        children: false,
+      },
+    },
     devtool: 'cheap-source-map',
     resolveLoader: {
       modules: [path.resolve(path.join(rootPath, 'node_modules'))],
