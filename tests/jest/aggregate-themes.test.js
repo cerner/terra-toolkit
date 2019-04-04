@@ -95,6 +95,7 @@ describe('Theme Aggregator', () => {
 
       ThemeAggregator.validate(options);
 
+      // eslint-disable-next-line no-console
       expect(console.warn).toHaveBeenCalledTimes(0);
     });
 
@@ -103,6 +104,7 @@ describe('Theme Aggregator', () => {
 
       ThemeAggregator.validate(options);
 
+      // eslint-disable-next-line no-console
       expect(console.warn).toHaveBeenCalledTimes(0);
     });
 
@@ -111,6 +113,7 @@ describe('Theme Aggregator', () => {
 
       ThemeAggregator.validate(options);
 
+      // eslint-disable-next-line no-console
       expect(console.warn).toHaveBeenCalled();
     });
   });

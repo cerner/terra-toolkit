@@ -5,7 +5,9 @@ Terra Toolkit offers up two different commands to serve your client side applica
 ## serve
 Serve is a light abstraction for [webpack-dev-server](https://github.com/webpack/webpack-dev-server).
 
-Serve is offered up only as a cli function.
+Why use serve instead of webpack-dev-server directly? Having the serve abstraction provides a hook for us to change the servers implementation in case webpack-dev-server nolonger meets our needs.
+
+Serve is offered up only through the CLI.
 
 ### CLI
 #### API

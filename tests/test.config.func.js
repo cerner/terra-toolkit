@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = (env = {}) => {
-  const { defaultLocale = 'en-US' } = env;
+  const { defaultLocale = 'en' } = env;
   return {
     entry: {
       index: path.join(__dirname, 'fixtures', 'index'),

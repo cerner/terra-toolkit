@@ -4,6 +4,11 @@ Changelog
 Unreleased
 ----------
 
+### Breaking
+* Deprecated serve javascript function
+* Serve-static no longer builds webpack config
+* Serve-static no longer injects locale.
+
 4.26.0 - (March 20, 2019)
 ----------
 ### Added
