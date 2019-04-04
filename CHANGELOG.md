@@ -4,6 +4,9 @@ Changelog
 Unreleased
 ----------
 
+### Added
+* Added an environment variable to support WebdriverIO's bail option.
+
 ### Changed
 * Updated devtool sourceMap from cheap-source-map to eval-source-map
 
