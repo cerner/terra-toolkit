@@ -21,7 +21,7 @@ const staticApp = (site, index) => {
   // Return any files in the site. If no extension is provided check the file with the htm or html extension.
   app.use(express.static(site, options));
   // Match on *.htm, *.html or routes without extensions.
-  app.use([/\/\w*$/, '/*.html?'], (req, res, next) => {
+  app.use([/\/[^.]*$/, '/*.html?'], (req, res, next) => {
     // Return 404.html if provided.
     res.status(404).sendFile('/404.html', { root: site }, () => {
       // If there is an error, bail.
