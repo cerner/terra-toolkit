@@ -58,7 +58,7 @@
     "release:minor": "node scripts/release/release.js minor",
     "release:patch": "node scripts/release/release.js patch",
     "start": "./bin/serve.js --config ./tests/test.config",
-    "start-static": "npm run pack && node scripts/serve/serve-static-cli.js --site ./build",
+    "start-static": "npm run pack && ./bin/serve-static.js --site ./build",
     "test": "npm run jest && npm run nightwatch && npm run nightwatch:port-provided && npm run wdio",
     "wdio": "npm run wdio-webpack-obj && npm run wdio-webpack-func && npm run tt-wdio-webpack-obj && npm run tt-wdio-webpack-func && npm run tt-wdio-static && npm run tt-wdio-unopinionated",
     "wdio-webpack-obj": "wdio --suite opinionated",

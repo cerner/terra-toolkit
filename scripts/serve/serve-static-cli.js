@@ -13,6 +13,6 @@ commander
 
 serve({
   host: commander.host,
-  port: Number(commander.port),
+  port: commander.port,
   site: commander.site,
 });
