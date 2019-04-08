@@ -11,7 +11,7 @@ const ip = process.env.WDIO_EXTERNAL_HOST || localIP.address();
 const externalPort = process.env.WDIO_EXTERNAL_PORT || 8080;
 const internalPort = process.env.WDIO_INTERNAL_PORT || 8080;
 const ci = process.env.TRAVIS || process.env.CI;
-const bail = process.env.BAIL || ci;
+const bail = process.env.WDIO_BAIL || ci;
 const locale = process.env.LOCALE;
 const formFactor = process.env.FORM_FACTOR;
 
