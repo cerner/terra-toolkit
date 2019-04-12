@@ -8,6 +8,9 @@ Unreleased
 * Serve-static no longer builds webpack config
 * Serve-static no longer injects locale.
 
+### Added
+* Added an environment variable `WDIO_BAIL` to support WebdriverIO's bail option.
+
 ### Changed
 * Updated devtool sourceMap from cheap-source-map to eval-source-map
 

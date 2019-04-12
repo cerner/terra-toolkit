@@ -50,11 +50,12 @@ exports.config = config;
 
 ### Environment Variables
 
-In order to support tests running inside of a container and hitting an external selenium grid, 3 environment variables are provided:
+* In order to support tests running inside of a container and hitting an external selenium grid, 3 environment variables are provided:
 
-* `WDIO_INTERNAL_PORT` - This specifies the port for the ServeStaticService. This is the port that the server being tested against will actually run on.
-* `WDIO_EXTERNAL_PORT` - This specifies the external port that is mapped on the container to the WDIO_INTERNAL_PORT.
-* `WDIO_EXTERNAL_HOST` - This specifies the externally accessible name for the host on which the container is running.
+  * `WDIO_INTERNAL_PORT` - This specifies the port for the ServeStaticService. This is the port that the server being tested against will actually run on.
+  * `WDIO_EXTERNAL_PORT` - This specifies the external port that is mapped on the container to the WDIO_INTERNAL_PORT.
+  * `WDIO_EXTERNAL_HOST` - This specifies the externally accessible name for the host on which the container is running.
+* In order to stop test runner as soon as a single test has failed, explicitly set the environment variable `WDIO_BAIL` to true. Please note that if it is not set, then the test runner does not bail and all the tests are run.
 
 ## Writing Tests
 
