@@ -11,6 +11,7 @@ const ip = process.env.WDIO_EXTERNAL_HOST || localIP.address();
 const externalPort = process.env.WDIO_EXTERNAL_PORT || 8080;
 const internalPort = process.env.WDIO_INTERNAL_PORT || 8080;
 const ci = process.env.TRAVIS || process.env.CI;
+const bail = process.env.WDIO_BAIL || ci;
 const locale = process.env.LOCALE;
 const formFactor = process.env.FORM_FACTOR;
 
@@ -32,7 +33,7 @@ const config = {
   sync: true,
   logLevel: 'silent',
   coloredLogs: true,
-  bail: ci ? 1 : 0,
+  bail: bail ? 1 : 0,
   screenshotPath: path.join('.', 'errorScreenshots'),
   waitforTimeout: 3000,
   connectionRetryTimeout: 90000,
@@ -65,7 +66,7 @@ const config = {
   mochaOpts: {
     ui: 'bdd',
     timeout: 20000,
-    bail: ci,
+    bail,
   },
 };
 
