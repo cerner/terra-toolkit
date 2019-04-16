@@ -4,6 +4,8 @@ Changelog
 Unreleased
 ----------
 
+4.27.0 - (April 16, 2019)
+----------
 ### Added
 * Added an environment variable `WDIO_BAIL` to support WebdriverIO's bail option.
 
