@@ -3,8 +3,28 @@ Changelog
 
 Unreleased
 ----------
+### Major Version Bump. See https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitUpgradeGuide-v45.0.0.md.
+
 ### Removed
-* Removed the nightwatch utility, dependencies, tests and documentations.
+* **Breaking Change** Removed the nightwatch utility, dependencies, tests and documentations.
+
+4.27.0 - (April 16, 2019)
+----------
+### Added
+* Added an environment variable `WDIO_BAIL` to support WebdriverIO's bail option.
+
+### Changed
+* Updated devtool sourceMap from cheap-source-map to eval-source-map
+
+4.26.0 - (March 20, 2019)
+----------
+### Added
+* Added a new method `validateElement` to both do a screenshot comparison and test accessibility
+* Log information on what selenium version is being used for the test run.
+
+### Fixed
+* Fixed the issue with Aggregate Translations CLI default options overriding the configuration file options.
+* Fixed an issue with the 'exclude' option in Aggregate Translations setup function. [#264](https://github.com/cerner/terra-toolkit/issues/264)
 
 4.25.0 - (March 5, 2019)
 ----------

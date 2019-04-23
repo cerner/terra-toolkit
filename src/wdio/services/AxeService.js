@@ -54,6 +54,7 @@ export default class AxeService {
       const axeOptions = {
         runOnly: options.runOnly,
         rules: options.rules,
+        restoreScroll: options.restoreScroll,
       };
 
       // analyze the specified viepworts

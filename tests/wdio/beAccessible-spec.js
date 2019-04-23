@@ -1,4 +1,3 @@
-/* global browser, describe, before, Terra */
 describe('axe', () => {
   const viewports = Terra.viewports('tiny', 'huge');
 
