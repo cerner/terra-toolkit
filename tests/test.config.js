@@ -7,11 +7,6 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'fixtures', 'nightwatch.html'),
-      chunks: ['index'],
-      filename: './nightwatch.html',
-    }),
-    new HtmlWebpackPlugin({
       template: path.join(__dirname, 'fixtures', 'accessible.html'),
       chunks: ['index'],
       filename: './accessible.html',
