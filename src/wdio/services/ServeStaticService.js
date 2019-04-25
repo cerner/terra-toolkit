@@ -4,19 +4,16 @@ import Logger from '../../../scripts/utils/logger';
 
 const WebpackDevServer = require('webpack-dev-server');
 const webpack = require('webpack');
-const ip = require('ip');
 
 const { serveStatic: SERVE_STATIC_DEFAULTS } = SERVICE_DEFAULTS;
 const context = '[Terra-Toolkit:serve-static-service]';
 
-const displayServer = (localAddress, networkAddress) => {
-  Logger.log('Server started listening at', { context });
-  Logger.log(`* Local:            ${Logger.emphasis(localAddress)}`);
-  Logger.log(`* On your network:  ${Logger.emphasis(networkAddress)}`);
+const displayServer = () => {
+  Logger.log('Server started listening', { context });
 };
 
 // Create a webpack dev server instance.
-const wds = (options) => {
+const startWebpackDevServer = (options) => {
   const {
     port, index, locale,
   } = options;
@@ -53,9 +50,7 @@ const wds = (options) => {
       if (err) {
         reject(err);
       }
-      const localAddress = `http://${host}:${port}/`;
-      const networkAddress = `http://${ip.address()}:${port}/`;
-      displayServer(localAddress, networkAddress);
+      displayServer();
       resolve(devServer);
     });
   });
@@ -97,12 +92,12 @@ export default class ServeStaticService {
     await this.stop();
   }
 
-  // Options include config, site, port, index, locale, verbose
+  // Options include config, site, port, index, locale
   static startService(serveOptions) {
     if (serveOptions.site) {
       return serveStatic(serveOptions);
     }
-    return wds(serveOptions);
+    return startWebpackDevServer(serveOptions);
   }
 
   stop() {

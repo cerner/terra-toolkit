@@ -13,7 +13,12 @@ const aggregateTranslations = require('../../scripts/aggregate-translations/aggr
 const ThemeAggregator = require('../../scripts/aggregate-themes/theme-aggregator');
 
 const webpackConfig = (options, env, argv) => {
-  const { rootPath, resolveModules, themeFile } = options;
+  const {
+    rootPath,
+    resolveModules,
+    themeFile,
+    staticOptions,
+  } = options;
 
   const production = argv.p;
   let filename = production ? '[name]-[chunkhash]' : '[name]';
@@ -106,6 +111,7 @@ const webpackConfig = (options, env, argv) => {
       publicPath,
     },
     devServer: {
+      ...staticOptions,
       host: '0.0.0.0',
       stats: {
         colors: true,
@@ -149,7 +155,14 @@ const webpackConfig = (options, env, argv) => {
 };
 
 const defaultWebpackConfig = (env = {}, argv = {}) => {
-  const { disableAggregateTranslations } = env;
+  const { disableAggregateTranslations, disableHotReloading } = env;
+
+  const staticOptions = {
+    ...disableHotReloading && {
+      hot: false,
+      inline: false,
+    },
+  };
 
   const processPath = process.cwd();
   /* Get the root path of a mono-repo process call */
@@ -163,7 +176,12 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
 
   const themeFile = ThemeAggregator.aggregate();
 
-  const options = { rootPath, resolveModules, themeFile };
+  const options = {
+    rootPath,
+    resolveModules,
+    themeFile,
+    staticOptions,
+  };
 
   return webpackConfig(options, env, argv);
 };
