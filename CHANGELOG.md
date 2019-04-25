@@ -8,6 +8,8 @@ Unreleased
 * Serve-static no longer builds webpack config
 * Serve-static no longer injects locale.
 
+4.27.0 - (April 16, 2019)
+----------
 ### Added
 * Added an environment variable `WDIO_BAIL` to support WebdriverIO's bail option.
 
