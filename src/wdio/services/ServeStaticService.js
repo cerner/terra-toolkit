@@ -39,19 +39,26 @@ const startWebpackDevServer = (options) => {
     },
   });
 
-  // get a compiler
-  const compiler = webpack(config);
-  // get a server
-  const devServer = new WebpackDevServer(compiler, devServerOptions);
-
-  // start that server.
   return new Promise((resolve, reject) => {
+    // get a compiler
+    const compiler = webpack(config);
+    // get a server
+    const devServer = new WebpackDevServer(compiler, devServerOptions);
+    // add a hook to report when webpacking is done
+    compiler.hooks.done.tap('Done', (stats) => {
+      if (stats.hasErrors()) {
+        reject();
+      } else {
+        resolve(devServer);
+      }
+    });
+
+    // start that server.
     devServer.listen(port, host, (err) => {
       if (err) {
         reject(err);
       }
       displayServer();
-      resolve(devServer);
     });
   });
 };
