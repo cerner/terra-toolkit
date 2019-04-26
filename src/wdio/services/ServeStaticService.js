@@ -30,6 +30,9 @@ const startWebpackDevServer = (options) => {
     // Disable hot reloading
     hot: false,
     inline: false,
+    watchOptions: {
+      ignored: /./,
+    },
     host,
     port,
     index,
