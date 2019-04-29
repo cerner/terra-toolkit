@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Added 
+* Added default testName in themeCombinationOfCustomProperties
 
 4.27.0 - (April 16, 2019)
 ----------
