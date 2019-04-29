@@ -3,6 +3,11 @@ Changelog
 
 Unreleased
 ----------
+### Added
+* Add `terra-aggregate-translations` module
+
+### Remove
+* Aggregate-translation script, tests, and bin executable
 
 4.27.0 - (April 16, 2019)
 ----------
