@@ -1,4 +1,4 @@
-jest.mock('../../scripts/aggregate-translations/aggregate-translations');
+jest.mock('terra-aggregate-translations/script/aggregate-translations');
 jest.mock('postcss-assets-webpack-plugin');
 jest.mock('postcss-custom-properties');
 jest.mock('mini-css-extract-plugin');
@@ -13,7 +13,7 @@ const PostCSSCustomProperties = require('postcss-custom-properties');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const aggregateTranslations = require('../../scripts/aggregate-translations/aggregate-translations');
+const aggregateTranslations = require('terra-aggregate-translations/script/aggregate-translations');
 const webpackConfig = require('../../config/webpack/webpack.config');
 
 const outputPath = expect.stringContaining('build');
