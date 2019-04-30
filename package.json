@@ -39,8 +39,9 @@
     }
   },
   "scripts": {
-    "clean:all": "npm run clean:compiled && npm run clean:dependencies",
+    "clean:all": "npm run clean:compiled && npm run clean:dependencies && npm run clean:build",
     "clean:compiled": "rimraf lib",
+    "clean:build": "rimraf build",
     "clean:dependencies": "rimraf node_modules",
     "clean:install": "npm run clean:all && npm install && npm run compile:build",
     "compile": "npm run clean:compiled && npm run compile:build",
@@ -60,7 +61,7 @@
     "start": "./bin/serve.js --config ./tests/test.config",
     "start-static": "npm run pack && ./bin/serve-static.js --site ./build",
     "test": "npm run jest && npm run nightwatch && npm run nightwatch:port-provided && npm run wdio",
-    "wdio": "npm run wdio-webpack-obj && npm run wdio-webpack-func && npm run tt-wdio-webpack-obj && npm run tt-wdio-webpack-func && npm run tt-wdio-static && npm run tt-wdio-unopinionated",
+    "wdio": "npm run clean:build && npm run wdio-webpack-obj && npm run wdio-webpack-func && npm run tt-wdio-webpack-obj && npm run tt-wdio-webpack-func && npm run tt-wdio-unopinionated && npm run tt-wdio-static",
     "wdio-webpack-obj": "wdio --suite opinionated",
     "wdio-webpack-func": "TT_TEST_WDIO_FUNCTION=true wdio --suite opinionated",
     "tt-wdio-webpack-obj": "node scripts/wdio/wdio-runner-cli.js --suite opinionated",

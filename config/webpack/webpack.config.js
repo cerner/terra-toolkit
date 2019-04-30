@@ -161,9 +161,6 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     ...disableHotReloading && {
       hot: false,
       inline: false,
-      watchOptions: {
-        ignored: /./,
-      },
     },
   };
 

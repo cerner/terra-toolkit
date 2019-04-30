@@ -222,9 +222,6 @@ describe('webpack config', () => {
       const expectedOuput = {
         hot: false,
         inline: false,
-        watchOptions: {
-          ignored: /./,
-        },
         host: '0.0.0.0',
         stats: {
           colors: true,

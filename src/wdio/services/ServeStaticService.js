@@ -12,6 +12,23 @@ const displayServer = () => {
   Logger.log('Server started listening', { context });
 };
 
+// Create a new proxy watch function
+const watch = (compiler) => {
+  // Store off original watch function.
+  const origWatch = compiler.watch;
+  // Return new watch function
+  return (watchOptions, handler) => {
+    // Call origial watch functions with the compiler as 'this'
+    const watcher = origWatch.call(compiler, watchOptions, handler);
+    // Remove the 'watch' function from the returned watcher.
+    watcher.watch = () => {
+      // console.log('not watching');
+      Logger.log('Watching is disabled', { context });
+    };
+    return watcher;
+  };
+};
+
 // Create a webpack dev server instance.
 const startWebpackDevServer = (options) => {
   const {
@@ -30,9 +47,6 @@ const startWebpackDevServer = (options) => {
     // Disable hot reloading
     hot: false,
     inline: false,
-    watchOptions: {
-      ignored: /./,
-    },
     host,
     port,
     index,
@@ -45,6 +59,8 @@ const startWebpackDevServer = (options) => {
   return new Promise((resolve, reject) => {
     // get a compiler
     const compiler = webpack(config);
+    // Disable hot reloading
+    compiler.watch = watch(compiler);
     // get a server
     const devServer = new WebpackDevServer(compiler, devServerOptions);
     // add a hook to report when webpacking is done
