@@ -20,6 +20,7 @@ describe('themeCombinationOfCustomProperties', () => {
   beforeEach(() => browser.url('/theme.html'));
 
   Terra.should.themeCombinationOfCustomProperties({
+    testName: 'themed',
     properties: {
       '--color': 'blue',
       '--font-size': '50px',

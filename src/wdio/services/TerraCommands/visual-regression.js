@@ -76,7 +76,8 @@ const themeCombinationOfCustomProperties = (...args) => {
   const styleProperties = args[0].properties ? args[0].properties : [];
 
   if (!args[0].testName) {
-    args[0].testName=themed;
+    throw Logger.error(`A test name for themeCombinationOfCustomProperties test is not provided.
+A testName property should be set in the options object passed to the themeCombinationOfCustomProperties to uniquely identify it.`);
   }
 
   global.it(`[${args[0].testName}]`, () => {
