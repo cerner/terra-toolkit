@@ -70,14 +70,10 @@ const themeCombinationOfCustomProperties = (...args) => {
     return;
   }
 
-  const selector = args[0].selector ? args[0].selector : global.browser.options.terra.selector;
-  const styleProperties = args[0].properties ? args[0].properties : [];
-  let testName;
-  if (!args[0].testName) {
-    testName = 'themed';
-  } else {
-    testName = args[0][testName];
-  }
+  const options = args[0];
+  const selector = options.selector || global.browser.options.terra.selector;
+  const styleProperties = options.properties || [];
+  const testName = options.testName || 'themed';
 
   global.it(`[${testName}]`, () => {
     Object.entries(styleProperties).forEach(([key, value]) => {
