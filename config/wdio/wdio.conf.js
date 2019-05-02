@@ -17,7 +17,11 @@ const locale = process.env.LOCALE;
 const hasPackages = glob.sync((path.join(process.cwd(), 'packages'))).length > 0;
 
 const config = {
-  specs: path.join('test*', 'wdio', '**', '*-spec.js'),
+  specs: hasPackages ? [
+    path.join('packages', '*', 'test*', 'wdio', '**', '*-spec.js'),
+  ] : [
+    path.join('test*', 'wdio', '**', '*-spec.js'),
+  ],
   maxInstances: 1,
   capabilities: [
     {
