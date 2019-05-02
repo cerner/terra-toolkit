@@ -13,16 +13,11 @@ const internalPort = process.env.WDIO_INTERNAL_PORT || 8080;
 const ci = process.env.TRAVIS || process.env.CI;
 const bail = process.env.WDIO_BAIL || ci;
 const locale = process.env.LOCALE;
-const formFactor = process.env.FORM_FACTOR;
 
 const hasPackages = glob.sync((path.join(process.cwd(), 'packages'))).length > 0;
 
 const config = {
-  specs: hasPackages ? [
-    path.join('packages', '*', 'test*', 'wdio', '**', '*-spec.js'),
-  ] : [
-    path.join('test*', 'wdio', '**', '*-spec.js'),
-  ],
+  specs: path.join('test*', 'wdio', '**', '*-spec.js'),
   maxInstances: 1,
   capabilities: [
     {
@@ -48,7 +43,7 @@ const config = {
     port: internalPort,
   },
   ...locale && { locale },
-  ...formFactor && { formFactor },
+  formFactor: process.env.FORM_FACTOR || 'huge',
 
   seleniumVersion: '3.11',
   seleniumDocker: {
