@@ -3,6 +3,13 @@ Changelog
 
 Unreleased
 ----------
+### Major Version Bump. See https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitUpgradeGuide-v5.0.0.md.
+
+### Added
+* `terra-aggregate-translations` peer depenency to use in the default webpack configuration
+
+### Removed
+* **Breaking Change** Aggregate-translations pre-build script and default terraI18nconfiguration is no longer provided through terra-toolkit. 
 
 4.27.0 - (April 16, 2019)
 ----------
