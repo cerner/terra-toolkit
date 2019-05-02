@@ -3,6 +3,11 @@ Changelog
 
 Unreleased
 ----------
+### Major Version Bump. See https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitUpgradeGuide-v5.0.0.md.
+
+### Fixed
+* **Breaking Change** Fix inconsistent screenshot widths for the huge form factor by setting the default formFactor to 'huge' in the wdio.config.js. [#137](https://github.com/cerner/terra-toolkit/issues/137)
+* **Breaking Change** Fix incorrect screenshot naming where the screenshot name by using the current viewport size's form facor instead of using the formFactor value set in wdio.config.js.[#248](https://github.com/cerner/terra-toolkit/issues/248)
 
 4.27.0 - (April 16, 2019)
 ----------
