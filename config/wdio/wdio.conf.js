@@ -8,8 +8,8 @@ const {
 const visualRegressionConfig = require('./visualRegressionConf');
 
 const ip = process.env.WDIO_EXTERNAL_HOST || localIP.address();
-const externalPort = process.env.WDIO_EXTERNAL_PORT || 8080;
-const internalPort = process.env.WDIO_INTERNAL_PORT || 8080;
+const externalPort = process.env.WDIO_EXTERNAL_PORT || 9000;
+const internalPort = process.env.WDIO_INTERNAL_PORT || 9000;
 const ci = process.env.TRAVIS || process.env.CI;
 const bail = process.env.WDIO_BAIL || ci;
 const locale = process.env.LOCALE;
@@ -24,11 +24,15 @@ const config = {
     path.join('test*', 'wdio', '**', '*-spec.js'),
   ],
   maxInstances: 1,
-  capabilities: [
-    {
-      browserName: 'chrome',
+  capabilities: [{
+    browserName: 'chrome',
+    'goog:chromeOptions': {
+      /** Run in headless mode since Chrome 69 cannot reach the tiny viewport size due to a omnibox size change
+       * made by the chrome team. See https://bugs.chromium.org/p/chromedriver/issues/detail?id=2626#c1.
+       */
+      args: ['headless', 'disable-gpu'],
     },
-  ],
+  }],
 
   sync: true,
   logLevel: 'silent',
@@ -50,7 +54,7 @@ const config = {
   ...locale && { locale },
   ...formFactor && { formFactor },
 
-  seleniumVersion: '3.11',
+  seleniumVersion: '3.14',
   seleniumDocker: {
     enabled: !ci,
   },
@@ -70,9 +74,9 @@ const config = {
   },
 };
 
-if (ci) {
-  config.host = 'standalone-chrome';
-}
+// if (ci) {
+//   config.host = 'standalone-chrome';
+// }
 
 // This code only executes for monorepos.  It will create a set of suites that can then be executed
 // independently and/or in parallel via 'wdio --suite suite1' for example
