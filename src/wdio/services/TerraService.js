@@ -57,7 +57,7 @@ export default class TerraService {
       viewports: getViewports,
       should: {
         beAccessible: accessiblity.beAccessible,
-        matchScreenshot: visualRegression.matchScreenshotWithinTolerance,
+        matchScreenshot: visualRegression.matchScreenshot,
         themeEachCustomProperty: visualRegression.themeEachCustomProperty,
         themeCombinationOfCustomProperties: visualRegression.themeCombinationOfCustomProperties,
         validateElement,

@@ -41,7 +41,6 @@ describe('aggregate-translations', () => {
     aggregateTranslations();
 
     expect(globSpy).toHaveBeenCalledTimes(numOfDefaultSearchPatterns);
-    // expect(searchedDirectories).toEqual(expect.arrayContaining(defaultSearchPatterns(process.cwd())));
     expect(searchedDirectories).toEqual(expect.arrayContaining(defaultSearchPatterns));
   });
 

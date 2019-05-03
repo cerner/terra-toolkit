@@ -1,44 +1,4 @@
-import Logger from '../../../../scripts/utils/logger';
-
-/**
-* Helper method to determine the screenshot tag name, the element selector, the viewport(s)
-* in which to take the screenshots, as well as the capture screenshot options to be passed
-* to the wdio-visual-regression-service comparison methods. Currently supported VR comparision
-* options are:
-*     - viewports: [{ width: Number, height: Number }]
-*     - misMatchTolerance: Number
-*     - viewportChangePause: Number
-* @param {Array} args - The list of test arguments to parse.
-*/
-const determineScreenshotOptions = (...args) => {
-  const param1 = args.length ? args[0] : undefined;
-  const param2 = args.length > 1 ? args[1] : undefined;
-
-  let name = 'default';
-  let options = {};
-  if (typeof param1 === 'string') {
-    name = param1;
-    options = typeof param2 === 'object' && !Array.isArray(param2) ? param2 : options;
-  } else {
-    options = typeof param1 === 'object' && !Array.isArray(param1) ? param1 : options;
-  }
-
-  // Check if custom selector should be used, otherwise use the global value.
-  const selector = options.selector || global.browser.options.terra.selector;
-
-  const compareOptions = {};
-
-  // Which viewports the screenshoot should adjust to & take screenshot. Supplying [] results in current viewport size.
-  compareOptions.viewports = options.viewports || [];
-
-  // Check if custom misMatchTolerance should be used, otherwise use the global value.
-  compareOptions.misMatchTolerance = options.misMatchTolerance || global.browser.options.visualRegression.compare.misMatchTolerance;
-
-  // Check if custom viewportChangePause should be used, otherwise use the global value.
-  compareOptions.viewportChangePause = options.viewportChangePause || global.browser.options.visualRegression.viewportChangePause;
-
-  return { name, selector, options: compareOptions };
-};
+import testOptions from './test-options';
 
 /**
 * Generates a test for each themed property given and runs a screenshot assertion.
@@ -56,8 +16,14 @@ const themeEachCustomProperty = (...args) => {
 
   Object.entries(styleProperties).forEach(([key, value]) => {
     global.it(`themed [${key}]`, () => {
+      // add document level style override
       global.browser.execute(`document.documentElement.style.setProperty('${key}', '${value}')`);
+
+      // take screenshot
       global.expect(global.browser.checkElement(selector)).to.matchReference();
+
+      // remove documented defined style override
+      global.browser.execute(`document.documentElement.style.setProperty('${key}', '')`);
     });
   });
 };
@@ -72,68 +38,52 @@ const themeCombinationOfCustomProperties = (...args) => {
     return;
   }
 
-  const selector = args[0].selector ? args[0].selector : global.browser.options.terra.selector;
-  const styleProperties = args[0].properties ? args[0].properties : [];
+  const options = args[0];
+  const selector = options.selector || global.browser.options.terra.selector;
+  const styleProperties = options.properties || [];
+  const testName = options.testName || 'themed';
 
-  if (!args[0].testName) {
-    throw Logger.error(`A test name for themeCombinationOfCustomProperties test is not provided.
-A testName property should be set in the options object passed to the themeCombinationOfCustomProperties to uniquely identify it.`);
-  }
-
-  global.it(`[${args[0].testName}]`, () => {
+  global.it(`[${testName}]`, () => {
+    // add document level style override
     Object.entries(styleProperties).forEach(([key, value]) => {
       global.browser.execute(`document.documentElement.style.setProperty('${key}', '${value}')`);
     });
+
+    // take screenshot
     global.expect(global.browser.checkElement(selector)).to.matchReference();
+
+    // remove documented defined style overrides
+    Object.entries(styleProperties).forEach(([key]) => {
+      global.browser.execute(`document.documentElement.style.setProperty('${key}', '')`);
+    });
   });
 };
-
-/** Helper method to create a useful test descripton.
-  * @param {String} matchType - Specifies the type of matchReference assertion. Either 'withinTolerance'
-  *   or 'exactly'.
-  */
-const getTestDescription = matchType => (
-  matchType === 'withinTolerance' ? 'be within the mismatch tolerance' : 'match screenshot exactly'
-);
 
 /**
  * The actual it block for the screenshot comparisons.  It will capture screenshots of a specified element
  * and assert the screenshot comparison results are within the mismatch tolerance or are an exact match
  * @param {String} name the test case name
- * @param {String} matchType the type of matchReference assertion. Either 'withinTolerance'
-*    or 'exactly'.
  * @param {String} selector the selector to use when capturing the screenshot.
- * @param {Object} options the test options. Options include viewports, misMatchTolerance and viewportChangePause.
+ * @param {Object} options the test options. Options include viewports and misMatchTolerance
  */
-const screenshotItBlock = (name, matchType, selector, options) => {
-  const testDescription = getTestDescription(matchType);
-  global.it(`[${name}] to ${testDescription}`, () => {
+const screenshotItBlock = (name, selector, options) => {
+  global.it(`[${name}] to be within the mismatch tolerance`, () => {
     const screenshots = global.browser.checkElement(selector, options);
 
     const { viewports } = options;
     if (viewports && viewports.length) {
       global.expect(screenshots, 'the number of screenshot results to match the number of specified viewports').to.have.lengthOf(viewports.length);
+
+      // add viewport name for meanful results message if a failure occurs
       viewports.forEach((viewport, index) => {
         screenshots[index].viewport = viewport.name;
       });
+    } else {
+      global.expect(screenshots, 'there is a screenshot to compare').to.have.lengthOf(1);
     }
 
-    global.expect(screenshots).to.matchReference(matchType);
+    global.expect(screenshots).to.matchReference();
   });
-};
-
-/**
-* A mocha-chai convenience test case to determines the screenshot options and test names needed to
-* capture screenshots of a specified element and assert the screenshot comparision results are
-* either within the mismatch tolerance or are an exact match.
-* @param {Array} testArguments - The test arguments passed to the `matchScreenshotWithinTolerance`
-*    or `matchScreenshotExactly` methods.
-* @param {String} matchType - Specifies the type of matchReference assertion. Either 'withinTolerance'
-*    or 'exactly'.
-*/
-const matchScreenshot = (testArguments, matchType) => {
-  const { name, selector, options } = determineScreenshotOptions(...testArguments);
-  screenshotItBlock(name, matchType, selector, options);
 };
 
 /**
@@ -141,20 +91,23 @@ const matchScreenshot = (testArguments, matchType) => {
 * screenshot comparision results are within the mismatch tolerance.
 * @param {Array} args - The list of test arguments to parse. Accepted Arguments:
 *    - String (optional): the test case name. Default name is 'default'
-*    - Object (optional): the test options. Options include selector, viewports,
-*        misMatchTolerance and viewportChangePause.
+*    - Object (optional): the test options. Options include selector, and viewports,
+*        misMatchTolerance.
 *    Note: args list order should be: name, then options when using both.
 */
-const matchScreenshotWithinTolerance = (...args) => {
-  matchScreenshot(args, 'withinTolerance');
+const matchScreenshot = (...args) => {
+  const {
+    name, selector, misMatchTolerance, viewports,
+  } = testOptions.determineScreenshotOptions(args);
+
+  screenshotItBlock(name, selector, { misMatchTolerance, viewports });
 };
 
 const methods = {
-  matchScreenshotWithinTolerance,
+  matchScreenshot,
   screenshotItBlock,
   themeEachCustomProperty,
   themeCombinationOfCustomProperties,
-  getTestDescription,
 };
 
 export default methods;

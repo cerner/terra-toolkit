@@ -19,7 +19,7 @@ describe('validateElement', () => {
   it('calls the appropriate methods downstream with all arguments', () => {
     validateElement('test name', { selector: 'test-selector', misMatchTolerance: 0.05, axeRules: { a: 'b', c: 'd' } });
 
-    expect(visualRegressions.screenshotItBlock).toBeCalledWith('test name', 'withinTolerance', 'test-selector', { misMatchTolerance: 0.05 });
+    expect(visualRegressions.screenshotItBlock).toBeCalledWith('test name', 'test-selector', { misMatchTolerance: 0.05 });
     expect(accessibility.beAccessible).toBeCalledWith({ rules: { a: 'b', c: 'd' }, restoreScroll: true, context: 'test-selector' });
   });
 
@@ -39,7 +39,7 @@ describe('validateElement', () => {
 
     validateElement();
 
-    expect(visualRegressions.screenshotItBlock).toBeCalledWith('default', 'withinTolerance', '[data-terra-toolkit-content]', { misMatchTolerance: 0.01 });
+    expect(visualRegressions.screenshotItBlock).toBeCalledWith('default', '[data-terra-toolkit-content]', { misMatchTolerance: 0.01 });
     expect(accessibility.beAccessible).toBeCalledWith({ restoreScroll: true, context: '[data-terra-toolkit-content]' });
   });
 });
