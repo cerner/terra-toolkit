@@ -8,8 +8,8 @@ const {
 const visualRegressionConfig = require('./visualRegressionConf');
 
 const ip = process.env.WDIO_EXTERNAL_HOST || localIP.address();
-const externalPort = process.env.WDIO_EXTERNAL_PORT || 9000;
-const internalPort = process.env.WDIO_INTERNAL_PORT || 9000;
+const externalPort = process.env.WDIO_EXTERNAL_PORT || 8080;
+const internalPort = process.env.WDIO_INTERNAL_PORT || 8080;
 const ci = process.env.TRAVIS || process.env.CI;
 const bail = process.env.WDIO_BAIL || ci;
 const locale = process.env.LOCALE;
@@ -74,9 +74,9 @@ const config = {
   },
 };
 
-// if (ci) {
-//   config.host = 'standalone-chrome';
-// }
+if (ci) {
+  config.host = 'standalone-chrome';
+}
 
 // This code only executes for monorepos.  It will create a set of suites that can then be executed
 // independently and/or in parallel via 'wdio --suite suite1' for example
