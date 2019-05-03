@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Added 
+* Added default testName `themed` for `themeCombinationOfCustomProperties` helper.
 
 4.27.0 - (April 16, 2019)
 ----------

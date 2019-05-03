@@ -1,5 +1,3 @@
-import Logger from '../../../../scripts/utils/logger';
-
 /**
 * Helper method to determine the screenshot tag name, the element selector, the viewport(s)
 * in which to take the screenshots, as well as the capture screenshot options to be passed
@@ -72,15 +70,12 @@ const themeCombinationOfCustomProperties = (...args) => {
     return;
   }
 
-  const selector = args[0].selector ? args[0].selector : global.browser.options.terra.selector;
-  const styleProperties = args[0].properties ? args[0].properties : [];
+  const options = args[0];
+  const selector = options.selector || global.browser.options.terra.selector;
+  const styleProperties = options.properties || [];
+  const testName = options.testName || 'themed';
 
-  if (!args[0].testName) {
-    throw Logger.error(`A test name for themeCombinationOfCustomProperties test is not provided.
-A testName property should be set in the options object passed to the themeCombinationOfCustomProperties to uniquely identify it.`);
-  }
-
-  global.it(`[${args[0].testName}]`, () => {
+  global.it(`[${testName}]`, () => {
     Object.entries(styleProperties).forEach(([key, value]) => {
       global.browser.execute(`document.documentElement.style.setProperty('${key}', '${value}')`);
     });
