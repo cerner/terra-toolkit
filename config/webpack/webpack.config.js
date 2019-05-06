@@ -38,11 +38,17 @@ const webpackConfig = (options, env, argv) => {
         {
           test: /\.(scss|css)$/,
           use: [
-            MiniCssExtractPlugin.loader,
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                hmr: !production, // only enable hot module reloading in development
+                sourceMap: true,
+              },
+            },
             {
               loader: 'css-loader',
               options: {
-                minimize: false, // Issue logged: https://github.com/cerner/terra-toolkit/issues/122
+                modules: true,
                 sourceMap: true,
                 importLoaders: 2,
                 localIdentName: '[name]__[local]___[hash:base64:5]',
@@ -53,6 +59,7 @@ const webpackConfig = (options, env, argv) => {
               options: {
                 // Add unique ident to prevent the loader from searching for a postcss.config file. Additionally see: https://github.com/postcss/postcss-loader#plugins
                 ident: 'postcss',
+                sourceMap: true,
                 plugins() {
                   return [
                     rtl(),
@@ -63,6 +70,9 @@ const webpackConfig = (options, env, argv) => {
             },
             {
               loader: 'sass-loader',
+              options: {
+                sourceMap: true,
+              },
             },
           ],
         },
@@ -122,7 +132,7 @@ const webpackConfig = (options, env, argv) => {
     mode: 'production',
     devtool: false,
     plugins: [
-      new CleanPlugin(outputPath, { root: rootPath, exclude: ['stats.json'] }),
+      new CleanPlugin({ cleanOnceBeforeBuildPatterns: ['**/*', '!stats.json'] }),
     ],
     optimization: {
       minimizer: [
