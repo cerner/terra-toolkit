@@ -29,8 +29,7 @@ function accessible() {
   * @property {bool} matchExactly - If the screenshots should be an exact match.
   */
 const getComparisonResults = (screenshots, matchExactly) => {
-  console.log(`screenshots: ${!screenshots}`);
-  if (screenshots == false) {
+  if (screenshots.length < 1) {
     return 'No screenshots to compare.';
   }
 
