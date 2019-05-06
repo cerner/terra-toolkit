@@ -8,6 +8,7 @@ Unreleased
 
 ### Changed
 * Remove rimraf dev-depenency
+* Remove scripts/release script and update package.json scripts to reflect release script
 
 4.27.0 - (April 16, 2019)
 ----------
