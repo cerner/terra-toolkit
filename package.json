@@ -50,7 +50,7 @@
     "nightwatch:port-provided": "nightwatch -c tests/test.nightwatch.conf.js",
     "pack": "webpack --config tests/test.config.js",
     "postpublish": "git push --tag",
-    "precompile": "rm -rf lib"
+    "precompile": "rm -rf lib",
     "prepare": "npm run compile",
     "prepublishOnly": "npm whoami && check-installed-dependencies && npm test",
     "pretest": "npm run lint",
