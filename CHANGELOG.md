@@ -5,6 +5,7 @@ Unreleased
 ----------
 ### Added 
 * Added default testName `themed` for `themeCombinationOfCustomProperties` helper.
+* Guard against empty screenshot array being passed to `getComparisonResults`.
 
 4.27.0 - (April 16, 2019)
 ----------

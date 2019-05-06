@@ -28,8 +28,13 @@ function accessible() {
   *    (bool) and isExactSameImage (bool).
   * @property {bool} matchExactly - If the screenshots should be an exact match.
   */
-const getComparisonResults = (screenshots, matchExactly) => (
-  screenshots.map((comparison) => {
+const getComparisonResults = (screenshots, matchExactly) => {
+  console.log(`screenshots: ${!screenshots}`);
+  if (screenshots == false) {
+    return 'No screenshots to compare.';
+  }
+
+  const results = screenshots.map((comparison) => {
     const {
       viewport, misMatchPercentage, isSameDimensions, isExactSameImage,
     } = comparison;
@@ -50,8 +55,10 @@ const getComparisonResults = (screenshots, matchExactly) => (
     relevantInformation.misMatchPercentage = misMatchPercentage;
 
     return `${JSON.stringify(relevantInformation, null, 2)}`;
-  })
-);
+  });
+
+  return results;
+};
 
 /** A visual regression chai assertion to be paired with browser.capture() visual regression tests.
   * Checks if the screenshot(s) are the same size and verifies the screenshots are either within
@@ -88,9 +95,10 @@ function matchReference(matchType = 'withinTolerance') {
   );
 }
 
-const chaiMedthods = {
+const chaiMethods = {
   accessible,
+  getComparisonResults,
   matchReference,
 };
 
-export default chaiMedthods;
+export default chaiMethods;
