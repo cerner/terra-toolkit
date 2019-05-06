@@ -3,7 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
 ### Added
+* Added default testName `themed` for `themeCombinationOfCustomProperties` helper.
 * Add `terra-aggregate-translations` module
 
 ### Remove
