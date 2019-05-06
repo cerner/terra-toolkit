@@ -6,6 +6,9 @@ Unreleased
 ### Added 
 * Added default testName `themed` for `themeCombinationOfCustomProperties` helper.
 
+### Changed
+* Remove rimraf dev-depenency
+
 4.27.0 - (April 16, 2019)
 ----------
 ### Added
