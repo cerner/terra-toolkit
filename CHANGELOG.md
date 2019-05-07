@@ -7,6 +7,7 @@ Unreleased
 ### Added
 * Added default testName `themed` for `themeCombinationOfCustomProperties` helper.
 * Add `terra-aggregate-translations` module
+* Guard against empty screenshot array being passed to `getComparisonResults`.
 
 ### Remove
 * Aggregate-translation script, tests, and bin executable
