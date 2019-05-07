@@ -40,7 +40,7 @@
     }
   },
   "scripts": {
-    "clean": "rm -rf node_modules",
+    "clean": "rm package-lock.json; rm -rf node_modules",
     "clean:install": "npm run clean && npm install",
     "compile": "babel src --out-dir lib --copy-files",
     "danger": "danger ci",
