@@ -11,6 +11,14 @@ Unreleased
 ### Removed
 * **Breaking Change** Aggregate-translations pre-build script and default terraI18nconfiguration is no longer provided through terra-toolkit. 
 
+### Added
+* Added default testName `themed` for `themeCombinationOfCustomProperties` helper.
+* Add `terra-aggregate-translations` module
+* Guard against empty screenshot array being passed to `getComparisonResults`.
+
+### Remove
+* Aggregate-translation script, tests, and bin executable
+
 4.27.0 - (April 16, 2019)
 ----------
 ### Added
