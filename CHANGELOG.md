@@ -3,8 +3,11 @@ Changelog
 
 Unreleased
 ----------
+
 ### Added 
 * Added default testName `themed` for `themeCombinationOfCustomProperties` helper.
+
+### Major Version Bump. See https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitUpgradeGuide-v5.0.0.md.
 
 4.27.0 - (April 16, 2019)
 ----------
