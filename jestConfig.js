@@ -2,7 +2,6 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: [
     'config/webpack/*.js',
-    'scripts/aggregate-translations/**/*.js',
   ],
   coverageDirectory: 'tests/jest/reports/coverage',
   coverageReporters: [
