@@ -26,8 +26,12 @@ function accessible() {
   *    contain: misMatchPercentage (number), isSameDimensions (bool), isWithinMisMatchTolerance
   *    (bool) and isExactSameImage (bool).
   */
-const getComparisonResults = screenshots => (
-  screenshots.map((comparison) => {
+const getComparisonResults = (screenshots) => {
+  if (screenshots.length < 1) {
+    return 'No screenshots to compare.';
+  }
+
+  const results = screenshots.map((comparison) => {
     const {
       viewport, misMatchPercentage, isSameDimensions,
     } = comparison;
@@ -44,8 +48,10 @@ const getComparisonResults = screenshots => (
     relevantInformation.misMatchPercentage = misMatchPercentage;
 
     return `${JSON.stringify(relevantInformation, null, 2)}`;
-  })
-);
+  });
+
+  return results;
+};
 
 /** A visual regression chai assertion to be paired with browser.capture() visual regression tests.
   * Checks if the screenshot(s) are the same size and verifies the screenshots are either within
@@ -69,9 +75,10 @@ function matchReference() {
   );
 }
 
-const chaiMedthods = {
+const chaiMethods = {
   accessible,
+  getComparisonResults,
   matchReference,
 };
 
-export default chaiMedthods;
+export default chaiMethods;

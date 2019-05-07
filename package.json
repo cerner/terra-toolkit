@@ -23,7 +23,6 @@
     "url": "https://github.com/cerner/terra-toolkit/issues"
   },
   "bin": {
-    "tt-aggregate-translations": "bin/aggregate-translations.js",
     "tt-clean-screenshots": "bin/clean-screenshots.js",
     "tt-heroku-serve-static": "bin/heroku-serve-static.js",
     "tt-pack": "bin/pack.js",
@@ -42,7 +41,7 @@
   "scripts": {
     "clean:all": "npm run clean:compiled && npm run clean:dependencies",
     "clean:compiled": "rimraf lib",
-    "clean:dependencies": "rimraf node_modules",
+    "clean:dependencies": "rm package-lock.json && rimraf node_modules",
     "clean:install": "npm run clean:all && npm install && npm run compile:build",
     "compile": "npm run clean:compiled && npm run compile:build",
     "compile:build": "babel src --out-dir lib --copy-files",
@@ -66,7 +65,7 @@
     "wdio-webpack-func": "TT_TEST_WDIO_FUNCTION=true wdio --suite opinionated",
     "tt-wdio-webpack-obj": "node scripts/wdio/wdio-runner-cli.js --suite opinionated",
     "tt-wdio-webpack-func": "TT_TEST_WDIO_FUNCTION=true node scripts/wdio/wdio-runner-cli.js --suite opinionated",
-    "tt-wdio-unopinionated": "npm run pack; node scripts/wdio/wdio-runner-cli.js --formFactors=['tiny','huge'] --locales=['en','fr'] --suite unopinionated; rm -rf ./build"
+    "tt-wdio-unopinionated": "npm run pack && node scripts/wdio/wdio-runner-cli.js --formFactors=['tiny','huge'] --locales=['en','fr'] --suite unopinionated && rm -rf ./build"
   },
   "dependencies": {
     "async": "^2.5.0",
@@ -88,7 +87,6 @@
     "glob": "^7.1.1",
     "ip": "^1.1.5",
     "load-json-file": "^5.0.0",
-    "lodash.startcase": "^4.4.0",
     "memory-fs": "^0.4.1",
     "mime-types": "^2.1.21",
     "mini-css-extract-plugin": "^0.4.5",
@@ -102,6 +100,7 @@
     "raw-loader": "^0.5.1",
     "sass-loader": "^7.0.1",
     "shelljs": "^0.8.3",
+    "terra-aggregate-translations": "^1.0.0",
     "terser-webpack-plugin": "^1.1.0",
     "wdio-visual-regression-service": "^0.9.0",
     "webdriverio": "^4.14.1",
