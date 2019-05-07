@@ -9,6 +9,10 @@ Unreleased
 * Add `terra-aggregate-translations` module
 * Guard against empty screenshot array being passed to `getComparisonResults`.
 
+### Changed
+* Remove rimraf dev-depenency
+* Remove scripts/release script and update package.json scripts to reflect release script
+
 ### Remove
 * Aggregate-translation script, tests, and bin executable
 
