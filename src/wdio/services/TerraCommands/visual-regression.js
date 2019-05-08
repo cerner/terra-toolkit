@@ -1,4 +1,4 @@
-import testOptions from './test-options';
+import determineOptions from './determine-test-options';
 
 /**
 * Generates a test for each themed property given and runs a screenshot assertion.
@@ -78,8 +78,6 @@ const screenshotItBlock = (name, selector, options) => {
       viewports.forEach((viewport, index) => {
         screenshots[index].viewport = viewport.name;
       });
-    } else {
-      global.expect(screenshots, 'there is a screenshot to compare').to.have.lengthOf(1);
     }
 
     global.expect(screenshots).to.matchReference();
@@ -98,7 +96,7 @@ const screenshotItBlock = (name, selector, options) => {
 const matchScreenshot = (...args) => {
   const {
     name, selector, misMatchTolerance, viewports,
-  } = testOptions.determineScreenshotOptions(args);
+  } = determineOptions.screenshotOptions(args);
 
   screenshotItBlock(name, selector, { misMatchTolerance, viewports });
 };
