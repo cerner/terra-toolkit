@@ -73,11 +73,10 @@ Then, to assist with testing, the TerraService provides the Terra global helper 
     - See [beAccessible-spec.js](https://github.com/cerner/terra-toolkit/blob/master/tests/wdio/beAccessible-spec.js) for examples.
 - `Terra.should.matchScreenshot()` **Note - It is preferred to use Terra.should.validateElement().  Terra.should.matchScreenshot() may eventually be deprecated** mocha-chai convenience method that takes a screenshot for the specified viewports and verifies the images are within the specified mis-match tolerance. Note: this method provides its own mocha it test case. The methods accepts these arguments (in this order):
     - String (optional): the test case name. Default name is 'default'
-    - Object (optional): the test options. Options include selector, viewports, misMatchTolerance and viewportChangePause:
+    - Object (optional): the test options. Options include selector, viewports, and misMatchTolerance:
          - selector: the element selector to take a screenshot of. Defaults to the global terra.selector.
          - viewports: the array of viewports dimensions to take a screenshot in. Defaults to the current viewport size.
          - misMatchTolerance: number between 0 and 100 that defines the degree of mismatch to consider two images as identical, increasing this value will decrease test coverage. Defaults to the global visualRegression.compare.misMatchTolerance.
-         - viewportChangePause: the number of milliseconds to wait after a viewport change. Defaults to the global visualRegression.viewportChangePause.
     - See [matchScreenshot-spec.js](https://github.com/cerner/terra-toolkit/blob/master/tests/wdio/matchScreenshot-spec.js) for example usage.
 - `Terra.should.validateElement()` mocha-chai convenience method that takes a screenshot and verifies the images are within the specified mis-match tolerance and performs accessibility validation. Note: this method provides its own mocha it test case. Also, since viewports isn't accepted in this method, you need to [test in multiple viewports](#testing-multiple-viewports) This method accepts these arguments (in this order):
     - String (optional): the test case name. Default name is 'default'
@@ -100,12 +99,10 @@ Then, to assist with testing, the TerraService provides the Terra global helper 
 /* global browser, describe, it, expect, viewport */
 
 describe('Basic Test', () => {
-  const viewports = Terra.viewports('tiny', 'huge');
-
   before(() => browser.url('/test.html'));
 
-  Terra.should.beAccessible({ viewports });
-  Terra.should.matchScreenshot({ viewports });
+  Terra.should.beAccessible();
+  Terra.should.matchScreenshot();
   Terra.should.themeEachCustomProperty({
     '--color': 'red',
     '--font-size': '20px',
@@ -117,52 +114,18 @@ describe('Basic Test', () => {
 });
 ```
 
-
-If more control is needed over the assertions, the TerraService also provides the custom chai assertions `accessible` and `matchReference`:
-
-- `accessible()` validates the `axe()` accessibility assertions on the specified viewports are successful.
-- `matchReference()` validates the `checkElement` visual regression assertions on the specified viewports are either within the mis-match tolerance or are an exact match. This method accepts a string argument of `withinTolerance` or `exactly` to specify the matchType. By default the matchType is `withinTolerance`.
-
-```js
-// These globals are provide via the Terra Service
-/* global browser, describe, it, expect, viewport */
-
-
-describe('Advanced Test', () => {
-  // Only test tiny and huge viewports
-  const viewports = Terra.viewports('tiny', 'huge');
-
-  before(() => browser.url('/test.html'));
-
-  it('checks accessibility', () => {
-    expect(browser.axe()).to.be.accessible();
-  });
-
-  it('checks visual comparison', () => {
-    const screenshots = browser.checkViewport({ viewports });
-    expect(screenshots).to.matchReference();
-  });
-
-  it('switches viewport sizes', () => {
-    viewports.forEach(size, () => {
-      browser.setViewportSize(size);
-    });
-  });
-});
-```
-
 ### Testing multiple viewports.
 Sometimes its necessary to rerun the test steps in each viewport. Some build systems support running viewports in parallel and control the viewport via the FORM_FACTOR environment variable. For build systems that don't support parallelization, `Terra.viewports` can be used to wrap the `describe` block. Example:
 
 ```js
 Terra.viewports('tiny', 'small', 'large').forEach((viewport) => {
-  describe('Resize Example', () => {
+  describe('Resize Example - ${viewport.name}', () => {
     before(() => {
       browser.setViewportSize(viewport);
       browser.url('/test.html');
     });
 
-    it(`resizes ${viewport.name}`, () => {
+    it(`resizes to ${viewport.name}`, () => {
       const size = browser.getViewportSize();
       expect(size.height).to.equal(viewport.height);
       expect(size.width).to.equal(viewport.width);
@@ -171,16 +134,13 @@ Terra.viewports('tiny', 'small', 'large').forEach((viewport) => {
 });
 ```
 
-This will generate a describe block for each viewport.
-
-
 ## Running Tests
 Installation of webdriver.io provides access to the wdio test runner. To start the runner, add the wdio npm script to the package.json and then provide the wdio configuration file. The wdio test runner requires a configuration file to be passed either from the current directory or by path.
 
 ```javascript
-// NPM Script at the root-level of a mono-repo with config in same directory
+// run wdio cli directly
 "wdio": "wdio";
 
-// NPM Script at a package-level of a mono-repo
-"wdio": "wdio ../../wdio.conf.js";
+// run terra-toolkit's wdio script for consecutive FormFactor and Locale parellel tests
+"wdio": "tt-wdio --config wdio.conf.js";
 ```
