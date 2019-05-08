@@ -29,17 +29,12 @@ describe('validateElement', () => {
         terra: {
           selector: '[data-terra-toolkit-content]',
         },
-        visualRegression: {
-          compare: {
-            misMatchTolerance: 0.01,
-          },
-        },
       },
     };
 
     validateElement();
 
-    expect(visualRegressions.screenshotItBlock).toBeCalledWith('default', '[data-terra-toolkit-content]', { misMatchTolerance: 0.01 });
+    expect(visualRegressions.screenshotItBlock).toBeCalledWith('default', '[data-terra-toolkit-content]', { });
     expect(accessibility.beAccessible).toBeCalledWith({ restoreScroll: true, context: '[data-terra-toolkit-content]' });
   });
 });

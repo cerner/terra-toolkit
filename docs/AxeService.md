@@ -42,8 +42,6 @@ The following options are available:
   An array of viewports `{ width, height }` to run the accessibility test in. If none provided, by default it uses the current viewport.
 * **rules**:
   The axe rules configuration to test. See the [axe-core documentation](https://www.axe-core.org/docs/).
-* **runOnly**:
-  The axe tags to filter the validations to run on the accessibility to test. See the [axe-core documentation](https://www.axe-core.org/docs/).
 * **context**:
   A css selector to scope the accessibility test to. See the [axe-core documentation](https://www.axe-core.org/docs/).
 
@@ -61,21 +59,12 @@ it('ignores inaccessibility based on rules', () => {
   expect(browser.axe({ viewports, rules })).to.be.accessible();
 });
 
-it('runs only specified tags', () => {
-  browser.url('/inaccessible-text.html');
-  const runOnly = {
-    type: 'tag',
-    values: ['color-contrast'],
-  };
-  expect(browser.axe({ viewports, runOnly })).to.be.accessible();
-});
-
 it('runs only specified context', () => {
   browser.url('/inaccessible-contrast.html');
   let context = 'h1';
-  expect(browser.axe({ viewports, context })).to.not.be.accessible();
+  expect(browser.axe({ context })).to.not.be.accessible();
 
   context = 'h2';
-  expect(browser.axe({ viewports, context })).to.be.accessible();
+  expect(browser.axe({ context })).to.be.accessible();
 });
 ```

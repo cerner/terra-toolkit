@@ -3,14 +3,24 @@ Changelog
 
 Unreleased
 ----------
+### Major Version Bump. See https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitUpgradeGuide-v5.0.0.md.
 
 ### Added
 * Added default testName `themed` for `themeCombinationOfCustomProperties` helper.
 * Add `terra-aggregate-translations` module
 * Guard against empty screenshot array being passed to `getComparisonResults`.
 
+### Changes
+* Moved/reduced redudant code that parsed the test options passed to TerraService test helpers
+
+### Fixed
+* Clean up global style chagnes changes made by Terra.should.themeEachCustomProperty and Terra.should.themeCombinationOfCustomProperties test helpers
+
 ### Remove
 * Aggregate-translation script, tests, and bin executable
+* **Breaking Change** Removed `isExactMatch` chai assertion.
+* **Breaking Change** Removed `viewportChangePause` option from Terra.should.matchScreenshot test helper
+* **Breaking Change** Removed `runOnly` option from Terra.should.beAccessible test helper and axe chai method
 
 4.27.0 - (April 16, 2019)
 ----------

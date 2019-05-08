@@ -1,6 +1,6 @@
 import accessibilityMethods from './accessiblity';
 import visualRegressionMethods from './visual-regression';
-import testOptions from './test-options';
+import determineOptions from './determine-test-options';
 
 /**
  * Mocha-chai wrapper method to capture screenshots of a specified element and assert the
@@ -11,14 +11,18 @@ import testOptions from './test-options';
  *        and axeRules
  */
 const validateElement = (...args) => {
-  const axeOptions = testOptions.determineAxeOptions(args);
+  const {
+    rules,
+    restoreScroll,
+    context,
+  } = determineOptions.axeOptions(args);
   const {
     name,
     selector,
     misMatchTolerance,
-  } = testOptions.determineScreenshotOptions(args);
+  } = determineOptions.screenshotOptions(args);
 
-  accessibilityMethods.beAccessible(axeOptions);
+  accessibilityMethods.beAccessible({ rules, restoreScroll, context });
   visualRegressionMethods.screenshotItBlock(name, selector, { misMatchTolerance });
 };
 

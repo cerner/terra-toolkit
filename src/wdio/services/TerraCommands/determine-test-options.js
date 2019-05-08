@@ -1,4 +1,4 @@
-const determineArgs = (...args) => {
+const determineArgs = (args) => {
   const param1 = args.length ? args[0] : undefined;
   const param2 = args.length > 1 ? args[1] : undefined;
 
@@ -14,10 +14,18 @@ const determineArgs = (...args) => {
   // Check if custom selector should be used, otherwise use the global value.
   const selector = options.selector || global.browser.options.terra.selector;
 
+  // Checked for custom axe selector
+  const { context } = options;
+
+  // Which viewports the screenshoot should adjust too during the test run, otherwise use's current viewport
+  const { viewports } = options;
+
   return {
+    context,
     name,
     options,
     selector,
+    viewports,
   };
 };
 
@@ -25,13 +33,18 @@ const determineArgs = (...args) => {
 * Helper method to determine the selector and axe rules for the test run.
 * @param {Array} args - The list of test arguments to parse.
 */
-const determineAxeOptions = (args) => {
-  const { options, selector } = determineArgs(...args);
+const axeOptions = (args) => {
+  const {
+    context, options, selector, viewports,
+  } = determineArgs(args);
+
+  const axeRules = options.rules || options.axeRules;
 
   return {
-    ...options.axeRules && { rules: options.axeRules },
+    context: context || selector,
     restoreScroll: true,
-    context: selector,
+    ...viewports && { viewports },
+    ...axeRules && { rules: axeRules },
   };
 };
 
@@ -42,29 +55,24 @@ const determineAxeOptions = (args) => {
 * options are:
 *     - viewports: [{ width: Number, height: Number }]
 *     - misMatchTolerance: Number
-*     - viewportChangePause: Number
 * @param {Array} args - The list of test arguments to parse.
 */
-const determineScreenshotOptions = (args) => {
-  const { name, options, selector } = determineArgs(...args);
-
-  // Check if custom misMatchTolerance should be used, otherwise use the global value.
-  const misMatchTolerance = options.misMatchTolerance || global.browser.options.visualRegression.compare.misMatchTolerance;
-
-  // Which viewports the screenshoot should adjust to & take screenshot. Supplying [] results in current viewport size.
-  const viewports = options.viewports || [];
+const screenshotOptions = (args) => {
+  const {
+    name, options, selector, viewports,
+  } = determineArgs(args);
 
   return {
     name,
     selector,
-    viewports,
-    misMatchTolerance,
+    ...viewports && { viewports },
+    ...options.misMatchTolerance && { misMatchTolerance: options.misMatchTolerance },
   };
 };
 
 const determineHelpers = {
-  determineScreenshotOptions,
-  determineAxeOptions,
+  screenshotOptions,
+  axeOptions,
 };
 
 export default determineHelpers;
