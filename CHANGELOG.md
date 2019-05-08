@@ -10,13 +10,15 @@ Unreleased
 * Add `terra-aggregate-translations` module
 * Guard against empty screenshot array being passed to `getComparisonResults`.
 
-### Changes
+### Changed
+* Remove rimraf dev-depenency
+* Remove scripts/release script and update package.json scripts to reflect release script
 * Moved/reduced redudant code that parsed the test options passed to TerraService test helpers
 
 ### Fixed
 * Clean up global style chagnes changes made by Terra.should.themeEachCustomProperty and Terra.should.themeCombinationOfCustomProperties test helpers
 
-### Remove
+### Removed
 * Aggregate-translation script, tests, and bin executable
 * **Breaking Change** Removed `isExactMatch` chai assertion.
 * **Breaking Change** Removed `viewportChangePause` option from Terra.should.matchScreenshot test helper
