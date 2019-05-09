@@ -3,6 +3,7 @@ Changelog
 
 Unreleased
 ----------
+### Major Version Bump. See https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitUpgradeGuide-v5.0.0.md.
 
 ### Added
 * Added default testName `themed` for `themeCombinationOfCustomProperties` helper.
@@ -13,8 +14,11 @@ Unreleased
 * Remove rimraf dev-depenency
 * Remove scripts/release script and update package.json scripts to reflect release script
 
-### Remove
+### Removed
 * Aggregate-translation script, tests, and bin executable
+* **Breaking Change** Removed Axe Service. The Axe service & Terra service had to be used in conjunction so merged the code into the Terra Service.
+    * Terra.should.beAccessible context default changed from document to the global terra.selector value defined in the config by the user
+* **Breaking Change** Removed `runOnly` option from Terra.should.beAccessible test helper and axe chai method
 
 4.27.0 - (April 16, 2019)
 ----------

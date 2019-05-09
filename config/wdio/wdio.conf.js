@@ -3,7 +3,7 @@ const glob = require('glob');
 
 const path = require('path');
 const {
-  Axe: AxeService, SeleniumDocker: SeleniumDockerService, ServeStaticService, Terra: TerraService,
+  SeleniumDocker: SeleniumDockerService, ServeStaticService, Terra: TerraService,
 } = require('../../lib/wdio/services/index');
 const visualRegressionConfig = require('./visualRegressionConf');
 
@@ -38,7 +38,7 @@ const config = {
   waitforTimeout: 3000,
   connectionRetryTimeout: 90000,
   connectionRetryCount: 1,
-  services: ['visual-regression', AxeService, TerraService, SeleniumDockerService, ServeStaticService],
+  services: ['visual-regression', TerraService, SeleniumDockerService, ServeStaticService],
 
   visualRegression: visualRegressionConfig,
 
