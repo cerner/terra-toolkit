@@ -57,7 +57,6 @@ describe('axeOptions', () => {
     const options = determineOptions.axeOptions([]);
 
     expect(options).toHaveProperty('context', '[data-terra-toolkit-content]');
-    expect(options).toHaveProperty('restoreScroll', true);
     expect(options).not.toHaveProperty('viewports');
     expect(options).not.toHaveProperty('rules');
   });
@@ -93,12 +92,6 @@ describe('axeOptions', () => {
     const options = determineOptions.axeOptions([{ axeRules: [customRule] }]);
 
     expect(options).toHaveProperty('rules', [customRule]);
-  });
-
-  it('cannot specify restoreScroll option', () => {
-    const options = determineOptions.axeOptions([{ restoreScroll: false }]);
-
-    expect(options).toHaveProperty('restoreScroll', true);
   });
 
   it('cannot specify runOnly options', () => {

@@ -13,16 +13,16 @@ import determineOptions from './determine-test-options';
 const validateElement = (...args) => {
   const {
     rules,
-    restoreScroll,
     context,
   } = determineOptions.axeOptions(args);
+
   const {
     name,
     selector,
     misMatchTolerance,
   } = determineOptions.screenshotOptions(args);
 
-  accessibilityMethods.beAccessible({ rules, restoreScroll, context });
+  accessibilityMethods.accessibleItBlock({ rules, context });
   visualRegressionMethods.screenshotItBlock(name, selector, { misMatchTolerance });
 };
 

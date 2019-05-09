@@ -6,6 +6,7 @@ import chai from 'chai';
 function accessible() {
   // eslint-disable-next-line no-underscore-dangle
   new chai.Assertion(this._obj).to.be.instanceof(Array);
+
   // eslint-disable-next-line no-underscore-dangle
   const errors = this._obj
     .filter(test => test.result)

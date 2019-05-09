@@ -1,4 +1,5 @@
 import chai from 'chai';
+import axeCommand from './TerraCommands/axe-command';
 import chaiMethods from './TerraCommands/chai-methods';
 import accessiblity from './TerraCommands/accessiblity';
 import visualRegression from './TerraCommands/visual-regression';
@@ -63,6 +64,7 @@ export default class TerraService {
         validateElement,
       },
     };
+    global.browser.addCommand('axe', axeCommand);
     chai.Assertion.addMethod('accessible', chaiMethods.accessible);
     chai.Assertion.addMethod('matchReference', chaiMethods.matchReference);
     // IE driver takes a longer to be ready for browser interactions

@@ -1,3 +1,8 @@
+/**
+* Helper method to determine the default test options for one or two args passed.
+* @param {Array} args - The list of test arguments to parse.
+*     Supports [ String ], [ object ], [ string, object ]
+*/
 const determineArgs = (args) => {
   const param1 = args.length ? args[0] : undefined;
   const param2 = args.length > 1 ? args[1] : undefined;
@@ -42,7 +47,6 @@ const axeOptions = (args) => {
 
   return {
     context: context || selector,
-    restoreScroll: true,
     ...viewports && { viewports },
     ...axeRules && { rules: axeRules },
   };
