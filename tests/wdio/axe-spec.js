@@ -1,6 +1,6 @@
 describe('axe', () => {
   const viewports = Terra.viewports('tiny', 'huge');
-  const context = '[data-terra-toolkit-content]';
+  const context = 'html';
   it('checks accessibility', () => {
     browser.url('/accessible.html');
     expect(browser.axe({ context })).to.be.accessible();

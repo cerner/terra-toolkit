@@ -18,11 +18,12 @@ const config = {
 
   // Configuration for Axe service
   axe: {
+    // disabling specific rules when testing accessibility
     options: {
-      rules: [
-         // disabling specific rules when testing accessibility
-        { id: 'landmark-one-main', enabled: false },
-      ],
+      rules: [{
+        id: 'landmark-one-main',
+        enabled: false,
+      }],
     }
   },
 };
@@ -32,29 +33,49 @@ exports.config = config;
 
 
 ## Writing Tests
-With the Terra Service, you have access to the `Terra.should.beAccessible()` assertion. This `it` block will run axe for the options provided and use a custom chai assertion to validating results have no errors.
 
-### Test Options
-The following are the list of available test options that can be used:
+`browser.axe([{options}]);`
 
-* **context**:
-  A css selector to scope the accessibility test to. By default the global selector will be used. See the [axe-core documentation](https://www.axe-core.org/docs/).
-* **rules**:
-  The axe rules to use during the test. See the [axe-core documentation](https://www.axe-core.org/docs/).
+The following options are available:
+
 * **viewports**:
-  The array of viewports `{ width, height }` to run the accessibility test in. By default the current viewport will be used. It is not recommended to use this options as this can cause undesirable behavior when testing responsive UIs. Instead, consider looping the desired viewport to manager how UI renders.
+  An array of viewports `{ width, height }` to run the accessibility test in. If none provided, by default it uses the current viewport.
+* **rules**:
+  The axe rules configuration to test. See the [axe-core documentation](https://www.axe-core.org/docs/).
+* **runOnly**:
+  The axe tags to filter the validations to run on the accessibility to test. See the [axe-core documentation](https://www.axe-core.org/docs/).
+* **context**:
+  A css selector to scope the accessibility test to. See the [axe-core documentation](https://www.axe-core.org/docs/).
 
-### Example Usage
+Then, the Axe Service provides the custom custom assertion `accessible()` to make validating the output of accessibility commands easier.
+
 ```js
-describe('check assessibility', () => {
-  before(() => browser.url('/home.html'));
+// Use viewport helper to get { width, height } by name.
+const viewports = Terra.viewports('tiny', 'huge');
 
-  // use defaults
-  Terra.should.beAccessible();
+it('ignores inaccessibility based on rules', () => {
+  browser.url('/inaccessible-contrast.html');
+  const rules = {
+    'color-contrast': { enabled: false },
+  };
+  expect(browser.axe({ viewports, rules })).to.be.accessible();
+});
 
-  // custom context
-  Terra.should.beAccessible('#my-list');
-})
+it('runs only specified tags', () => {
+  browser.url('/inaccessible-text.html');
+  const runOnly = {
+    type: 'tag',
+    values: ['color-contrast'],
+  };
+  expect(browser.axe({ viewports, runOnly })).to.be.accessible();
+});
+
+it('runs only specified context', () => {
+  browser.url('/inaccessible-contrast.html');
+  let context = 'h1';
+  expect(browser.axe({ viewports, context })).to.not.be.accessible();
+
+  context = 'h2';
+  expect(browser.axe({ viewports, context })).to.be.accessible();
+});
 ```
-
-

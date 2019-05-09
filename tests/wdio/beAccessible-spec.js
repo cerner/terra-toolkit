@@ -1,4 +1,4 @@
-describe('beAccessible', () => {
+describe('axe', () => {
   const viewports = Terra.viewports('tiny', 'huge');
 
   describe('accessible', () => {
