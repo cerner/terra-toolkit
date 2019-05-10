@@ -64,7 +64,7 @@ const webpackConfig = (options, env, argv) => {
                   return [
                     rtl(),
                     Autoprefixer(),
-                    ...production && cssnano({ preset: 'advanced' }),
+                    ...(production ? [cssnano({ preset: 'advanced' })] : []),
                   ];
                 },
               },
