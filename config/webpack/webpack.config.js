@@ -7,7 +7,6 @@ const rtl = require('postcss-rtl');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const browserslist = require('browserslist-config-terra');
 const merge = require('webpack-merge');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
 const aggregateTranslations = require('../../scripts/aggregate-translations/aggregate-translations');
@@ -64,7 +63,7 @@ const webpackConfig = (options, env, argv) => {
                 plugins() {
                   return [
                     rtl(),
-                    Autoprefixer({ browsers: browserslist }),
+                    Autoprefixer(),
                     ...production && cssnano({ preset: 'advanced' }),
                   ];
                 },
