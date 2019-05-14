@@ -3,6 +3,7 @@ Changelog
 
 Unreleased
 ----------
+### Major Version Bump. See https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitUpgradeGuide-v5.0.0.md.
 
 ### Added
 * Added default testName `themed` for `themeCombinationOfCustomProperties` helper.
@@ -12,6 +13,7 @@ Unreleased
 ### Changed
 * Remove rimraf dev-depenency
 * Remove scripts/release script and update package.json scripts to reflect release script
+* Upgrade to use selenium-docker chrome version 3.14.0-helium. Tests now run against Google Chrome: 69.0.3497.100. See https://github.com/SeleniumHQ/docker-selenium/tree/3.14.0-helium
 
 ### Remove
 * Aggregate-translation script, tests, and bin executable
