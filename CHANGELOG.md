@@ -7,8 +7,9 @@ Unreleased
 
 ### Added
 * Added default testName `themed` for `themeCombinationOfCustomProperties` helper.
-* Add `terra-aggregate-translations` module
+* Added `terra-aggregate-translations` module
 * Guard against empty screenshot array being passed to `getComparisonResults`.
+* **Breaking Change** Added `resetScroll: true` to axe helper.
 
 ### Changed
 * Remove rimraf dev-depenency
