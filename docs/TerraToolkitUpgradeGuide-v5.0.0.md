@@ -1,8 +1,11 @@
 # Terra Toolkit Upgrade Guide v5.0.0
+
 This document will provide information on upgrading from terra-toolkit 4.x to 5.0.0.
 
 ## Terra Scripts
+
 ### Serve
+
 Serve is now a thin abstraction on webpack dev server and the commandline api is now identical. With this addition it now means that you have control over the dev server through options specified in your webpack config as well as through the cli.
 
 Why use serve instead of webpack-dev-server directly? Having the serve abstraction provides a hook for us to change the servers implementation in case webpack-dev-server no longer meets our needs.
@@ -23,14 +26,16 @@ module.exports = {
 };
 ```
 
-Serve is no longer available as a javascript function. If this is needed use webpack-dev-server directly.
+Serve is no longer available as a javascript function. If this is needed use [webpack-dev-server](https://github.com/webpack/webpack-dev-server) directly.
 
 ### Serve Static
+
 Webpack-dev-server now supports IE 10+, because of this change we have removed the ability for serve-static to run webpack to create your site. Serve static now will simply host static site content.
 
 If an html page is not found serve static will try to return /404.html with a status of 404. If that file is not found serve static will return a 404 status as before.
 
 These api options have been removed from both the cli and javascript:
+
 * config
 * production
 * disk
@@ -43,17 +48,19 @@ module.exports = {
     // Disable hot reloading and javascript injection to watch for changes.
     hot: false,
     inline: false,
-    },
   },
 };
 ```
 
 ### tt-heroku-serve-static
+
 This script was removed. Use this instead:
-```npm run compile:prod && tt-serve-static --port $PORT --site './build' ```
+```npm run compile:prod && tt-serve-static --port $PORT --site './build'```
 
 ## WebdriverIO
+
 ### ServeStaticService
+
 The serve static service can serve a static site or compile a site from the wepback config. The compiled site will be served by webpack-dev-server and the static site will be served by serve static.
 
 The service will no longer inject the locale into served html files.
@@ -64,6 +71,7 @@ For compiled sites, the ```defaultLocale```` environment variable will be passed
 
 For example:
 Webpack config
+
 ```javascript
 module.exports = (env = {}) => {
   const { defaultLocale = 'en' } = env;
@@ -78,7 +86,9 @@ module.exports = (env = {}) => {
   };
 };
 ```
+
 Template
+
 ```html
 <!doctype html>
 <html lang="<%= htmlWebpackPlugin.options.lang %>" dir="ltr">
