@@ -2,7 +2,6 @@ const ThemeAggregator = require('../../scripts/aggregate-themes/theme-aggregator
 
 global.console = { log: jest.fn(), warn: jest.fn() };
 
-
 describe('Theme Aggregator', () => {
   describe('aggregate', () => {
     it('returns null if there is no terra-theme-config.js', () => {
