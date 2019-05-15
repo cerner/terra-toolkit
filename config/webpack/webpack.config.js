@@ -9,7 +9,7 @@ const CleanPlugin = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const merge = require('webpack-merge');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
-const aggregateTranslations = require('../../scripts/aggregate-translations/aggregate-translations');
+const aggregateTranslations = require('terra-aggregate-translations');
 const ThemeAggregator = require('../../scripts/aggregate-themes/theme-aggregator');
 
 const webpackConfig = (options, env, argv) => {

@@ -23,7 +23,6 @@
     "url": "https://github.com/cerner/terra-toolkit/issues"
   },
   "bin": {
-    "tt-aggregate-translations": "bin/aggregate-translations.js",
     "tt-clean-screenshots": "bin/clean-screenshots.js",
     "tt-heroku-serve-static": "bin/heroku-serve-static.js",
     "tt-pack": "bin/pack.js",
@@ -31,6 +30,9 @@
     "tt-serve-static": "bin/serve-static.js",
     "tt-wdio": "bin/wdio-runner.js"
   },
+  "browserslist": [
+    "extends browserslist-config-terra"
+  ],
   "eslintConfig": {
     "extends": "terra",
     "settings": {
@@ -40,24 +42,23 @@
     }
   },
   "scripts": {
-    "clean:all": "npm run clean:compiled && npm run clean:dependencies",
-    "clean:compiled": "rimraf lib",
-    "clean:dependencies": "rimraf node_modules",
-    "clean:install": "npm run clean:all && npm install && npm run compile:build",
-    "compile": "npm run clean:compiled && npm run compile:build",
-    "compile:build": "babel src --out-dir lib --copy-files",
+    "clean": "rm package-lock.json; rm -rf node_modules",
+    "clean:install": "npm run clean && npm install",
+    "compile": "babel src --out-dir lib --copy-files",
     "danger": "danger ci",
     "jest": "jest --config jestConfig.js",
     "lint": "eslint --ext .js .",
     "nightwatch": "nightwatch",
     "nightwatch:port-provided": "nightwatch -c tests/test.nightwatch.conf.js",
     "pack": "webpack --config tests/test.config.js",
+    "postpublish": "git push --tag",
+    "precompile": "rm -rf lib",
     "prepare": "npm run compile",
-    "prepublishOnly": "npm test",
+    "prepublishOnly": "npm whoami && check-installed-dependencies && npm test",
     "pretest": "npm run lint",
-    "release:major": "node scripts/release/release.js major",
-    "release:minor": "node scripts/release/release.js minor",
-    "release:patch": "node scripts/release/release.js patch",
+    "release:major": "npm version major -m 'Released version %s' && npm publish",
+    "release:minor": "npm version minor -m 'Released version %s' && npm publish",
+    "release:patch": "npm version patch -m 'Released version %s' && npm publish",
     "start": "node scripts/serve/serve-cli.js --config ./tests/test.config",
     "start-static": "node scripts/serve/serve-static-cli.js --config ./tests/test.config",
     "test": "npm run jest && npm run nightwatch && npm run nightwatch:port-provided && npm run wdio",
@@ -89,7 +90,6 @@
     "glob": "^7.1.1",
     "ip": "^1.1.5",
     "load-json-file": "^5.0.0",
-    "lodash.startcase": "^4.4.0",
     "memory-fs": "^0.4.1",
     "mime-types": "^2.1.21",
     "mini-css-extract-plugin": "^0.6.0",
@@ -103,6 +103,7 @@
     "raw-loader": "^2.0.0",
     "sass-loader": "^7.0.1",
     "shelljs": "^0.8.3",
+    "terra-aggregate-translations": "^1.0.0",
     "terser-webpack-plugin": "^1.1.0",
     "wdio-visual-regression-service": "^0.9.0",
     "webdriverio": "^4.14.1",
@@ -125,11 +126,12 @@
     "@babel/plugin-transform-runtime": "^7.4.4",
     "@babel/preset-env": "^7.4.4",
     "browserslist-config-terra": "^1.0.0",
+    "check-installed-dependencies": "^1.0.0",
     "danger": "^3.7.14",
     "eslint": "^5.12.0",
     "eslint-config-terra": "^2.2.0",
     "html-webpack-plugin": "^3.1.0",
     "jest": "^24.0.0",
-    "rimraf": "^2.6.3"
+    "nightwatch": "^0.9.12"
   }
 }

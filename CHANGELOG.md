@@ -5,16 +5,22 @@ Unreleased
 ----------
 ### Major Version Bump. See https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitUpgradeGuide-v5.0.0.md.
 
-### Added 
+### Added
 * Added default testName `themed` for `themeCombinationOfCustomProperties` helper.
-* 
+* Add `terra-aggregate-translations` module
+* Guard against empty screenshot array being passed to `getComparisonResults`.
 
 ### Changed
+* Remove rimraf dev-depenency
+* Remove scripts/release script and update package.json scripts to reflect release script
 * Webpack configuration:
     * Added css compression for production webpack builds with cssnano
     * Remove directly passing browserslist configuration to webpack. Use package defined configuraiton instead.
     * Updated dependencies
     * Changed webpack, webpack-cli and webpack-dev-server to be peer dependencies to ensure correct versions are used
+
+### Remove
+* Aggregate-translation script, tests, and bin executable
 
 4.27.0 - (April 16, 2019)
 ----------
