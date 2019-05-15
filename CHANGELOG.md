@@ -3,11 +3,18 @@ Changelog
 
 Unreleased
 ----------
+### Major Version Bump. See https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitUpgradeGuide-v5.0.0.md.
 
 ### Added 
 * Added default testName `themed` for `themeCombinationOfCustomProperties` helper.
+* 
 
-### Major Version Bump. See https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitUpgradeGuide-v5.0.0.md.
+### Changed
+* Webpack configuration:
+    * Added css compression for production webpack builds with cssnano
+    * Remove directly passing browserslist configuration to webpack. Use package defined configuraiton instead.
+    * Updated dependencies
+    * Changed webpack, webpack-cli and webpack-dev-server to be peer dependencies to ensure correct versions are used
 
 4.27.0 - (April 16, 2019)
 ----------

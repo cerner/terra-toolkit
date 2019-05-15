@@ -14,7 +14,7 @@ This document will provide information on upgrading from terra-toolkit 4.x to 5.
 }
 ```
 
-2. For prod compilation, css will be minimized via `cssnano`.
+2. For prod compilation, css will be compressed via `cssnano`.
 
 ### Dependencies Changes
 The following webpack dependency changes were made in Terra toolkit's default webpack configuration. Please note, upgrading to use babel `^7` is required to use these dependency updates.
