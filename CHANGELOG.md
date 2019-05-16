@@ -9,10 +9,8 @@ Unreleased
 * `terra-aggregate-translations` peer depenency to use in the default webpack configuration
 
 ### Removed
-* **Breaking Change** Aggregate-translations pre-build script and default terraI18nconfiguration is no longer provided through terra-toolkit. 
-
-### Removed
 * **Breaking Change** Removed the nightwatch utility, dependencies, tests and documentations.
+* **Breaking Change** Aggregate-translations pre-build script and default terraI18nconfiguration is no longer provided through terra-toolkit.
 
 4.28.0 - (May 16, 2019)
 ----------
