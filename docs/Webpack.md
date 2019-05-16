@@ -41,7 +41,7 @@ module.exports = mergedConfig;
 ```
 
 #### Translation Aggregation
-Terra's supported locales will be aggregated when using the default webpack configuration through the `aggregate-translations` pre-build tool. To customize which translations are aggregated, refer these docs on [aggregating translations](https://github.com/cerner/terra-toolkit/blob/master/docs/AggregateTranslations.md#terrai18nconfig-example). Alternatively, if translations are not required, disable translation aggregation within the webpack build by passing the environment variable `--env.disableAggregateTranslations` to the webpack command.
+Terra's supported locales will be aggregated when using the default webpack configuration through the `aggregate-translations` pre-build tool. To customize which translations are aggregated, refer these docs on [aggregating translations](https://github.com/cerner/terra-aggregate-translations#terrai18nconfig-example). Alternatively, if translations are not required, disable translation aggregation within the webpack build by passing the environment variable `--env.disableAggregateTranslations` to the webpack command.
 
 ```bash
 webpack --env.disableAggregateTranslations

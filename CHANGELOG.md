@@ -8,6 +8,20 @@ Unreleased
 ### Removed
 * **Breaking Change** Removed the nightwatch utility, dependencies, tests and documentations.
 
+4.28.0 - (May 16, 2019)
+----------
+### Added
+* Added default testName `themed` for `themeCombinationOfCustomProperties` helper.
+* Add `terra-aggregate-translations` module
+* Guard against empty screenshot array being passed to `getComparisonResults`.
+
+### Changed
+* Remove rimraf dev-depenency
+* Remove scripts/release script and update package.json scripts to reflect release script
+
+### Remove
+* Aggregate-translation script, tests, and bin executable
+
 4.27.0 - (April 16, 2019)
 ----------
 ### Added

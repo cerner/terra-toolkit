@@ -34,9 +34,7 @@ Terra Toolkit uses Docker to setup, run, and tear down selenium to ensure a cons
 - Install Docker version 17.09.0 or higher. Installation instructions can be found at https://docs.docker.com/install/.
 
 ## Aggregate Translations Tool
-Terra components provide internationalization and localization support via `react-intl`. To use the component translations, the `aggregate-translations` pre-build tool will aggregate the translations, and create the intl loader and translation loader files that are configured for the specified locales.
-
-See the [Aggregating Translations Guide](https://github.com/cerner/terra-toolkit/blob/master/docs/AggregateTranslations.md) to get started.
+Terra-toolkit leverages the `terra-aggregate-translations` pre-build tool to provide interntionalization support for builds and tests. Pleases see the [Aggregating Translations Guide](https://github.com/cerner/terra-aggregate-translations) to get started.
 
 ## Theme Aggregation
 
