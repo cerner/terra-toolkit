@@ -8,9 +8,13 @@ Unreleased
 ### Added
 * `terra-aggregate-translations` peer depenency to use in the default webpack configuration
 
+### Changes
+* Moved/reduced redudant code that parsed the test options passed to TerraService test helpers
+
 ### Fixed
 * **Breaking Change** Fix inconsistent screenshot widths for the huge form factor by setting the default formFactor to 'huge' in the wdio.config.js. [#137](https://github.com/cerner/terra-toolkit/issues/137)
 * **Breaking Change** Fix incorrect screenshot naming where the screenshot name by using the current viewport size's form facor instead of using the formFactor value set in wdio.config.js.[#248](https://github.com/cerner/terra-toolkit/issues/248)
+* Clean up global style changes changes made by Terra.should.themeEachCustomProperty and Terra.should.themeCombinationOfCustomProperties test helpers
 
 ### Removed
 * **Breaking Change** Removed the nightwatch utility, dependencies, tests and documentations.
@@ -18,6 +22,9 @@ Unreleased
 * **Breaking Change** Deprecated serve javascript function
 * **Breaking Change** Serve-static no longer builds webpack config
 * **Breaking Change** Serve-static no longer injects locale.
+* **Breaking Change** Removed `isExactMatch` chai assertion.
+* **Breaking Change** Removed `viewportChangePause` option from Terra.should.matchScreenshot test helper
+* **Breaking Change** Removed `runOnly` option from Terra.should.beAccessible test helper and axe chai method
 
 4.28.0 - (May 16, 2019)
 ----------
@@ -29,16 +36,9 @@ Unreleased
 ### Changed
 * Remove rimraf dev-depenency
 * Remove scripts/release script and update package.json scripts to reflect release script
-* Moved/reduced redudant code that parsed the test options passed to TerraService test helpers
-
-### Fixed
-* Clean up global style chagnes changes made by Terra.should.themeEachCustomProperty and Terra.should.themeCombinationOfCustomProperties test helpers
 
 ### Removed
 * Aggregate-translation script, tests, and bin executable
-* **Breaking Change** Removed `isExactMatch` chai assertion.
-* **Breaking Change** Removed `viewportChangePause` option from Terra.should.matchScreenshot test helper
-* **Breaking Change** Removed `runOnly` option from Terra.should.beAccessible test helper and axe chai method
 
 4.27.0 - (April 16, 2019)
 ----------

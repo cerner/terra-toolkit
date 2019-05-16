@@ -71,6 +71,9 @@ This script was removed. Use this instead:
 ### Visual Regression
 The default form factor is now 'huge' to correct inconsistent viewport sizing that had occured when a test used the default viewport for a test run vs defining a huge viewport. This may require screenshot updates, but no code changes are necessary.
 
+### TerraService
+- The `viewportChangePause` option was removed the `Terra.should.matchScreenshot`.
+
 ### ServeStaticService
 
 The serve static service can serve a static site or compile a site from the wepback config. The compiled site will be served by webpack-dev-server and the static site will be served by serve static.
