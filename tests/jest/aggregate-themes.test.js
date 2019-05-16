@@ -93,6 +93,7 @@ describe('Theme Aggregator', () => {
       const options = { theme: 'terra-mock-dark-theme' };
 
       ThemeAggregator.validate(options);
+
       // eslint-disable-next-line no-console
       expect(console.warn).toHaveBeenCalledTimes(0);
     });
@@ -101,6 +102,7 @@ describe('Theme Aggregator', () => {
       const options = { scoped: ['terra-mock-dark-theme'] };
 
       ThemeAggregator.validate(options);
+
       // eslint-disable-next-line no-console
       expect(console.warn).toHaveBeenCalledTimes(0);
     });
@@ -109,6 +111,7 @@ describe('Theme Aggregator', () => {
       const options = {};
 
       ThemeAggregator.validate(options);
+
       // eslint-disable-next-line no-console
       expect(console.warn).toHaveBeenCalled();
     });

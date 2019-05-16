@@ -3,7 +3,7 @@ const glob = require('glob');
 
 const path = require('path');
 const {
-  Axe: AxeService, SeleniumDocker: SeleniumDockerService, ServeStaticService, Terra: TerraService,
+  SeleniumDocker: SeleniumDockerService, ServeStaticService, Terra: TerraService,
 } = require('../../lib/wdio/services/index');
 const visualRegressionConfig = require('./visualRegressionConf');
 
@@ -13,7 +13,6 @@ const internalPort = process.env.WDIO_INTERNAL_PORT || 8080;
 const ci = process.env.TRAVIS || process.env.CI;
 const bail = process.env.WDIO_BAIL || ci;
 const locale = process.env.LOCALE;
-const formFactor = process.env.FORM_FACTOR;
 
 const hasPackages = glob.sync((path.join(process.cwd(), 'packages'))).length > 0;
 
@@ -42,7 +41,7 @@ const config = {
   waitforTimeout: 3000,
   connectionRetryTimeout: 90000,
   connectionRetryCount: 1,
-  services: ['visual-regression', AxeService, TerraService, SeleniumDockerService, ServeStaticService],
+  services: ['visual-regression', TerraService, SeleniumDockerService, ServeStaticService],
 
   visualRegression: visualRegressionConfig,
 
@@ -52,7 +51,7 @@ const config = {
     port: internalPort,
   },
   ...locale && { locale },
-  ...formFactor && { formFactor },
+  formFactor: process.env.FORM_FACTOR || 'huge',
 
   seleniumVersion: '3.14',
   seleniumDocker: {
