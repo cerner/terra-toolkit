@@ -20,6 +20,7 @@ Cerner Corporation
 - Justin Wisniewski [@JustinWisniewski]
 - Naveen Kumar Ramamurthy [@nramamurth]
 - Lalitha Kalidindi[@lalitha94]
+- Pranav Agarwal [@pranav300]
 
 [@emilyrohrbough]: https://github.com/emilyrohrbough
 [@brettjankord]: https://github.com/bjankord
@@ -41,3 +42,4 @@ Cerner Corporation
 [@JustinWisniewski]: https://github.com/JustinWisniewski
 [@nramamurth]: https://github.com/nramamurth
 [@lalitha94]: https://github.com/lalitha94
+[@pranav300]: https://github.com/pranav300

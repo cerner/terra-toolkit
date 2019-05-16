@@ -7,7 +7,6 @@ tests
 errorScreenshots
 .github
 screenshots
-/nightwatch.config.js
 dangerfile.js
 /wdio.conf.js
 .travis.yml

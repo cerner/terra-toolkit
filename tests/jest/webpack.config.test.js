@@ -1,4 +1,4 @@
-jest.mock('../../scripts/aggregate-translations/aggregate-translations');
+jest.mock('terra-aggregate-translations');
 jest.mock('postcss-assets-webpack-plugin');
 jest.mock('postcss-custom-properties');
 jest.mock('mini-css-extract-plugin');
@@ -13,7 +13,7 @@ const PostCSSCustomProperties = require('postcss-custom-properties');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const aggregateTranslations = require('../../scripts/aggregate-translations/aggregate-translations');
+const aggregateTranslations = require('terra-aggregate-translations');
 const webpackConfig = require('../../config/webpack/webpack.config');
 
 const outputPath = expect.stringContaining('build');
@@ -209,6 +209,26 @@ describe('webpack config', () => {
 
     it('and it aggregates translations with these options', () => {
       expect(aggregateTranslations).toBeCalledWith(expect.objectContaining(aggregateOptions));
+    });
+  });
+
+  describe('accepts disableHotReloading env variable', () => {
+    const disableHotReloading = true;
+    beforeAll(() => {
+      config = webpackConfig({ disableHotReloading }, { });
+    });
+
+    it('and adds to dev server options', () => {
+      const expectedOuput = {
+        hot: false,
+        inline: false,
+        host: '0.0.0.0',
+        stats: {
+          colors: true,
+          children: false,
+        },
+      };
+      expect(config.devServer).toEqual(expect.objectContaining(expectedOuput));
     });
   });
 });
