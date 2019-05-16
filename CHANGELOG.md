@@ -5,8 +5,12 @@ Unreleased
 ----------
 ### Major Version Bump. See https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitUpgradeGuide-v5.0.0.md.
 
+### Changed
+* **Breaking Change** Upgrade to use selenium-docker chrome version 3.14.0-helium. Tests now run against Google Chrome: 69.0.3497.100. See https://github.com/SeleniumHQ/docker-selenium/tree/3.14.0-helium
+
 ### Added
 * `terra-aggregate-translations` peer depenency to use in the default webpack configuration
+* **Breaking Change** Added `resetScroll: true` to axe helper.
 
 ### Changes
 * Moved/reduced redudant code that parsed the test options passed to TerraService test helpers
@@ -22,6 +26,8 @@ Unreleased
 * **Breaking Change** Deprecated serve javascript function
 * **Breaking Change** Serve-static no longer builds webpack config
 * **Breaking Change** Serve-static no longer injects locale.
+* **Breaking Change** Removed Axe Service. The Axe service & Terra service had to be used in conjunction so merged the code into the Terra Service.
+    * Terra.should.beAccessible context default changed from document to the global terra.selector value defined in the config by the user
 * **Breaking Change** Removed `isExactMatch` chai assertion.
 * **Breaking Change** Removed `viewportChangePause` option from Terra.should.matchScreenshot test helper
 * **Breaking Change** Removed `runOnly` option from Terra.should.beAccessible test helper and axe chai method
@@ -30,12 +36,17 @@ Unreleased
 ----------
 ### Added
 * Added default testName `themed` for `themeCombinationOfCustomProperties` helper.
-* Add `terra-aggregate-translations` module
+* Added `terra-aggregate-translations` module
 * Guard against empty screenshot array being passed to `getComparisonResults`.
 
 ### Changed
 * Remove rimraf dev-depenency
 * Remove scripts/release script and update package.json scripts to reflect release script
+* Webpack configuration:
+    * Added css compression for production webpack builds with cssnano
+    * Remove directly passing browserslist configuration to webpack. Use package defined configuraiton instead.
+    * Updated dependencies
+    * Changed webpack, webpack-cli and webpack-dev-server to be peer dependencies to ensure correct versions are used
 
 ### Removed
 * Aggregate-translation script, tests, and bin executable

@@ -18,18 +18,17 @@ To run the webdriver.io test running, the [webdriver.io configuration options](h
 
 * `SeleniumDockerService` - starts a Selenium-Docker instance.
     - See [here](https://github.com/cerner/terra-toolkit/blob/master/docs/SeleniumDockerService.md) for configuration information.
-* `AxeService` - provides utilities for accessibility testing.
-    - See [here](https://github.com/cerner/terra-toolkit/blob/master/docs/AxeService.md) for configuration information.
-* `TerraService` - provides global access to chai, custom chai assertions and a Terra helper to make testing easier.
-    - To provide a custom global selector, add `terra: { selector: 'selector_name' }` to the configuration.
+* `TerraService` - provides utilities for accessibility testing as well as gives global access to chai and a Terra object containg helpers to make testing easier. 
+    - A global selector must be defined: add `terra: { selector: 'selector_name' }` to the configuration.
     - To disable theme testing add `terra: { disableThemeTests: true }` to the configuration. This will skip the following functions during testing: `themeEachCustomProperty` and `themeCombinationOfCustomProperties`. 
+    - To configure the acessibilty utility, add `axe: { options: {} }` to be passed to the axe instance that is inject on the test page. See [axe-core's axe.configure docs](https://www.deque.com/axe/axe-for-web/documentation/api-documentation/#api-name-axeconfigure) for possible configuraiton options.
 * `VisualRegressionService` - uses wdio-screenshot to capture screenshots and run visual regression testing.
     - See [here](https://github.com/zinserjan/wdio-visual-regression-service#configuration) for configuration information.
 * `ServeStaticService` - to start a server and returns a promise when the webpack compiler is completed.
     - See [here](https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitServeStaticService.md) for configuration information.
 
 ```javascript
-// An example of a full mono-repo configuration file:
+// wdio.config.js
 const wdioConf = require('terra-toolkit/config/wdio/wdio.conf');
 const webpackConfig = require('./webpack.config.js');
 
@@ -50,12 +49,12 @@ exports.config = config;
 
 ### Environment Variables
 
-* In order to support tests running inside of a container and hitting an external selenium grid, 3 environment variables are provided:
+* To support testing inside of a container and hitting an external selenium grid, three environment variables are provided:
 
   * `WDIO_INTERNAL_PORT` - This specifies the port for the ServeStaticService. This is the port that the server being tested against will actually run on.
   * `WDIO_EXTERNAL_PORT` - This specifies the external port that is mapped on the container to the WDIO_INTERNAL_PORT.
   * `WDIO_EXTERNAL_HOST` - This specifies the externally accessible name for the host on which the container is running.
-* In order to stop test runner as soon as a single test has failed, explicitly set the environment variable `WDIO_BAIL` to true. Please note that if it is not set, then the test runner does not bail and all the tests are run.
+* In order to stop test runner as soon as a single test has failed, explicitly set the environment variable `WDIO_BAIL` to true. By default all the tests are run regardless of failures.
 
 ## Writing Tests
 
@@ -97,7 +96,6 @@ Then, to assist with testing, the TerraService provides the Terra global helper 
 ```js
 // These globals are provide via the Terra Service
 /* global browser, describe, it, expect, viewport */
-
 describe('Basic Test', () => {
   before(() => browser.url('/test.html'));
 
@@ -119,13 +117,13 @@ Sometimes its necessary to rerun the test steps in each viewport. Some build sys
 
 ```js
 Terra.viewports('tiny', 'small', 'large').forEach((viewport) => {
-  describe('Resize Example - ${viewport.name}', () => {
+  describe(`Resize Example - ${viewport.name}`, () => {
     before(() => {
       browser.setViewportSize(viewport);
       browser.url('/test.html');
     });
 
-    it(`resizes to ${viewport.name}`, () => {
+    it(`correctly resized to ${viewport.name}`, () => {
       const size = browser.getViewportSize();
       expect(size.height).to.equal(viewport.height);
       expect(size.width).to.equal(viewport.width);
@@ -137,10 +135,13 @@ Terra.viewports('tiny', 'small', 'large').forEach((viewport) => {
 ## Running Tests
 Installation of webdriver.io provides access to the wdio test runner. To start the runner, add the wdio npm script to the package.json and then provide the wdio configuration file. The wdio test runner requires a configuration file to be passed either from the current directory or by path.
 
-```javascript
+```json
 // run wdio cli directly
 "wdio": "wdio";
+```
 
-// run terra-toolkit's wdio script for consecutive FormFactor and Locale parellel tests
+Terra-toolkit also provides the tt-wdio script to run wdio test runs for specified locales and form factors in a syrsynchronous fashion. This script is helpful for generating results a parallelize CI pipeline could produce.
+```json
+// run terra-toolkit's wdio script for consecutive FormFactor and Locale parallel tests
 "wdio": "tt-wdio --config wdio.conf.js";
 ```

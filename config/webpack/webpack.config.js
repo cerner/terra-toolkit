@@ -1,12 +1,12 @@
 const Autoprefixer = require('autoprefixer');
 const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin');
 const PostCSSCustomProperties = require('postcss-custom-properties');
+const cssnano = require('cssnano');
 const path = require('path');
 const rtl = require('postcss-rtl');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const browserslist = require('browserslist-config-terra');
 const merge = require('webpack-merge');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
 const aggregateTranslations = require('terra-aggregate-translations');
@@ -43,11 +43,17 @@ const webpackConfig = (options, env, argv) => {
         {
           test: /\.(scss|css)$/,
           use: [
-            MiniCssExtractPlugin.loader,
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                hmr: !production, // only enable hot module reloading in development
+                sourceMap: true,
+              },
+            },
             {
               loader: 'css-loader',
               options: {
-                minimize: false, // Issue logged: https://github.com/cerner/terra-toolkit/issues/122
+                modules: 'global',
                 sourceMap: true,
                 importLoaders: 2,
                 localIdentName: '[name]__[local]___[hash:base64:5]',
@@ -56,18 +62,23 @@ const webpackConfig = (options, env, argv) => {
             {
               loader: 'postcss-loader',
               options: {
-                // Add unique ident to prevent the loader from searching for a postcss.config file. Additionally see: https://github.com/postcss/postcss-loader#plugins
+                // Add unique ident to prevent the loader from searching for a postcss.config file. See: https://github.com/postcss/postcss-loader#plugins
                 ident: 'postcss',
+                sourceMap: true,
                 plugins() {
                   return [
                     rtl(),
-                    Autoprefixer({ browsers: browserslist }),
+                    Autoprefixer(),
+                    ...(production ? [cssnano({ preset: 'advanced' })] : []),
                   ];
                 },
               },
             },
             {
               loader: 'sass-loader',
+              options: {
+                sourceMap: true,
+              },
             },
           ],
         },
@@ -135,7 +146,7 @@ const webpackConfig = (options, env, argv) => {
     mode: 'production',
     devtool: false,
     plugins: [
-      new CleanPlugin(outputPath, { root: rootPath, exclude: ['stats.json'] }),
+      new CleanPlugin({ cleanOnceBeforeBuildPatterns: ['**/*', '!stats.json'] }),
     ],
     optimization: {
       minimizer: [

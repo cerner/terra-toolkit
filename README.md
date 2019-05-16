@@ -27,9 +27,12 @@ Terra Toolkit is a utility module used to facilitate independent development of 
 
 ## Getting Started
 
-- Install with [npm](https://www.npmjs.com): `npm install terra-toolkit --save-dev`
+- Install toolkit and its peer dependencies as dev-dependencies with [npm](https://www.npmjs.com): 
+```
+npm install terra-toolkit webpack webpack-cli webpack-dev-server @babel/cli @babel/core --save-dev
+```
 
-Terra Toolkit uses Docker to setup, run, and tear down selenium to ensure a consistent testing environment locally and in continuous integration build systems. To use Terra Toolkit for webdriver testing, you must install docker on your machine.
+To use Terra Toolkit for local webdriver testing, you must install docker on your machine.
 
 - Install Docker version 17.09.0 or higher. Installation instructions can be found at https://docs.docker.com/install/.
 

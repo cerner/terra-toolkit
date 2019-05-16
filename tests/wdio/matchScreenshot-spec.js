@@ -21,7 +21,7 @@ describe('matchScreenshot', () => {
   });
 
   describe('matchScreenshot-options--selector', () => {
-    Terra.should.matchScreenshot({ selector: 'button' });
+    Terra.should.matchScreenshot({ selector: '#content' });
   });
 
   describe('matchScreenshot-options--misMatchTolerance', () => {
@@ -57,7 +57,7 @@ describe('matchScreenshot', () => {
   describe('matchScreenshot-test name & options', () => {
     after(() => browser.setViewportSize(viewports[0]));
 
-    Terra.should.matchScreenshot('button', { selector: 'button', viewports });
+    Terra.should.matchScreenshot('button', { selector: '#content', viewports });
   });
 
   describe('matchScreenshot-invalid options', () => {

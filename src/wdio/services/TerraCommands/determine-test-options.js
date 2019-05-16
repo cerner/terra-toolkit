@@ -20,7 +20,7 @@ const determineArgs = (args) => {
   const selector = options.selector || global.browser.options.terra.selector;
 
   // Checked for custom axe selector
-  const { context } = options;
+  const { context } = options.context;
 
   // Which viewports the screenshoot should adjust too during the test run, otherwise use's current viewport
   const { viewports } = options;

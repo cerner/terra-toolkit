@@ -1,13 +1,5 @@
 const path = require('path');
 
-/* Axe Service Defaults */
-const axe = {
-  /* Wheather or not to inject axe into the browser. */
-  inject: true,
-  /* Axe configiuration options. */
-  options: undefined,
-};
-
 /* Serve Static Service Defaults */
 const serveStatic = {
   /* The port to start the express server on. */
@@ -40,7 +32,6 @@ const terraViewports = {
 };
 
 module.exports = {
-  axe,
   serveStatic,
   seleniumDocker,
   terraViewports,
