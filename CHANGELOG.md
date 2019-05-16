@@ -5,6 +5,9 @@ Unreleased
 ----------
 ### Major Version Bump. See https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitUpgradeGuide-v5.0.0.md.
 
+### Changed
+* **Breaking Change** Upgrade to use selenium-docker chrome version 3.14.0-helium. Tests now run against Google Chrome: 69.0.3497.100. See https://github.com/SeleniumHQ/docker-selenium/tree/3.14.0-helium
+
 ### Added
 * `terra-aggregate-translations` peer depenency to use in the default webpack configuration
 * **Breaking Change** Added `resetScroll: true` to axe helper.

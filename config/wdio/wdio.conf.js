@@ -23,11 +23,15 @@ const config = {
     path.join('test*', 'wdio', '**', '*-spec.js'),
   ],
   maxInstances: 1,
-  capabilities: [
-    {
-      browserName: 'chrome',
+  capabilities: [{
+    browserName: 'chrome',
+    'goog:chromeOptions': {
+      /** Run in headless mode since Chrome 69 cannot reach the tiny viewport size due to a omnibox size change
+       * made by the chrome team. See https://bugs.chromium.org/p/chromedriver/issues/detail?id=2626#c1.
+       */
+      args: ['headless', 'disable-gpu'],
     },
-  ],
+  }],
 
   sync: true,
   logLevel: 'silent',
@@ -49,7 +53,7 @@ const config = {
   ...locale && { locale },
   formFactor: process.env.FORM_FACTOR || 'huge',
 
-  seleniumVersion: '3.11',
+  seleniumVersion: '3.14',
   seleniumDocker: {
     enabled: !ci,
   },
