@@ -2,7 +2,9 @@
 
 This document will provide information on upgrading from terra-toolkit 4.x to 5.0.0.
 
-## Aggregated Translations
+## Terra Scripts
+
+### Aggregated Translations
 The aggregate-translations pre-build script and default terraI18nconfiguration is no longer provided through terra-toolkit. This being said, the default webpack configuration still runs the aggegrate-translations pre-build script! For direct use of the aggregate-translations script or list of supported locales, update imports to reference the `terra-aggregate-translations` dependency: 
 
 ```diff
@@ -11,12 +13,6 @@ The aggregate-translations pre-build script and default terraI18nconfiguration i
 - const i18nSupportedLocales = require('terra-toolkit/scripts/aggregate-translations/i18nSupportedLocales');
 + const aggregateTranslations = require('terra-aggregate-translations/config/i18nSupportedLocaels');
 ```
-
-## Nightwatch 
-
-The nightwatch utility and peer dependencies have been removed in this toolkit release.
-
-## Terra Scripts
 
 ### Serve
 
@@ -72,6 +68,8 @@ This script was removed. Use this instead:
 ```npm run compile:prod && tt-serve-static --port $PORT --site './build'```
 
 ## WebdriverIO
+### Visual Regression
+The default form factor is now 'huge' to correct inconsistent viewport sizing that had occured when a test used the default viewport for a test run vs defining a huge viewport. This may require screenshot updates, but no code changes are necessary.
 
 ### ServeStaticService
 
@@ -138,3 +136,7 @@ module.exports = {
   },
 };
 ```
+
+## Nightwatch 
+
+The nightwatch utility and peer dependencies have been removed in this toolkit release. Be sure to remove the `nightwatch` dev-dependency in your project, if it exists.

@@ -8,13 +8,16 @@ Unreleased
 ### Added
 * `terra-aggregate-translations` peer depenency to use in the default webpack configuration
 
+### Fixed
+* **Breaking Change** Fix inconsistent screenshot widths for the huge form factor by setting the default formFactor to 'huge' in the wdio.config.js. [#137](https://github.com/cerner/terra-toolkit/issues/137)
+* **Breaking Change** Fix incorrect screenshot naming where the screenshot name by using the current viewport size's form facor instead of using the formFactor value set in wdio.config.js.[#248](https://github.com/cerner/terra-toolkit/issues/248)
+
 ### Removed
 * **Breaking Change** Removed the nightwatch utility, dependencies, tests and documentations.
 * **Breaking Change** Aggregate-translations pre-build script and default terraI18nconfiguration is no longer provided through terra-toolkit.
 * **Breaking Change** Deprecated serve javascript function
 * **Breaking Change** Serve-static no longer builds webpack config
 * **Breaking Change** Serve-static no longer injects locale.
-
 
 4.28.0 - (May 16, 2019)
 ----------
