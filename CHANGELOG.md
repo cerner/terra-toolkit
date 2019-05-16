@@ -33,6 +33,11 @@ Unreleased
 ### Changed
 * Remove rimraf dev-depenency
 * Remove scripts/release script and update package.json scripts to reflect release script
+* Webpack configuration:
+    * Added css compression for production webpack builds with cssnano
+    * Remove directly passing browserslist configuration to webpack. Use package defined configuraiton instead.
+    * Updated dependencies
+    * Changed webpack, webpack-cli and webpack-dev-server to be peer dependencies to ensure correct versions are used
 
 ### Removed
 * Aggregate-translation script, tests, and bin executable

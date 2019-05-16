@@ -1,10 +1,65 @@
 # Terra Toolkit Upgrade Guide v5.0.0
+
 This document will provide information on upgrading from terra-toolkit 4.x to 6.0.0.
+
+## Webpack Configuration
+
+### Configuration Changes
+
+1. The browsers list provided to the Autoprefixer plugin no longer directly uses the `browserslist-config-terra`'s list of targeted browsers. Autoprefixer recommends including this list via a browserslist key to your package.json to configure all build tools with the same browsers list. Fixed [#110](https://github.com/cerner/terra-toolkit/issues/110).
+
+    Add the `browserslist-config-terra` targeted browsers (or a custom list) to your package.json like:
+
+```json
+{
+  "browserslist": [
+    "extends browserslist-config-terra"
+  ]
+}
+```
+
+2. For prod compilation, css will be compressed via `cssnano`.
+
+### Dependencies Changes
+
+The following webpack dependency changes were made in Terra toolkit's default webpack configuration. Please note, upgrading to use babel `^7` is required to use these dependency updates.
+
+#### Dependency to Peer Dependencies
+
+Terra recommends using the bins provided by these webpack dependencies. To ensure you always have access to these bins and the correct versions, these are now defined as peer dependencies:
+
+- webpack
+- webpack-cli
+- webpack-dev-server
+
+#### Updated
+
+- autoprefixer: `^8.5.2` -> `^9.5.1`
+- babel-loader: `^7.1.2` -> `^8.0.5` [* requires babel `^7`]
+- clean-webpack-plugin: `^0.1.17` -> `^2.0.1`
+- css-loader: `^0.28.7` -> `^2.1.1`
+- file-loader: `^1.1.5` -> `^3.0.1`
+- mini-css-extract-plugin: `^0.4.5` -> `^0.6.0`
+- postcss: `^6.0.9` -> `^7.0.16`
+- postcss-assets-webpack-plugin: `^2.0.0` -> `^3.0.0`
+- postcss-custom-properties: `^7.0.0` -> `^8.0.10`
+- postcss-loader: `^2.0.6` -> `^3.0.0`
+- raw-loader: `^0.5.1` -> `^2.0.0`
+
+#### Added
+
+- cssnano: `^4.1.10`
+- cssnano-preset-advanced: `^4.0.7`
+
+#### Removed
+
+- `browserslist-config-terra`
 
 ## Terra Scripts
 
 ### Aggregated Translations
-The aggregate-translations pre-build script and default terraI18nconfiguration is no longer provided through terra-toolkit. This being said, the default webpack configuration still runs the aggegrate-translations pre-build script! For direct use of the aggregate-translations script or list of supported locales, update imports to reference the `terra-aggregate-translations` dependency: 
+
+The aggregate-translations pre-build script and default terraI18nconfiguration is no longer provided through terra-toolkit. This being said, the default webpack configuration still runs the aggegrate-translations pre-build script! For direct use of the aggregate-translations script or list of supported locales, update imports to reference the `terra-aggregate-translations` dependency:
 
 ```diff
 - const aggregateTranslations = require('terra-toolkit/scripts/aggregate-translations/aggregate-translations');
@@ -45,9 +100,9 @@ If an html page is not found serve static will try to return /404.html with a st
 
 These api options have been removed from both the cli and javascript:
 
-* config
-* production
-* disk
+- config
+- production
+- disk
 
 If you want to serve a non hot-reloading site without pre-building your site, use tt-static with the following options specified in your webpack config.
 
@@ -67,11 +122,14 @@ This script was removed. Use this instead:
 ```npm run compile:prod && tt-serve-static --port $PORT --site './build'```
 
 ## WebdriverIO
+
 ### Depenedency Changes
+
 - unlock `axe-core`: `3.0.3` -> `^3.0.2`.
 
 ### Visual Regression
-The default form factor is now 'huge' to correct inconsistent viewport sizing that had occured when a test used the default viewport for a test run vs defining a huge viewport. This may require screenshot updates, but no code changes are necessary.
+
+The default form factor is now 'huge' to correct inconsistent viewport sizing that had occurred when a test used the default viewport for a test run vs defining a huge viewport. This may require screenshot updates, but no code changes are necessary.
 
 ### ServeStaticService
 
@@ -79,7 +137,7 @@ The serve static service can serve a static site or compile a site from the wepb
 
 The service will no longer inject the locale into served html files.
 
-For static sites, the orginal files will be served, you will be responsible for adding the locale to the static files.
+For static sites, the original files will be served, you will be responsible for adding the locale to the static files.
 
 For compiled sites, the ```defaultLocale```` environment variable will be passed to the webpack config indicating what locale the site should be compiled for. This will be done automatically for projects using terra-dev-site.
 
@@ -140,9 +198,10 @@ module.exports = {
 ```
 
 ### AxeService
-The AxeService has been removed. The accessibilitly capabilites the Axe Service provided has been move to the Terra Service because the services could not run independently. The `axe` key can still be used for configuration and the test helper and axe chai assertion can be used. Please note, the `runOnly` option has been removed from Terra.should.beAccessible test helper and axe chai method and resetScroll has been enabled.
+The AxeService has been removed. The accessibility capabilities the Axe Service provided has been move to the Terra Service because the services could not run independently. The `axe` key can still be used for configuration and the test helper and axe chai assertion can be used. Please note, the `runOnly` option has been removed from Terra.should.beAccessible test helper and axe chai method and resetScroll has been enabled.
 
-If you use the default wdio config, no changes need to be made. If using a custom wdio configuartion, be sure to remove the AxeService from the wdio config:
+If you use the default wdio config, no changes need to be made. If using a custom wdio configuration, be sure to remove the AxeService from the wdio config:
+
 ```diff
 const {
 - Axe: AxeService,
@@ -164,6 +223,6 @@ const config = {
 
 Documentation can now be found [here](https://github.com/cerner/terra-toolkit/blob/master/docs/Wdio_Utility.md).
 
-## Nightwatch 
+## Nightwatch
 
 The nightwatch utility and peer dependencies have been removed in this toolkit release. Be sure to remove the `nightwatch` dev-dependency in your project, if it exists.
