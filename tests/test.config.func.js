@@ -10,12 +10,6 @@ module.exports = (env = {}) => {
     plugins: [
       new HtmlWebpackPlugin({
         lang: defaultLocale,
-        template: path.join(__dirname, 'fixtures', 'nightwatch.html'),
-        chunks: ['index'],
-        filename: './nightwatch.html',
-      }),
-      new HtmlWebpackPlugin({
-        lang: defaultLocale,
         template: path.join(__dirname, 'fixtures', 'accessible.html'),
         chunks: ['index'],
         filename: './accessible.html',

@@ -3,11 +3,18 @@ Changelog
 
 Unreleased
 ----------
+### Major Version Bump. See https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitUpgradeGuide-v5.0.0.md.
+
 ### Breaking
 * Deprecated serve javascript function
 * Serve-static no longer builds webpack config
 * Serve-static no longer injects locale.
 
+### Removed
+* **Breaking Change** Removed the nightwatch utility, dependencies, tests and documentations.
+
+4.28.0 - (May 16, 2019)
+----------
 ### Added
 * Added default testName `themed` for `themeCombinationOfCustomProperties` helper.
 * Add `terra-aggregate-translations` module
