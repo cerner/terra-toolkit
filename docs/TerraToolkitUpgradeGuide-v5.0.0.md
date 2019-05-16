@@ -2,7 +2,7 @@
 This document will provide information on upgrading from terra-toolkit 4.x to 5.0.0.
 
 ## Aggregated Translations
-The aggregate-translations pre-build script and default terraI18nconfiguration is no longer provided through terra-toolkit. This being said, the default webpack configuration still runs the aggegrate-translations pre-build script! Which is why `terra-aggregate-translations` is marked as a peer-depenency of terra-toolkit v5. Adding this peer dependency and configuration, via `terraI18n.config.js`, should be sufficient for most projects. For direct use of the aggregate-translations script or list of supported locales, update imports to reference the `terra-aggregate-translations` dependency: 
+The aggregate-translations pre-build script and default terraI18nconfiguration is no longer provided through terra-toolkit. This being said, the default webpack configuration still runs the aggegrate-translations pre-build script! For direct use of the aggregate-translations script or list of supported locales, update imports to reference the `terra-aggregate-translations` dependency: 
 
 ```diff
 - const aggregateTranslations = require('terra-toolkit/scripts/aggregate-translations/aggregate-translations');
