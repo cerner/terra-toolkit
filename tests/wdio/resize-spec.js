@@ -7,6 +7,7 @@ Terra.viewports('tiny', 'small', 'large').forEach((viewport) => {
 
     Terra.should.beAccessible();
     Terra.should.matchScreenshot();
+
     it(`resizes ${viewport.name}`, () => {
       const size = browser.getViewportSize();
       expect(size.height).to.equal(viewport.height);

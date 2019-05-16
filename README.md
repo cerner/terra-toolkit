@@ -36,9 +36,6 @@ To use Terra Toolkit for local webdriver testing, you must install docker on you
 
 - Install Docker version 17.09.0 or higher. Installation instructions can be found at https://docs.docker.com/install/.
 
-## Aggregate Translations Tool
-Terra-toolkit leverages the `terra-aggregate-translations` pre-build tool to provide interntionalization support for builds and tests. Pleases see the [Aggregating Translations Guide](https://github.com/cerner/terra-aggregate-translations) to get started.
-
 ## Theme Aggregation
 
 Terra Toolkit provides a built-in mechanism for aggregating themes.

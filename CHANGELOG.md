@@ -6,8 +6,28 @@ Unreleased
 ### Major Version Bump. See https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitUpgradeGuide-v5.0.0.md.
 
 ### Added
+* `terra-aggregate-translations` peer depenency to use in the default webpack configuration
+* **Breaking Change** Added `resetScroll: true` to axe helper.
+
+### Fixed
+* **Breaking Change** Fix inconsistent screenshot widths for the huge form factor by setting the default formFactor to 'huge' in the wdio.config.js. [#137](https://github.com/cerner/terra-toolkit/issues/137)
+* **Breaking Change** Fix incorrect screenshot naming where the screenshot name by using the current viewport size's form facor instead of using the formFactor value set in wdio.config.js.[#248](https://github.com/cerner/terra-toolkit/issues/248)
+
+### Removed
+* **Breaking Change** Removed the nightwatch utility, dependencies, tests and documentations.
+* **Breaking Change** Aggregate-translations pre-build script and default terraI18nconfiguration is no longer provided through terra-toolkit.
+* **Breaking Change** Deprecated serve javascript function
+* **Breaking Change** Serve-static no longer builds webpack config
+* **Breaking Change** Serve-static no longer injects locale.
+* **Breaking Change** Removed Axe Service. The Axe service & Terra service had to be used in conjunction so merged the code into the Terra Service.
+    * Terra.should.beAccessible context default changed from document to the global terra.selector value defined in the config by the user
+* **Breaking Change** Removed `runOnly` option from Terra.should.beAccessible test helper and axe chai method
+
+4.28.0 - (May 16, 2019)
+----------
+### Added
 * Added default testName `themed` for `themeCombinationOfCustomProperties` helper.
-* Add `terra-aggregate-translations` module
+* Added `terra-aggregate-translations` module
 * Guard against empty screenshot array being passed to `getComparisonResults`.
 
 ### Changed
@@ -19,7 +39,7 @@ Unreleased
     * Updated dependencies
     * Changed webpack, webpack-cli and webpack-dev-server to be peer dependencies to ensure correct versions are used
 
-### Remove
+### Removed
 * Aggregate-translation script, tests, and bin executable
 
 4.27.0 - (April 16, 2019)
