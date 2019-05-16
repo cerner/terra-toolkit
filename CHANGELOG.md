@@ -11,6 +11,10 @@ Unreleased
 ### Removed
 * **Breaking Change** Removed the nightwatch utility, dependencies, tests and documentations.
 * **Breaking Change** Aggregate-translations pre-build script and default terraI18nconfiguration is no longer provided through terra-toolkit.
+* **Breaking Change** Deprecated serve javascript function
+* **Breaking Change** Serve-static no longer builds webpack config
+* **Breaking Change** Serve-static no longer injects locale.
+
 
 4.28.0 - (May 16, 2019)
 ----------

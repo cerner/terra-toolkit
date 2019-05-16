@@ -211,4 +211,24 @@ describe('webpack config', () => {
       expect(aggregateTranslations).toBeCalledWith(expect.objectContaining(aggregateOptions));
     });
   });
+
+  describe('accepts disableHotReloading env variable', () => {
+    const disableHotReloading = true;
+    beforeAll(() => {
+      config = webpackConfig({ disableHotReloading }, { });
+    });
+
+    it('and adds to dev server options', () => {
+      const expectedOuput = {
+        hot: false,
+        inline: false,
+        host: '0.0.0.0',
+        stats: {
+          colors: true,
+          children: false,
+        },
+      };
+      expect(config.devServer).toEqual(expect.objectContaining(expectedOuput));
+    });
+  });
 });
