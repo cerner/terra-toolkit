@@ -3,6 +3,10 @@ Changelog
 
 Unreleased
 ----------
+### Major Version Bump. See https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitUpgradeGuide-v5.0.0.md.
+
+### Removed
+* **Breaking Change** Removed the nightwatch utility, dependencies, tests and documentations.
 
 4.28.0 - (May 16, 2019)
 ----------
