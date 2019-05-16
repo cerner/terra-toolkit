@@ -70,7 +70,7 @@ describe('axeOptions', () => {
   it('honors custom selector -- for validateElement helper', () => {
     const options = determineOptions.axeOptions([{ selector: 'custom-id' }]);
 
-    expect(options).toHaveProperty('context', 'custom-id');
+    expect(options).toHaveProperty('selector', 'custom-id');
   });
 
   it('honors custom viewports', () => {

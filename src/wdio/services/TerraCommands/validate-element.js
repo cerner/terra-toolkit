@@ -13,7 +13,7 @@ import determineOptions from './determine-test-options';
 const validateElement = (...args) => {
   const {
     rules,
-    context,
+    selector: context,
   } = determineOptions.axeOptions(args);
 
   const {

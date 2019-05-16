@@ -19,8 +19,8 @@ const determineArgs = (args) => {
   // Check if custom selector should be used, otherwise use the global value.
   const selector = options.selector || global.browser.options.terra.selector;
 
-  // Checked for custom axe selector
-  const { context } = options.context;
+  // Checked for custom axe selector, otherwise use the global value.
+  const context = options.context || global.browser.options.terra.selector;
 
   // Which viewports the screenshoot should adjust too during the test run, otherwise use's current viewport
   const { viewports } = options;
@@ -46,7 +46,8 @@ const axeOptions = (args) => {
   const axeRules = options.rules || options.axeRules;
 
   return {
-    context: context || selector,
+    context,
+    selector, // this is needed to ensure the same selector is used in Terra.should.validateElement
     ...viewports && { viewports },
     ...axeRules && { rules: axeRules },
   };
