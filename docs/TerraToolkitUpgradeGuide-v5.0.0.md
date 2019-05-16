@@ -69,7 +69,7 @@ This script was removed. Use this instead:
 
 ## WebdriverIO
 ### Visual Regression
-The defualt form factor is now 'huge' to correct inconsistent viewport sizing that had occured when a test used the default viewport for a test run vs defining a huge viewport. This may require screenshot updates, but no code changes are necessary.
+The default form factor is now 'huge' to correct inconsistent viewport sizing that had occured when a test used the default viewport for a test run vs defining a huge viewport. This may require screenshot updates, but no code changes are necessary.
 
 ### ServeStaticService
 
