@@ -5,13 +5,16 @@ Unreleased
 ----------
 ### Major Version Bump. See https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitUpgradeGuide-v5.0.0.md.
 
-### Breaking
-* Deprecated serve javascript function
-* Serve-static no longer builds webpack config
-* Serve-static no longer injects locale.
+### Added
+* `terra-aggregate-translations` peer depenency to use in the default webpack configuration
 
 ### Removed
 * **Breaking Change** Removed the nightwatch utility, dependencies, tests and documentations.
+* **Breaking Change** Aggregate-translations pre-build script and default terraI18nconfiguration is no longer provided through terra-toolkit.
+* **Breaking Change** Deprecated serve javascript function
+* **Breaking Change** Serve-static no longer builds webpack config
+* **Breaking Change** Serve-static no longer injects locale.
+
 
 4.28.0 - (May 16, 2019)
 ----------
