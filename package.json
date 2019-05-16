@@ -1,6 +1,6 @@
 {
   "name": "terra-toolkit",
-  "version": "4.27.0",
+  "version": "4.28.0",
   "description": "Utilities to help when developing terra modules.",
   "main": "lib/index.js",
   "engines": {
@@ -24,7 +24,6 @@
   },
   "bin": {
     "tt-clean-screenshots": "bin/clean-screenshots.js",
-    "tt-heroku-serve-static": "bin/heroku-serve-static.js",
     "tt-pack": "bin/pack.js",
     "tt-serve": "bin/serve.js",
     "tt-serve-static": "bin/serve-static.js",
@@ -41,30 +40,28 @@
   "scripts": {
     "clean": "rm package-lock.json; rm -rf node_modules",
     "clean:install": "npm run clean && npm install",
+    "clean:build": "rm -rf build",
     "compile": "babel src --out-dir lib --copy-files",
     "danger": "danger ci",
     "jest": "jest --config jestConfig.js",
     "lint": "eslint --ext .js,.jsx .",
-    "nightwatch": "nightwatch",
-    "nightwatch:port-provided": "nightwatch -c tests/test.nightwatch.conf.js",
     "pack": "webpack --config tests/test.config.js",
-    "postpublish": "git push --tag",
-    "precompile": "rm -rf lib",
     "prepare": "npm run compile",
     "prepublishOnly": "npm whoami && check-installed-dependencies && npm test",
     "pretest": "npm run lint",
     "release:major": "npm version major -m 'Released version %s' && npm publish",
     "release:minor": "npm version minor -m 'Released version %s' && npm publish",
     "release:patch": "npm version patch -m 'Released version %s' && npm publish",
-    "start": "node scripts/serve/serve-cli.js --config ./tests/test.config",
-    "start-static": "node scripts/serve/serve-static-cli.js --config ./tests/test.config",
-    "test": "npm run jest && npm run nightwatch && npm run nightwatch:port-provided && npm run wdio",
-    "wdio": "npm run wdio-webpack-obj && npm run wdio-webpack-func && npm run tt-wdio-webpack-obj && npm run tt-wdio-webpack-func && npm run tt-wdio-unopinionated",
+    "start": "./bin/serve.js --config ./tests/test.config",
+    "start-static": "npm run pack && ./bin/serve-static.js --site ./build",
+    "test": "npm run jest && npm run wdio",
+    "wdio": "npm run clean:build && npm run wdio-webpack-obj && npm run wdio-webpack-func && npm run tt-wdio-webpack-obj && npm run tt-wdio-webpack-func && npm run tt-wdio-unopinionated && npm run tt-wdio-static",
     "wdio-webpack-obj": "wdio --suite opinionated",
     "wdio-webpack-func": "TT_TEST_WDIO_FUNCTION=true wdio --suite opinionated",
     "tt-wdio-webpack-obj": "node scripts/wdio/wdio-runner-cli.js --suite opinionated",
     "tt-wdio-webpack-func": "TT_TEST_WDIO_FUNCTION=true node scripts/wdio/wdio-runner-cli.js --suite opinionated",
-    "tt-wdio-unopinionated": "npm run pack && node scripts/wdio/wdio-runner-cli.js --formFactors=['tiny','huge'] --locales=['en','fr'] --suite unopinionated && rm -rf ./build"
+    "tt-wdio-unopinionated": "TT_TEST_WDIO_FUNCTION=true node scripts/wdio/wdio-runner-cli.js --formFactors=['tiny','huge'] --locales=['en','fr'] --suite unopinionated;",
+    "tt-wdio-static": "npm run pack; wdio --suite static; rm -rf ./build"
   },
   "dependencies": {
     "async": "^2.5.0",
@@ -76,7 +73,6 @@
     "chai": "^4.2.0",
     "chalk": "^2.4.2",
     "clean-webpack-plugin": "^0.1.17",
-    "clone": "^2.1.1",
     "commander": "^2.19.0",
     "css-loader": "^0.28.7",
     "duplicate-package-checker-webpack-plugin": "^3.0.0",
@@ -86,8 +82,7 @@
     "glob": "^7.1.1",
     "ip": "^1.1.5",
     "load-json-file": "^5.0.0",
-    "memory-fs": "^0.4.1",
-    "mime-types": "^2.1.21",
+    "lodash.startcase": "^4.4.0",
     "mini-css-extract-plugin": "^0.4.5",
     "node-sass": "^4.11.0",
     "postcss": "^6.0.9",
@@ -108,9 +103,6 @@
     "webpack-dev-server": "^3.1.11",
     "webpack-merge": "^4.2.1"
   },
-  "peerDependencies": {
-    "nightwatch": "^0.9.12"
-  },
   "optionalDependencies": {
     "wdio-mocha-framework": "^0.5.11"
   },
@@ -125,10 +117,10 @@
     "babel-runtime": "^6.26.0",
     "check-installed-dependencies": "^1.0.0",
     "danger": "^3.7.14",
-    "eslint": "^5.12.0",
     "eslint-config-terra": "^2.2.0",
+    "eslint": "^5.12.0",
     "html-webpack-plugin": "^3.1.0",
     "jest": "^23.1.0",
-    "nightwatch": "^0.9.12"
+    "memory-fs": "^0.4.1"
   }
 }
