@@ -7,6 +7,7 @@ Unreleased
 
 ### Added
 * `terra-aggregate-translations` peer depenency to use in the default webpack configuration
+* **Breaking Change** Added `resetScroll: true` to axe helper.
 
 ### Fixed
 * **Breaking Change** Fix inconsistent screenshot widths for the huge form factor by setting the default formFactor to 'huge' in the wdio.config.js. [#137](https://github.com/cerner/terra-toolkit/issues/137)
@@ -18,19 +19,22 @@ Unreleased
 * **Breaking Change** Deprecated serve javascript function
 * **Breaking Change** Serve-static no longer builds webpack config
 * **Breaking Change** Serve-static no longer injects locale.
+* **Breaking Change** Removed Axe Service. The Axe service & Terra service had to be used in conjunction so merged the code into the Terra Service.
+    * Terra.should.beAccessible context default changed from document to the global terra.selector value defined in the config by the user
+* **Breaking Change** Removed `runOnly` option from Terra.should.beAccessible test helper and axe chai method
 
 4.28.0 - (May 16, 2019)
 ----------
 ### Added
 * Added default testName `themed` for `themeCombinationOfCustomProperties` helper.
-* Add `terra-aggregate-translations` module
+* Added `terra-aggregate-translations` module
 * Guard against empty screenshot array being passed to `getComparisonResults`.
 
 ### Changed
 * Remove rimraf dev-depenency
 * Remove scripts/release script and update package.json scripts to reflect release script
 
-### Remove
+### Removed
 * Aggregate-translation script, tests, and bin executable
 
 4.27.0 - (April 16, 2019)

@@ -7,4 +7,14 @@ describe('validateElement', () => {
 
     Terra.should.validateElement();
   });
+
+  describe('inaccessible contrast', () => {
+    before(() => browser.url('/inaccessible-contrast.html'));
+
+    const ignoredA11y = {
+      'color-contrast': { enabled: false },
+    };
+
+    Terra.should.validateElement({ axeRules: ignoredA11y });
+  });
 });
