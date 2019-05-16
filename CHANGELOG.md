@@ -4,6 +4,8 @@ Changelog
 Unreleased
 ----------
 
+4.28.0 - (May 16, 2019)
+----------
 ### Added
 * Added default testName `themed` for `themeCombinationOfCustomProperties` helper.
 * Add `terra-aggregate-translations` module
