@@ -4,9 +4,13 @@ Changelog
 Unreleased
 ----------
 
+4.28.1 - (May 17, 2019)
+----------
 ### Fixed
 * use terra-toolkit's default locales since terra-aggregate-translations doesn't support ar
 
+4.28.0 - (May 16, 2019)
+----------
 ### Added
 * Added default testName `themed` for `themeCombinationOfCustomProperties` helper.
 * Add `terra-aggregate-translations` module
