@@ -9,7 +9,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const browserslist = require('browserslist-config-terra');
 const merge = require('webpack-merge');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
-const aggregateTranslations = require('terra-aggregate-translations');
+const aggregateTranslations = require('../../scripts/aggregate-translations/aggregate-translations');
 const ThemeAggregator = require('../../scripts/aggregate-themes/theme-aggregator');
 
 const webpackConfig = (options, env, argv) => {
@@ -150,7 +150,7 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
 
   const resolveModules = ['node_modules'];
   if (!disableAggregateTranslations) {
-    aggregateTranslations(Object.assign({}, { baseDirectory: rootPath }, env.aggregateOptions));
+    aggregateTranslations(Object.assign({}, { baseDir: rootPath }, env.aggregateOptions));
     resolveModules.unshift(path.resolve(rootPath, 'aggregated-translations'));
   }
 

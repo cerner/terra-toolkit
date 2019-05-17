@@ -202,7 +202,7 @@ describe('webpack config', () => {
   });
 
   describe('accepts aggregateOptions env variable', () => {
-    const aggregateOptions = { baseDirectory: 'test/dir' };
+    const aggregateOptions = { baseDir: 'test/dir' };
     beforeAll(() => {
       config = webpackConfig({ aggregateOptions }, { });
     });
