@@ -59,7 +59,7 @@ Terra recommends using the bins provided by these webpack dependencies. To ensur
 
 ### Aggregated Translations
 
-The aggregate-translations pre-build script and default terraI18nconfiguration is no longer provided through terra-toolkit. This being said, the default webpack configuration still runs the aggegrate-translations pre-build script! For direct use of the aggregate-translations script or list of supported locales, update imports to reference the `terra-aggregate-translations` dependency:
+The aggregate-translations pre-build script and default terraI18n configuration is no longer provided through terra-toolkit. This being said, the default webpack configuration still runs the aggregrate-translations pre-build script! For direct use of the aggregate-translations script or list of supported locales, update imports to reference the `terra-aggregate-translations` dependency:
 
 ```diff
 - const aggregateTranslations = require('terra-toolkit/scripts/aggregate-translations/aggregate-translations');
@@ -70,7 +70,7 @@ The aggregate-translations pre-build script and default terraI18nconfiguration i
 
 ### Serve
 
-Serve is now a thin abstraction on webpack dev server and the commandline api is now identical. With this addition it now means that you have control over the dev server through options specified in your webpack config as well as through the cli.
+Serve is now a thin abstraction on webpack dev server and the command line api is now identical. With this addition it now means that you have control over the dev server through options specified in your webpack config as well as through the cli.
 
 Why use serve instead of webpack-dev-server directly? Having the serve abstraction provides a hook for us to change the servers implementation in case webpack-dev-server no longer meets our needs.
 
@@ -131,9 +131,12 @@ This script was removed. Use this instead:
 
 The default form factor is now 'huge' to correct inconsistent viewport sizing that had occurred when a test used the default viewport for a test run vs defining a huge viewport. This may require screenshot updates, but no code changes are necessary.
 
+### TerraService
+- The `viewportChangePause` option was removed the `Terra.should.matchScreenshot`.
+
 ### ServeStaticService
 
-The serve static service can serve a static site or compile a site from the wepback config. The compiled site will be served by webpack-dev-server and the static site will be served by serve static.
+The serve static service can serve a static site or compile a site from the webpack config. The compiled site will be served by webpack-dev-server and the static site will be served by serve static.
 
 The service will no longer inject the locale into served html files.
 
@@ -208,7 +211,7 @@ const {
   SeleniumDocker: SeleniumDockerService,
   ServeStaticService,
   Terra: TerraService,
-} = require('terra-toolkit/libwdio/services/index');
+} = require('terra-toolkit/lib/wdio/services/index');
 
 const config = {
   ...

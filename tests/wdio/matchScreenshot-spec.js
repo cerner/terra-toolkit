@@ -54,21 +54,6 @@ describe('matchScreenshot', () => {
     });
   });
 
-  describe('matchScreenshot-options--viewportChangePause', () => {
-    let startTime;
-    before(() => {
-      startTime = new Date().getTime();
-    });
-
-    Terra.should.matchScreenshot({ viewports, viewportChangePause: 500 });
-
-    it('waited as expected', () => {
-      const endTime = new Date().getTime();
-      const totalTime = endTime - startTime;
-      expect(totalTime).to.be.above(500);
-    });
-  });
-
   describe('matchScreenshot-test name & options', () => {
     after(() => browser.setViewportSize(viewports[0]));
 
