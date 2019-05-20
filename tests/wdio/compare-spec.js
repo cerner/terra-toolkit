@@ -4,12 +4,12 @@ describe('comparing screenshots', () => {
   before(() => browser.url('/compare.html'));
 
   it('[0] checks visual comparison with shortened id', () => {
-    const screenshots = browser.checkElement('#content', { viewports });
+    const screenshots = browser.checkElement('button', { viewports });
     expect(screenshots).to.matchReference();
   });
 
   it('checks visual comparison with a [tag]', () => {
-    const screenshots = browser.checkElement('#content', { viewports });
+    const screenshots = browser.checkElement('button', { viewports });
     expect(screenshots).to.matchReference();
   });
 

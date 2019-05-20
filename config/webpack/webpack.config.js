@@ -1,24 +1,19 @@
 const Autoprefixer = require('autoprefixer');
 const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin');
 const PostCSSCustomProperties = require('postcss-custom-properties');
-const cssnano = require('cssnano');
 const path = require('path');
 const rtl = require('postcss-rtl');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const browserslist = require('browserslist-config-terra');
 const merge = require('webpack-merge');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
 const aggregateTranslations = require('terra-aggregate-translations');
 const ThemeAggregator = require('../../scripts/aggregate-themes/theme-aggregator');
 
 const webpackConfig = (options, env, argv) => {
-  const {
-    rootPath,
-    resolveModules,
-    themeFile,
-    staticOptions,
-  } = options;
+  const { rootPath, resolveModules, themeFile } = options;
 
   const production = argv.p;
   let filename = production ? '[name]-[chunkhash]' : '[name]';
@@ -43,17 +38,11 @@ const webpackConfig = (options, env, argv) => {
         {
           test: /\.(scss|css)$/,
           use: [
-            {
-              loader: MiniCssExtractPlugin.loader,
-              options: {
-                hmr: !production, // only enable hot module reloading in development
-                sourceMap: true,
-              },
-            },
+            MiniCssExtractPlugin.loader,
             {
               loader: 'css-loader',
               options: {
-                modules: 'global',
+                minimize: false, // Issue logged: https://github.com/cerner/terra-toolkit/issues/122
                 sourceMap: true,
                 importLoaders: 2,
                 localIdentName: '[name]__[local]___[hash:base64:5]',
@@ -62,23 +51,18 @@ const webpackConfig = (options, env, argv) => {
             {
               loader: 'postcss-loader',
               options: {
-                // Add unique ident to prevent the loader from searching for a postcss.config file. See: https://github.com/postcss/postcss-loader#plugins
+                // Add unique ident to prevent the loader from searching for a postcss.config file. Additionally see: https://github.com/postcss/postcss-loader#plugins
                 ident: 'postcss',
-                sourceMap: true,
                 plugins() {
                   return [
                     rtl(),
-                    Autoprefixer(),
-                    ...(production ? [cssnano({ preset: 'advanced' })] : []),
+                    Autoprefixer({ browsers: browserslist }),
                   ];
                 },
               },
             },
             {
               loader: 'sass-loader',
-              options: {
-                sourceMap: true,
-              },
             },
           ],
         },
@@ -121,14 +105,6 @@ const webpackConfig = (options, env, argv) => {
       path: outputPath,
       publicPath,
     },
-    devServer: {
-      ...staticOptions,
-      host: '0.0.0.0',
-      stats: {
-        colors: true,
-        children: false,
-      },
-    },
     devtool: 'eval-source-map',
     resolveLoader: {
       modules: [path.resolve(path.join(rootPath, 'node_modules'))],
@@ -146,7 +122,7 @@ const webpackConfig = (options, env, argv) => {
     mode: 'production',
     devtool: false,
     plugins: [
-      new CleanPlugin({ cleanOnceBeforeBuildPatterns: ['**/*', '!stats.json'] }),
+      new CleanPlugin(outputPath, { root: rootPath, exclude: ['stats.json'] }),
     ],
     optimization: {
       minimizer: [
@@ -166,14 +142,7 @@ const webpackConfig = (options, env, argv) => {
 };
 
 const defaultWebpackConfig = (env = {}, argv = {}) => {
-  const { disableAggregateTranslations, disableHotReloading } = env;
-
-  const staticOptions = {
-    ...disableHotReloading && {
-      hot: false,
-      inline: false,
-    },
-  };
+  const { disableAggregateTranslations } = env;
 
   const processPath = process.cwd();
   /* Get the root path of a mono-repo process call */
@@ -187,12 +156,7 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
 
   const themeFile = ThemeAggregator.aggregate();
 
-  const options = {
-    rootPath,
-    resolveModules,
-    themeFile,
-    staticOptions,
-  };
+  const options = { rootPath, resolveModules, themeFile };
 
   return webpackConfig(options, env, argv);
 };
