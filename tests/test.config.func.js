@@ -61,6 +61,7 @@ module.exports = (env = {}) => {
     },
     devServer: {
       host: '0.0.0.0',
+      publicPath: '/',
       stats: {
         colors: true,
         children: false,

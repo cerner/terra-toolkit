@@ -16,6 +16,10 @@ const config = {
     selector: '[data-terra-toolkit-content]',
   },
 
+  serveStatic: {
+    index: 'compare.html',
+  },
+
   axe: {
     inject: true,
     options: {

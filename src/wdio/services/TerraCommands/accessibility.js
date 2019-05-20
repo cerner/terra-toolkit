@@ -1,9 +1,9 @@
 import determineOptions from './determine-test-options';
 
 /**
- * The actual it block for running axe and validating no accesibilty violations were found.
+ * The actual it block for running axe and validating no accessibility violations were found.
  * @param {Object} options - The Axe options. Available options are viewports,
- * rules, and contex.
+ * rules, and context.
  */
 const accessibleItBlock = (options) => {
   global.it('is accessible', () => {
@@ -13,9 +13,9 @@ const accessibleItBlock = (options) => {
 };
 
 /**
-* A mocha-chai convenience test case to assert assesiblity.
+* A mocha-chai convenience test case to assert accessibility.
 * @param {Object} options - The Axe options. Available options are viewports,
-* rules, and contex. See https://www.axe-core.org/docs/.
+* rules, and context. See https://www.axe-core.org/docs/.
 */
 const beAccessible = (...args) => {
   accessibleItBlock(determineOptions.axeOptions(args));

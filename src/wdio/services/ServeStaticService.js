@@ -18,7 +18,7 @@ const watch = (compiler) => {
   const origWatch = compiler.watch;
   // Return new watch function
   return (watchOptions, handler) => {
-    // Call origial watch functions with the compiler as 'this'
+    // Call original watch functions with the compiler as 'this'
     const watcher = origWatch.call(compiler, watchOptions, handler);
     // Remove the 'watch' function from the returned watcher.
     watcher.watch = () => {

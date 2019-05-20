@@ -1,7 +1,7 @@
 import chai from 'chai';
 import axeCommand from './TerraCommands/axe-command';
 import chaiMethods from './TerraCommands/chai-methods';
-import accessiblity from './TerraCommands/accessiblity';
+import accessibility from './TerraCommands/accessibility';
 import visualRegression from './TerraCommands/visual-regression';
 import validateElement from './TerraCommands/validate-element';
 import Logger from '../../../scripts/utils/logger';
@@ -41,7 +41,7 @@ const setViewport = (formFactor) => {
 * Webdriver.io TerraService
 * Provides global access to chia, as well as custom chai assertions.
 * Also provides access a global instance of the Terra object which
-* provides accessibliy and visual regression test steps.
+* provides accessibility and visual regression test steps.
 */
 export default class TerraService {
   // eslint-disable-next-line class-methods-use-this
@@ -58,7 +58,7 @@ export default class TerraService {
     global.Terra = {
       viewports: getViewports,
       should: {
-        beAccessible: accessiblity.beAccessible,
+        beAccessible: accessibility.beAccessible,
         matchScreenshot: visualRegression.matchScreenshot,
         themeEachCustomProperty: visualRegression.themeEachCustomProperty,
         themeCombinationOfCustomProperties: visualRegression.themeCombinationOfCustomProperties,

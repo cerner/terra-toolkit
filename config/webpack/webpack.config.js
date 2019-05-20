@@ -1,7 +1,6 @@
 const Autoprefixer = require('autoprefixer');
 const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin');
 const PostCSSCustomProperties = require('postcss-custom-properties');
-const cssnano = require('cssnano');
 const path = require('path');
 const rtl = require('postcss-rtl');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -69,7 +68,6 @@ const webpackConfig = (options, env, argv) => {
                   return [
                     rtl(),
                     Autoprefixer(),
-                    ...(production ? [cssnano({ preset: 'advanced' })] : []),
                   ];
                 },
               },
@@ -124,6 +122,7 @@ const webpackConfig = (options, env, argv) => {
     devServer: {
       ...staticOptions,
       host: '0.0.0.0',
+      publicPath,
       stats: {
         colors: true,
         children: false,

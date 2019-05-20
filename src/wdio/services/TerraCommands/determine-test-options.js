@@ -22,7 +22,7 @@ const determineArgs = (args) => {
   // Checked for custom axe selector, otherwise use the global value.
   const context = options.context || global.browser.options.terra.selector;
 
-  // Which viewports the screenshoot should adjust too during the test run, otherwise use's current viewport
+  // Which viewports the screenshot should adjust too during the test run, otherwise use's current viewport
   const { viewports } = options;
 
   return {
@@ -56,7 +56,7 @@ const axeOptions = (args) => {
 /**
 * Helper method to determine the screenshot tag name, the element selector, the viewport(s)
 * in which to take the screenshots, as well as the capture screenshot options to be passed
-* to the wdio-visual-regression-service comparison methods. Currently supported VR comparision
+* to the wdio-visual-regression-service comparison methods. Currently supported VR comparison
 * options are:
 *     - viewports: [{ width: Number, height: Number }]
 *     - misMatchTolerance: Number
