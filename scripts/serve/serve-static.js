@@ -1,177 +1,57 @@
 const express = require('express');
-const fse = require('fs-extra');
-const path = require('path');
-const webpack = require('webpack');
-const clone = require('clone');
-const MemoryFS = require('memory-fs');
-const mime = require('mime-types');
+const ip = require('ip');
 
 const Logger = require('../utils/logger');
 
 const context = '[Terra-Toolkit:serve-static]';
-
-// Run webpack on the provided webpack config and save to either the virtual file system or disk.
-const compile = (webpackConfig, disk) => (
-  new Promise((resolve, reject) => {
-    const compiler = webpack(webpackConfig);
-    // setup a virtual file system to write webpack files to.
-    if (!disk) {
-      compiler.outputFileSystem = new MemoryFS();
-    }
-    Logger.log('Starting Webpack compilation', { context });
-    compiler.run((err, stats) => {
-      if (err || stats.hasErrors()) {
-        Logger.log(`Webpack failed to compile in ${webpackConfig.mode} mode`, { context });
-        reject(err || Logger.error((stats.toJson().errors)));
-      } else {
-        if (stats.hasWarnings()) {
-          Logger.warn(stats.toJson().warnings, { context });
-        }
-        Logger.log(`Webpack compiled successfully in ${Logger.emphasis(webpackConfig.mode.toUpperCase())} mode`, { context });
-        resolve([webpackConfig.output.path, compiler.outputFileSystem]);
-      }
-    });
-  })
-);
-
-// Either build the site or return the path to the provided site.
-const generateSite = (site, config, disk, production) => {
-  if (site) {
-    const sitePath = path.join(process.cwd(), site);
-
-    if (fse.existsSync(sitePath) && fse.lstatSync(sitePath).isDirectory()) {
-      const fileSystem = disk ? fse : undefined;
-      return Promise.resolve([sitePath, fileSystem]);
-    }
-
-    return Promise.reject(Logger.error(`Could not serve static site from ${sitePath}.`, { context }));
-  }
-
-  if (config) {
-    let webpackConfig;
-    if (typeof config === 'function') {
-      webpackConfig = config(undefined, { p: production });
-    } else {
-      webpackConfig = clone(config);
-    }
-
-    if (!(webpackConfig.output || {}).path) {
-      webpackConfig.output = Object.assign({}, webpackConfig.output, { path: '/dist' });
-    }
-
-    return compile(webpackConfig, disk);
-  }
-
-  return Promise.reject(Logger.error('No webpack configuration provided.', { context }));
-};
-
-// Set the test locale for the html file
-const setSiteLocale = (fileContent, locale) => {
-  const localeComment = `<!-- Terra-toolkit's serve-static set the default site locale to ${locale}.-->`;
-  const content = fileContent.replace(/<html/, `${localeComment}\n<html`);
-
-  const langPattern = /lang="[a-zA-Z0-9-]*"/;
-  const langLocale = `lang="${locale}"`;
-
-  const isLanguageSet = content.match(langPattern);
-  if (isLanguageSet) {
-    return content.replace(langPattern, langLocale);
-  }
-
-  return content.replace(/<html/, `<html ${langLocale}`);
-};
-
-// Setup an app server that reads from a filesystem.
-const virtualApp = (site, index, locale, fs, verbose) => {
-  const app = express();
-
-  // Setup a catch all route, we can't use 'static' because we need to use a virtual file system
-  app.get('*', (req, res, next) => {
-    let filename = req.url;
-    // Setup a default index for the server.
-    if (filename === '/') {
-      filename = `/${index}`;
-    }
-
-    // Filter query params
-    const filepath = `${site}${filename}`.replace(/(\?).*/, '');
-
-    if (fs.existsSync(filepath)) {
-      if (filename === '/favicon.ico') {
-        res.sendStatus(200);
-        return;
-      }
-
-      const fileExt = path.extname(filename).replace(/(\?).*/, '');
-      res.setHeader('content-type', mime.contentType(fileExt));
-
-      if (fileExt === '.html') {
-        let fileContent = fs.readFileSync(filepath, 'utf8');
-        fileContent = setSiteLocale(fileContent, locale);
-        res.send(fileContent);
-      } else {
-        res.send(fs.readFileSync(filepath));
-      }
-    } else {
-      next();
-    }
-  });
-
-  if (verbose) {
-    app.use((req, res, next) => {
-      const err = Logger.error(`Not Found: ${req.originalUrl}`, { context });
-      err.status = 404;
-      next(err);
-    });
-
-    // error handler
-    app.use((err, req, res) => {
-      // set locals, only providing error in development
-      res.locals.message = err.message;
-      res.locals.error = err;
-
-      // render the error page
-      res.status(err.status || 500);
-      res.render('error');
-    });
-  }
-
-  return Promise.resolve(app);
+const displayServer = (localAddress, networkAddress) => {
+  Logger.log('Server started listening at', { context });
+  Logger.log(`* Local:            ${Logger.emphasis(localAddress)}`);
+  Logger.log(`* On your network:  ${Logger.emphasis(networkAddress)}`);
 };
 
 // Setup a static express server
-const staticApp = (site) => {
+const staticApp = (site, index) => {
   const app = express();
-  app.use(express.static(site));
-  return Promise.resolve(app);
-};
+  const options = {
+    ...index && { index },
+    // If an extensionless file can't be found search for it with .html and .htm
+    extensions: ['html', 'htm'],
+  };
+  // Return any files in the site. If no extension is provided check the file with the htm or html extension.
+  app.use(express.static(site, options));
+  // Match on *.htm, *.html or routes without extensions.
+  app.use([/\/[^.]*$/, '/*.html?'], (req, res, next) => {
+    // Return 404.html if provided.
+    res.status(404).sendFile('/404.html', { root: site }, () => {
+      // If there is an error, bail.
+      next();
+    });
+  });
 
-// Setup an app for either a virtual site or a static site. If a file system is not provided, serve the static site.
-const serveSite = (site, fs, index, locale, verbose) => {
-  if (fs) {
-    return virtualApp(site, index, locale, fs, verbose);
-  }
-
-  return staticApp(site);
+  return app;
 };
 
 // Generate a site if not provided and spin up an express server to serve the site.
 const serve = (options) => {
   const {
-    site, config, port, disk, index, locale, production, host, verbose,
+    // Setting defaults here instead of in cli.
+    site, port = 8080, host = '0.0.0.0', index,
   } = options;
 
-  const appPort = port || 8080;
-  const appIndex = index || 'index.html';
-  const appLocale = locale || process.env.LOCALE || 'en';
+  const app = staticApp(site, index);
 
-  return generateSite(site, config, disk, production)
-    .then(([sitePath, fs]) => serveSite(sitePath, fs, appIndex, appLocale, verbose))
-    .then((app) => {
-      const server = app.listen(appPort, host);
-      Logger.log(`Server started listening at port:${appPort}`, { context });
-      return server;
+  return new Promise((resolve, reject) => {
+    const server = app.listen(port, host, (err) => {
+      if (err) {
+        reject(err);
+      }
+      const localAddress = `http://${host}:${port}/`;
+      const networkAddress = `http://${ip.address()}:${port}/`;
+      displayServer(localAddress, networkAddress);
+      resolve(server);
     });
+  });
 };
 
 module.exports = serve;

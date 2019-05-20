@@ -45,7 +45,7 @@ describe('webpack config', () => {
       expect(config.module.rules).toHaveLength(4);
 
       const cssLoaders = [
-        expect.stringContaining('mini-css-extract-plugin/dist/loader.js'),
+        expect.objectContaining({ loader: expect.stringContaining('mini-css-extract-plugin/dist/loader.js') }),
         expect.objectContaining({ loader: 'css-loader' }),
         expect.objectContaining({ loader: 'postcss-loader' }),
         expect.objectContaining({ loader: 'sass-loader' }),
@@ -160,9 +160,9 @@ describe('webpack config', () => {
       expect(MiniCssExtractPlugin).toBeCalled();
       expect(PostCSSAssetsPlugin).toBeCalled();
 
-      const cleanPluginOptions = expect.objectContaining({ exclude: ['stats.json'] });
+      const cleanPluginOptions = expect.objectContaining({ cleanOnceBeforeBuildPatterns: expect.arrayContaining(['!stats.json']) });
 
-      expect(CleanPlugin).toBeCalledWith(outputPath, cleanPluginOptions);
+      expect(CleanPlugin).toBeCalledWith(cleanPluginOptions);
     });
 
     it('removes devtool option', () => {
@@ -209,6 +209,26 @@ describe('webpack config', () => {
 
     it('and it aggregates translations with these options', () => {
       expect(aggregateTranslations).toBeCalledWith(expect.objectContaining(aggregateOptions));
+    });
+  });
+
+  describe('accepts disableHotReloading env variable', () => {
+    const disableHotReloading = true;
+    beforeAll(() => {
+      config = webpackConfig({ disableHotReloading }, { });
+    });
+
+    it('and adds to dev server options', () => {
+      const expectedOuput = {
+        hot: false,
+        inline: false,
+        host: '0.0.0.0',
+        stats: {
+          colors: true,
+          children: false,
+        },
+      };
+      expect(config.devServer).toEqual(expect.objectContaining(expectedOuput));
     });
   });
 });
