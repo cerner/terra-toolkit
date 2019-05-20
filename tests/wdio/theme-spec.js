@@ -1,14 +1,10 @@
 describe('themeEachCustomProperty', () => {
-  before(() => browser.url('/theme.html'));
-
-  Terra.should.matchScreenshot('before');
+  beforeEach(() => browser.url('/theme.html'));
 
   Terra.should.themeEachCustomProperty({
     '--color': 'red',
     '--font-size': '50px',
   });
-
-  Terra.should.matchScreenshot('verify-styles were removed');
 
   Terra.should.themeEachCustomProperty(
     '.test',
@@ -21,9 +17,7 @@ describe('themeEachCustomProperty', () => {
 
 
 describe('themeCombinationOfCustomProperties', () => {
-  before(() => browser.url('/theme.html'));
-
-  Terra.should.matchScreenshot('before');
+  beforeEach(() => browser.url('/theme.html'));
 
   Terra.should.themeCombinationOfCustomProperties({
     properties: {
@@ -31,8 +25,6 @@ describe('themeCombinationOfCustomProperties', () => {
       '--font-size': '50px',
     },
   });
-
-  Terra.should.matchScreenshot('verify-styles were removed');
 
   Terra.should.themeCombinationOfCustomProperties({
     testName: 'custom',

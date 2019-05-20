@@ -63,7 +63,7 @@ React 16 depends on the collection types ``Map`` and ``Set`` and it depends on `
 - [file-loader](https://webpack.js.org/loaders/file-loader/) - Instructs webpack to emit the required object as file and to return its public URL.
 
 ### CSS Loaders and Plugins
-- [autoprefixer](https://github.com/postcss/autoprefixer) - Plugin to parse CSS and add vendor prefixes to CSS rules. This should be configured with [`browserslist-config-terra`](https://github.com/cerner/browserslist-config-terra). \*
+- [autoprefixer](https://github.com/postcss/autoprefixer) - Plugin to parse CSS and add vendor prefixes to CSS rules. This is configured for [Terra's supported browsers](https://github.com/cerner/terra-core/wiki/Component-Features#cross-browser-support). \*
 - [css-loader](https://webpack.js.org/loaders/css-loader/) - The css-loader interprets ``@import`` and ``url()`` like ``import/require()`` and will resolve them. The css-loader is also used to parse CSS Modules.
 - [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin) - This plugin extracts CSS into separate files and supports on-demand-loading of CSS and SourceMaps.
 - [postcss-loader](https://webpack.js.org/loaders/postcss-loader/) - Transforms styles with JS plugins.
@@ -77,6 +77,5 @@ React 16 depends on the collection types ``Map`` and ``Set`` and it depends on `
 - [clean-webpack-plugin](https://github.com/johnagan/clean-webpack-plugin) -
 A webpack plugin to remove/clean your build folder(s) before building.
 - [terser-webpack-plugin](https://webpack.js.org/plugins/terser-webpack-plugin/) - minifies your JavaScript.
-- [cssnano](https://cssnano.co/) - a tool powersed by PostCSS to compress css
 
 _\* Required to support IE legacy browsers_

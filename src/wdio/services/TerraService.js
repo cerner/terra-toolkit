@@ -1,5 +1,4 @@
 import chai from 'chai';
-import axeCommand from './TerraCommands/axe-command';
 import chaiMethods from './TerraCommands/chai-methods';
 import accessiblity from './TerraCommands/accessiblity';
 import visualRegression from './TerraCommands/visual-regression';
@@ -51,7 +50,6 @@ export default class TerraService {
 
   // eslint-disable-next-line class-methods-use-this
   before() {
-    global.browser.addCommand('axe', axeCommand);
     chai.config.showDiff = false;
     global.expect = chai.expect;
     global.should = chai.should();
@@ -59,7 +57,7 @@ export default class TerraService {
       viewports: getViewports,
       should: {
         beAccessible: accessiblity.beAccessible,
-        matchScreenshot: visualRegression.matchScreenshot,
+        matchScreenshot: visualRegression.matchScreenshotWithinTolerance,
         themeEachCustomProperty: visualRegression.themeEachCustomProperty,
         themeCombinationOfCustomProperties: visualRegression.themeCombinationOfCustomProperties,
         validateElement,

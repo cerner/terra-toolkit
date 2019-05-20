@@ -3,7 +3,7 @@ const glob = require('glob');
 
 const path = require('path');
 const {
-  SeleniumDocker: SeleniumDockerService, ServeStaticService, Terra: TerraService,
+  Axe: AxeService, SeleniumDocker: SeleniumDockerService, ServeStaticService, Terra: TerraService,
 } = require('../../lib/wdio/services/index');
 const visualRegressionConfig = require('./visualRegressionConf');
 
@@ -13,6 +13,7 @@ const internalPort = process.env.WDIO_INTERNAL_PORT || 8080;
 const ci = process.env.TRAVIS || process.env.CI;
 const bail = process.env.WDIO_BAIL || ci;
 const locale = process.env.LOCALE;
+const formFactor = process.env.FORM_FACTOR;
 
 const hasPackages = glob.sync((path.join(process.cwd(), 'packages'))).length > 0;
 
@@ -23,15 +24,11 @@ const config = {
     path.join('test*', 'wdio', '**', '*-spec.js'),
   ],
   maxInstances: 1,
-  capabilities: [{
-    browserName: 'chrome',
-    'goog:chromeOptions': {
-      /** Run in headless mode since Chrome 69 cannot reach the tiny viewport size due to a omnibox size change
-       * made by the chrome team. See https://bugs.chromium.org/p/chromedriver/issues/detail?id=2626#c1.
-       */
-      args: ['headless', 'disable-gpu'],
+  capabilities: [
+    {
+      browserName: 'chrome',
     },
-  }],
+  ],
 
   sync: true,
   logLevel: 'silent',
@@ -41,7 +38,7 @@ const config = {
   waitforTimeout: 3000,
   connectionRetryTimeout: 90000,
   connectionRetryCount: 1,
-  services: ['visual-regression', TerraService, SeleniumDockerService, ServeStaticService],
+  services: ['visual-regression', AxeService, TerraService, SeleniumDockerService, ServeStaticService],
 
   visualRegression: visualRegressionConfig,
 
@@ -51,9 +48,9 @@ const config = {
     port: internalPort,
   },
   ...locale && { locale },
-  formFactor: process.env.FORM_FACTOR || 'huge',
+  ...formFactor && { formFactor },
 
-  seleniumVersion: '3.14',
+  seleniumVersion: '3.11',
   seleniumDocker: {
     enabled: !ci,
   },
