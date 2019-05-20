@@ -37,7 +37,12 @@ const webpackConfig = (options, env, argv) => {
         {
           test: /\.(jsx|js)$/,
           exclude: /node_modules/,
-          use: 'babel-loader',
+          use: {
+            loader: 'babel-loader',
+            options: {
+              rootMode: 'upward', // needed to correctly resolve babel's config root in mono-repos
+            },
+          },
         },
         {
           test: /\.(scss|css)$/,
