@@ -74,13 +74,23 @@ Serve is now a thin abstraction on webpack dev server and the command line api i
 
 Why use serve instead of webpack-dev-server directly? Having the serve abstraction provides a hook for us to change the servers implementation in case webpack-dev-server no longer meets our needs.
 
-Our default webpack config has been updated with the following defaults:
+A webpack.config must be provided at the root level or passed in via `--config` flag in the package.json script. The webpack-dev-server cannot attempt to automatically load our defaults.
+
+```diff
+//package.json
+scripts: {
+  "tt-serve-dev": "tt-serve --config node_modules/terra-dev-site/config/webpack/webpack.config.js",
+}
+```
+
+Then, our default webpack config has been updated with the following defaults:
 
 ```javascript
 module.exports = {
   devServer: {
     // We set the host this way to allow it to be served from docker containers.
     host: '0.0.0.0',
+    publicPath: '/',
     // These options cut down on noise in the webpack build output.
     stats: {
       colors: true,
@@ -96,7 +106,7 @@ Serve is no longer available as a javascript function. If this is needed use [we
 
 Webpack-dev-server now supports IE 10+, because of this change we have removed the ability for serve-static to run webpack to create your site. Serve static now will simply host static site content.
 
-If an html page is not found serve static will try to return /404.html with a status of 404. If that file is not found serve static will return a 404 status as before.
+If an html page is not found serve static will try to return /404.html with a status of 404. If that file is not found, serve-static will return a 404 status as before.
 
 These api options have been removed from both the cli and javascript:
 
@@ -104,16 +114,14 @@ These api options have been removed from both the cli and javascript:
 - production
 - disk
 
-If you want to serve a non hot-reloading site without pre-building your site, use tt-static with the following options specified in your webpack config.
+If you want to serve a non hot-reloading site without pre-building your site, use tt-static with the `--env.disableHotReloading` flag passed via the cli.
 
-```javascript
-module.exports = {
-  devServer: {
-    // Disable hot reloading and javascript injection to watch for changes.
-    hot: false,
-    inline: false,
-  },
-};
+```diff
+//package.json
+scripts: {
+  "tt-serve": "tt-serve --config node_modules/terra-dev-site/config/webpack/webpack.config.js -p --env.disableHotReloading",
+  "tt-serve-dev": "tt-serve --config node_modules/terra-dev-site/config/webpack/webpack.config.js",
+}
 ```
 
 ### tt-heroku-serve-static
@@ -179,7 +187,7 @@ Template
 </html>
 ```
 
-For compiled sites, the service will respect the devserver setting in webpack config with a few exceptions:
+For compiled sites, the service will respect the devServer setting in webpack config with a few exceptions:
 
 ```javascript
 module.exports = {
@@ -188,10 +196,9 @@ module.exports = {
     hot: false,
     inline: false,
     host: '0.0.0.0',
-    // From wdio config.
-    port,
-    // From wdio config.
-    index,
+    publicPath: '/', 
+    port, // From wdio config.
+    index, // From wdio config.
     stats: {
       colors: true,
       children: false,

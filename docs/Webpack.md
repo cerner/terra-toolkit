@@ -47,6 +47,14 @@ Terra's supported locales will be aggregated when using the default webpack conf
 webpack --env.disableAggregateTranslations
 ```
 
+#### Hot Reloading with Webpack Dev Server
+Terra's webpack configuration enables hot reloading by default in development mode. To disable this behavior, pass 
+`--env.disableHotReloading` to the cli when running tt-serve.
+
+```bash
+tt-serve --env.disableHotReloading
+```
+
 #### Development vs Production
 The default webpack configuration is a function that will flex between production and development modes when passing the `-p` flag while compiling with webpack. See webpack's documentation on [configuration types](https://webpack.js.org/configuration/configuration-types/) for more information.
 
