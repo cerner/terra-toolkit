@@ -5,10 +5,9 @@ Serve-static Service is provided as a convenience to start an express server and
 
 | Name  | Required | Default Value | Description |
 | ------------- | ------------- | ------------- | ------------- |
-| **webpackConfig**  | false | `undefined` | The webpack configuration used to start the express server. |
+| **webpackConfig**  | true | `undefined` | The webpack configuration used to start the express server. |
 | **site**  | false | `undefined` | The relative path to the static site used to start the express server. This takes precidence over webpack config if both are passed. |
 | **serveStatic**  | false | `{ index: 'index.html', port: '8080' }` | The serveStatic configuration to be passed to the service. The only options are index and port. |
-| **locale** | false | `undefined` | The locale is passed as an env variable to the supplied webpack config as 'defaultLocale'. Alternatively this variable can be read as the env variable LOCALE. Locale is disregarded when using a static site.|
 
 ```js
 // wdio.conf.js

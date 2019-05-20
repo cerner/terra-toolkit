@@ -39,15 +39,6 @@ const config = {
       'tests/wdio/i18n-spec.js',
       'tests/wdio/theme-spec.js',
     ],
-    static: [
-      'tests/wdio/axe-spec.js',
-      'tests/wdio/beAccessible-spec.js',
-      'tests/wdio/compare-spec.js',
-      'tests/wdio/matchScreenshot-spec.js',
-      'tests/wdio/resize-spec.js',
-      'tests/wdio/validateElement-spec.js',
-      'tests/wdio/serveStatic-spec.js',
-    ],
   },
   // Static site for ServeStaticService
   ...siteExists && { site },
