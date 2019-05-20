@@ -1,4 +1,4 @@
-jest.mock('../../lib/wdio/services/TerraCommands/accessiblity', () => ({
+jest.mock('../../lib/wdio/services/TerraCommands/accessibility', () => ({
   __esModule: true,
   default: {
     accessibleItBlock: jest.fn(),
@@ -11,7 +11,7 @@ jest.mock('../../lib/wdio/services/TerraCommands/visual-regression', () => ({
   },
 }));
 
-const accessibility = require('../../lib/wdio/services/TerraCommands/accessiblity').default;
+const accessibility = require('../../lib/wdio/services/TerraCommands/accessibility').default;
 const visualRegressions = require('../../lib/wdio/services/TerraCommands/visual-regression').default;
 const validateElement = require('../../lib/wdio/services/TerraCommands/validate-element').default;
 

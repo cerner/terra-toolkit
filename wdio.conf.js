@@ -20,16 +20,6 @@ const config = {
     index: 'compare.html',
   },
 
-  axe: {
-    inject: true,
-    options: {
-      rules: [
-        { id: 'landmark-one-main', enabled: false },
-        { id: 'region', enabled: false },
-      ],
-    },
-  },
-
   suites: {
     opinionated: [
       'tests/wdio/axe-spec.js',
