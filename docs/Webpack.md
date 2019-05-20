@@ -85,6 +85,5 @@ React 16 depends on the collection types ``Map`` and ``Set`` and it depends on `
 - [clean-webpack-plugin](https://github.com/johnagan/clean-webpack-plugin) -
 A webpack plugin to remove/clean your build folder(s) before building.
 - [terser-webpack-plugin](https://webpack.js.org/plugins/terser-webpack-plugin/) - minifies your JavaScript.
-- [cssnano](https://cssnano.co/) - a tool powersed by PostCSS to compress css
 
 _\* Required to support IE legacy browsers_
