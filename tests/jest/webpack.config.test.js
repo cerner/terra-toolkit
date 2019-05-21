@@ -52,7 +52,7 @@ describe('webpack config', () => {
       ];
 
       const moduleRules = [
-        expect.objectContaining({ use: 'babel-loader' }),
+        expect.objectContaining({ use: expect.objectContaining({ loader: 'babel-loader' }) }),
         expect.objectContaining({ use: expect.arrayContaining(cssLoaders) }),
         expect.objectContaining({ use: 'raw-loader' }),
         expect.objectContaining({ use: 'file-loader' }),
