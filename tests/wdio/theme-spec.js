@@ -8,8 +8,10 @@ describe('themeEachCustomProperty', () => {
     '--font-size': '50px',
   });
 
-  Terra.should.matchScreenshot('verify-styles were removed');
+  // verify-styles were removed
+  Terra.should.matchScreenshot('before');
 
+  // verify custom naming
   Terra.should.themeEachCustomProperty(
     '.test',
     {
@@ -18,7 +20,6 @@ describe('themeEachCustomProperty', () => {
     },
   );
 });
-
 
 describe('themeCombinationOfCustomProperties', () => {
   before(() => browser.url('/theme.html'));
@@ -32,8 +33,10 @@ describe('themeCombinationOfCustomProperties', () => {
     },
   });
 
-  Terra.should.matchScreenshot('verify-styles were removed');
+  // verify-styles were removed
+  Terra.should.matchScreenshot('before');
 
+  // verify custom naming
   Terra.should.themeCombinationOfCustomProperties({
     testName: 'custom',
     selector: '.test',

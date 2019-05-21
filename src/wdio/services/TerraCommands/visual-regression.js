@@ -19,11 +19,23 @@ const themeEachCustomProperty = (...args) => {
       // add document level style override
       global.browser.execute(`document.documentElement.style.setProperty('${key}', '${value}')`);
 
-      // take screenshot
-      global.expect(global.browser.checkElement(selector)).to.matchReference();
+      let screenshotFailure;
+      try {
+        // take screenshot
+        global.expect(global.browser.checkElement(selector)).to.matchReference();
+      } catch (err) {
+        // it failed. that fine but we still need to clean up the themed styles
+        screenshotFailure = err;
+      } finally {
+        // remove documented defined style override
+        global.browser.execute(`document.documentElement.style.setProperty('${key}', '')`);
 
-      // remove documented defined style override
-      global.browser.execute(`document.documentElement.style.setProperty('${key}', '')`);
+        // re-throw failed screenshot error
+        if (screenshotFailure) {
+          // eslint-disable-next-line no-unsafe-finally
+          throw Error(screenshotFailure);
+        }
+      }
     });
   });
 };
@@ -49,13 +61,25 @@ const themeCombinationOfCustomProperties = (...args) => {
       global.browser.execute(`document.documentElement.style.setProperty('${key}', '${value}')`);
     });
 
+    let screenshotFailure;
+    try {
     // take screenshot
-    global.expect(global.browser.checkElement(selector)).to.matchReference();
+      global.expect(global.browser.checkElement(selector)).to.matchReference();
+    } catch (err) {
+      // it failed. that fine but we still need to clean up the themed styles
+      screenshotFailure = err;
+    } finally {
+      // remove documented defined style overrides
+      Object.entries(styleProperties).forEach(([key]) => {
+        global.browser.execute(`document.documentElement.style.setProperty('${key}', '')`);
+      });
 
-    // remove documented defined style overrides
-    Object.entries(styleProperties).forEach(([key]) => {
-      global.browser.execute(`document.documentElement.style.setProperty('${key}', '')`);
-    });
+      // re-throw failed screenshot error
+      if (screenshotFailure) {
+        // eslint-disable-next-line no-unsafe-finally
+        throw Error(screenshotFailure);
+      }
+    }
   });
 };
 
