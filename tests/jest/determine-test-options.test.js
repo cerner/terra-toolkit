@@ -56,21 +56,8 @@ describe('axeOptions', () => {
   it('returns defaults', () => {
     const options = determineOptions.axeOptions([]);
 
-    expect(options).toHaveProperty('context', '[data-terra-toolkit-content]');
     expect(options).not.toHaveProperty('viewports');
     expect(options).not.toHaveProperty('rules');
-  });
-
-  it('honors custom context', () => {
-    const options = determineOptions.axeOptions([{ context: 'custom-id' }]);
-
-    expect(options).toHaveProperty('context', 'custom-id');
-  });
-
-  it('honors custom selector -- for validateElement helper', () => {
-    const options = determineOptions.axeOptions([{ selector: 'custom-id' }]);
-
-    expect(options).toHaveProperty('selector', 'custom-id');
   });
 
   it('honors custom viewports', () => {

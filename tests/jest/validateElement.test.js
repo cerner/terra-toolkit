@@ -28,20 +28,20 @@ describe('validateElement', () => {
     validateElement('test name', { selector: 'test-selector', misMatchTolerance: 0.05, axeRules: { a: 'b', c: 'd' } });
 
     expect(visualRegressions.screenshotItBlock).toBeCalledWith('test name', 'test-selector', { misMatchTolerance: 0.05 });
-    expect(accessibility.accessibleItBlock).toBeCalledWith({ rules: { a: 'b', c: 'd' }, context: 'test-selector' });
+    expect(accessibility.accessibleItBlock).toBeCalledWith({ rules: { a: 'b', c: 'd' } });
   });
 
   it('calls the appropriate methods downstream with defaults', () => {
     validateElement();
 
     expect(visualRegressions.screenshotItBlock).toBeCalledWith('default', '[data-terra-toolkit-content]', { });
-    expect(accessibility.accessibleItBlock).toBeCalledWith({ context: '[data-terra-toolkit-content]' });
+    expect(accessibility.accessibleItBlock).toBeCalled();
   });
 
   it('does not use context option', () => {
     validateElement({ selector: 'test-selector', context: 'im_sneaky_and_will_test_a_diff_element_for_a11y' });
 
     expect(visualRegressions.screenshotItBlock).toBeCalledWith('default', 'test-selector', { });
-    expect(accessibility.accessibleItBlock).toBeCalledWith({ context: 'test-selector' });
+    expect(accessibility.accessibleItBlock).toBeCalled();
   });
 });

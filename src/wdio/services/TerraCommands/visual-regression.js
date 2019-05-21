@@ -110,7 +110,7 @@ const screenshotItBlock = (name, selector, options) => {
 
 /**
 * Mocha-chai wrapper method to capture screenshots of a specified element and assert the
-* screenshot comparision results are within the mismatch tolerance.
+* screenshot comparison results are within the mismatch tolerance.
 * @param {Array} args - The list of test arguments to parse. Accepted Arguments:
 *    - String (optional): the test case name. Default name is 'default'
 *    - Object (optional): the test options. Options include selector, and viewports,

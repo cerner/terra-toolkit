@@ -13,7 +13,6 @@ import determineOptions from './determine-test-options';
 const validateElement = (...args) => {
   const {
     rules,
-    selector: context,
   } = determineOptions.axeOptions(args);
 
   const {
@@ -22,7 +21,7 @@ const validateElement = (...args) => {
     misMatchTolerance,
   } = determineOptions.screenshotOptions(args);
 
-  accessibilityMethods.accessibleItBlock({ rules, context });
+  accessibilityMethods.accessibleItBlock({ rules });
   visualRegressionMethods.screenshotItBlock(name, selector, { misMatchTolerance });
 };
 

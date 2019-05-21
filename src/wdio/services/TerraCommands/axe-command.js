@@ -17,14 +17,14 @@ const injectAxe = (axeOptions) => {
   browser.execute(axeCoreSrc);
 };
 
-const runAxeTest = (wdioContext, rules) => {
+const runAxeTest = (rules) => {
   /* Avoid arrow callback syntax as this function is injected into the browser */
   /* eslint-disable func-names, prefer-arrow-callback, object-shorthand */
-  const axeResult = browser.executeAsync(function (context, opts, done) {
-    axe.run(context, opts, function (error, result) {
+  const axeResult = browser.executeAsync(function (opts, done) {
+    axe.run(document, opts, function (error, result) {
       done({ error, result });
     });
-  }, wdioContext, { rules, restoreScroll: true, runOnly: ['wcag2aa', 'section508'] });
+  }, { rules, restoreScroll: true, runOnly: ['wcag2aa', 'section508'] });
   /* eslint-enable func-names, prefer-arrow-callback, object-shorthand */
 
   return axeResult.value;
@@ -43,14 +43,13 @@ const axeCommand = (testOptions = {}) => {
   }
 
   const {
-    context,
     rules,
     viewports,
   } = testOptions;
 
   if (!viewports) {
     // analyze the current viewport
-    return [runAxeTest(context, rules)];
+    return [runAxeTest(rules)];
   }
 
   // get the current viewport
@@ -59,7 +58,7 @@ const axeCommand = (testOptions = {}) => {
   // Get accessibility results for each specified viewport size
   const results = viewports.map((viewport) => {
     browser.setViewportSize(viewport);
-    return runAxeTest(context, rules);
+    return runAxeTest(rules);
   });
 
   // reset viewport back to the current viewport

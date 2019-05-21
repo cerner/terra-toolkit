@@ -2,8 +2,8 @@ import determineOptions from './determine-test-options';
 
 /**
  * The actual it block for running axe and validating no accessibility violations were found.
- * @param {Object} options - The Axe options. Available options are viewports,
- * rules, and context.
+ * @param {Object} options - The Axe options. Available options are viewports and
+ * rules.
  */
 const accessibleItBlock = (options) => {
   global.it('is accessible', () => {
