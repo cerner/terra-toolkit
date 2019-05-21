@@ -22,8 +22,7 @@ const watch = (compiler) => {
     const watcher = origWatch.call(compiler, watchOptions, handler);
     // Remove the 'watch' function from the returned watcher.
     watcher.watch = () => {
-      // console.log('not watching');
-      Logger.log('Watching is disabled', { context });
+      Logger.log('Hot reloading has been disabled for tests.', { context });
     };
     return watcher;
   };

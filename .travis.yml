@@ -24,27 +24,24 @@ jobs:
     - stage: release terra-node
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "ryanthemanuel" --password-stdin
-        - "travis_wait docker build -t cerner/terra-node -f ./docker/terra-node/Dockerfile ./docker/terra-node/"
-        - "travis_wait docker push cerner/terra-node"
+        - travis_wait docker build -t cerner/terra-node -f ./docker/terra-node/Dockerfile ./docker/terra-node/
+        - travis_wait docker push cerner/terra-node
     - stage: build
       before_install: true
       script:
         - sudo chown -R travis:travis $HOME/docker
         - 'rm -f $HOME/docker/*.tar.gz'
-        - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
-        - travis_wait docker-compose build --build-arg TERRA_NODE_TAG=latest test-chrome
+        - travis_wait docker-compose build test-ci
         - travis_wait docker-compose --verbose pull standalone-chrome
         - >
           mkdir -p $HOME/docker && docker images -a --filter='dangling=false' --format '{{.Repository}}:{{.Tag}} {{.ID}}'
           | xargs -n 2 -t sh -c 'test -e $HOME/docker/$1.tar.gz || docker save $0 | gzip -2 > $HOME/docker/$1.tar.gz'
     - stage: lint jest and danger
       script:
-        - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
-        - "travis_wait docker-compose run -e DANGER_GITHUB_API_TOKEN=$DANGER_GITHUB_API_TOKEN -e TRAVIS=$TRAVIS -e CI=$CI -e HAS_JOSH_K_SEAL_OF_APPROVAL=$HAS_JOSH_K_SEAL_OF_APPROVAL -e TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST -e TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG test-chrome bash -c 'npm run danger && npm run lint && npm run jest'"
+        - "travis_wait docker-compose run -e DANGER_GITHUB_API_TOKEN=$DANGER_GITHUB_API_TOKEN -e HAS_JOSH_K_SEAL_OF_APPROVAL=$HAS_JOSH_K_SEAL_OF_APPROVAL -e TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST -e TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG test-ci bash -c 'npm run danger && npm run lint && npm run jest'"
     - stage: test
       script:
-        - 'cp ./config/docker/ci-docker-compose.yml ./docker-compose.yml'
-        - "travis_wait docker-compose run -e DANGER_GITHUB_API_TOKEN=$DANGER_GITHUB_API_TOKEN -e TRAVIS=$TRAVIS -e CI=$CI -e HAS_JOSH_K_SEAL_OF_APPROVAL=$HAS_JOSH_K_SEAL_OF_APPROVAL -e TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST -e TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG test-chrome npm run wdio"
+        - "travis_wait docker-compose run test-ci npm run wdio"
     - stage: clean up cache
       before_install: true
       script:

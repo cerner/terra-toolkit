@@ -21,8 +21,8 @@ const config = {
 
   // Configuration for SeleniumDocker service
   seleniumDocker: {
-    // Disable if running in Travis
-    enabled: !process.env.TRAVIS,
+    // Disable if running in CI pipeline
+    enabled: !process.env.CI,
     env: {
       TZ: 'America/Chicago'
     },
