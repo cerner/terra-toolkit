@@ -29,14 +29,6 @@ export default class TerraService {
     global.Terra = {
       viewports: viewportHelpers.getViewports,
 
-      should: {
-        beAccessible: accessibility.itIsAccessible,
-        matchScreenshot: visualRegression.itMatchesScreenshot,
-        themeEachCustomProperty: themeCustomProperties.themeEachCustomProperty,
-        themeCombinationOfCustomProperties: themeCustomProperties.themeCombinationOfCustomProperties,
-        validateElement: validateElement.itValidatesElement,
-      },
-
       validates: {
         accessibility: accessibility.validatesAccessibility,
         screenshot: visualRegression.validatesScreenshot,

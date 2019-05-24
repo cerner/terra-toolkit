@@ -15,7 +15,7 @@ const staticApp = (site, index) => {
   const app = express();
   const options = {
     ...index && { index },
-    // If an extensionless file can't be found search for it with .html and .htm
+    // If an extension-less file can't be found search for it with .html and .htm
     extensions: ['html', 'htm'],
   };
   // Return any files in the site. If no extension is provided check the file with the htm or html extension.

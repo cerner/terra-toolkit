@@ -5,7 +5,6 @@ describe('validateElement', () => {
       browser.setViewportSize(Terra.viewports('tiny')[0]);
     });
 
-    Terra.should.validateElement();
     Terra.it.validatesElement();
 
     it('checks element', () => {
@@ -20,7 +19,6 @@ describe('validateElement', () => {
       'color-contrast': { enabled: false },
     };
 
-    Terra.should.validateElement({ axeRules: ignoredA11y });
     Terra.it.validatesElement({ axeRules: ignoredA11y });
 
     it('checks element', () => {
