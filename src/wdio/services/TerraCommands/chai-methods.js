@@ -17,13 +17,13 @@ function accessible() {
   this.assert(
     errors.length === 0,
     `expected no accessibility violations but got:\n\t${errors[0]}`,
-    'expected accessibilty errors but received none',
+    'expected accessibility errors but received none',
   );
 }
 
-/** Helper method to determine which comparision results are relevant if the chai
+/** Helper method to determine which comparison results are relevant if the chai
   * screenshot assertion fails.
-  * @property {Array of Objects} screenshots - The list of comparision results. The results
+  * @property {Array of Objects} screenshots - The list of comparison results. The results
   *    contain: misMatchPercentage (number), isSameDimensions (bool), isWithinMisMatchTolerance
   *    (bool) and isExactSameImage (bool).
   */

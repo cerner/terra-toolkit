@@ -10,7 +10,7 @@ import determineOptions from './determine-test-options';
  *    - Object (optional): the test options. Options include selector, misMatchTolerance,
  *        and axeRules
  */
-const validateElement = (...args) => {
+const itValidatesElement = (...args) => {
   const {
     rules,
   } = determineOptions.axeOptions(args);
@@ -21,8 +21,30 @@ const validateElement = (...args) => {
     misMatchTolerance,
   } = determineOptions.screenshotOptions(args);
 
-  accessibilityMethods.accessibleItBlock({ rules });
-  visualRegressionMethods.screenshotItBlock(name, selector, { misMatchTolerance });
+  global.it(`[${name}] is accessible and is within the mismatch tolerance`, () => {
+    accessibilityMethods.runAccessibilityTest({ rules });
+    visualRegressionMethods.runMatchScreenshotTest(selector, { misMatchTolerance, name });
+  });
 };
 
-export default validateElement;
+const validatesElement = (...args) => {
+  const {
+    rules,
+  } = determineOptions.axeOptions(args);
+
+  const {
+    name,
+    selector,
+    misMatchTolerance,
+  } = determineOptions.screenshotOptions(args);
+
+  accessibilityMethods.runAccessibilityTest({ rules });
+  visualRegressionMethods.runMatchScreenshotTest(selector, { misMatchTolerance, name });
+};
+
+const methods = {
+  validatesElement,
+  itValidatesElement,
+};
+
+export default methods;

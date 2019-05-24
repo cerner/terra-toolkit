@@ -1,7 +1,7 @@
 describe('themeEachCustomProperty', () => {
   before(() => browser.url('/theme.html'));
 
-  Terra.should.matchScreenshot('before');
+  Terra.it.matchesScreenshot('before');
 
   Terra.should.themeEachCustomProperty({
     '--color': 'red',
@@ -9,7 +9,7 @@ describe('themeEachCustomProperty', () => {
   });
 
   // verify-styles were removed
-  Terra.should.matchScreenshot('before');
+  Terra.it.matchesScreenshot('before');
 
   // verify custom naming
   Terra.should.themeEachCustomProperty(
@@ -24,7 +24,7 @@ describe('themeEachCustomProperty', () => {
 describe('themeCombinationOfCustomProperties', () => {
   before(() => browser.url('/theme.html'));
 
-  Terra.should.matchScreenshot('before');
+  Terra.it.matchesScreenshot('before');
 
   Terra.should.themeCombinationOfCustomProperties({
     properties: {
@@ -34,7 +34,7 @@ describe('themeCombinationOfCustomProperties', () => {
   });
 
   // verify-styles were removed
-  Terra.should.matchScreenshot('before');
+  Terra.it.matchesScreenshot('before');
 
   // verify custom naming
   Terra.should.themeCombinationOfCustomProperties({

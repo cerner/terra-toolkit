@@ -6,6 +6,11 @@ describe('validateElement', () => {
     });
 
     Terra.should.validateElement();
+    Terra.it.validatesElement();
+
+    it('checks element', () => {
+      Terra.validates.element();
+    });
   });
 
   describe('inaccessible contrast', () => {
@@ -16,5 +21,10 @@ describe('validateElement', () => {
     };
 
     Terra.should.validateElement({ axeRules: ignoredA11y });
+    Terra.it.validatesElement({ axeRules: ignoredA11y });
+
+    it('checks element', () => {
+      Terra.validates.element({ axeRules: ignoredA11y });
+    });
   });
 });

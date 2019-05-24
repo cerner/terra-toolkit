@@ -2,40 +2,11 @@ import chai from 'chai';
 import axeCommand from './TerraCommands/axe-command';
 import chaiMethods from './TerraCommands/chai-methods';
 import accessibility from './TerraCommands/accessibility';
+import themeCustomProperties from './TerraCommands/theme-custom-properties';
 import visualRegression from './TerraCommands/visual-regression';
 import validateElement from './TerraCommands/validate-element';
+import viewportHelpers from './TerraCommands/viewport-helpers';
 import Logger from '../../../scripts/utils/logger';
-import SERVICE_DEFAULTS from '../../../config/wdio/services.default-config';
-
-const { terraViewports: VIEWPORTS } = SERVICE_DEFAULTS;
-
-/**
-* Convenience method for getting viewports by name.
-* @param sizes - [String] of viewport sizes.
-* @return [Object] of viewport sizes.
-*/
-const getViewports = (...sizes) => {
-  let viewportSizes = Object.keys(VIEWPORTS);
-  if (sizes.length) {
-    viewportSizes = sizes;
-  }
-  return viewportSizes.map(size => VIEWPORTS[size]);
-};
-
-/**
-* Sets the viewport for the test run if the formFactor config is defined.
-* @param formFactor - [String] the viewport size.
-*/
-const setViewport = (formFactor) => {
-  if (formFactor) {
-    const terraViewport = VIEWPORTS[formFactor];
-    if (terraViewport !== undefined && typeof terraViewport === 'object') {
-      global.browser.setViewportSize(terraViewport);
-    } else {
-      throw Logger.error('The formFactor supplied is not a Terra-defined viewport size.', { context: '[Terra-Toolkit:terra-service]' });
-    }
-  }
-};
 
 /**
 * Webdriver.io TerraService
@@ -50,27 +21,40 @@ export default class TerraService {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  before() {
+  before(capabilities) {
     global.browser.addCommand('axe', axeCommand);
     chai.config.showDiff = false;
     global.expect = chai.expect;
     global.should = chai.should();
     global.Terra = {
-      viewports: getViewports,
+      viewports: viewportHelpers.getViewports,
+
       should: {
-        beAccessible: accessibility.beAccessible,
-        matchScreenshot: visualRegression.matchScreenshot,
-        themeEachCustomProperty: visualRegression.themeEachCustomProperty,
-        themeCombinationOfCustomProperties: visualRegression.themeCombinationOfCustomProperties,
-        validateElement,
+        beAccessible: accessibility.itIsAccessible,
+        matchScreenshot: visualRegression.itMatchesScreenshot,
+        themeEachCustomProperty: themeCustomProperties.themeEachCustomProperty,
+        themeCombinationOfCustomProperties: themeCustomProperties.themeCombinationOfCustomProperties,
+        validateElement: validateElement.itValidatesElement,
+      },
+
+      validates: {
+        accessibility: accessibility.validatesAccessibility,
+        screenshot: visualRegression.validatesScreenshot,
+        element: validateElement.validatesElement,
+      },
+
+      it: {
+        isAccessible: accessibility.itIsAccessible,
+        matchesScreenshot: visualRegression.itMatchesScreenshot,
+        validatesElement: validateElement.itValidatesElement,
       },
     };
     chai.Assertion.addMethod('accessible', chaiMethods.accessible);
     chai.Assertion.addMethod('matchReference', chaiMethods.matchReference);
     // IE driver takes a longer to be ready for browser interactions
-    if (global.browser.desiredCapabilities.browserName === 'internet explorer') {
+    if (capabilities.browserName === 'internet explorer') {
       global.browser.pause(10000);
     }
-    setViewport(global.browser.options.formFactor);
+    viewportHelpers.setViewport(global.browser.options.formFactor);
   }
 }

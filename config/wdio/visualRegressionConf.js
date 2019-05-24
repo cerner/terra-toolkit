@@ -27,8 +27,9 @@ function createTestName(fullName) {
 }
 
 function getScreenshotName(context) {
+  const { name } = (context.options || {});
   const parentName = createTestName(context.test.parent);
-  const testName = createTestName(context.test.title);
+  const testName = createTestName(name || context.test.title);
 
   return `${parentName}[${testName}].png`;
 }

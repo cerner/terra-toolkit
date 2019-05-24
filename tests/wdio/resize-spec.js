@@ -5,7 +5,7 @@ Terra.viewports().forEach((viewport) => {
       browser.url('/compare.html');
     });
 
-    Terra.should.matchScreenshot();
+    Terra.it.matchesScreenshot();
 
     it(`resizes ${viewport.name}`, () => {
       const size = browser.getViewportSize();
