@@ -2,7 +2,6 @@ import chai from 'chai';
 import axeCommand from './TerraCommands/axe-command';
 import chaiMethods from './TerraCommands/chai-methods';
 import accessibility from './TerraCommands/accessibility';
-import themeCustomProperties from './TerraCommands/theme-custom-properties';
 import visualRegression from './TerraCommands/visual-regression';
 import validateElement from './TerraCommands/validate-element';
 import viewportHelpers from './TerraCommands/viewport-helpers';
@@ -28,7 +27,7 @@ export default class TerraService {
     global.should = chai.should();
     global.Terra = {
       viewports: viewportHelpers.getViewports,
-
+      describeViewports: viewportHelpers.describeViewports,
       validates: {
         accessibility: accessibility.validatesAccessibility,
         screenshot: visualRegression.validatesScreenshot,

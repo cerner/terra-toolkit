@@ -28,6 +28,7 @@ const config = {
       'tests/wdio/matchScreenshot-spec.js',
       'tests/wdio/resize-spec.js',
       'tests/wdio/validateElement-spec.js',
+      'tests/wdio/describeViewports-spec.js',
     ],
     unopinionated: [
       'tests/wdio/i18n-spec.js',
@@ -41,6 +42,7 @@ const config = {
       'tests/wdio/resize-spec.js',
       'tests/wdio/validateElement-spec.js',
       'tests/wdio/serveStatic-spec.js',
+      'tests/wdio/describeViewports-spec.js',
     ],
   },
   // Static site for ServeStaticService
