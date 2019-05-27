@@ -46,6 +46,7 @@ export default class TerraService {
     if (capabilities.browserName === 'internet explorer') {
       global.browser.pause(10000);
     }
-    viewportHelpers.setViewport(global.browser.options.formFactor);
+    const { formFactor = 'huge' } = global.browser.options;
+    viewportHelpers.setViewport(formFactor);
   }
 }

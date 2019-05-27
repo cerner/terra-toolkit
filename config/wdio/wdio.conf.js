@@ -51,7 +51,7 @@ const config = {
     port: internalPort,
   },
   ...locale && { locale },
-  formFactor: process.env.FORM_FACTOR || 'huge',
+  formFactor: process.env.FORM_FACTOR,
 
   seleniumVersion: '3.14',
   seleniumDocker: {
