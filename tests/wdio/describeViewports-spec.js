@@ -11,10 +11,3 @@ Terra.describeViewports('describeViewports', ['tiny', 'huge'], () => {
     Terra.validates.screenshot('expands the height');
   });
 });
-
-Terra.describeViewports('describeViewports defaults', () => {
-  it('creates only huge screens', () => {
-    browser.url('/compare.html');
-    Terra.validates.screenshot();
-  });
-});

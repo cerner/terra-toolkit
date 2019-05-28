@@ -31,29 +31,21 @@ const setViewport = (formFactor) => {
   }
 };
 // name, viewports, tests
-const describeViewports = (title, arg1, arg2) => {
+const describeViewports = (title, viewports, fn) => {
   // 1. global.options.formFactor  = 'huge' // or defined by Ci
   // 2. use defined test viewports locally
   // 3. fallback to all viewports if not
-  let fn = arg2;
-  let viewports = arg1;
-
-  // if viewports are a function and fn is undefined, viewports are fn
-  if (fn === undefined && typeof viewports === 'function') {
-    fn = viewports;
-    viewports = ['huge'];
-  }
+  let localViewports = viewports;
 
   const { formFactor } = global.browser.options;
   // if formFactor is defined and viewports contains form factor, run that size or nothing at all.
   if (formFactor) {
-    viewports = viewports.includes(formFactor) ? [formFactor] : [];
+    localViewports = viewports.includes(formFactor) ? [formFactor] : [];
   }
 
-  viewports.forEach(viewport => global.describe(`${title}-${viewport}`, () => {
+  localViewports.forEach(viewport => global.describe(`[${viewport}]`, () => {
     global.before(() => setViewport(viewport));
-    fn();
-    // global.describe(title, fn);
+    global.describe(title, fn);
   }));
 };
 
