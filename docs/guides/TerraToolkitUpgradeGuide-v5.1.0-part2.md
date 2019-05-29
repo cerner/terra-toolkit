@@ -1,6 +1,6 @@
 # Terra Toolkit Upgrade Guide v5.0.0 - Part 2
 
-This document will provide the step-by-step changes required to upgrade from terra-toolkit 4.x to 5.0.0. 
+This document will provide the step-by-step dependency and script changes required to successfully upgrade from terra-toolkit 4.x to 5.0.0. 
 
 **NOTE: The information in Part 1 is very important to understand to make the Part 2 changes smoothly. Be sure to read both parts.**
 
@@ -14,7 +14,7 @@ Update the toolkit version:
 
 <details>
 <summary>
-You will likely see unmet peer-dependency logs for babel and webpack.
+You will likely see unmet peer-dependency logs for babel and webpack. (toggle for example output).
 </summary>
 
 ```bash
@@ -50,6 +50,8 @@ Toolkit has define a few webpack dependencies as peer dependencies to ensure you
 
 This should resolve unmet  `webpack`, `webpack-cli`, and `webpack-dev-server` peer dependency errors we saw when updating the terra-toolkit version.
 
+If you provide any other webpack dev-dependencies in your package.json, either remove these or ensure they are using the correct versions.
+
 ## Step 3. Add Babel Peer Dependencies
 
 To use toolkit v5, you **must** upgrade to use `babel v7`. This change _will_ impact the major version of most of the build tools your project will use. We have included steps for what we feel are common changes most project will need, but please reference [Babel's v7 Upgrade Guide](https://babeljs.io/docs/en/v7-migration-api) more info. 
@@ -68,7 +70,7 @@ Babel now uses [scoped npm packages](https://docs.npmjs.com/misc/scope), so we c
 ```
 This should have resolved the remaining unmet peer dependency errors we saw when updating the terra-toolkit version.
 
-### 3. Add a `babel.config.js` File
+### 3. Add a `babel.config.js` file
 Babel changed how the babel configuration is used and should be written. Babel recommends using a `babel.config.js` for better compatibility with monorepos, webpack tools, etc. 
 
 ```js
@@ -142,162 +144,87 @@ If your project runs aggregate-translations for jest unit testing, you will need
 + const aggregateTranslations = require('terra-aggregate-translations');
 ```
 
-## Step 5. Update Start Scripts 
+## Step 5. Update the Start Scripts 
 
-### Serve
+The start scripts in the `package.json` need to be updated. `tt-serve` is now a thin abstraction on [`webpack-dev-server`](https://webpack.js.org/configuration/dev-server/) and `tt-start-static` will only serve compiled site assets.
 
-Serve is now a thin abstraction on webpack dev server and the command line api is now identical. With this addition it now means that you have control over the dev server through options specified in your webpack config as well as through the cli.
-
-Why use serve instead of webpack-dev-server directly? Having the serve abstraction provides a hook for us to change the servers implementation in case webpack-dev-server no longer meets our needs.
-
-A webpack.config must be provided at the root level or passed in via `--config` flag in the package.json script. The webpack-dev-server cannot attempt to automatically load our defaults.
+### 1. Update the `start` script
+The `webpack-dev-server` cannot automatically load our defaults. Thus, a webpack.config must be provided at the root level or be passed via the `--config` flag in the package.json script. 
 
 ```diff
-//package.json
-scripts: {
 -  "start": "tt-serve",
 +  "start": "tt-serve --config node_modules/terra-dev-site/config/webpack/webpack.config.js",
+```
+
+### 2. Add a `start-prod` script
+Add the following script to run `webpack-dev-server` with hot-reloading disabled to view the assets that are used during the test run.
+
+```diff
 +    "start-prod": "tt-serve --config node_modules/terra-dev-site/config/webpack/webpack.config.js --env.disableHotReloading -p",
+```
 
+When running wdio integration tests, the ServeStatic Service will compile your assets in production mode and serve the assets with hot-reloading disabled if the site assets have not been pre-compiled.
+
+### 3. Update the `start-static` script
+Since `tt-start-static` will only serve compiled site assets, be sure to compile the assets before starting the server.
+
+```diff
 -  "start-static": "tt-serve-static",
-+  "start-static": "npm run compile:prod && tt-serve-static --site ./build",
-}
-
++  "start-static": "npm run pack && tt-serve-static",
 ```
-
-
-### Serve Static
-
-Webpack-dev-server now supports IE 10+, because of this change we have removed the ability for serve-static to run webpack to create your site. Serve static now will simply host static site content.
-
-If an html page is not found serve static will try to return /404.html with a status of 404. If that file is not found, serve-static will return a 404 status as before.
-
-These api options have been removed from both the cli and javascript:
-
-- config
-- production
-- disk
-
-If you want to serve a non hot-reloading site without pre-building your site, use tt-static with the `--env.disableHotReloading` flag passed via the cli.
-
+If your project does not have a `pack` script, add the following:
 ```diff
-//package.json
-scripts: {
-  "tt-serve": "tt-serve --config node_modules/terra-dev-site/config/webpack/webpack.config.js -p --env.disableHotReloading",
-  "tt-serve-dev": "tt-serve --config node_modules/terra-dev-site/config/webpack/webpack.config.js",
-}
++  "pack": "webpack --config tests/test.config.js -p",
 ```
 
-### tt-heroku-serve-static
+## Step 6. Remove Nightwatch
 
-This script was removed. Use this instead:
-```npm run compile:prod && tt-serve-static --port $PORT --site './build'```
-
-## WebdriverIO
-
-
-
-### Visual Regression
-
-The default form factor is now 'huge' to correct inconsistent viewport sizing that had occurred when a test used the default viewport for a test run vs defining a huge viewport. This may require screenshot updates, but no code changes are necessary.
-
-### TerraService
-- The `viewportChangePause` option was removed the `Terra.should.matchScreenshot`.
-
-### ServeStaticService
-
-The serve static service can serve a static site or compile a site from the webpack config. The compiled site will be served by webpack-dev-server and the static site will be served by serve static.
-
-The service will no longer inject the locale into served html files.
-
-For static sites, the original files will be served, you will be responsible for adding the locale to the static files.
-
-For compiled sites, the ```defaultLocale```` environment variable will be passed to the webpack config indicating what locale the site should be compiled for. This will be done automatically for projects using terra-dev-site.
-
-For example:
-Webpack config
-
-```javascript
-module.exports = (env = {}) => {
-  const { defaultLocale = 'en' } = env;
-  return {
-    plugins: [
-      new HtmlWebpackPlugin({
-        lang: defaultLocale,
-        template: 'index.html'),
-        filename: './index.html',
-      }),
-    ],
-  };
-};
-```
-
-Template
-
-```html
-<!doctype html>
-<html lang="<%= htmlWebpackPlugin.options.lang %>" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>index</title>
-  </head>
-  <body>
-    <h1>index</h1>
-  </body>
-</html>
-```
-
-For compiled sites, the service will respect the devServer setting in webpack config with a few exceptions:
-
-```javascript
-module.exports = {
-  devServer: {
-    // Disable hot reloading and javascript injection to watch for changes.
-    hot: false,
-    inline: false,
-    host: '0.0.0.0',
-    publicPath: '/', 
-    port, // From wdio config.
-    index, // From wdio config.
-    stats: {
-      colors: true,
-      children: false,
-    },
-  },
-};
-```
-
-### AxeService
-The AxeService has been removed. The accessibility capabilities the Axe Service provided has been move to the Terra Service because the services could not run independently. The `axe` key can still be used for configuration and the test helper and axe chai assertion can be used. Please note, the `runOnly` option has been removed from Terra.should.beAccessible test helper and axe chai method and resetScroll has been enabled.
-
-If you use the default wdio config, no changes need to be made. If using a custom wdio configuration, be sure to remove the AxeService from the wdio config:
-
-```diff
-const {
-- Axe: AxeService,
-  SeleniumDocker: SeleniumDockerService,
-  ServeStaticService,
-  Terra: TerraService,
-} = require('terra-toolkit/lib/wdio/services/index');
-
-const config = {
-  ...
-- services: ['visual-regression', TerraService, SeleniumDockerService, ServeStaticService, AxeService],
-+ services: ['visual-regression', TerraService, SeleniumDockerService, ServeStaticService],
-
-  axe: {
-    inject: true,
-  },
-}
-```
-
-Documentation can now be found [here](https://github.com/cerner/terra-toolkit/blob/master/docs/Wdio_Utility.md).
-
-## Step 100. Remove Nightwatch Dependency
-
-Remove the `nightwatch` dev-dependency in your project.
+Remove the `nightwatch` dev-dependency in your project. 
 ```
 npm uninstall nightwatch
 ```
+If you still have nightwatch tests, these will need to be migrated to Webdriver tests. See the [Nightwatch to Webdriver.io Migration Guide](https://github.com/cerner/terra-toolkit/wiki/Webdriver.io-Migration-Guide#nightwatch-to-webdriverio-migration-guide) for more info.
+
+## Step 7. Validate Dependency and Script Changes
+### 1. Run `clean:install`
+Run a clean install to confirm all old dependencies were correctly removed, new dependencies were added and all peer-dependencies were correctly met.
+```bash
+> npm run clean:install
+```
+
+### 2. Run `compile`
+Most project run babel in a postinstall, but might as well as validate compile runs correctly.
+```bash
+> npm run compile
+```
+
+### 3. Run `jest`
+Verify jest runs correctly and all tests pass.
+```bash
+> npm run jest
+```
+
+### 4. Run `start`
+Verify your site renders correctly and all pages are displaying as expected.
+```bash
+> npm run start
+```
+
+### 5. Run `start-prod`
+Verify hot-reloading is correctly disabled so your can quickly check the assets used during test runs.
+```bash
+> npm run start-prod
+```
+
+### 6. Run `start`
+Verify your site is packed and served as static content.
+```bash
+> npm run start-static
+```
+
+## NEXT: Webdriver Test Updates
+See Part 3 for more information on Webdriver changes.
+
+
+
+

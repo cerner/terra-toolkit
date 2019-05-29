@@ -1,8 +1,8 @@
 # Terra Toolkit Upgrade Guide v5.0.0 - Part 1
 
-This document will provide information on what changed from terra-toolkit 4.x to 5.0.0. This included dependency, functionality and technical changes that impact how you should use the terra-toolkit module. See Part 2 for step-by-step upgrade changes.
+This document will provide information on what changed from terra-toolkit 4.x to 5.0.0. This included dependency, functionality and technical changes that impact how you should use the terra-toolkit module. See Part 2 for step-by-step upgrade changes. See Part 3 for webdriver.io test changes.
 
-**NOTE: The information in Part 1 is very important to understand to make the Part 2 changes smoothly. Be sure to read both parts.**
+**NOTE: The information in Part 1 is extremely important to understand before attempting start the changes outlined in Part 2 and Part 3. Be sure to read first.**
 
 ## Webpack Configuration
 
@@ -78,7 +78,7 @@ A webpack.config must be provided at the root level or passed in via `--config` 
 ```diff
 //package.json
 scripts: {
-  "tt-serve-dev": "tt-serve --config node_modules/terra-dev-site/config/webpack/webpack.config.js",
+  "tt-serve": "tt-serve --config node_modules/terra-dev-site/config/webpack/webpack.config.js",
 }
 ```
 
@@ -118,8 +118,8 @@ If you want to serve a non hot-reloading site without pre-building your site, us
 ```diff
 //package.json
 scripts: {
-  "tt-serve": "tt-serve --config node_modules/terra-dev-site/config/webpack/webpack.config.js -p --env.disableHotReloading",
-  "tt-serve-dev": "tt-serve --config node_modules/terra-dev-site/config/webpack/webpack.config.js",
+  "tt-serve": "tt-serve --config node_modules/terra-dev-site/config/webpack/webpack.config.js",
+  "tt-serve-prod": "tt-serve --config node_modules/terra-dev-site/config/webpack/webpack.config.js -p --env.disableHotReloading",
 }
 ```
 
@@ -235,3 +235,6 @@ Documentation can now be found [here](https://github.com/cerner/terra-toolkit/bl
 ## Nightwatch
 
 The nightwatch utility and peer dependencies have been removed in this toolkit release. Be sure to remove the `nightwatch` dev-dependency in your project, if it exists.
+
+## NEXT: Upgrade to Toolkit v5
+See Part 2 for more information on the step-by-step dependency and script changes for terra-toolkit v5.
