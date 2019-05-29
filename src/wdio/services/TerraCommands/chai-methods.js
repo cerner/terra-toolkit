@@ -1,7 +1,8 @@
 import chai from 'chai';
 
 /**
-  * A accessible chai assertion to be paired with browser.axe() tests.
+  * A chai assertion method to be paired with browser.axe() tests to assert no violations were found
+  * on the test page.
   */
 function accessible() {
   // eslint-disable-next-line no-underscore-dangle
@@ -21,12 +22,21 @@ function accessible() {
   );
 }
 
-/** Helper method to determine which comparison results are relevant if the chai
-  * screenshot assertion fails.
-  * @property {Array of Objects} screenshots - The list of comparison results. The results
-  *    contain: misMatchPercentage (number), isSameDimensions (bool), isWithinMisMatchTolerance
-  *    (bool) and isExactSameImage (bool).
-  */
+/**
+ * Helper method to determine which comparison results are relevant for if the chai screenshot assertion
+ * fails.
+ *
+ * @param {Object[]} screenshots - The list of comparison results
+ * @param {boolean} screenshot.isSameDimensions - If the latest screenshot was the same size as the
+ *    reference screenshot.
+ * @param {boolean} screenshot.isWithinMisMatchTolerance - If the latest screenshot was within the
+ *    mismatch tolerance.
+ * @param {boolean} screenshot.isExactSameImage - If the latest screenshot matched the reference
+ *    screenshot exactly, i.e. 0% mismatch.
+ * @param {Number} screenshot.misMatchPercentage - The mismatch percentage when comparing the latest
+ *    screenshot to the reference screenshot.
+ * @param {Number} screenshot.viewport - The viewport that the latest screenshot was taken in.
+ */
 const getComparisonResults = (screenshots) => {
   if (screenshots.length < 1) {
     return 'No screenshots to compare.';
@@ -54,10 +64,10 @@ const getComparisonResults = (screenshots) => {
   return results;
 };
 
-/** A visual regression chai assertion to be paired with browser.capture() visual regression tests.
-  * Checks if the screenshot(s) are the same size and verifies the screenshots are either within
-  * the mismatch tolerance match or an exact match.
-  */
+/**
+ * A chai assertion method to be paired with Visual Regression Service to assert each screenshot is within
+ * the mismatch tolerance and are the same size.
+ */
 function matchReference() {
   // eslint-disable-next-line no-underscore-dangle
   new chai.Assertion(this._obj).to.be.instanceof(Array);
@@ -67,6 +77,8 @@ function matchReference() {
 
   const comparisonResults = getComparisonResults(screenshots);
 
+  // Validate the screenshot is the same size for the case when the new screenshot matches 100% but is 'n' pixel taller due to new content.
+  // For example: the latest screenshot of a list has two more items than the reference screenshot so it is 60 pixels taller. That should fail.
   const imagesMatch = screenshots.every(screenshot => (screenshot && screenshot.isSameDimensions && screenshot.isWithinMisMatchTolerance));
 
   this.assert(

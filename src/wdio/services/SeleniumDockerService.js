@@ -9,7 +9,7 @@ import Logger from '../../../scripts/utils/logger';
 const context = '[Terra-Toolkit:selenium-docker]';
 /**
 * Webdriver.io SeleniuMDockerService
-* provides standalone chrome/firefox selenium docker automation.
+* provides standalone chrome selenium docker automation.
 */
 export default class SeleniumDockerService {
   constructor() {

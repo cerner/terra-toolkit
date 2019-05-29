@@ -1,11 +1,15 @@
 import determineOptions from './determine-test-options';
 
 /**
- * The screenshot comparisons.  It will capture screenshots of a specified element
- * and assert the screenshot comparison results are within the mismatch tolerance or are an exact match
- * @param {String} name the test case name
- * @param {String} selector the selector to use when capturing the screenshot.
- * @param {Object} options the test options. Options include viewports and misMatchTolerance
+ * Runs the visual regression comparisons and assert the screenshot comparison results are
+ * the same size and within the mismatch tolerance.
+ *
+ * This should be used within a Mocha `it` block.
+ *
+ * @param {string} selector - the selector to use when capturing the screenshot.
+ * @param {Object} [options] - the visual regression test options. Options include viewports and misMatchTolerance
+ * @param {Object} [options.misMatchTolerance] - the mismatch tolerance for the screenshot comparison.
+ * @param {Object} [options.viewports] - the list of Terra viewports to test.
  */
 const runMatchScreenshotTest = (selector, options) => {
   const screenshots = global.browser.checkElement(selector, options);
@@ -26,11 +30,13 @@ const runMatchScreenshotTest = (selector, options) => {
 /**
 * Mocha-chai wrapper method to capture screenshots of a specified element and assert the
 * screenshot comparison results are within the mismatch tolerance.
-* @param {Array} args - The list of test arguments to parse. Accepted Arguments:
-*    - String (optional): the test case name. Default name is 'default'
-*    - Object (optional): the test options. Options include selector, and viewports,
-*        misMatchTolerance.
-*    Note: args list order should be: name, then options when using both.
+*
+* @param {[name, options]} [args] - the list of test arguments to parse.
+* @param {string} [name=default] - the name of the visual regression test.
+* @param {Object} [options.misMatchTolerance] - the mismatch tolerance for the screenshot comparison.
+* @param {string} [options.selector=browser.options.terra.selector] - the element selector to use for
+*    the screenshot comparison.
+* @param {Object} [options.viewports] - the list of Terra viewports to test.
 */
 const itMatchesScreenshot = (...args) => {
   const {
@@ -42,6 +48,19 @@ const itMatchesScreenshot = (...args) => {
   });
 };
 
+/**
+ * The screenshot comparisons.  It will capture screenshots of a specified element
+ * and assert the screenshot comparison results are within the mismatch tolerance or are an exact match
+ *
+ * This should be used within a Mocha `it` block.
+ *
+ * @param {[name, options]} [args] - the list of test arguments to parse.
+ * @param {string} [name=default] - the name of the visual regression test.
+ * @param {Object} [options] - the visual regression test options. Options include viewports and misMatchTolerance
+ * @param {Object} [options.misMatchTolerance] - the mismatch tolerance for the screenshot comparison.
+ * @param {string} [options.selector=browser.options.terra.selector] - the element selector to use for
+ * @param {Object} [options.viewports] - the list of Terra viewports to test.
+ */
 const validatesScreenshot = (...args) => {
   const {
     name, selector, misMatchTolerance, viewports,

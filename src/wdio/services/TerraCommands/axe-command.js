@@ -4,6 +4,12 @@ import fs from 'fs';
 
 let axeCoreSrc;
 
+/**
+* Injects Axe on the on the test page and configures it options are included in the
+* wdio configuration.
+*
+* @param {Object} [options] - the Axe test options
+*/
 const injectAxe = (axeOptions) => {
   if (!axeCoreSrc) {
     axeCoreSrc = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
@@ -17,6 +23,13 @@ const injectAxe = (axeOptions) => {
   browser.execute(axeCoreSrc);
 };
 
+/**
+* Runs Axe against test page to check for WCAG 2.0 AA and Section 508 violations.
+*
+* @param {Object} [rules] - the axe rules to use to use in the axe run.
+*
+* @returns {Object} axeResults - the axe results as list of passes, violations, incomplete and inapplicable.
+*/
 const runAxeTest = (rules) => {
   /* Avoid arrow callback syntax as this function is injected into the browser */
   /* eslint-disable func-names, prefer-arrow-callback, object-shorthand */
@@ -30,6 +43,15 @@ const runAxeTest = (rules) => {
   return axeResult.value;
 };
 
+/**
+* Custom wdio command to test accessibly on the page for each viewport defined.
+*
+* @param {Object} [options] - the Axe test options
+* @param {Object} [rules] - the axe rules to use to use in the axe run.
+* @param {Object[]} [options.viewports] - the list of Terra viewports to test.
+*
+* @returns {Object} axeResults - the axe results as list of passes, violations, incomplete and inapplicable.
+*/
 const axeCommand = (testOptions = {}) => {
   const globalConfig = browser.options.axe || {};
 

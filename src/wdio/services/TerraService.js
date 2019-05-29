@@ -21,32 +21,47 @@ export default class TerraService {
 
   // eslint-disable-next-line class-methods-use-this
   before(capabilities) {
+    /* Add Terra's custom Wdio command for a11y testing. */
     global.browser.addCommand('axe', axeCommand);
+
+    /* Initialize the Chai assertion library to have more expressive tests. */
     chai.config.showDiff = false;
     global.expect = chai.expect;
     global.should = chai.should();
+
+    /* Add Terra's custom Chai assertion helpers for a11y & VR testing. */
+    chai.Assertion.addMethod('accessible', chaiMethods.accessible);
+    chai.Assertion.addMethod('matchReference', chaiMethods.matchReference);
+
+    /* Add a Terra global with access to Mocha-Chai test helpers. */
     global.Terra = {
+      /* `viewports` provides access Terra's list of test viewports. */
       viewports: viewportHelpers.getViewports,
+
+      /* `describeViewports` provides a custom Mocha `describe` block for looping test viewports. */
       describeViewports: viewportHelpers.describeViewports,
+
+      /* `validates` provides access to the chai assertions to use in Mocha `it` blocks. */
       validates: {
         accessibility: accessibility.validatesAccessibility,
         screenshot: visualRegression.validatesScreenshot,
         element: validateElement.validatesElement,
       },
 
+      /* `it` provides access to Mocha it blocks of test assertions. */
       it: {
         isAccessible: accessibility.itIsAccessible,
         matchesScreenshot: visualRegression.itMatchesScreenshot,
         validatesElement: validateElement.itValidatesElement,
       },
     };
-    chai.Assertion.addMethod('accessible', chaiMethods.accessible);
-    chai.Assertion.addMethod('matchReference', chaiMethods.matchReference);
-    // IE driver takes a longer to be ready for browser interactions
+
+    /* IE driver takes a longer to be ready for browser interactions. */
     if (capabilities.browserName === 'internet explorer') {
       global.browser.pause(10000);
     }
-    const { formFactor = 'huge' } = global.browser.options;
-    viewportHelpers.setViewport(formFactor);
+
+    /* Set the viewport size before the spec begins.  */
+    viewportHelpers.setViewport(global.browser.options.formFactor);
   }
 }

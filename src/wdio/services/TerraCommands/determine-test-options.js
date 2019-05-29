@@ -1,7 +1,13 @@
 /**
 * Helper method to determine the default test options for one or two args passed.
-* @param {Array} args - The list of test arguments to parse.
-*     Supports [ String ], [ object ], [ string, object ]
+*
+* @param {[name, options]} [args] - the list of test arguments to parse.
+* @param {string} [name=default] - the name of the visual regression test.
+* @param {Object} [options] - the test options
+* @param {string} [options.selector=browser.options.terra.selector] - the element selector to use for
+*    the screenshot comparison.
+* @param {Object[]} [options.viewports] - the list of Terra viewports to test.
+*
 */
 const determineArgs = (args) => {
   const param1 = args.length ? args[0] : undefined;
@@ -31,8 +37,12 @@ const determineArgs = (args) => {
 };
 
 /**
-* Helper method to determine the selector and axe rules for the test run.
-* @param {Array} args - The list of test arguments to parse.
+* Helper method to determine the viewports and axe rules for the test run.
+*
+* @param {[options]} [args] - the list of test arguments to parse.
+* @param {Object} [options.axeRules] - the axe rules to use to use in the axe run.
+* @param {Object} [options.rules] - the axe rules to use to use in the axe run.
+* @param {Object} [options.viewports] - the list of Terra viewports to test.
 */
 const axeOptions = (args) => {
   const {
@@ -48,13 +58,16 @@ const axeOptions = (args) => {
 };
 
 /**
-* Helper method to determine the screenshot tag name, the element selector, the viewport(s)
+* Helper method to determine the screenshot name, the element selector, the viewport(s)
 * in which to take the screenshots, as well as the capture screenshot options to be passed
-* to the wdio-visual-regression-service comparison methods. Currently supported VR comparison
-* options are:
-*     - viewports: [{ width: Number, height: Number }]
-*     - misMatchTolerance: Number
-* @param {Array} args - The list of test arguments to parse.
+* to the wdio-visual-regression-service comparison methods.
+*
+* @param {[name, options]} [args] - the list of test arguments to parse.
+* @param {string} [name=default] - the name of the visual regression test.
+* @param {Object} [options.misMatchTolerance] - the mismatch tolerance for the screenshot comparison.
+* @param {string} [options.selector=browser.options.terra.selector] - the element selector to use for
+*    the screenshot comparison.
+* @param {Object} [options.viewports] - the list of Terra viewports to test.
 */
 const screenshotOptions = (args) => {
   const {

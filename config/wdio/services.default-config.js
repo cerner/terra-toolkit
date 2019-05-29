@@ -14,8 +14,7 @@ const seleniumDocker = {
   enabled: true,
   /* Retry count to test for selenium being up. */
   retries: 4000,
-  /* The retry interval (in milliseconds) to wait between retries.
-   */
+  /* The retry interval (in milliseconds) to wait between retries. */
   retryInterval: 10,
   /* Docker compose file reference when deploying the docker selenium hub stack. */
   composeFile: path.join(__dirname, '..', 'docker', 'local-docker-compose.yml'),

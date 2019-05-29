@@ -19,7 +19,7 @@ shell.exec('npm pack --ignore-scripts', { silent: true }, (code, stdout, stderr)
   }
 
   // By default npm pack will append the package version to the tar archive file name.
-  // Rename the tar achive file to exclude the appended version.
+  // Rename the tar achieve file to exclude the appended version.
   shell.mv(stdout, archiveName);
   shell.exit(0);
 });

@@ -1,9 +1,13 @@
 import determineOptions from './determine-test-options';
 
 /**
- * The run axe to validate no accessibility violations were found.
- * @param {Object} options - The Axe options. Available options are viewports and
- * rules.
+ * Runs the custom wdio accessibility command and asserts no violations were found.
+ *
+ * See https://www.deque.com/axe/axe-for-web/documentation/api-documentation/#api-name-axerun
+ *
+ * @param {Object} [options] - the Axe test options
+ * @param {Object} [options.rules] - the axe rules to use to assert accessibility.
+ * @param {Object[]} [options.viewports] - the list of Terra viewports to test.
  */
 const runAccessibilityTest = (options) => {
   const axeResults = global.browser.axe(options);
@@ -11,18 +15,24 @@ const runAccessibilityTest = (options) => {
 };
 
 /**
-* A mocha-chai convenience test case to assert accessibility.
-* @param {Object} options - The Axe options. Available options are viewports,
-* rules, and context. See https://www.axe-core.org/docs/.
+* A chai assertion method to assert accessibility.
+*
+* This should be used within a Mocha `it` block.
+*
+* @param {Object} [options] - the Axe test options
+* @param {Object} [options.rules] - the axe rules to use to assert accessibility.
+* @param {Object[]} [options.viewports] - the list of Terra viewports to test.
 */
 const validatesAccessibility = (...args) => {
   runAccessibilityTest(determineOptions.axeOptions(args));
 };
 
 /**
-* A mocha-chai convenience test case to assert accessibility.
-* @param {Object} options - The Axe options. Available options are viewports,
-* rules, and context. See https://www.axe-core.org/docs/.
+* A mocha-chai `it` block to assert accessibility.
+*
+* @param {Object} [options] - the Axe test options
+* @param {Object} [options.rules] - the axe rules to use to assert accessibility.
+* @param {Object[]} [options.viewports] - the list of Terra viewports to test.
 */
 const itIsAccessible = (...args) => {
   global.it('is accessible', () => {

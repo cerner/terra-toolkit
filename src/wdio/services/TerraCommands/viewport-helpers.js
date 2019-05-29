@@ -4,9 +4,10 @@ import Logger from '../../../../scripts/utils/logger';
 const { terraViewports: VIEWPORTS } = SERVICE_DEFAULTS;
 
 /**
-* Convenience method for getting viewports by name.
-* @param sizes - [String] of viewport sizes.
-* @return [Object] of viewport sizes.
+* Convenience method for getting the Terra test viewports by name.
+*
+* @param {string|string[]} sizes - the list of Terra viewport names.
+* @return {object} - Terra viewport sizes.
 */
 const getViewports = (...sizes) => {
   let viewportSizes = Object.keys(VIEWPORTS);
@@ -17,8 +18,9 @@ const getViewports = (...sizes) => {
 };
 
 /**
-* Sets the viewport for the test run if the formFactor config is defined.
-* @param formFactor - [String] the viewport size.
+* Sets the viewport for the test run to the Terra test viewport size.
+*
+* @param {string} [formFactor=huge] - the Terra test viewport.
 */
 const setViewport = (formFactor) => {
   if (formFactor) {
@@ -28,17 +30,28 @@ const setViewport = (formFactor) => {
     } else {
       throw Logger.error('The formFactor supplied is not a Terra-defined viewport size.', { context: '[Terra-Toolkit:terra-service]' });
     }
+  } else {
+    const defaultViewport = VIEWPORTS.huge;
+    global.browser.setViewportSize(defaultViewport);
   }
 };
-// name, viewports, tests
+
+/**
+* Mocha `describe` block to set and loop the tests viewports to simplify writing tests.
+* If defined, the formFactor will be used if it is included in the list of test viewports.
+* Otherwise, use the list of test viewports.
+*
+* This is intended to be used as a root-level Mocha `describe`.
+*
+* @param {string} title - The `describe` block title.
+* @param {string[]} viewports - The list of Terra viewports to tests if formFactor is not set.
+* @param {function} - the test function to execute for each viewport.
+*/
 const describeViewports = (title, viewports, fn) => {
-  // 1. global.options.formFactor  = 'huge' // or defined by Ci
-  // 2. use defined test viewports locally
-  // 3. fallback to all viewports if not
   let localViewports = viewports;
 
+  // If formFactor is defined and viewports contains the form factor, run that size else don't run the tests
   const { formFactor } = global.browser.options;
-  // if formFactor is defined and viewports contains form factor, run that size or nothing at all.
   if (formFactor) {
     localViewports = viewports.includes(formFactor) ? [formFactor] : [];
   }
