@@ -1,14 +1,15 @@
 const express = require('express');
-const ip = require('ip');
+const fs = require('fs');
 
 const Logger = require('../utils/logger');
 
 const context = '[Terra-Toolkit:serve-static]';
-const displayServer = (localAddress, networkAddress) => {
+const displayServer = (localAddress) => {
   Logger.log('Server started listening at', { context });
   Logger.log(`* Local:            ${Logger.emphasis(localAddress)}`);
-  Logger.log(`* On your network:  ${Logger.emphasis(networkAddress)}`);
 };
+
+const dirExists = site => (fs.existsSync(site) && fs.lstatSync(site).isDirectory());
 
 // Setup a static express server
 const staticApp = (site, index) => {
@@ -36,8 +37,12 @@ const staticApp = (site, index) => {
 const serve = (options) => {
   const {
     // Setting defaults here instead of in cli.
-    site, port = 8080, host = '0.0.0.0', index,
+    site = '.build/', port = 8080, host = '0.0.0.0', index,
   } = options;
+
+  if (!dirExists(site)) {
+    return Logger.warn(`Cannot serves content from ${site} because it does not exist.`, { context });
+  }
 
   const app = staticApp(site, index);
 
@@ -47,8 +52,7 @@ const serve = (options) => {
         reject(err);
       }
       const localAddress = `http://${host}:${port}/`;
-      const networkAddress = `http://${ip.address()}:${port}/`;
-      displayServer(localAddress, networkAddress);
+      displayServer(localAddress);
       resolve(server);
     });
   });

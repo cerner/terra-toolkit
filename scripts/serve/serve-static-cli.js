@@ -7,8 +7,8 @@ const packageJson = require('../../package.json');
 commander
   .version(packageJson.version)
   .option('--port [number]', 'The port the app should listen on. Default: 8080', undefined)
-  .option('--host [string]', 'Sets the host that the server will listen on. eg. \'10.10.10.1\' Default:\'0.0.0.0\'', undefined)
-  .option('--site <path>', 'The relative path to the static site.', undefined)
+  .option('--host [string]', 'Sets the host that the server will listen on. Default:\'0.0.0.0\'', undefined)
+  .option('--site <path>', 'The relative path to the static site. Default: \'./build\'', undefined)
   .parse(process.argv);
 
 serve({
