@@ -1,6 +1,8 @@
-# Terra Toolkit Upgrade Guide v5.0.0
+# Terra Toolkit Upgrade Guide v5.0.0 - Part 1
 
-This document will provide information on upgrading from terra-toolkit 4.x to 5.0.0.
+This document will provide information on what changed from terra-toolkit 4.x to 5.0.0. This included dependency, functionality and technical changes that impact how you should use the terra-toolkit module. See Part 2 for step-by-step upgrade changes.
+
+**NOTE: The information in Part 1 is very important to understand to make the Part 2 changes smoothly. Be sure to read both parts.**
 
 ## Webpack Configuration
 
@@ -17,9 +19,6 @@ This document will provide information on upgrading from terra-toolkit 4.x to 5.
   ]
 }
 ```
-
-2. For prod compilation, css will be compressed via `cssnano`.
-
 ### Dependencies Changes
 
 The following webpack dependency changes were made in Terra toolkit's default webpack configuration. Please note, upgrading to use babel `^7` is required to use these dependency updates.
