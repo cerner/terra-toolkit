@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Unreleased
+4.29.0 - (May 30, 2019)
 ----------
 ### Added
 * Added `Terra.it` Mocha-chai it block test methods in the Terra Service to eventually replace `Terra.should`
