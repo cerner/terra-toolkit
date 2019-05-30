@@ -83,8 +83,8 @@ const startWebpackDevServer = (options) => {
 
 export default class ServeStaticService {
   async onPrepare(config = {}) {
-    const { site, webpackConfig, locale = process.env.LOCALE } = config;
-
+    const { site, webpackConfig } = config;
+    const locale = process.env.LOCALE || config.locale;
     if (!webpackConfig && !site) {
       Logger.warn('No webpack configuration provided', { context });
       return;
