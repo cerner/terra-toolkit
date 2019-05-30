@@ -30,8 +30,7 @@ const webpackConfig = (options, env, argv) => {
     entry: {
       raf: 'raf/polyfill',
       'core-js': 'core-js/stable',
-      'regenerator-runtime':'regenerator-runtime/runtime',
-      // 'babel-polyfill': 'babel-polyfill',
+      'regenerator-runtime': 'regenerator-runtime/runtime',
       ...themeFile && { theme: themeFile },
     },
     module: {

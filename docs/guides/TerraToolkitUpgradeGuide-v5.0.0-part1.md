@@ -19,17 +19,24 @@ This document will provide information on what changed from terra-toolkit 4.x to
   ]
 }
 ```
+
 ### Dependencies Changes
 
 The following webpack dependency changes were made in Terra toolkit's default webpack configuration. Please note, upgrading to use babel `^7` is required to use these dependency updates.
 
 #### Dependency to Peer Dependencies
 
-Terra recommends using the bins provided by these webpack dependencies. To ensure you always have access to these bins and the correct versions, these are now defined as peer dependencies:
+Terra recommends using the bins provided by these npm dependencies. To ensure you always have access to these bins and the correct versions, these are now defined as peer dependencies:
 
 - webpack
 - webpack-cli
 - webpack-dev-server
+
+These dependencies are offered through the webpack configuration and must be defined at the application level to ensure the correct version is pulled in.
+
+- core-js
+- raf
+- regenerator-runtime
 
 #### Updated
 
@@ -48,11 +55,11 @@ Terra recommends using the bins provided by these webpack dependencies. To ensur
 #### Added
 
 - cssnano: `^4.1.10`
-- cssnano-preset-advanced: `^4.0.7`
 
 #### Removed
 
 - `browserslist-config-terra`
+- `babel-polyfill`
 
 ## Terra Scripts
 
@@ -113,7 +120,7 @@ These api options have been removed from both the cli and javascript:
 - production
 - disk
 
-If you want to serve a non hot-reloading site without pre-building your site, use tt-static with the `--env.disableHotReloading` flag passed via the cli.
+If you want to serve a non hot-reloading site without pre-building your site, use tt-serve with the `--env.disableHotReloading` flag passed via the cli.
 
 ```diff
 //package.json
@@ -130,7 +137,7 @@ This script was removed. Use this instead:
 
 ## WebdriverIO
 
-### Depenedency Changes
+### Dependency Changes
 
 - unlock `axe-core`: `3.0.3` -> `^3.0.2`.
 
@@ -139,6 +146,7 @@ This script was removed. Use this instead:
 The default form factor is now 'huge' to correct inconsistent viewport sizing that had occurred when a test used the default viewport for a test run vs defining a huge viewport. This may require screenshot updates, but no code changes are necessary.
 
 ### TerraService
+
 - The `viewportChangePause` option was removed the `Terra.should.matchScreenshot`.
 
 ### ServeStaticService
@@ -195,7 +203,7 @@ module.exports = {
     hot: false,
     inline: false,
     host: '0.0.0.0',
-    publicPath: '/', 
+    publicPath: '/',
     port, // From wdio config.
     index, // From wdio config.
     stats: {
