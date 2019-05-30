@@ -38,6 +38,7 @@ const config = {
     unopinionated: [
       'tests/wdio/i18n-spec.js',
       'tests/wdio/theme-spec.js',
+      'tests/wdio/validateElement-spec.js',
     ],
   },
   // Static site for ServeStaticService

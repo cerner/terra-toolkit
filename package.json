@@ -59,12 +59,13 @@
     "start": "node scripts/serve/serve-cli.js --config ./tests/test.config",
     "start-static": "node scripts/serve/serve-static-cli.js --config ./tests/test.config",
     "test": "npm run jest && npm run nightwatch && npm run nightwatch:port-provided && npm run wdio",
-    "wdio": "npm run wdio-webpack-obj && npm run wdio-webpack-func && npm run tt-wdio-webpack-obj && npm run tt-wdio-webpack-func && npm run tt-wdio-unopinionated",
+    "wdio": "npm run wdio-webpack-obj && npm run wdio-webpack-func && npm run tt-wdio-webpack-obj && npm run tt-wdio-webpack-func && npm run tt-wdio-unopinionated && npm run tt-wdio-no-formFactor",
     "wdio-webpack-obj": "wdio --suite opinionated",
     "wdio-webpack-func": "TT_TEST_WDIO_FUNCTION=true wdio --suite opinionated",
     "tt-wdio-webpack-obj": "node scripts/wdio/wdio-runner-cli.js --suite opinionated",
     "tt-wdio-webpack-func": "TT_TEST_WDIO_FUNCTION=true node scripts/wdio/wdio-runner-cli.js --suite opinionated",
-    "tt-wdio-unopinionated": "npm run pack && node scripts/wdio/wdio-runner-cli.js --formFactors=['tiny','huge'] --locales=['en','fr'] --suite unopinionated && rm -rf ./build"
+    "tt-wdio-unopinionated": "npm run pack && node scripts/wdio/wdio-runner-cli.js --formFactors=['tiny','huge'] --locales=['en','fr'] --suite unopinionated && rm -rf ./build",
+    "tt-wdio-no-formFactor": "npm run pack && node scripts/wdio/wdio-runner-cli.js --locales=['en','fr'] --spec tests/wdio/validateElement-spec.js && rm -rf ./build"
   },
   "dependencies": {
     "async": "^2.5.0",
