@@ -37,14 +37,19 @@ const determineOptions = (...args) => {
 };
 
 /**
- * Mocha-chai wrapper method to capture screenshots of a specified element and assert the
- * screenshot comparision results are within the mismatch tolerance.
- * @param  {Array} args The list of test arguments to parse. Accepted Arguments:
- *    - String (optional): the test case name. Default name is 'default'
- *    - Object (optional): the test options. Options include selector, misMatchTolerance,
- *        and axeRules
+ * A chai assertion method to assert the page is accessible and the screenshot comparison result is within
+ * the mismatch tolerance.
+ *
+ * This should be used within a Mocha `it` block.
+ *
+ * @param {string} [name=default] - the test case name.
+ * @param {Object} [options] - the test options
+ * @param {Object} [options.axeRules] - the axe rules to use to assert accessibility.
+ * @param {Number} [options.misMatchTolerance] - the mismatch tolerance for the screenshot comparison.
+ * @param {string} [options.selector=browser.options.terra.selector] - the element selector to use for the
+ *    screenshot comparison.
  */
-const validateElement = (...args) => {
+const validatesElement = (...args) => {
   const {
     name,
     selector,
@@ -52,8 +57,37 @@ const validateElement = (...args) => {
     axeOptions,
   } = determineOptions(...args);
 
-  accessibilityMethods.beAccessible(axeOptions);
-  visualRegressionMethods.screenshotItBlock(name, 'withinTolerance', selector, { misMatchTolerance });
+  accessibilityMethods.runAccessibilityTest(axeOptions);
+  visualRegressionMethods.runMatchScreenshotTest('withinTolerance', selector, { misMatchTolerance, name });
 };
 
-export default validateElement;
+/**
+ * Mocha `it` block to assert the page is accessible and the screenshot comparison result is within the
+ * mismatch tolerance.
+ *
+ * @param {string} [name=default] - the test case name.
+ * @param {Object} [options] - the test options
+ * @param {Object} [options.axeRules] - the axe rules to use to assert accessibility.
+ * @param {Number} [options.misMatchTolerance] - the mismatch tolerance for the screenshot comparison.
+ * @param {string} [options.selector=browser.options.terra.selector] - the element selector to use for the screenshot comparison.
+ */
+const itValidatesElement = (...args) => {
+  const {
+    name,
+    selector,
+    misMatchTolerance,
+    axeOptions,
+  } = determineOptions(...args);
+
+  global.it(`[${name}] is accessible and is within the mismatch tolerance`, () => {
+    accessibilityMethods.runAccessibilityTest(axeOptions);
+    visualRegressionMethods.runMatchScreenshotTest('withinTolerance', selector, { misMatchTolerance });
+  });
+};
+
+const methods = {
+  validatesElement,
+  itValidatesElement,
+};
+
+export default methods;

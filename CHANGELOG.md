@@ -3,6 +3,15 @@ Changelog
 
 Unreleased
 ----------
+### Added
+* Added `Terra.it` Mocha-chai it block test methods in the Terra Service to eventually replace `Terra.should`
+* Added `Terra.validates` chai assertion methods in the Terra Service to used in Mocha it blocks
+* Added `Terra.describeViewports` Mocha describe block methods in the Terra Service as a convenience for setting up test viewport looping
+
+4.28.1 - (May 17, 2019)
+----------
+### Fixed
+* use terra-toolkit's default locales since terra-aggregate-translations doesn't support ar
 
 4.28.0 - (May 16, 2019)
 ----------
