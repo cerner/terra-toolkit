@@ -8,8 +8,7 @@ describe('matchScreenshot', () => {
 
   describe('matchScreenshot', () => {
     Terra.it.matchesScreenshot();
-
-    it('checks default screenshot', () => {
+    it('matches screenshot', () => {
       Terra.validates.screenshot();
     });
   });

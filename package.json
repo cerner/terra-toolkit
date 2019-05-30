@@ -1,6 +1,6 @@
 {
   "name": "terra-toolkit",
-  "version": "4.28.0",
+  "version": "4.28.1",
   "description": "Utilities to help when developing terra modules.",
   "main": "lib/index.js",
   "engines": {
@@ -58,12 +58,13 @@
     "start": "./bin/serve.js --config ./tests/test.config",
     "start-static": "npm run pack && ./bin/serve-static.js --site ./build",
     "test": "npm run jest && npm run wdio",
-    "wdio": "npm run clean:build && npm run wdio-webpack-obj && npm run wdio-webpack-func && npm run tt-wdio-webpack-obj && npm run tt-wdio-webpack-func && npm run tt-wdio-unopinionated && npm run tt-wdio-static",
+    "wdio": "npm run clean:build && npm run wdio-webpack-obj && npm run wdio-webpack-func && npm run tt-wdio-webpack-obj && npm run tt-wdio-webpack-func && npm run tt-wdio-unopinionated && npm run tt-wdio-no-formFactor && npm run tt-wdio-static",
     "wdio-webpack-obj": "wdio --suite opinionated",
     "wdio-webpack-func": "TT_TEST_WDIO_FUNCTION=true wdio --suite opinionated",
     "tt-wdio-webpack-obj": "node scripts/wdio/wdio-runner-cli.js --suite opinionated",
     "tt-wdio-webpack-func": "TT_TEST_WDIO_FUNCTION=true node scripts/wdio/wdio-runner-cli.js --suite opinionated",
     "tt-wdio-unopinionated": "TT_TEST_WDIO_FUNCTION=true node scripts/wdio/wdio-runner-cli.js --formFactors=['tiny','huge'] --locales=['en','fr'] --suite unopinionated;",
+    "tt-wdio-no-formFactor": "npm run pack && node scripts/wdio/wdio-runner-cli.js --locales=['en','fr'] --spec tests/wdio/validateElement-spec.js && rm -rf ./build",
     "tt-wdio-static": "npm run pack; wdio --suite static; rm -rf ./build"
   },
   "dependencies": {

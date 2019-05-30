@@ -1,8 +1,7 @@
-describe('validateElement', () => {
+Terra.describeViewports('validateElement', ['tiny', 'small', 'huge'], () => {
   describe('full implementation', () => {
     before(() => {
       browser.url('/compare.html');
-      browser.setViewportSize(Terra.viewports('tiny')[0]);
     });
 
     Terra.it.validatesElement();

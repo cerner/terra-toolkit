@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Unreleased
+4.29.0 - (May 30, 2019)
 ----------
 ### Major Version Bump. See https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitUpgradeGuide-v5.0.0.md.
 
@@ -32,6 +32,18 @@ Unreleased
 * **Breaking Change** Removed `viewportChangePause` option from Terra.should.matchScreenshot test helper
 * **Breaking Change** Removed `runOnly` option from Terra.should.beAccessible test helper and axe chai method
 
+4.29.0 - (May 30, 2019)
+----------
+### Added
+* Added `Terra.it` Mocha-chai it block test methods in the Terra Service to eventually replace `Terra.should`
+* Added `Terra.validates` chai assertion methods in the Terra Service to used in Mocha it blocks
+* Added `Terra.describeViewports` Mocha describe block methods in the Terra Service as a convenience for setting up test viewport looping
+
+4.28.1 - (May 17, 2019)
+----------
+### Fixed
+* use terra-toolkit's default locales since terra-aggregate-translations doesn't support ar
+
 4.28.0 - (May 16, 2019)
 ----------
 ### Added
@@ -40,7 +52,7 @@ Unreleased
 * Guard against empty screenshot array being passed to `getComparisonResults`.
 
 ### Changed
-* Remove rimraf dev-depenency
+* Remove rimraf dev-dependency
 * Remove scripts/release script and update package.json scripts to reflect release script
 * Webpack configuration:
     * Added css compression for production webpack builds with cssnano

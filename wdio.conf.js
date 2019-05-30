@@ -32,6 +32,7 @@ const config = {
     ],
     unopinionated: [
       'tests/wdio/i18n-spec.js',
+      'tests/wdio/validateElement-spec.js',
     ],
     static: [
       'tests/wdio/axe-spec.js',
