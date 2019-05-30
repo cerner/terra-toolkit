@@ -7,7 +7,7 @@ describe('be accessible', () => {
     Terra.it.isAccessible({ viewports });
     it('is accessible', () => {
       Terra.validates.accessibility({ viewports });
-    })
+    });
   });
 
   describe('inaccessible contrast', () => {
@@ -20,6 +20,6 @@ describe('be accessible', () => {
     Terra.it.isAccessible({ viewports, rules: ignoredA11y });
     it('is accessible', () => {
       Terra.validates.accessibility({ viewports, rules: ignoredA11y });
-    })
+    });
   });
 });
