@@ -69,7 +69,7 @@ const config = {
     port: internalPort,
   },
   ...locale && { locale },
-  formFactor,
+  ...formFactor && { formFactor },
 
   seleniumVersion: '3.14',
   seleniumDocker: {
