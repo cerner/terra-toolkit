@@ -35,7 +35,8 @@ describe('webpack config', () => {
       expect(config).toHaveProperty('entry');
       expect(config.entry).toMatchObject({
         raf: 'raf/polyfill',
-        'babel-polyfill': 'babel-polyfill',
+        'core-js': 'core-js/stable',
+        'regenerator-runtime': 'regenerator-runtime/runtime',
       });
     });
 
