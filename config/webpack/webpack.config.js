@@ -29,7 +29,9 @@ const webpackConfig = (options, env, argv) => {
     mode: 'development',
     entry: {
       raf: 'raf/polyfill',
-      'babel-polyfill': 'babel-polyfill',
+      'core-js': 'core-js/stable',
+      'regenerator-runtime':'regenerator-runtime/runtime',
+      // 'babel-polyfill': 'babel-polyfill',
       ...themeFile && { theme: themeFile },
     },
     module: {
