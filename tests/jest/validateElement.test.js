@@ -1,4 +1,4 @@
-jest.mock('../../lib/wdio/services/TerraCommands/accessiblity', () => ({
+jest.mock('../../lib/wdio/services/TerraCommands/accessibility', () => ({
   __esModule: true,
   default: {
     runAccessibilityTest: jest.fn(),
@@ -11,35 +11,37 @@ jest.mock('../../lib/wdio/services/TerraCommands/visual-regression', () => ({
   },
 }));
 
-const accessibility = require('../../lib/wdio/services/TerraCommands/accessiblity').default;
+const accessibility = require('../../lib/wdio/services/TerraCommands/accessibility').default;
 const visualRegressions = require('../../lib/wdio/services/TerraCommands/visual-regression').default;
-const validateMethods = require('../../lib/wdio/services/TerraCommands/validate-element').default;
+const { validatesElement } = require('../../lib/wdio/services/TerraCommands/validate-element').default;
+
+global.browser = {
+  options: {
+    terra: {
+      selector: '[data-terra-toolkit-content]',
+    },
+  },
+};
 
 describe('validateElement', () => {
   it('calls the appropriate methods downstream with all arguments', () => {
-    validateMethods.validatesElement('test name', { selector: 'test-selector', misMatchTolerance: 0.05, axeRules: { a: 'b', c: 'd' } });
+    validatesElement('test name', { selector: 'test-selector', misMatchTolerance: 0.05, axeRules: { a: 'b', c: 'd' } });
 
-    expect(accessibility.runAccessibilityTest).toBeCalledWith({ rules: { a: 'b', c: 'd' }, restoreScroll: true, context: 'test-selector' });
-    expect(visualRegressions.runMatchScreenshotTest).toBeCalledWith('withinTolerance', 'test-selector', { misMatchTolerance: 0.05, name: 'test name' });
+    expect(visualRegressions.runMatchScreenshotTest).toBeCalledWith('test-selector', { misMatchTolerance: 0.05, name: 'test name' });
+    expect(accessibility.runAccessibilityTest).toBeCalledWith({ rules: { a: 'b', c: 'd' } });
   });
 
   it('calls the appropriate methods downstream with defaults', () => {
-    global.browser = {
-      options: {
-        terra: {
-          selector: '[data-terra-toolkit-content]',
-        },
-        visualRegression: {
-          compare: {
-            misMatchTolerance: 0.01,
-          },
-        },
-      },
-    };
+    validatesElement();
 
-    validateMethods.validatesElement();
+    expect(visualRegressions.runMatchScreenshotTest).toBeCalledWith('[data-terra-toolkit-content]', { name: 'default' });
+    expect(accessibility.runAccessibilityTest).toBeCalled();
+  });
 
-    expect(accessibility.runAccessibilityTest).toBeCalledWith({ restoreScroll: true, context: '[data-terra-toolkit-content]' });
-    expect(visualRegressions.runMatchScreenshotTest).toBeCalledWith('withinTolerance', '[data-terra-toolkit-content]', { misMatchTolerance: 0.01, name: 'default' });
+  it('does not use context option', () => {
+    validatesElement({ selector: 'test-selector', context: 'im_sneaky_and_will_test_a_diff_element_for_a11y' });
+
+    expect(visualRegressions.runMatchScreenshotTest).toBeCalledWith('test-selector', { name: 'default' });
+    expect(accessibility.runAccessibilityTest).toBeCalled();
   });
 });

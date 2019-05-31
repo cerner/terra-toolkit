@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-require('../scripts/serve/serve-cli');
+require('webpack-dev-server/bin/webpack-dev-server');

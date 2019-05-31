@@ -18,18 +18,17 @@ To run the webdriver.io test running, the [webdriver.io configuration options](h
 
 * `SeleniumDockerService` - starts a Selenium-Docker instance.
     - See [here](https://github.com/cerner/terra-toolkit/blob/master/docs/SeleniumDockerService.md) for configuration information.
-* `AxeService` - provides utilities for accessibility testing.
-    - See [here](https://github.com/cerner/terra-toolkit/blob/master/docs/AxeService.md) for configuration information.
-* `TerraService` - provides global access to chai, custom chai assertions and a Terra helper to make testing easier.
-    - To provide a custom global selector, add `terra: { selector: 'selector_name' }` to the configuration.
+* `TerraService` - provides utilities for accessibility testing as well as gives global access to chai and a Terra object containg helpers to make testing easier. 
+    - A global selector must be defined: add `terra: { selector: 'selector_name' }` to the configuration.
     - To disable theme testing add `terra: { disableThemeTests: true }` to the configuration. This will skip the following functions during testing: `themeEachCustomProperty` and `themeCombinationOfCustomProperties`. 
+    - To configure the acessibilty utility, add `axe: { options: {} }` to be passed to the axe instance that is inject on the test page. See [axe-core's axe.configure docs](https://www.deque.com/axe/axe-for-web/documentation/api-documentation/#api-name-axeconfigure) for possible configuraiton options.
 * `VisualRegressionService` - uses wdio-screenshot to capture screenshots and run visual regression testing.
     - See [here](https://github.com/zinserjan/wdio-visual-regression-service#configuration) for configuration information.
 * `ServeStaticService` - to start a server and returns a promise when the webpack compiler is completed.
     - See [here](https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitServeStaticService.md) for configuration information.
 
 ```javascript
-// An example of a full mono-repo configuration file:
+// wdio.config.js
 const wdioConf = require('terra-toolkit/config/wdio/wdio.conf');
 const webpackConfig = require('./webpack.config.js');
 
@@ -50,12 +49,12 @@ exports.config = config;
 
 ### Environment Variables
 
-* In order to support tests running inside of a container and hitting an external selenium grid, 3 environment variables are provided:
+* To support testing inside of a container and hitting an external selenium grid, three environment variables are provided:
 
   * `WDIO_INTERNAL_PORT` - This specifies the port for the ServeStaticService. This is the port that the server being tested against will actually run on.
   * `WDIO_EXTERNAL_PORT` - This specifies the external port that is mapped on the container to the WDIO_INTERNAL_PORT.
   * `WDIO_EXTERNAL_HOST` - This specifies the externally accessible name for the host on which the container is running.
-* In order to stop test runner as soon as a single test has failed, explicitly set the environment variable `WDIO_BAIL` to true. Please note that if it is not set, then the test runner does not bail and all the tests are run.
+* In order to stop test runner as soon as a single test has failed, explicitly set the environment variable `WDIO_BAIL` to true. By default all the tests are run regardless of failures.
 
 ## Writing Tests
 
@@ -73,11 +72,10 @@ Then, to assist with testing, the TerraService provides the Terra global helper 
     - See [beAccessible-spec.js](https://github.com/cerner/terra-toolkit/blob/master/tests/wdio/beAccessible-spec.js) for examples.
 - `Terra.should.matchScreenshot()` **Note - It is preferred to use Terra.should.validateElement().  Terra.should.matchScreenshot() may eventually be deprecated** mocha-chai convenience method that takes a screenshot for the specified viewports and verifies the images are within the specified mis-match tolerance. Note: this method provides its own mocha it test case. The methods accepts these arguments (in this order):
     - String (optional): the test case name. Default name is 'default'
-    - Object (optional): the test options. Options include selector, viewports, misMatchTolerance and viewportChangePause:
+    - Object (optional): the test options. Options include selector, viewports, and misMatchTolerance:
          - selector: the element selector to take a screenshot of. Defaults to the global terra.selector.
          - viewports: the array of viewports dimensions to take a screenshot in. Defaults to the current viewport size.
          - misMatchTolerance: number between 0 and 100 that defines the degree of mismatch to consider two images as identical, increasing this value will decrease test coverage. Defaults to the global visualRegression.compare.misMatchTolerance.
-         - viewportChangePause: the number of milliseconds to wait after a viewport change. Defaults to the global visualRegression.viewportChangePause.
     - See [matchScreenshot-spec.js](https://github.com/cerner/terra-toolkit/blob/master/tests/wdio/matchScreenshot-spec.js) for example usage.
 - `Terra.should.validateElement()` mocha-chai convenience method that takes a screenshot and verifies the images are within the specified mis-match tolerance and performs accessibility validation. Note: this method provides its own mocha it test case. Also, since viewports isn't accepted in this method, you need to [test in multiple viewports](#testing-multiple-viewports) This method accepts these arguments (in this order):
     - String (optional): the test case name. Default name is 'default'
@@ -98,14 +96,11 @@ Then, to assist with testing, the TerraService provides the Terra global helper 
 ```js
 // These globals are provide via the Terra Service
 /* global browser, describe, it, expect, viewport */
-
 describe('Basic Test', () => {
-  const viewports = Terra.viewports('tiny', 'huge');
-
   before(() => browser.url('/test.html'));
 
-  Terra.should.beAccessible({ viewports });
-  Terra.should.matchScreenshot({ viewports });
+  Terra.should.beAccessible();
+  Terra.should.matchScreenshot();
   Terra.should.themeEachCustomProperty({
     '--color': 'red',
     '--font-size': '20px',
@@ -117,52 +112,18 @@ describe('Basic Test', () => {
 });
 ```
 
-
-If more control is needed over the assertions, the TerraService also provides the custom chai assertions `accessible` and `matchReference`:
-
-- `accessible()` validates the `axe()` accessibility assertions on the specified viewports are successful.
-- `matchReference()` validates the `checkElement` visual regression assertions on the specified viewports are either within the mis-match tolerance or are an exact match. This method accepts a string argument of `withinTolerance` or `exactly` to specify the matchType. By default the matchType is `withinTolerance`.
-
-```js
-// These globals are provide via the Terra Service
-/* global browser, describe, it, expect, viewport */
-
-
-describe('Advanced Test', () => {
-  // Only test tiny and huge viewports
-  const viewports = Terra.viewports('tiny', 'huge');
-
-  before(() => browser.url('/test.html'));
-
-  it('checks accessibility', () => {
-    expect(browser.axe()).to.be.accessible();
-  });
-
-  it('checks visual comparison', () => {
-    const screenshots = browser.checkViewport({ viewports });
-    expect(screenshots).to.matchReference();
-  });
-
-  it('switches viewport sizes', () => {
-    viewports.forEach(size, () => {
-      browser.setViewportSize(size);
-    });
-  });
-});
-```
-
 ### Testing multiple viewports.
 Sometimes its necessary to rerun the test steps in each viewport. Some build systems support running viewports in parallel and control the viewport via the FORM_FACTOR environment variable. For build systems that don't support parallelization, `Terra.viewports` can be used to wrap the `describe` block. Example:
 
 ```js
 Terra.viewports('tiny', 'small', 'large').forEach((viewport) => {
-  describe('Resize Example', () => {
+  describe(`Resize Example - ${viewport.name}`, () => {
     before(() => {
       browser.setViewportSize(viewport);
       browser.url('/test.html');
     });
 
-    it(`resizes ${viewport.name}`, () => {
+    it(`correctly resized to ${viewport.name}`, () => {
       const size = browser.getViewportSize();
       expect(size.height).to.equal(viewport.height);
       expect(size.width).to.equal(viewport.width);
@@ -171,16 +132,16 @@ Terra.viewports('tiny', 'small', 'large').forEach((viewport) => {
 });
 ```
 
-This will generate a describe block for each viewport.
-
-
 ## Running Tests
 Installation of webdriver.io provides access to the wdio test runner. To start the runner, add the wdio npm script to the package.json and then provide the wdio configuration file. The wdio test runner requires a configuration file to be passed either from the current directory or by path.
 
-```javascript
-// NPM Script at the root-level of a mono-repo with config in same directory
+```json
+// run wdio cli directly
 "wdio": "wdio";
+```
 
-// NPM Script at a package-level of a mono-repo
-"wdio": "wdio ../../wdio.conf.js";
+Terra-toolkit also provides the tt-wdio script to run wdio test runs for specified locales and form factors in a syrsynchronous fashion. This script is helpful for generating results a parallelize CI pipeline could produce.
+```json
+// run terra-toolkit's wdio script for consecutive FormFactor and Locale parallel tests
+"wdio": "tt-wdio --config wdio.conf.js";
 ```

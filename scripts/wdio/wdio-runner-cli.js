@@ -14,7 +14,7 @@ commander
   .option('--config [path]', 'The wdio config path for the tests', undefined)
   .option('--formFactors [list]', 'The list of viewport sizes to test', parseCLIList, undefined)
   .option('--locales [list]', 'The list of locales to test', parseCLIList, ['en'])
-  .option('--continueOnFail', 'Wheather or not to execute all test runs when a run fails', false)
+  .option('--continueOnFail', 'Whether or not to execute all test runs when a run fails', false)
   .option('--updateReference', 'Whether or not to remove reference screenshots during screenshot cleanup', false)
   .option('--host [number]', '[wdio option] The selenium server port', undefined)
   .option('--port [string]', '[wdio option] The selenium server host address', undefined)
@@ -39,7 +39,7 @@ const {
 const configPath = getWdioConfigPath(config);
 
 cleanScreenshots({
-  configPath, updateReference,
+  updateReference,
 });
 
 runner({

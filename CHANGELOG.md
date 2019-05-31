@@ -1,6 +1,42 @@
 Changelog
 =========
 
+unreleased
+----------
+### Major Version Bump. 
+
+### Changed
+* **Breaking Change** Upgrade to use selenium-docker chrome version 3.14.0-helium. Tests now run against Google Chrome: 69.0.3497.100. See https://github.com/SeleniumHQ/docker-selenium/tree/3.14.0-helium
+* Updated dependencies and dev dependencies to their latest version (with the exception of webdriverio)
+* Change the following dependencies to peer dependencies: webpack, webpack-cli, webpack-dev-server, raf
+
+### Added
+* **Breaking Change** Added `resetScroll: true` to axe helper.
+* Added the following peer dependencies: @babel/core, @babel/cli, core-js
+* Added `SITE` env to wdio configuration for serving and testing pre-compiled static content
+* Added webpack-dev-server configuration in the webpack configuration to disable hot reloading with `--env.disableHotReloading`
+
+### Changes
+* Moved/reduced redundant code that parsed the test options passed to TerraService test helpers
+
+### Fixed
+* **Breaking Change** Fix inconsistent screenshot widths for the huge form factor by setting the default formFactor to 'huge' in the wdio.config.js. [#137](https://github.com/cerner/terra-toolkit/issues/137)
+* **Breaking Change** Fix incorrect screenshot naming where the screenshot name by using the current viewport size's form factor instead of using the formFactor value set in wdio.config.js.[#248](https://github.com/cerner/terra-toolkit/issues/248)
+
+### Removed
+* **Breaking Change** Removed the nightwatch utility, dependencies, tests and documentations.
+* **Breaking Change** Aggregate-translations pre-build script and default terraI18n configuration is no longer provided through terra-toolkit.
+* **Breaking Change** Deprecated serve javascript function
+* **Breaking Change** Serve-static no longer builds webpack config
+* **Breaking Change** Serve-static no longer injects locale.
+* **Breaking Change** Removed Axe Service. The Axe Service functionally was moved to the Terra Service.
+* Terra Service:
+  * **Breaking Change** Removed Terra.should test helpers. There is no replacement for Terra.should.themeEachCustomProperty and Terra.should.themeCombinationOfCustomProperties 
+  * **Breaking Change** Terra.it.isAccessible (previously Terra.should.beAccessible) no longer accept context as a test option but instead always use `document`
+  * **Breaking Change** Removed `runOnly` option from Terra.should.beAccessible test helper and axe chai method
+  * **Breaking Change** Removed `isExactMatch` chai assertion.
+  * **Breaking Change** Removed `viewportChangePause` test option from Terra.it.matchesScreenshot (previously Terra.should.matchScreenshot) test helper
+
 4.29.0 - (May 30, 2019)
 ----------
 ### Added
@@ -17,14 +53,19 @@ Changelog
 ----------
 ### Added
 * Added default testName `themed` for `themeCombinationOfCustomProperties` helper.
-* Add `terra-aggregate-translations` module
+* Added `terra-aggregate-translations` module
 * Guard against empty screenshot array being passed to `getComparisonResults`.
 
 ### Changed
-* Remove rimraf dev-depenency
+* Remove rimraf dev-dependency
 * Remove scripts/release script and update package.json scripts to reflect release script
+* Webpack configuration:
+    * Added css compression for production webpack builds with cssnano
+    * Remove directly passing browserslist configuration to webpack. Use package defined configuraiton instead.
+    * Updated dependencies
+    * Changed webpack, webpack-cli and webpack-dev-server to be peer dependencies to ensure correct versions are used
 
-### Remove
+### Removed
 * Aggregate-translation script, tests, and bin executable
 
 4.27.0 - (April 16, 2019)
@@ -87,7 +128,7 @@ Changelog
 ### Added
 * Add exclude directories option to aggregate translations tool
 * Add local and network address display to tt-serve
-* Add glob option to follow symlinked node_modules while aggreagating trasnlations
+* Add glob option to follow symlinked node_modules while aggregating translations
 
 ### Changed
 * Opened up default search patterns to search all first-, second- and third-level `node_module/*/translations` patterns for monorepos and non-monorepos instead of the first-level `node_modules/terra-*/translations` patterns.
@@ -98,7 +139,7 @@ Changelog
 * Upgraded webpack-cli to 3.0.0 and unlocked webpack version.
 
 ### Changed
-* Aggregrate-translations tool now outputs pre-compiled tranlstaions jsons, intl loaders and translations loaders to prevent the need for the compilation during webpack. This resolves SCRIPT1002: Syntax error with IE.
+* Aggregrate-translations tool now outputs pre-compiled translations jsons, intl loaders and translations loaders to prevent the need for the compilation during webpack. This resolves SCRIPT1002: Syntax error with IE.
 
 4.19.0 - (November 20, 2018)
 ----------
@@ -212,7 +253,7 @@ Changelog
 * Added sv and sv-SE to aggregated translations supported locales list
 
 ### Fixed
-* Only hash css assets in proudction mode for webpack config reusability in rails projects.
+* Only hash css assets in production mode for webpack config reusability in rails projects.
 
 4.5.0 - (July 20, 2018)
 ----------
@@ -244,7 +285,7 @@ Changelog
 
 4.0.0 - (June 26, 2018)
 ----------
-### Major Version Bump. See https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitUpgradeGuide-v4.0.0.md.
+### Major Version Bump. See https://github.com/cerner/terra-toolkit/blob/master/docs/guides/UpgradeGuide-v4.0.0.md.
 
 ### Added
 * Added `locale`, `formFactor` and `baseScreenshotDir` wdio.config options for i18n support [#69](https://github.com/cerner/terra-toolkit/issues/69) and parallelization support [#70](https://github.com/cerner/terra-toolkit/issues/70)
@@ -350,7 +391,7 @@ Changelog
 
 3.0.0 - (April 19, 2018)
 ----------
-### Major Version Bump. See https://github.com/cerner/terra-toolkit/blob/master/docs/TerraToolkitUpgradeBuid-v3.0.0.md.
+### Major Version Bump. See https://github.com/cerner/terra-toolkit/blob/master/docs/guides/UpgradeGuide-v3.0.0.md.
 
 ### Added
 * Added nl and nl-BE to supported locales

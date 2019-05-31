@@ -1,12 +1,13 @@
 import chai from 'chai';
-import visualRegression from './visual-regression';
 
 /**
-  * A accessible chai assertion to be paired with browser.axe() tests.
+  * A chai assertion method to be paired with browser.axe() tests to assert no violations were found
+  * on the test page.
   */
 function accessible() {
   // eslint-disable-next-line no-underscore-dangle
   new chai.Assertion(this._obj).to.be.instanceof(Array);
+
   // eslint-disable-next-line no-underscore-dangle
   const errors = this._obj
     .filter(test => test.result)
@@ -21,21 +22,29 @@ function accessible() {
   );
 }
 
-/** Helper method to determine which comparison results are relevant if the chai
-  * screenshot assertion fails.
-  * @property {Array of Objects} screenshots - The list of comparison results. The results
-  *    contain: misMatchPercentage (number), isSameDimensions (bool), isWithinMisMatchTolerance
-  *    (bool) and isExactSameImage (bool).
-  * @property {bool} matchExactly - If the screenshots should be an exact match.
-  */
-const getComparisonResults = (screenshots, matchExactly) => {
+/**
+ * Helper method to determine which comparison results are relevant for if the chai screenshot assertion
+ * fails.
+ *
+ * @param {Object[]} screenshots - The list of comparison results
+ * @param {boolean} screenshot.isSameDimensions - If the latest screenshot was the same size as the
+ *    reference screenshot.
+ * @param {boolean} screenshot.isWithinMisMatchTolerance - If the latest screenshot was within the
+ *    mismatch tolerance.
+ * @param {boolean} screenshot.isExactSameImage - If the latest screenshot matched the reference
+ *    screenshot exactly, i.e. 0% mismatch.
+ * @param {Number} screenshot.misMatchPercentage - The mismatch percentage when comparing the latest
+ *    screenshot to the reference screenshot.
+ * @param {Number} screenshot.viewport - The viewport that the latest screenshot was taken in.
+ */
+const getComparisonResults = (screenshots) => {
   if (screenshots.length < 1) {
     return 'No screenshots to compare.';
   }
 
   const results = screenshots.map((comparison) => {
     const {
-      viewport, misMatchPercentage, isSameDimensions, isExactSameImage,
+      viewport, misMatchPercentage, isSameDimensions,
     } = comparison;
     const relevantInformation = {};
 
@@ -47,10 +56,6 @@ const getComparisonResults = (screenshots, matchExactly) => {
       relevantInformation.isSameDimensions = isSameDimensions;
     }
 
-    if (matchExactly) {
-      relevantInformation.isExactSameImage = isExactSameImage;
-    }
-
     relevantInformation.misMatchPercentage = misMatchPercentage;
 
     return `${JSON.stringify(relevantInformation, null, 2)}`;
@@ -59,38 +64,27 @@ const getComparisonResults = (screenshots, matchExactly) => {
   return results;
 };
 
-/** A visual regression chai assertion to be paired with browser.capture() visual regression tests.
-  * Checks if the screenshot(s) are the same size and verifies the screenshots are either within
-  * the mismatch tolerance match or an exact match.
-  * @property {String} matchType - Which assertion to make. Either 'withinTolerance' or 'exactly'.
-  *     Defaults to 'withinTolerance'.
-  */
-function matchReference(matchType = 'withinTolerance') {
+/**
+ * A chai assertion method to be paired with Visual Regression Service to assert each screenshot is within
+ * the mismatch tolerance and are the same size.
+ */
+function matchReference() {
   // eslint-disable-next-line no-underscore-dangle
   new chai.Assertion(this._obj).to.be.instanceof(Array);
 
-  if (matchType) {
-    new chai.Assertion(matchType).to.be.oneOf(['withinTolerance', 'exactly']);
-  }
-
   // eslint-disable-next-line no-underscore-dangle
   const screenshots = this._obj;
-  const matchExactly = matchType === 'exactly';
 
-  const testDescription = visualRegression.getTestDescription(matchType);
-  const comparisonResults = getComparisonResults(screenshots, matchExactly);
+  const comparisonResults = getComparisonResults(screenshots);
 
-  let imagesMatch;
-  if (matchExactly) {
-    imagesMatch = screenshots.every(screenshot => (screenshot && screenshot.isSameDimensions && screenshot.isExactSameImage));
-  } else {
-    imagesMatch = screenshots.every(screenshot => (screenshot && screenshot.isSameDimensions && screenshot.isWithinMisMatchTolerance));
-  }
+  // Validate the screenshot is the same size for the case when the new screenshot matches 100% but is 'n' pixel taller due to new content.
+  // For example: the latest screenshot of a list has two more items than the reference screenshot so it is 60 pixels taller. That should fail.
+  const imagesMatch = screenshots.every(screenshot => (screenshot && screenshot.isSameDimensions && screenshot.isWithinMisMatchTolerance));
 
   this.assert(
     imagesMatch === true,
-    `expected to ${testDescription}, but received the following comparison results \n${comparisonResults}`,
-    `did not expected to ${testDescription}, but received the following comparison results \n${comparisonResults}`,
+    `expected to be within the mismatch tolerance, but received the following comparison results \n${comparisonResults}`,
+    `did not expect to be within the mismatch tolerance, but received the following comparison results \n${comparisonResults}`,
   );
 }
 

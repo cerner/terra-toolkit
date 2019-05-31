@@ -16,14 +16,8 @@ const config = {
     selector: '[data-terra-toolkit-content]',
   },
 
-  axe: {
-    inject: true,
-    options: {
-      rules: [
-        { id: 'landmark-one-main', enabled: false },
-        { id: 'region', enabled: false },
-      ],
-    },
+  serveStatic: {
+    index: 'compare.html',
   },
 
   suites: {
@@ -34,11 +28,21 @@ const config = {
       'tests/wdio/matchScreenshot-spec.js',
       'tests/wdio/resize-spec.js',
       'tests/wdio/validateElement-spec.js',
+      'tests/wdio/describeViewports-spec.js',
     ],
     unopinionated: [
       'tests/wdio/i18n-spec.js',
-      'tests/wdio/theme-spec.js',
       'tests/wdio/validateElement-spec.js',
+    ],
+    static: [
+      'tests/wdio/axe-spec.js',
+      'tests/wdio/beAccessible-spec.js',
+      'tests/wdio/compare-spec.js',
+      'tests/wdio/matchScreenshot-spec.js',
+      'tests/wdio/resize-spec.js',
+      'tests/wdio/validateElement-spec.js',
+      'tests/wdio/serveStatic-spec.js',
+      'tests/wdio/describeViewports-spec.js',
     ],
   },
   // Static site for ServeStaticService

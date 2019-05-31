@@ -47,6 +47,13 @@ Terra's supported locales will be aggregated when using the default webpack conf
 webpack --env.disableAggregateTranslations
 ```
 
+#### Hot Reloading with Webpack Dev Server
+Terra's webpack configuration enables hot reloading by default in development mode. To disable this behavior, pass `--env.disableHotReloading` to the cli when running tt-serve.
+
+```bash
+tt-serve --env.disableHotReloading
+```
+
 #### Development vs Production
 The default webpack configuration is a function that will flex between production and development modes when passing the `-p` flag while compiling with webpack. See webpack's documentation on [configuration types](https://webpack.js.org/configuration/configuration-types/) for more information.
 
@@ -63,7 +70,7 @@ React 16 depends on the collection types ``Map`` and ``Set`` and it depends on `
 - [file-loader](https://webpack.js.org/loaders/file-loader/) - Instructs webpack to emit the required object as file and to return its public URL.
 
 ### CSS Loaders and Plugins
-- [autoprefixer](https://github.com/postcss/autoprefixer) - Plugin to parse CSS and add vendor prefixes to CSS rules. This is configured for [Terra's supported browsers](https://github.com/cerner/terra-core/wiki/Component-Features#cross-browser-support). \*
+- [autoprefixer](https://github.com/postcss/autoprefixer) - Plugin to parse CSS and add vendor prefixes to CSS rules. This should be configured with [`browserslist-config-terra`](https://github.com/cerner/browserslist-config-terra). \*
 - [css-loader](https://webpack.js.org/loaders/css-loader/) - The css-loader interprets ``@import`` and ``url()`` like ``import/require()`` and will resolve them. The css-loader is also used to parse CSS Modules.
 - [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin) - This plugin extracts CSS into separate files and supports on-demand-loading of CSS and SourceMaps.
 - [postcss-loader](https://webpack.js.org/loaders/postcss-loader/) - Transforms styles with JS plugins.

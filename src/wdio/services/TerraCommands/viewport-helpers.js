@@ -30,6 +30,9 @@ const setViewport = (formFactor) => {
     } else {
       throw Logger.error('The formFactor supplied is not a Terra-defined viewport size.', { context: '[Terra-Toolkit:terra-service]' });
     }
+  } else {
+    const defaultViewport = VIEWPORTS.huge;
+    global.browser.setViewportSize(defaultViewport);
   }
 };
 

@@ -1,6 +1,7 @@
 import chai from 'chai';
+import axeCommand from './TerraCommands/axe-command';
 import chaiMethods from './TerraCommands/chai-methods';
-import accessibility from './TerraCommands/accessiblity';
+import accessibility from './TerraCommands/accessibility';
 import visualRegression from './TerraCommands/visual-regression';
 import validateElement from './TerraCommands/validate-element';
 import viewportHelpers from './TerraCommands/viewport-helpers';
@@ -19,7 +20,10 @@ export default class TerraService {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  before() {
+  before(capabilities) {
+    /* Add Terra's custom Wdio command for a11y testing. */
+    global.browser.addCommand('axe', axeCommand);
+
     /* Initialize the Chai assertion library to have more expressive tests. */
     chai.config.showDiff = false;
     global.expect = chai.expect;
@@ -37,19 +41,9 @@ export default class TerraService {
       /* `describeViewports` provides a custom Mocha `describe` block for looping test viewports. */
       describeViewports: viewportHelpers.describeViewports,
 
-
-      /* `should` provides access to Mocha it blocks of test assertions. */
-      should: {
-        beAccessible: accessibility.itIsAccessible,
-        matchScreenshot: visualRegression.itMatchesScreenshot,
-        themeEachCustomProperty: visualRegression.themeEachCustomProperty,
-        themeCombinationOfCustomProperties: visualRegression.themeCombinationOfCustomProperties,
-        validateElement: validateElement.itValidatesElement,
-      },
-
       /* `validates` provides access to the chai assertions to use in Mocha `it` blocks. */
       validates: {
-        accessibility: accessibility.runAccessibilityTest,
+        accessibility: accessibility.validatesAccessibility,
         screenshot: visualRegression.validatesScreenshot,
         element: validateElement.validatesElement,
       },
@@ -63,18 +57,11 @@ export default class TerraService {
     };
 
     /* IE driver takes a longer to be ready for browser interactions. */
-    if (global.browser.desiredCapabilities.browserName === 'internet explorer') {
+    if (capabilities.browserName === 'internet explorer') {
       global.browser.pause(10000);
     }
 
     /* Set the viewport size before the spec begins.  */
     viewportHelpers.setViewport(global.browser.options.formFactor);
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  onComplete() {
-    Logger.log(`${Logger.emphasis('Be proactive for toolkit v5!')} Update Terra.should.matchScreenshot to Terra.it.matchesScreenshot.`, { context: '[Terra-Toolkit:terra-service]' });
-    Logger.log(`${Logger.emphasis('Be proactive for toolkit v5!')} Update Terra.should.beAccessible to Terra.it.isAccessible.`, { context: '[Terra-Toolkit:terra-service]' });
-    Logger.log(`${Logger.emphasis('Be proactive for toolkit v5!')} Update Terra.should.validateElement to Terra.it.validatesElement.`, { context: '[Terra-Toolkit:terra-service]' });
   }
 }

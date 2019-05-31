@@ -33,3 +33,24 @@ Cannot read property 'viewport' of undefined
 ```
 wdio-visual-regression-service": "^0.9.0",
 ```
+
+## I am using toolkit v5, and while running tt-serve, I received this babel error:
+```
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+Error: Babel was run with rootMode:"upward" but a root could not be found when searching upward from "/Users/er047227/terra-ui"
+    at resolveRootMode (/Users/er047227/terra-ui/node_modules/@babel/core/lib/config/partial.js:50:29)
+    at loadPrivatePartialConfig (/Users/er047227/terra-ui/node_modules/@babel/core/lib/config/partial.js:77:27)
+    at Object.loadPartialConfig (/Users/er047227/terra-ui/node_modules/@babel/core/lib/config/partial.js:110:18)
+    at Object.<anonymous> (/Users/er047227/terra-ui/node_modules/babel-loader/lib/index.js:144:26)
+    at Generator.next (<anonymous>)
+    at asyncGeneratorStep (/Users/er047227/terra-ui/node_modules/babel-loader/lib/index.js:3:103)
+    at _next (/Users/er047227/terra-ui/node_modules/babel-loader/lib/index.js:5:194)
+    at /Users/er047227/terra-ui/node_modules/babel-loader/lib/index.js:5:364
+    at Promise (<anonymous>)
+    at Object.<anonymous> (/Users/er047227/terra-ui/node_modules/babel-loader/lib/index.js:5:97)
+    at Object.loader (/Users/er047227/terra-ui/node_modules/babel-loader/lib/index.js:60:18)
+    at Object.<anonymous> (/Users/er047227/terra-ui/node_modules/babel-loader/lib/index.js:55:12)
+ @ ./node_modules/terra-dev-site/lib/Index.js 11:40-66
+
+```
+Be sure to you are using babel 7 and have added `babel.config.js` file to your project.

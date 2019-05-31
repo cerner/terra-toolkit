@@ -1,13 +1,5 @@
 const path = require('path');
 
-/* Axe Service Defaults */
-const axe = {
-  /* Wheather or not to inject axe into the browser. */
-  inject: true,
-  /* Axe configiuration options. */
-  options: undefined,
-};
-
 /* Serve Static Service Defaults */
 const serveStatic = {
   /* The port to start the express server on. */
@@ -22,8 +14,7 @@ const seleniumDocker = {
   enabled: true,
   /* Retry count to test for selenium being up. */
   retries: 4000,
-  /* The retry interval (in milliseconds) to wait between retries.
-   */
+  /* The retry interval (in milliseconds) to wait between retries. */
   retryInterval: 10,
   /* Docker compose file reference when deploying the docker selenium hub stack. */
   composeFile: path.join(__dirname, '..', 'docker', 'local-docker-compose.yml'),
@@ -40,7 +31,6 @@ const terraViewports = {
 };
 
 module.exports = {
-  axe,
   serveStatic,
   seleniumDocker,
   terraViewports,

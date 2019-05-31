@@ -7,7 +7,6 @@ describe('matchScreenshot', () => {
   });
 
   describe('matchScreenshot', () => {
-    Terra.should.matchScreenshot();
     Terra.it.matchesScreenshot();
     it('matches screenshot', () => {
       Terra.validates.screenshot();
@@ -15,9 +14,9 @@ describe('matchScreenshot', () => {
   });
 
   describe('matchScreenshot-test name', () => {
-    Terra.should.matchScreenshot('test-name-only');
     Terra.it.matchesScreenshot('test-name-only');
-    it('matches screenshot', () => {
+
+    it('checks [default] screenshot', () => {
       Terra.validates.screenshot('test-name-only');
     });
   });
@@ -25,18 +24,18 @@ describe('matchScreenshot', () => {
   describe('matchScreenshot-options--viewports', () => {
     after(() => browser.setViewportSize(viewports[0]));
 
-    Terra.should.matchScreenshot({ viewports });
     Terra.it.matchesScreenshot({ viewports });
+
     it('matches screenshot', () => {
       Terra.validates.screenshot({ viewports });
     });
   });
 
   describe('matchScreenshot-options--selector', () => {
-    Terra.should.matchScreenshot({ selector: 'button' });
-    Terra.it.matchesScreenshot({ selector: 'button' });
+    Terra.it.matchesScreenshot({ selector: '#content' });
+
     it('matches screenshot', () => {
-      Terra.validates.screenshot({ selector: 'button' });
+      Terra.validates.screenshot({ selector: '#content' });
     });
   });
 
@@ -46,8 +45,8 @@ describe('matchScreenshot', () => {
     });
 
     // Base screenshots
-    Terra.should.matchScreenshot();
     Terra.it.matchesScreenshot();
+
     it('matches screenshot', () => {
       Terra.validates.screenshot();
     });
@@ -56,8 +55,8 @@ describe('matchScreenshot', () => {
       browser.execute('document.getElementsByClassName("test")[0].style.color = "blue";');
     });
 
-    Terra.should.matchScreenshot({ misMatchTolerance: 100 });
     Terra.it.matchesScreenshot({ misMatchTolerance: 100 });
+
     it('matches screenshot', () => {
       Terra.validates.screenshot({ misMatchTolerance: 100 });
     });
@@ -78,40 +77,13 @@ describe('matchScreenshot', () => {
     });
   });
 
-  describe('matchScreenshot-options--viewportChangePause', () => {
-    let startTime;
-    before(() => {
-      startTime = new Date().getTime();
-    });
-
-    Terra.should.matchScreenshot({ viewports, viewportChangePause: 500 });
-    Terra.it.matchesScreenshot({ viewports, viewportChangePause: 500 });
-    it('matches screenshot', () => {
-      Terra.validates.screenshot({ viewports, viewportChangePause: 500 });
-    });
-
-    it('waited as expected', () => {
-      const endTime = new Date().getTime();
-      const totalTime = endTime - startTime;
-      expect(totalTime).to.be.above(500);
-    });
-  });
-
   describe('matchScreenshot-test name & options', () => {
     after(() => browser.setViewportSize(viewports[0]));
 
-    Terra.should.matchScreenshot('button', { selector: 'button', viewports });
-    Terra.it.matchesScreenshot('button', { selector: 'button', viewports });
-    it('matches screenshot', () => {
-      Terra.validates.screenshot('button', { selector: 'button', viewports });
-    });
+    Terra.it.matchesScreenshot('button', { selector: '#content', viewports });
   });
 
   describe('matchScreenshot-invalid options', () => {
-    Terra.should.matchScreenshot('test-invalid-options', [viewports.tiny, viewports.huge]);
     Terra.it.matchesScreenshot('test-invalid-options', [viewports.tiny, viewports.huge]);
-    it('matches screenshot', () => {
-      Terra.validates.screenshot('test-invalid-options', [viewports.tiny, viewports.huge]);
-    });
   });
 });

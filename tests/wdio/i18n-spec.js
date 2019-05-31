@@ -19,5 +19,5 @@ describe('I18n Locale', () => {
     expect(testLocale).to.equal(browserLocale);
   });
 
-  Terra.should.matchScreenshot({ selector: '#i18n-validation' });
+  Terra.it.matchesScreenshot({ selector: '#i18n-validation' });
 });

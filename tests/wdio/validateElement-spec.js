@@ -4,17 +4,15 @@ Terra.describeViewports('validateElement', ['tiny', 'small', 'huge'], () => {
       browser.url('/compare.html');
     });
 
-    Terra.should.validateElement();
     Terra.it.validatesElement();
-    it('validates element', () => {
+
+    it('checks element', () => {
       Terra.validates.element();
     });
   });
 
   describe('inaccessible contrast', () => {
-    before(() => {
-      browser.url('/inaccessible-contrast.html');
-    });
+    before(() => browser.url('/inaccessible-contrast.html'));
 
     const ignoredA11y = {
       'color-contrast': { enabled: false },
