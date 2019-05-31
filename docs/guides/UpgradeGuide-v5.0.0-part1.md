@@ -2,8 +2,6 @@
 
 This document will provide information on what changed from terra-toolkit 4.x to 5.0.0. This included dependency, functionality and technical changes that impact how you should use the terra-toolkit module. See Part 2 for step-by-step upgrade changes. See Part 3 for webdriver.io test changes.
 
-**NOTE: The information in Part 1 is extremely important to understand before attempting start the changes outlined in Part 2 and Part 3. Be sure to read first.**
-
 ## Webpack Configuration
 
 ### Configuration Changes
@@ -45,16 +43,12 @@ These dependencies are offered through the webpack configuration and must be def
 - clean-webpack-plugin: `^0.1.17` -> `^2.0.1`
 - css-loader: `^0.28.7` -> `^2.1.1`
 - file-loader: `^1.1.5` -> `^3.0.1`
-- mini-css-extract-plugin: `^0.4.5` -> `^0.6.0`
+- mini-css-extract-plugin: `^0.4.5` -> `^0.7.0`
 - postcss: `^6.0.9` -> `^7.0.16`
 - postcss-assets-webpack-plugin: `^2.0.0` -> `^3.0.0`
 - postcss-custom-properties: `^7.0.0` -> `^8.0.10`
 - postcss-loader: `^2.0.6` -> `^3.0.0`
 - raw-loader: `^0.5.1` -> `^2.0.0`
-
-#### Added
-
-- cssnano: `^4.1.10`
 
 #### Removed
 
@@ -63,9 +57,9 @@ These dependencies are offered through the webpack configuration and must be def
 
 ## Terra Scripts
 
-### Aggregated Translations
+### Aggregate Translations
 
-The aggregate-translations pre-build script and default terraI18n configuration is no longer provided through terra-toolkit. This being said, the default webpack configuration still runs the aggregrate-translations pre-build script! For direct use of the aggregate-translations script or list of supported locales, update imports to reference the `terra-aggregate-translations` dependency:
+The aggregate-translations pre-build script and default terraI18n configuration is no longer provided through terra-toolkit. This being said, the default webpack configuration still runs the aggregate-translations pre-build script! For direct use of the aggregate-translations script or list of supported locales, update imports to reference the `terra-aggregate-translations` dependency:
 
 ```diff
 - const aggregateTranslations = require('terra-toolkit/scripts/aggregate-translations/aggregate-translations');

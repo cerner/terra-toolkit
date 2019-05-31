@@ -23,9 +23,6 @@ const config = {
   seleniumDocker: {
     // Disable if running in CI pipeline
     enabled: !process.env.CI,
-    env: {
-      TZ: 'America/Chicago'
-    },
   },
 };
 

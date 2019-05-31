@@ -1,13 +1,18 @@
 // Example of current & proposed test changes
 const testViewports = ['tiny', 'huge'];
 const viewports = Terra.viewports(testViewports);
+tag[default]
 
-describe('current test [passing viewports]', () => {
+descrbie('tag selection varaint')
+
+describe('[19282] it runs varaint int he current test passing viewports with selection', () => {
   beforeEach(() => {
     browser.url('/compare.html');
     browser.click('button');
   });
-
+  it('click', () => {
+    browser.click('button');
+  })
   Terra.should.matchScreenshot({ viewports });
   Terra.should.beAccessible({ viewports });
   // Terra.should.validateElement(); doesn't accept a viewports option 
@@ -45,6 +50,8 @@ viewports.forEach((viewport) => {
       browser.setViewportSize(viewport);
     });
 
+Terra.describeWithViewports('current test [looping viewports]', ['tiny', 'huge'], () => {
+
     describe('test', () => {
       beforeEach(() => {
         browser.url('/compare.html');
@@ -56,8 +63,8 @@ viewports.forEach((viewport) => {
   });
 });
 
-Terra.describeWithViewports('5. new change proposal [looping viewport describe block helper]', ['tiny', 'huge'], () => {
-  describe('with it block helper', () => {
+Terra.describeViewports('5. new change proposal [looping viewport describe block helper]', ['tiny', 'huge'], () => {
+  Terra.describe('with it block helper', () => {
     before(() => {
       browser.url('/compare.html');
       browser.click('button');

@@ -48,8 +48,7 @@ webpack --env.disableAggregateTranslations
 ```
 
 #### Hot Reloading with Webpack Dev Server
-Terra's webpack configuration enables hot reloading by default in development mode. To disable this behavior, pass 
-`--env.disableHotReloading` to the cli when running tt-serve.
+Terra's webpack configuration enables hot reloading by default in development mode. To disable this behavior, pass `--env.disableHotReloading` to the cli when running tt-serve.
 
 ```bash
 tt-serve --env.disableHotReloading

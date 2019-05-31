@@ -48,7 +48,7 @@
     "danger": "danger ci",
     "jest": "jest --config jestConfig.js",
     "lint": "eslint --ext .js .",
-    "pack": "webpack --config tests/test.config.js",
+    "pack": "webpack --config tests/test.config.js -p",
     "prepare": "npm run compile",
     "prepublishOnly": "npm whoami && check-installed-dependencies && npm test",
     "pretest": "npm run lint",
@@ -57,6 +57,7 @@
     "release:patch": "npm version patch -m 'Released version %s' && npm publish",
     "start": "./bin/serve.js --config ./tests/test.config",
     "start-static": "npm run pack && ./bin/serve-static.js --site ./build",
+    "s": "./bin/serve-static.js",
     "test": "npm run jest && npm run wdio",
     "wdio": "npm run clean:build && npm run wdio-webpack-obj && npm run wdio-webpack-func && npm run tt-wdio-webpack-obj && npm run tt-wdio-webpack-func && npm run tt-wdio-unopinionated && npm run tt-wdio-no-formFactor && npm run tt-wdio-static",
     "wdio-webpack-obj": "wdio --suite opinionated",
@@ -68,7 +69,7 @@
     "tt-wdio-static": "npm run pack; wdio --suite static; rm -rf ./build"
   },
   "dependencies": {
-    "async": "^2.5.0",
+    "async": "^3.0.1",
     "autoprefixer": "^9.5.1",
     "axe-core": "^3.2.2",
     "babel-loader": "^8.0.5",
@@ -83,7 +84,6 @@
     "fs-extra": "^8.0.1",
     "glob": "^7.1.1",
     "ip": "^1.1.5",
-    "load-json-file": "^5.0.0",
     "lodash.startcase": "^4.4.0",
     "mini-css-extract-plugin": "^0.7.0",
     "node-sass": "^4.11.0",
@@ -127,12 +127,10 @@
     "eslint-config-terra": "^2.2.0",
     "eslint": "^5.12.0",
     "html-webpack-plugin": "^3.1.0",
-    "jest": "^24.0.0",
     "memory-fs": "^0.4.1",
     "raf": "^3.4.1",
     "regenerator-runtime": "^0.13.2",
     "webpack-cli": "^3.3.2",
-    "webpack-dev-server": "^3.3.1",
-    "webpack": "^4.30.0"
+    "webpack-dev-server": "^3.3.1"
   }
 }
