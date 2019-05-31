@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Changed
+* Update danger dev-dependency
 
 5.0.0 - (May 31, 2019)
 ----------
