@@ -1,9 +1,12 @@
 Changelog
 =========
 
-unreleased
+Unreleased
 ----------
-### Major Version Bump. 
+
+5.0.0 - (May 31, 2019)
+----------
+### Major Version Bump.
 
 ### Changed
 * **Breaking Change** Upgrade to use selenium-docker chrome version 3.14.0-helium. Tests now run against Google Chrome: 69.0.3497.100. See https://github.com/SeleniumHQ/docker-selenium/tree/3.14.0-helium
@@ -31,7 +34,7 @@ unreleased
 * **Breaking Change** Serve-static no longer injects locale.
 * **Breaking Change** Removed Axe Service. The Axe Service functionally was moved to the Terra Service.
 * Terra Service:
-  * **Breaking Change** Removed Terra.should test helpers. There is no replacement for Terra.should.themeEachCustomProperty and Terra.should.themeCombinationOfCustomProperties 
+  * **Breaking Change** Removed Terra.should test helpers. There is no replacement for Terra.should.themeEachCustomProperty and Terra.should.themeCombinationOfCustomProperties
   * **Breaking Change** Terra.it.isAccessible (previously Terra.should.beAccessible) no longer accept context as a test option but instead always use `document`
   * **Breaking Change** Removed `runOnly` option from Terra.should.beAccessible test helper and axe chai method
   * **Breaking Change** Removed `isExactMatch` chai assertion.
