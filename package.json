@@ -57,7 +57,6 @@
     "release:patch": "npm version patch -m 'Released version %s' && npm publish",
     "start": "./bin/serve.js --config ./tests/test.config",
     "start-static": "npm run pack && ./bin/serve-static.js --site ./build",
-    "s": "./bin/serve-static.js",
     "test": "npm run jest && npm run wdio",
     "wdio": "npm run clean:build && npm run wdio-webpack-obj && npm run wdio-webpack-func && npm run tt-wdio-webpack-obj && npm run tt-wdio-webpack-func && npm run tt-wdio-unopinionated && npm run tt-wdio-no-formFactor && npm run tt-wdio-static",
     "wdio-webpack-obj": "wdio --suite opinionated",
@@ -127,9 +126,11 @@
     "eslint-config-terra": "^2.2.0",
     "eslint": "^5.12.0",
     "html-webpack-plugin": "^3.1.0",
+    "jest": "^24.0.0",
     "memory-fs": "^0.4.1",
     "raf": "^3.4.1",
     "regenerator-runtime": "^0.13.2",
+    "webpack": "^4.30.0",
     "webpack-cli": "^3.3.2",
     "webpack-dev-server": "^3.3.1"
   }
