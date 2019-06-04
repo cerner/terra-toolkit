@@ -12,8 +12,10 @@ const packageJson = require('../../package.json');
 commander
   .version(packageJson.version)
   .option('--config [path]', 'The wdio config path for the tests', undefined)
-  .option('--formFactors [list]', 'The list of viewport sizes to test', parseCLIList, undefined)
-  .option('--locales [list]', 'The list of locales to test', parseCLIList, ['en'])
+  .option('--locales [list]', 'The list of locales to test. Defaults to [en]', parseCLIList, undefined)
+  .option('--formFactors [list]', 'The list of viewport sizes to test.', parseCLIList, undefined)
+  .option('--browsers [list]', 'The list of browsers to test. Defaults to [chrome].', parseCLIList, undefined)
+  .option('--grid', 'Whether or not to run tests against the orion internal selenium grid. Defaults to false.')
   .option('--continueOnFail', 'Whether or not to execute all test runs when a run fails', false)
   .option('--updateReference', 'Whether or not to remove reference screenshots during screenshot cleanup', false)
   .option('--host [number]', '[wdio option] The selenium server port', undefined)
@@ -26,6 +28,8 @@ commander
 const {
   continueOnFail,
   config,
+  grid,
+  browsers,
   formFactors,
   locales,
   host,
@@ -47,7 +51,9 @@ runner({
   configPath,
   continueOnFail,
   formFactors,
-  locales,
+  testlocales: locales,
+  grid,
+  browsers,
   // honored wdio cli options
   ...host && { host },
   ...port && { port },

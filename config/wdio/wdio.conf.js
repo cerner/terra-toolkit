@@ -1,7 +1,9 @@
 const localIP = require('ip');
 const glob = require('glob');
-
 const path = require('path');
+const determineSeleniumConfig = require('./selenium.config').determineConfig;
+const resolve = require('../../scripts/utils/resolve');
+
 const {
   SeleniumDocker: SeleniumDockerService, ServeStaticService, Terra: TerraService,
 } = require('../../lib/wdio/services/index');
@@ -31,24 +33,33 @@ const formFactor = process.env.FORM_FACTOR;
 /* Use to disable running webpack in the ServeStatic Service, provide the packed site to serve directly. */
 const site = process.env.SITE;
 
+/*  */
+const useSeleniumGrid = process.env.USE_SELENIUM_GRID;
+
+/*  */
+const seleniumGridUrl = process.env.SELENIUM_GRID_URL;
+
+/*  */
+const browsers = process.env.BROWSERS;
+
 const hasPackages = glob.sync((path.join(process.cwd(), 'packages'))).length > 0;
 
+const seleniumConfig = determineSeleniumConfig({
+  ci, useSeleniumGrid, seleniumGridUrl, browsers,
+});
+
+// Try to find the local to process.cwd webpack config
+const webpackConfig = resolve(path.resolve(process.cwd(), 'webpack.config.js'));
+
 const config = {
+  ...webpackConfig && { webpackConfig },
+  ...seleniumConfig,
   specs: hasPackages ? [
     path.join('packages', '*', 'test*', 'wdio', '**', '*-spec.js'),
   ] : [
     path.join('test*', 'wdio', '**', '*-spec.js'),
   ],
   maxInstances: 1,
-  capabilities: [{
-    browserName: 'chrome',
-    'goog:chromeOptions': {
-      /** Run in headless mode since Chrome 69 cannot reach the tiny viewport size due to a omnibox size change
-       * made by the chrome team. See https://bugs.chromium.org/p/chromedriver/issues/detail?id=2626#c1.
-       */
-      args: ['headless', 'disable-gpu'],
-    },
-  }],
 
   sync: true,
   logLevel: 'silent',
@@ -56,7 +67,7 @@ const config = {
   bail: bail ? 1 : 0,
   screenshotPath: path.join('.', 'errorScreenshots'),
   waitforTimeout: 3000,
-  connectionRetryTimeout: 90000,
+  connectionRetryTimeout: 1200000,
   connectionRetryCount: 1,
   services: ['visual-regression', TerraService, SeleniumDockerService, ServeStaticService],
 
@@ -71,11 +82,6 @@ const config = {
   ...locale && { locale },
   ...formFactor && { formFactor },
 
-  seleniumVersion: '3.14',
-  seleniumDocker: {
-    enabled: !ci,
-  },
-
   // Ignore deprecation warnings. When chrome supports /actions API we'll update to use those.
   deprecationWarnings: false,
 
@@ -83,17 +89,17 @@ const config = {
     inject: true,
   },
 
+  terra: {
+    selector: '[data-terra-dev-site-content] *:first-child',
+  },
+
   framework: 'mocha',
   mochaOpts: {
     ui: 'bdd',
-    timeout: 20000,
+    timeout: 1200000,
     bail,
   },
 };
-
-if (ci) {
-  config.host = 'standalone-chrome';
-}
 
 // This code only executes for monorepos.  It will create a set of suites that can then be executed
 // independently and/or in parallel via 'wdio --suite suite1' for example

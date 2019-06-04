@@ -25,3 +25,17 @@ services:
       NODE_MAX_INSTANCES: 1
       TZ: 'America/Chicago'
     entrypoint: bash -c 'SE_OPTS="-host $$HOSTNAME" /opt/bin/entry_point.sh'
+
+  firefox:
+    image: selenium/node-firefox:3.14.0-helium
+    volumes:
+      - /dev/shm:/dev/shm
+    deploy:
+      replicas: 1
+    environment:
+      HUB_HOST: selenium_hub
+      HUB_PORT: 4444
+      NODE_MAX_SESSION: 1
+      NODE_MAX_INSTANCES: 1
+      TZ: 'America/Chicago'
+    entrypoint: bash -c 'SE_OPTS="-host $$HOSTNAME" /opt/bin/entry_point.sh'

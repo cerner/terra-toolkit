@@ -12,6 +12,7 @@ Before running this script, it is recommended you pack the static site in produc
 | ------------- | ------------- | ------------- |
 | **--config**  | `undefined` | The wdio config path for the tests.  |
 | **--formFactors**  | `undefined` | The list of viewport sizes to test. |
+| **--grid**  | `false` | The list of viewport sizes to test. |
 | **-locales** | `['en']` | The list of locales to test. |
 | **--continueOnFail** | `undefined` | Whether or not to execute all test runs when a run fails. |
 | **--updateReference** | `undefined` | Whether or not to remove reference screenshots during screenshot cleanup. CLI use only. |

@@ -1,17 +1,14 @@
-const path = require('path');
-const fs = require('fs');
 const Logger = require('../utils/logger');
-
-const isFile = filePath => (fs.existsSync(filePath) && !fs.lstatSync(filePath).isDirectory());
+const resolve = require('../utils/resolve');
 
 const getWdioConfigPath = (configPath) => {
   if (configPath) {
-    return path.resolve(configPath);
+    return resolve(configPath);
   }
 
   // Try to find the local to process.cwd webpack config
-  const localConfig = path.resolve(process.cwd(), 'wdio.conf.js');
-  if (isFile(localConfig)) {
+  const localConfig = resolve(process.cwd(), 'wdio.conf.js');
+  if (localConfig) {
     return localConfig;
   }
 
