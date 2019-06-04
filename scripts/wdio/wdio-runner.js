@@ -7,11 +7,11 @@ async function wdioRunner(options) {
   const {
     configPath, testlocales, formFactors, gridUrl, browsers, continueOnFail, ...testSetup
   } = options;
+
   const locales = testlocales || ['en'];
   const factors = formFactors || [undefined];
 
   if (gridUrl) {
-    process.env.USE_SELENIUM_GRID = true;
     process.env.SELENIUM_GRID_URL = gridUrl;
   }
 

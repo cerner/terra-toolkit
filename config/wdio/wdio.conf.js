@@ -2,7 +2,7 @@ const localIP = require('ip');
 const glob = require('glob');
 const path = require('path');
 const determineSeleniumConfig = require('./selenium.config').determineConfig;
-const resolve = require('../../scripts/utils/resolve');
+const { dynamicRequire } = require('../configUtils');
 
 const {
   SeleniumDocker: SeleniumDockerService, ServeStaticService, Terra: TerraService,
@@ -19,7 +19,7 @@ const externalPort = process.env.WDIO_EXTERNAL_PORT || 8080;
 const internalPort = process.env.WDIO_INTERNAL_PORT || 8080;
 
 /* Use to set configuration for build tools like Travis CI. */
-const ci = process.env.CI;
+const ci = process.env.CI || false;
 
 /* Use to bail fast while running locally. */
 const bail = process.env.WDIO_BAIL || ci;
@@ -33,23 +33,23 @@ const formFactor = process.env.FORM_FACTOR;
 /* Use to disable running webpack in the ServeStatic Service, provide the packed site to serve directly. */
 const site = process.env.SITE;
 
-/*  */
-const useSeleniumGrid = process.env.USE_SELENIUM_GRID;
-
-/*  */
+/* Use to set enable running test against a hosted selenium grid. Enables IE capabilities if the grid supports it. */
 const seleniumGridUrl = process.env.SELENIUM_GRID_URL;
 
-/*  */
+/**
+ * Use to run tests against the various browsers. Headless Chrome and Headless Firefox browsers are available. IE is
+ * an option when a SELENIUM_GRID_URL is provided.
+ */
 const browsers = process.env.BROWSERS;
 
 const hasPackages = glob.sync((path.join(process.cwd(), 'packages'))).length > 0;
 
 const seleniumConfig = determineSeleniumConfig({
-  ci, useSeleniumGrid, seleniumGridUrl, browsers,
+  ci, seleniumGridUrl, browsers,
 });
 
 // Try to find the local to process.cwd webpack config
-const webpackConfig = resolve(path.resolve(process.cwd(), 'webpack.config.js'));
+const webpackConfig = dynamicRequire(path.resolve(process.cwd(), 'webpack.config.js'));
 
 const config = {
   ...webpackConfig && { webpackConfig },

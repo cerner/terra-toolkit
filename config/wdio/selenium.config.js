@@ -65,8 +65,10 @@ const determineCapabililities = ({ useSeleniumGrid, browsers }) => {
 
 const determineConfig = (envs) => {
   const {
-    ci, useSeleniumGrid, seleniumGridUrl, browsers,
+    ci, seleniumGridUrl, browsers,
   } = envs;
+
+  const useSeleniumGrid = seleniumGridUrl !== undefined;
 
   const config = {
     seleniumVersion: '3.14',

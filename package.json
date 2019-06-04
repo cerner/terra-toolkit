@@ -64,7 +64,7 @@
     "tt-wdio-webpack-obj": "node scripts/wdio/wdio-runner-cli.js --suite opinionated",
     "tt-wdio-webpack-func": "TT_TEST_WDIO_FUNCTION=true node scripts/wdio/wdio-runner-cli.js --suite opinionated",
     "tt-wdio-unopinionated": "TT_TEST_WDIO_FUNCTION=true node scripts/wdio/wdio-runner-cli.js --formFactors=['tiny','huge'] --locales=['en','fr'] --suite unopinionated;",
-    "tt-wdio-no-formFactor": "npm run pack && node scripts/wdio/wdio-runner-cli.js --locales=['en','fr'] --spec tests/wdio/validateElement-spec.js && rm -rf ./build",
+    "tt-wdio-no-formFactor": "npm run pack && node scripts/wdio/wdio-runner-cli.js --spec tests/wdio/validateElement-spec.js && rm -rf ./build",
     "tt-wdio-static": "npm run pack; wdio --suite static; rm -rf ./build"
   },
   "dependencies": {
