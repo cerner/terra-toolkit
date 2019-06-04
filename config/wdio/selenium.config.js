@@ -82,6 +82,7 @@ const determineConfig = (envs) => {
     config.path = '/wd/hub';
     config.agent = new http.Agent({ keepAlive: true, timeout: 600000 });
   }
+
   if (ci) {
     config.host = 'standalone-chrome';
   }

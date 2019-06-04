@@ -5,13 +5,14 @@ const context = '[Terra-Tookit:wdio-runner]';
 
 async function wdioRunner(options) {
   const {
-    configPath, testlocales, formFactors, grid, browsers, continueOnFail, ...testSetup
+    configPath, testlocales, formFactors, gridUrl, browsers, continueOnFail, ...testSetup
   } = options;
   const locales = testlocales || ['en'];
   const factors = formFactors || [undefined];
 
-  if (grid) {
+  if (gridUrl) {
     process.env.USE_SELENIUM_GRID = true;
+    process.env.SELENIUM_GRID_URL = gridUrl;
   }
 
   if (browsers) {
