@@ -19,7 +19,7 @@ const externalPort = process.env.WDIO_EXTERNAL_PORT || 8080;
 const internalPort = process.env.WDIO_INTERNAL_PORT || 8080;
 
 /* Use to set configuration for build tools like Travis CI. */
-const ci = process.env.CI || false;
+const ci = process.env.CI;
 
 /* Use to bail fast while running locally. */
 const bail = process.env.WDIO_BAIL || ci;

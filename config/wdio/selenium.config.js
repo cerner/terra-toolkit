@@ -73,7 +73,7 @@ const determineConfig = (envs) => {
   const config = {
     seleniumVersion: '3.14',
     seleniumDocker: {
-      enabled: !ci || !useSeleniumGrid,
+      enabled: !(ci || useSeleniumGrid),
     },
     capabilities: determineCapabililities({ useSeleniumGrid, browsers }),
   };
