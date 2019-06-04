@@ -4,11 +4,14 @@ This document will provide the step-by-step dependency and script changes requir
 
 Please note the steps outlined in this guide aim to hit the majority use-case! :) Your project may need additional dependency and/or configuration changes. From what we have evaluated, the dependency changes recommended in this guide should minimal. However, as always, it is best practice to verify yourself what the breaking changes and/or requirements are for bumping to a new major version of a dev-dependency.
 
+## Step 0. Delete the package-lock.json
+If your project has a package-lock.json. Delete it, otherwise the steps provided will not work.
+
 ## Step 1. Update Terra-Toolkit
 Update the toolkit version:
 
 ```bash
->  npm update terra-toolkit
+>  npm uninstall terra-toolkit && npm install --save-dev terra-toolkit@latest
 ```
 
 <details>
@@ -44,12 +47,12 @@ We will resolve these iteratively as we upgrade.
 Toolkit has define a few webpack dependencies as peer dependencies to ensure you always have access to these webpack bins and that you are using the correct versions. 
 
 ```bash
-> npm install --save-dev webpack webpack-cli webpack-dev-server
+> npm install --save-dev webpack webpack-cli webpack-dev-server core-js raf regenerator-runtime
 ```
 
-This should resolve unmet  `webpack`, `webpack-cli`, and `webpack-dev-server` peer dependency errors we saw when updating the terra-toolkit version.
+This should resolve unmet webpack peer dependency errors we saw when updating the terra-toolkit version.
 
-If you provide any other webpack dev-dependencies in your package.json, either remove these or ensure they are using the correct versions.
+If you provide any other webpack dev-dependencies in your package.json, either remove these or ensure they are using the correct versions. These might be `sass-loader`, `babel-loader`, `node-sass`, `postcss`, etc.
 
 ## Step 3. Add Babel Peer Dependencies
 
@@ -102,7 +105,7 @@ The `.babelrc` is no longer needed with the addition of the `babel.config.js` fi
 If your project uses `jest` and/or `babel-jest` for unit testing, these dev dependencies will also need updated:
 
 ```bash
-> npm update jest babel-jest
+> npm uninstall jest babel-jest && npm install --save-dev jest babel-jest
 ```
 
 ## Step 3. Add Browserslist Configuration

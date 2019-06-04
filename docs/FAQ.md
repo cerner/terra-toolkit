@@ -35,7 +35,7 @@ wdio-visual-regression-service": "^0.9.0",
 ```
 
 ## I am using toolkit v5, and while running tt-serve, I received this babel error:
-```
+```bash
 Module build failed (from ./node_modules/babel-loader/lib/index.js):
 Error: Babel was run with rootMode:"upward" but a root could not be found when searching upward from "/Users/er047227/terra-ui"
     at resolveRootMode (/Users/er047227/terra-ui/node_modules/@babel/core/lib/config/partial.js:50:29)
@@ -54,3 +54,37 @@ Error: Babel was run with rootMode:"upward" but a root could not be found when s
 
 ```
 Be sure to you are using babel 7 and have added `babel.config.js` file to your project.
+
+## I am using toolkit v5, and while running test:jest, I received this error:
+
+```bash
+ReferenceError: regeneratorRuntime is not defined
+```
+Add `@babel/plugin-transform-runtime` to your dev-dependencies. 
+
+Run
+```
+npm install --save-dev @babel/plugin-transform-runtime
+```
+Then update your babel.config.js plugin list to include it:
+```diff
+module.exports = (api) => {
+  api.cache(true);
+  api.assertVersion('^7.4.4');
+
+  const presets = [
+    '@babel/preset-env',
+    '@babel/preset-react',
+  ];
+  const plugins = [
+    '@babel/plugin-transform-object-assign',
+    '@babel/plugin-proposal-object-rest-spread',
++   '@babel/plugin-transform-runtime',
+  ];
+
+  return {
+    presets,
+    plugins,
+  };
+};
+```
