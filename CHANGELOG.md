@@ -5,6 +5,7 @@ Unreleased
 ----------
 ### Changed
 * Update danger dev-dependency
+* Add wcag2a and wcag21aa rules to axe-core check
 
 5.0.0 - (May 31, 2019)
 ----------
