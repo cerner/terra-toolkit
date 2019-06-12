@@ -3,6 +3,17 @@ Changelog
 
 Unreleased
 ----------
+### Added
+* Added selenium/firefox-node to local docker-compose test setup
+* Added support for hitting an external selenium grid url
+* Added firefox and internet explorer browser capabilities
+* tt-wdio: added `--gridUrl` and `--browsers` options 
+  
+### Changed
+* Increase wdio timeout and mocha timeouts to be 1200000
+
+### Fixed
+* Update serve-static site directory check to to ensure it serves a site directory that has content
 
 5.0.0 - (May 31, 2019)
 ----------
