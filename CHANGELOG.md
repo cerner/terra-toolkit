@@ -8,7 +8,8 @@ Unreleased
 * Added support for hitting an external selenium grid url
 * Added firefox and internet explorer browser capabilities
 * tt-wdio: added `--gridUrl` and `--browsers` options 
-  
+* Added default terra.selector of `[data-terra-dev-site-content] *:first-child` to wdio configuration
+
 ### Changed
 * Increase wdio timeout and mocha timeouts to be 1200000
 
