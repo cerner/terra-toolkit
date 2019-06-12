@@ -8,7 +8,8 @@ const chromeConfig = {
   },
   'goog:chromeOptions': {
     /** Run in headless mode since Chrome 69 cannot reach the tiny viewport size due to a omnibox size change
-     * made by the chrome team. See https://bugs.chromium.org/p/chromedriver/issues/detail?id=2626#c1.
+     * made by the chrome team. See https://bugs.chromium.org/p/chromedriver/issues/detail?id=2626#c1 &&
+     * https://bugs.chromium.org/p/chromium/issues/detail?id=849784.
      */
     args: ['headless', 'disable-gpu'],
     perfLoggingPrefs: {
@@ -20,9 +21,6 @@ const chromeConfig = {
 const firefoxConfig = {
   browserName: 'firefox',
   maxInstances: 1,
-  'moz:firefoxOptions': {
-    args: ['-headless'],
-  },
 };
 
 const ieConfig = {
@@ -40,7 +38,7 @@ const ieConfig = {
   },
 };
 
-const determineCapabililities = ({ useSeleniumGrid, browsers }) => {
+const determineCapabilities = ({ useSeleniumGrid, browsers }) => {
   const capabilities = [];
 
   if (!browsers) {
@@ -72,10 +70,11 @@ const determineConfig = (envs) => {
 
   const config = {
     seleniumVersion: '3.14',
+    maxInstances: 1,
     seleniumDocker: {
       enabled: !(ci || useSeleniumGrid),
     },
-    capabilities: determineCapabililities({ useSeleniumGrid, browsers }),
+    capabilities: determineCapabilities({ useSeleniumGrid, browsers }),
   };
 
   if (useSeleniumGrid) {

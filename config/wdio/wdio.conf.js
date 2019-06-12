@@ -59,7 +59,6 @@ const config = {
   ] : [
     path.join('test*', 'wdio', '**', '*-spec.js'),
   ],
-  maxInstances: 1,
 
   sync: true,
   logLevel: 'silent',

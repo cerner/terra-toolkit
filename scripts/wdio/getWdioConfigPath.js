@@ -8,7 +8,7 @@ const getWdioConfigPath = (configPath) => {
   }
 
   // Try to find the local to process.cwd webpack config
-  const localConfig = path.resolve(path.resolve(process.cwd(), './wdio.conf.js')) ;
+  const localConfig = path.resolve(process.cwd(), './wdio.conf.js');
   if (isFile(localConfig)) {
     return localConfig;
   }
