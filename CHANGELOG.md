@@ -11,6 +11,7 @@ Unreleased
 * Added default terra.selector of `[data-terra-dev-site-content] *:first-child` to wdio configuration
 
 ### Changed
+* Update danger dev-dependency
 * Increase wdio timeout and mocha timeouts to be 1200000
 
 ### Fixed

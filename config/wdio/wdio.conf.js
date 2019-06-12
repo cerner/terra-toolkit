@@ -54,6 +54,7 @@ const webpackConfig = dynamicRequire(path.resolve(process.cwd(), 'webpack.config
 const config = {
   ...webpackConfig && { webpackConfig },
   ...seleniumConfig,
+
   specs: hasPackages ? [
     path.join('packages', '*', 'test*', 'wdio', '**', '*-spec.js'),
   ] : [
