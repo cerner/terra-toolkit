@@ -51,7 +51,7 @@ runner({
   configPath,
   continueOnFail,
   formFactors,
-  testlocales: locales,
+  locales,
   gridUrl,
   browsers,
   // honored wdio cli options
