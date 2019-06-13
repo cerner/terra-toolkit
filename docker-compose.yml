@@ -48,3 +48,4 @@ services:
       - CI=true
     depends_on:
       - standalone-chrome
+      - standalone-firefox
