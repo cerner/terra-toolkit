@@ -33,6 +33,7 @@ jobs:
         - 'rm -f $HOME/docker/*.tar.gz'
         - travis_wait docker-compose build test-ci
         - travis_wait docker-compose --verbose pull standalone-chrome
+        - travis_wait docker-compose --verbose pull standalone-firefox
         - >
           mkdir -p $HOME/docker && docker images -a --filter='dangling=false' --format '{{.Repository}}:{{.Tag}} {{.ID}}'
           | xargs -n 2 -t sh -c 'test -e $HOME/docker/$1.tar.gz || docker save $0 | gzip -2 > $HOME/docker/$1.tar.gz'
