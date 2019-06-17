@@ -14,7 +14,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const aggregateTranslations = require('terra-aggregate-translations');
-const webpackConfig = require('../../config/webpack/webpack.config');
+const webpackConfig = require('../../../../config/webpack/webpack.config');
 
 const outputPath = expect.stringContaining('build');
 
@@ -27,7 +27,7 @@ describe('webpack config', () => {
       config = webpackConfig();
     });
 
-    it('aggregates translations by defualt', () => {
+    it('aggregates translations by default', () => {
       expect(aggregateTranslations).toBeCalled();
     });
 

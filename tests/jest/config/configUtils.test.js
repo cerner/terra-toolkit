@@ -1,5 +1,5 @@
 const path = require('path');
-const { dynamicRequire } = require('../../config/configUtils');
+const { dynamicRequire } = require('../../../config/configUtils');
 
 describe('dynamicRequire', () => {
   it('returns undefined when invalid', () => {
@@ -8,7 +8,7 @@ describe('dynamicRequire', () => {
   });
 
   it('returns file when valid', () => {
-    const file = dynamicRequire(path.resolve(__dirname, '../../package.json'));
+    const file = dynamicRequire(path.resolve(__dirname, '../../../package.json'));
     expect(file).toHaveProperty('name', 'terra-toolkit');
   });
 });

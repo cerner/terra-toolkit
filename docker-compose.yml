@@ -13,22 +13,11 @@ services:
       - CI=true
     depends_on:
       - standalone-chrome
-      - standalone-firefox
     volumes:
       - .:/opt/module
 
   standalone-chrome:
     image: 'selenium/standalone-chrome:3.14.0-helium'
-    ports:
-      - '4444'
-    # Necessary due to some issues with chrome in docker.  See https://github.com/SeleniumHQ/docker-selenium#running-the-images
-    volumes:
-      - '/dev/shm:/dev/shm'
-    environment:
-      TZ: 'America/Chicago'
-
-  standalone-firefox:
-    image: 'selenium/standalone-firefox:3.14.0-helium'
     ports:
       - '4444'
     # Necessary due to some issues with chrome in docker.  See https://github.com/SeleniumHQ/docker-selenium#running-the-images
@@ -43,9 +32,8 @@ services:
 
   test-ci:
     build: ./
-    image: "${DOCKER_IMAGE}-test-standalone-chrome:${TAG:-latest}"
+    image: "${DOCKER_IMAGE}-test:${TAG:-latest}"
     environment:
       - CI=true
     depends_on:
       - standalone-chrome
-      - standalone-firefox

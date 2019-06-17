@@ -7,7 +7,7 @@ const chromeConfig = {
     performance: 'ALL',
   },
   'goog:chromeOptions': {
-    /** Run in headless mode since Chrome 69 cannot reach the tiny viewport size due to a omnibox size change
+    /** Run in headless mode since Chrome 69 cannot reach the tiny viewport size due to a omnibox size changexx
      * made by the chrome team. See https://bugs.chromium.org/p/chromedriver/issues/detail?id=2626#c1 &&
      * https://bugs.chromium.org/p/chromium/issues/detail?id=849784.
      */
@@ -42,10 +42,13 @@ const determineCapabilities = ({ useSeleniumGrid, browsers }) => {
   const capabilities = [];
 
   if (!browsers) {
-    if (useSeleniumGrid) {
-      capabilities.push(chromeConfig, firefoxConfig, ieConfig);
-    }
+    // always test chrome by default
     capabilities.push(chromeConfig);
+
+    // always test chrome, firefox and IE by default when selenium grid url is provided
+    if (useSeleniumGrid) {
+      capabilities.push(firefoxConfig, ieConfig);
+    }
   } else {
     if (browsers.includes('chrome')) {
       capabilities.push(chromeConfig);
@@ -57,8 +60,8 @@ const determineCapabilities = ({ useSeleniumGrid, browsers }) => {
       capabilities.push(ieConfig);
     }
   }
-  /* Randomized the browser order to help reduce a heavy number of session request made to the grid for each browser at once. */
-  return capabilities.map(a => [Math.random(), a]).sort((a, b) => a[0] - b[0]).map(a => a[1]);
+  /* Randomized the browser order to reduce a heavy number of session request made to the grid for each browser at once. */
+  return capabilities.sort(() => 0.5 - Math.random());
 };
 
 const determineConfig = (envs) => {
