@@ -53,7 +53,6 @@ describe('Wdio Selenium Configuration', () => {
 
       expect(seleniumConfig.capabilities).toHaveLength(1);
       expect(seleniumConfig.capabilities).toMatchObject(chromeCapability);
-
     });
 
     it('returns chrome when defined via browsers env', () => {
@@ -71,7 +70,6 @@ describe('Wdio Selenium Configuration', () => {
 
       expect(seleniumConfig.capabilities).toHaveLength(3);
       expect(seleniumConfig.capabilities).toMatchObject(chromeCapability);
-
     });
 
     it('returns chrome when seleniumGridUrl env and browsers env', () => {
