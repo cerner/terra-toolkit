@@ -1,7 +1,5 @@
 const { determineConfig } = require('../../../../config/wdio/selenium.config');
 
-// global.console = { log: jest.fn(), warn: jest.fn() };
-
 const chromeCapability = expect.arrayContaining([
   expect.objectContaining({ browserName: 'chrome' }),
 ]);
