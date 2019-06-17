@@ -11,7 +11,7 @@ const path = require('path');
 const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin');
 const PostCSSCustomProperties = require('postcss-custom-properties');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CleanPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const aggregateTranslations = require('terra-aggregate-translations');
 const webpackConfig = require('../../config/webpack/webpack.config');
@@ -154,7 +154,7 @@ describe('webpack config', () => {
       expect(config).toHaveProperty('mode', 'production');
     });
 
-    it('adds the CleanPlugin', () => {
+    it('adds the CleanWebpackPlugin', () => {
       expect(config).toHaveProperty('plugins');
       expect(config.plugins).toHaveLength(4);
 
@@ -163,7 +163,7 @@ describe('webpack config', () => {
 
       const cleanPluginOptions = expect.objectContaining({ cleanOnceBeforeBuildPatterns: expect.arrayContaining(['!stats.json']) });
 
-      expect(CleanPlugin).toBeCalledWith(cleanPluginOptions);
+      expect(CleanWebpackPlugin).toBeCalledWith(cleanPluginOptions);
     });
 
     it('removes devtool option', () => {

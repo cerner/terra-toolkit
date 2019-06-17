@@ -4,7 +4,7 @@ const PostCSSCustomProperties = require('postcss-custom-properties');
 const path = require('path');
 const rtl = require('postcss-rtl');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CleanPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const merge = require('webpack-merge');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
@@ -151,7 +151,7 @@ const webpackConfig = (options, env, argv) => {
     mode: 'production',
     devtool: false,
     plugins: [
-      new CleanPlugin({ cleanOnceBeforeBuildPatterns: ['**/*', '!stats.json'] }),
+      new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ['**/*', '!stats.json'] }),
     ],
     optimization: {
       minimizer: [

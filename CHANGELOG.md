@@ -5,6 +5,9 @@ Unreleased
 ----------
 ### Changed
 * Update danger dev-dependency
+* Updated clean-webpack-plugin dependency. Webpack config and jest test syntax updated to reflect v3 import changes, see https://github.com/johnagan/clean-webpack-plugin/releases/tag/v3.0.0
+* Updated file-loader dependency, requires node >= 8.9.0 (.nvmrc version is > 8.9.0)
+* Updated raw-loader dependency, requires node >= 8.9.0 (.nvmrc version is > 8.9.0)
 
 5.0.0 - (May 31, 2019)
 ----------
