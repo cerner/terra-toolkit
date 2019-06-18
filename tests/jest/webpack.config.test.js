@@ -6,6 +6,7 @@ jest.mock('clean-webpack-plugin');
 jest.mock('terser-webpack-plugin');
 
 const path = require('path');
+
 process.env.BASEPATH = '/test';
 
 // Import mocked components
@@ -15,10 +16,14 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const aggregateTranslations = require('terra-aggregate-translations');
+const webpack = require('webpack');
 const webpackConfig = require('../../config/webpack/webpack.config');
 
-const webpack = require('webpack');
 const outputPath = expect.stringContaining('build');
+
+afterAll(() => {
+  delete process.env.BASEPATH;
+});
 
 describe('webpack config', () => {
   let config;

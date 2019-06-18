@@ -9,8 +9,9 @@ const TerserPlugin = require('terser-webpack-plugin');
 const merge = require('webpack-merge');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
 const aggregateTranslations = require('terra-aggregate-translations');
-const ThemeAggregator = require('../../scripts/aggregate-themes/theme-aggregator');
 const webpack = require('webpack');
+const ThemeAggregator = require('../../scripts/aggregate-themes/theme-aggregator');
+
 const base = process.env.BASEPATH;
 
 const webpackConfig = (options, env, argv) => {
@@ -209,8 +210,8 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     staticOptions,
   };
   return merge.strategy({
-    entry:'append',
-  })(webpackConfig(options, env, argv), basepathConfig)
+    entry: 'append',
+  })(webpackConfig(options, env, argv), basepathConfig);
 };
 
 module.exports = defaultWebpackConfig;
