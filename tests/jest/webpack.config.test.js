@@ -6,6 +6,7 @@ jest.mock('clean-webpack-plugin');
 jest.mock('terser-webpack-plugin');
 
 const path = require('path');
+process.env.BASEPATH = '/test';
 
 // Import mocked components
 const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin');
@@ -16,6 +17,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const aggregateTranslations = require('terra-aggregate-translations');
 const webpackConfig = require('../../config/webpack/webpack.config');
 
+const webpack = require('webpack');
 const outputPath = expect.stringContaining('build');
 
 describe('webpack config', () => {
@@ -64,7 +66,7 @@ describe('webpack config', () => {
 
     it('adds the plugins', () => {
       expect(config).toHaveProperty('plugins');
-      expect(config.plugins).toHaveLength(3);
+      expect(config.plugins).toHaveLength(4);
 
       expect(MiniCssExtractPlugin).toBeCalled();
 
@@ -156,7 +158,7 @@ describe('webpack config', () => {
 
     it('adds the CleanWebpackPlugin', () => {
       expect(config).toHaveProperty('plugins');
-      expect(config.plugins).toHaveLength(4);
+      expect(config.plugins).toHaveLength(5);
 
       expect(MiniCssExtractPlugin).toBeCalled();
       expect(PostCSSAssetsPlugin).toBeCalled();
@@ -164,6 +166,14 @@ describe('webpack config', () => {
       const cleanPluginOptions = expect.objectContaining({ cleanOnceBeforeBuildPatterns: expect.arrayContaining(['!stats.json']) });
 
       expect(CleanWebpackPlugin).toBeCalledWith(cleanPluginOptions);
+    });
+
+    it('adds the webpack.definePlugin with BASEPATH env variable', () => {
+      // config = webpackConfig({}, {});
+      const mockPlugin = new webpack.DefinePlugin({
+        BASEPATH: JSON.stringify('/test'),
+      });
+      expect(config.plugins).toEqual(expect.arrayContaining([mockPlugin]));
     });
 
     it('removes devtool option', () => {
