@@ -111,9 +111,6 @@ const webpackConfig = (options, env, argv) => {
       new DuplicatePackageCheckerPlugin({
         showHelp: false,
       }),
-      new webpack.DefinePlugin({
-        BASEPATH: JSON.stringify(base),
-      }),
     ],
     resolve: {
       extensions: ['.js', '.jsx'],
@@ -175,6 +172,14 @@ const webpackConfig = (options, env, argv) => {
   });
 };
 
+const basepathConfig = {
+  plugins: [
+    new webpack.DefinePlugin({
+      BASEPATH: JSON.stringify(base),
+    }),
+  ],
+};
+
 const defaultWebpackConfig = (env = {}, argv = {}) => {
   const { disableAggregateTranslations, disableHotReloading } = env;
 
@@ -203,8 +208,9 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     themeFile,
     staticOptions,
   };
-
-  return webpackConfig(options, env, argv);
+  return merge.strategy({
+    entry:'append',
+  })(webpackConfig(options, env, argv), basepathConfig)
 };
 
 module.exports = defaultWebpackConfig;
