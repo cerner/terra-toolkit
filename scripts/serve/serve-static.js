@@ -1,5 +1,5 @@
 const express = require('express');
-const glob = require('glob');
+const fs = require('fs');
 
 const Logger = require('../utils/logger');
 
@@ -9,7 +9,7 @@ const displayServer = (localAddress) => {
   Logger.log(`* Local:            ${Logger.emphasis(localAddress)}`);
 };
 
-const dirExistsWithContent = site => glob.sync(`${site}/**/*`).length > 0;
+const dirExistsWithContent = site => fs.existsSync(site) && fs.lstatSync(site).isDirectory() && fs.readdirSync(site).length > 0;
 
 // Setup a static express server
 const staticApp = (site, index) => {
@@ -41,7 +41,7 @@ const serve = (options) => {
   } = options;
 
   if (!dirExistsWithContent(site)) {
-    return Logger.warn(`Cannot serves content from ${site} because it does not exist.`, { context });
+    return Logger.warn(`Cannot serves content from ${site} because it does not exist or it is empty.`, { context });
   }
 
   const app = staticApp(site, index);
