@@ -8,7 +8,7 @@ import Logger from '../../../scripts/utils/logger';
 
 const context = '[Terra-Toolkit:selenium-docker]';
 /**
-* Webdriver.io SeleniuMDockerService
+* Webdriver.io SeleniumDockerService
 * provides standalone chrome selenium docker automation.
 */
 export default class SeleniumDockerService {
@@ -71,7 +71,7 @@ export default class SeleniumDockerService {
         { times: this.config.retries, interval: this.config.retryInterval },
         this.getSeleniumStatus, (err, result) => {
           if (err) {
-            reject(Logger.error(err, { context }));
+            reject(Logger.error(JSON.stringify(err), { context }));
           } else {
             resolve(result);
           }

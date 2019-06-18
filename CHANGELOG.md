@@ -3,11 +3,23 @@ Changelog
 
 Unreleased
 ----------
+### Added
+* Added selenium/firefox-node to local docker-compose test setup
+* Added support for hitting an external selenium grid url
+* Added firefox and internet explorer browser capabilities
+* tt-wdio: added `--gridUrl` and `--browsers` options 
+* Added default terra.selector of `[data-terra-dev-site-content] *:first-child` to wdio configuration
+
 ### Changed
-* Update danger dev-dependency
 * Updated clean-webpack-plugin dependency. Webpack config and jest test syntax updated to reflect v3 import changes, see https://github.com/johnagan/clean-webpack-plugin/releases/tag/v3.0.0
 * Updated file-loader dependency, requires node >= 8.9.0 (.nvmrc version is > 8.9.0)
 * Updated raw-loader dependency, requires node >= 8.9.0 (.nvmrc version is > 8.9.0)
+* Update danger dev-dependency
+* Increase wdio timeout and mocha timeouts to be 1200000
+
+### Fixed
+* Update serve-static site directory check to to ensure it serves a site directory that has content
+
 
 5.0.0 - (May 31, 2019)
 ----------

@@ -9,7 +9,7 @@ const displayServer = (localAddress) => {
   Logger.log(`* Local:            ${Logger.emphasis(localAddress)}`);
 };
 
-const dirExists = site => (fs.existsSync(site) && fs.lstatSync(site).isDirectory());
+const dirExistsWithContent = site => fs.existsSync(site) && fs.lstatSync(site).isDirectory() && fs.readdirSync(site).length > 0;
 
 // Setup a static express server
 const staticApp = (site, index) => {
@@ -37,11 +37,11 @@ const staticApp = (site, index) => {
 const serve = (options) => {
   const {
     // Setting defaults here instead of in cli.
-    site = '.build/', port = 8080, host = '0.0.0.0', index,
+    site = './build', port = 8080, host = '0.0.0.0', index,
   } = options;
 
-  if (!dirExists(site)) {
-    return Logger.warn(`Cannot serves content from ${site} because it does not exist.`, { context });
+  if (!dirExistsWithContent(site)) {
+    return Logger.warn(`Cannot serves content from ${site} because it does not exist or it is empty.`, { context });
   }
 
   const app = staticApp(site, index);

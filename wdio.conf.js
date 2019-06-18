@@ -5,7 +5,7 @@ const webpackConfigObject = require('./tests/test.config.js');
 const webpackConfigFunction = require('./tests/test.config.func.js');
 
 const site = path.join('./build');
-const siteExists = fs.existsSync(site) && fs.lstatSync(site).isDirectory();
+const siteExists = fs.existsSync(site) && fs.lstatSync(site).isDirectory() && fs.readdirSync(site).length > 0;
 
 const webpackConfig = process.env.TT_TEST_WDIO_FUNCTION ? webpackConfigFunction : webpackConfigObject;
 
