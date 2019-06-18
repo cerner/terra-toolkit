@@ -11,7 +11,7 @@ const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack
 const aggregateTranslations = require('terra-aggregate-translations');
 const ThemeAggregator = require('../../scripts/aggregate-themes/theme-aggregator');
 const webpack = require('webpack');
-const base = process.env.BASEPATH;
+const basepath = process.env.BASEPATH;
 
 const webpackConfig = (options, env, argv) => {
   const {
@@ -112,7 +112,7 @@ const webpackConfig = (options, env, argv) => {
         showHelp: false,
       }),
       new webpack.DefinePlugin({
-        BASEPATH: JSON.stringify(base),
+        BASEPATH: JSON.stringify(basepath),
       }),
     ],
     resolve: {
