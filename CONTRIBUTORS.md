@@ -21,6 +21,7 @@ Cerner Corporation
 - Naveen Kumar Ramamurthy [@nramamurth]
 - Lalitha Kalidindi[@lalitha94]
 - Pranav Agarwal [@pranav300]
+- Adam Parker [@amichaelparker]
 
 [@emilyrohrbough]: https://github.com/emilyrohrbough
 [@brettjankord]: https://github.com/bjankord
@@ -43,3 +44,4 @@ Cerner Corporation
 [@nramamurth]: https://github.com/nramamurth
 [@lalitha94]: https://github.com/lalitha94
 [@pranav300]: https://github.com/pranav300
+[@amichaelparker]: https://github.com/amichaelparker

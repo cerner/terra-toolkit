@@ -1,8 +1,6 @@
 const path = require('path');
-const fs = require('fs');
 const Logger = require('../utils/logger');
-
-const isFile = filePath => (fs.existsSync(filePath) && !fs.lstatSync(filePath).isDirectory());
+const { isFile } = require('../../config/configUtils');
 
 const getWdioConfigPath = (configPath) => {
   if (configPath) {
