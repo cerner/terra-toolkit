@@ -11,11 +11,13 @@ const packageJson = require('../../package.json');
 // Parse process arguments
 commander
   .version(packageJson.version)
-  .option('--config [path]', 'The wdio config path for the tests', undefined)
-  .option('--formFactors [list]', 'The list of viewport sizes to test', parseCLIList, undefined)
-  .option('--locales [list]', 'The list of locales to test', parseCLIList, ['en'])
-  .option('--continueOnFail', 'Whether or not to execute all test runs when a run fails', false)
-  .option('--updateReference', 'Whether or not to remove reference screenshots during screenshot cleanup', false)
+  .option('--config [path]', 'The wdio config path for the tests. Defaults to wdio.conf.js', undefined)
+  .option('--locales [list]', 'The list of locales to test. Defaults to [en]', parseCLIList, undefined)
+  .option('--formFactors [list]', 'The list of viewport sizes to test.', parseCLIList, undefined)
+  .option('--browsers [list]', 'The list of browsers to test. Defaults to [chrome].', parseCLIList, undefined)
+  .option('--gridUrl [url]', 'The selenium grid url to run tests against', undefined)
+  .option('--continueOnFail', 'Pass to continue executing test runs when a run fails', false)
+  .option('--updateReference', 'Pass to remove all reference screenshots during screenshot cleanup', false)
   .option('--host [number]', '[wdio option] The selenium server port', undefined)
   .option('--port [string]', '[wdio option] The selenium server host address', undefined)
   .option('--baseUrl [path]', '[wdio option] The base URL', undefined)
@@ -26,6 +28,8 @@ commander
 const {
   continueOnFail,
   config,
+  gridUrl,
+  browsers,
   formFactors,
   locales,
   host,
@@ -48,6 +52,8 @@ runner({
   continueOnFail,
   formFactors,
   locales,
+  gridUrl,
+  browsers,
   // honored wdio cli options
   ...host && { host },
   ...port && { port },

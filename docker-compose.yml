@@ -32,7 +32,7 @@ services:
 
   test-ci:
     build: ./
-    image: "${DOCKER_IMAGE}-test-standalone-chrome:${TAG:-latest}"
+    image: "${DOCKER_IMAGE}-test:${TAG:-latest}"
     environment:
       - CI=true
     depends_on:
