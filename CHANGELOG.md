@@ -20,7 +20,6 @@ Unreleased
 ### Fixed
 * Update serve-static site directory check to to ensure it serves a site directory that has content
 
-
 5.0.0 - (May 31, 2019)
 ----------
 ### Major Version Bump.

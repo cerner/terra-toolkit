@@ -1,53 +1,72 @@
-# Terra Toolkit Upgrade Guide v5.0.0 - Part 3
-This document will outline the changes made to Terra's webdriver.io setup from terra-toolkit 4.x to 5.0.0. First we will outline the changes and why they were made. Then we will provide examples of common changes, as well and include stats on current vs new test execution.
+# Terra Toolkit Upgrade Guide v5 - Part 2
+This document will outline the notable changes made to Terra's webdriver.io setup from terra-toolkit 4.x to 5.x. Full documentation on all configuration, services and test helper changes can be found on the `Changes.md` doc. First we will outline the test improvements, notable changes and why they were made. Then we will provide examples of common changes, as well and include stats on current vs new test execution.
 
-## Outline of Wdio Changes
-- Fixed huge viewport issue. If a viewport is not defined, it will be set to Terra's huge viewport size. This may require new screenshots for the huge viewport screenshots.
-- Updated Chrome instance to use selenium 3.14-helium to test against Google Chrome: 69.0.3497.100. With this change, test are now being run against headless chrome to reach all Terra viewport widths. This results in an orange focus glow on native elements.
-- AxeService functionally was moved to the Terra Service
-- TerraService
-  - Now provides the accessibility testing capabilities. These have been scoped to only check WCAG 2.0 AA and Section 508 accessibility standards to align with Terra's accessibility standards. 
-  - Terra global:
-    - removed `Terra.should` test helpers
-    - added `Terra.it` test helpers. These are Mocha-chia `it` blocks  to replace `Terra.should` test helpers. 
-      - Terra.it.isAccessible() 
-        - This was updated to no longer accept context as a test option but instead always use `document`. Delete from passed test options. i.e. `Terra.should.beAccessible({ context })` -> `Terra.it.isAccessible()`
-        - test options include:
-          - rules - the axe rules to assert in the test run
-          - viewports - this is not a recommended option. This can cause unintended behavior in UI and result in x page resizes for each Mocha `it` block rather than once before the test spec is ran.
-      - Terra.it.matchesScreenshot()
-        - test options include:
-          - mismatchTolerance - percentage of mismatch acceptable before failure
-          - selector - the element to take a screenshot of
-          - viewports - this is not a recommended option. This can cause unintended behavior in UI and result in x page resizes for each Mocha `it` block rather than once before the test spec is ran.
-      - Terra.it.validatesElement()
-        - This was updated to be one it block instead of two it blocks to prevent unseen behaviors with beforeEach hooks
-        - test options include:
-          - axeRules - the axe rules to assert in the test run
-          - mismatchTolerance - percentage of mismatch acceptable before failure
-          - selector - the element to take a screenshot of
-    - added `Terra.validates` test helpers. These are chia test helpers that can be used inside of `it` blocks. Terra.it test helpers use these directly, but providing these allow for one to write more cohesive test specs.
-      - Terra.validates.accessibility()
-      - Terra.validates.screenshot()
-      - Terra.validates.element()
-    - added `describeViewports`. This is a Mocha `describe` block which is intended to use used as a top-level describe block for tests to 1) simplify test writing 2) enabled writing test that support both viewport and formFactor testing for better local testing and paralyzed CI testing. Using this will eliminate the need to use `--formFactors` when using the `tt-wdio` runner to run locale & form factor test locally--which improves test times.
-- There global refresh hook has been remove which previously reset the state of the page after each `it` was run. This will improve test tests, enable one to write more cohesive test specs and catch bugs with functionally that may have previously been blow away. This also means Mocha `before` and `beforeEach` hooks should be used sparingly since these be executed multiple times, where as Mocha `it` blocks are easier to follow and get executed in the order they are written. With this, use `browser.refresh()` sparingly. Each refresh will end the current selenium session and require a new session request to be made in your spec.
-- Added `SITE` environmental variable to the wdio config to allow testing against pre-compile test assets. Use this when you do not want wdio to run webpack.
-- wdio configuration must be provided to both `wdio` and `tt-wdio` if a `wdio.config.js` file does not exist at the root level. 
+## So, What Are the Test Improvements?
+These changes will:
+1. enabled writing correct Mocha syntax 
+2. improve test readability
+3. allow for explicit control of the browser integration workflow being tests
+4. improve test times 
+4. decrease unnecessary test steps and viewport resizes
 
-## References:
-These are provided in docs throughout toolkit but here they are for quick reference:
-- wdio api: http://v4.webdriver.io/api.html
-- mocha test framework docs: https://mochajs.org/
-- chai assertion library docs: https://www.chaijs.com/
-- quick reference to mocha execution: https://gist.github.com/harto/c97d2fc9d0bfaf20706eb2acbf48c908
+When uplifting terra-framework to toolkit v5, we reduced our total test time by 12 minutes! And we can still make further spec improvements!
 
-## What Does this Even Mean?
-SO this seems a lot of changes! Where to start?! We will use the following example spec to outline the possible updates and changes that can and/or should be made with terra-toolkit v5.
+## What Are the Notable Changes?
+
+1. The huge viewport issue has finally be resolved! Now if a viewport is not defined, it will be set to Terra's huge viewport size instead of the browser's previous viewport size.
+
+2. Selenium has been updated to 3.14-helium. Previously this was 3.11-californium (or 2.53 when using the selenium grid).
+
+3. The removal of the global before hook which called `browser.refresh()`. 
+
+4. The `Terra.should` test helpers have been replaced with `Terra.it` test helpers. These are exactly the same test helpers; they've been renamed to emphasis the fact they are Mocha-chia `it` blocks.
+
+4. The addition of the `Terra.validates` test helpers. These allow for writing more comprehensive and interactive test cases.
+
+5. The addition of the `Terra.describeViewports`. This helper is intended to be a top-level Mocha `describe` block. You pass the describe description, the test viewports and the test callback to execute and we will manger looping the viewports for you.
+
+
+## Why these changes?
+
+It was not clear in `toolkit <v4` that the `Terra.should` tests helpers were actually Mocha `it` blocks. These caused "magical" test execution and unexpected browser behaviors and it affected how test could be written. 
+
+Additionally, the global refresh
+
+Additionally, the global refresh was removed for many reasons. The `browser.refresh()` command ends the current selenium session and sends a new session request and resets the state on the page for to be made for each Mocha `it` block. This resulted in badly written tests, decreased test stability and often 'hid' buggy behavior by chopping the browser integration testing into pieces rather than testing the behavior of full integration workflow. 
+
+<details>
+<summary>How many time did you accidentally write the following in a wdio spec?</summary>
+
+```js
+const viewports = Terra.viewports(['tiny', 'small']);
+
+describe('magical failure', () => {
+  before(() => {
+    browser.url('#/raw/tests/popup');
+    browser.click('#triggerPopup');
+  });
+
+  Terra.should.matchScreenshot({ viewports });
+  // result - the viewport resize collapsed the popup so the small screenshot is incorrect
+});
+
+describe('or different magical failure', () => {
+  before(() => browser.url('#/raw/tests/popup'));
+
+  browser.click('#triggerPopup');
+  // the click is never executed because it needs to be in an Mocha it block
+  // although Terra.should.matchScreenshot didn't need to be??
+
+  Terra.should.matchScreenshot();
+  // result - the popup never opens so the screenshot is incorrect
+});
+```
+</details>
 
 ### Lets Review an Example Spec
 The following example is an example that hopefully highlights everything that could break or need changes for v5. Most of these changes will be simple. I promise.
-details
+
+<details>
 <summary> Example Spec: <code>test-app-spec.js</code> </summary>
 
 ```js
@@ -213,6 +232,35 @@ Running this spec would resulted in 14 viewport resizes to complete 15 tests and
 ```
 </details>
 
+## Notable Wdio Changes
+
+## What Are the Notable Changes?
+
+1. The huge viewport issue has finally be resolved! Now if a viewport is not defined, it will be set to Terra's huge viewport size instead of the browser's previous viewport size.
+
+2. Selenium has been updated to 3.14-helium. Previously this was 3.11-californium (or 2.53 when using the selenium grid).
+
+Updated Chrome instance to use selenium 3.14-helium to test against Google Chrome: 69.0.3497.100. With this change, test are now being run against headless chrome to reach all Terra viewport widths. This results in an orange focus glow on native elements.
+
+3. The removal of the global refresh hook. The was would reset the state of the page after each `it` was run which was resulting in:
+1) bad test writing practices with over use of Mocha `before` and `beforeEach` which slows down tests.
+2) the current selenium session being killed and new selenium session request being made for each Mocha `it` assertion.  This resulted in flaky testing against a shared selenium grid.
+
+ This will improve test tests, enable one to write more cohesive test specs and catch bugs with functionally that may have previously been blow away. This also means  hooks should be used sparingly since these be executed multiple times, where as Mocha `it` blocks are easier to follow and get executed in the order they are written. With this, use `browser.refresh()` sparingly. Each refresh will end the current selenium session and require a new session request to be made in your spec.
+
+4. 
+3. The `Terra.should` test helpers have been replaced with `Terra.it` test helpers. These are exactly the same test helpers; they've been renamed to emphasis the fact they are Mocha-chia `it` blocks.
+
+4. The addition of the `Terra.validates` test helpers. These allow for writing more comprehensive and interactive test cases.
+
+5. The addition of the `Terra.describeViewports`. This helper is intended to be a top-level Mocha `describe` block. You pass the describe description, the test viewports and the test callback to execute and we will manger looping the viewports for you.
+
+
+## What Does this Even Mean?
+SO this seems a lot of changes! Where to start?! We will use the following example spec to outline the possible updates and changes that can and/or should be made with terra-toolkit v5.
+
+
+
 ## Lets Make Changes
 
 ### Step 1. Replace `Terra.should` helpers
@@ -375,3 +423,11 @@ describe('Test App', () => {
 
 ```
 </details>
+
+
+## Testing References:
+These are provided in docs throughout toolkit but here they are for quick reference:
+- wdio api: http://v4.webdriver.io/api.html
+- mocha test framework docs: https://mochajs.org/
+- chai assertion library docs: https://www.chaijs.com/
+- quick reference to mocha execution: https://gist.github.com/harto/c97d2fc9d0bfaf20706eb2acbf48c908

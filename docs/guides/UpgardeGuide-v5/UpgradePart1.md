@@ -1,6 +1,6 @@
-# Terra Toolkit Upgrade Guide v5.0.0 - Part 2
+# Terra Toolkit Upgrade Guide v5 - Part 2
 
-This document will provide the step-by-step dependency and script changes required to successfully upgrade from terra-toolkit 4.x to 5.0.0.
+This document will provide the step-by-step dependency and script changes required to successfully upgrade from terra-toolkit 4.x to 5.x.
 
 Please note the steps outlined in this guide aim to hit the majority use-case! :) Your project may need additional dependency and/or configuration changes. From what we have evaluated, the dependency changes recommended in this guide should minimal. However, as always, it is best practice to verify yourself what the breaking changes and/or requirements are for bumping to a new major version of a dev-dependency.
 
@@ -16,7 +16,7 @@ Update the toolkit version:
 
 <details>
 <summary>
-You will likely see unmet peer-dependency logs for babel and webpack. (toggle for example output).
+You will likely see unmet peer-dependency logs for babel and webpack (toggle for example output).
 </summary>
 
 ```bash
@@ -52,7 +52,7 @@ Toolkit has define a few webpack dependencies as peer dependencies to ensure you
 
 This should resolve unmet webpack peer dependency errors we saw when updating the terra-toolkit version.
 
-If you provide any other webpack dev-dependencies in your package.json, either remove these or ensure they are using the correct versions. These might be `sass-loader`, `babel-loader`, `node-sass`, `postcss`, etc.
+If you provide any other webpack dev-dependencies in your package.json, either remove these or ensure they are using the correct versions. These include `sass-loader`, `babel-loader`, `node-sass`, `postcss`, etc. Here is the [list of webpack dependencies](https://github.com/cerner/terra-toolkit/blob/master/docs/Webpack.md) that are installed with terra-toolki.
 
 ## Step 3. Add Babel Peer Dependencies
 
@@ -73,7 +73,7 @@ Babel now uses [scoped npm packages](https://docs.npmjs.com/misc/scope), so we c
 This should have resolved the remaining unmet peer dependency errors we saw when updating the terra-toolkit version.
 
 ### 3. Add a `babel.config.js` file
-Babel changed how the babel configuration is used and should be written. Babel recommends using a `babel.config.js` for better compatibility with monorepos, webpack tools, etc. 
+Babel changed their recommendation on how to write and use the babel configuration. Babel recommends using a `babel.config.js` for better compatibility with monorepos, webpack tools, etc. so we've opted to require this configuration for compatibility with our webpack configuration.
 
 ```js
 module.exports = (api) => {
@@ -96,7 +96,7 @@ module.exports = (api) => {
 };
 ```
 
-Be sure to check your project's current `.babelrc` config to ensure these presets and plugins are correct.
+Check this against project's current `.babelrc` config to ensure all of the presets and plugins have been included.
 
 ### 4. Remove the `.babelrc` file
 The `.babelrc` is no longer needed with the addition of the `babel.config.js` file.
@@ -146,12 +146,12 @@ If your project runs aggregate-translations for jest unit testing, you will need
 + const aggregateTranslations = require('terra-aggregate-translations');
 ```
 
-## Step 5. Update the Start Scripts 
+## Step 5. Update the Project Scripts 
 
 The start scripts in the `package.json` need to be updated. `tt-serve` is now a thin abstraction on [`webpack-dev-server`](https://webpack.js.org/configuration/dev-server/) and `tt-start-static` will only serve compiled site assets.
 
 ### 1. Update the `start` script
-The `webpack-dev-server` cannot automatically load our defaults. Thus, a webpack.config must be provided at the root level or be passed via the `--config` flag in the package.json script. 
+The `webpack-dev-server` cannot automatically load our default configuration files that exists in the node_modules directory. Thus, a webpack.config must be provided at the root level or the configuration needs to be passed via the `--config` flag in the package.json script. 
 
 ```diff
 -  "start": "tt-serve",
@@ -165,7 +165,7 @@ Add the following script to run `webpack-dev-server` with hot-reloading disabled
 +    "start-prod": "tt-serve --config node_modules/terra-dev-site/config/webpack/webpack.config.js --env.disableHotReloading -p",
 ```
 
-When running wdio integration tests, the ServeStatic Service will compile your assets in production mode and serve the assets with hot-reloading disabled if the site assets have not been pre-compiled.
+When running wdio integration tests, the ServeStatic Service will compile your assets in production mode and serve the assets with hot-reloading disabled when the site assets have not been pre-compiled. This script will generate these same assets.
 
 ### 3. Update the `start-static` script
 Since `tt-start-static` will only serve compiled site assets, be sure to compile the assets before starting the server.
@@ -176,7 +176,15 @@ Since `tt-start-static` will only serve compiled site assets, be sure to compile
 ```
 If your project does not have a `pack` script, add the following:
 ```diff
-+  "pack": "webpack --config tests/test.config.js -p",
++  "pack": "NODE_ENV=production webpack --config node_modules/terra-dev-site/config/webpack/webpack.config.js -p",
+```
+
+### 4. Update the `test:wdio:local` script
+Since `ot-wdio` has been removed, update to use `tt-wdio` and provide the wdio configuration path and selenium grid url.
+
+```diff
+-  "test:wdio:local": "ot-wdio --browsers=['firefox','ie']",
++  "test:wdio:local": "tt-wdio --config node_modules/terra-toolkit/config/wdio/wdio.conf.js --gridUrl='my.grid.com' --browsers=['firefox','ie']",
 ```
 
 ## Step 6. Remove Nightwatch
