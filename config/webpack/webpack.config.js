@@ -108,18 +108,19 @@ const webpackConfig = (options, env, argv) => {
       }),
       new DuplicatePackageCheckerPlugin({
         showHelp: false,
+        alwaysEmitErrorsFor: ['react', 'react-dom', 'react-intl'],
       }),
     ],
-    resolve: {
-      extensions: ['.js', '.jsx'],
-      modules: resolveModules,
-      // See https://github.com/facebook/react/issues/8026
-      alias: {
-        react: path.resolve(rootPath, 'node_modules', 'react'),
-        'react-intl': path.resolve(rootPath, 'node_modules', 'react-intl'),
-        'react-dom': path.resolve(rootPath, 'node_modules', 'react-dom'),
-      },
-    },
+    // resolve: {
+    //   extensions: ['.js', '.jsx'],
+    //   modules: resolveModules,
+    //   // See https://github.com/facebook/react/issues/8026
+    //   alias: {
+    //     react: path.resolve(rootPath, 'node_modules', 'react'),
+    //     'react-intl': path.resolve(rootPath, 'node_modules', 'react-intl'),
+    //     'react-dom': path.resolve(rootPath, 'node_modules', 'react-dom'),
+    //   },
+    // },
     output: {
       filename: `${filename}.js`,
       path: outputPath,
