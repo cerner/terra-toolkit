@@ -16,6 +16,7 @@ Unreleased
 * Updated file-loader dependency, requires node >= 8.9.0 (.nvmrc version is > 8.9.0)
 * Updated raw-loader dependency, requires node >= 8.9.0 (.nvmrc version is > 8.9.0)
 * Update danger dev-dependency
+* Add wcag2a and wcag21aa rules to axe-core check
 * Increase wdio timeout and mocha timeouts to be 1200000
 
 ### Fixed

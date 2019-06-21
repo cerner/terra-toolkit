@@ -37,7 +37,7 @@ const runAxeTest = (rules) => {
     axe.run(document, opts, function (error, result) {
       done({ error, result });
     });
-  }, { rules, restoreScroll: true, runOnly: ['wcag2aa', 'section508'] });
+  }, { rules, restoreScroll: true, runOnly: ['wcag2a', 'wcag2aa', 'wcag21aa', 'section508'] });
   /* eslint-enable func-names, prefer-arrow-callback, object-shorthand */
 
   return axeResult.value;
