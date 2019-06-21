@@ -233,7 +233,7 @@ Verify your site is packed and served as static content.
 ```
 
 ## NEXT: Webdriver Test Updates
-See Part 3 for more information on Webdriver changes.
+See Part 2 for more information on Webdriver changes.
 
 
 
