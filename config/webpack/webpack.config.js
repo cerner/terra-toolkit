@@ -108,7 +108,18 @@ const webpackConfig = (options, env, argv) => {
       }),
       new DuplicatePackageCheckerPlugin({
         showHelp: false,
-        alwaysEmitErrorsFor: ['react', 'react-dom', 'react-intl'],
+        alwaysEmitErrorsFor: [
+          'react',
+          'react-dom',
+          'react-intl',
+          'terra-base',
+          'terra-breakpoints',
+          'terra-application',
+          'terra-disclosure-manager',
+          'terra-modal-manager',
+          'terra-navigation-prompt',
+          'terra-slide-panel-manager',
+        ],
       }),
     ],
     resolve: {
