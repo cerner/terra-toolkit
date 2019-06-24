@@ -93,7 +93,6 @@
     "postcss": "^7.0.16",
     "raw-loader": "^3.0.0",
     "sass-loader": "^7.0.1",
-    "shelljs": "^0.8.3",
     "terra-aggregate-translations": "^1.0.0",
     "terser-webpack-plugin": "^1.1.0",
     "wdio-mocha-framework": "^0.6.4",
