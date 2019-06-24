@@ -139,7 +139,7 @@ This script was removed. Use this serve-static instead.
 
 ### Toolkit's Wdio Runner
 
-This script now supports `--gridUrl` and `--browsers` flags. And should be used directly for locale and form testing testing. 
+This script now supports `--gridUrl` and `--browsers` flags. And should be used directly for locale and form testing. 
 
 Also, the wdio configuration is no longer auto-magically loaded. It must be provided to both `wdio` and `tt-wdio` if a `wdio.config.js` file does not exist at the root level. 
 
@@ -150,7 +150,7 @@ Also, the wdio configuration is no longer auto-magically loaded. It must be prov
 - unlock `axe-core`: `3.0.3` -> `^3.0.2`.
 
 ### Configuration Changes
-Changes allow terra-toolkit's wdio configuration can be used directly. Terra-dev-site's wdio configuration will soon be removed and should not be used.
+Below are changes that allow terra-toolkit's wdio configuration to be used directly. Terra-dev-site's wdio configuration will soon be removed and should not be used.
 
 1. The wdio configuration has been updated to use [selenium 3.14.0-helium](https://github.com/SeleniumHQ/docker-selenium/tree/3.14.0-helium). It now also support hitting a selenium grid and provided `firefox` and `ie` capabilities. Chrome is still the only browser used by default.
 
@@ -202,7 +202,9 @@ This helper no longer accept context as a test option but instead always use `do
   - axeRules - the axe rules to assert in the test run
   - mismatchTolerance - percentage of mismatch acceptable before failure
   - selector - the element to take a screenshot of
-  
+
+This helper no longer uses the selector value for scoping accessibility, but instead always use `document`.
+
 Added `Terra.validates` test helpers. These are chia test helpers that can be used inside of `it` blocks. Terra.it test helpers use these directly, but providing these allow for one to write more cohesive test specs.
   - Terra.validates.accessibility()
   - Terra.validates.screenshot()

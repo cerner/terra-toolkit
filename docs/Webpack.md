@@ -40,8 +40,9 @@ Terra has two webpack configuration recommendations to ensure webpack configurat
 
 2) Terra-dev-site's [webpack configuration](https://github.com/cerner/terra-toolkit/blob/master/config/webpack/webpack.config.js)
     - Use when building a documentation and test site with the terra-dev-site module.
-    - This extended terra-toolkit's webpack configuration and require no additional configuration
-Toolkit's configuration can  we recommend you extend to meet your needs. By using this default configuration, we will manage webpack dependencies and set up translation aggregation. If you choose not to use the default configuration, it can be used as an guide to build your own.
+    - This extends terra-toolkit's webpack configuration and requires no additional configuration
+
+By using this default configuration, we will manage webpack dependencies and set up translation aggregation. If you choose not to use the default configuration, Toolkit's configuration can  be extend to meet your needs or it can be used as an guide to build your own.
 
 ### Extending the Default Config
 1. Create a `webpack.config.js` file.

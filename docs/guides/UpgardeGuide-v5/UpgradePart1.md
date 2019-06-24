@@ -44,7 +44,7 @@ Peer dependencies are dependencies required by a module to run correctly but mus
 We will resolve these iteratively as we upgrade.
 
 ## Step 2. Add Webpack Peer Dependencies
-Toolkit has define a few webpack dependencies as peer dependencies to ensure you always have access to these webpack bins and that you are using the correct versions. 
+Toolkit has defined a few webpack dependencies as peer dependencies to ensure you always have access to these webpack bins and that you are using the correct versions. 
 
 ```bash
 > npm install --save-dev webpack webpack-cli webpack-dev-server core-js raf regenerator-runtime
@@ -52,7 +52,7 @@ Toolkit has define a few webpack dependencies as peer dependencies to ensure you
 
 This should resolve unmet webpack peer dependency errors we saw when updating the terra-toolkit version.
 
-If you provide any other webpack dev-dependencies in your package.json, either remove these or ensure they are using the correct versions. These include `sass-loader`, `babel-loader`, `node-sass`, `postcss`, etc. Here is the [list of webpack dependencies](https://github.com/cerner/terra-toolkit/blob/master/docs/Webpack.md) that are installed with terra-toolki.
+If you provide any other webpack dev-dependencies in your package.json, either remove these or ensure they are using the correct versions. These include `sass-loader`, `babel-loader`, `node-sass`, `postcss`, etc. Here is the [list of webpack dependencies](https://github.com/cerner/terra-toolkit/blob/master/docs/Webpack.md) that are installed with terra-toolkit.
 
 ## Step 3. Add Babel Peer Dependencies
 
@@ -203,7 +203,7 @@ Run a clean install to confirm all old dependencies were correctly removed, new 
 ```
 
 ### 2. Run `compile`
-Most project run babel in a postinstall, but might as well as validate compile runs correctly.
+Most projects run babel in a `postinstall` step, but it would still be good to validate that the compile script runs correctly.
 ```bash
 > npm run compile
 ```
@@ -221,7 +221,7 @@ Verify your site renders correctly and all pages are displaying as expected.
 ```
 
 ### 5. Run `start-prod`
-Verify hot-reloading is correctly disabled so your can quickly check the assets used during test runs.
+Verify hot-reloading is correctly disabled so you can quickly check the assets used during test runs.
 ```bash
 > npm run start-prod
 ```

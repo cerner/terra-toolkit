@@ -33,7 +33,7 @@ It was not clear in `toolkit < v4` that the `Terra.should` tests helpers were ac
 Additionally, the global refresh was removed for many reasons. The `browser.refresh()` command ends the current selenium session and sends a new session request and resets the state on the page for to be made for each Mocha `it` block. This resulted in badly written tests, decreased test stability and often 'hid' buggy behavior by chopping the browser integration testing into pieces rather than testing the behavior of full integration workflow. 
 
 <details>
-<summary>How many time did you accidentally write the following in a wdio spec?</summary>
+<summary>How many times did you accidentally write the following in a wdio spec?</summary>
 
 ```js
 const viewports = Terra.viewports(['tiny', 'small']);
@@ -64,7 +64,7 @@ describe('or different magical failure', () => {
 ## Lets Review an Example
 The following is an example that hopefully highlights everything that could break or need changes for v5. Most of these changes will be simple. I promise.
 
-Here is a simple example component that allows a user to search through a table's row to select one. There is also a button that can be clicked to display a popup with more info.
+Here is a simple component that allows a user to search through a table's row to select one. There is also a button that can be clicked to display a popup with more info.
 <details>
 <summary> Example Component: <code>exampleComponent.jsx</code> </summary>
 
@@ -84,7 +84,7 @@ export default exampleComponent;
 ```
 </details>
 
-This component needed tested in chrome and firefox for the tiny and huge viewports. We need to verify:
+This component needs tests in Chrome and Firefox for the tiny and huge viewports. We need to verify:
 1) the input accepts text
 2) table rows are selectable
 3) the popup displays when the button is click
@@ -168,7 +168,7 @@ describe('Example', () => {
 </details>
 
 ### The Results
-Running this spec in toolkit v4, this would resulted in for each browser:
+These are the results for running this spec in toolkit v4
 - 14 viewport resizes
 - 14 test assertions
 - 11 screenshots (2 with the incorrect huge viewport size for each browser)
@@ -677,7 +677,7 @@ Unfortunately clicking <tr> tags is a known Firefox bug. Firefox maintainers sug
 
 Our suggested workaround this issue by using the [`browser.leftClick()` command](http://v4.webdriver.io/api/action/leftClick.html) or using keyboard navigation to interact with a table row.
 
-The wdio `browser.leftClick()` works because its using used button press and the W3C actions protocol API behind the scenes where as of the `browser.click()` command used the click protocol API directly.
+The wdio `browser.leftClick()` works because its using the button press and the W3C actions protocol API behind the scenes where as of the `browser.click()` command used the click protocol API directly.
 
 ### 5. Errors for `browser.execute()` in Firefox and IE
 
@@ -915,12 +915,19 @@ Terra.describeViewports('Example', ['tiny', 'huge'], () => {
 </details>
 
 ### The Results
-Then, after slimming down the spec, we end up w:
-- 2 viewport resizes
+Then, after slimming down the spec, we end up with:
+- 2 viewport resizes 
 - 14 test assertions
 - 14 screenshots (all with the correct viewport sizes)
 - 2 before hook executions
 - 0 beforeEach hook executions
+
+If you don't remember, these were originally:
+- 14 viewport resizes
+- 14 test assertions
+- 11 screenshots (2 with the incorrect huge viewport size for each browser)
+- 13 before hook executions
+- 12 beforeEach hook executions
 
 This is WAYYYYYYYY better than the v4 results!
 
