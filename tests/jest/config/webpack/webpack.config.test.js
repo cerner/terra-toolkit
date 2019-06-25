@@ -5,8 +5,6 @@ jest.mock('mini-css-extract-plugin');
 jest.mock('clean-webpack-plugin');
 jest.mock('terser-webpack-plugin');
 
-const path = require('path');
-
 // Import mocked components
 const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin');
 const PostCSSCustomProperties = require('postcss-custom-properties');
@@ -91,15 +89,8 @@ describe('webpack config', () => {
       expect(config).toHaveProperty('resolve.modules', expectedModules);
     });
 
-    it('adds resolve alias', () => {
-      const reactAlias = expect.stringContaining(path.join('node_modules', 'react'));
-      const reactIntlAlias = expect.stringContaining(path.join('node_modules', 'react-intl'));
-      const reactDomAlias = expect.stringContaining(path.join('node_modules', 'react-dom'));
-
-      expect(config).toHaveProperty('resolve.alias');
-      expect(config.resolve.alias).toHaveProperty('react', reactAlias);
-      expect(config.resolve.alias).toHaveProperty('react-intl', reactIntlAlias);
-      expect(config.resolve.alias).toHaveProperty('react-dom', reactDomAlias);
+    it('does not include resolve alias', () => {
+      expect(config).not.toHaveProperty('resolve.alias');
     });
 
     it('adds a module resolver loader', () => {

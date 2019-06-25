@@ -18,6 +18,8 @@ Unreleased
 * Update danger dev-dependency
 * Add wcag2a and wcag21aa rules to axe-core check
 * Increase wdio timeout and mocha timeouts to be 1200000
+* Changed duplicate-package-checker-webpack-plugin dependency and added strict duplicate detection for version-sensitive packages.
+* Removed aliases for version-sensitive packages.
 
 ### Fixed
 * Update serve-static site directory check to to ensure it serves a site directory that has content
