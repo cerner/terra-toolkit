@@ -3,8 +3,6 @@ const Logger = require('../utils/logger');
 
 const context = '[Terra-Tookit:wdio-runner]';
 
-process.on('SIGINT', () => process.exit(0));
-
 async function wdioRunner(options) {
   const {
     configPath, locales, formFactors, gridUrl, browsers, continueOnFail, ...testSetup
@@ -21,11 +19,17 @@ async function wdioRunner(options) {
     process.env.BROWSERS = browsers;
   }
 
-  for (let localeI = 0; localeI < testlocales.length; localeI += 1) {
+  let factor = 0;
+  let localeI = 0;
+  process.on('SIGINT', () => {
+    factor = factors.length;
+    localeI = testlocales.length;
+  });
+  for (localeI = 0; localeI < testlocales.length; localeI += 1) {
     const locale = testlocales[localeI];
     process.env.LOCALE = locale;
 
-    for (let factor = 0; factor < factors.length; factor += 1) {
+    for (factor = 0; factor < factors.length; factor += 1) {
       let envValues = `LOCALE=${locale} `;
 
       const form = factors[factor];
