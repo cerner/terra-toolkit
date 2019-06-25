@@ -9,6 +9,7 @@ Unreleased
 * Added firefox and internet explorer browser capabilities
 * tt-wdio: added `--gridUrl` and `--browsers` options 
 * Added default terra.selector of `[data-terra-dev-site-content] *:first-child` to wdio configuration
+* v5 upgrade guide
 
 ### Changed
 * Updated clean-webpack-plugin dependency. Webpack config and jest test syntax updated to reflect v3 import changes, see https://github.com/johnagan/clean-webpack-plugin/releases/tag/v3.0.0
@@ -22,6 +23,9 @@ Unreleased
 
 ### Fixed
 * Update serve-static site directory check to to ensure it serves a site directory that has content
+
+### Removed
+* Removed shelljs dependency to resolve potential security vulnerability issue. Updated scripts/pack/pack.js to use node child_process and file system commands.
 
 5.0.0 - (May 31, 2019)
 ----------
