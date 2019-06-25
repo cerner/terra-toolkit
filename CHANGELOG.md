@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+5.1.0 - (June 25, 2019)
+----------
 ### Added
 * Added selenium/firefox-node to local docker-compose test setup
 * Added support for hitting an external selenium grid url
