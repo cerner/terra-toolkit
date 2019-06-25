@@ -3,6 +3,8 @@ const Logger = require('../utils/logger');
 
 const context = '[Terra-Tookit:wdio-runner]';
 
+process.on('SIGINT', () => process.exit(0));
+
 async function wdioRunner(options) {
   const {
     configPath, locales, formFactors, gridUrl, browsers, continueOnFail, ...testSetup
