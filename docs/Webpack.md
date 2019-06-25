@@ -57,6 +57,28 @@ tt-serve --env.disableHotReloading
 #### Development vs Production
 The default webpack configuration is a function that will flex between production and development modes when passing the `-p` flag while compiling with webpack. See webpack's documentation on [configuration types](https://webpack.js.org/configuration/configuration-types/) for more information.
 
+#### Duplicate Asset Management
+
+The `@cerner/duplicate-package-checker-webpack-plugin` is used to detect duplicated packages within a generated Webpack bundle. If more than one version of the same package are present in a bundle, the package information will be logged with a Webpack compilation warning.
+
+Some packages can be duplicated safely, so these warnings may not indicate a serious problem. However, some packages are intended to be used as singleton packages. If these singleton packages are duplicated, errors will be logged and the Webpack compilation will fail.
+
+|Package Name|Description|
+|---|---|
+|`react`|Has undefined behavior when multiple versions are loaded at the same time.|
+|`react-dom`|Has undefined behavior when multiple versions are loaded at the same time.|
+|`react-intl`|Uses React Context for communication of intl APIs.|
+|`react-on-rails`|Uses a singleton registry to manage available components.|
+|`terra-breakpoints`|Uses React Context for communication of active breakpoint APIs.|
+|`terra-application`|Uses a number of Context-providing components.|
+|`terra-disclosure-manager`|Uses React Context for communication of progressive disclosure APIs.|
+|`terra-navigation-prompt`|Uses React Context for communication of navigation prompt APIs.|
+
+If duplicates of the above packages are detected, options for remediation include:
+
+- Updating the dependencies that are causing the duplication. Generally, the above packages should be listed as peerDependencies to prevent duplication.
+- Adding a webpack `resolve.alias` to the configuration that will force Webpack to use a single version of the duplicated package. However, this may cause logic to fail if the APIs between the expected versions differ.
+
 ## Terra's Configuration Requirements
 Below is the list of polyfills, webpack loaders and plugins Terra components rely on:
 
