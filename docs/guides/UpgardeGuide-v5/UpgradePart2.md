@@ -5,9 +5,9 @@ This document will outline the notable changes made to Terra's webdriver.io setu
 
 1. Ability to write tests using the correct Mocha syntax 
 2. Improved test readability
-3. Explicit control of the browser integration workflow being tests
+3. Explicit control of the browser integration workflow being tested
 4. Decreased test times 
-4. Reduced the number of unnecessary test steps and viewport resizes
+5. Reduced the number of unnecessary test steps and viewport resizes
 
 When uplifting terra-framework to toolkit v5, we reduced our total test time by 12 minutes! and terra-popup's test-spec was reduced by over 150 lines of code!
 
@@ -19,11 +19,11 @@ When uplifting terra-framework to toolkit v5, we reduced our total test time by 
 
 3. The global before hook which preformed a browser refresh was removed. 
 
-4. The `Terra.should` test helpers have been replaced with `Terra.it` test helpers. These are exactly the same test helpers; they've been renamed to emphasis the fact they are Mocha-chia `it` blocks.
+4. The `Terra.should` test helpers have been replaced with `Terra.it` test helpers. These are exactly the same test helpers; they've been renamed to emphasis the fact they are Mocha-chai `it` blocks.
 
-4. The addition of the `Terra.validates` test helpers. These allow for writing more comprehensive and interactive test cases.
+5. The addition of the `Terra.validates` test helpers. These allow for writing more comprehensive and interactive test cases. These must be put inside of a Mocha `it` block.
 
-5. The addition of the `Terra.describeViewports`. This helper is intended to be a top-level Mocha `describe` block. You pass the describe description, the test viewports and the test callback to execute and we will manger looping the viewports for you.
+6. The addition of the `Terra.describeViewports`. This helper is intended to be a top-level Mocha `describe` block. You pass the describe description, the test viewports and the test callback to execute and we will manger looping the viewports for you.
 
 
 ## Why these changes?

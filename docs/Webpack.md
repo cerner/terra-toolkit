@@ -6,8 +6,9 @@ Below is the list of polyfills, webpack loaders and plugins Terra components rel
 
 ### Polyfills
 React 16 depends on the collection types ``Map`` and ``Set`` and it depends on ``requestAnimationFrame``, so Terra UI needs a polyfilled environment.
-- [babel-polyfill](https://babeljs.io/docs/en/next/babel-polyfill.html) - Provides polyfills necessary for a full ES2015+ environment.\*
-- [raf](https://github.com/babel/babel/tree/7.0/packages/babel-polyfill) - Provides requestAnimationFrame polyfill library.
+- [core-js](https://github.com/zloirock/core-js) - Provides polyfills necessary for ECMAScript: promises, symbols, collections, iterators, typed arrays, many other features, ECMAScript proposals, some cross-platform WHATWG / W3C features and proposals like URL.\*
+- [regenerator-runtime](https://github.com/facebook/regenerator/tree/master/packages/regenerator-runtime) - Transformer for enabling ECMAScript 6.\*
+- [raf](https://github.com/chrisdickinson/raf) - Provides requestAnimationFrame polyfill library.
 
 ### JavaScript Loaders
 - [babel-loader](https://webpack.js.org/loaders/babel-loader/) - Allows transpiling JavaScript files using [Babel](https://github.com/babel/babel) and webpack.

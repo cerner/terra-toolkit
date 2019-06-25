@@ -5,7 +5,7 @@ This document will provide the step-by-step dependency and script changes requir
 Please note the steps outlined in this guide aim to hit the majority use-case! :) Your project may need additional dependency and/or configuration changes. From what we have evaluated, the dependency changes recommended in this guide should minimal. However, as always, it is best practice to verify yourself what the breaking changes and/or requirements are for bumping to a new major version of a dev-dependency.
 
 ## Step 0. Delete the package-lock.json
-If your project has a package-lock.json. Delete it, otherwise the steps provided will not work.
+If your project has a `package-lock.json`, delete it, otherwise the steps provided will not work.
 
 ## Step 1. Update Terra-Toolkit
 Update the toolkit version:
@@ -52,7 +52,7 @@ Toolkit has defined a few webpack dependencies as peer dependencies to ensure yo
 
 This should resolve unmet webpack peer dependency errors we saw when updating the terra-toolkit version.
 
-If you provide any other webpack dev-dependencies in your package.json, either remove these or ensure they are using the correct versions. These include `sass-loader`, `babel-loader`, `node-sass`, `postcss`, etc. Here is the [list of webpack dependencies](https://github.com/cerner/terra-toolkit/blob/master/docs/Webpack.md) that are installed with terra-toolkit.
+If you provide any other webpack dev-dependencies in your package.json, either remove these or ensure they are using the correct versions. These include `sass-loader`, `babel-loader`, `node-sass`, `postcss`, etc. Here is the [list of webpack dependencies](https://github.com/cerner/terra-toolkit/blob/master/docs/Webpack.md#terras-configuration-requirements) that are installed with terra-toolkit.
 
 ## Step 3. Add Babel Peer Dependencies
 

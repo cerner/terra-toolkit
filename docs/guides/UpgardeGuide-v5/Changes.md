@@ -182,7 +182,7 @@ The default form factor is now 'huge' to correct inconsistent viewport sizing th
 ### TerraService
 Now provides the accessibility testing capabilities. These have been scoped to only check WCAG 2.0 AA and Section 508 accessibility standards to align with Terra's accessibility standards. 
 
-The `Terra.should` test helpers have been removed. Use the `Terra.it` test helpers instead. These are Mocha-chia `it` blocks  to replace `Terra.should` test helpers:
+The `Terra.should` test helpers have been removed. Use the `Terra.it` test helpers instead. These are Mocha-chai `it` blocks  to replace `Terra.should` test helpers:
   - `Terra.should.beAccessible()` -> `Terra.it.isAccessible()`
   - `Terra.should.matchScreenshot()` -> `Terra.it.matchesScreenshot()`
   - `Terra.should.validate()` -> `Terra.it.validatesElement()`
@@ -205,7 +205,7 @@ This helper no longer accept context as a test option but instead always use `do
 
 This helper no longer uses the selector value for scoping accessibility, but instead always use `document`.
 
-Added `Terra.validates` test helpers. These are chia test helpers that can be used inside of `it` blocks. Terra.it test helpers use these directly, but providing these allow for one to write more cohesive test specs.
+Added `Terra.validates` test helpers. These are chai test helpers that can be used inside of `it` blocks. Terra.it test helpers use these directly, but providing these allow for one to write more cohesive test specs.
   - Terra.validates.accessibility()
   - Terra.validates.screenshot()
   - Terra.validates.element()
@@ -221,7 +221,7 @@ The serve static service can serve a static site or compile a site from the webp
 
 The service will no longer inject the locale into served html files so when serving static sites, you will be responsible for adding the locale to the static files.
 
-When compiling a sites with webpack, the ```defaultLocale```` environment variable will be passed to the webpack config for the current test locale. This will be done automatically for projects using terra-dev-site.
+When compiling a site with webpack, the `defaultLocale` environment variable will be passed to the webpack config for the current test locale. This will be done automatically for projects using terra-dev-site.
 
 For projects extending terra-toolkit's default webpack configuration, be sure to make the following changes to enable locale testing:
 
