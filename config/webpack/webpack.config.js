@@ -7,7 +7,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const merge = require('webpack-merge');
-const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
+const DuplicatePackageCheckerPlugin = require('@cerner/duplicate-package-checker-webpack-plugin');
 const aggregateTranslations = require('terra-aggregate-translations');
 const ThemeAggregator = require('../../scripts/aggregate-themes/theme-aggregator');
 
@@ -108,17 +108,21 @@ const webpackConfig = (options, env, argv) => {
       }),
       new DuplicatePackageCheckerPlugin({
         showHelp: false,
+        alwaysEmitErrorsFor: [
+          'react',
+          'react-dom',
+          'react-intl',
+          'react-on-rails',
+          'terra-breakpoints',
+          'terra-application',
+          'terra-disclosure-manager',
+          'terra-navigation-prompt',
+        ],
       }),
     ],
     resolve: {
       extensions: ['.js', '.jsx'],
       modules: resolveModules,
-      // See https://github.com/facebook/react/issues/8026
-      alias: {
-        react: path.resolve(rootPath, 'node_modules', 'react'),
-        'react-intl': path.resolve(rootPath, 'node_modules', 'react-intl'),
-        'react-dom': path.resolve(rootPath, 'node_modules', 'react-dom'),
-      },
     },
     output: {
       filename: `${filename}.js`,
