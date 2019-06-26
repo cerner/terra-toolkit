@@ -19,18 +19,25 @@ async function wdioRunner(options) {
     process.env.BROWSERS = browsers;
   }
 
-  let factor = 0;
-  let localeI = 0;
-  process.on('SIGINT', () => {
-    factor = factors.length;
-    localeI = testlocales.length;
-  });
-  for (localeI = 0; localeI < testlocales.length; localeI += 1) {
+  function onReturnSuccess(doExit, envValues) {
+    if (!doExit) {
+      Logger.log(`Finished tests for: ${envValues}\n\n---------------------------------------\n`, { context });
+    } else {
+      process.exit(0);
+    }
+  }
+
+  for (let localeI = 0; localeI < testlocales.length; localeI += 1) {
     const locale = testlocales[localeI];
     process.env.LOCALE = locale;
 
-    for (factor = 0; factor < factors.length; factor += 1) {
+    for (let factor = 0; factor < factors.length; factor += 1) {
       let envValues = `LOCALE=${locale} `;
+      let exitProcess = false;
+      process.on('SIGINT', () => {
+        exitProcess = true;
+        return exitProcess;
+      });
 
       const form = factors[factor];
       if (form) {
@@ -45,11 +52,11 @@ async function wdioRunner(options) {
         .run()
         .then(
           (code) => {
-            if (code === 1 && !continueOnFail) {
+            if (code === 1 && !continueOnFail && !exitProcess) {
               Logger.error(`Running tests for: ${envValues} failed.`, { context });
               process.exit(1);
             } else {
-              Logger.log(`Finished tests for: ${envValues}\n\n---------------------------------------\n`, { context });
+              onReturnSuccess(exitProcess, envValues);
             }
           },
           (error) => {
