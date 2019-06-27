@@ -36,7 +36,6 @@ async function wdioRunner(options) {
       let exitProcess = false;
       process.on('SIGINT', () => {
         exitProcess = true;
-        return exitProcess;
       });
 
       const form = factors[factor];
@@ -52,6 +51,8 @@ async function wdioRunner(options) {
         .run()
         .then(
           (code) => {
+            // If we receive a test failure, exit with a status of 1.  exitProcess is a special case
+            // where the user hit Ctrl-C and will be handled in the else block.
             if (code === 1 && !continueOnFail && !exitProcess) {
               Logger.error(`Running tests for: ${envValues} failed.`, { context });
               process.exit(1);
