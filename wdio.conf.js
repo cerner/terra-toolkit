@@ -29,6 +29,7 @@ const config = {
       'tests/wdio/resize-spec.js',
       'tests/wdio/validateElement-spec.js',
       'tests/wdio/describeViewports-spec.js',
+      'tests/wdio/timeout-spec.js',
     ],
     unopinionated: [
       'tests/wdio/i18n-spec.js',
