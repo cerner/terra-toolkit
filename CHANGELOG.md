@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Fixed
+* Stop gracefully when using Ctrl-C to kill the wdio-runner
 
 5.1.0 - (June 25, 2019)
 ----------
