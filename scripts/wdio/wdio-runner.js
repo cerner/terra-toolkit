@@ -19,12 +19,24 @@ async function wdioRunner(options) {
     process.env.BROWSERS = browsers;
   }
 
+  function onReturnSuccess(doExit, envValues) {
+    if (!doExit) {
+      Logger.log(`Finished tests for: ${envValues}\n\n---------------------------------------\n`, { context });
+    } else {
+      process.exit(0);
+    }
+  }
+
   for (let localeI = 0; localeI < testlocales.length; localeI += 1) {
     const locale = testlocales[localeI];
     process.env.LOCALE = locale;
 
     for (let factor = 0; factor < factors.length; factor += 1) {
       let envValues = `LOCALE=${locale} `;
+      let exitProcess = false;
+      process.on('SIGINT', () => {
+        exitProcess = true;
+      });
 
       const form = factors[factor];
       if (form) {
@@ -39,11 +51,13 @@ async function wdioRunner(options) {
         .run()
         .then(
           (code) => {
-            if (code === 1 && !continueOnFail) {
+            // If we receive a test failure, exit with a status of 1.  exitProcess is a special case
+            // where the user hit Ctrl-C and will be handled in the else block.
+            if (code === 1 && !continueOnFail && !exitProcess) {
               Logger.error(`Running tests for: ${envValues} failed.`, { context });
               process.exit(1);
             } else {
-              Logger.log(`Finished tests for: ${envValues}\n\n---------------------------------------\n`, { context });
+              onReturnSuccess(exitProcess, envValues);
             }
           },
           (error) => {
