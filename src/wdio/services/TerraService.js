@@ -73,7 +73,7 @@ export default class TerraService {
         try {
           global.browser.waitUntil(() => (
             global.browser.isExisting('[data-terra-dev-site-content]')
-          ), 5000, '', 100);
+          ), global.browser.options.waitforTimeout + 2000, '', 100);
         } catch (error) {
           // intentionally blank
           // if this fails we don't want to warn because the user can't fix the issue
