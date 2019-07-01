@@ -7,7 +7,6 @@ tests
 errorScreenshots
 .github
 screenshots
-dangerfile.js
 /wdio.conf.js
 .travis.yml
 .gitattributes
