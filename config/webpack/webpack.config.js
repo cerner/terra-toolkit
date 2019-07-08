@@ -9,30 +9,24 @@ const TerserPlugin = require('terser-webpack-plugin');
 const merge = require('webpack-merge');
 const DuplicatePackageCheckerPlugin = require('@cerner/duplicate-package-checker-webpack-plugin');
 const aggregateTranslations = require('terra-aggregate-translations');
-const ThemeAggregator = require('../../scripts/aggregate-themes/theme-aggregator');
+const webpackEntries = require('./webpack.entries');
 
 const webpackConfig = (options, env, argv) => {
   const {
     rootPath,
     resolveModules,
-    themeFile,
     staticOptions,
   } = options;
 
   const production = argv.p;
-  let filename = production ? '[name]-[chunkhash]' : '[name]';
-  filename = argv['output-filename'] || filename;
+  const chunkFilename = production ? '[name]-[chunkhash]' : '[name]';
+  const filename = argv['output-filename'] || chunkFilename;
   const outputPath = argv['output-path'] || path.join(rootPath, 'build');
   const publicPath = argv['output-public-path'] || '';
 
   const devConfig = {
     mode: 'development',
-    entry: {
-      raf: 'raf/polyfill',
-      'core-js': 'core-js/stable',
-      'regenerator-runtime': 'regenerator-runtime/runtime',
-      ...themeFile && { theme: themeFile },
-    },
+    entry: webpackEntries,
     module: {
       rules: [
         {
@@ -98,6 +92,8 @@ const webpackConfig = (options, env, argv) => {
     plugins: [
       new MiniCssExtractPlugin({
         filename: `${filename}.css`,
+        chunkFilename: `${chunkFilename}.js`,
+
       }),
       new PostCSSAssetsPlugin({
         test: /\.css$/,
@@ -126,6 +122,7 @@ const webpackConfig = (options, env, argv) => {
     },
     output: {
       filename: `${filename}.js`,
+      chunkFilename: `${chunkFilename}.js`,
       path: outputPath,
       publicPath,
     },
@@ -194,12 +191,9 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     resolveModules.unshift(path.resolve(rootPath, 'aggregated-translations'));
   }
 
-  const themeFile = ThemeAggregator.aggregate();
-
   const options = {
     rootPath,
     resolveModules,
-    themeFile,
     staticOptions,
   };
 
