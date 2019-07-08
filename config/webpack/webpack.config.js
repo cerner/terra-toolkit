@@ -92,7 +92,7 @@ const webpackConfig = (options, env, argv) => {
     plugins: [
       new MiniCssExtractPlugin({
         filename: `${filename}.css`,
-        chunkFilename: `${chunkFilename}.js`,
+        chunkFilename: `${chunkFilename}.css`,
       }),
       new PostCSSAssetsPlugin({
         test: /\.css$/,
