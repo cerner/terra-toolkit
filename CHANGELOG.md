@@ -5,6 +5,7 @@ Unreleased
 ----------
 ### Added
 * After command to help passivity for a code split dev site.
+* Create webpack entries configuration such that polyfill entries can be extended.
 
 ### Fixed
 * Stop gracefully when using Ctrl-C to kill the wdio-runner
