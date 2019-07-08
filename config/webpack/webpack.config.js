@@ -26,7 +26,7 @@ const webpackConfig = (options, env, argv) => {
 
   const devConfig = {
     mode: 'development',
-    entry: webpackEntries,
+    entry: webpackEntries(),
     module: {
       rules: [
         {
@@ -93,7 +93,6 @@ const webpackConfig = (options, env, argv) => {
       new MiniCssExtractPlugin({
         filename: `${filename}.css`,
         chunkFilename: `${chunkFilename}.js`,
-
       }),
       new PostCSSAssetsPlugin({
         test: /\.css$/,
