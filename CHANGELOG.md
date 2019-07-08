@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+### Added
+* After command to help passivity for a code split dev site.
+
 ### Fixed
 * Stop gracefully when using Ctrl-C to kill the wdio-runner
 
@@ -12,7 +15,7 @@ Unreleased
 * Added selenium/firefox-node to local docker-compose test setup
 * Added support for hitting an external selenium grid url
 * Added firefox and internet explorer browser capabilities
-* tt-wdio: added `--gridUrl` and `--browsers` options 
+* tt-wdio: added `--gridUrl` and `--browsers` options
 * Added default terra.selector of `[data-terra-dev-site-content] *:first-child` to wdio configuration
 * v5 upgrade guide
 

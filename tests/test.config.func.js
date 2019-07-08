@@ -51,6 +51,12 @@ module.exports = (env = {}) => {
         filename: './i18n.html',
       }),
       new HtmlWebpackPlugin({
+        lang: defaultLocale,
+        template: path.join(__dirname, 'fixtures', 'timeout.html'),
+        chunks: ['index'],
+        filename: './timeout.html',
+      }),
+      new HtmlWebpackPlugin({
         template: path.join(__dirname, 'fixtures', '404.html'),
         inject: false,
         filename: './404.html',

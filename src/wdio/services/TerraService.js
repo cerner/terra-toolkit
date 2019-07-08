@@ -64,4 +64,21 @@ export default class TerraService {
     /* Set the viewport size before the spec begins.  */
     viewportHelpers.setViewport(global.browser.options.formFactor);
   }
+
+  // To more passively support code splitting in terra dev site, wait for data to load before progressing with the test.
+  // eslint-disable-next-line class-methods-use-this
+  afterCommand(commandName) {
+    if (commandName === 'refresh' || (commandName === 'url')) {
+      if (global.browser.isExisting('[data-terra-dev-site-loading]')) {
+        try {
+          global.browser.waitUntil(() => (
+            global.browser.isExisting('[data-terra-dev-site-content]')
+          ), global.browser.options.waitforTimeout + 2000, '', 100);
+        } catch (error) {
+          // intentionally blank
+          // if this fails we don't want to warn because the user can't fix the issue
+        }
+      }
+    }
+  }
 }
