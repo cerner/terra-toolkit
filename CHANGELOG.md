@@ -9,6 +9,9 @@ Unreleased
 ### Fixed
 * Stop gracefully when using Ctrl-C to kill the wdio-runner
 
+### Changed
+* Pin axe-core version to 3.2.2
+
 5.1.0 - (June 25, 2019)
 ----------
 ### Added
