@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+5.2.0 - (July 9, 2019)
+----------
 ### Added
 * After command to help passivity for a code split dev site.
 
