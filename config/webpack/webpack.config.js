@@ -19,8 +19,9 @@ const webpackConfig = (options, env, argv) => {
   } = options;
 
   const production = argv.p;
-  const chunkFilename = production ? '[name]-[chunkhash]' : '[name]';
-  const filename = argv['output-filename'] || chunkFilename;
+  const fileNameStategy = production ? '[name]-[chunkhash]' : '[name]';
+  const chunkFilename = argv['output-chunk-filename'] || fileNameStategy;
+  const filename = argv['output-filename'] || fileNameStategy;
   const outputPath = argv['output-path'] || path.join(rootPath, 'build');
   const publicPath = argv['output-public-path'] || '';
 
