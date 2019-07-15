@@ -61,6 +61,12 @@ module.exports = (env = {}) => {
         inject: false,
         filename: './404.html',
       }),
+      new HtmlWebpackPlugin({
+        lang: defaultLocale,
+        template: path.join(__dirname, 'fixtures', 'input.html'),
+        chunks: ['index'],
+        filename: './input.html',
+      }),
     ],
     output: {
       path: path.join(process.cwd(), 'build'),

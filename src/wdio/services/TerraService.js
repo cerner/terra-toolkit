@@ -5,6 +5,7 @@ import accessibility from './TerraCommands/accessibility';
 import visualRegression from './TerraCommands/visual-regression';
 import validateElement from './TerraCommands/validate-element';
 import viewportHelpers from './TerraCommands/viewport-helpers';
+import hideInputCaret from './TerraCommands/hide-input-caret';
 import Logger from '../../../scripts/utils/logger';
 
 /**
@@ -40,6 +41,9 @@ export default class TerraService {
 
       /* `describeViewports` provides a custom Mocha `describe` block for looping test viewports. */
       describeViewports: viewportHelpers.describeViewports,
+
+      /* `hideInputCaret` hides the blinking input caret that appears in editable text areas. */
+      hideInputCaret,
 
       /* `validates` provides access to the chai assertions to use in Mocha `it` blocks. */
       validates: {
