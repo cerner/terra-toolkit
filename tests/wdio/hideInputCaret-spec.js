@@ -1,7 +1,7 @@
 describe('hideInputCaret', () => {
   before(() => {
     browser.url('/input.html');
-    Terra.hideInputCaret('#inputIDd');
+    Terra.hideInputCaret('#inputID');
   });
 
   it('validates the caretColor is transparent', () => {

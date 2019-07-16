@@ -1,5 +1,5 @@
 /**
- * Hides the blinking input caret that appears in editable text areas and can cause inconsistent test failues.
+ * Hides the blinking input caret that appears within editable text areas to prevent inconsistent test failures.
  *
  * @param {string} selector The selector for the element to hide the caret of
  */
