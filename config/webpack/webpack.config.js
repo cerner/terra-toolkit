@@ -98,6 +98,7 @@ const webpackConfig = (options, env, argv) => {
     plugins: [
       new MiniCssExtractPlugin({
         filename: `${filename}.css`,
+        ignoreOrder: true,
       }),
       new PostCSSAssetsPlugin({
         test: /\.css$/,
