@@ -61,7 +61,7 @@ There are a few things to note about the webdriver.io configuration provided by 
 
 - Test files should use `*-spec.js` naming format. The default spec search paths are `./tests/wdio/**/*-spec.js` and `./packages/*/tests/wdio/**/*-spec.js`.
 - Use `/test_url_path` to direct test urls. This is appended to the `baseUrl` provided in the config.
-- The TerraService automatically sets the `caret-color` CSS property to `transparent` at the root level, although this can be overridden by CSS further down the tree. If it is overridden you can change it back to `transparent` with `Terra.hideInputCaret()` (scroll down for documentation).
+- The TerraService automatically sets the `caret-color` CSS property to `transparent` at the root level whenever a page is loaded or refreshed, although this can be overridden by CSS further down the tree. If it is overridden you can change it back to `transparent` with `Terra.hideInputCaret()` (scroll down for documentation).
 
 Then, to assist with testing, the TerraService provides the Terra global helper to make testing easier:
 
