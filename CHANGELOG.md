@@ -9,6 +9,10 @@ Unreleased
 ### Changed
 * The WDIO TerraService automatically hides carets in the page whenever a page is loaded or refreshed
 
+### Changed
+* Upgraded mini extract text plugin
+* Ignore css order warnings from mini extract text plugin
+
 5.2.0 - (July 9, 2019)
 ----------
 ### Added
