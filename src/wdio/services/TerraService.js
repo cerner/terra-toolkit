@@ -67,20 +67,20 @@ export default class TerraService {
 
   // To more passively support code splitting in terra dev site, wait for data to load before progressing with the test.
   // eslint-disable-next-line class-methods-use-this
-  afterCommand(commandName, args, result, error) {
-    if ((commandName === 'refresh' || commandName === 'url') && result && !error) {
-      console.log('afterCommand result', result);
-      console.log('afterCommand error', error);
-      // try {
-        if (global.browser.isExisting('[data-terra-dev-site-loading]')) {
-          global.browser.waitUntil(() => (
-            global.browser.isExisting('[data-terra-dev-site-content]')
-          ), global.browser.options.waitforTimeout + 2000, '', 100);
-        }
-      // } catch (err) {
-      //   // intentionally blank
-      //   // if this fails we don't want to warn because the user can't fix the issue
-      // }
-    }
-  }
+  // afterCommand(commandName, args, result, error) {
+  //   if ((commandName === 'refresh' || commandName === 'url') && result && !error) {
+  //     console.log('afterCommand result', result);
+  //     console.log('afterCommand error', error);
+  //     // try {
+  //       if (global.browser.isExisting('[data-terra-dev-site-loading]')) {
+  //         global.browser.waitUntil(() => (
+  //           global.browser.isExisting('[data-terra-dev-site-content]')
+  //         ), global.browser.options.waitforTimeout + 2000, '', 100);
+  //       }
+  //     // } catch (err) {
+  //     //   // intentionally blank
+  //     //   // if this fails we don't want to warn because the user can't fix the issue
+  //     // }
+  //   }
+  // }
 }
