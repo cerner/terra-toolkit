@@ -8,6 +8,7 @@ Unreleased
 * Upgraded mini extract text plugin
 * Ignore css order warnings from mini extract text plugin
 * Upgraded terra-node to node 10
+* Update postcss-custom-properties package to latest release
 
 5.2.0 - (July 9, 2019)
 ----------
