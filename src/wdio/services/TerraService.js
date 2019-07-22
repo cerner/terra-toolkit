@@ -75,19 +75,19 @@ export default class TerraService {
    * Automatically hides input carets on the page (unless something explicitly sets a caret-color) when the page is loaded or refreshed.
    */
   // eslint-disable-next-line class-methods-use-this
-  afterCommand(commandName) {
-    if (commandName === 'refresh' || (commandName === 'url')) {
+  afterCommand(commandName, args, result, error) {
+    if ((commandName === 'refresh' || commandName === 'url') && !error) {
       hideInputCaret('body');
 
-      if (global.browser.isExisting('[data-terra-dev-site-loading]')) {
-        try {
+      try {
+        if (global.browser.isExisting('[data-terra-dev-site-loading]')) {
           global.browser.waitUntil(() => (
             global.browser.isExisting('[data-terra-dev-site-content]')
           ), global.browser.options.waitforTimeout + 2000, '', 100);
-        } catch (error) {
-          // intentionally blank
-          // if this fails we don't want to warn because the user can't fix the issue
         }
+      } catch (err) {
+        // intentionally blank
+        // if this fails we don't want to warn because the user can't fix the issue
       }
     }
   }
