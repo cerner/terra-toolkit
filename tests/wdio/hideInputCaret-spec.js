@@ -17,4 +17,8 @@ describe('hideInputCaret', () => {
     // Terra service automatically sets caretColor at root level to transparent
     expect(element.getCssProperty('caretColor').value).to.equal('rgba(0,0,0,0)');
   });
+
+  it('hides the input caret on a non-existent element', () => {
+    expect(Terra.hideInputCaret.bind(this, '#NotAnElement')).to.throw('No element could be found');
+  });
 });

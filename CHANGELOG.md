@@ -5,8 +5,6 @@ Unreleased
 ----------
 ### Added
 * Added test helper to hide a blinking input caret in an element
-
-### Changed
 * The WDIO TerraService automatically hides carets in the page whenever a page is loaded or refreshed
 
 ### Changed
