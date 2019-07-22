@@ -69,8 +69,6 @@ export default class TerraService {
   // eslint-disable-next-line class-methods-use-this
   afterCommand(commandName, args, result, error) {
     if ((commandName === 'refresh' || commandName === 'url') && !error) {
-      console.log('afterCommand result', result);
-      console.log('afterCommand error', error);
       try {
         if (global.browser.isExisting('[data-terra-dev-site-loading]')) {
           global.browser.waitUntil(() => (
