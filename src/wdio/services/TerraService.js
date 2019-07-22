@@ -68,7 +68,7 @@ export default class TerraService {
   // To more passively support code splitting in terra dev site, wait for data to load before progressing with the test.
   // eslint-disable-next-line class-methods-use-this
   afterCommand(commandName, args, result, error) {
-    if ((commandName === 'refresh' || commandName === 'url')) {
+    if ((commandName === 'refresh' || commandName === 'url') && result && !error) {
       console.log('afterCommand result', result);
       console.log('afterCommand error', error);
       // try {
