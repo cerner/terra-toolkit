@@ -8,7 +8,6 @@ Unreleased
 * Upgraded mini extract text plugin
 * Ignore css order warnings from mini extract text plugin
 * Upgraded terra-node to node 10
-* Improve afterCommand error handling
 
 5.2.0 - (July 9, 2019)
 ----------
