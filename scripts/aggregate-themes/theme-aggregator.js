@@ -38,22 +38,60 @@ class ThemeAggregator {
    * @param {Object} options - The aggregation options.
    * @returns {array} - An array of file names.
    */
-  static aggregateTheme(theme, options = {}) {
+  static aggregateDefaultTheme(theme, options = {}) {
     Logger.log(`Aggregating ${theme}...`);
 
     const { scoped = [] } = options;
 
-    const file = scoped.indexOf(theme) > -1 ? SCOPED_THEME : ROOT_THEME;
-    const assets = ThemeAggregator.find(`**/themes/${theme}/${file}`, options);
+    const assets = ThemeAggregator.find(`**/themes/${theme}/${ROOT_THEME}`, options);
 
     // Add the dependency import if it exists.
-    assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${theme}/**/${file}`, options));
+    assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${theme}/**/${ROOT_THEME}`, options));
 
     if (assets.length === 0) {
       Logger.warn(`No theme files were found for ${theme}.`);
     }
 
     return assets.map(asset => ThemeAggregator.resolve(asset));
+  }
+
+  /**
+   * Aggregates theme assets.
+   * @param {string} theme - The theme to aggregate.
+   * @param {Object} options - The aggregation options.
+   * @returns {array} - An array of file names.
+   */
+  static aggregateScopedTheme(theme, options = {}) {
+    const { name } = theme;
+    Logger.log(`Aggregating ${name}...`);
+
+    // const { scoped = [] } = options;
+
+    const assets = ThemeAggregator.find(`**/themes/${name}/${ROOT_THEME}`, options);
+
+    // Add the dependency import if it exists.
+    assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${name}/**/${ROOT_THEME}`, options));
+
+    // create scoped file
+    const scopedThemeFilePath = ThemeAggregator.createScopedThemeFile(assets, theme);
+
+    if (assets.length === 0) {
+      Logger.warn(`No theme files were found for ${name}.`);
+    }
+
+    return assets.map(asset => ThemeAggregator.resolve(asset));
+    // return scopedThemeFilePath;
+  }
+
+  static createScopedThemeFile(assets, theme) {
+    const { name, scopeSelector } = theme;
+    const filePath = `${path.resolve(OUTPUT_PATH, `scoped-${name}.scss`)}`;
+
+    let file = assets.reduce((acc, s) => `\xa0\xa0@${acc}import '${s}';\n`, '');
+    file = `.${scopeSelector}\xa0{\n${file}}\n`;
+
+    fs.writeFileSync(filePath, file);
+    return filePath;
   }
 
   /**
@@ -69,12 +107,12 @@ class ThemeAggregator {
 
     // Aggregate the default theme.
     if (theme) {
-      assets.push(...ThemeAggregator.aggregateTheme(theme, options));
+      assets.push(...ThemeAggregator.aggregateDefaultTheme(theme, options));
     }
 
     // Aggregate the scoped themes.
-    scoped.forEach((name) => {
-      assets.push(...ThemeAggregator.aggregateTheme(name, options));
+    scoped.forEach((scopedTheme) => {
+      assets.push(...ThemeAggregator.aggregateScopedTheme(scopedTheme, options));
     });
 
     return ThemeAggregator.writeFile(assets);
@@ -88,7 +126,6 @@ class ThemeAggregator {
    */
   static find(pattern, options) {
     const { exclude = [] } = options;
-
     return glob.sync(pattern, { ignore: exclude });
   }
 
@@ -137,5 +174,5 @@ class ThemeAggregator {
     return filePath;
   }
 }
-
+ThemeAggregator.aggregate();
 module.exports = ThemeAggregator;
