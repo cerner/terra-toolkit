@@ -1,4 +1,4 @@
-# Terra Toolkit Upgrade Guide v5 - Part 2
+# Terra Toolkit Upgrade Guide v5 - Part 1
 
 This document will provide the step-by-step dependency and script changes required to successfully upgrade from terra-toolkit 4.x to 5.x.
 
