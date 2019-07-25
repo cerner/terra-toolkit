@@ -35,6 +35,23 @@ project
         └── scoped-theme.scss
 ```
 
+## Scoped Theme Generation
+Alternatively, opt-in feature exists to generate scoped themes with a specified selector. This functionality is provided for first class themes provided within components.
+```txt
+project
+├── node_modules
+│  └── terra-component
+│      └── themes
+│           ├── terra-dark-theme
+│           │   └── root-theme.scss
+│           └── terra-light-theme
+│               └── root-theme.scss
+└── themes
+    └── terra-dark-theme
+        ├── component.scss
+        └── root-theme.scss
+```
+
 ## Configuration
 
 ### terra-theme.config.js
@@ -49,6 +66,18 @@ const themeConfig = {
 module.exports = themeConfig;
 ```
 
+```js
+// Alternative config to generate scope themes. Opt-in.
+const generateScopeThemeConfig = {
+  generateScope: true, // Opt-in flag.
+  scoped: [
+    { name: 'terra-light-theme', scopeSelector: 'light-theme' }, // An array of scoped theme config objects.
+  ],
+}
+
+module.exports = generateScopeThemeConfig;
+```
+
 ### Options
 
 #### Exclude (Optional)
@@ -59,6 +88,27 @@ The `exclude` option accepts an array of files to exclude from being aggregated.
 
 The `theme` option accepts the string name of a default theme. The default theme will be applied directly to the application. If a `root-theme.scss` is found only that single file will be aggregated.
 
+#### GenerateScope (Optional)
+
+Opt-in flag. Set to true to generate scope themes with a given scope selector.
+
 #### Scoped (Optional)
 
 The `scoped` option accepts an array of theme names to aggregate. Only the `scoped-theme.scss` files will be aggregated.
+
+Alternatively, if `generateScope` is set, provide an array of objects containing `name` and `scopeSelector`. This will generate a scoped file per theme. If `scopeSelector` is not provided, it defaults to `name`.
+
+Using the [generateScopeThemeConfig](###terra-theme.config.js) example generates:
+
+#### scoped-terra-light-theme.scss
+####
+```scss
+.light-theme {
+  @import 'themes/terra-light-theme/root-theme.scss';
+}
+```
+
+#### aggregated-themes.js
+```scss
+import 'scoped-terra-light-theme.scss';
+```

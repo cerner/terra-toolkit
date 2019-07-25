@@ -118,6 +118,7 @@ class ThemeAggregator {
    */
   static find(pattern, options) {
     const { exclude = [] } = options;
+
     return glob.sync(pattern, { ignore: exclude });
   }
 
