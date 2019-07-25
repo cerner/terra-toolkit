@@ -40,7 +40,6 @@ class ThemeAggregator {
   static aggregateDefaultTheme(theme, options = {}) {
     Logger.log(`Aggregating ${theme}...`);
 
-    const { scoped = [] } = options;
 
     const assets = ThemeAggregator.find(`**/themes/${theme}/${ROOT_THEME}`, options);
 
@@ -72,13 +71,13 @@ class ThemeAggregator {
     assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${name}/**/${ROOT_THEME}`, options));
 
     // create scoped file
-    ThemeAggregator.createScopedThemeFile(assets, theme);
+    const relativeFilePath = ThemeAggregator.createScopedThemeFile(assets, theme);
 
     if (assets.length === 0) {
       Logger.warn(`No theme files were found for ${name}.`);
     }
 
-    return assets.map(asset => ThemeAggregator.resolve(asset));
+    return relativeFilePath;
   }
 
   /**
@@ -99,7 +98,7 @@ class ThemeAggregator {
 
     // Aggregate the scoped themes.
     scoped.forEach((scopedTheme) => {
-      assets.push(...ThemeAggregator.aggregateScopedTheme(scopedTheme, options));
+      assets.push(ThemeAggregator.aggregateScopedTheme(scopedTheme, options));
     });
 
     return ThemeAggregator.writeFile(assets);
@@ -161,6 +160,7 @@ class ThemeAggregator {
     fs.writeFileSync(filePath, file);
 
     Logger.log(`Successfully generated ${fileName}.`);
+    return ThemeAggregator.resolve(filePath);
   }
 
   /**
