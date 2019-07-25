@@ -60,7 +60,7 @@ class ThemeAggregator {
    * Aggregates theme assets and generates a scope theme.
    * @param {string} theme - The theme to aggregate.
    * @param {Object} options - The aggregation options.
-   * @returns {array} - An array of file names.
+   * @returns {string} - The relative file path of the generated scope theme
    */
   static aggregateScopedTheme(theme, options = {}) {
     const { name } = theme;
@@ -157,6 +157,7 @@ class ThemeAggregator {
    * Writes a file containing scoped theme imports.
    * @param {string} assets - The theme to aggregate.
    * @param {Object} theme - The object containing theme nanme and scope selector.
+   * @returns {string} - The scoped theme resolved file path.
    */
   static writeScopedThemeFile(assets, theme) {
     const { name, scopeSelector = name } = theme;
@@ -188,5 +189,5 @@ class ThemeAggregator {
     return filePath;
   }
 }
-ThemeAggregator.aggregate();
+ThemeAggregator.aggregate(); // TODO remove
 module.exports = ThemeAggregator;
