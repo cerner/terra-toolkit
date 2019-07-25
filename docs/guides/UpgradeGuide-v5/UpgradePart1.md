@@ -226,7 +226,7 @@ Verify hot-reloading is correctly disabled so you can quickly check the assets u
 > npm run start-prod
 ```
 
-### 6. Run `start`
+### 6. Run `start-static`
 Verify your site is packed and served as static content.
 ```bash
 > npm run start-static
