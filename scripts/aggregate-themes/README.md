@@ -69,7 +69,7 @@ module.exports = themeConfig;
 ```js
 // Alternative config to generate scope themes. Opt-in.
 const generateScopeThemeConfig = {
-  generateScope: true, // Opt-in flag.
+  generateScoped: true, // Opt-in flag.
   scoped: [
     { name: 'terra-light-theme', scopeSelector: 'light-theme' }, // An array of scoped theme config objects.
   ],
@@ -88,7 +88,7 @@ The `exclude` option accepts an array of files to exclude from being aggregated.
 
 The `theme` option accepts the string name of a default theme. The default theme will be applied directly to the application. If a `root-theme.scss` is found only that single file will be aggregated.
 
-#### GenerateScope (Optional)
+#### GenerateScoped (Optional)
 
 Opt-in flag. Set to true to generate scope themes with a given scope selector.
 
@@ -96,7 +96,7 @@ Opt-in flag. Set to true to generate scope themes with a given scope selector.
 
 The `scoped` option accepts an array of theme names to aggregate. Only the `scoped-theme.scss` files will be aggregated.
 
-Alternatively, if `generateScope` is set, provide an array of objects containing `name` and `scopeSelector`. This will generate a scoped file per theme. If `scopeSelector` is not provided, it defaults to `name`.
+Alternatively, if `generateScoped` is set, provide an array of objects containing `name` and `scopeSelector`. This will generate a scoped file per theme. If `scopeSelector` is not provided, it defaults to `name`.
 
 Using the [generateScopeThemeConfig](###terra-theme.config.js) example generates:
 
