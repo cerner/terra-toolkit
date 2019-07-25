@@ -4,6 +4,8 @@ Changelog
 Unreleased
 ----------
 
+5.3.0 - (July 25, 2019)
+----------
 ### Changed
 * Upgraded mini extract text plugin
 * Ignore css order warnings from mini extract text plugin
