@@ -14,7 +14,13 @@ describe('hideInputCaret', () => {
 
   it('validates the textarea\'s caret-color is transparent', () => {
     const element = browser.element('#textareaID');
-    // Terra service automatically sets caretColor at root level to transparent
+    // Terra service automatically sets caretColor on the body to transparent which gets inherited
+    expect(element.getCssProperty('caretColor').value).to.equal('rgba(0,0,0,0)');
+  });
+
+  it('validates the body\'s caret-color is transparent', () => {
+    const element = browser.element('#textareaID');
+    // Terra service automatically sets caretColor on the body to transparent
     expect(element.getCssProperty('caretColor').value).to.equal('rgba(0,0,0,0)');
   });
 

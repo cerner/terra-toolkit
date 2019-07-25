@@ -77,9 +77,10 @@ export default class TerraService {
   // eslint-disable-next-line class-methods-use-this
   afterCommand(commandName, args, result, error) {
     if ((commandName === 'refresh' || commandName === 'url') && !error) {
-      hideInputCaret('body');
-
       try {
+        // This is only meant as a convenience so failure is not particularly concerning
+        hideInputCaret('body');
+
         if (global.browser.isExisting('[data-terra-dev-site-loading]')) {
           global.browser.waitUntil(() => (
             global.browser.isExisting('[data-terra-dev-site-content]')
