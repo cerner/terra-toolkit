@@ -50,7 +50,7 @@ class ThemeAggregator {
     assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${theme}/**/${file}`, options));
 
     if (assets.length === 0) {
-      Logger.warn(`No theme files were found for ${theme}.`);
+      Logger.warn(`No theme files found for ${theme}.`);
     }
 
     return assets.map(asset => ThemeAggregator.resolve(asset));
@@ -65,7 +65,7 @@ class ThemeAggregator {
   static generateScopedTheme(theme, options = {}) {
     const { name } = theme;
 
-    Logger.log(`Aggregating ${name}...`);
+    Logger.log(`Generating scoped file for ${name}...`);
 
     const assets = ThemeAggregator.find(`**/themes/${name}/${ROOT_THEME}`, options);
 
@@ -73,7 +73,7 @@ class ThemeAggregator {
     assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${name}/**/${ROOT_THEME}`, options));
 
     if (assets.length === 0) {
-      Logger.warn(`No theme files were found for ${name}.`);
+      Logger.warn(`No theme files found for ${name}.`);
     }
     return ThemeAggregator.writeScopedThemeFile(assets, theme);
   }
