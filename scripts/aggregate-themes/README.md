@@ -36,7 +36,7 @@ project
 ```
 
 ## Scoped Theme Generation
-Alternatively, opt-in feature exists to generate scoped themes with a specified selector. This functionality is provided for first class themes provided within components.
+Alternatively, an opt-in feature exists to generate scoped themes with a specified selector. This exists for first class Terra themes.
 ```txt
 project
 ├── node_modules

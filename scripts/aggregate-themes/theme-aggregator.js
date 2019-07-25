@@ -163,7 +163,7 @@ class ThemeAggregator {
     const filePath = `${path.resolve(OUTPUT_PATH, fileName)}`;
 
     let file = assets.reduce((acc, s) => `${acc}  @import '${s}';\n`, '');
-
+    file = `${DISCLAIMER}.${scopeSelector} {\n${file}}\n`;
 
     fs.writeFileSync(filePath, file);
 
