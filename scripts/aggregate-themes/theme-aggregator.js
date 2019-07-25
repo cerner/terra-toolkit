@@ -72,15 +72,13 @@ class ThemeAggregator {
     // Add the dependency import if it exists.
     assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${name}/**/${ROOT_THEME}`, options));
 
-
     if (assets.length === 0) {
       Logger.warn(`No theme files were found for ${name}.`);
     }
 
-    // generate scoped file
-    const relativeFilePath = ThemeAggregator.writeScopedThemeFile(assets, theme);
+    return ThemeAggregator.writeScopedThemeFile(assets, theme);
 
-    return relativeFilePath;
+//    return assets.map(asset => ThemeAggregator.writeScopedThemeFile(assets, theme));
   }
 
   /**
@@ -164,7 +162,7 @@ class ThemeAggregator {
     const fileName = `scoped-${name}.scss`;
     const filePath = `${path.resolve(OUTPUT_PATH, fileName)}`;
 
-    let file = assets.reduce((acc, s) => `  @${acc}import '${s}';\n`, '');
+    let file = assets.reduce((acc, s) => `${acc}  @import '${s}';\n`, '');
     file = `${DISCLAIMER}.${scopeSelector} {\n${file}}\n`;
 
     fs.writeFileSync(filePath, file);
