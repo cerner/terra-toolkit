@@ -7,7 +7,7 @@ import Logger from '../../../../scripts/utils/logger';
  */
 const hideInputCaret = (selector) => {
   try {
-    global.browser.execute(`document.querySelector("${selector.replace('"', '\\"')}").style.caretColor = "transparent";`);
+    global.browser.execute(`document.querySelector("${selector.replace(/"/g, '\\"')}").style.caretColor = "transparent";`);
   } catch (error) {
     if (!global.browser.isExisting(selector)) {
       throw Logger.error(`No element could be found with the selector '${selector}'.`);
