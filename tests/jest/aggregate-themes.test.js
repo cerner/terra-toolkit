@@ -31,6 +31,17 @@ describe('Theme Aggregator', () => {
     });
   });
 
+  describe('generateScopedTheme', () => {
+    it('returns an array of aggregated scoped theme files', () => {
+      const theme = { name: 'terra-mock-dark-theme' };
+
+      const files = ThemeAggregator.generateScopedTheme(theme);
+      const expected = './scoped-terra-mock-dark-theme.scss';
+
+      expect(files).toEqual(expected);
+    });
+  });
+
   describe('find', () => {
     it('returns the requested files', () => {
       const options = {};

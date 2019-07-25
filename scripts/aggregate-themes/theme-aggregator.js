@@ -184,5 +184,5 @@ class ThemeAggregator {
     return filePath;
   }
 }
-ThemeAggregator.aggregate(); // TODO remove
+
 module.exports = ThemeAggregator;
