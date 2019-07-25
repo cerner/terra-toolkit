@@ -62,7 +62,7 @@ class ThemeAggregator {
    * @param {Object} options - The aggregation options.
    * @returns {string} - The relative file path of the generated scope theme
    */
-  static aggregateScopedTheme(theme, options = {}) {
+  static generateScopedTheme(theme, options = {}) {
     const { name } = theme;
 
     Logger.log(`Aggregating ${name}...`);
@@ -75,10 +75,7 @@ class ThemeAggregator {
     if (assets.length === 0) {
       Logger.warn(`No theme files were found for ${name}.`);
     }
-
     return ThemeAggregator.writeScopedThemeFile(assets, theme);
-
-//    return assets.map(asset => ThemeAggregator.writeScopedThemeFile(assets, theme));
   }
 
   /**
@@ -100,7 +97,7 @@ class ThemeAggregator {
     // Aggregate the scoped themes.
     if (generateScoped) {
       scoped.forEach((scopedTheme) => {
-        assets.push(ThemeAggregator.aggregateScopedTheme(scopedTheme, options));
+        assets.push(ThemeAggregator.generateScopedTheme(scopedTheme, options));
       });
     } else {
       scoped.forEach((scopedTheme) => {
