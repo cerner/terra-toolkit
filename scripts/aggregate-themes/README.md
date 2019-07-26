@@ -36,9 +36,9 @@ project
 ```
 
 ## Scoped Theme Generation
-Alternatively, an opt-in feature exists to generate scoped themes with a specified selector. In the future, first class themes shall live within components. Scope theme generation allows consumers to
+Alternatively, an opt-in feature exists to generate scoped themes with a specified selector.
 
-**Note**, scope theme generation will be the default behaviour for terra-toolkit v6.
+**Note**, scope theme generation will be the default behaviour for terra-toolkit v6, eliminating the need for pre-baked scope theme files.
 ```txt
 project
 ├── node_modules
@@ -69,7 +69,7 @@ module.exports = themeConfig;
 ```
 
 ```js
-// Alternative config to generate scope themes. Opt-in.
+// Alternative config to generate scope themes.
 const generateScopeThemeConfig = {
   generateScopedThemes: true, // Opt-in flag.
   scoped: [
@@ -98,7 +98,7 @@ Opt-in flag. Set to true to generate scope themes with a given scope selector.
 
 The `scoped` option accepts an array of theme names to aggregate. Only the `scoped-theme.scss` files will be aggregated.
 
-Alternatively, if `generateScopedTheme` is set, provide an array of objects containing `name` and `scopeSelector`. This will generate a scoped file per theme. If `scopeSelector` is not provided, it defaults to `name`.
+If `generateScopedTheme` is set, the `scoped` option accepts an array of objects containing `name` and `scopeSelector`. This will generate a scoped file per object. If `scopeSelector` is not provided, it defaults to `name`.
 
 Using the [generateScopeThemeConfig](###terra-theme.config.js) example generates:
 
