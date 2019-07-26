@@ -197,6 +197,7 @@ class ThemeAggregator {
     Logger.log(`Successfully generated ${OUTPUT}.`);
 
     return filePath;
+  }
 }
 
 module.exports = ThemeAggregator;
