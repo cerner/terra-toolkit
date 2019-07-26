@@ -87,7 +87,11 @@ class ThemeAggregator {
    * @returns {string} - The output path of the aggregated theme file.
    */
   static aggregateThemes(options) {
-    ThemeAggregator.validate(options);
+    if (!ThemeAggregator.validate(options)) {
+      return null;
+    } else {
+      fs.mkdir(OUTPUT_DIR);
+    }
 
     const assets = [];
     const { theme, scoped = [], generateScoped = false } = options; // TODO Remove opt in generateScoped config on next MVB
@@ -99,7 +103,7 @@ class ThemeAggregator {
 
     // Aggregate the scoped themes.
     if (generateScoped) {
-      SCOPED.forEach((scopedTheme) => {
+      scoped.forEach((scopedTheme) => {
         assets.push(ThemeAggregator.generateScopedTheme(scopedTheme, options));
       });
     } else {
@@ -149,9 +153,10 @@ class ThemeAggregator {
 
     if (!theme && !scoped) {
       Logger.warn('No theme provided.');
-    } else {
-      fs.mkdir(OUTPUT_DIR);
+      return false;
     }
+
+    return true;
   }
 
   /**
