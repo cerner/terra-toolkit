@@ -7,7 +7,7 @@ const CONFIG = 'terra-theme.config.js';
 const DISCLAIMER = fs.readFileSync(path.resolve(__dirname, 'disclaimer.txt'), 'utf8');
 const NODE_MODULES = 'node_modules/';
 const OUTPUT = 'aggregated-themes.js';
-const OUTPUT_PATH = path.resolve(process.cwd());
+const OUTPUT_PATH = path.resolve(process.cwd(), 'generatedThemes');
 const ROOT_THEME = 'root-theme.scss';
 const SCOPED_THEME = 'scoped-theme.scss';
 
