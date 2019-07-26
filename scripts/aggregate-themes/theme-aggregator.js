@@ -180,7 +180,7 @@ class ThemeAggregator {
     fs.writeFileSync(filePath, file);
 
     Logger.log(`Successfully generated ${fileName}.`);
-    return path.relative(OUTPUT_PATH, filePath);
+    return `./${path.relative(OUTPUT_PATH, filePath)}`;
   }
 
   /**
@@ -197,6 +197,6 @@ class ThemeAggregator {
     Logger.log(`Successfully generated ${OUTPUT}.`);
 
     return filePath;
-  }
 }
+
 module.exports = ThemeAggregator;
