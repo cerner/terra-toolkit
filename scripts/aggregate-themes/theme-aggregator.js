@@ -7,7 +7,8 @@ const CONFIG = 'terra-theme.config.js';
 const DISCLAIMER = fs.readFileSync(path.resolve(__dirname, 'disclaimer.txt'), 'utf8');
 const NODE_MODULES = 'node_modules/';
 const OUTPUT = 'aggregated-themes.js';
-const OUTPUT_PATH = path.resolve(process.cwd(), 'generatedThemes');
+const OUTPUT_DIR = 'generatedThemes';
+const OUTPUT_PATH = path.resolve(process.cwd(), OUTPUT_DIR);
 const ROOT_THEME = 'root-theme.scss';
 const SCOPED_THEME = 'scoped-theme.scss';
 
@@ -98,7 +99,7 @@ class ThemeAggregator {
 
     // Aggregate the scoped themes.
     if (generateScoped) {
-      scoped.forEach((scopedTheme) => {
+      SCOPED.forEach((scopedTheme) => {
         assets.push(ThemeAggregator.generateScopedTheme(scopedTheme, options));
       });
     } else {
@@ -148,6 +149,8 @@ class ThemeAggregator {
 
     if (!theme && !scoped) {
       Logger.warn('No theme provided.');
+    } else {
+      fs.mkdir(OUTPUT_DIR);
     }
   }
 
@@ -187,5 +190,4 @@ class ThemeAggregator {
     return filePath;
   }
 }
-
 module.exports = ThemeAggregator;
