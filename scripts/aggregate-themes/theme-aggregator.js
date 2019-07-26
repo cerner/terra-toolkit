@@ -178,7 +178,8 @@ class ThemeAggregator {
     fs.writeFileSync(filePath, file);
 
     Logger.log(`Successfully generated ${fileName}.`);
-    return fileName;
+    console.log(`filePath: ${filePath}`);
+    return `./${filename}`;
   }
 
   /**
