@@ -98,7 +98,7 @@ Opt-in flag. Set to true to generate scope themes with a given scope selector.
 
 The `scoped` option accepts an array of theme names to aggregate. Only the `scoped-theme.scss` files will be aggregated.
 
-Alternatively, if `generateScoped` is set, provide an array of objects containing `name` and `scopeSelector`. This will generate a scoped file per theme. If `scopeSelector` is not provided, it defaults to `name`.
+Alternatively, if `generateScopedTheme` is set, provide an array of objects containing `name` and `scopeSelector`. This will generate a scoped file per theme. If `scopeSelector` is not provided, it defaults to `name`.
 
 Using the [generateScopeThemeConfig](###terra-theme.config.js) example generates:
 
