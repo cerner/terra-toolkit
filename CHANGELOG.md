@@ -7,6 +7,8 @@ Unreleased
 * Added test helper to hide a blinking input caret in an element
 * The WDIO TerraService automatically hides carets in the page whenever a page is loaded or refreshed
 
+5.3.0 - (July 25, 2019)
+----------
 ### Changed
 * Upgraded mini extract text plugin
 * Ignore css order warnings from mini extract text plugin
