@@ -163,7 +163,7 @@ class ThemeAggregator {
    * Writes a file containing scoped theme imports.
    * @param {string} assets - The theme to aggregate.
    * @param {Object} theme - The object containing theme nanme and scope selector.
-   * @returns {string} - The scoped theme resolved file path.
+   * @returns {string} - The scoped theme file name.
    */
   static writeScopedThemeFile(assets, theme) {
     const { name, scopeSelector = name } = theme;
@@ -176,7 +176,7 @@ class ThemeAggregator {
     fs.writeFileSync(filePath, file);
 
     Logger.log(`Successfully generated ${fileName}.`);
-    return ThemeAggregator.resolve(filePath);
+    return fileName;
   }
 
   /**
