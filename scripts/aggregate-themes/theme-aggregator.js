@@ -89,11 +89,13 @@ class ThemeAggregator {
   static aggregateThemes(options) {
     if (!ThemeAggregator.validate(options)) {
       return null;
-    } else {
-      fs.mkdir(OUTPUT_DIR, (error) => {
-        Logger.log(error);
-      });
     }
+
+    fs.mkdir(OUTPUT_DIR, (err) => {
+      if (err) {
+        Logger.log(err);
+      }
+    });
 
     const assets = [];
     const { theme, scoped = [], generateScopedThemes = false } = options; // TODO Remove opt in generateScopedThemes config on next MVB
@@ -165,7 +167,7 @@ class ThemeAggregator {
    * Writes a file containing scoped theme imports.
    * @param {string} assets - The theme to aggregate.
    * @param {Object} theme - The object containing theme nanme and scope selector.
-   * @returns {string} - The scoped theme file name.
+   * @returns {string} - The scoped theme file relative to the generatedThemes directory.
    */
   static writeScopedThemeFile(assets, theme) {
     const { name, scopeSelector = name } = theme;
@@ -178,7 +180,6 @@ class ThemeAggregator {
     fs.writeFileSync(filePath, file);
 
     Logger.log(`Successfully generated ${fileName}.`);
-    console.log(`filePath: ${filePath}`);
     return `./${fileName}`;
   }
 
