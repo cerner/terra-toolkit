@@ -96,7 +96,7 @@ class ThemeAggregator {
     }
 
     const assets = [];
-    const { theme, scoped = [], generateScoped = false } = options; // TODO Remove opt in generateScoped config on next MVB
+    const { theme, scoped = [], generateScopedThemes = false } = options; // TODO Remove opt in generateScopedThemes config on next MVB
 
     // Aggregate the default theme.
     if (theme) {
@@ -104,7 +104,7 @@ class ThemeAggregator {
     }
 
     // Aggregate the scoped themes.
-    if (generateScoped) {
+    if (generateScopedThemes) {
       scoped.forEach((scopedTheme) => {
         assets.push(ThemeAggregator.generateScopedTheme(scopedTheme, options));
       });
