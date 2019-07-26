@@ -91,7 +91,7 @@ class ThemeAggregator {
       return null;
     } else {
       fs.mkdir(OUTPUT_DIR, (error) => {
-        Logger.log(`Error creating generatedThemes directory: ${error}`);
+        Logger.log(error);
       });
     }
 
@@ -179,7 +179,7 @@ class ThemeAggregator {
 
     Logger.log(`Successfully generated ${fileName}.`);
     console.log(`filePath: ${filePath}`);
-    return `./${filename}`;
+    return `./${fileName}`;
   }
 
   /**
