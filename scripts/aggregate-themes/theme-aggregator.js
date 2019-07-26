@@ -90,7 +90,9 @@ class ThemeAggregator {
     if (!ThemeAggregator.validate(options)) {
       return null;
     } else {
-      fs.mkdir(OUTPUT_DIR);
+      fs.mkdir(OUTPUT_DIR, (error) => {
+        Logger.log(`Error creating generatedThemes directory: ${error}`);
+      });
     }
 
     const assets = [];
