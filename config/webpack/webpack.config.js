@@ -195,7 +195,7 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     resolveModules.unshift(path.resolve(rootPath, 'aggregated-translations'));
   }
 
-  const themeFile = ThemeAggregator.aggregate();
+  const themeFile = ThemeAggregator.aggregate(env.terraThemeConfig);
 
   const options = {
     rootPath,
