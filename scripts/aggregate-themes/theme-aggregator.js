@@ -22,15 +22,17 @@ class ThemeAggregator {
    * Aggregates theme assets.
    * @returns {string|null} - The output path of the aggregated theme file. Null if not generated.
    */
-  static aggregate() {
+  static aggregate(config) {
     const defaultConfig = path.resolve(process.cwd(), CONFIG);
 
     if (fs.existsSync(defaultConfig)) {
       // eslint-disable-next-line global-require, import/no-dynamic-require
       return ThemeAggregator.aggregateThemes(require(defaultConfig));
+    } else if (config) {
+      return ThemeAggregator.aggregateThemes(config);
+    } else {
+      return null;
     }
-
-    return null;
   }
 
   /**
