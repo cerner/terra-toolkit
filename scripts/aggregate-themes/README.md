@@ -18,7 +18,7 @@ project
 
 Within this file declare and export an object containing your theme configuration.
 
-This configuration will be used to aggregate nested dependency themes and output a single `aggregated-themes.js` file. This file will be automatically included as an entry point within your application if you are using the webpack configuration provided by terra-toolkit.
+This configuration will be used to aggregate nested dependency themes and output a single `aggregated-themes.js` file inside a `generatedThemes` directory. This file will be automatically included as an entry point within your application if you are using the webpack configuration provided by terra-toolkit.
 
 Theme files must follow naming conventions to be aggregated. Theme files are expected be within a namespaced directory within a `themes` directory.
 
@@ -36,7 +36,7 @@ project
 ```
 
 ## Scoped Theme Generation
-Alternatively, an opt-in feature exists to generate scoped themes with a specified selector.
+Alternatively, an opt-in feature exists to generate scoped themes with a specified selector. The generated file(s) output to the `generatedThemes` directory.
 
 **Note**, scope theme generation will be the default behaviour for terra-toolkit v6, eliminating the need for pre-baked scope theme files.
 ```txt
@@ -102,7 +102,7 @@ If `generateScopedTheme` is set, the `scoped` option accepts an array of objects
 
 Using the [generateScopeThemeConfig](###terra-theme.config.js) example generates:
 
-#### scoped-terra-light-theme.scss
+#### generatedThemes/scoped-terra-light-theme.scss
 ####
 ```scss
 .light-theme {
@@ -110,7 +110,7 @@ Using the [generateScopeThemeConfig](###terra-theme.config.js) example generates
 }
 ```
 
-#### aggregated-themes.js
+#### generatedThemes/aggregated-themes.js
 ```scss
 import 'scoped-terra-light-theme.scss';
 ```
