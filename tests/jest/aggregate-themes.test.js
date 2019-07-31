@@ -4,7 +4,7 @@ global.console = { log: jest.fn(), warn: jest.fn() };
 
 describe('Theme Aggregator', () => {
   describe('aggregate', () => {
-    it('returns null if there is no terra-theme-config.js', () => {
+    it('returns null if there is no terra-theme-config.js and no config passed by env var.', () => {
       const file = ThemeAggregator.aggregate();
 
       expect(file).toBeNull();
