@@ -4,7 +4,7 @@ Changelog
 Unreleased
 ----------
 
-5.4.0 - (July 30, 2019)
+5.4.0 - (July 31, 2019)
 ----------
 ### Added
 * Added test helper to hide a blinking input caret in an element
