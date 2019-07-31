@@ -1,4 +1,4 @@
-# Terra Toolkit Upgrade Guide v5 - Part 2
+# Terra Toolkit Upgrade Guide v5 - Part 1
 
 This document will provide the step-by-step dependency and script changes required to successfully upgrade from terra-toolkit 4.x to 5.x.
 
@@ -226,7 +226,7 @@ Verify hot-reloading is correctly disabled so you can quickly check the assets u
 > npm run start-prod
 ```
 
-### 6. Run `start`
+### 6. Run `start-static`
 Verify your site is packed and served as static content.
 ```bash
 > npm run start-static

@@ -22,6 +22,7 @@ Cerner Corporation
 - Lalitha Kalidindi[@lalitha94]
 - Pranav Agarwal [@pranav300]
 - Adam Parker [@amichaelparker]
+- Nathan Faltermeier [@Blackop778]
 
 [@emilyrohrbough]: https://github.com/emilyrohrbough
 [@brettjankord]: https://github.com/bjankord
@@ -45,3 +46,4 @@ Cerner Corporation
 [@lalitha94]: https://github.com/lalitha94
 [@pranav300]: https://github.com/pranav300
 [@amichaelparker]: https://github.com/amichaelparker
+[@Blackop778]: https://github.com/Blackop778
