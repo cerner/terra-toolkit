@@ -15,7 +15,7 @@ const setTheme = (themeSelector) => {
 
   global.browser.execute(root);
   Logger.log(`Applying ${themeSelector} to root.`);
-}
+};
 
 const methods = {
   setTheme,
