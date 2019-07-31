@@ -1,4 +1,4 @@
-import Logger from '../../../../scripts/utils/logger';
+import Logger from '../scripts/utils/logger';
 
 /**
 * Applies the  scoped theme to root.
