@@ -28,11 +28,13 @@ class ThemeAggregator {
     if (fs.existsSync(defaultConfig)) {
       // eslint-disable-next-line global-require, import/no-dynamic-require
       return ThemeAggregator.aggregateThemes(require(defaultConfig));
-    } else if (config) {
-      return ThemeAggregator.aggregateThemes(config);
-    } else {
-      return null;
     }
+
+    if (config) {
+      return ThemeAggregator.aggregateThemes(config);
+    }
+
+    return null;
   }
 
   /**
@@ -100,15 +102,14 @@ class ThemeAggregator {
     });
 
     const assets = [];
-    const { theme, scoped = [], generateScopedThemes = false } = options; // TODO Remove opt in generateScopedThemes config on next MVB
-
+    const { theme, scoped = [], generateScoped = false } = options; // TODO Remove opt in generateScoped config on next MVB
     // Aggregate the default theme.
     if (theme) {
       assets.push(...ThemeAggregator.aggregateTheme(theme, options));
     }
 
     // Aggregate the scoped themes.
-    if (generateScopedThemes) {
+    if (generateScoped) {
       scoped.forEach((scopedTheme) => {
         assets.push(ThemeAggregator.generateScopedTheme(scopedTheme, options));
       });
