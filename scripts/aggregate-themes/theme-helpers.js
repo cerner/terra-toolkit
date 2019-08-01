@@ -10,10 +10,10 @@ const setTheme = (themeSelector) => {
     return;
   }
 
-  let root = document.documentElement.className;
-  root = `${root} ${themeSelector}`;
+  //let root = 'document.documentElement.className';
+  //root = `${root} ${themeSelector}`;
 
-  global.browser.execute(root);
+  global.browser.execute(`document.documentElement.classList.add('${themeSelector}')`);
   Logger.log(`Applying ${themeSelector} to root.`);
 }
 
