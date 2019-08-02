@@ -22,14 +22,26 @@ class ThemeAggregator {
    * Aggregates theme assets.
    * @returns {string|null} - The output path of the aggregated theme file. Null if not generated.
    */
-  static aggregate(config) {
+  static aggregate(config, theme) {
     const defaultConfig = path.resolve(process.cwd(), CONFIG);
 
+    // Mono repo usage.
+    // If theme name is provided by env variable, provide this theme *only* to override default.
+    if (theme) {
+      ThemeAggregator.createDirectory();
+      const asset = ThemeAggregator.aggregateTheme(theme);
+      return ThemeAggregator.writeFile(asset);
+    }
+
+    // Consumer usage.
+    // Existing theme config takes precedence over passed in config
     if (fs.existsSync(defaultConfig)) {
       // eslint-disable-next-line global-require, import/no-dynamic-require
       return ThemeAggregator.aggregateThemes(require(defaultConfig));
     }
 
+    // Dev site usage.
+    // Passed in config allows dev site to display specified themes face up.
     if (config) {
       return ThemeAggregator.aggregateThemes(config);
     }
@@ -86,6 +98,19 @@ class ThemeAggregator {
   }
 
   /**
+   * Creates a directory to place theme files.
+   */
+  static createDirectory() {
+    fs.statSync(OUTPUT_DIR, (err, stats) => {
+      if (stats.isDir === true) {
+        Logger.log(`${OUTPUT_DIR} already exists.`)
+      } else {
+        fs.mkdirSync(OUTPUT_DIR);
+      };
+    });
+  }
+
+  /**
    * Aggregates theme assets into a single file.
    * @param {Object} options - The aggregation options.
    * @returns {string} - The output path of the aggregated theme file.
@@ -95,14 +120,11 @@ class ThemeAggregator {
       return null;
     }
 
-    fs.mkdir(OUTPUT_DIR, (err) => {
-      if (err) {
-        Logger.log(err);
-      }
-    });
-
     const assets = [];
     const { theme, scoped = [], generateScoped = false } = options; // TODO Remove opt in generateScoped config on next MVB
+
+    ThemeAggregator.createDirectory();
+
     // Aggregate the default theme.
     if (theme) {
       assets.push(...ThemeAggregator.aggregateTheme(theme, options));

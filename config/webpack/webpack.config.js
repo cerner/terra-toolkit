@@ -176,7 +176,9 @@ const webpackConfig = (options, env, argv) => {
 };
 
 const defaultWebpackConfig = (env = {}, argv = {}) => {
-  const { disableAggregateTranslations, disableHotReloading } = env;
+  const {
+    disableAggregateTranslations, disableHotReloading, terraThemeConfig, theme,
+  } = env;
 
   const staticOptions = {
     ...disableHotReloading && {
@@ -195,7 +197,7 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     resolveModules.unshift(path.resolve(rootPath, 'aggregated-translations'));
   }
 
-  const themeFile = ThemeAggregator.aggregate(env.terraThemeConfig);
+  const themeFile = ThemeAggregator.aggregate(terraThemeConfig, theme);
 
   const options = {
     rootPath,
