@@ -22,14 +22,14 @@ class ThemeAggregator {
    * Aggregates theme assets.
    * @returns {string|null} - The output path of the aggregated theme file. Null if not generated.
    */
-  static aggregate(config, theme) {
+  static aggregate(config, themeOverride) {
     const defaultConfig = path.resolve(process.cwd(), CONFIG);
 
     // Mono repo usage.
-    // If theme name is provided by env variable, provide this theme *only* to override default.
-    if (theme) {
+    // Aggregates themeOverride only. Used to override default theme.
+    if (themeOverride) {
       ThemeAggregator.createDirectory();
-      const asset = ThemeAggregator.aggregateTheme(theme);
+      const asset = ThemeAggregator.aggregateTheme(themeOverride);
       return ThemeAggregator.writeFile(asset);
     }
 
