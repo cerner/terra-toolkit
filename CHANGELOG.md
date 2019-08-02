@@ -5,7 +5,7 @@ Unreleased
 ----------
 ### Added
 * Added chunk filename support
-* Added reusable webpack entry points
+* Created webpack entries configuration such that polyfill entries can be extended.
 
 5.4.0 - (July 31, 2019)
 ----------
@@ -26,7 +26,6 @@ Unreleased
 ----------
 ### Added
 * After command to help passivity for a code split dev site.
-* Create webpack entries configuration such that polyfill entries can be extended.
 
 ### Fixed
 * Stop gracefully when using Ctrl-C to kill the wdio-runner
