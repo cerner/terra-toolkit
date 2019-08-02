@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+### Added
+* Added chunk filename support
+* Added reusable webpack entry points object
 
 5.4.0 - (July 31, 2019)
 ----------
