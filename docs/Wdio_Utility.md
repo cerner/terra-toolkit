@@ -20,7 +20,6 @@ To run the webdriver.io test running, the [webdriver.io configuration options](h
     - See [here](https://github.com/cerner/terra-toolkit/blob/master/docs/SeleniumDockerService.md) for configuration information.
 * `TerraService` - provides utilities for accessibility testing as well as gives global access to chai and a Terra object containg helpers to make testing easier. 
     - A global selector must be defined: add `terra: { selector: 'selector_name' }` to the configuration.
-    - To disable theme testing add `terra: { disableThemeTests: true }` to the configuration. This will skip the following functions during testing: `themeEachCustomProperty` and `themeCombinationOfCustomProperties`. 
     - To configure the acessibilty utility, add `axe: { options: {} }` to be passed to the axe instance that is inject on the test page. See [axe-core's axe.configure docs](https://www.deque.com/axe/axe-for-web/documentation/api-documentation/#api-name-axeconfigure) for possible configuraiton options.
 * `VisualRegressionService` - uses wdio-screenshot to capture screenshots and run visual regression testing.
     - See [here](https://github.com/zinserjan/wdio-visual-regression-service#configuration) for configuration information.
@@ -62,72 +61,59 @@ There are a few things to note about the webdriver.io configuration provided by 
 
 - Test files should use `*-spec.js` naming format. The default spec search paths are `./tests/wdio/**/*-spec.js` and `./packages/*/tests/wdio/**/*-spec.js`.
 - Use `/test_url_path` to direct test urls. This is appended to the `baseUrl` provided in the config.
+- The TerraService automatically sets the `caret-color` CSS property to `transparent` at the root level whenever a page is loaded or refreshed, although this can be overridden by CSS further down the tree. If it is overridden you can change it back to `transparent` with `Terra.hideInputCaret()` (scroll down for documentation).
 
 Then, to assist with testing, the TerraService provides the Terra global helper to make testing easier:
 
-- `Terra.viewports(name)` takes the viewport key name(s) and returns an array of { height, width } objects representing the respective terra viewport size(s).
+### Test Setup Helpers
+
+- `Terra.describeViewports` mocha `describe` block intended to replace the spec file's top level `describe` block. This method will run all tests within it's block at the given viewport(s). `Terra.describeViewports` blocks should not be nested and if tests need to run against different viewports then they should have their own top level `Terra.describeViewports` block. Only Terra defined viewports are accepted. This method accepts these arguments (in this order):
+    - String: The describe block name. Will automatically have viewport information included.
+    - String array: The viewport(s) to run the tests at. If the formFactor is defined that is the only viewport size that tests may be ran against.
+    - Function: The method containing the tests to run against each viewport.
+    - See [describeViewports-spec.js](https://github.com/cerner/terra-toolkit/blob/master/tests/wdio/describeViewports-spec.js) for example usage.
+- `Terra.viewports(name)` **Note - It is preferred to use Terra.describeViewports().** takes the viewport key name(s) and returns an array of { height, width } objects representing the respective terra viewport size(s).
     - Use this function to resize the browser or pass the viewport sizes to the accessibility and visual regression commands.
     - By default returns all viewports if not name key are provided.
-- `Terra.should.beAccessible()` mocha-chai convenience method that runs an axe test for the page. Takes the same arguments as the `axe()` utility.
+- `Terra.hideInputCaret()` mocha-chai convenience method that sets the CSS caret color of an element to transparent. Normally this caret will blink when an editable text field is focused which can lead to inconsistent test failures. This must be placed in a Mocha `before`, `beforeEach`, or `it` block or it will not be ran. The method accepts this argument:
+    - String: the CSS element selector to hide the input caret of. Will only apply to the first element if multiple are found.
+    - See [hideInputCaret-spec.js](https://github.com/cerner/terra-toolkit/blob/master/tests/wdio/hideInputCaret-spec.js) for examples.
+
+### Test Assertion Helpers
+
+- `Terra.it.validatesElement()` mocha-chai convenience method that takes a screenshot and verifies the images are within the specified mis-match tolerance and performs accessibility validation. Note: this method provides its own mocha it test case. Also, since viewports isn't accepted in this method, you need to [test in multiple viewports](https://github.com/cerner/terra-toolkit/blob/master/tests/wdio/describeViewports-spec.js). This method accepts these arguments (in this order):
+    - String (optional): the test case name. Default name is 'default'
+    - Object (optional): the test options. Options include selector, misMatchTolerance and axeRules:
+         - selector: the element selector to take a screenshot of. Defaults to the global `terra.selector`. Accessibility testing ignores this option and always tests the whole document.
+         - misMatchTolerance: number between 0 and 100 that defines the degree of mismatch to consider two images as identical, increasing this value will decrease test coverage. Defaults to the global `visualRegression.compare.misMatchTolerance`.
+         - axeRules: the [axe rules](https://github.com/dequelabs/axe-core/blob/master/doc/rule-descriptions.md) to use as overrides if necessary.
+    - See [validateElement-spec.js](https://github.com/cerner/terra-toolkit/blob/master/tests/wdio/validateElement-spec.js) for example usage.
+    - This helper can be used inside mocha `it` blocks by being called through `Terra.validates.element()`. This takes the same arguments.
+- `Terra.it.isAccessible()` mocha-chai convenience method that runs an axe test for the page.
+    - Object (optional): the test options. Options include rules and viewports:
+         - rules: the [axe rules](https://github.com/dequelabs/axe-core/blob/master/doc/rule-descriptions.md) to use as overrides if necessary.
+         - viewports: the array of viewports dimensions to test accessibility in. Defaults to the current viewport size. **Note - This will significantly slow down tests and it is prefered to instead use a top-level `Terra.describeViewports` block**
     - See [beAccessible-spec.js](https://github.com/cerner/terra-toolkit/blob/master/tests/wdio/beAccessible-spec.js) for examples.
-- `Terra.should.matchScreenshot()` **Note - It is preferred to use Terra.should.validateElement().  Terra.should.matchScreenshot() may eventually be deprecated** mocha-chai convenience method that takes a screenshot for the specified viewports and verifies the images are within the specified mis-match tolerance. Note: this method provides its own mocha it test case. The methods accepts these arguments (in this order):
+    - This helper can be used inside mocha `it` blocks by being called through `Terra.validates.accessibliity()`. This takes the same arguments.
+- `Terra.it.matchesScreenshot()` **Note - It is preferred to use Terra.it.validatesElement().  Terra.should.matchScreenshot() may eventually be deprecated** mocha-chai convenience method that takes a screenshot for the specified viewports and verifies the images are within the specified mis-match tolerance. Note: this method provides its own mocha it test case. The methods accepts these arguments (in this order):
     - String (optional): the test case name. Default name is 'default'
     - Object (optional): the test options. Options include selector, viewports, and misMatchTolerance:
          - selector: the element selector to take a screenshot of. Defaults to the global terra.selector.
-         - viewports: the array of viewports dimensions to take a screenshot in. Defaults to the current viewport size.
+         - viewports: the array of viewports dimensions to take a screenshot in. Defaults to the current viewport size. **Note - This will significantly slow down tests and can cause screenshot inconsistencies with some responsive UI. It is prefered to instead use a top-level `Terra.describeViewports` block**
          - misMatchTolerance: number between 0 and 100 that defines the degree of mismatch to consider two images as identical, increasing this value will decrease test coverage. Defaults to the global visualRegression.compare.misMatchTolerance.
     - See [matchScreenshot-spec.js](https://github.com/cerner/terra-toolkit/blob/master/tests/wdio/matchScreenshot-spec.js) for example usage.
-- `Terra.should.validateElement()` mocha-chai convenience method that takes a screenshot and verifies the images are within the specified mis-match tolerance and performs accessibility validation. Note: this method provides its own mocha it test case. Also, since viewports isn't accepted in this method, you need to [test in multiple viewports](#testing-multiple-viewports) This method accepts these arguments (in this order):
-    - String (optional): the test case name. Default name is 'default'
-    - Object (optional): the test options. Options include selector, misMatchTolerance and axeRules:
-         - selector: the element selector to take a screenshot of. Defaults to the global terra.selector.
-         - misMatchTolerance: number between 0 and 100 that defines the degree of mismatch to consider two images as identical, increasing this value will decrease test coverage. Defaults to the global visualRegression.compare.misMatchTolerance.
-         - axeRules: the axe rules to use as overrides if necessary.
-    - See [validateElement-spec.js](https://github.com/cerner/terra-toolkit/blob/master/tests/wdio/validateElement-spec.js) for example usage.
-- `Terra.should.themeEachCustomProperty()` mocha-chai convenience method that runs a visual comparison test for each custom property given. Note: this method provides its own mocha it test case. The methods accepts these arguments (in this order):
-    - String (optional): the element selector to take a screenshot of. Defaults to the global terra.selector.
-    - Object: list of themeable-variable key-value pairs such that the key is the themeable-variable name and the value is the css value to check in the screenshot.
-  - `Terra.should.themeCombinationOfCustomProperties()` mocha-chai convenience method that runs a visual comparison test for a grouping of custom properties provided. Note: this method provides its own mocha it test case. The methods accepts these arguments (in this order):
-      - Object: the test options. Options include testName, selector and properties:
-           - testName (optional): the name associated to the test. Used to create unique screenshots. Defaults to `themed`.
-           - properties (required): object of themeable-variable key-value pairs such that the key is the themeable-variable name and the value is the css value to check in the screenshot.
-           - selector (optional): the element selector to take a screenshot of. Defaults to the global terra.selector.
+    - This helper can be used inside mocha `it` blocks by being called through `Terra.validates.screenshot()`. This takes the same arguments.
 
 ```js
 // These globals are provide via the Terra Service
 /* global browser, describe, it, expect, viewport */
-describe('Basic Test', () => {
+Terra.describeViewports('Basic Test', ['huge'], () => {
   before(() => browser.url('/test.html'));
 
-  Terra.should.beAccessible();
-  Terra.should.matchScreenshot();
-  Terra.should.themeEachCustomProperty({
-    '--color': 'red',
-    '--font-size': '20px',
-  });
+  Terra.it.validatesElement();
 
   it('custom test', () => {
     expect('something').to.equal('something');
-  });
-});
-```
-
-### Testing multiple viewports.
-Sometimes its necessary to rerun the test steps in each viewport. Some build systems support running viewports in parallel and control the viewport via the FORM_FACTOR environment variable. For build systems that don't support parallelization, `Terra.viewports` can be used to wrap the `describe` block. Example:
-
-```js
-Terra.viewports('tiny', 'small', 'large').forEach((viewport) => {
-  describe(`Resize Example - ${viewport.name}`, () => {
-    before(() => {
-      browser.setViewportSize(viewport);
-      browser.url('/test.html');
-    });
-
-    it(`correctly resized to ${viewport.name}`, () => {
-      const size = browser.getViewportSize();
-      expect(size.height).to.equal(viewport.height);
-      expect(size.width).to.equal(viewport.width);
-    });
   });
 });
 ```

@@ -5,6 +5,7 @@ import accessibility from './TerraCommands/accessibility';
 import visualRegression from './TerraCommands/visual-regression';
 import validateElement from './TerraCommands/validate-element';
 import viewportHelpers from './TerraCommands/viewport-helpers';
+import hideInputCaret from './TerraCommands/hide-input-caret';
 import Logger from '../../../scripts/utils/logger';
 
 /**
@@ -41,6 +42,9 @@ export default class TerraService {
       /* `describeViewports` provides a custom Mocha `describe` block for looping test viewports. */
       describeViewports: viewportHelpers.describeViewports,
 
+      /* `hideInputCaret` hides the blinking input caret that appears in inputs or editable text areas. */
+      hideInputCaret,
+
       /* `validates` provides access to the chai assertions to use in Mocha `it` blocks. */
       validates: {
         accessibility: accessibility.validatesAccessibility,
@@ -65,19 +69,26 @@ export default class TerraService {
     viewportHelpers.setViewport(global.browser.options.formFactor);
   }
 
-  // To more passively support code splitting in terra dev site, wait for data to load before progressing with the test.
+  /*
+   * To more passively support code splitting in terra dev site, wait for data to load before progressing with the test.
+   *
+   * Automatically hides input carets on the page (unless something explicitly sets a caret-color) when the page is loaded or refreshed.
+   */
   // eslint-disable-next-line class-methods-use-this
-  afterCommand(commandName) {
-    if (commandName === 'refresh' || (commandName === 'url')) {
-      if (global.browser.isExisting('[data-terra-dev-site-loading]')) {
-        try {
+  afterCommand(commandName, args, result, error) {
+    if ((commandName === 'refresh' || commandName === 'url') && !error) {
+      try {
+        // This is only meant as a convenience so failure is not particularly concerning
+        hideInputCaret('body');
+
+        if (global.browser.isExisting('[data-terra-dev-site-loading]')) {
           global.browser.waitUntil(() => (
             global.browser.isExisting('[data-terra-dev-site-content]')
           ), global.browser.options.waitforTimeout + 2000, '', 100);
-        } catch (error) {
-          // intentionally blank
-          // if this fails we don't want to warn because the user can't fix the issue
         }
+      } catch (err) {
+        // intentionally blank
+        // if this fails we don't want to warn because the user can't fix the issue
       }
     }
   }

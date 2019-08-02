@@ -3,12 +3,33 @@ Changelog
 
 Unreleased
 ----------
+
+5.4.0 - (July 31, 2019)
+----------
+### Added
+* Added test helper to hide a blinking input caret in an element
+* The WDIO TerraService automatically hides carets in the page whenever a page is loaded or refreshed
+
+5.3.0 - (July 25, 2019)
+----------
+### Changed
+* Upgraded mini extract text plugin
+* Ignore css order warnings from mini extract text plugin
+* Upgraded terra-node to node 10
+* Update postcss-custom-properties package to latest release
+* Improve afterCommand error handling
+
+5.2.0 - (July 9, 2019)
+----------
 ### Added
 * After command to help passivity for a code split dev site.
 * Create webpack entries configuration such that polyfill entries can be extended.
 
 ### Fixed
 * Stop gracefully when using Ctrl-C to kill the wdio-runner
+
+### Changed
+* Pin axe-core version to 3.2.2
 
 5.1.0 - (June 25, 2019)
 ----------

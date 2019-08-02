@@ -94,6 +94,7 @@ const webpackConfig = (options, env, argv) => {
       new MiniCssExtractPlugin({
         filename: `${filename}.css`,
         chunkFilename: `${chunkFilename}.css`,
+        ignoreOrder: true,
       }),
       new PostCSSAssetsPlugin({
         test: /\.css$/,
@@ -181,11 +182,9 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     },
   };
 
-  const processPath = process.cwd();
-  /* Get the root path of a mono-repo process call */
-  const rootPath = processPath.includes('packages') ? processPath.split('packages')[0] : processPath;
-
+  const rootPath = process.cwd();
   const resolveModules = ['node_modules'];
+
   if (!disableAggregateTranslations) {
     aggregateTranslations(Object.assign({}, { baseDir: rootPath }, env.aggregateOptions));
     resolveModules.unshift(path.resolve(rootPath, 'aggregated-translations'));

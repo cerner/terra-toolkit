@@ -43,13 +43,13 @@ To use Terra Toolkit for local webdriver testing, you must install docker on you
 
 Terra Toolkit provides a built-in mechanism for aggregating themes.
 
-See the [Theme Aggregation](https://github.com/cerner/terra-toolkit/blob/master/docs/ThemeAggregation.md) to get started.
+See the [Theme Aggregation](https://github.com/cerner/terra-toolkit/blob/master/scripts/aggregate-themes/README.md) to get started.
 
 ## Serve Options
 
 Terra Toolkit offers two ways to serve your client side application, `serve` and `serve-static`. Serve provides a hot-reloading, development only option via [webpack-dev-server](https://github.com/webpack/webpack-dev-server), while serve-static is a non-hot-reloading [express](https://expressjs.com/) server. Serve-static supports IE10 and is used in webdriver testing.
 
-See the [Serve Guide](https://github.com/cerner/terra-toolkit/blob/master/scripts/serve/README.md) to get started.
+See the [Serve Guide](https://github.com/cerner/terra-toolkit/blob/master/scripts/serve/Serve.md) to get started.
 
 ## Webdriver.io Utility
 
