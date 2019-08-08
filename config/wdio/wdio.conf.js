@@ -42,7 +42,9 @@ const seleniumGridUrl = process.env.SELENIUM_GRID_URL;
  */
 const browsers = process.env.BROWSERS;
 
-const theme = process.env.THEME_DIRECTORY;
+const theme = process.env.THEME;
+
+const baseScreenshotDir = theme ? `./themes/#{theme}tests/wdio/__snapshots__` : null;
 
 const hasPackages = glob.sync((path.join(process.cwd(), 'packages'))).length > 0;
 
@@ -101,11 +103,9 @@ const config = {
     timeout: 1200000,
     bail,
   },
-};
 
-if (theme) {
-  baseScreenshotDir: `./themes/#{theme}tests/wdio/__snapshots__`,
-}
+  ...baseScreenshotDir && {baseScreenshotDir}
+};
 
 // This code only executes for monorepos.  It will create a set of suites that can then be executed
 // independently and/or in parallel via 'wdio --suite suite1' for example
