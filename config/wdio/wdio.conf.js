@@ -44,7 +44,7 @@ const browsers = process.env.BROWSERS;
 
 const theme = process.env.THEME;
 
-const baseScreenshotDir = theme ? `./themes/#{theme}tests/wdio/__snapshots__` : null;
+const baseScreenshotDir = theme ? './themes/#{theme}tests/wdio/__snapshots__' : null;
 
 const hasPackages = glob.sync((path.join(process.cwd(), 'packages'))).length > 0;
 
@@ -55,7 +55,7 @@ const seleniumConfig = determineSeleniumConfig({
 // Try to find the local to process.cwd webpack config
 const webpackConfig = dynamicRequire(path.resolve(process.cwd(), 'webpack.config.js'));
 
-webpackConfig.env.theme= theme;
+webpackConfig.env.theme = theme;
 
 const config = {
   ...webpackConfig && { webpackConfig },
@@ -106,7 +106,7 @@ const config = {
     bail,
   },
 
-  ...baseScreenshotDir && {baseScreenshotDir}
+  ...baseScreenshotDir && { baseScreenshotDir },
 };
 
 // This code only executes for monorepos.  It will create a set of suites that can then be executed
