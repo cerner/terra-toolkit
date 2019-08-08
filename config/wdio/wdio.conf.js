@@ -103,8 +103,8 @@ const config = {
   },
 };
 
-if (themeOverride) {
-  baseScreenshotDir: `./themes/#{themeOverride}tests/wdio/__snapshots__`,
+if (themeDirectory) {
+  baseScreenshotDir: `./themes/#{themeDirectory}tests/wdio/__snapshots__`,
 }
 
 // This code only executes for monorepos.  It will create a set of suites that can then be executed
