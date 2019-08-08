@@ -10,6 +10,7 @@ const merge = require('webpack-merge');
 const DuplicatePackageCheckerPlugin = require('@cerner/duplicate-package-checker-webpack-plugin');
 const aggregateTranslations = require('terra-aggregate-translations');
 const webpackEntries = require('./webpack.entries');
+const ThemeAggregator = require('../../scripts/aggregate-themes/theme-aggregator');
 
 const webpackConfig = (options, env, argv) => {
   const {
@@ -24,10 +25,11 @@ const webpackConfig = (options, env, argv) => {
   const filename = argv['output-filename'] || fileNameStategy;
   const outputPath = argv['output-path'] || path.join(rootPath, 'build');
   const publicPath = argv['output-public-path'] || '';
+  const themeAggregatorResult = ThemeAggregator.aggregate();
 
   const devConfig = {
     mode: 'development',
-    entry: webpackEntries(),
+    entry: webpackEntries(themeAggregatorResult.javascriptFile),
     module: {
       rules: [
         {
@@ -100,7 +102,10 @@ const webpackConfig = (options, env, argv) => {
         test: /\.css$/,
         log: false,
         plugins: [
-          PostCSSCustomProperties({ preserve: true }),
+          PostCSSCustomProperties({
+            preserve: true,
+            ...themeAggregatorResult.rootCSSFile && { importFrom: themeAggregatorResult.rootCSSFile },
+          }),
         ],
       }),
       new DuplicatePackageCheckerPlugin({

@@ -30,7 +30,7 @@ class ThemeAggregator {
       return ThemeAggregator.aggregateThemes(require(defaultConfig));
     }
 
-    return null;
+    return {};
   }
 
   /**

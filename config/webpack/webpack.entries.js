@@ -1,8 +1,4 @@
-const ThemeAggregator = require('../../scripts/aggregate-themes/theme-aggregator');
-
-const webpackEntries = () => {
-  const themeFile = ThemeAggregator.aggregate();
-
+const webpackEntries = (themeFile) => {
   return {
     raf: 'raf/polyfill',
     'core-js': 'core-js/stable',
