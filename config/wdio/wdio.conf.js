@@ -42,7 +42,7 @@ const seleniumGridUrl = process.env.SELENIUM_GRID_URL;
  */
 const browsers = process.env.BROWSERS;
 
-const themeDirectory = process.env.THEME_DIRECTORY;
+const theme = process.env.THEME_DIRECTORY;
 
 const hasPackages = glob.sync((path.join(process.cwd(), 'packages'))).length > 0;
 
@@ -103,8 +103,8 @@ const config = {
   },
 };
 
-if (themeDirectory) {
-  baseScreenshotDir: `./themes/#{themeDirectory}tests/wdio/__snapshots__`,
+if (theme) {
+  baseScreenshotDir: `./themes/#{theme}tests/wdio/__snapshots__`,
 }
 
 // This code only executes for monorepos.  It will create a set of suites that can then be executed

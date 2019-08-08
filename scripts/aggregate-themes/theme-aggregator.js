@@ -23,8 +23,6 @@ class ThemeAggregator {
    * @returns {string|null} - The output path of the aggregated theme file. Null if not generated.
    */
   static aggregate(config, themeOverride) {
-    const defaultConfig = path.resolve(process.cwd(), CONFIG);
-
     // Mono repo usage.
     // Aggregates themeOverride only. Used to override default theme.
     if (themeOverride) {
@@ -35,6 +33,7 @@ class ThemeAggregator {
 
     // Consumer usage.
     // Existing theme config takes precedence over passed in config
+    const defaultConfig = path.resolve(process.cwd(), CONFIG);
     if (fs.existsSync(defaultConfig)) {
       // eslint-disable-next-line global-require, import/no-dynamic-require
       return ThemeAggregator.aggregateThemes(require(defaultConfig));
