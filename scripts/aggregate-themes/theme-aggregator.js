@@ -156,7 +156,7 @@ class ThemeAggregator {
       data: imports.reduce((acc, s) => `${acc}@import '${s.relativePath}';\n`, ''),
     });
 
-    fs.writeFileSync(filePath, `${DISCLAIMER}${result.css.toString()}`);
+    fs.writeFileSync(filePath, `${DISCLAIMER}${result.css.toString().replace(/:global /g, '')}`);
 
     Logger.log(`Successfully generated ${CSS_OUTPUT}.`);
 
