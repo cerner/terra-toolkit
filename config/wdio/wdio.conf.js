@@ -55,6 +55,8 @@ const seleniumConfig = determineSeleniumConfig({
 // Try to find the local to process.cwd webpack config
 const webpackConfig = dynamicRequire(path.resolve(process.cwd(), 'webpack.config.js'));
 
+webpackConfig.env.theme= theme;
+
 const config = {
   ...webpackConfig && { webpackConfig },
   ...seleniumConfig,
