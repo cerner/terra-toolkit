@@ -94,7 +94,8 @@ export default class ServeStaticService {
     const { site, webpackConfig } = config;
     const locale = process.env.LOCALE || config.locale;
     const theme = process.env.THEME || config.theme;
-    console.log(`serve static config: ${JSON.stringify(config)}`);
+    //console.log(`serve static config: ${JSON.stringify(config)}`);
+    console.log(`serve static env.THEME: ${process.env.THEME}`);
     console.log(`serve static theme: ${theme}`);
     console.log(`serve static local: ${locale}`);
     if (!webpackConfig && !site) {
