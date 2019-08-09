@@ -31,7 +31,7 @@ const watch = (compiler) => {
 // Create a webpack dev server instance.
 const startWebpackDevServer = (options) => {
   const {
-    port, index, locale,
+    port, index, locale, theme,
   } = options;
   const host = '0.0.0.0';
   let { config } = options;
@@ -39,6 +39,11 @@ const startWebpackDevServer = (options) => {
   if (typeof config === 'function') {
     const env = { ...locale && { defaultLocale: locale } };
     config = config(env, { p: true });
+  }
+
+  if (theme) {
+    const env = { ...theme && { theme }};
+    config = config(env);
   }
 
   // pull the dev server options out of the webpack config. override host, port, and stats. SRY.
@@ -83,7 +88,7 @@ const startWebpackDevServer = (options) => {
 
 export default class ServeStaticService {
   async onPrepare(config = {}) {
-    const { site, webpackConfig } = config;
+    const { site, webpackCenfig } = config;
     const locale = process.env.LOCALE || config.locale;
     if (!webpackConfig && !site) {
       Logger.warn('No webpack configuration provided', { context });
