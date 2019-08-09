@@ -46,7 +46,8 @@ const startWebpackDevServer = (options) => {
     const env = { ...theme && { theme }};
     config = config(env);
   }
-  console.log(`start webpack server; config: ${JSON.stringify(config)}`);
+  console.log(`start webpack server; theme config: ${config.theme}`);
+  console.log(`start webpack server; locale config: ${config.locale}`);
 
   // pull the dev server options out of the webpack config. override host, port, and stats. SRY.
   const devServerOptions = Object.assign({}, config.devServer, {
