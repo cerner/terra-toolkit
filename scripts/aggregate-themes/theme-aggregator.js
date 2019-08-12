@@ -217,7 +217,7 @@ class ThemeAggregator {
 
     if (isScoped) {
       const { name, scopeSelector = name } = theme;
-      fileName = `{SCOPED}-${name}.scss`;
+      fileName = `${SCOPED}-${name}.scss`;
       intro = `${DISCLAIMER}:global(.${scopeSelector})`;
     } else {
       fileName = `${ROOT}-${theme}.scss`;
