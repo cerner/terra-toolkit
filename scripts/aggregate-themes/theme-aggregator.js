@@ -168,8 +168,8 @@ class ThemeAggregator {
     }
 
     // Constructs the relative path.
-    const outputPath = path.resolve(process.cwd());
-    return `./${path.relative(outputPath, path.resolve(process.cwd(), filePath))}`;
+    const outputPath = path.resolve(OUTPUT_PATH);
+    return `${path.relative(outputPath, path.resolve(OUTPUT_PATH, filePath))}`;
   }
 
   /**
@@ -198,7 +198,7 @@ class ThemeAggregator {
     const fileName = `scoped-${name}.scss`;
     const filePath = `${path.resolve(OUTPUT_PATH, fileName)}`;
 
-    let file = assets.reduce((acc, s) => `${acc}  @import '../${s}';\n`, '');
+    let file = assets.reduce((acc, s) => `${acc}  @import '${s}';\n`, '');
     file = `${DISCLAIMER}.${scopeSelector} {\n${file}}\n`;
 
     fs.writeFileSync(filePath, file);
@@ -213,7 +213,7 @@ class ThemeAggregator {
    * @returns {string} - The filepath of the file.
    */
   static writeFile(imports) {
-    const file = imports.reduce((acc, s) => `${acc}import '../${s}';\n`, '');
+    const file = imports.reduce((acc, s) => `${acc}import '${s}';\n`, '');
     const filePath = `${path.resolve(OUTPUT_PATH, OUTPUT)}`;
 
     fs.writeFileSync(filePath, `${DISCLAIMER}${file}`);
