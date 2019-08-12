@@ -30,7 +30,8 @@ class ThemeAggregator {
     // Aggregates themeOverride only. Used to override default theme.
     if (themeOverride) {
       ThemeAggregator.createDirectory();
-      const asset = ThemeAggregator.generateTheme(themeOverride);
+      let asset = [];
+      asset.push(ThemeAggregator.generateTheme(themeOverride));
       if (!asset) {
         return null;
       }
@@ -239,7 +240,7 @@ class ThemeAggregator {
    * @returns {string} - The filepath of the file.
    */
   static writeThemeImportFile(imports) {
-    const file = imports.reduce((acc, s) => `${acc}import '../${s}';\n`, '');
+    const file = imports.reduce((acc, s) => `${acc}import '${s}';\n`, '');
     const filePath = `${path.resolve(OUTPUT_PATH, OUTPUT)}`;
 
     fs.writeFileSync(filePath, `${DISCLAIMER}${file}`);
