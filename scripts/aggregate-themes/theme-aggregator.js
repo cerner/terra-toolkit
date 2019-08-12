@@ -141,7 +141,7 @@ class ThemeAggregator {
     // Aggregate the default theme.
     if (theme) {
       if (generateRoot) {
-        assets.push(...ThemeAggregator.generateTheme(theme, options, isRoot));
+        assets.push(...ThemeAggregator.generateTheme(theme, options));
       }
       assets.push(...ThemeAggregator.aggregateTheme(theme, options));
     }
@@ -150,7 +150,7 @@ class ThemeAggregator {
     if (scoped) {
       if (generateScoped) {
         scoped.forEach((scopedTheme) => {
-          assets.push(ThemeAggregator.generateTheme(scopedTheme, options, null, isScoped));
+          assets.push(ThemeAggregator.generateTheme(scopedTheme, options, true));
         });
       } else {
         scoped.forEach((scopedTheme) => {
