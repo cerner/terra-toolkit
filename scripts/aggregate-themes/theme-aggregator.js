@@ -9,8 +9,11 @@ const NODE_MODULES = 'node_modules/';
 const OUTPUT = 'aggregated-themes.js';
 const OUTPUT_DIR = 'generatedThemes';
 const OUTPUT_PATH = path.resolve(process.cwd(), OUTPUT_DIR);
-const ROOT_THEME = 'root-theme.scss';
-const SCOPED_THEME = 'scoped-theme.scss';
+const ROOT = 'root';
+const SCOPED = 'scoped';
+const ROOT_THEME = `${ROOT}-theme.scss`;
+const SCOPED_THEME = `${SCOPED}-theme.scss`;
+const THEME_VARIABLES = '*-theme-variables.scss';
 
 /**
  * Aggregates theme assets into a single file.
@@ -27,8 +30,8 @@ class ThemeAggregator {
     // Aggregates themeOverride only. Used to override default theme.
     if (themeOverride) {
       ThemeAggregator.createDirectory();
-      const asset = ThemeAggregator.aggregateTheme(themeOverride);
-      return ThemeAggregator.writeFile(asset);
+      const asset = ThemeAggregator.generateTheme(themeOverride);
+      return ThemeAggregator.writeThemeImportFile(asset);
     }
 
     // Consumer usage.
@@ -78,22 +81,29 @@ class ThemeAggregator {
    * @param {Object} options - The aggregation options.
    * @returns {string} - The relative file path of the generated scope theme
    */
-  static generateScopedTheme(theme, options = {}) {
-    const { name } = theme;
+  static generateTheme(theme, options = {}, isScoped) {
+    let themeName, assets, themeScope;
 
-    Logger.log(`Generating scoped file for ${name}...`);
+    if (isScoped) {
+      themeName = theme;
+      themeScope = SCOPED;
+    } else {
+    themeName = theme.name;
+    themeScope = ROOT;
+    }
 
-    const assets = ThemeAggregator.find(`**/themes/${name}/${ROOT_THEME}`, options);
+    assets = ThemeAggregator.find(`**/themes/${themeName}/${THEME_VARIABLES}`, options);
 
     // Add the dependency import if it exists.
-    assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${name}/**/${ROOT_THEME}`, options));
+    assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${themeName}/**/${THEME_VARIABLES}`, options));
 
     if (assets.length === 0) {
-      Logger.warn(`No theme files found for ${name}.`);
+      Logger.warn(`No theme files found for ${themeName}.`);
       return null;
     }
 
-    return ThemeAggregator.writeScopedThemeFile(assets, theme);
+    Logger.log(`Generating ${themeScope} file for ${themeName}...`);
+    return ThemeAggregator.writeThemeFile(assets, theme, isScoped);
   }
 
   /**
@@ -120,27 +130,32 @@ class ThemeAggregator {
     }
 
     const assets = [];
-    const { theme, scoped = [], generateScoped = false } = options; // TODO Remove opt in generateScoped config on next MVB
+    const { theme, scoped = [], generateScoped = false, generateRoot = false } = options; // TODO Remove opt in generateScoped config on next MVB
 
     ThemeAggregator.createDirectory();
 
     // Aggregate the default theme.
     if (theme) {
+      if (generateRoot) {
+        assets.push(...ThemeAggregator.generateTheme(theme, options, isRoot));
+      }
       assets.push(...ThemeAggregator.aggregateTheme(theme, options));
     }
 
     // Aggregate the scoped themes.
-    if (generateScoped) {
-      scoped.forEach((scopedTheme) => {
-        assets.push(ThemeAggregator.generateScopedTheme(scopedTheme, options));
-      });
-    } else {
-      scoped.forEach((scopedTheme) => {
-        assets.push(ThemeAggregator.aggregateTheme(scopedTheme, options));
-      });
+    if (scoped) {
+      if (generateScoped) {
+        scoped.forEach((scopedTheme) => {
+          assets.push(ThemeAggregator.generateTheme(scopedTheme, options, null, isScoped));
+        });
+      } else {
+        scoped.forEach((scopedTheme) => {
+          assets.push(ThemeAggregator.aggregateTheme(scopedTheme, options));
+        });
+      }
     }
 
-    return ThemeAggregator.writeFile(assets);
+    return ThemeAggregator.writeThemeImportFile(assets);
   }
 
   /**
@@ -188,19 +203,27 @@ class ThemeAggregator {
   }
 
   /**
-   * Writes a file containing scoped theme imports.
+   * Writes a scss file containing either root or scoped theme imports.
    * @param {string} assets - The theme to aggregate.
-   * @param {Object} theme - The object containing theme nanme and scope selector.
-   * @returns {string} - The scoped theme file relative to the generatedThemes directory.
+   * @param {Object | string} theme - The object containing scoped theme name and scope selector, or string containing root theme name.
+   * @returns {string} - The theme file relative to the generatedThemes directory.
    */
-  static writeScopedThemeFile(assets, theme) {
-    const { name, scopeSelector = name } = theme;
-    const fileName = `scoped-${name}.scss`;
-    const filePath = `${path.resolve(OUTPUT_PATH, fileName)}`;
+  static writeThemeFile(assets, theme, isScoped) {
+    let fileName, intro;
+
+    if (isScoped) {
+      const { name, scopeSelector = name } = theme;
+      fileName = `{SCOPED}-${name}.scss`;
+      intro = `${DISCLAIMER}.${scopeSelector}`;
+    } else {
+      fileName = `${ROOT}-${theme}.scss`;
+      intro = `${DISCLAIMER}.${ROOT}`;
+    }
 
     let file = assets.reduce((acc, s) => `${acc}  @import '../${s}';\n`, '');
-    file = `${DISCLAIMER}.${scopeSelector} {\n${file}}\n`;
+    file = `${intro} {\n${file}}\n`;
 
+    const filePath = `${path.resolve(OUTPUT_PATH, fileName)}`;
     fs.writeFileSync(filePath, file);
 
     Logger.log(`Successfully generated ${fileName}.`);
@@ -208,11 +231,11 @@ class ThemeAggregator {
   }
 
   /**
-   * Writes a file containing theme imports.
+   * Writes a js file containing theme imports.
    * @param {string[]} imports - An array of files to import.
    * @returns {string} - The filepath of the file.
    */
-  static writeFile(imports) {
+  static writeThemeImportFile(imports) {
     const file = imports.reduce((acc, s) => `${acc}import '../${s}';\n`, '');
     const filePath = `${path.resolve(OUTPUT_PATH, OUTPUT)}`;
 
