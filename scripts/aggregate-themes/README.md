@@ -35,7 +35,7 @@ project
         └── scoped-theme.scss
 ```
 
-## Configuration
+## Configuratiod
 
 ### terra-theme.config.js
 
