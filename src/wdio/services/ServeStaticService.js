@@ -40,14 +40,14 @@ const startWebpackDevServer = (options) => {
   if (typeof config === 'function') {
     const env = { ...locale && { defaultLocale: locale } };
     config = config(env, { p: true });
+
+    if (theme) {
+      const env = { ...theme && { theme }};
+      config = config(env);
+    }
+    console.log(`start webpack server; theme config: ${config.theme}`);
   }
 
-  if (theme) {
-    const env = { ...theme && { theme }};
-    config = config(env);
-  }
-  console.log(`start webpack server; theme config: ${config.theme}`);
-  console.log(`start webpack server; locale config: ${config.locale}`);
 
   // pull the dev server options out of the webpack config. override host, port, and stats. SRY.
   const devServerOptions = Object.assign({}, config.devServer, {
@@ -95,9 +95,7 @@ export default class ServeStaticService {
     const locale = process.env.LOCALE || config.locale;
     const theme = process.env.THEME || config.theme;
     //console.log(`serve static config: ${JSON.stringify(config)}`);
-    console.log(`serve static env.THEME: ${process.env.THEME}`);
     console.log(`serve static theme: ${theme}`);
-    console.log(`serve static local: ${locale}`);
     if (!webpackConfig && !site) {
       Logger.warn('No webpack configuration provided', { context });
       return;
