@@ -41,11 +41,11 @@ const startWebpackDevServer = (options) => {
     const env = { ...locale && { defaultLocale: locale } };
     config = config(env, { p: true });
 
-    if (theme) {
-      Object.assign(env, theme);
-      config = config(env);
-    }
-    console.log(`start webpack server; theme config: ${config.theme}`);
+    //if (theme) {
+      //Object.assign(env, theme);
+      //config = config(env);
+    //}
+    //console.log(`start webpack server; theme config: ${config.theme}`);
   }
 
 
@@ -94,7 +94,7 @@ export default class ServeStaticService {
     const { site, webpackConfig } = config;
     const locale = process.env.LOCALE || config.locale;
     const theme = process.env.THEME || config.theme;
-    // console.log(`serve static config: ${JSON.stringify(config)}`);
+    console.log(`serve static config: ${JSON.stringify(config)}`);
     console.log(`serve static theme: ${theme}`);
     if (!webpackConfig && !site) {
       Logger.warn('No webpack configuration provided', { context });
