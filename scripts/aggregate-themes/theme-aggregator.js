@@ -214,10 +214,10 @@ class ThemeAggregator {
     if (isScoped) {
       const { name, scopeSelector = name } = theme;
       fileName = `{SCOPED}-${name}.scss`;
-      intro = `${DISCLAIMER}.${scopeSelector}`;
+      intro = `${DISCLAIMER}:global(.${scopeSelector})`;
     } else {
       fileName = `${ROOT}-${theme}.scss`;
-      intro = `${DISCLAIMER}.${ROOT}`;
+      intro = `${DISCLAIMER}:global(.${ROOT})`;
     }
 
     let file = assets.reduce((acc, s) => `${acc}  @import '../${s}';\n`, '');
