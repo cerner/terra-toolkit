@@ -31,6 +31,9 @@ class ThemeAggregator {
     if (themeOverride) {
       ThemeAggregator.createDirectory();
       const asset = ThemeAggregator.generateTheme(themeOverride);
+      if (!asset) {
+        return null;
+      }
       return ThemeAggregator.writeThemeImportFile(asset);
     }
 
@@ -88,8 +91,8 @@ class ThemeAggregator {
       themeName = theme.name;
       themeScope = SCOPED;
     } else {
-    themeName = theme;
-    themeScope = ROOT;
+      themeName = theme;
+      themeScope = ROOT;
     }
 
     assets = ThemeAggregator.find(`**/themes/${themeName}/${THEME_VARIABLES}`, options);
