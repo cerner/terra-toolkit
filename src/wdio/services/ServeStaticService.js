@@ -42,7 +42,7 @@ const startWebpackDevServer = (options) => {
     config = config(env, { p: true });
 
     if (theme) {
-      const env = { ...theme && { theme }};
+      env = Object.assign(env, ...theme);
       config = config(env);
     }
     console.log(`start webpack server; theme config: ${config.theme}`);
