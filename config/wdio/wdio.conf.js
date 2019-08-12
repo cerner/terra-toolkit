@@ -43,7 +43,6 @@ const seleniumGridUrl = process.env.SELENIUM_GRID_URL;
 const browsers = process.env.BROWSERS;
 
 const theme = process.env.THEME;
-console.log(`process.env.THEME: ${process.env.THEME}`);
 
 const baseScreenshotDir = theme ? './themes/#{theme}tests/wdio/__snapshots__' : null;
 

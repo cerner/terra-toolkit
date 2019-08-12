@@ -197,6 +197,7 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     resolveModules.unshift(path.resolve(rootPath, 'aggregated-translations'));
   }
 
+  // THEME env variable will override default theme for wdio theme verification purposes.
   const themeOverride = process.env.THEME;
   const themeFile = ThemeAggregator.aggregate(terraThemeConfig, themeOverride);
 

@@ -30,7 +30,6 @@ const watch = (compiler) => {
 
 // Create a webpack dev server instance.
 const startWebpackDevServer = (options) => {
-  console.log(`options: ${JSON.stringify(options)}`);
   const {
     port, index, locale, theme,
   } = options;
@@ -94,8 +93,6 @@ export default class ServeStaticService {
     const { site, webpackConfig } = config;
     const locale = process.env.LOCALE || config.locale;
     const theme = process.env.THEME || config.theme;
-    console.log(`serve static config: ${JSON.stringify(config)}`);
-    console.log(`serve static theme: ${theme}`);
     if (!webpackConfig && !site) {
       Logger.warn('No webpack configuration provided', { context });
       return;
