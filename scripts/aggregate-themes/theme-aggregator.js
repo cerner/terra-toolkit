@@ -217,7 +217,7 @@ class ThemeAggregator {
       intro = `${DISCLAIMER}:global(.${scopeSelector})`;
     } else {
       fileName = `${ROOT}-${theme}.scss`;
-      intro = `${DISCLAIMER}:global(.${ROOT})`;
+      intro = `${DISCLAIMER}:global(:${ROOT})`;
     }
 
     let file = assets.reduce((acc, s) => `${acc}  @import '../${s}';\n`, '');

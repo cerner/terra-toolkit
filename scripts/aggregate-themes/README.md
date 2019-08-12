@@ -4,7 +4,7 @@ Terra Toolkit provides a built-in mechanism for aggregating themes.
 
 By default, the terra-toolkit webpack configuration enables theme aggregation when it detects the presence of a `terra-theme.config.js` file.
 
-## Getting started
+## Use Existing Root and Scoped Themes
 
 Create a new file within the same directory as your webpack configuration file.
 
@@ -35,25 +35,6 @@ project
         └── scoped-theme.scss
 ```
 
-## Scoped Theme Generation
-Alternatively, an opt-in feature exists to generate scoped themes with a specified selector. The generated file(s) output to the `generatedThemes` directory.
-
-**Note**, scope theme generation will be the default behaviour for terra-toolkit v6, eliminating the need for pre-baked scope theme files.
-```txt
-project
-├── node_modules
-│  └── terra-component
-│      └── themes
-│           ├── terra-dark-theme
-│           │   └── root-theme.scss
-│           └── terra-light-theme
-│               └── root-theme.scss
-└── themes
-    └── terra-dark-theme
-        ├── component.scss
-        └── root-theme.scss
-```
-
 ## Configuration
 
 ### terra-theme.config.js
@@ -67,19 +48,6 @@ const themeConfig = {
 
 module.exports = themeConfig;
 ```
-
-```js
-// Alternative config to generate scope themes.
-const generateScopeThemeConfig = {
-  generateScoped: true, // Opt-in flag.
-  scoped: [
-    { name: 'terra-light-theme', scopeSelector: 'light-theme' }, // An array of scoped theme config objects.
-  ],
-}
-
-module.exports = generateScopeThemeConfig;
-```
-
 ### Options
 
 #### Exclude (Optional)
@@ -90,22 +58,82 @@ The `exclude` option accepts an array of files to exclude from being aggregated.
 
 The `theme` option accepts the string name of a default theme. The default theme will be applied directly to the application. If a `root-theme.scss` is found only that single file will be aggregated.
 
+#### Scoped (Optional)
+
+The `scoped` option accepts an array of theme names to aggregate. Only the `scoped-theme.scss` files will be aggregated.
+
+## Generate Root and Scoped Themes (Opt -in)
+Alternatively, an opt-in feature exists to generate root and scoped themes with a specified selector, then output a single `aggregated-themes.js` file. Once activated, theme aggregation searches files following the namespace `*theme-variables`, then generates root or scoped theme files. These generated file(s) output to the `generatedThemes` directory and are imported into `aggregated-themes.js`.
+
+**Note**, root and scope theme generation will be the default behaviour for terra-toolkit v6, eliminating the need for pre-baked root and scope files.
+```txt
+project
+├── node_modules
+│  └── terra-component
+│      └── themes
+│           ├── terra-dark-theme
+│           │   └── theme-variables.scss
+│           └── terra-light-theme
+│               └── theme-variables.scss
+└── themes
+    └── terra-dark-theme
+        ├── component-1-theme-variables.scss
+        └── component-2-theme-variables.scss
+```
+
+The only requirement for each theme file is an object containing custom property values.
+
+```scss
+{
+  --theme-variable-one: pink;
+  --theme-variable-two: purple;
+}
+```
+
+## Configuration
+
+```js
+// Alternative config to generate scope themes.
+const generateScopeThemeConfig = {
+  exclude: [],
+  generateRoot: false, // Opt-in flag.
+  generateScoped: true, // Opt-in flag.
+  theme: 'terra-dark-theme',
+  scoped: [
+    { name: 'terra-light-theme', scopeSelector: 'light-theme' }, // An array of scoped theme config objects.
+  ],
+}
+
+module.exports = generateScopeThemeConfig;
+```
+
+### Opt-in Options
+
+#### GenerateRoot (Optional)
+Opt-in flag. Set to true to generate a theme under the root selector.
+
 #### GenerateScoped (Optional)
 
 Opt-in flag. Set to true to generate scope themes with a given scope selector.
 
 #### Scoped (Optional)
 
-The `scoped` option accepts an array of theme names to aggregate. Only the `scoped-theme.scss` files will be aggregated.
-
 If `generateScopedTheme` is set, the `scoped` option accepts an array of objects containing `name` and `scopeSelector`. This will generate a scoped file per object. If `scopeSelector` is not provided, it defaults to `name`.
 
 Using the [generateScopeThemeConfig](###terra-theme.config.js) example generates:
 
+#### generatedThemes/root-terra-dark-theme.scss
+####
+```scss
+:global(:root) {
+  @import 'themes/terra-light-theme/root-theme.scss';
+}
+```
+
 #### generatedThemes/scoped-terra-light-theme.scss
 ####
 ```scss
-.light-theme {
+:global(.light-theme) {
   @import 'themes/terra-light-theme/root-theme.scss';
 }
 ```
