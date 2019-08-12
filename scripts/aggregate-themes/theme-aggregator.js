@@ -85,10 +85,10 @@ class ThemeAggregator {
     let themeName, assets, themeScope;
 
     if (isScoped) {
-      themeName = theme;
+      themeName = theme.name;
       themeScope = SCOPED;
     } else {
-    themeName = theme.name;
+    themeName = theme;
     themeScope = ROOT;
     }
 
@@ -130,7 +130,7 @@ class ThemeAggregator {
     }
 
     const assets = [];
-    const { theme, scoped = [], generateScoped = false, generateRoot = false } = options; // TODO Remove opt in generateScoped config on next MVB
+    const { theme, scoped, generateScoped = false, generateRoot = false } = options; // TODO Remove opt in generateScoped config on next MVB
 
     ThemeAggregator.createDirectory();
 
