@@ -15,7 +15,6 @@ const webpackConfig = (options, env, argv) => {
   const {
     rootPath,
     resolveModules,
-    themeFile,
     staticOptions,
   } = options;
 
@@ -25,13 +24,17 @@ const webpackConfig = (options, env, argv) => {
   const outputPath = argv['output-path'] || path.join(rootPath, 'build');
   const publicPath = argv['output-public-path'] || '';
 
+  // THEME env variable will override default theme for wdio theme verification purposes.
+  const themeOverride = process.env.THEME;
+  const tthemeAggregatorResult = ThemeAggregator.aggregate(terraThemeConfig, themeOverride);
+
   const devConfig = {
     mode: 'development',
     entry: {
       raf: 'raf/polyfill',
       'core-js': 'core-js/stable',
       'regenerator-runtime': 'regenerator-runtime/runtime',
-      ...themeFile && { theme: themeFile },
+      ...themeAggregatorResult && { theme: themeAggregatorResult.javascriptFile },
     },
     module: {
       rules: [
@@ -104,7 +107,10 @@ const webpackConfig = (options, env, argv) => {
         test: /\.css$/,
         log: false,
         plugins: [
-          PostCSSCustomProperties({ preserve: true }),
+          PostCSSCustomProperties({
+            preserve: true,
+            ...themeAggregatorResult.rootCSSFile && { importFrom: themeAggregatorResult.rootCSSFile },
+          }),
         ],
       }),
       new DuplicatePackageCheckerPlugin({
@@ -197,14 +203,9 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     resolveModules.unshift(path.resolve(rootPath, 'aggregated-translations'));
   }
 
-  // THEME env variable will override default theme for wdio theme verification purposes.
-  const themeOverride = process.env.THEME;
-  const themeFile = ThemeAggregator.aggregate(terraThemeConfig, themeOverride);
-
   const options = {
     rootPath,
     resolveModules,
-    themeFile,
     staticOptions,
   };
 

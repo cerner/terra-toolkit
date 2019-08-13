@@ -1,12 +1,14 @@
 const fs = require('fs');
 const glob = require('glob');
 const path = require('path');
+const sass = require('node-sass');
 const Logger = require('../utils/logger');
 
 const CONFIG = 'terra-theme.config.js';
 const DISCLAIMER = fs.readFileSync(path.resolve(__dirname, 'disclaimer.txt'), 'utf8');
 const NODE_MODULES = 'node_modules/';
-const OUTPUT = 'aggregated-themes.js';
+const JAVACRIPT_OUTPUT = 'aggregated-themes.js';
+const CSS_OUTPUT = 'aggregated-themes.css';
 const OUTPUT_DIR = 'generatedThemes';
 const OUTPUT_PATH = path.resolve(process.cwd(), OUTPUT_DIR);
 const ROOT = 'root';
@@ -119,7 +121,7 @@ class ThemeAggregator {
   /**
    * Aggregates theme assets into a single file.
    * @param {Object} options - The aggregation options.
-   * @returns {string} - The output path of the aggregated theme file.
+   * @returns {Object} - The output path of the aggregated theme javascript file and css file.
    */
   static aggregateThemes(options) {
     if (!ThemeAggregator.validate(options)) {
@@ -152,7 +154,10 @@ class ThemeAggregator {
       }
     }
 
-    return ThemeAggregator.writeThemeImportFile(assets);
+    return {
+      javascriptFile: ThemeAggregator.writeFile(assets),
+      rootCSSFile: ThemeAggregator.createRootCSSFile(assets),
+    };
   }
 
   /**
@@ -172,16 +177,23 @@ class ThemeAggregator {
    * Dependency files will resolve to the node_modules directory.
    * Local files will resolve relative to the expected output directory.
    * @param {string} filePath - A file path.
-   * @returns {string} - A resolved file path.
+   * @returns {Object} - A resolved file path containing a relative path and a node module relative path
    */
   static resolve(filePath) {
-    if (filePath.indexOf(NODE_MODULES) > -1) {
-      return filePath.substring(filePath.indexOf(NODE_MODULES) + NODE_MODULES.length);
-    }
-
     // Constructs the relative path.
     const outputPath = path.resolve(OUTPUT_PATH);
-    return `${path.relative(outputPath, path.resolve(OUTPUT_PATH, filePath))}`;
+    const relativePath = `${path.relative(outputPath, path.resolve(OUTPUT_PATH, filePath))}`;
+
+    if (filePath.indexOf(NODE_MODULES) > -1) {
+      return {
+        relativePath,
+        nodeModuleRelativePath: filePath.substring(filePath.indexOf(NODE_MODULES) + NODE_MODULES.length),
+      };
+    }
+    return {
+      relativePath,
+      nodeModuleRelativePath: relativePath,
+    };
   }
 
   /**
@@ -229,17 +241,30 @@ class ThemeAggregator {
 
   /**
    * Writes a js file containing theme imports.
-   * @param {string[]} imports - An array of files to import.
+   * @param {Object[]} imports - An array of files to import.
    * @returns {string} - The filepath of the file.
    */
   static writeThemeImportFile(imports) {
-    const file = imports.reduce((acc, s) => `${acc}import '${s}';\n`, '');
-    const filePath = `${path.resolve(OUTPUT_PATH, OUTPUT)}`;
+    const file = imports.reduce((acc, s) => `${acc}import '${s.nodeModuleRelativePath}';\n`, '');
+    const filePath = `${path.resolve(OUTPUT_PATH, JAVASCRIPT_OUTPUT)}`;
 
     fs.writeFileSync(filePath, `${DISCLAIMER}${file}`);
 
-    Logger.log(`Successfully generated ${OUTPUT}.`);
+    Logger.log(`Successfully generated ${JAVACRIPT_OUTPUT}.`);
 
+    return filePath;
+  }
+
+  static createRootCSSFile(imports) {
+    const filePath = `${path.resolve(OUTPUT_PATH, CSS_OUTPUT)}`;
+
+    const result = sass.renderSync({
+      data: imports.reduce((acc, s) => `${acc}@import '${s.relativePath}';\n`, ''),
+    });
+
+    fs.writeFileSync(filePath, `${DISCLAIMER}${result.css.toString().replace(/:global /g, '')}`);
+
+    Logger.log(`Successfully generated ${CSS_OUTPUT}.`);
     return filePath;
   }
 }
