@@ -155,8 +155,8 @@ class ThemeAggregator {
     }
 
     return {
-      javascriptFile: ThemeAggregator.writeFile(assets),
-      rootCSSFile: ThemeAggregator.createRootCSSFile(assets),
+      javascriptFile: ThemeAggregator.writeJsThemeImportFile(assets),
+      rootCSSFile: ThemeAggregator.writeRootCSSFile(assets),
     };
   }
 
@@ -244,7 +244,7 @@ class ThemeAggregator {
    * @param {Object[]} imports - An array of files to import.
    * @returns {string} - The filepath of the file.
    */
-  static writeThemeImportFile(imports) {
+  static writeJsThemeImportFile(imports) {
     const file = imports.reduce((acc, s) => `${acc}import '${s.nodeModuleRelativePath}';\n`, '');
     const filePath = `${path.resolve(OUTPUT_PATH, JAVASCRIPT_OUTPUT)}`;
 
@@ -255,7 +255,7 @@ class ThemeAggregator {
     return filePath;
   }
 
-  static createRootCSSFile(imports) {
+  static writeRootCSSFile(imports) {
     const filePath = `${path.resolve(OUTPUT_PATH, CSS_OUTPUT)}`;
 
     const result = sass.renderSync({
