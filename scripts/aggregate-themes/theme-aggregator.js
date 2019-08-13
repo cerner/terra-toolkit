@@ -29,13 +29,8 @@ class ThemeAggregator {
     // Mono repo usage.
     // Aggregates themeOverride only. Used to override default theme.
     if (themeOverride) {
-      ThemeAggregator.createDirectory();
-      let asset = [];
-      asset.push(ThemeAggregator.generateTheme(themeOverride));
-      if (!asset) {
-        return null;
-      }
-      return ThemeAggregator.writeThemeImportFile(asset);
+      const options = { theme: themeOverride};
+      return ThemeAggregator.aggregateThemes(options);
     }
 
     // Consumer usage.
