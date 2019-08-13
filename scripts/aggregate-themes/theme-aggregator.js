@@ -240,7 +240,11 @@ class ThemeAggregator {
     fs.writeFileSync(filePath, file);
 
     Logger.log(`Successfully generated ${fileName}.`);
-    return `./${path.relative(OUTPUT_PATH, filePath)}`;
+    const path = `./${path.relative(OUTPUT_PATH, filePath)}`;
+    return {
+      relativePath: path,
+      nodeModuleRelativePath: path,
+    };
   }
 
   /**
