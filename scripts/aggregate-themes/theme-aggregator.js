@@ -264,6 +264,7 @@ class ThemeAggregator {
 
     const result = sass.renderSync({
       data: imports.reduce((acc, s) => `${acc}@import '${s.relativePath}';\n`, ''),
+      includePaths: imports,
     });
 
     fs.writeFileSync(filePath, `${DISCLAIMER}${result.css.toString().replace(/:global /g, '')}`);
