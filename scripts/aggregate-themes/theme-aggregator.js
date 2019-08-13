@@ -114,13 +114,11 @@ class ThemeAggregator {
    * Creates a directory to place theme files.
    */
   static createDirectory() {
-    fs.statSync(OUTPUT_DIR, (err, stats) => {
-      if (stats.isDir === true) {
-        Logger.log(`${OUTPUT_DIR} already exists.`)
-      } else {
-        fs.mkdirSync(OUTPUT_DIR);
-      };
-    });
+    if (!fs.existsSync(OUTPUT_DIR)) {
+      fs.mkdirSync(OUTPUT_DIR);
+    } else {
+      Logger.log(`Skip creating ${OUTPUT_DIR} dir - ${OUTPUT_DIR} dir already exists.`)
+    }
   }
 
   /**

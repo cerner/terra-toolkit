@@ -81,10 +81,9 @@ project
         └── component-2-theme-variables.scss
 ```
 
-The only requirement for each theme file is an object containing custom property values.
-
+##### Example - theme-variables.scss
 ```scss
-{
+:global {
   --theme-variable-one: pink;
   --theme-variable-two: purple;
 }
