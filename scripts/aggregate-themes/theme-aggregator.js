@@ -31,7 +31,7 @@ class ThemeAggregator {
     // Component repo test usage.
     // Aggregates themeOverride only. Used to override default theme.
     if (themeOverride) {
-      const configOverride = { theme: themeOverride, generateRoot: true};
+      const configOverride = { theme: themeOverride, generateRoot: true };
       return ThemeAggregator.aggregateThemes(configOverride);
     }
 
@@ -83,7 +83,8 @@ class ThemeAggregator {
    * @returns {string} - The relative file path of the generated scope theme
    */
   static generateTheme(theme, options = {}, isScoped) {
-    let themeName, assets, themeScope;
+    let themeName;
+    let themeScope;
 
     if (isScoped) {
       themeName = theme.name;
@@ -93,7 +94,7 @@ class ThemeAggregator {
       themeScope = ROOT;
     }
 
-    assets = ThemeAggregator.find(`**/themes/${themeName}/${THEME_VARIABLES}`, options);
+    const assets = ThemeAggregator.find(`**/themes/${themeName}/${THEME_VARIABLES}`, options);
 
     // Add the dependency import if it exists.
     assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${themeName}/**/${THEME_VARIABLES}`, options));
@@ -114,7 +115,7 @@ class ThemeAggregator {
     if (!fs.existsSync(OUTPUT_DIR)) {
       fs.mkdirSync(OUTPUT_DIR);
     } else {
-      Logger.log(`Skip creating ${OUTPUT_DIR} dir - already exists.`)
+      Logger.log(`Skip creating ${OUTPUT_DIR} dir - already exists.`);
     }
   }
 
@@ -129,7 +130,9 @@ class ThemeAggregator {
     }
 
     const assets = [];
-    const { theme, scoped, generateScoped = false, generateRoot = false } = options; // TODO Remove opt in generateScoped config on next MVB
+    const {
+      theme, scoped, generateScoped = false, generateRoot = false,
+    } = options; // TODO generateScoped and generateRoot on next MVB
 
     ThemeAggregator.createDirectory();
 
@@ -218,7 +221,8 @@ class ThemeAggregator {
    * @returns {string} - The theme file relative to the generatedThemes directory.
    */
   static writeThemeFile(assets, theme, isScoped) {
-    let fileName, intro;
+    let fileName;
+    let intro;
 
     if (isScoped) {
       const { name, scopeSelector = name } = theme;
@@ -246,7 +250,7 @@ class ThemeAggregator {
    */
   static writeJsThemeImportFile(imports) {
     const file = imports.reduce((acc, s) => `${acc}import '${s.nodeModuleRelativePath}';\n`, '');
-    const filePath = `${path.resolve(OUTPUT_PATH, JAVASCRIPT_OUTPUT)}`;
+    const filePath = `${path.resolve(OUTPUT_PATH, JAVACRIPT_OUTPUT)}`;
 
     fs.writeFileSync(filePath, `${DISCLAIMER}${file}`);
 
