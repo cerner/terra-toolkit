@@ -26,7 +26,7 @@ class ThemeAggregator {
    * @returns {string|null} - The output path of the aggregated theme file. Null if not generated.
    */
   static aggregate(config, themeOverride) {
-    // Mono repo usage.
+    // Component repo test usage.
     // Aggregates themeOverride only. Used to override default theme.
     if (themeOverride) {
       const configOverride = { theme: themeOverride, generateRoot: true};
@@ -112,7 +112,7 @@ class ThemeAggregator {
     if (!fs.existsSync(OUTPUT_DIR)) {
       fs.mkdirSync(OUTPUT_DIR);
     } else {
-      Logger.log(`Skip creating ${OUTPUT_DIR} dir, dir already exists.`)
+      Logger.log(`Skip creating ${OUTPUT_DIR} dir - already exists.`)
     }
   }
 
@@ -134,7 +134,7 @@ class ThemeAggregator {
     // Aggregate the default theme.
     if (theme) {
       if (generateRoot) {
-        assets.push(...ThemeAggregator.generateTheme(theme, options));
+        assets.push(ThemeAggregator.generateTheme(theme, options));
       }
       assets.push(...ThemeAggregator.aggregateTheme(theme, options));
     }
