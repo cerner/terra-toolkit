@@ -44,8 +44,6 @@ const browsers = process.env.BROWSERS;
 
 const theme = process.env.THEME;
 
-const baseScreenshotDir = theme ? './themes/#{theme}tests/wdio/__snapshots__' : null;
-
 const hasPackages = glob.sync((path.join(process.cwd(), 'packages'))).length > 0;
 
 const seleniumConfig = determineSeleniumConfig({
@@ -105,7 +103,6 @@ const config = {
   },
 
   ...theme && { theme },
-  ...baseScreenshotDir && { baseScreenshotDir },
 };
 
 // This code only executes for monorepos.  It will create a set of suites that can then be executed
