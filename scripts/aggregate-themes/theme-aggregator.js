@@ -29,7 +29,7 @@ class ThemeAggregator {
     // Mono repo usage.
     // Aggregates themeOverride only. Used to override default theme.
     if (themeOverride) {
-      const config = { theme: themeOverride, generateRoot = true};
+      const config = { theme: themeOverride, generateRoot: true};
       return ThemeAggregator.aggregateThemes(config);
     }
 
