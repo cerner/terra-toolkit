@@ -15,7 +15,6 @@ const webpackConfig = (options, env, argv) => {
   const {
     rootPath,
     resolveModules,
-    themeFile,
     staticOptions,
   } = options;
 
@@ -24,6 +23,7 @@ const webpackConfig = (options, env, argv) => {
   filename = argv['output-filename'] || filename;
   const outputPath = argv['output-path'] || path.join(rootPath, 'build');
   const publicPath = argv['output-public-path'] || '';
+  const themeAggregatorResult = ThemeAggregator.aggregate();
 
   const devConfig = {
     mode: 'development',
@@ -31,7 +31,7 @@ const webpackConfig = (options, env, argv) => {
       raf: 'raf/polyfill',
       'core-js': 'core-js/stable',
       'regenerator-runtime': 'regenerator-runtime/runtime',
-      ...themeFile && { theme: themeFile },
+      ...themeAggregatorResult && { theme: themeAggregatorResult.javascriptFile },
     },
     module: {
       rules: [
@@ -104,7 +104,10 @@ const webpackConfig = (options, env, argv) => {
         test: /\.css$/,
         log: false,
         plugins: [
-          PostCSSCustomProperties({ preserve: true }),
+          PostCSSCustomProperties({
+            preserve: true,
+            ...themeAggregatorResult.rootCSSFile && { importFrom: themeAggregatorResult.rootCSSFile },
+          }),
         ],
       }),
       new DuplicatePackageCheckerPlugin({
@@ -195,12 +198,9 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     resolveModules.unshift(path.resolve(rootPath, 'aggregated-translations'));
   }
 
-  const themeFile = ThemeAggregator.aggregate();
-
   const options = {
     rootPath,
     resolveModules,
-    themeFile,
     staticOptions,
   };
 
