@@ -124,20 +124,23 @@ Using the [generateScopeThemeConfig](###terra-theme.config.js) example generates
 #### generatedThemes/root-terra-dark-theme.scss
 ####
 ```scss
-:global(:root) {
-  @import 'themes/terra-light-theme/root-theme.scss';
+:root {
+  @import '../node_modules/terra-component/themes/terra-light-theme/theme-variables.scss';
+  @import '../themes/component-1-theme-variables.scss';
+  @import '../themes/component-2-theme-variables.scss';
 }
 ```
 
 #### generatedThemes/scoped-terra-light-theme.scss
 ####
 ```scss
-:global(.light-theme) {
-  @import 'themes/terra-light-theme/root-theme.scss';
+.light-theme {
+  @import '../node_modules/terra-component/themes/terra-light-theme/theme-variables.scss';
 }
 ```
 
 #### generatedThemes/aggregated-themes.js
 ```scss
+import 'root-terra-dark-theme.scss';
 import 'scoped-terra-light-theme.scss';
 ```
