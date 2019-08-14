@@ -256,13 +256,15 @@ class ThemeAggregator {
    * @returns {string} - The filepath of the file.
    */
   static writeJsThemeImportFile(imports) {
+    const filePath = `${path.resolve(OUTPUT_PATH, JAVASCRIPT_OUTPUT)}`;
+
     if (imports.length < 1) {
-      Logger.log(`No themes to import. Skip generating ${JAVASCRIPT_OUTPUT}`);
-      return null;
+      Logger.warn(`No themes to import. Generating empty ${JAVASCRIPT_OUTPUT}`);
+      fs.writeFileSync(filePath, `${DISCLAIMER}`);
+      return filePath;
     }
 
     const file = imports.reduce((acc, s) => `${acc}import '${s.nodeModuleRelativePath}';\n`, '');
-    const filePath = `${path.resolve(OUTPUT_PATH, JAVASCRIPT_OUTPUT)}`;
 
     fs.writeFileSync(filePath, `${DISCLAIMER}${file}`);
 
@@ -271,12 +273,12 @@ class ThemeAggregator {
   }
 
   static writeRootCSSFile(imports) {
-    if (imports.length < 1) {
-      Logger.log(`No themes to import. Skip generating ${CSS_OUTPUT}`);
-      return null;
-    }
-
     const filePath = `${path.resolve(OUTPUT_PATH, CSS_OUTPUT)}`;
+
+    if (imports.length < 1) {
+      Logger.warn(`No themes to import. Generating empty ${CSS_OUTPUT}`);
+      return filePath;
+    }
 
     const result = sass.renderSync({
       data: imports.reduce((acc, s) => `${acc}@import '${s.relativePath}';\n`, ''),
