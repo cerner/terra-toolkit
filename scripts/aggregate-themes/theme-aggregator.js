@@ -138,12 +138,15 @@ class ThemeAggregator {
 
     ThemeAggregator.createDirectory();
 
+    let asset;
     // Aggregate the default theme.
     if (theme) {
       if (generateRoot) {
-        assets.push(ThemeAggregator.generateTheme(theme, options));
+        asset = ThemeAggregator.generateTheme(theme, options);
+        if (asset) { assets.push(asset); }
       } else {
-        assets.push(...ThemeAggregator.aggregateTheme(theme, options));
+        asset = ThemeAggregator.aggregateTheme(theme, options);
+        if (asset) { assets.push(...asset); }
       }
     }
 
@@ -151,11 +154,13 @@ class ThemeAggregator {
     if (scoped) {
       if (generateScoped) {
         scoped.forEach((scopedTheme) => {
-          assets.push(ThemeAggregator.generateTheme(scopedTheme, options, true));
+          asset = ThemeAggregator.generateTheme(scopedTheme, options, true);
+          if (asset) { assets.push(asset); }
         });
       } else {
         scoped.forEach((scopedTheme) => {
-          assets.push(ThemeAggregator.aggregateTheme(scopedTheme, options));
+          asset = ThemeAggregator.aggregateTheme(scopedTheme, options);
+          if (asset) { assets.push(asset); }
         });
       }
     }
