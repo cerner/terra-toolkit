@@ -15,7 +15,7 @@ const ROOT = 'root';
 const SCOPED = 'scoped';
 const ROOT_THEME = `${ROOT}-theme.scss`;
 const SCOPED_THEME = `${SCOPED}-theme.scss`;
-const THEME_VARIABLES = '*-theme-variables.scss';
+const THEME_VARIABLES = '*theme-variables.scss';
 
 /**
  * Aggregates theme assets into a single file.
@@ -248,10 +248,11 @@ class ThemeAggregator {
     fs.writeFileSync(filePath, file);
     Logger.log(`Successfully generated ${fileName}.`);
 
-    const relativePath = path.relative(OUTPUT_PATH, filePath);
+    const relativePath = path.relative(process.cwd(), filePath);
+    const nodeModuleRelativePath = `./${path.relative(OUTPUT_PATH, filePath)}`;
     return {
       relativePath,
-      nodeModuleRelativePath: `./${relativePath}`,
+      nodeModuleRelativePath,
     };
   }
 
