@@ -192,12 +192,12 @@ class ThemeAggregator {
     if (filePath.indexOf(NODE_MODULES) > -1) {
       return {
         relativePath,
-        nodeModuleRelativePath: '../' + filePath.substring(filePath.indexOf(NODE_MODULES) + NODE_MODULES.length),
+        nodeModuleRelativePath: `../${filePath.substring(filePath.indexOf(NODE_MODULES) + NODE_MODULES.length)}`,
       };
     }
     return {
       relativePath,
-      nodeModuleRelativePath: '../' + relativePath,
+      nodeModuleRelativePath: `../${relativePath}`,
     };
   }
 
@@ -238,14 +238,15 @@ class ThemeAggregator {
     let file = assets.reduce((acc, s) => `${acc}  @import '../${s}';\n`, '');
     file = `${intro} {\n${file}}\n`;
 
-    const filePath = `${path.resolve(OUTPUT_PATH, fileName)}`;
+    const filePath = path.resolve(OUTPUT_PATH, fileName);
     fs.writeFileSync(filePath, file);
 
     Logger.log(`Successfully generated ${fileName}.`);
-    const path = `${path.relative(OUTPUT_PATH, filePath)}`;
+    const relativePath = path.relative(OUTPUT_PATH, filePath);
+
     return {
-      relativePath: path,
-      nodeModuleRelativePath: `./${path}`,
+      relativePath,
+      nodeModuleRelativePath: `./${relativePath}`,
     };
   }
 
