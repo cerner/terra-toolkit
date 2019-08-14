@@ -77,10 +77,11 @@ class ThemeAggregator {
   }
 
   /**
-   * Aggregates theme assets and generates a scope theme.
+   * Aggregates theme assets and generates a root or scope theme.
    * @param {string} theme - The theme to aggregate.
    * @param {Object} options - The aggregation options.
-   * @returns {string} - The relative file path of the generated scope theme
+   * @param {string} isScoped - Signifies to generate a scoped theme.
+   * @returns {string} - The relative file path of the generated theme.
    */
   static generateTheme(theme, options = {}, isScoped) {
     let themeName;
@@ -110,7 +111,7 @@ class ThemeAggregator {
   }
 
   /**
-   * Creates a directory to place theme files.
+   * Creates a generatedThemes directory to place theme assets.
    */
   static createDirectory() {
     if (!fs.existsSync(OUTPUT_DIR)) {
@@ -121,9 +122,9 @@ class ThemeAggregator {
   }
 
   /**
-   * Aggregates theme assets into a single file.
+   * Aggregates theme assets into a js and CSS file.
    * @param {Object} options - The aggregation options.
-   * @returns {Object} - The output path of the aggregated theme javascript file and css file.
+   * @returns {Object} - The output path of the aggregated theme js file and CSS file.
    */
   static aggregateThemes(options) {
     if (!ThemeAggregator.validate(options)) {
@@ -186,18 +187,18 @@ class ThemeAggregator {
    */
   static resolve(filePath) {
     // Constructs the relative path.
-    const outputPath = path.resolve(OUTPUT_PATH);
-    const relativePath = `${path.relative(outputPath, path.resolve(OUTPUT_PATH, filePath))}`;
+    const relativePath = `${path.relative(OUTPUT_PATH, path.resolve(OUTPUT_PATH, filePath))}`;
+    let nodeModuleRelativePath = filePath.substring(filePath.indexOf(NODE_MODULES) + NODE_MODULES.length);
 
     if (filePath.indexOf(NODE_MODULES) > -1) {
-      return {
-        relativePath,
-        nodeModuleRelativePath: `../${filePath.substring(filePath.indexOf(NODE_MODULES) + NODE_MODULES.length)}`,
-      };
+      nodeModuleRelativePath = path.relativePath(process.cwd(), nodeModuleRelativePath);
     }
+
+    nodeModuleRelativePath = path.relativePath(process.cwd(), filePath);
+
     return {
       relativePath,
-      nodeModuleRelativePath: `../${relativePath}`,
+      nodeModuleRelativePath,
     };
   }
 
@@ -240,10 +241,9 @@ class ThemeAggregator {
 
     const filePath = path.resolve(OUTPUT_PATH, fileName);
     fs.writeFileSync(filePath, file);
-
     Logger.log(`Successfully generated ${fileName}.`);
-    const relativePath = path.relative(OUTPUT_PATH, filePath);
 
+    const relativePath = path.relative(OUTPUT_PATH, filePath);
     return {
       relativePath,
       nodeModuleRelativePath: `./${relativePath}`,
@@ -265,7 +265,6 @@ class ThemeAggregator {
     }
 
     const file = imports.reduce((acc, s) => `${acc}import '${s.nodeModuleRelativePath}';\n`, '');
-
     fs.writeFileSync(filePath, `${DISCLAIMER}${file}`);
 
     Logger.log(`Successfully generated ${JAVASCRIPT_OUTPUT}.`);
@@ -286,7 +285,6 @@ class ThemeAggregator {
     });
 
     fs.writeFileSync(filePath, `${DISCLAIMER}${result.css.toString().replace(/:global /g, '')}`);
-
     Logger.log(`Successfully generated ${CSS_OUTPUT}.`);
     return filePath;
   }
