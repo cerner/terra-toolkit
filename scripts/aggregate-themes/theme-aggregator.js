@@ -7,7 +7,7 @@ const Logger = require('../utils/logger');
 const CONFIG = 'terra-theme.config.js';
 const DISCLAIMER = fs.readFileSync(path.resolve(__dirname, 'disclaimer.txt'), 'utf8');
 const NODE_MODULES = 'node_modules/';
-const JAVACRIPT_OUTPUT = 'aggregated-themes.js';
+const JAVASCRIPT_OUTPUT = 'aggregated-themes.js';
 const CSS_OUTPUT = 'aggregated-themes.css';
 const OUTPUT_DIR = 'generatedThemes';
 const OUTPUT_PATH = path.resolve(process.cwd(), OUTPUT_DIR);
@@ -256,17 +256,26 @@ class ThemeAggregator {
    * @returns {string} - The filepath of the file.
    */
   static writeJsThemeImportFile(imports) {
+    if (imports.length < 1) {
+      Logger.log(`No themes to import. Skip generating ${JAVASCRIPT_OUTPUT}`);
+      return null;
+    }
+
     const file = imports.reduce((acc, s) => `${acc}import '${s.nodeModuleRelativePath}';\n`, '');
-    const filePath = `${path.resolve(OUTPUT_PATH, JAVACRIPT_OUTPUT)}`;
+    const filePath = `${path.resolve(OUTPUT_PATH, JAVASCRIPT_OUTPUT)}`;
 
     fs.writeFileSync(filePath, `${DISCLAIMER}${file}`);
 
-    Logger.log(`Successfully generated ${JAVACRIPT_OUTPUT}.`);
-
+    Logger.log(`Successfully generated ${JAVASCRIPT_OUTPUT}.`);
     return filePath;
   }
 
   static writeRootCSSFile(imports) {
+    if (imports.length < 1) {
+      Logger.log(`No themes to import. Skip generating ${CSS_OUTPUT}`);
+      return null;
+    }
+
     const filePath = `${path.resolve(OUTPUT_PATH, CSS_OUTPUT)}`;
 
     const result = sass.renderSync({

@@ -79,7 +79,7 @@ function getScreenshotPath(ref) {
 
     const theme = process.env.THEME;
     if (theme) {
-      testPath = testPath + `/themes/${theme}`;
+      testPath += `/themes/${theme}`;
     }
 
     return path.join(testPath, '__snapshots__', refDir, getScreenshotDir(context), getScreenshotName(context));
