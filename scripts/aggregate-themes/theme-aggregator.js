@@ -141,8 +141,9 @@ class ThemeAggregator {
     if (theme) {
       if (generateRoot) {
         assets.push(ThemeAggregator.generateTheme(theme, options));
+      } else {
+        assets.push(...ThemeAggregator.aggregateTheme(theme, options));
       }
-      assets.push(...ThemeAggregator.aggregateTheme(theme, options));
     }
 
     // Aggregate the scoped themes.
@@ -186,17 +187,17 @@ class ThemeAggregator {
   static resolve(filePath) {
     // Constructs the relative path.
     const outputPath = path.resolve(OUTPUT_PATH);
-    const relativePath = `../${path.relative(outputPath, path.resolve(OUTPUT_PATH, filePath))}`;
+    const relativePath = `${path.relative(outputPath, path.resolve(OUTPUT_PATH, filePath))}`;
 
     if (filePath.indexOf(NODE_MODULES) > -1) {
       return {
         relativePath,
-        nodeModuleRelativePath: filePath.substring(filePath.indexOf(NODE_MODULES) + NODE_MODULES.length),
+        nodeModuleRelativePath: '../' + filePath.substring(filePath.indexOf(NODE_MODULES) + NODE_MODULES.length),
       };
     }
     return {
       relativePath,
-      nodeModuleRelativePath: relativePath,
+      nodeModuleRelativePath: '../' + relativePath,
     };
   }
 
@@ -241,10 +242,10 @@ class ThemeAggregator {
     fs.writeFileSync(filePath, file);
 
     Logger.log(`Successfully generated ${fileName}.`);
-    const path = `./${path.relative(OUTPUT_PATH, filePath)}`;
+    const path = `${path.relative(OUTPUT_PATH, filePath)}`;
     return {
       relativePath: path,
-      nodeModuleRelativePath: path,
+      nodeModuleRelativePath: `./${path}`,
     };
   }
 
