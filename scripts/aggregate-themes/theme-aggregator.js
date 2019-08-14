@@ -105,7 +105,8 @@ class ThemeAggregator {
     }
 
     Logger.log(`Generating ${themeScope} file for ${themeName}...`);
-    return ThemeAggregator.writeThemeFile(assets, theme, isScoped);
+    const filePath = ThemeAggregator.writeThemeFile(assets, theme, isScoped);
+    return filePath;
   }
 
   /**
@@ -185,7 +186,7 @@ class ThemeAggregator {
   static resolve(filePath) {
     // Constructs the relative path.
     const outputPath = path.resolve(OUTPUT_PATH);
-    const relativePath = `${path.relative(outputPath, path.resolve(OUTPUT_PATH, filePath))}`;
+    const relativePath = `../${path.relative(outputPath, path.resolve(OUTPUT_PATH, filePath))}`;
 
     if (filePath.indexOf(NODE_MODULES) > -1) {
       return {
