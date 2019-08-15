@@ -214,7 +214,8 @@ class ThemeAggregator {
   static validate(options) {
     const { theme, scoped } = options;
 
-    if (!theme && !scoped) {Logger.warn('No theme provided.');
+    if (!theme && !scoped) {
+      Logger.warn('No theme provided.');
       return false;
     }
 
