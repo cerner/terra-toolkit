@@ -117,7 +117,7 @@ class ThemeAggregator {
     if (!fs.existsSync(OUTPUT_DIR)) {
       fs.mkdirSync(OUTPUT_DIR);
     } else {
-      Logger.log(`Skip creating ${OUTPUT_DIR} dir - already exists.`);
+      Logger.log(`Skip creating ${OUTPUT_DIR} directory - already exists.`);
     }
   }
 

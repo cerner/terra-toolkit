@@ -37,7 +37,7 @@ const webpackConfig = (options, env, argv) => {
       raf: 'raf/polyfill',
       'core-js': 'core-js/stable',
       'regenerator-runtime': 'regenerator-runtime/runtime',
-      ...themeAggregatorResult && { theme: themeAggregatorResult.javascriptFile },
+      ...themeAggregatorResult.javascriptFile && { theme: themeAggregatorResult.javascriptFile },
     },
     module: {
       rules: [
