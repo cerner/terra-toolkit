@@ -39,7 +39,7 @@ const startWebpackDevServer = (options) => {
   if (typeof config === 'function') {
     const env = {
       ...locale && { defaultLocale: locale },
-      ...theme && theme,
+      ...theme && { theme },
     };
 
     config = config(env, { p: true });
