@@ -44,7 +44,7 @@ const startWebpackDevServer = (options) => {
 
     config = config(env, { p: true });
     }
-  }
+};
 
 
   // pull the dev server options out of the webpack config. override host, port, and stats. SRY.
