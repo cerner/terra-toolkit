@@ -214,8 +214,7 @@ class ThemeAggregator {
   static validate(options) {
     const { theme, scoped } = options;
 
-    if (!theme && !scoped) {
-      Logger.warn('No theme provided.');
+    if (!theme && !scoped) {Logger.warn('No theme provided.');
       return false;
     }
 
@@ -262,14 +261,12 @@ class ThemeAggregator {
    * @returns {string} - The filepath of the file.
    */
   static writeJsThemeImportFile(imports) {
+    if (imports.length < 1) {
+      Logger.warn(`No themes to import. Skip generating ${JAVASCRIPT_OUTPUT}.`);
+      return null;
+    }
+
     const filePath = `${path.resolve(OUTPUT_PATH, JAVASCRIPT_OUTPUT)}`;
-
-    //if (imports.length < 1) {
-      //Logger.warn(`No themes to import. Generating empty ${JAVASCRIPT_OUTPUT}`);
-      //fs.writeFileSync(filePath, `${DISCLAIMER}`);
-      //return filePath;
-    //}
-
     const file = imports.reduce((acc, s) => `${acc}import '${s.jsImportPath}';\n`, '');
     fs.writeFileSync(filePath, `${DISCLAIMER}${file}`);
 
@@ -278,14 +275,12 @@ class ThemeAggregator {
   }
 
   static writeRootCSSFile(imports) {
+    if (imports.length < 1) {
+      Logger.warn(`No themes to import. Skip generating ${CSS_OUTPUT}.`);
+      return null;
+    }
+
     const filePath = `${path.resolve(OUTPUT_PATH, CSS_OUTPUT)}`;
-
-    //if (imports.length < 1) {
-      //Logger.warn(`No themes to import. Generating empty ${CSS_OUTPUT}`);
-      //fs.writeFileSync(filePath, `${DISCLAIMER}`);
-      //return filePath;
-    //}
-
     const result = sass.renderSync({
       data: imports.reduce((acc, s) => `${acc}@import '${s.cssImportPath}';\n`, ''),
       includePaths: imports,
