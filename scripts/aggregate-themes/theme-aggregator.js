@@ -192,18 +192,18 @@ class ThemeAggregator {
    */
   static resolve(filePath) {
     // Constructs the relative path.
-    const relativePath = `${path.relative(OUTPUT_PATH, path.resolve(OUTPUT_PATH, filePath))}`;
-    let nodeModuleRelativePath = filePath.substring(filePath.indexOf(NODE_MODULES) + NODE_MODULES.length);
+    const cssImportPath = `${path.relative(OUTPUT_PATH, path.resolve(OUTPUT_PATH, filePath))}`;
+    let jsImportPath = filePath.substring(filePath.indexOf(NODE_MODULES) + NODE_MODULES.length);
 
     if (filePath.indexOf(NODE_MODULES) > -1) {
-      nodeModuleRelativePath = path.relativePath(process.cwd(), nodeModuleRelativePath);
+      jsImportPath = path.relativePath(process.cwd(), jsImportPath);
     } else {
-      nodeModuleRelativePath = path.relativePath(process.cwd(), filePath);
+      jsImportPath = path.relativePath(process.cwd(), filePath);
     }
 
     return {
-      relativePath,
-      nodeModuleRelativePath,
+      cssImportPath,
+      jsImportPath,
     };
   }
 
@@ -248,11 +248,11 @@ class ThemeAggregator {
     fs.writeFileSync(filePath, file);
     Logger.log(`Successfully generated ${fileName}.`);
 
-    const relativePath = path.relative(process.cwd(), filePath);
-    const nodeModuleRelativePath = `./${path.relative(OUTPUT_PATH, filePath)}`;
+    const cssImportPath = path.relative(process.cwd(), filePath);
+    const jsImportPath = `./${path.relative(OUTPUT_PATH, filePath)}`;
     return {
-      relativePath,
-      nodeModuleRelativePath,
+      cssImportPath,
+      jsImportPath,
     };
   }
 
@@ -270,7 +270,7 @@ class ThemeAggregator {
       return filePath;
     }
 
-    const file = imports.reduce((acc, s) => `${acc}import '${s.nodeModuleRelativePath}';\n`, '');
+    const file = imports.reduce((acc, s) => `${acc}import '${s.jsImportPath}';\n`, '');
     fs.writeFileSync(filePath, `${DISCLAIMER}${file}`);
 
     Logger.log(`Successfully generated ${JAVASCRIPT_OUTPUT}.`);
@@ -286,7 +286,7 @@ class ThemeAggregator {
     }
 
     const result = sass.renderSync({
-      data: imports.reduce((acc, s) => `${acc}@import '${s.relativePath}';\n`, ''),
+      data: imports.reduce((acc, s) => `${acc}@import '${s.cssImportPath}';\n`, ''),
       includePaths: imports,
     });
 
