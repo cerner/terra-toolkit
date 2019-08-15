@@ -191,15 +191,16 @@ class ThemeAggregator {
    * @returns {Object} - A resolved file path containing a relative path and a node module relative path
    */
   static resolve(filePath) {
-    // Constructs the relative path.
-    let relativePath = path.relative(process.cwd(), path.resolve(OUTPUT_PATH, filePath));
 
     if (filePath.indexOf(NODE_MODULES) > -1) {
-      const dependencyPath = filePath.substring(filePath.indexOf(NODE_MODULES) + NODE_MODULES.length;
+      const dependencyPath = filePath.substring(filePath.indexOf(NODE_MODULES) + NODE_MODULES.length);
       return {
         cssImportPath: dependencyPath,
         jsImportPath: dependencyPath,
-      }
+      };
+    }
+    // Constructs the relative path.
+    let relativePath = path.relative(OUTPUT_PATH, path.resolve(OUTPUT_PATH, filePath));
 
     return {
       cssImportPath: relativePath,
