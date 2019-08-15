@@ -37,14 +37,13 @@ const startWebpackDevServer = (options) => {
   let { config } = options;
   // if config is a function, execute it with prod mode if applicable.
   if (typeof config === 'function') {
-    const env = { ...locale && { defaultLocale: locale } };
-    config = config(env, { p: true });
+    const env = {
+      ...locale && { defaultLocale: locale },
+      ...theme && theme,
+    };
 
-    //if (theme) {
-      //Object.assign(env, theme);
-      //config = config(env);
-    //}
-    //console.log(`start webpack server; theme config: ${config.theme}`);
+    config = config(env, { p: true });
+    }
   }
 
 

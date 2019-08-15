@@ -18,8 +18,6 @@ const webpackConfig = (options, env, argv) => {
     staticOptions,
   } = options;
 
-  // Allow dev-site to pass in pre-baked theme config.
-  const { themeConfig } = env;
 
   const production = argv.p;
   let filename = production ? '[name]-[chunkhash]' : '[name]';
@@ -27,8 +25,10 @@ const webpackConfig = (options, env, argv) => {
   const outputPath = argv['output-path'] || path.join(rootPath, 'build');
   const publicPath = argv['output-public-path'] || '';
 
-  // THEME env variable will override default theme for wdio theme verification purposes.
+  // Used for wdio tests scripts.
   const themeOverride = process.env.THEME;
+  // Used by dev site to provide baked theme configuration.
+  const { themeConfig } = env;
   const themeAggregatorResult = ThemeAggregator.aggregate(themeConfig, themeOverride);
 
   const devConfig = {
@@ -186,7 +186,7 @@ const webpackConfig = (options, env, argv) => {
 
 const defaultWebpackConfig = (env = {}, argv = {}) => {
   const {
-    disableAggregateTranslations, disableHotReloading, terraThemeConfig,
+    disableAggregateTranslations, disableHotReloading,
   } = env;
 
   const staticOptions = {
