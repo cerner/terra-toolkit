@@ -197,9 +197,9 @@ class ThemeAggregator {
 
     if (filePath.indexOf(NODE_MODULES) > -1) {
       nodeModuleRelativePath = path.relativePath(process.cwd(), nodeModuleRelativePath);
+    } else {
+      nodeModuleRelativePath = path.relativePath(process.cwd(), filePath);
     }
-
-    nodeModuleRelativePath = path.relativePath(process.cwd(), filePath);
 
     return {
       relativePath,
