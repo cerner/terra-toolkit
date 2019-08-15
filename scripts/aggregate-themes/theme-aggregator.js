@@ -192,18 +192,18 @@ class ThemeAggregator {
    */
   static resolve(filePath) {
     // Constructs the relative path.
-    const cssImportPath = `${path.relative(OUTPUT_PATH, path.resolve(OUTPUT_PATH, filePath))}`;
-    let jsImportPath = filePath.substring(filePath.indexOf(NODE_MODULES) + NODE_MODULES.length);
+    let relativePath = path.relative(process.cwd(), path.resolve(OUTPUT_PATH, filePath));
 
     if (filePath.indexOf(NODE_MODULES) > -1) {
-      jsImportPath = path.relativePath(process.cwd(), jsImportPath);
-    } else {
-      jsImportPath = path.relativePath(process.cwd(), filePath);
-    }
+      const dependencyPath = filePath.substring(filePath.indexOf(NODE_MODULES) + NODE_MODULES.length;
+      return {
+        cssImportPath: dependencyPath,
+        jsImportPath: dependencyPath,
+      }
 
     return {
-      cssImportPath,
-      jsImportPath,
+      cssImportPath: relativePath,
+      jsImportPath: relativePath,
     };
   }
 
