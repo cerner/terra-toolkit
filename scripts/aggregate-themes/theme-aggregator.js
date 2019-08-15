@@ -282,6 +282,7 @@ class ThemeAggregator {
 
     if (imports.length < 1) {
       Logger.warn(`No themes to import. Generating empty ${CSS_OUTPUT}`);
+      fs.writeFileSync(filePath, `${DISCLAIMER}`);
       return filePath;
     }
 
