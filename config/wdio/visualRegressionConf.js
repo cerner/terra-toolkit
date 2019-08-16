@@ -77,9 +77,7 @@ function getScreenshotPath(ref) {
     }
     const refDir = screenshotSetup[`${ref}Dir`];
 
-    //const theme = process.env.THEME;
     const theme = global.browser.options.theme;
-    console.log(`theme: ${theme}`);
     if (theme) {
       return path.join(testPath, '__snapshots__', refDir, theme, getScreenshotDir(context), getScreenshotName(context));
     }
