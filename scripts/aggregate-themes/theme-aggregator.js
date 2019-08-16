@@ -130,7 +130,7 @@ class ThemeAggregator {
       // Generate root theme.
       if (generateRoot) {
         const themeFiles = ThemeAggregator.findThemeVariableFiles(theme, options);
-        if (themeFiles) { asset = ThemeAggregator.writeThemeFile(themeFiles, theme, ROOT, `:${ROOT}`); }
+        if (themeFiles) { asset = ThemeAggregator.writeSCSSFile(themeFiles, theme, ROOT, `:${ROOT}`); }
         if (asset) { assets.push(asset); }
       } else {
         // Aggregate the default theme (root-theme.scss).
@@ -146,7 +146,7 @@ class ThemeAggregator {
           const { name, scopeSelector = name } = scopedTheme;
           const themeFiles = ThemeAggregator.findThemeVariableFiles(name, options);
           if (themeFiles) {
-            asset = ThemeAggregator.writeThemeFile(themeFiles, name, SCOPED, `.${scopeSelector}`);
+            asset = ThemeAggregator.writeSCSSFile(themeFiles, name, SCOPED, `.${scopeSelector}`);
           }
           if (asset) { assets.push(asset); }
         });
@@ -160,7 +160,7 @@ class ThemeAggregator {
     }
 
     return {
-      javascriptFile: ThemeAggregator.writeJsThemeImportFile(assets),
+      javascriptFile: ThemeAggregator.writeJsFile(assets),
       rootCSSFile: ThemeAggregator.writeRootCSSFile(assets),
     };
   }
@@ -224,7 +224,7 @@ class ThemeAggregator {
    * @param {string} scopeSelector - scss scope selector to encase theme.
    * @returns {object} - the object containing the generated file path relative to the root directory and relative to the generatedThemes directory.
    */
-  static writeThemeFile(assets, themeName, prefix, scopeSelector) {
+  static writeSCSSFile(assets, themeName, prefix, scopeSelector) {
     const fileName = `${prefix}-${themeName}.scss`;
     const intro = `${DISCLAIMER}${scopeSelector}`;
 
@@ -248,7 +248,7 @@ class ThemeAggregator {
    * @param {Object[]} imports - An array of files to import.
    * @returns {string} - The filepath of the file.
    */
-  static writeJsThemeImportFile(imports) {
+  static writeJsFile(imports) {
     if (imports.length < 1) {
       Logger.warn(`No themes to import. Skip generating ${JAVASCRIPT_OUTPUT}.`);
       return null;
