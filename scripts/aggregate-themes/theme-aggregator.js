@@ -83,16 +83,8 @@ class ThemeAggregator {
    * @param {string} isScoped - Signifies to generate a scoped theme.
    * @returns {string} - The relative file path of the generated theme.
    */
-  static findThemeVariableFiles(theme, options = {}, isScoped) {
-    let themeName;
-
-    if (isScoped) {
-      themeName = theme.name;
-    } else {
-      themeName = theme;
-    }
-
-    const assets = ThemeAggregator.find(`**/themes/${themeName}/${THEME_VARIABLES}`, options);
+  static findThemeVariableFiles(themeName, options = {}) {
+    const assets = ThemeAggregator.find(`**/themes/${themeName}/**/${THEME_VARIABLES}`, options);
 
     // Add the dependency import if it exists.
     assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${themeName}/**/${THEME_VARIABLES}`, options));
@@ -138,7 +130,7 @@ class ThemeAggregator {
     if (theme) {
       if (generateRoot) {
         const themeFiles = ThemeAggregator.findThemeVariableFiles(theme, options);
-        if (themeFiles) { asset = ThemeAggregator.writeThemeFile(themeFiles, theme, false); }
+        if (themeFiles) { asset = ThemeAggregator.writeThemeFile(themeFiles, theme, ROOT, `:${ROOT}`); }
         if (asset) { assets.push(asset); }
       } else {
         asset = ThemeAggregator.aggregateTheme(theme, options);
@@ -150,8 +142,11 @@ class ThemeAggregator {
     if (scoped) {
       if (generateScoped) {
         scoped.forEach((scopedTheme) => {
-          const themeFiles = ThemeAggregator.findThemeVariableFiles(scopedTheme, options, true);
-          if (themeFiles) { asset = ThemeAggregator.writeThemeFile(themeFiles, scopedTheme, true); }
+          const { name, scopeSelector = name } = scopedTheme;
+          const themeFiles = ThemeAggregator.findThemeVariableFiles(name, options);
+          if (themeFiles) {
+            asset = ThemeAggregator.writeThemeFile(themeFiles, name, SCOPED, `.${scopeSelector}`);
+          }
           if (asset) { assets.push(asset); }
         });
       } else {
@@ -225,18 +220,10 @@ class ThemeAggregator {
    * @param {Object | string} theme - The object containing scoped theme name and scope selector, or string containing root theme name.
    * @returns {string} - The theme file relative to the generatedThemes directory.
    */
-  static writeThemeFile(assets, theme, isScoped) {
-    let fileName;
-    let intro;
+  static writeThemeFile(assets, themeName, prefix, scopeSelector) {
 
-    if (isScoped) {
-      const { name, scopeSelector = name } = theme;
-      fileName = `${SCOPED}-${name}.scss`;
-      intro = `${DISCLAIMER}.${scopeSelector}`;
-    } else {
-      fileName = `${ROOT}-${theme}.scss`;
-      intro = `${DISCLAIMER}:${ROOT}`;
-    }
+    const fileName = `${prefix}-${themeName}.scss`;
+    const intro = `${DISCLAIMER}${scopeSelector}`;
 
     let file = assets.reduce((acc, s) => `${acc}  @import '../${s}';\n`, '');
     file = `${intro} {\n${file}}\n`;

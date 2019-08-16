@@ -37,13 +37,12 @@ describe('Theme Aggregator', () => {
     });
   });
 
-  describe('generateScopedTheme', () => {
-    it('returns an array of aggregated scoped theme files', () => {
-      const theme = { name: 'terra-mock-dark-theme' };
-      const isScoped = true;
+  describe('findThemeVariableFiles', () => {
+    it("returns the requested theme's files", () => {
+      const themeName = 'terra-mock-dark-theme';
 
-      const files = ThemeAggregator.generateTheme(theme, {}, isScoped);
-      const expected = './scoped-terra-mock-dark-theme.scss';
+      const files = ThemeAggregator.findThemeVariableFiles(themeName);
+      const expected = ["tests/jest/fixtures/themes/terra-mock-dark-theme/theme-variables.scss"];
 
       expect(files).toEqual(expected);
     });
