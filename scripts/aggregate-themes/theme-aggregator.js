@@ -151,7 +151,7 @@ class ThemeAggregator {
       if (generateScoped) {
         scoped.forEach((scopedTheme) => {
           const themeFiles = ThemeAggregator.findThemeVariableFiles(scopedTheme, options, true);
-          if (themeFiles) { asset = ThemeAggregator.writeThemeFile(themeFiles, theme, true); }
+          if (themeFiles) { asset = ThemeAggregator.writeThemeFile(themeFiles, scopedTheme, true); }
           if (asset) { assets.push(asset); }
         });
       } else {
