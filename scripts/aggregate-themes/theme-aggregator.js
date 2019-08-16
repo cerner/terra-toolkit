@@ -145,9 +145,7 @@ class ThemeAggregator {
         scoped.forEach((scopedTheme) => {
           const { name, scopeSelector = name } = scopedTheme;
           const themeFiles = ThemeAggregator.findThemeVariableFiles(name, options);
-          if (themeFiles) {
-            asset = ThemeAggregator.writeSCSSFile(themeFiles, name, SCOPED, `.${scopeSelector}`);
-          }
+          if (themeFiles) { asset = ThemeAggregator.writeSCSSFile(themeFiles, name, SCOPED, `.${scopeSelector}`); }
           if (asset) { assets.push(asset); }
         });
       } else {
@@ -272,11 +270,12 @@ class ThemeAggregator {
       Logger.warn(`No themes to import. Skip generating ${CSS_OUTPUT}.`);
       return null;
     }
+    const importPaths = imports.push('node_modules/terra-mixins');
 
     const filePath = `${path.resolve(OUTPUT_PATH, CSS_OUTPUT)}`;
     const result = sass.renderSync({
       data: imports.reduce((acc, s) => `${acc}@import '${s.cssImportPath}';\n`, ''),
-      includePaths: imports,
+      includePaths: importPaths,
     });
 
     fs.writeFileSync(filePath, `${DISCLAIMER}${result.css.toString().replace(/:global /g, '')}`);
