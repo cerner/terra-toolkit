@@ -111,7 +111,7 @@ class ThemeAggregator {
   /**
    * Aggregates theme assets into a js and CSS file.
    * @param {Object} options - The aggregation options.
-   * @returns {Object} - The output path of the aggregated theme js file and CSS file.
+   * @returns {Object} - The file paths of the generated js and CSS file.
    */
   static aggregateThemes(options) {
     if (!ThemeAggregator.validate(options)) {
@@ -126,21 +126,22 @@ class ThemeAggregator {
 
     ThemeAggregator.createDirectory();
 
-    // Aggregate the default theme.
     if (theme) {
+      // Generate root theme.
       if (generateRoot) {
         const themeFiles = ThemeAggregator.findThemeVariableFiles(theme, options);
         if (themeFiles) { asset = ThemeAggregator.writeThemeFile(themeFiles, theme, ROOT, `:${ROOT}`); }
         if (asset) { assets.push(asset); }
       } else {
+        // Aggregate the default theme (root-theme.scss).
         asset = ThemeAggregator.aggregateTheme(theme, options);
         if (asset) { assets.push(...asset); }
       }
     }
 
-    // Aggregate the scoped themes.
     if (scoped) {
       if (generateScoped) {
+        // Generate the scoped themes.
         scoped.forEach((scopedTheme) => {
           const { name, scopeSelector = name } = scopedTheme;
           const themeFiles = ThemeAggregator.findThemeVariableFiles(name, options);
@@ -150,6 +151,7 @@ class ThemeAggregator {
           if (asset) { assets.push(asset); }
         });
       } else {
+        // Aggregate the scoped themes.
         scoped.forEach((scopedTheme) => {
           asset = ThemeAggregator.aggregateTheme(scopedTheme, options);
           if (asset) { assets.push(asset); }
@@ -180,7 +182,7 @@ class ThemeAggregator {
    * Dependency files will resolve to the node_modules directory.
    * Local files will resolve relative to the expected output directory.
    * @param {string} filePath - A file path.
-   * @returns {Object} - A resolved file path containing a relative path and a node module relative path
+   * @returns {Object} - Resolved file paths containing either relative or node module paths.
    */
   static resolve(filePath) {
     if (filePath.indexOf(NODE_MODULES) > -1) {
@@ -215,13 +217,14 @@ class ThemeAggregator {
   }
 
   /**
-   * Writes a scss file containing either root or scoped theme imports.
-   * @param {string} assets - The theme to aggregate.
-   * @param {Object | string} theme - The object containing scoped theme name and scope selector, or string containing root theme name.
-   * @returns {string} - The theme file relative to the generatedThemes directory.
+   * Generates a theme scss file and outputs it to the generatedThemes directory.
+   * @param {string} assets - The aggregated theme files to import within generated file.
+   * @param {string} themeName - Name of theme to aggregate.
+   * @param {string} prefix - Prefix to append to generated file.
+   * @param {string} scopeSelector - scss scope selector to encase theme.
+   * @returns {object} - the object containing the generated file path relative to the root directory and relative to the generatedThemes directory.
    */
   static writeThemeFile(assets, themeName, prefix, scopeSelector) {
-
     const fileName = `${prefix}-${themeName}.scss`;
     const intro = `${DISCLAIMER}${scopeSelector}`;
 
@@ -259,6 +262,11 @@ class ThemeAggregator {
     return filePath;
   }
 
+  /**
+   * Writes a css file containing theme imports. Necessary for code splitting compatibility.
+   * @param {Object[]} imports - An array of files to import.
+   * @returns {string} - The filepath of the file.
+   */
   static writeRootCSSFile(imports) {
     if (imports.length < 1) {
       Logger.warn(`No themes to import. Skip generating ${CSS_OUTPUT}.`);
