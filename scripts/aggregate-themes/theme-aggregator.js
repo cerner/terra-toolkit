@@ -83,16 +83,13 @@ class ThemeAggregator {
    * @param {string} isScoped - Signifies to generate a scoped theme.
    * @returns {string} - The relative file path of the generated theme.
    */
-  static generateTheme(theme, options = {}, isScoped) {
+  static findThemeVariableFiles(theme, options = {}, isScoped) {
     let themeName;
-    let themeScope;
 
     if (isScoped) {
       themeName = theme.name;
-      themeScope = SCOPED;
     } else {
       themeName = theme;
-      themeScope = ROOT;
     }
 
     const assets = ThemeAggregator.find(`**/themes/${themeName}/${THEME_VARIABLES}`, options);
@@ -105,9 +102,7 @@ class ThemeAggregator {
       return null;
     }
 
-    Logger.log(`Generating ${themeScope} file for ${themeName}...`);
-    const filePath = ThemeAggregator.writeThemeFile(assets, theme, isScoped);
-    return filePath;
+    return assets;
   }
 
   /**
@@ -132,17 +127,18 @@ class ThemeAggregator {
     }
 
     const assets = [];
+    let asset;
     const {
       theme, scoped, generateScoped = false, generateRoot = false,
     } = options; // TODO generateScoped and generateRoot on next MVB
 
     ThemeAggregator.createDirectory();
 
-    let asset;
     // Aggregate the default theme.
     if (theme) {
       if (generateRoot) {
-        asset = ThemeAggregator.generateTheme(theme, options);
+        const themeFiles = ThemeAggregator.findThemeVariableFiles(theme, options);
+        if (themeFiles) { asset = ThemeAggregator.writeThemeFile(themeFiles, theme, false); }
         if (asset) { assets.push(asset); }
       } else {
         asset = ThemeAggregator.aggregateTheme(theme, options);
@@ -154,7 +150,8 @@ class ThemeAggregator {
     if (scoped) {
       if (generateScoped) {
         scoped.forEach((scopedTheme) => {
-          asset = ThemeAggregator.generateTheme(scopedTheme, options, true);
+          const themeFiles = ThemeAggregator.findThemeVariableFiles(scopedTheme, options, true);
+          if (themeFiles) { asset = ThemeAggregator.writeThemeFile(themeFiles, theme, true); }
           if (asset) { assets.push(asset); }
         });
       } else {
@@ -191,7 +188,6 @@ class ThemeAggregator {
    * @returns {Object} - A resolved file path containing a relative path and a node module relative path
    */
   static resolve(filePath) {
-
     if (filePath.indexOf(NODE_MODULES) > -1) {
       const dependencyPath = filePath.substring(filePath.indexOf(NODE_MODULES) + NODE_MODULES.length);
       return {
@@ -200,7 +196,7 @@ class ThemeAggregator {
       };
     }
     // Constructs the relative path.
-    let relativePath = path.relative(OUTPUT_PATH, path.resolve(OUTPUT_PATH, filePath));
+    const relativePath = path.relative(OUTPUT_PATH, path.resolve(OUTPUT_PATH, filePath));
 
     return {
       cssImportPath: relativePath,
