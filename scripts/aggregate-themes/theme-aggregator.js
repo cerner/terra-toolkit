@@ -270,12 +270,10 @@ class ThemeAggregator {
       Logger.warn(`No themes to import. Skip generating ${CSS_OUTPUT}.`);
       return null;
     }
-    const importPaths = imports.push('node_modules/terra-mixins');
 
     const filePath = `${path.resolve(OUTPUT_PATH, CSS_OUTPUT)}`;
     const result = sass.renderSync({
       data: imports.reduce((acc, s) => `${acc}@import '${s.cssImportPath}';\n`, ''),
-      includePaths: importPaths,
     });
 
     fs.writeFileSync(filePath, `${DISCLAIMER}${result.css.toString().replace(/:global /g, '')}`);
