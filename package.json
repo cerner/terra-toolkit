@@ -36,7 +36,7 @@
     "extends": "terra",
     "settings": {
       "polyfills": [
-        "promises"
+        "Promise"
       ]
     }
   },
@@ -46,7 +46,7 @@
     "clean:build": "rm -rf build",
     "compile": "babel src --out-dir lib --copy-files",
     "jest": "jest --config jestConfig.js",
-    "lint": "eslint --ext .js .",
+    "lint": "eslint --fix --ext .js .",
     "pack": "webpack --config tests/test.config.js -p",
     "prepare": "npm run compile",
     "prepublishOnly": "npm whoami && check-installed-dependencies && npm test",
@@ -120,8 +120,8 @@
     "browserslist-config-terra": "^1.0.0",
     "check-installed-dependencies": "^1.0.0",
     "core-js": "^3.1.3",
-    "eslint": "^5.12.0",
-    "eslint-config-terra": "^2.2.0",
+    "eslint": "^6.1.0",
+    "eslint-config-terra": "cerner/eslint-config-terra#update-dependencies",
     "html-webpack-plugin": "^3.1.0",
     "jest": "^24.0.0",
     "memory-fs": "^0.4.1",
