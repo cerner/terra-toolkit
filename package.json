@@ -46,7 +46,7 @@
     "clean:build": "rm -rf build",
     "compile": "babel src --out-dir lib --copy-files",
     "jest": "jest --config jestConfig.js",
-    "lint": "eslint --fix --ext .js .",
+    "lint": "eslint --ext .js .",
     "pack": "webpack --config tests/test.config.js -p",
     "prepare": "npm run compile",
     "prepublishOnly": "npm whoami && check-installed-dependencies && npm test",
