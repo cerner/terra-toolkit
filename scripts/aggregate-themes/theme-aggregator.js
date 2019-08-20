@@ -215,6 +215,20 @@ class ThemeAggregator {
   }
 
   /**
+   * Allows node-sass to correctly resolve sass loader tilde (~) paths to home directory node modules.
+   * @param {string} url - the path in import as-is
+   * @returns {object} an object literal containing the resolved path.
+   */
+  static resolveTildePath(url) {
+    let resolvedPath;
+    if (url[0] === '~') {
+      resolvedPath = path.resolve(process.cwd(), NODE_MODULES, url.substring(1));
+    }
+
+    return { file: resolvedPath };
+  }
+
+  /**
    * Generates a theme scss file and outputs it to the generatedThemes directory.
    * @param {string} assets - The aggregated theme files to import within generated file.
    * @param {string} themeName - Name of theme to aggregate.
@@ -274,6 +288,7 @@ class ThemeAggregator {
     const filePath = `${path.resolve(OUTPUT_PATH, CSS_OUTPUT)}`;
     const result = sass.renderSync({
       data: imports.reduce((acc, s) => `${acc}@import '${s.cssImportPath}';\n`, ''),
+      importer: ThemeAggregator.resolveTildePath,
     });
 
     fs.writeFileSync(filePath, `${DISCLAIMER}${result.css.toString().replace(/:global /g, '')}`);
