@@ -134,7 +134,6 @@ class ThemeAggregator {
           asset = ThemeAggregator.writeSCSSFile(themeFiles, theme, ROOT, `:${ROOT}`);
         }
         if (asset) {
-          asset.includePaths = themeFiles;
           assets.push(asset);
         }
       } else {
@@ -154,7 +153,6 @@ class ThemeAggregator {
             asset = ThemeAggregator.writeSCSSFile(themeFiles, name, SCOPED, `.${scopeSelector}`);
           }
           if (asset) {
-            asset.includePaths = themeFiles;
             assets.push(asset);
           }
         });
@@ -167,10 +165,7 @@ class ThemeAggregator {
       }
     }
 
-    return {
-      javascriptFile: ThemeAggregator.writeJsFile(assets),
-      rootCSSFile: ThemeAggregator.writeRootCSSFile(assets),
-    };
+    return ThemeAggregator.writeJsFile(assets);
   }
 
   /**
@@ -197,16 +192,10 @@ class ThemeAggregator {
     const relativePath = path.relative(OUTPUT_PATH, path.resolve(OUTPUT_PATH, filePath));
     if (filePath.indexOf(NODE_MODULES) > -1) {
       const dependencyPath = filePath.substring(filePath.indexOf(NODE_MODULES) + NODE_MODULES.length);
-      return {
-        scssImportPath: relativePath,
-        jsImportPath: dependencyPath,
-      };
+      return dependencyPath;
     }
 
-    return {
-      scssImportPath: relativePath,
-      jsImportPath: relativePath,
-    };
+    return relativePath;
   }
 
   /**
@@ -222,20 +211,6 @@ class ThemeAggregator {
     }
 
     return true;
-  }
-
-  /**
-   * Allows node-sass to correctly resolve sass loader tilde (~) paths to home directory node modules.
-   * @param {string} url - the path in import as-is
-   * @returns {object} an object literal containing the resolved path.
-   */
-  static resolveTildePath(url) {
-    let resolvedPath;
-    if (url[0] === '~') {
-      resolvedPath = path.resolve(process.cwd(), NODE_MODULES, url.substring(1));
-    }
-
-    return { file: resolvedPath };
   }
 
   /**
@@ -257,12 +232,7 @@ class ThemeAggregator {
     fs.writeFileSync(filePath, file);
     Logger.log(`Successfully generated ${fileName}.`);
 
-    const scssImportPath = path.relative(process.cwd(), filePath);
-    const jsImportPath = `./${path.relative(OUTPUT_PATH, filePath)}`;
-    return {
-      scssImportPath,
-      jsImportPath,
-    };
+    return `./${path.relative(OUTPUT_PATH, filePath)}`;
   }
 
   /**
@@ -277,43 +247,10 @@ class ThemeAggregator {
     }
 
     const filePath = `${path.resolve(OUTPUT_PATH, JAVASCRIPT_OUTPUT)}`;
-    const file = imports.reduce((acc, s) => `${acc}import '${s.jsImportPath}';\n`, '');
+    const file = imports.reduce((acc, s) => `${acc}import '${s}';\n`, '');
     fs.writeFileSync(filePath, `${DISCLAIMER}${file}`);
 
     Logger.log(`Successfully generated ${JAVASCRIPT_OUTPUT}.`);
-    return filePath;
-  }
-
-  /**
-   * Writes a css file containing theme imports. Necessary for code splitting compatibility.
-   * @param {Object[]} imports - An array of files to import.
-   * @returns {string} - The filepath of the file.
-   */
-  static writeRootCSSFile(imports) {
-    if (imports.length < 1) {
-      Logger.warn(`No themes to import. Skip generating ${CSS_OUTPUT}.`);
-      return null;
-    }
-
-    const filePath = `${path.resolve(OUTPUT_PATH, CSS_OUTPUT)}`;
-    const includePaths = imports.map(
-      (x) => {
-        if (x.includePaths) {
-          return x.includePaths;
-        }
-        return null;
-      },
-    );
-    includePaths.push(path.relative(process.cwd(), path.resolve(process.cwd(), 'node_modules')));
-
-    const result = sass.renderSync({
-      data: imports.reduce((acc, s) => `${acc}@import '${s.scssImportPath}';\n`, ''),
-      importer: ThemeAggregator.resolveTildePath,
-      includePaths,
-    });
-
-    fs.writeFileSync(filePath, `${DISCLAIMER}${result.css.toString().replace(/:global /g, '')}`);
-    Logger.log(`Successfully generated ${CSS_OUTPUT}.`);
     return filePath;
   }
 }
