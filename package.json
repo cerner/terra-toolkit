@@ -93,6 +93,7 @@
     "raw-loader": "^3.0.0",
     "sass-loader": "^7.0.1",
     "terra-aggregate-translations": "^1.0.0",
+    "terra-mixins": "^1.33.0",
     "terser-webpack-plugin": "^1.1.0",
     "wdio-mocha-framework": "^0.6.4",
     "wdio-visual-regression-service": "^0.9.0",

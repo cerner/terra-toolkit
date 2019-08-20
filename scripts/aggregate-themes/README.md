@@ -62,10 +62,9 @@ The `theme` option accepts the string name of a default theme. The default theme
 
 The `scoped` option accepts an array of theme names to aggregate. Only the `scoped-theme.scss` files will be aggregated.
 
-## Getting Started - Generate Root and Scoped Themes (Opt-in)
-Alternatively, an opt-in feature exists to generate root and scoped themes with a specified selector, then output a single `aggregated-themes.js` file. Once activated, theme aggregation searches files following the namespace `*theme-variables`, then generates root or scoped theme files. These generated file(s) output to the `generatedThemes` directory and are imported into `aggregated-themes.js`.
+## Getting Started - Generate Root and Scoped Themes
+Alternatively, an opt-in feature exists to generate root and scoped themes, then output a single `aggregated-themes.js` file within the `generatedThemes` directory. Once activated, theme aggregation searches files following the namespace `*theme-variables`, then generates root or scoped theme files. These generated file(s) output to the `generatedThemes` directory and are imported into `aggregated-themes.js`.
 
-**Note**, root and scope theme generation will be the default behaviour for terra-toolkit v6, eliminating the need for pre-baked root and scope files.
 ```txt
 project
 ├── node_modules
@@ -109,11 +108,11 @@ module.exports = generateScopeThemeConfig;
 ### Opt-in Options
 
 #### GenerateRoot (Optional)
-Opt-in flag. Set to true to generate a theme under the root selector.
+Set to true to generate a theme under the root selector.
 
 #### GenerateScoped (Optional)
 
-Opt-in flag. Set to true to generate scope themes with a given scope selector.
+Set to true to generate scope themes with a given scope selector.
 
 #### Scoped (Optional)
 
@@ -125,9 +124,9 @@ Using the [generateScopeThemeConfig](###terra-theme.config.js) example generates
 ####
 ```scss
 :root {
-  @import '../node_modules/terra-component/themes/terra-light-theme/theme-variables.scss';
-  @import '../themes/component-1-theme-variables.scss';
-  @import '../themes/component-2-theme-variables.scss';
+  @import '../node_modules/terra-component/themes/terra-dark-theme/theme-variables.scss';
+  @import '../themes/terra-dark-theme/component-1-theme-variables.scss';
+  @import '../themes/terra-dark-theme/component-2-theme-variables.scss';
 }
 ```
 
@@ -141,6 +140,6 @@ Using the [generateScopeThemeConfig](###terra-theme.config.js) example generates
 
 #### generatedThemes/aggregated-themes.js
 ```scss
-import 'root-terra-dark-theme.scss';
-import 'scoped-terra-light-theme.scss';
+import './root-terra-dark-theme.scss';
+import './scoped-terra-light-theme.scss';
 ```
