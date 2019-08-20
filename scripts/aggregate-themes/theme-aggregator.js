@@ -128,16 +128,12 @@ class ThemeAggregator {
       // Generate root theme.
       if (generateRoot) {
         const themeFiles = ThemeAggregator.findThemeVariableFiles(theme, options);
-        if (themeFiles) {
-          asset = ThemeAggregator.writeSCSSFile(themeFiles, theme, ROOT, `:${ROOT}`);
-        }
-        if (asset) {
-          assets.push(asset);
-        }
+        if (themeFiles) asset = ThemeAggregator.writeSCSSFile(themeFiles, theme, ROOT, `:${ROOT}`);
+        if (asset) assets.push(asset);
       } else {
         // Aggregate the default theme (root-theme.scss).
         asset = ThemeAggregator.aggregateTheme(theme, options);
-        if (asset) { assets.push(...asset); }
+        if (asset) assets.push(...asset);
       }
     }
 
@@ -147,18 +143,14 @@ class ThemeAggregator {
         scoped.forEach((scopedTheme) => {
           const { name, scopeSelector = name } = scopedTheme;
           const themeFiles = ThemeAggregator.findThemeVariableFiles(name, options);
-          if (themeFiles) {
-            asset = ThemeAggregator.writeSCSSFile(themeFiles, name, SCOPED, `.${scopeSelector}`);
-          }
-          if (asset) {
-            assets.push(asset);
-          }
+          if (themeFiles) asset = ThemeAggregator.writeSCSSFile(themeFiles, name, SCOPED, `.${scopeSelector}`);
+          if (asset) assets.push(asset);
         });
       } else {
         // Aggregate the scoped themes.
         scoped.forEach((scopedTheme) => {
           asset = ThemeAggregator.aggregateTheme(scopedTheme, options);
-          if (asset) { assets.push(asset); }
+          if (asset) assets.push(asset);
         });
       }
     }
