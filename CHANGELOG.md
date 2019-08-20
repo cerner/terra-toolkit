@@ -5,7 +5,6 @@ Unreleased
 ----------
 ### Added
 * Added chunk filename support
-* Created webpack entries configuration such that polyfill entries can be extended.
 
 5.4.0 - (July 31, 2019)
 ----------
