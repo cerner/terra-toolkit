@@ -42,8 +42,8 @@ const startWebpackDevServer = (options) => {
   }
 
   // pull the dev server options out of the webpack config. override host, port, and stats. SRY.
-  const devServerOptions = Object.assign({}, config.devServer, {
-    // Disable hot reloading
+  const devServerOptions = {
+    ...config.devServer, // Disable hot reloading
     hot: false,
     inline: false,
     host,
@@ -53,7 +53,7 @@ const startWebpackDevServer = (options) => {
       colors: true,
       children: false,
     },
-  });
+  };
 
   return new Promise((resolve, reject) => {
     // get a compiler
