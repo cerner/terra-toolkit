@@ -1,14 +1,12 @@
 const fs = require('fs');
 const glob = require('glob');
 const path = require('path');
-const sass = require('node-sass');
 const Logger = require('../utils/logger');
 
 const CONFIG = 'terra-theme.config.js';
 const DISCLAIMER = fs.readFileSync(path.resolve(__dirname, 'disclaimer.txt'), 'utf8');
 const NODE_MODULES = 'node_modules/';
 const JAVASCRIPT_OUTPUT = 'aggregated-themes.js';
-const CSS_OUTPUT = 'aggregated-themes.css';
 const OUTPUT_DIR = 'generatedThemes';
 const OUTPUT_PATH = path.resolve(process.cwd(), OUTPUT_DIR);
 const ROOT = 'root';
