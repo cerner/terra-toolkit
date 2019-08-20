@@ -15,13 +15,14 @@ const webpackConfig = (options, env, argv) => {
   const {
     rootPath,
     resolveModules,
-    themeFile,
     staticOptions,
+    themeFile,
   } = options;
 
   const production = argv.p;
-  let filename = production ? '[name]-[chunkhash]' : '[name]';
-  filename = argv['output-filename'] || filename;
+  const fileNameStategy = production ? '[name]-[chunkhash]' : '[name]';
+  const chunkFilename = argv['output-chunk-filename'] || fileNameStategy;
+  const filename = argv['output-filename'] || fileNameStategy;
   const outputPath = argv['output-path'] || path.join(rootPath, 'build');
   const publicPath = argv['output-public-path'] || '';
 
@@ -98,6 +99,7 @@ const webpackConfig = (options, env, argv) => {
     plugins: [
       new MiniCssExtractPlugin({
         filename: `${filename}.css`,
+        chunkFilename: `${chunkFilename}.css`,
         ignoreOrder: true,
       }),
       new PostCSSAssetsPlugin({
@@ -127,6 +129,7 @@ const webpackConfig = (options, env, argv) => {
     },
     output: {
       filename: `${filename}.js`,
+      chunkFilename: `${chunkFilename}.js`,
       path: outputPath,
       publicPath,
     },
@@ -190,6 +193,7 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
   const rootPath = processPath.includes('packages') ? processPath.split('packages')[0] : processPath;
 
   const resolveModules = ['node_modules'];
+
   if (!disableAggregateTranslations) {
     aggregateTranslations({ baseDir: rootPath, ...env.aggregateOptions });
     resolveModules.unshift(path.resolve(rootPath, 'aggregated-translations'));
@@ -200,8 +204,8 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
   const options = {
     rootPath,
     resolveModules,
-    themeFile,
     staticOptions,
+    themeFile,
   };
 
   return webpackConfig(options, env, argv);

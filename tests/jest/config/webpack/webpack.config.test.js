@@ -64,7 +64,11 @@ describe('webpack config', () => {
       expect(config).toHaveProperty('plugins');
       expect(config.plugins).toHaveLength(3);
 
-      expect(MiniCssExtractPlugin).toBeCalled();
+      expect(MiniCssExtractPlugin).toBeCalledWith({
+        chunkFilename: '[name].css',
+        filename: '[name].css',
+        ignoreOrder: true,
+      });
 
       const postCSSAssetsPluginOptions = expect.objectContaining({
         plugins: [PostCSSCustomProperties()],
@@ -106,6 +110,8 @@ describe('webpack config', () => {
 
     it('add the output config', () => {
       expect(config).toHaveProperty('output');
+      expect(config.output).toHaveProperty('filename');
+      expect(config.output).toHaveProperty('chunkFilename');
       expect(config.output).toHaveProperty('path', outputPath);
       expect(config.output).toHaveProperty('publicPath', '');
     });
@@ -131,6 +137,7 @@ describe('webpack config', () => {
     it('replace the output with dev config', () => {
       const expectedOuput = {
         filename: '[name].js',
+        chunkFilename: '[name].js',
       };
       expect(config.output).toEqual(expect.objectContaining(expectedOuput));
     });
@@ -149,7 +156,11 @@ describe('webpack config', () => {
       expect(config).toHaveProperty('plugins');
       expect(config.plugins).toHaveLength(4);
 
-      expect(MiniCssExtractPlugin).toBeCalled();
+      expect(MiniCssExtractPlugin).toBeCalledWith({
+        chunkFilename: '[name].css',
+        filename: '[name].css',
+        ignoreOrder: true,
+      });
       expect(PostCSSAssetsPlugin).toBeCalled();
 
       const cleanPluginOptions = expect.objectContaining({ cleanOnceBeforeBuildPatterns: expect.arrayContaining(['!stats.json']) });
@@ -162,7 +173,10 @@ describe('webpack config', () => {
     });
 
     it('replace the output with prod config', () => {
-      const expectedOuput = { filename: '[name]-[chunkhash].js' };
+      const expectedOuput = {
+        filename: '[name]-[chunkhash].js',
+        chunkFilename: '[name]-[chunkhash].js',
+      };
       expect(config.output).toEqual(expect.objectContaining(expectedOuput));
     });
 

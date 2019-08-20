@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+### Added
+* Added chunk filename support
+
 ### Changed
 * Updated Object.assign syntax to Object spread syntax
 
