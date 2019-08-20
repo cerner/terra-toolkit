@@ -16,6 +16,7 @@ const webpackConfig = (options, env, argv) => {
     rootPath,
     resolveModules,
     staticOptions,
+    themeFile,
   } = options;
 
 
@@ -25,11 +26,6 @@ const webpackConfig = (options, env, argv) => {
   const outputPath = argv['output-path'] || path.join(rootPath, 'build');
   const publicPath = argv['output-public-path'] || '';
 
-  // Used for wdio tests scripts.
-  const themeOverride = process.env.THEME;
-  // Used by dev site to provide baked theme configuration.
-  const { themeConfig } = env;
-  const themeAggregatorResult = ThemeAggregator.aggregate(themeConfig, themeOverride);
 
   const devConfig = {
     mode: 'development',
@@ -37,7 +33,7 @@ const webpackConfig = (options, env, argv) => {
       raf: 'raf/polyfill',
       'core-js': 'core-js/stable',
       'regenerator-runtime': 'regenerator-runtime/runtime',
-      ...themeAggregatorResult.javascriptFile && { theme: themeAggregatorResult.javascriptFile },
+      ...themeFile && { theme: themeFile},
     },
     module: {
       rules: [
@@ -110,10 +106,7 @@ const webpackConfig = (options, env, argv) => {
         test: /\.css$/,
         log: false,
         plugins: [
-          PostCSSCustomProperties({
-            preserve: true,
-            ...themeAggregatorResult.rootCSSFile && { importFrom: themeAggregatorResult.rootCSSFile },
-          }),
+          PostCSSCustomProperties({ preserve: true }),
         ],
       }),
       new DuplicatePackageCheckerPlugin({
@@ -185,8 +178,9 @@ const webpackConfig = (options, env, argv) => {
 };
 
 const defaultWebpackConfig = (env = {}, argv = {}) => {
+  // themeConfig used by dev site to provide baked theme configuration.
   const {
-    disableAggregateTranslations, disableHotReloading,
+    disableAggregateTranslations, disableHotReloading, themeConfig,
   } = env;
 
   const staticOptions = {
@@ -206,10 +200,15 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     resolveModules.unshift(path.resolve(rootPath, 'aggregated-translations'));
   }
 
+  // themeOverride used to flex themes for wdio.
+  const themeOverride = process.env.THEME;
+  const themeFile = ThemeAggregator.aggregate(themeConfig, themeOverride);
+
   const options = {
     rootPath,
     resolveModules,
     staticOptions,
+    themeFile,
   };
 
   return webpackConfig(options, env, argv);
