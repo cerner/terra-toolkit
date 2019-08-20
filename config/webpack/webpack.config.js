@@ -198,6 +198,7 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     aggregateTranslations(Object.assign({}, { baseDir: rootPath }, env.aggregateOptions));
     resolveModules.unshift(path.resolve(rootPath, 'aggregated-translations'));
   }
+
   const themeFile = ThemeAggregator.aggregate();
 
   const options = {
