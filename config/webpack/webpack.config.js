@@ -9,13 +9,14 @@ const TerserPlugin = require('terser-webpack-plugin');
 const merge = require('webpack-merge');
 const DuplicatePackageCheckerPlugin = require('@cerner/duplicate-package-checker-webpack-plugin');
 const aggregateTranslations = require('terra-aggregate-translations');
-const webpackEntries = require('./webpack.entries');
+const ThemeAggregator = require('../../scripts/aggregate-themes/theme-aggregator');
 
 const webpackConfig = (options, env, argv) => {
   const {
     rootPath,
     resolveModules,
     staticOptions,
+    themeFile,
   } = options;
 
   const production = argv.p;
@@ -27,7 +28,12 @@ const webpackConfig = (options, env, argv) => {
 
   const devConfig = {
     mode: 'development',
-    entry: webpackEntries(),
+    entry: {
+      raf: 'raf/polyfill',
+      'core-js': 'core-js/stable',
+      'regenerator-runtime': 'regenerator-runtime/runtime',
+      ...themeFile && { theme: themeFile },
+    },
     module: {
       rules: [
         {
@@ -182,18 +188,23 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     },
   };
 
-  const rootPath = process.cwd();
+  const processPath = process.cwd();
+  /* Get the root path of a mono-repo process call */
+  const rootPath = processPath.includes('packages') ? processPath.split('packages')[0] : processPath;
+
   const resolveModules = ['node_modules'];
 
   if (!disableAggregateTranslations) {
     aggregateTranslations(Object.assign({}, { baseDir: rootPath }, env.aggregateOptions));
     resolveModules.unshift(path.resolve(rootPath, 'aggregated-translations'));
   }
+  const themeFile = ThemeAggregator.aggregate();
 
   const options = {
     rootPath,
     resolveModules,
     staticOptions,
+    themeFile,
   };
 
   return webpackConfig(options, env, argv);
