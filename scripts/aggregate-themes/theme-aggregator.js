@@ -130,8 +130,13 @@ class ThemeAggregator {
       // Generate root theme.
       if (generateRoot) {
         const themeFiles = ThemeAggregator.findThemeVariableFiles(theme, options);
-        if (themeFiles) { asset = ThemeAggregator.writeSCSSFile(themeFiles, theme, ROOT, `:${ROOT}`); }
-        if (asset) { assets.push(asset); }
+        if (themeFiles) {
+          asset = ThemeAggregator.writeSCSSFile(themeFiles, theme, ROOT, `:${ROOT}`);
+        }
+        if (asset) {
+          asset.includePaths = themeFiles;
+          assets.push(asset);
+        }
       } else {
         // Aggregate the default theme (root-theme.scss).
         asset = ThemeAggregator.aggregateTheme(theme, options);
@@ -145,8 +150,13 @@ class ThemeAggregator {
         scoped.forEach((scopedTheme) => {
           const { name, scopeSelector = name } = scopedTheme;
           const themeFiles = ThemeAggregator.findThemeVariableFiles(name, options);
-          if (themeFiles) { asset = ThemeAggregator.writeSCSSFile(themeFiles, name, SCOPED, `.${scopeSelector}`); }
-          if (asset) { assets.push(asset); }
+          if (themeFiles) {
+            asset = ThemeAggregator.writeSCSSFile(themeFiles, name, SCOPED, `.${scopeSelector}`);
+          }
+          if (asset) {
+            asset.includePaths = themeFiles;
+            assets.push(asset);
+          }
         });
       } else {
         // Aggregate the scoped themes.
@@ -188,13 +198,13 @@ class ThemeAggregator {
     if (filePath.indexOf(NODE_MODULES) > -1) {
       const dependencyPath = filePath.substring(filePath.indexOf(NODE_MODULES) + NODE_MODULES.length);
       return {
-        cssImportPath: relativePath,
+        scssImportPath: relativePath,
         jsImportPath: dependencyPath,
       };
     }
 
     return {
-      cssImportPath: relativePath,
+      scssImportPath: relativePath,
       jsImportPath: relativePath,
     };
   }
@@ -247,10 +257,10 @@ class ThemeAggregator {
     fs.writeFileSync(filePath, file);
     Logger.log(`Successfully generated ${fileName}.`);
 
-    const cssImportPath = path.relative(process.cwd(), filePath);
+    const scssImportPath = path.relative(process.cwd(), filePath);
     const jsImportPath = `./${path.relative(OUTPUT_PATH, filePath)}`;
     return {
-      cssImportPath,
+      scssImportPath,
       jsImportPath,
     };
   }
@@ -286,9 +296,20 @@ class ThemeAggregator {
     }
 
     const filePath = `${path.resolve(OUTPUT_PATH, CSS_OUTPUT)}`;
+    const includePaths = imports.map(
+      (x) => {
+        if (x.includePaths) {
+          return x.includePaths;
+        }
+        return null;
+      },
+    );
+    includePaths.push(path.relative(process.cwd(), path.resolve(process.cwd(), 'node_modules')));
+
     const result = sass.renderSync({
-      data: imports.reduce((acc, s) => `${acc}@import '${s.cssImportPath}';\n`, ''),
+      data: imports.reduce((acc, s) => `${acc}@import '${s.scssImportPath}';\n`, ''),
       importer: ThemeAggregator.resolveTildePath,
+      includePaths,
     });
 
     fs.writeFileSync(filePath, `${DISCLAIMER}${result.css.toString().replace(/:global /g, '')}`);
