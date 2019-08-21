@@ -109,7 +109,7 @@ const webpackConfig = (options, env, argv) => {
         plugins: [
           PostCSSCustomProperties({
             preserve: true,
-            importFrom: [ getThemeWebpackPromise(rootPath, themeFile) ],
+            ...themeFile && { importFrom: [ getThemeWebpackPromise(rootPath, themeFile) ] },
           }),
         ],
       }),

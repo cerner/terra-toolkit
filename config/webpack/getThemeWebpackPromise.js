@@ -23,7 +23,7 @@ module.exports = (rootPath, themeFile) => {
     const compiler = webpack({
       mode: 'production',
       entry: {
-        ...themeFile && { theme: themeFile },
+        theme: themeFile,
       },
       module: {
         rules: [
