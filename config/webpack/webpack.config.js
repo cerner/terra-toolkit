@@ -19,13 +19,11 @@ const webpackConfig = (options, env, argv) => {
     themeFile,
   } = options;
 
-
   const production = argv.p;
   let filename = production ? '[name]-[chunkhash]' : '[name]';
   filename = argv['output-filename'] || filename;
   const outputPath = argv['output-path'] || path.join(rootPath, 'build');
   const publicPath = argv['output-public-path'] || '';
-
 
   const devConfig = {
     mode: 'development',
@@ -33,7 +31,7 @@ const webpackConfig = (options, env, argv) => {
       raf: 'raf/polyfill',
       'core-js': 'core-js/stable',
       'regenerator-runtime': 'regenerator-runtime/runtime',
-      ...themeFile && { theme: themeFile},
+      ...themeFile && { theme: themeFile },
     },
     module: {
       rules: [

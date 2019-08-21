@@ -109,7 +109,7 @@ class ThemeAggregator {
   /**
    * Aggregates theme assets into a js and CSS file.
    * @param {Object} options - The aggregation options.
-   * @returns {Object} - The file paths of the generated js and CSS file.
+   * @returns {string} - The file path of the generated js file.
    */
   static aggregateThemes(options) {
     if (!ThemeAggregator.validate(options)) {
@@ -175,7 +175,7 @@ class ThemeAggregator {
    * Dependency files will resolve to the node_modules directory.
    * Local files will resolve relative to the expected output directory.
    * @param {string} filePath - A file path.
-   * @returns {Object} - Resolved file paths containing either relative or node module paths.
+   * @returns {string} - Resolved file path relative to the home directory or node module path.
    */
   static resolve(filePath) {
     // Constructs the relative path.
@@ -191,6 +191,7 @@ class ThemeAggregator {
   /**
    * Validates the aggregated options.
    * @param {Object} options - The aggregated options.
+   * @returns {boolean} - Whether the theme config has valid options.
    */
   static validate(options) {
     const { theme, scoped } = options;
@@ -209,7 +210,7 @@ class ThemeAggregator {
    * @param {string} themeName - Name of theme to aggregate.
    * @param {string} prefix - Prefix to append to generated file.
    * @param {string} scopeSelector - scss scope selector to encase theme.
-   * @returns {object} - the object containing the generated file path relative to the root directory and relative to the generatedThemes directory.
+   * @returns {string} - The path of the generated scss file, relative to the working home directory.
    */
   static writeSCSSFile(assets, themeName, prefix, scopeSelector) {
     const fileName = `${prefix}-${themeName}.scss`;
