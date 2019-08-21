@@ -8,6 +8,74 @@ const PostCSSCustomProperties = require('postcss-custom-properties');
 const path = require('path');
 const Logger = require('../../scripts/utils/logger');
 
+const themeConfig = (rootPath, themeFile, cachedObject) => (
+  {
+    mode: 'production',
+    entry: {
+      theme: themeFile,
+    },
+    module: {
+      rules: [
+        {
+          test: /\.(scss|css)$/,
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader,
+            },
+            {
+              loader: 'css-loader',
+              options: {
+                modules: 'global',
+                importLoaders: 2,
+                localIdentName: '[name]__[local]___[hash:base64:5]',
+              },
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                // Add unique ident to prevent the loader from searching for a postcss.config file. See: https://github.com/postcss/postcss-loader#plugins
+                ident: 'postcss',
+                plugins() {
+                  return [
+                    rtl(),
+                    Autoprefixer(),
+                  ];
+                },
+              },
+            },
+            {
+              loader: 'sass-loader',
+            },
+          ],
+        }],
+    },
+    plugins: [
+      new MiniCssExtractPlugin({
+        filename: 'temp-themes.css',
+        ignoreOrder: true,
+      }),
+      new PostCSSAssetsPlugin({
+        test: /\.css$/,
+        log: false,
+        plugins: [
+          PostCSSCustomProperties({
+            preserve: true,
+            exportTo: [
+              cachedObject,
+            ],
+          }),
+        ],
+      }),
+    ],
+    resolve: {
+      extensions: ['.js'],
+    },
+    resolveLoader: {
+      modules: [path.resolve(path.join(rootPath, 'node_modules'))],
+    },
+  }
+);
+
 module.exports = (rootPath, themeFile) => {
   const cachedObject = {
     toJSON: customProperties => (
@@ -20,71 +88,7 @@ module.exports = (rootPath, themeFile) => {
     customProperties: {},
   };
   return new Promise((resolve, reject) => {
-    const compiler = webpack({
-      mode: 'production',
-      entry: {
-        theme: themeFile,
-      },
-      module: {
-        rules: [
-          {
-            test: /\.(scss|css)$/,
-            use: [
-              {
-                loader: MiniCssExtractPlugin.loader,
-              },
-              {
-                loader: 'css-loader',
-                options: {
-                  modules: 'global',
-                  importLoaders: 2,
-                  localIdentName: '[name]__[local]___[hash:base64:5]',
-                },
-              },
-              {
-                loader: 'postcss-loader',
-                options: {
-                  // Add unique ident to prevent the loader from searching for a postcss.config file. See: https://github.com/postcss/postcss-loader#plugins
-                  ident: 'postcss',
-                  plugins() {
-                    return [
-                      rtl(),
-                      Autoprefixer(),
-                    ];
-                  },
-                },
-              },
-              {
-                loader: 'sass-loader',
-              },
-            ],
-          }],
-      },
-      plugins: [
-        new MiniCssExtractPlugin({
-          filename: 'temp-themes.css',
-          ignoreOrder: true,
-        }),
-        new PostCSSAssetsPlugin({
-          test: /\.css$/,
-          log: false,
-          plugins: [
-            PostCSSCustomProperties({
-              preserve: true,
-              exportTo: [
-                cachedObject,
-              ],
-            }),
-          ],
-        }),
-      ],
-      resolve: {
-        extensions: ['.js'],
-      },
-      resolveLoader: {
-        modules: [path.resolve(path.join(rootPath, 'node_modules'))],
-      },
-    });
+    const compiler = webpack(themeConfig(rootPath, themeFile, cachedObject));
     compiler.outputFileSystem = new MemoryFS();
     compiler.run((error) => {
       if (error) {
