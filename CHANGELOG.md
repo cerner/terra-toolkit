@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+5.5.0 - (August 21, 2019)
+----------
 ### Added
 * Added chunk filename support
 
