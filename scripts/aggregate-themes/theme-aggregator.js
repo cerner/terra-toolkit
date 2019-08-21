@@ -26,7 +26,7 @@ class ThemeAggregator {
    * @returns {string|null} - The output path of the aggregated theme file. Null if not generated.
    */
   static aggregate(config, themeOverride) {
-    // Component repo test usage.
+    // Component test usage.
     // Aggregates themeOverride only. Used to override default theme.
     if (themeOverride) {
       const configOverride = { theme: themeOverride, generateRoot: true };
@@ -61,7 +61,7 @@ class ThemeAggregator {
 
     const { scoped = [] } = options;
 
-    const file = scoped.indexOf(theme) > -1 ? SCOPED_THEME : ROOT_THEME; // TODO Remove scope logic on next version bump.
+    const file = scoped.indexOf(theme) > -1 ? SCOPED_THEME : ROOT_THEME;
     const assets = ThemeAggregator.find(`**/themes/${theme}/${file}`, options);
 
     // Add the dependency import if it exists.
@@ -75,11 +75,10 @@ class ThemeAggregator {
   }
 
   /**
-   * Aggregates theme assets and generates a root or scope theme.
-   * @param {string} theme - The theme to aggregate.
+   * Aggregates *theme-variable files.
+   * @param {string} themeName - The theme to aggregate.
    * @param {Object} options - The aggregation options.
-   * @param {string} isScoped - Signifies to generate a scoped theme.
-   * @returns {string} - The relative file path of the generated theme.
+   * @returns {array} - An array of *theme-variable files.
    */
   static findThemeVariableFiles(themeName, options = {}) {
     const assets = ThemeAggregator.find(`**/themes/${themeName}/**/${THEME_VARIABLES}`, options);
@@ -107,7 +106,7 @@ class ThemeAggregator {
   }
 
   /**
-   * Aggregates theme assets into a js and CSS file.
+   * Aggregates theme assets into a js file.
    * @param {Object} options - The aggregation options.
    * @returns {string} - The file path of the generated js file.
    */
@@ -227,7 +226,7 @@ class ThemeAggregator {
   }
 
   /**
-   * Writes a js file containing theme imports.
+   * Writes a js file containing theme assets.
    * @param {Object[]} imports - An array of files to import.
    * @returns {string} - The filepath of the file.
    */

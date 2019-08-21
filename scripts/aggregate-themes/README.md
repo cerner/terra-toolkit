@@ -88,14 +88,14 @@ project
 }
 ```
 
-## Configuration
+## Additional Configuration
 
 ```js
-// Alternative config to generate scope themes.
+// Config to generate root and scope themes.
 const generateScopeThemeConfig = {
   exclude: [],
-  generateRoot: false, // Opt-in flag.
-  generateScoped: true, // Opt-in flag.
+  generateRoot: true,
+  generateScoped: true,
   theme: 'terra-dark-theme',
   scoped: [
     { name: 'terra-light-theme', scopeSelector: 'light-theme' }, // An array of scoped theme config objects.
@@ -108,7 +108,7 @@ module.exports = generateScopeThemeConfig;
 ### Opt-in Options
 
 #### GenerateRoot (Optional)
-Set to true to generate a theme under the root selector.
+Set to true to generate a default theme under the root selector.
 
 #### GenerateScoped (Optional)
 
