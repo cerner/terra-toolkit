@@ -10,6 +10,7 @@ const merge = require('webpack-merge');
 const DuplicatePackageCheckerPlugin = require('@cerner/duplicate-package-checker-webpack-plugin');
 const aggregateTranslations = require('terra-aggregate-translations');
 const ThemeAggregator = require('../../scripts/aggregate-themes/theme-aggregator');
+const getThemeWebpackPromise = require('./getThemeWebpackPromise');
 
 const webpackConfig = (options, env, argv) => {
   const {
@@ -106,7 +107,10 @@ const webpackConfig = (options, env, argv) => {
         test: /\.css$/,
         log: false,
         plugins: [
-          PostCSSCustomProperties({ preserve: true }),
+          PostCSSCustomProperties({
+            preserve: true,
+            importFrom: [ getThemeWebpackPromise(rootPath, themeFile) ],
+          }),
         ],
       }),
       new DuplicatePackageCheckerPlugin({
