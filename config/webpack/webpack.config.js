@@ -114,7 +114,7 @@ const webpackConfig = (options, env, argv) => {
             // so that they are populated with values if variables aren't supported (e.g. IE10). This dance is
             // necessary when code splitting to ensure the variables and values are applied across all code split
             // css files
-            ...themeFile && { importFrom: [ getThemeWebpackPromise(rootPath, themeFile) ] },
+            ...themeFile && { importFrom: [getThemeWebpackPromise(rootPath, themeFile)] },
           }),
         ],
       }),
