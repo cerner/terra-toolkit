@@ -8,6 +8,14 @@ const PostCSSCustomProperties = require('postcss-custom-properties');
 const path = require('path');
 const Logger = require('../../scripts/utils/logger');
 
+/**
+ * This is a basic configuration to webpack just the theme file and grab the resulting css.  Thus,
+ * there are no JS, raw, etc. loaders. The resulting themeable variables and values will be populated in
+ * the cachedObject
+ * @param {String} rootPath the root path from where the webpack is being run
+ * @param {String} themeFile the file to be webpacked
+ * @param {Object} cachedObject this object will be populated with the resulting themeable variables and values
+ */
 const themeConfig = (rootPath, themeFile, cachedObject) => (
   {
     mode: 'production',
@@ -60,6 +68,7 @@ const themeConfig = (rootPath, themeFile, cachedObject) => (
         plugins: [
           PostCSSCustomProperties({
             preserve: true,
+            // Here is where the cachedObject is populated
             exportTo: [
               cachedObject,
             ],
@@ -76,8 +85,15 @@ const themeConfig = (rootPath, themeFile, cachedObject) => (
   }
 );
 
+/**
+ * Gets a promise that performs webpack on the theme file. The promise resolves with an object that contains the
+ * themeable variables and values.
+ * @param {String} rootPath the root path from where the webpack is being run
+ * @param {String} themeFile the file to be webpacked
+ */
 module.exports = (rootPath, themeFile) => {
   const cachedObject = {
+    // Provide our own toJSON as the default inserts commas in between things like inset values which is invalid CSS
     toJSON: customProperties => (
       Object.keys(customProperties).reduce((customPropertiesJSON, key) => {
         const aggregatedCustomPropertiesJSON = customPropertiesJSON;
@@ -89,6 +105,7 @@ module.exports = (rootPath, themeFile) => {
   };
   return new Promise((resolve, reject) => {
     const compiler = webpack(themeConfig(rootPath, themeFile, cachedObject));
+    // Set the output file system to MemoryFS so that this all runs in memory
     compiler.outputFileSystem = new MemoryFS();
     compiler.run((error) => {
       if (error) {
