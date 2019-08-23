@@ -108,7 +108,7 @@ module.exports = (rootPath, themeFile) => {
     const compiler = webpack(themeConfig(rootPath, themeFile, cachedObject));
     // Set the output file system to MemoryFS so that this all runs in memory
     compiler.outputFileSystem = new MemoryFS();
-    compiler.run((error) => {
+    compiler.run((error, stats) => {
       if (error) {
         Logger.error(error.stack || error);
         if (error.details) {
