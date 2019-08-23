@@ -41,25 +41,25 @@ const startWebpackDevServer = (options) => {
     config = config(env, { p: true });
   }
 
-  // pull the dev server options out of the webpack config. override host, port, and stats. SRY.
-  const devServerOptions = {
-    ...config.devServer, // Disable hot reloading
-    hot: false,
-    inline: false,
-    host,
-    port,
-    index,
-    stats: {
-      colors: true,
-      children: false,
-    },
-  };
-
   return new Promise((resolve, reject) => {
     // get a compiler
     const compiler = webpack(config);
     // Disable hot reloading
     compiler.watch = watch(compiler);
+
+    // Give webpack plugins a chance to modify dev server config.
+    const devServerOptions = {
+      ...compiler.options.devServer,
+      hot: false,
+      inline: false,
+      host,
+      port,
+      index,
+      stats: {
+        colors: true,
+        children: false,
+      },
+    };
     // get a server
     const devServer = new WebpackDevServer(compiler, devServerOptions);
     // add a hook to report when webpacking is done
