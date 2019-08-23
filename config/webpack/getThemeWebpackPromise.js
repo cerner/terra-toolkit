@@ -109,9 +109,24 @@ module.exports = (rootPath, themeFile) => {
     compiler.outputFileSystem = new MemoryFS();
     compiler.run((error) => {
       if (error) {
-        Logger.error(error);
+        Logger.error(error.stack || error);
+        if (error.details) {
+          Logger.error(error.details);
+        }
         reject(error);
         return;
+      }
+
+      const info = stats.toJson();
+
+      if (stats.hasErrors()) {
+        Logger.error(info.errors);
+        reject(info.errors);
+        return;
+      }
+
+      if (stats.hasWarnings()) {
+        Logger.warn(info.warnings);
       }
 
       resolve(cachedObject);
