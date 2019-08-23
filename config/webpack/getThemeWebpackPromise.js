@@ -11,7 +11,8 @@ const Logger = require('../../scripts/utils/logger');
 /**
  * This is a basic configuration to webpack just the theme file and grab the resulting css.  Thus,
  * there are no JS, raw, etc. loaders. The resulting themeable variables and values will be populated in
- * the cachedObject
+ * the cachedObject. Note this will not support hot reloading. This is a very trimmed down config from
+ * what we normally do.
  * @param {String} rootPath the root path from where the webpack is being run
  * @param {String} themeFile the file to be webpacked
  * @param {Object} cachedObject this object will be populated with the resulting themeable variables and values
