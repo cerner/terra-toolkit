@@ -25,7 +25,7 @@ class ThemeAggregator {
    * Aggregates theme assets.
    * @returns {string|null} - The output path of the aggregated theme file. Null if not generated.
    */
-  static aggregate(config, themeOverride) {
+  static aggregate(themeOverride) {
     // Component test usage.
     // Aggregates themeOverride only. Used to override default theme.
     if (themeOverride) {
@@ -39,12 +39,6 @@ class ThemeAggregator {
     if (fs.existsSync(defaultConfig)) {
       // eslint-disable-next-line global-require, import/no-dynamic-require
       return ThemeAggregator.aggregateThemes(require(defaultConfig));
-    }
-
-    // Dev site usage.
-    // Passed in config allows dev site to display specified themes face up.
-    if (config) {
-      return ThemeAggregator.aggregateThemes(config);
     }
 
     return null;

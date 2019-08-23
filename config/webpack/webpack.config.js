@@ -177,7 +177,7 @@ const webpackConfig = (options, env, argv) => {
 
 const defaultWebpackConfig = (env = {}, argv = {}) => {
   // themeConfig used by dev site to provide baked theme configuration.
-  const { disableAggregateTranslations, disableHotReloading, themeConfig } = env;
+  const { disableAggregateTranslations, disableHotReloading} = env;
 
   const staticOptions = {
     ...disableHotReloading && {
@@ -197,7 +197,7 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
   }
 
   const themeOverride = process.env.THEME; // Flexes root theme for theme visual regression testing.
-  const themeFile = ThemeAggregator.aggregate(themeConfig, themeOverride);
+  const themeFile = ThemeAggregator.aggregate(themeOverride);
 
   const options = {
     rootPath,
