@@ -12,26 +12,20 @@ describe('Theme Aggregator', () => {
   });
 
   describe('aggregateTheme', () => {
-    it('returns an array of objects containing aggregated default theme file paths', () => {
+    it('returns an array of aggregated default theme file paths', () => {
       const options = { theme: 'terra-mock-dark-theme' };
 
       const files = ThemeAggregator.aggregateTheme('terra-mock-dark-theme', options);
-      const expected = [{
-        cssImportPath: "tests/jest/fixtures/themes/terra-mock-dark-theme/root-theme.scss",
-        jsImportPath: "tests/jest/fixtures/themes/terra-mock-dark-theme/root-theme.scss",
-      }];
+      const expected = ["tests/jest/fixtures/themes/terra-mock-dark-theme/root-theme.scss"];
 
       expect(files).toEqual(expected);
     });
 
-    it('returns an array of aggregated scoped theme files', () => {
+    it('returns an array of aggregated scoped theme files paths', () => {
       const options = { scoped: ['terra-mock-dark-theme'] };
 
       const files = ThemeAggregator.aggregateTheme('terra-mock-dark-theme', options);
-      const expected = [{
-        cssImportPath: "tests/jest/fixtures/themes/terra-mock-dark-theme/scoped-theme.scss",
-        jsImportPath: "tests/jest/fixtures/themes/terra-mock-dark-theme/scoped-theme.scss",
-      }];
+      const expected = ["tests/jest/fixtures/themes/terra-mock-dark-theme/scoped-theme.scss"];
 
       expect(files).toEqual(expected);
     });
@@ -94,20 +88,14 @@ describe('Theme Aggregator', () => {
   describe('resolve', () => {
     it('resolves a file path from the node_modules directory', () => {
       const resolvedFile = ThemeAggregator.resolve('node_modules/terra-mock-dark-theme/root-file.scss');
-      const expected = {
-        cssImportPath: "terra-mock-dark-theme/root-file.scss",
-        jsImportPath: "terra-mock-dark-theme/root-file.scss",
-      };
+      const expected = "terra-mock-dark-theme/root-file.scss";
 
       expect(resolvedFile).toEqual(expected);
     });
 
     it('resolves a relative file path', () => {
       const resolvedFile = ThemeAggregator.resolve('fixtures/themes/terra-mock-dark-theme/root-file.scss');
-      const expected = {
-        cssImportPath: "fixtures/themes/terra-mock-dark-theme/root-file.scss",
-        jsImportPath: "fixtures/themes/terra-mock-dark-theme/root-file.scss",
-      };
+      const expected = "fixtures/themes/terra-mock-dark-theme/root-file.scss";
 
       expect(resolvedFile).toEqual(expected);
     });

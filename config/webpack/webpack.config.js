@@ -179,7 +179,6 @@ const webpackConfig = (options, env, argv) => {
 };
 
 const defaultWebpackConfig = (env = {}, argv = {}) => {
-  // themeConfig used by dev site to provide baked theme configuration.
   const { disableAggregateTranslations, disableHotReloading} = env;
 
   const staticOptions = {

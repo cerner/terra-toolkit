@@ -6,7 +6,7 @@ const Logger = require('../utils/logger');
 const CONFIG = 'terra-theme.config.js';
 const DISCLAIMER = fs.readFileSync(path.resolve(__dirname, 'disclaimer.txt'), 'utf8');
 const NODE_MODULES = 'node_modules/';
-const JAVASCRIPT_OUTPUT = 'aggregated-themes.js';
+const OUTPUT = 'aggregated-themes.js';
 const OUTPUT_DIR = 'generatedThemes';
 const OUTPUT_PATH = path.resolve(process.cwd(), OUTPUT_DIR);
 const ROOT = 'root';
@@ -226,15 +226,15 @@ class ThemeAggregator {
    */
   static writeJsFile(imports) {
     if (imports.length < 1) {
-      Logger.warn(`No themes to import. Skip generating ${JAVASCRIPT_OUTPUT}.`);
+      Logger.warn(`No themes to import. Skip generating ${OUTPUT}.`);
       return null;
     }
 
-    const filePath = `${path.resolve(OUTPUT_PATH, JAVASCRIPT_OUTPUT)}`;
+    const filePath = `${path.resolve(OUTPUT_PATH, OUTPUT)}`;
     const file = imports.reduce((acc, s) => `${acc}import '${s}';\n`, '');
     fs.writeFileSync(filePath, `${DISCLAIMER}${file}`);
 
-    Logger.log(`Successfully generated ${JAVASCRIPT_OUTPUT}.`);
+    Logger.log(`Successfully generated ${OUTPUT}.`);
     return filePath;
   }
 }
