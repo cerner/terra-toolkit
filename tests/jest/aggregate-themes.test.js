@@ -36,7 +36,7 @@ describe('Theme Aggregator', () => {
       const themeName = 'terra-mock-dark-theme';
 
       const files = ThemeAggregator.findThemeVariableFiles(themeName);
-      const expected = ['tests/jest/fixtures/themes/terra-mock-dark-theme/theme-variables.scss'];
+      const expected = ['tests/jest/fixtures/themes/terra-mock-dark-theme/terra-mock-dark-theme.scss'];
 
       expect(files).toEqual(expected);
     });

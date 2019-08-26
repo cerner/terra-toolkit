@@ -13,7 +13,6 @@ const ROOT = 'root';
 const SCOPED = 'scoped';
 const ROOT_THEME = `${ROOT}-theme.scss`;
 const SCOPED_THEME = `${SCOPED}-theme.scss`;
-const THEME_VARIABLES = '*theme-variables.scss';
 
 /**
  * Aggregates theme assets into a single file.
@@ -55,7 +54,8 @@ class ThemeAggregator {
 
     const { scoped = [] } = options;
 
-    const file = scoped.indexOf(theme) > -1 ? SCOPED_THEME : ROOT_THEME;
+    const isScoped = scoped.indexOf(theme);
+    const file = isScoped > -1 ? SCOPED_THEME : ROOT_THEME;
     const assets = ThemeAggregator.find(`**/themes/${theme}/${file}`, options);
 
     // Add the dependency import if it exists.
@@ -63,22 +63,40 @@ class ThemeAggregator {
 
     if (assets.length === 0) {
       Logger.warn(`No theme files found for ${theme}.`);
+
+      // If root or scope theme files not found, fallback to theme generation.
+      // TODO: Make this the default functionality on next MVB.
+      let asset;
+      if (isScoped <= -1) {
+        const themeFiles = ThemeAggregator.findThemeVariableFiles(theme, options);
+        if (themeFiles) asset = ThemeAggregator.writeSCSSFile(themeFiles, theme, ROOT, `:${ROOT}`);
+        return asset;
+      }
+
+      if (isScoped > -1) {
+        const { name = null, scopeSelector = name } = theme;
+        if (name) {
+          const themeFiles = ThemeAggregator.findThemeVariableFiles(name, options);
+          if (themeFiles) asset = ThemeAggregator.writeSCSSFile(themeFiles, name, SCOPED, `.${scopeSelector}`);
+          return asset;
+        }
+      }
     }
 
     return assets.map(asset => ThemeAggregator.resolve(asset));
   }
 
   /**
-   * Aggregates *theme-variable files.
+   * Aggregates theme files for generation.
    * @param {string} themeName - The theme to aggregate.
    * @param {Object} options - The aggregation options.
    * @returns {array} - An array of *theme-variable files.
    */
   static findThemeVariableFiles(themeName, options = {}) {
-    const assets = ThemeAggregator.find(`**/themes/${themeName}/**/${THEME_VARIABLES}`, options);
+    const assets = ThemeAggregator.find(`**/themes/${themeName}/**/${themeName}.scss`, options);
 
     // Add the dependency import if it exists.
-    assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${themeName}/**/${THEME_VARIABLES}`, options));
+    assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${themeName}/**/${themeName}.scss`, options));
 
     if (assets.length === 0) {
       Logger.warn(`No theme files found for ${themeName}.`);
@@ -112,40 +130,25 @@ class ThemeAggregator {
     const assets = [];
     let asset;
     const {
-      theme, scoped, generateScoped = false, generateRoot = false,
-    } = options; // TODO generateScoped and generateRoot on next MVB
+      theme, scoped,
+    } = options;
 
     ThemeAggregator.createDirectory();
 
     if (theme) {
-      // Generate root theme.
-      if (generateRoot) {
-        const themeFiles = ThemeAggregator.findThemeVariableFiles(theme, options);
-        if (themeFiles) asset = ThemeAggregator.writeSCSSFile(themeFiles, theme, ROOT, `:${ROOT}`);
-        if (asset) assets.push(asset);
-      } else {
-        // Aggregate the default theme (root-theme.scss).
-        asset = ThemeAggregator.aggregateTheme(theme, options);
-        if (asset) assets.push(...asset);
+      asset = ThemeAggregator.aggregateTheme(theme, options);
+      if (asset) {
+        assets.push(...asset);
       }
     }
 
     if (scoped) {
-      if (generateScoped) {
-        // Generate the scoped themes.
-        scoped.forEach((scopedTheme) => {
-          const { name, scopeSelector = name } = scopedTheme;
-          const themeFiles = ThemeAggregator.findThemeVariableFiles(name, options);
-          if (themeFiles) asset = ThemeAggregator.writeSCSSFile(themeFiles, name, SCOPED, `.${scopeSelector}`);
-          if (asset) assets.push(asset);
-        });
-      } else {
-        // Aggregate the scoped themes.
-        scoped.forEach((scopedTheme) => {
-          asset = ThemeAggregator.aggregateTheme(scopedTheme, options);
-          if (asset) assets.push(asset);
-        });
-      }
+      scoped.forEach((scopedTheme) => {
+        asset = ThemeAggregator.aggregateTheme(scopedTheme, options);
+        if (asset) {
+          assets.push(asset);
+        }
+      });
     }
 
     return ThemeAggregator.writeJsFile(assets);
