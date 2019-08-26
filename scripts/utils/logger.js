@@ -56,7 +56,7 @@ class Logger {
    */
   static log(message, options) {
     /* eslint-disable-next-line no-console */
-    console.log(Logger.format(message, Object.assign({}, { decorations: ['grey'] }, options)));
+    console.log(Logger.format(message, { decorations: ['grey'], ...options }));
   }
 
   /**
@@ -67,7 +67,7 @@ class Logger {
    */
   static warn(message, options) {
     /* eslint-disable-next-line no-console */
-    console.warn(Logger.format(message, Object.assign({}, options, { decorations: ['yellow'] })));
+    console.warn(Logger.format(message, { ...options, decorations: ['yellow'] }));
   }
 
   /**
@@ -78,7 +78,7 @@ class Logger {
    * @returns - A formatted error object.
    */
   static error(message, options) {
-    return new Error(Logger.format(message, Object.assign({}, options, { decorations: ['red'] })));
+    return new Error(Logger.format(message, { ...options, decorations: ['red'] }));
   }
 }
 

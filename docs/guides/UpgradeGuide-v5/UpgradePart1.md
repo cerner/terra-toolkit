@@ -233,7 +233,7 @@ Verify your site is packed and served as static content.
 ```
 
 ## NEXT: Webdriver Test Updates
-See Part 2 for more information on Webdriver changes.
+See [Part 2 for more information on Webdriver changes](https://github.com/cerner/terra-toolkit/blob/master/docs/guides/UpgradeGuide-v5/UpgradePart2.md).
 
 
 

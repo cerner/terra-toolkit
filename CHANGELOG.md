@@ -4,6 +4,17 @@ Changelog
 Unreleased
 ----------
 
+### Changed
+* Give webpack plugins a chance to manipulate devServer options.
+
+5.5.0 - (August 21, 2019)
+----------
+### Added
+* Added chunk filename support
+
+### Changed
+* Updated Object.assign syntax to Object spread syntax
+
 5.4.0 - (July 31, 2019)
 ----------
 ### Added
