@@ -6,6 +6,9 @@ Unreleased
 ### Added
 * Add functionality to support theming with code splitting in IE
 
+### Changed
+* Give webpack plugins a chance to manipulate devServer options.
+
 5.5.0 - (August 21, 2019)
 ----------
 ### Added
