@@ -179,7 +179,7 @@ const webpackConfig = (options, env, argv) => {
 };
 
 const defaultWebpackConfig = (env = {}, argv = {}) => {
-  const { disableAggregateTranslations, disableHotReloading} = env;
+  const { disableAggregateTranslations, disableHotReloading } = env;
 
   const staticOptions = {
     ...disableHotReloading && {
