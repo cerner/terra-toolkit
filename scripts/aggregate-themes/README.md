@@ -63,7 +63,9 @@ The `theme` option accepts the string name of a default theme. The default theme
 The `scoped` option accepts an array of theme names to aggregate. Only the `scoped-theme.scss` files will be aggregated.
 
 ## Getting Started - Generate Root and Scoped Themes
-Alternatively, an opt-in feature exists to generate root and scoped themes, then output a single `aggregated-themes.js` file within the `generatedThemes` directory. Once activated, theme aggregation searches files following the namespace `*theme-variables`, then generates root or scoped theme files. These generated file(s) output to the `generatedThemes` directory and are imported into `aggregated-themes.js`.
+Alternatively, generate root and scoped themes, then output a single `aggregated-themes.js` file within the `generatedThemes` directory.
+
+When activated, theme aggregation searches files following the namespace `*theme-variables`, then generates root or scoped theme files. These generated file(s) output to the `generatedThemes` directory and are imported into `aggregated-themes.js`.
 
 ```txt
 project
@@ -116,7 +118,7 @@ Set to true to generate scope themes with a given scope selector.
 
 #### Scoped (Optional)
 
-If `generateScopedTheme` is set, the `scoped` option accepts an array of objects containing `name` and `scopeSelector`. This will generate a scoped file per object. If `scopeSelector` is not provided, it defaults to `name`.
+If `generateScopedTheme` is set, the `scoped` option accepts an array of objects containing `name` and `scopeSelector`. This will generate a scoped file per object. `scopedSelector` defaults to `name` if `scopeSelector` is undefined.
 
 Using the [generateScopeThemeConfig](###terra-theme.config.js) example generates:
 
