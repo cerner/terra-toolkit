@@ -1,6 +1,7 @@
 const fs = require('fs');
 const glob = require('glob');
 const path = require('path');
+const fsExtra = require('fs-extra');
 const Logger = require('../utils/logger');
 
 const CONFIG = 'terra-theme.config.js';
@@ -50,8 +51,6 @@ class ThemeAggregator {
    * @returns {array} - An array of file names.
    */
   static aggregateTheme(theme, options = {}) {
-    Logger.log(`Aggregating ${theme}...`);
-
     const { scoped = [] } = options;
 
     const isScoped = scoped.indexOf(theme) > -1;
@@ -61,9 +60,10 @@ class ThemeAggregator {
     // Add the dependency import if it exists.
     assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${theme}/**/${file}`, options));
 
-    if (assets.length === 0) {
+    if (!assets.length) {
       // If root or scope theme files not found, fallback to theme generation.
       // TODO: Make this the default functionality on next MVB.
+      // Root Generation
       let asset;
       if (!isScoped) {
         const themeFiles = ThemeAggregator.findThemeVariableFiles(theme, options);
@@ -78,6 +78,7 @@ class ThemeAggregator {
         return asset;
       }
 
+      // Scoped Generation
       if (isScoped) {
         const { name = null, scopeSelector = name } = theme;
         if (name) {
@@ -93,14 +94,17 @@ class ThemeAggregator {
           return asset;
         }
       }
-    }
 
-    if (theme.name) {
-      Logger.warn(`No theme files found for ${theme.name}.`);
-    } else {
+      if (theme.name) {
+        Logger.warn(`No theme files found for ${theme.name}.`);
+        return null;
+      }
+
       Logger.warn(`No theme files found for ${theme}.`);
+      return null;
     }
 
+    Logger.log(`Aggregating ${theme}...`);
     return assets.map(asset => ThemeAggregator.resolve(asset));
   }
 
@@ -116,23 +120,12 @@ class ThemeAggregator {
     // Add the dependency import if it exists.
     assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${themeName}/**/${themeName}.scss`, options));
 
-    if (assets.length === 0) {
+    if (!assets.length) {
       Logger.warn(`No theme files found for ${themeName}.`);
       return null;
     }
 
     return assets;
-  }
-
-  /**
-   * Creates a generatedThemes directory to place theme assets.
-   */
-  static createDirectory() {
-    if (!fs.existsSync(OUTPUT_DIR)) {
-      fs.mkdirSync(OUTPUT_DIR);
-    } else {
-      Logger.log(`Skip creating ${OUTPUT_DIR} directory - already exists.`);
-    }
   }
 
   /**
@@ -151,7 +144,10 @@ class ThemeAggregator {
       theme, scoped,
     } = options;
 
-    ThemeAggregator.createDirectory();
+    // Create generatedThemes directory.
+    fsExtra.ensureDir(OUTPUT_DIR, (err) => {
+      Logger.warn(err);
+    });
 
     if (theme) {
       asset = ThemeAggregator.aggregateTheme(theme, options);
@@ -249,7 +245,7 @@ class ThemeAggregator {
    * @returns {string} - The filepath of the file.
    */
   static writeJsFile(imports) {
-    if (imports.length < 1) {
+    if (!imports.length) {
       Logger.warn(`No themes to import. Skip generating ${OUTPUT}.`);
       return null;
     }
