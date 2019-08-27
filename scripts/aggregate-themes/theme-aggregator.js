@@ -54,8 +54,8 @@ class ThemeAggregator {
 
     const { scoped = [] } = options;
 
-    const isScoped = scoped.indexOf(theme);
-    const file = isScoped > -1 ? SCOPED_THEME : ROOT_THEME;
+    const isScoped = scoped.indexOf(theme) > -1;
+    const file = isScoped ? SCOPED_THEME : ROOT_THEME;
     const assets = ThemeAggregator.find(`**/themes/${theme}/${file}`, options);
 
     // Add the dependency import if it exists.
@@ -67,13 +67,13 @@ class ThemeAggregator {
       // If root or scope theme files not found, fallback to theme generation.
       // TODO: Make this the default functionality on next MVB.
       let asset;
-      if (isScoped <= -1) {
+      if (!isScoped) {
         const themeFiles = ThemeAggregator.findThemeVariableFiles(theme, options);
         if (themeFiles) asset = ThemeAggregator.writeSCSSFile(themeFiles, theme, ROOT, `:${ROOT}`);
         return asset;
       }
 
-      if (isScoped > -1) {
+      if (isScoped) {
         const { name = null, scopeSelector = name } = theme;
         if (name) {
           const themeFiles = ThemeAggregator.findThemeVariableFiles(name, options);

@@ -7,6 +7,10 @@ Unreleased
 ### Changed
 * Give webpack plugins a chance to manipulate devServer options.
 
+### Added
+* Fallback theme generation strategy for theme aggregation.
+* Theme visual regression support.
+
 5.5.0 - (August 21, 2019)
 ----------
 ### Added
