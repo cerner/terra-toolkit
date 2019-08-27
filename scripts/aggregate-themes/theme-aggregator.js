@@ -62,14 +62,19 @@ class ThemeAggregator {
     assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${theme}/**/${file}`, options));
 
     if (assets.length === 0) {
-      Logger.warn(`No theme files found for ${theme}.`);
-
       // If root or scope theme files not found, fallback to theme generation.
       // TODO: Make this the default functionality on next MVB.
       let asset;
       if (!isScoped) {
         const themeFiles = ThemeAggregator.findThemeVariableFiles(theme, options);
-        if (themeFiles) asset = ThemeAggregator.writeSCSSFile(themeFiles, theme, ROOT, `:${ROOT}`);
+        const fileAttrs = {
+          assets: themeFiles,
+          themeName: theme,
+          prefix: ROOT,
+          scopeSelector: `:${ROOT}`,
+        };
+
+        if (themeFiles) asset = ThemeAggregator.writeSCSSFile(fileAttrs);
         return asset;
       }
 
@@ -77,10 +82,23 @@ class ThemeAggregator {
         const { name = null, scopeSelector = name } = theme;
         if (name) {
           const themeFiles = ThemeAggregator.findThemeVariableFiles(name, options);
-          if (themeFiles) asset = ThemeAggregator.writeSCSSFile(themeFiles, name, SCOPED, `.${scopeSelector}`);
+          const fileAttrs = {
+            assets: themeFiles,
+            themeName: name,
+            prefix: SCOPED,
+            scopeSelector: `.${scopeSelector}`,
+          };
+
+          if (themeFiles) asset = ThemeAggregator.writeSCSSFile(fileAttrs);
           return asset;
         }
       }
+    }
+
+    if (theme.name) {
+      Logger.warn(`No theme files found for ${theme.name}.`);
+    } else {
+      Logger.warn(`No theme files found for ${theme}.`);
     }
 
     return assets.map(asset => ThemeAggregator.resolve(asset));
@@ -202,13 +220,16 @@ class ThemeAggregator {
 
   /**
    * Generates a theme scss file and outputs it to the generatedThemes directory.
-   * @param {string} assets - The aggregated theme files to import within generated file.
-   * @param {string} themeName - Name of theme to aggregate.
-   * @param {string} prefix - Prefix to append to generated file.
-   * @param {string} scopeSelector - scss scope selector to encase theme.
+   * @param {object} contains requested scss file attrs
+   *   @param {string} assets - The aggregated theme files to import within generated file.
+   *   @param {string} themeName - Name of theme to aggregate.
+   *   @param {string} prefix - Prefix to append to generated file.
+   *   @param {string} scopeSelector - scss scope selector to encase theme.
    * @returns {string} - The path of the generated scss file, relative to the working home directory.
    */
-  static writeSCSSFile(assets, themeName, prefix, scopeSelector) {
+  static writeSCSSFile({
+    assets, themeName, prefix, scopeSelector,
+  }) {
     const fileName = `${prefix}-${themeName}.scss`;
     const intro = `${DISCLAIMER}${scopeSelector}`;
 
