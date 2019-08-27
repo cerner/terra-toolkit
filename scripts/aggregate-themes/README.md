@@ -83,23 +83,8 @@ project
         └── terra-dark-theme.scss
 ```
 
-## Configuration
-### terra-theme.config.js
-
-```js
-// Config to generate root and scope themes.
-const generateScopeThemeConfig = {
-  exclude: [],
-  theme: 'terra-dark-theme',
-  scoped: [
-    { name: 'terra-light-theme', scopeSelector: 'light-theme' }, // An array of scoped theme config objects.
-  ],
-}
-
-module.exports = generateScopeThemeConfig;
-```
-
-`${themeName}` files should be CSS custom property values encased in a `:global` scope.
+## Example
+`${themeName}` files should be imports or CSS custom property values encased in a `:global` scope.
 ### themes/terra-dark-theme/terra-dark-theme.scss
 ```scss
 :global {
@@ -108,7 +93,7 @@ module.exports = generateScopeThemeConfig;
 }
 ```
 
-Using the above config in conjunction with the above project generates:
+Using the above `terra-theme-config` in conjunction with the above project structure generates:
 
 ### generatedThemes/root-terra-dark-theme.scss
 ```scss
