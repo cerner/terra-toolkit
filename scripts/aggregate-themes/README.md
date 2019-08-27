@@ -78,7 +78,9 @@ project
 │               └── terra-light-theme.scss
 └── themes
     └── terra-dark-theme
-        └──terra-dark-theme.scss
+        ├── component-1.scss
+        ├── component-2.scss
+        └── terra-dark-theme.scss
 ```
 
 ## Configuration
@@ -101,8 +103,8 @@ module.exports = generateScopeThemeConfig;
 ### themes/terra-dark-theme/terra-dark-theme.scss
 ```scss
 :global {
-  --theme-variable-one: pink;
-  --theme-variable-two: purple;
+  @import 'component-1';
+  @import 'component-2';
 }
 ```
 
@@ -111,9 +113,8 @@ Using the above config in conjunction with the above project generates:
 ### generatedThemes/root-terra-dark-theme.scss
 ```scss
 :root {
-  @import '../node_modules/terra-component/themes/terra-dark-theme/theme-variables.scss';
-  @import '../themes/terra-dark-theme/component-1-theme-variables.scss';
-  @import '../themes/terra-dark-theme/component-2-theme-variables.scss';
+  @import '../node_modules/terra-component/themes/terra-dark-theme/terra-dark-theme.scss;
+  @import '../themes/terra-dark-theme/terra-dark-theme.scss
 }
 ```
 
