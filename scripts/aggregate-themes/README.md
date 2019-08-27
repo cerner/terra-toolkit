@@ -65,9 +65,7 @@ The `scoped` option accepts an array of theme names to aggregate. Only the `scop
 ## Getting Started - Generate Root and Scoped Themes
 Alternatively, if root or scope theme files do not exist, theme aggregation will generate root and scope themes.
 
-Theme aggregation shall search for files named after the `${theme-name}`, then generates a root and/or scope theme. These generated file(s) output to the `generatedThemes` directory and are imported into `aggregated-themes.js`.
-
-
+Theme aggregation shall search for files named after the `${themeName}`, then generates a root and/or scope theme. These generated file(s) output to the `generatedThemes` directory and are imported into `aggregated-themes.js`.
 
 ```txt
 project
@@ -83,15 +81,10 @@ project
         └──terra-dark-theme.scss
 ```
 
-### Theme Generation Example
-##### Example - themes/terra-dark-theme/terra-dark-theme.scss
-```scss
-:global {
-  --theme-variable-one: pink;
-  --theme-variable-two: purple;
-}
-```
+## Configuration
+### terra-theme.config.js
 
+```js
 // Config to generate root and scope themes.
 const generateScopeThemeConfig = {
   exclude: [],
@@ -103,10 +96,19 @@ const generateScopeThemeConfig = {
 
 module.exports = generateScopeThemeConfig;
 ```
+
+`${themeName}` files should be CSS custom property values encased in a `:global` scope.
+### themes/terra-dark-theme/terra-dark-theme.scss
+```scss
+:global {
+  --theme-variable-one: pink;
+  --theme-variable-two: purple;
+}
+```
+
 Using the above config in conjunction with the above project generates:
 
-#### generatedThemes/root-terra-dark-theme.scss
-####
+### generatedThemes/root-terra-dark-theme.scss
 ```scss
 :root {
   @import '../node_modules/terra-component/themes/terra-dark-theme/theme-variables.scss';
@@ -115,15 +117,14 @@ Using the above config in conjunction with the above project generates:
 }
 ```
 
-#### generatedThemes/scoped-terra-light-theme.scss
-####
+### generatedThemes/scoped-terra-light-theme.scss
 ```scss
 .light-theme {
   @import '../node_modules/terra-component/themes/terra-light-theme/theme-variables.scss';
 }
 ```
 
-#### generatedThemes/aggregated-themes.js
+### generatedThemes/aggregated-themes.js
 ```scss
 import './root-terra-dark-theme.scss';
 import './scoped-terra-light-theme.scss';
