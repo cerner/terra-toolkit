@@ -1,7 +1,6 @@
-const fs = require('fs');
+const fs = require('fs-extra');
 const glob = require('glob');
 const path = require('path');
-const fsExtra = require('fs-extra');
 const Logger = require('../utils/logger');
 
 const CONFIG = 'terra-theme.config.js';
@@ -64,35 +63,20 @@ class ThemeAggregator {
       // If root or scope theme files not found, fallback to theme generation.
       // TODO: Make this the default functionality on next MVB.
       // Root Generation
+      const prefix = !isScoped ? ROOT : SCOPED;
+      const scopeSelector = !isScoped ? `:${ROOT}` : `.${theme}`;
+      const themeFiles = ThemeAggregator.findThemeVariableFiles(theme, options);
+      const fileAttrs = {
+        assets: themeFiles,
+        themeName: theme,
+        prefix,
+        scopeSelector,
+      };
       let asset;
-      if (!isScoped) {
-        const themeFiles = ThemeAggregator.findThemeVariableFiles(theme, options);
-        const fileAttrs = {
-          assets: themeFiles,
-          themeName: theme,
-          prefix: ROOT,
-          scopeSelector: `:${ROOT}`,
-        };
 
-        if (themeFiles) asset = ThemeAggregator.writeSCSSFile(fileAttrs);
+      if (themeFiles) {
+        asset = ThemeAggregator.writeSCSSFile(fileAttrs);
         return asset;
-      }
-
-      // Scoped Generation
-      if (isScoped) {
-        const { name = null, scopeSelector = name } = theme;
-        if (name) {
-          const themeFiles = ThemeAggregator.findThemeVariableFiles(name, options);
-          const fileAttrs = {
-            assets: themeFiles,
-            themeName: name,
-            prefix: SCOPED,
-            scopeSelector: `.${scopeSelector}`,
-          };
-
-          if (themeFiles) asset = ThemeAggregator.writeSCSSFile(fileAttrs);
-          return asset;
-        }
       }
 
       if (theme.name) {
@@ -145,7 +129,7 @@ class ThemeAggregator {
     } = options;
 
     // Create generatedThemes directory.
-    fsExtra.ensureDir(OUTPUT_DIR, (err) => {
+    fs.ensureDir(OUTPUT_DIR, (err) => {
       Logger.warn(err);
     });
 
