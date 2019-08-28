@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Added
+* Add functionality to support theming with code splitting in IE
 
 ### Changed
 * Give webpack plugins a chance to manipulate devServer options.
