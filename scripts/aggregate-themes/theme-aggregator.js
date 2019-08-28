@@ -115,19 +115,22 @@ class ThemeAggregator {
     });
 
     const {
-      theme,
+      theme: defaultTheme,
       scoped,
     } = options;
     const assets = [];
     let asset;
 
-    const themesToAggregate = theme ? [theme] : [];
-    themesToAggregate.concat(scoped);
+    let themesToAggregate = defaultTheme ? [defaultTheme] : [];
+    themesToAggregate = themesToAggregate.concat(scoped);
 
-    themesToAggregate.forEach((themeEntry) => {
-      asset = ThemeAggregator.aggregateTheme(themeEntry, options);
+    themesToAggregate.forEach((theme) => {
+      asset = ThemeAggregator.aggregateTheme(theme, options);
       if (asset) {
-        assets.push(...asset);
+        if (asset.length > 1) {
+          assets.push(...asset);
+        }
+        assets.push(asset);
       }
     });
 
