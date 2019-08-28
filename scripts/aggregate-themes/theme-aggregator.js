@@ -24,20 +24,14 @@ class ThemeAggregator {
    * Aggregates theme assets.
    * @returns {string|null} - The output path of the aggregated theme file. Null if not generated.
    */
-  static aggregate(themeOverride) {
-    // Component test usage.
-    // Aggregates themeOverride only. Used to override default theme.
-    if (themeOverride) {
-      const configOverride = { theme: themeOverride, generateRoot: true };
-      return ThemeAggregator.aggregateThemes(configOverride);
-    }
-
-    // Consumer usage.
-    // Existing theme config takes precedence over passed in config
+  static aggregate(theme) {
+    let themeConfig;
     const defaultConfig = path.resolve(process.cwd(), CONFIG);
     if (fs.existsSync(defaultConfig)) {
       // eslint-disable-next-line global-require, import/no-dynamic-require
-      return ThemeAggregator.aggregateThemes(require(defaultConfig));
+      themeConfig = require(defaultConfig);
+      // theme param used for theme visual regression testing - overrides default theme.
+      return ThemeAggregator.aggregateThemes({ ...themeConfig, theme });
     }
 
     return null;
@@ -61,8 +55,7 @@ class ThemeAggregator {
 
     if (!assets.length) {
       // If root or scope theme files not found, fallback to theme generation.
-      // TODO: Make this the default functionality on next MVB.
-      // Root Generation
+      // @TODO Default to theme generation on next MVB - https://github.com/cerner/terra-toolkit/issues/325
       const prefix = !isScoped ? ROOT : SCOPED;
       const scopeSelector = !isScoped ? `:${ROOT}` : `.${theme}`;
       const themeFiles = ThemeAggregator.findThemeVariableFiles(theme, options);
@@ -72,19 +65,13 @@ class ThemeAggregator {
         prefix,
         scopeSelector,
       };
-      let asset;
 
       if (themeFiles) {
-        asset = ThemeAggregator.writeSCSSFile(fileAttrs);
-        return asset;
+        return ThemeAggregator.writeSCSSFile(fileAttrs);
       }
 
-      if (theme.name) {
-        Logger.warn(`No theme files found for ${theme.name}.`);
-        return null;
-      }
-
-      Logger.warn(`No theme files found for ${theme}.`);
+      const themeName = theme.name || theme;
+      Logger.warn(`No theme files found for ${themeName}.`);
       return null;
     }
 
@@ -96,7 +83,7 @@ class ThemeAggregator {
    * Aggregates theme files for generation.
    * @param {string} themeName - The theme to aggregate.
    * @param {Object} options - The aggregation options.
-   * @returns {array} - An array of *theme-variable files.
+   * @returns {array} - An array of ${themeName} files.
    */
   static findThemeVariableFiles(themeName, options = {}) {
     const assets = ThemeAggregator.find(`**/themes/${themeName}/**/${themeName}.scss`, options);
@@ -122,32 +109,27 @@ class ThemeAggregator {
       return null;
     }
 
-    const assets = [];
-    let asset;
-    const {
-      theme, scoped,
-    } = options;
-
     // Create generatedThemes directory.
     fs.ensureDir(OUTPUT_DIR, (err) => {
       Logger.warn(err);
     });
 
-    if (theme) {
-      asset = ThemeAggregator.aggregateTheme(theme, options);
+    const {
+      theme,
+      scoped,
+    } = options;
+    const assets = [];
+    let asset;
+
+    const themesToAggregate = theme ? [theme] : [];
+    themesToAggregate.concat(scoped);
+
+    themesToAggregate.forEach((themeEntry) => {
+      asset = ThemeAggregator.aggregateTheme(themeEntry, options);
       if (asset) {
         assets.push(...asset);
       }
-    }
-
-    if (scoped) {
-      scoped.forEach((scopedTheme) => {
-        asset = ThemeAggregator.aggregateTheme(scopedTheme, options);
-        if (asset) {
-          assets.push(asset);
-        }
-      });
-    }
+    });
 
     return ThemeAggregator.writeJsFile(assets);
   }
@@ -179,7 +161,7 @@ class ThemeAggregator {
       return dependencyPath;
     }
 
-    return relativePath;
+    return `../${relativePath}`;
   }
 
   /**

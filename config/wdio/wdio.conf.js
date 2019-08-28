@@ -42,6 +42,7 @@ const seleniumGridUrl = process.env.SELENIUM_GRID_URL;
  */
 const browsers = process.env.BROWSERS;
 
+/* Use to override default theme for theme visual regression tests. */
 const theme = process.env.THEME;
 
 const hasPackages = glob.sync((path.join(process.cwd(), 'packages'))).length > 0;
