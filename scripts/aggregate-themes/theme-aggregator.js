@@ -205,7 +205,7 @@ class ThemeAggregator {
     fs.writeFileSync(filePath, file);
     Logger.log(`Successfully generated ${fileName}.`);
 
-    return `./${path.relative(OUTPUT_PATH, filePath)}`;
+    return `./${filePath}`;
   }
 
   /**
