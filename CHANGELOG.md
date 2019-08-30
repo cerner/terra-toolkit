@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+5.6.0 - (August 30, 2019)
+----------
 ### Added
 * Add functionality to support theming with code splitting in IE
 
