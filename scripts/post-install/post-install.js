@@ -8,7 +8,7 @@ fs.readFile(`${process.env.INIT_CWD}/package.json`, (error, file) => {
 
   const { dependencies } = JSON.parse(file);
 
-  if (dependencies['terra-toolkit']) {
+  if (dependencies && dependencies['terra-toolkit']) {
     Logger.warn('+-------------------------------------------------------------------------------------------------------------+');
     Logger.warn('|                                                   WARNING                                                   |');
     Logger.warn('+-------------------------------------------------------------------------------------------------------------+');
