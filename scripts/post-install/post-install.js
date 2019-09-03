@@ -12,7 +12,7 @@ fs.readFile(`${process.env.INIT_CWD}/package.json`, (error, file) => {
     Logger.warn('+-------------------------------------------------------------------------------------------------------------+');
     Logger.warn('|                                                   WARNING                                                   |');
     Logger.warn('+-------------------------------------------------------------------------------------------------------------+');
-    Logger.warn('|                            terra-toolkit should be installed as a devDependency.                            |');
+    Logger.warn('|                             terra-toolkit must be installed as a devDependency.                             |');
     Logger.warn('|                                                                                                             |');
     Logger.warn('| Modify the package.json to remove terra-toolkit from dependencies and add terra-toolkit to devDependencies. |');
     Logger.warn('+-------------------------------------------------------------------------------------------------------------+');
