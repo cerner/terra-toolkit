@@ -10,6 +10,7 @@ const merge = require('webpack-merge');
 const DuplicatePackageCheckerPlugin = require('@cerner/duplicate-package-checker-webpack-plugin');
 const aggregateTranslations = require('terra-aggregate-translations');
 const ThemeAggregator = require('../../scripts/aggregate-themes/theme-aggregator');
+const getThemeWebpackPromise = require('./getThemeWebpackPromise');
 
 const webpackConfig = (options, env, argv) => {
   const {
@@ -106,7 +107,15 @@ const webpackConfig = (options, env, argv) => {
         test: /\.css$/,
         log: false,
         plugins: [
-          PostCSSCustomProperties({ preserve: true }),
+          PostCSSCustomProperties({
+            preserve: true,
+            // If we have a theme file, use the webpack promise to webpack it.  This promise will resolve to
+            // an object with themeable variables and values. This will then be used to update the end state CSS
+            // so that they are populated with values if variables aren't supported (e.g. IE10). This dance is
+            // necessary when code splitting to ensure the variables and values are applied across all code split
+            // css files
+            ...themeFile && { importFrom: [getThemeWebpackPromise(rootPath, themeFile)] },
+          }),
         ],
       }),
       new DuplicatePackageCheckerPlugin({
