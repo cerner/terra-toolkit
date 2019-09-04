@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Theme Aggregator writeSCSSFile returns the generated SCSS file path relative to the given output path. 1`] = `
-Array [
-  "./scoped-test-theme.scss",
-]
-`;

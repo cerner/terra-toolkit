@@ -140,7 +140,9 @@ describe('Theme Aggregator', () => {
       const scssFile = ThemeAggregator.writeSCSSFile({
         assets: [theme], themeName: theme, prefix: 'scoped', scopeSelector: theme, outputPath,
       });
-      expect(scssFile).toMatchSnapshot();
+
+      const expected = ["./scoped-test-theme.scss"];
+      expect(scssFile).toEqual(expected);
     });
   });
 });
