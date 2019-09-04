@@ -22,6 +22,7 @@ const SCOPED_THEME = `${SCOPED}-theme.scss`;
 class ThemeAggregator {
   /**
    * Aggregates theme assets.
+   * @param {string} theme - The theme to override the default theme. Used for visual regression testing.
    * @returns {string|null} - The output path of the aggregated theme file. Null if not generated.
    */
   static aggregate(theme) {
@@ -30,7 +31,6 @@ class ThemeAggregator {
     if (fs.existsSync(defaultConfig)) {
       // eslint-disable-next-line global-require, import/no-dynamic-require
       themeConfig = require(defaultConfig);
-      // theme param used for theme visual regression testing - overrides default theme.
       return ThemeAggregator.aggregateThemes({ ...themeConfig, theme });
     }
 
@@ -186,14 +186,15 @@ class ThemeAggregator {
   /**
    * Generates a theme scss file and outputs it to the generatedThemes directory.
    * @param {object} contains requested scss file attrs
-   *   @param {string} assets - The aggregated theme files to import within generated file.
+   *   @param {array} assets - The aggregated theme files to import within generated file.
    *   @param {string} themeName - Name of theme to aggregate.
    *   @param {string} prefix - Prefix to append to generated file.
    *   @param {string} scopeSelector - scss scope selector to encase theme.
+   *   @param {string} outputPath - path to write the scss file to. For testing purposes - overrides the default generatedThemes path.
    * @returns {string} - The path of the generated scss file, relative to the working home directory.
    */
   static writeSCSSFile({
-    assets, themeName, prefix, scopeSelector,
+    assets, themeName, prefix, scopeSelector, outputPath,
   }) {
     const fileName = `${prefix}-${themeName}.scss`;
     const intro = `${DISCLAIMER}${scopeSelector}`;
@@ -201,11 +202,11 @@ class ThemeAggregator {
     let file = assets.reduce((acc, s) => `${acc}  @import '../${s}';\n`, '');
     file = `${intro} {\n${file}}\n`;
 
-    const filePath = path.resolve(OUTPUT_PATH, fileName);
+    const filePath = path.resolve(outputPath || OUTPUT_PATH, fileName);
     fs.writeFileSync(filePath, file);
     Logger.log(`Successfully generated ${fileName}.`);
 
-    return `./${filePath}`;
+    return [`./${path.relative(outputPath || OUTPUT_PATH, filePath)}`];
   }
 
   /**

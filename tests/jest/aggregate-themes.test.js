@@ -1,3 +1,4 @@
+const path = require('path');
 const ThemeAggregator = require('../../scripts/aggregate-themes/theme-aggregator');
 
 global.console = { log: jest.fn(), warn: jest.fn() };
@@ -127,6 +128,19 @@ describe('Theme Aggregator', () => {
 
       // eslint-disable-next-line no-console
       expect(console.warn).toHaveBeenCalled();
+    });
+  });
+
+  describe('writeSCSSFile', () => {
+    it('returns the generated SCSS file path relative to the given output path.', () => {
+      const theme = 'test-theme';
+
+      const outputPath = path.resolve(process.cwd(), 'tests', 'jest', 'fixtures', 'generatedThemes');
+
+      const scssFile = ThemeAggregator.writeSCSSFile({
+        assets: [theme], themeName: theme, prefix: 'scoped', scopeSelector: theme, outputPath,
+      });
+      expect(scssFile).toMatchSnapshot();
     });
   });
 });
