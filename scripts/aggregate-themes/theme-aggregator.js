@@ -43,12 +43,13 @@ class ThemeAggregator {
    * @param {Object} options - The aggregation options.
    * @returns {array} - An array of file names.
    */
-  static aggregateTheme(theme, options = {}) {
-    const { scoped = [] } = options;
+  static aggregateTheme(themeName, options = {}) {
+    const { theme, scoped = [] } = options;
 
-    const isScoped = scoped.indexOf(theme) > -1;
-    const file = isScoped ? SCOPED_THEME : ROOT_THEME;
-    const assets = ThemeAggregator.find(`**/themes/${theme}/${file}`, options);
+    const isRoot = themeName === theme;
+    const isScoped = scoped.indexOf(themeName) > -1;
+    const file = isScoped && !isRoot ? SCOPED_THEME : ROOT_THEME;
+    const assets = ThemeAggregator.find(`**/themes/${themeName}/${file}`, options);
 
     // Add the dependency import if it exists.
     assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${theme}/**/${file}`, options));
@@ -56,12 +57,12 @@ class ThemeAggregator {
     if (!assets.length) {
       // If root or scope theme files not found, fallback to theme generation.
       // @TODO Default to theme generation on next MVB - https://github.com/cerner/terra-toolkit/issues/325
-      const prefix = !isScoped ? ROOT : SCOPED;
-      const scopeSelector = !isScoped ? `:${ROOT}` : `.${theme}`;
-      const themeFiles = ThemeAggregator.findThemeVariableFiles(theme, options);
+      const prefix = isScoped && !isRoot ? SCOPED : ROOT;
+      const scopeSelector = isScoped && !isRoot ? `.${themeName}` : `:${ROOT}`;
+      const themeFiles = ThemeAggregator.findThemeVariableFiles(themeName, options);
       const fileAttrs = {
         assets: themeFiles,
-        themeName: theme,
+        themeName,
         prefix,
         scopeSelector,
       };
@@ -70,12 +71,12 @@ class ThemeAggregator {
         return ThemeAggregator.writeSCSSFile(fileAttrs);
       }
 
-      const themeName = theme.name || theme;
-      Logger.warn(`No theme files found for ${themeName}.`);
+      const name = themeName.name || themeName;
+      Logger.warn(`No theme files found for ${name}.`);
       return null;
     }
 
-    Logger.log(`Aggregating ${theme}...`);
+    Logger.log(`Aggregating ${themeName}...`);
     return assets.map(asset => ThemeAggregator.resolve(asset));
   }
 
