@@ -141,7 +141,7 @@ describe('Theme Aggregator', () => {
         assets: [theme], themeName: theme, prefix: 'scoped', scopeSelector: theme, outputPath,
       });
 
-      const expected = ["./scoped-test-theme.scss"];
+      const expected = ['./scoped-test-theme.scss'];
       expect(scssFile).toEqual(expected);
     });
   });
