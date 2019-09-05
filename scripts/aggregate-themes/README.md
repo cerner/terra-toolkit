@@ -98,8 +98,8 @@ Using the above `terra-theme-config` in conjunction with the above project struc
 ### generatedThemes/root-terra-dark-theme.scss
 ```scss
 :root {
-  @import '../node_modules/terra-component/themes/terra-dark-theme/terra-dark-theme.scss;
-  @import '../themes/terra-dark-theme/terra-dark-theme.scss
+  @import '../node_modules/terra-component/themes/terra-dark-theme/terra-dark-theme.scss';
+  @import '../themes/terra-dark-theme/terra-dark-theme.scss';
 }
 ```
 
