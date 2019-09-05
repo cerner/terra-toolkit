@@ -135,6 +135,7 @@ const webpackConfig = (options, env, argv) => {
     resolve: {
       extensions: ['.js', '.jsx'],
       modules: resolveModules,
+      mainFields: ['main'],
     },
     output: {
       filename: `${filename}.js`,
