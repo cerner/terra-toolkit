@@ -5,7 +5,7 @@ const context = '[Terra-Tookit:wdio-runner]';
 
 async function wdioRunner(options) {
   const {
-    configPath, locales, formFactors, gridUrl, browsers, continueOnFail, ...testSetup
+    configPath, locales, formFactors, gridUrl, browsers, theme, continueOnFail, ...testSetup
   } = options;
 
   const testlocales = locales || ['en'];
@@ -17,6 +17,10 @@ async function wdioRunner(options) {
 
   if (browsers) {
     process.env.BROWSERS = browsers;
+  }
+
+  if (theme) {
+    process.env.THEME = theme;
   }
 
   function onReturnSuccess(doExit, envValues) {
