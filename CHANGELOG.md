@@ -5,6 +5,7 @@ Unreleased
 ----------
 ### Added
 * Added a post-install console warning if terra-toolkit is included as a hard dependency
+* Added a line to webpack config to only resolve to 'main'
 
 5.6.0 - (August 30, 2019)
 ----------
