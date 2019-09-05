@@ -60,10 +60,12 @@ const webpackConfig = (options, env, argv) => {
             {
               loader: 'css-loader',
               options: {
-                modules: 'global',
+                modules: {
+                  mode: 'global',
+                  localIdentName: '[name]__[local]___[hash:base64:5]',
+                },
                 sourceMap: true,
                 importLoaders: 2,
-                localIdentName: '[name]__[local]___[hash:base64:5]',
               },
             },
             {
