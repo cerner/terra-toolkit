@@ -2,7 +2,7 @@
 
 Terra Toolkit provides a built-in mechanism for aggregating themes.
 
-By default, the terra-toolkit webpack configuration enables theme aggregation when it detects the presence of a `terra-theme.config.js` file. Theme aggregation supports generating theme files and aggregating existing ones. Generating theme files is the recommended approach. But, for passivity, theme aggregation will aggregate existing theme files first, before falling back to theme generation.
+By default, the terra-toolkit webpack configuration enables theme aggregation when it detects the presence of a `terra-theme.config.js` file.
 
 ## Getting Started - Generate Root and Scoped Themes
 Create a new file within the same directory as your webpack configuration file.
@@ -17,9 +17,9 @@ project
 
 Within this file declare and export an object containing your theme configuration.
 
-Theme aggregation uses this configuration to search for theme files within the following directory format: `theme->themeName->themeName.scss`. Then, for each theme, a root and/or scope themes will be generated.
+Theme aggregation uses this configuration to search for theme files within the following directory format: `themes->theme-name->theme-name.scss`. Then, for each theme, a root and/or scope themes will be generated.
 
-The generated file(s) output to the `generatedThemes` directory and are imported into `aggregated-themes.js`. This js file will be automatically included as an entry point within your application if you are using the webpack configuration provided by terra-toolkit.
+The generated file(s) output to the `generated-themes` directory and are imported into `aggregated-themes.js`. This js file will be automatically included as an entry point within your application if you are using the webpack configuration provided by terra-toolkit.
 
 ### Sample Project Structure
 ```txt
@@ -80,7 +80,7 @@ This example follows the [sample project structure](#Sample-Project-Structure) d
 
 Using the above `terra-theme-config` in conjunction with the above project structure generates:
 
-### generatedThemes/root-terra-dark-theme.scss
+### generated-themes/root-terra-dark-theme.scss
 ```scss
 :root {
   @import '../node_modules/terra-component/themes/terra-dark-theme/terra-dark-theme.scss';
@@ -88,14 +88,14 @@ Using the above `terra-theme-config` in conjunction with the above project struc
 }
 ```
 
-### generatedThemes/scoped-terra-light-theme.scss
+### generated-themes/scoped-terra-light-theme.scss
 ```scss
 .light-theme {
   @import '../node_modules/terra-component/themes/terra-light-theme/theme-variables.scss';
 }
 ```
 
-### generatedThemes/aggregated-themes.js
+### generated-themes/aggregated-themes.js
 ```scss
 import './root-terra-dark-theme.scss';
 import './scoped-terra-light-theme.scss';
@@ -103,7 +103,7 @@ import './scoped-terra-light-theme.scss';
 ## Getting Started - Using Existing Root and Scoped Themes
 Theme files must follow naming conventions to be aggregated - theme aggregation will search for `root` or `scope` theme files. These theme files are expected be within a namespaced directory within a `themes` directory.
 
-Aggregated themes will be imported into a single `aggregated-themes.js` file inside a `generatedThemes` directory. This file will be automatically included as an entry point within your application if you are using the webpack configuration provided by terra-toolkit.
+Aggregated themes will be imported into a single `aggregated-themes.js` file inside a `generated-themes` directory. This file will be automatically included as an entry point within your application if you are using the webpack configuration provided by terra-toolkit.
 
 ### Sample Project Structure - Existing Themes
 ```txt

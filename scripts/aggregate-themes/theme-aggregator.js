@@ -7,7 +7,7 @@ const CONFIG = 'terra-theme.config.js';
 const DISCLAIMER = fs.readFileSync(path.resolve(__dirname, 'disclaimer.txt'), 'utf8');
 const NODE_MODULES = 'node_modules/';
 const OUTPUT = 'aggregated-themes.js';
-const OUTPUT_DIR = 'generatedThemes';
+const OUTPUT_DIR = 'generated-themes';
 const OUTPUT_PATH = path.resolve(process.cwd(), OUTPUT_DIR);
 const ROOT = 'root';
 const SCOPED = 'scoped';
@@ -110,7 +110,7 @@ class ThemeAggregator {
       return null;
     }
 
-    // Create generatedThemes directory.
+    // Create generated-themes directory.
     fs.ensureDir(OUTPUT_DIR, (err) => {
       Logger.warn(err);
     });
@@ -185,13 +185,13 @@ class ThemeAggregator {
   }
 
   /**
-   * Generates a theme scss file and outputs it to the generatedThemes directory.
+   * Generates a theme scss file and outputs it to the generated-themes directory.
    * @param {object} contains requested scss file attrs
    *   @param {array} assets - The aggregated theme files to import within generated file.
    *   @param {string} themeName - Name of theme to aggregate.
    *   @param {string} prefix - Prefix to append to generated file.
    *   @param {string} scopeSelector - scss scope selector to encase theme.
-   *   @param {string} outputPath - path to write the scss file to. For testing purposes - overrides the default generatedThemes path.
+   *   @param {string} outputPath - path to write the scss file to. For testing purposes - overrides the default generated-themes path.
    * @returns {string} - The path of the generated scss file, relative to the working home directory.
    */
   static writeSCSSFile({
