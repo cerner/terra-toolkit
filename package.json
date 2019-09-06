@@ -1,6 +1,6 @@
 {
   "name": "terra-toolkit",
-  "version": "5.6.1",
+  "version": "5.6.2",
   "description": "Utilities to help when developing terra modules.",
   "main": "lib/index.js",
   "engines": {
@@ -48,7 +48,6 @@
     "jest": "jest --config jestConfig.js",
     "lint": "eslint --ext .js .",
     "pack": "webpack --config tests/test.config.js -p",
-    "postinstall": "node ./scripts/post-install/post-install.js",
     "prepare": "npm run compile",
     "prepublishOnly": "npm whoami && check-installed-dependencies && npm test",
     "pretest": "npm run lint",

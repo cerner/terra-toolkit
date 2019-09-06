@@ -1,8 +1,10 @@
 Changelog
 =========
 
-Unreleased
+5.6.2 - (September 6, 2019)
 ----------
+### Fixed
+* Reverted post-install console warning if terra-toolkit is included as a hard dependency
 
 5.6.1 - (September 5, 2019)
 ----------
