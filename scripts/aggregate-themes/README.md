@@ -100,11 +100,12 @@ Using the above `terra-theme-config` in conjunction with the above project struc
 import './root-terra-dark-theme.scss';
 import './scoped-terra-light-theme.scss';
 ```
-## Getting Started - Using Existing Root and Scoped Themes
+## [Legacy] Getting Started - Using Existing Root and Scoped Themes
 Theme files must follow naming conventions to be aggregated - theme aggregation will search for `root` or `scope` theme files. These theme files are expected be within a namespaced directory within a `themes` directory.
 
 Aggregated themes will be imported into a single `aggregated-themes.js` file inside a `generated-themes` directory. This file will be automatically included as an entry point within your application if you are using the webpack configuration provided by terra-toolkit.
 
+*Note*: This functionality will be deprecated on 6.0 release.
 ### Sample Project Structure - Existing Themes
 ```txt
 project
