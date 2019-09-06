@@ -5,6 +5,8 @@ Unreleased
 ----------
 ### Added
 * Added a post-install console warning if terra-toolkit is included as a hard dependency
+* Fallback theme generation strategy for theme aggregation.
+* Theme visual regression support.
 
 5.6.0 - (August 30, 2019)
 ----------
@@ -13,10 +15,6 @@ Unreleased
 
 ### Changed
 * Give webpack plugins a chance to manipulate devServer options.
-
-### Added
-* Fallback theme generation strategy for theme aggregation.
-* Theme visual regression support.
 
 5.5.0 - (August 21, 2019)
 ----------
