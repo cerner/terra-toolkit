@@ -1,13 +1,13 @@
 const Autoprefixer = require('autoprefixer');
 // const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin');
 // const PostCSSCustomProperties = require('postcss-custom-properties');
-const path = require('path');
+// const path = require('path');
 const rtl = require('postcss-rtl');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+// const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const merge = require('webpack-merge');
-const DuplicatePackageCheckerPlugin = require('@cerner/duplicate-package-checker-webpack-plugin');
+// const DuplicatePackageCheckerPlugin = require('@cerner/duplicate-package-checker-webpack-plugin');
 // const aggregateTranslations = require('terra-aggregate-translations');
 // const ThemeAggregator = require('../../scripts/aggregate-themes/theme-aggregator');
 // const getThemeWebpackPromise = require('./getThemeWebpackPromise');
@@ -16,18 +16,18 @@ const TerraWebpack = require('./plugin/TerraWebpack');
 
 const webpackConfig = (options, env, argv) => {
   const {
-    rootPath,
-    resolveModules,
-    staticOptions,
+    // rootPath,
+    // resolveModules,
+    // staticOptions,
     themeFile,
   } = options;
 
   const production = argv.p;
-  const fileNameStategy = production ? '[name]-[chunkhash]' : '[name]';
-  const chunkFilename = argv['output-chunk-filename'] || fileNameStategy;
-  const filename = argv['output-filename'] || fileNameStategy;
-  const outputPath = argv['output-path'] || path.join(rootPath, 'build');
-  const publicPath = argv['output-public-path'] || '';
+  // const fileNameStategy = production ? '[name]-[chunkhash]' : '[name]';
+  // const chunkFilename = argv['output-chunk-filename'] || fileNameStategy;
+  // const filename = argv['output-filename'] || fileNameStategy;
+  // const outputPath = argv['output-path'] || path.join(rootPath, 'build');
+  // const publicPath = argv['output-public-path'] || '';
 
   const devConfig = {
     mode: 'development',
@@ -105,11 +105,11 @@ const webpackConfig = (options, env, argv) => {
         },
         disableHotReloading: env.disableHotReloading,
       }),
-      new MiniCssExtractPlugin({
-        filename: `${filename}.css`,
-        chunkFilename: `${chunkFilename}.css`,
-        ignoreOrder: true,
-      }),
+      // new MiniCssExtractPlugin({
+      //   filename: `${filename}.css`,
+      //   chunkFilename: `${chunkFilename}.css`,
+      //   ignoreOrder: true,
+      // }),
       // new PostCSSAssetsPlugin({
       //   test: /\.css$/,
       //   log: false,
@@ -125,45 +125,45 @@ const webpackConfig = (options, env, argv) => {
       //     }),
       //   ],
       // }),
-      new DuplicatePackageCheckerPlugin({
-        showHelp: false,
-        alwaysEmitErrorsFor: [
-          'react',
-          'react-dom',
-          'react-intl',
-          'react-on-rails',
-          'terra-breakpoints',
-          'terra-application',
-          'terra-disclosure-manager',
-          'terra-navigation-prompt',
-        ],
-      }),
+      // new DuplicatePackageCheckerPlugin({
+      //   showHelp: false,
+      //   alwaysEmitErrorsFor: [
+      //     'react',
+      //     'react-dom',
+      //     'react-intl',
+      //     'react-on-rails',
+      //     'terra-breakpoints',
+      //     'terra-application',
+      //     'terra-disclosure-manager',
+      //     'terra-navigation-prompt',
+      //   ],
+      // }),
     ],
     resolve: {
       extensions: ['.js', '.jsx'],
-      modules: resolveModules,
+      // modules: resolveModules,
       mainFields: ['main'],
     },
-    output: {
-      filename: `${filename}.js`,
-      chunkFilename: `${chunkFilename}.js`,
-      path: outputPath,
-      publicPath,
-    },
-    devServer: {
-      ...staticOptions,
-      host: '0.0.0.0',
-      publicPath,
-      stats: {
-        colors: true,
-        children: false,
-      },
-    },
-    devtool: 'eval-source-map',
-    resolveLoader: {
-      modules: [path.resolve(path.join(rootPath, 'node_modules'))],
-    },
-    stats: { children: false },
+    // output: {
+    //   filename: `${filename}.js`,
+    //   chunkFilename: `${chunkFilename}.js`,
+    //   path: outputPath,
+    //   // publicPath,
+    // },
+    // devServer: {
+    //   ...staticOptions,
+    //   host: '0.0.0.0',
+    //   publicPath,
+    //   stats: {
+    //     colors: true,
+    //     children: false,
+    //   },
+    // },
+    // devtool: 'eval-source-map',
+    // resolveLoader: {
+    //   modules: [path.resolve(path.join(rootPath, 'node_modules'))],
+    // },
+    // stats: { children: false },
   };
 
   if (!production) {
@@ -174,10 +174,10 @@ const webpackConfig = (options, env, argv) => {
     devtool: 'replace',
   })(devConfig, {
     mode: 'production',
-    devtool: false,
-    plugins: [
-      new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ['**/*', '!stats.json'] }),
-    ],
+    // devtool: false,
+    // plugins: [
+    //   new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ['**/*', '!stats.json'] }),
+    // ],
     optimization: {
       minimizer: [
         new TerserPlugin({
