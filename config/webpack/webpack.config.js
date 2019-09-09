@@ -1,6 +1,6 @@
 const Autoprefixer = require('autoprefixer');
-const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin');
-const PostCSSCustomProperties = require('postcss-custom-properties');
+// const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin');
+// const PostCSSCustomProperties = require('postcss-custom-properties');
 const path = require('path');
 const rtl = require('postcss-rtl');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -8,9 +8,11 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const merge = require('webpack-merge');
 const DuplicatePackageCheckerPlugin = require('@cerner/duplicate-package-checker-webpack-plugin');
-const aggregateTranslations = require('terra-aggregate-translations');
-const ThemeAggregator = require('../../scripts/aggregate-themes/theme-aggregator');
-const getThemeWebpackPromise = require('./getThemeWebpackPromise');
+// const aggregateTranslations = require('terra-aggregate-translations');
+// const ThemeAggregator = require('../../scripts/aggregate-themes/theme-aggregator');
+// const getThemeWebpackPromise = require('./getThemeWebpackPromise');
+const TerraWebpackEntrypoints = require('./plugin/TerraWebpackEntrypoints');
+const TerraWebpack = require('./plugin/TerraWebpack');
 
 const webpackConfig = (options, env, argv) => {
   const {
@@ -30,9 +32,7 @@ const webpackConfig = (options, env, argv) => {
   const devConfig = {
     mode: 'development',
     entry: {
-      raf: 'raf/polyfill',
-      'core-js': 'core-js/stable',
-      'regenerator-runtime': 'regenerator-runtime/runtime',
+      ...TerraWebpackEntrypoints,
       ...themeFile && { theme: themeFile },
     },
     module: {
@@ -98,26 +98,33 @@ const webpackConfig = (options, env, argv) => {
         }],
     },
     plugins: [
+      new TerraWebpack({
+        aggregateOptions: {
+          ...env.aggregateOptions,
+          disable: env.disableAggregateTranslations,
+        },
+        disableHotReloading: env.disableHotReloading,
+      }),
       new MiniCssExtractPlugin({
         filename: `${filename}.css`,
         chunkFilename: `${chunkFilename}.css`,
         ignoreOrder: true,
       }),
-      new PostCSSAssetsPlugin({
-        test: /\.css$/,
-        log: false,
-        plugins: [
-          PostCSSCustomProperties({
-            preserve: true,
-            // If we have a theme file, use the webpack promise to webpack it.  This promise will resolve to
-            // an object with themeable variables and values. This will then be used to update the end state CSS
-            // so that they are populated with values if variables aren't supported (e.g. IE10). This dance is
-            // necessary when code splitting to ensure the variables and values are applied across all code split
-            // css files
-            ...themeFile && { importFrom: [getThemeWebpackPromise(rootPath, themeFile)] },
-          }),
-        ],
-      }),
+      // new PostCSSAssetsPlugin({
+      //   test: /\.css$/,
+      //   log: false,
+      //   plugins: [
+      //     PostCSSCustomProperties({
+      //       preserve: true,
+      //       // If we have a theme file, use the webpack promise to webpack it.  This promise will resolve to
+      //       // an object with themeable variables and values. This will then be used to update the end state CSS
+      //       // so that they are populated with values if variables aren't supported (e.g. IE10). This dance is
+      //       // necessary when code splitting to ensure the variables and values are applied across all code split
+      //       // css files
+      //       ...themeFile && { importFrom: [getThemeWebpackPromise(rootPath, themeFile)] },
+      //     }),
+      //   ],
+      // }),
       new DuplicatePackageCheckerPlugin({
         showHelp: false,
         alwaysEmitErrorsFor: [
@@ -189,33 +196,33 @@ const webpackConfig = (options, env, argv) => {
 };
 
 const defaultWebpackConfig = (env = {}, argv = {}) => {
-  const { disableAggregateTranslations, disableHotReloading } = env;
+  // const { disableAggregateTranslations, disableHotReloading } = env;
 
-  const staticOptions = {
-    ...disableHotReloading && {
-      hot: false,
-      inline: false,
-    },
-  };
+  // const staticOptions = {
+  //   ...disableHotReloading && {
+  //     hot: false,
+  //     inline: false,
+  //   },
+  // };
 
   const processPath = process.cwd();
   /* Get the root path of a mono-repo process call */
   const rootPath = processPath.includes('packages') ? processPath.split('packages')[0] : processPath;
 
-  const resolveModules = ['node_modules'];
+  // const resolveModules = ['node_modules'];
 
-  if (!disableAggregateTranslations) {
-    aggregateTranslations({ baseDir: rootPath, ...env.aggregateOptions });
-    resolveModules.unshift(path.resolve(rootPath, 'aggregated-translations'));
-  }
+  // if (!disableAggregateTranslations) {
+  //   aggregateTranslations({ baseDir: rootPath, ...env.aggregateOptions });
+  //   resolveModules.unshift(path.resolve(rootPath, 'aggregated-translations'));
+  // }
 
-  const themeFile = ThemeAggregator.aggregate();
+  // const themeFile = ThemeAggregator.aggregate();
 
   const options = {
     rootPath,
-    resolveModules,
-    staticOptions,
-    themeFile,
+    // resolveModules,
+    // staticOptions,
+    // themeFile,
   };
 
   return webpackConfig(options, env, argv);
