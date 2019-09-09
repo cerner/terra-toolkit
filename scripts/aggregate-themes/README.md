@@ -69,7 +69,7 @@ The `scoped` option accepts an array of theme names to generate or aggregate.
 ## Example
 This example follows the [sample project structure](#Sample-Project-Structure) defined above.
 
-`${themeName}` files should contain imports or CSS custom property values encased in a `:global` scope.
+`theme-name` files should contain imports or CSS custom property values encased in a `:global` scope.
 ### themes/terra-dark-theme/terra-dark-theme.scss
 ```scss
 :global {
