@@ -15,7 +15,7 @@ commander
   .option('--locales [list]', 'The list of locales to test. Defaults to [en]', parseCLIList, undefined)
   .option('--formFactors [list]', 'The list of viewport sizes to test.', parseCLIList, undefined)
   .option('--browsers [list]', 'The list of browsers to test. Defaults to [chrome].', parseCLIList, undefined)
-  .option('--theme [string]', 'The default theme. Overrides default theme set within terra-theme-config.js.', undefined)
+  .option('--themes [list]', 'List of themes to override defined default theme.', undefined)
   .option('--gridUrl [url]', 'The selenium grid url to run tests against', undefined)
   .option('--continueOnFail', 'Pass to continue executing test runs when a run fails', false)
   .option('--updateReference', 'Pass to remove all reference screenshots during screenshot cleanup', false)
