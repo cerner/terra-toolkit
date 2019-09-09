@@ -41,12 +41,13 @@ class ThemeAggregator {
    * Aggregates theme assets.
    * @param {string} theme - The theme to aggregate.
    * @param {Object} options - The aggregation options.
+   * @param {boolean} defaultFlag - Whether the theme to be generated is a root or scope theme. Guards against default theme and scope theme being equivalent.
    * @returns {array} - An array of file names.
    */
-  static aggregateTheme(themeName, options = {}) {
+  static aggregateTheme(themeName, options = {}, defaultFlag) {
     const { theme, scoped = [] } = options;
 
-    const isRoot = themeName === theme;
+    const isRoot = themeName === theme && defaultFlag;
     const isScoped = scoped.indexOf(themeName) > -1;
     const file = isScoped && !isRoot ? SCOPED_THEME : ROOT_THEME;
     const assets = ThemeAggregator.find(`**/themes/${themeName}/${file}`, options);
@@ -122,17 +123,25 @@ class ThemeAggregator {
     const assets = [];
     let asset;
 
+    // Guards against default theme and scope theme being equivalent.
+    let defaultFlag;
+    if (defaultTheme) {
+      defaultFlag = true;
+    }
+
     let themesToAggregate = defaultTheme ? [defaultTheme] : [];
     themesToAggregate = themesToAggregate.concat(scoped);
 
     themesToAggregate.forEach((theme) => {
-      asset = ThemeAggregator.aggregateTheme(theme, options);
+      asset = ThemeAggregator.aggregateTheme(theme, options, defaultFlag);
       if (asset) {
         if (asset.length > 1) {
           assets.push(...asset);
         }
         assets.push(asset);
       }
+
+      if (defaultFlag) defaultFlag = false; // There can only be one instance of the default theme. This stops multiple root themes from being generated.
     });
 
     return ThemeAggregator.writeJsFile(assets);
