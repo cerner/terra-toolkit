@@ -77,7 +77,8 @@ function getScreenshotPath(ref) {
     }
     const refDir = screenshotSetup[`${ref}Dir`];
 
-    return path.join(testPath, '__snapshots__', refDir, getScreenshotDir(context), getScreenshotName(context));
+    const { theme } = global.browser.options;
+    return path.join(testPath, '__snapshots__', refDir, theme || '', getScreenshotDir(context), getScreenshotName(context));
   };
 }
 
