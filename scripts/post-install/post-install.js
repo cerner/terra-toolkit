@@ -13,13 +13,13 @@ function validateInstall() {
    * Note: This feature was introduced in npm 5.4.0.
    */
   if (!process.env.INIT_CWD) {
-    Logger.warn('WARNING: [terra-toolkit] - INIT_CWD was undefined. This is likely due to an outdated version of npm. Please consider upgrading.');
+    Logger.warn('WARNING: [terra-toolkit] - INIT_CWD was undefined. This is likely due to an outdated version of npm. Please consider upgrading. terra-toolkit does not support this version of npm.');
     return;
   }
 
   fs.readFile(`${process.env.INIT_CWD}/package.json`, (error, file) => {
     if (error) {
-      Logger.warn('WARNING: [terra-toolkit] - Unable to read package.json in post-install script.');
+      Logger.warn('WARNING: [terra-toolkit] - Unable to validate if terra-toolkit was installed as a dev-dependency. Please ensure terra-toolkit is defined as a devDependency and not a dependency in the package.json.');
       return;
     }
 
