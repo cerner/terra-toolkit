@@ -13,7 +13,7 @@ function validateInstall() {
    * Note: This feature was introduced in npm 5.4.0.
    */
   if (!process.env.INIT_CWD) {
-    Logger.warn('WARNING: [terra-toolkit] - INIT_CWD was undefined. This is likely due to an outdated version of npm. Please consider upgrading. terra-toolkit does not support this version of npm.');
+    Logger.warn('WARNING: [terra-toolkit] - INIT_CWD was undefined. This is likely due to an outdated version of npm. Please consider upgrading.');
     return;
   }
 
