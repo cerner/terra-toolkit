@@ -1,7 +1,9 @@
 Changelog
 =========
  ### Added
- * Added a post-install console warning if terra-toolkit is included as a hard dependency
+* Added a post-install console warning if terra-toolkit is included as a hard dependency
+* Fallback theme generation strategy for theme aggregation.
+* Theme visual regression support.
 
 5.6.2 - (September 6, 2019)
 ----------
@@ -12,8 +14,6 @@ Changelog
 ----------
 ### Added
 * Added a post-install console warning if terra-toolkit is included as a hard dependency
-* Fallback theme generation strategy for theme aggregation.
-* Theme visual regression support.
 * Added a line to webpack config to only resolve to 'main'
 
 5.6.0 - (August 30, 2019)
