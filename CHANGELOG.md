@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Changed
+* Updated webpack range from "webpack": "^4.30.0" to "webpack": ">=4.30.0 <4.40.0" to avoid consuming buggy behavior in webpack 4.40.0
 
 5.4.0 - (July 31, 2019)
 ----------
