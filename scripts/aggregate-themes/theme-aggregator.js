@@ -124,7 +124,7 @@ class ThemeAggregator {
     let asset;
 
     // Guards against default theme and scope theme being equivalent.
-    let defaultFlag;
+    let defaultFlag = false;
     if (defaultTheme) {
       defaultFlag = true;
     }
@@ -137,8 +137,9 @@ class ThemeAggregator {
       if (asset) {
         if (asset.length > 1) {
           assets.push(...asset);
+        } else {
+          assets.push(asset);
         }
-        assets.push(asset);
       }
 
       if (defaultFlag) defaultFlag = false; // There can only be one instance of the default theme. This stops multiple root themes from being generated.
