@@ -1,6 +1,9 @@
 Changelog
 =========
- ### Added
+
+5.7.0 - (September 12, 2019)
+----------
+### Added
 * Added a post-install console warning if terra-toolkit is included as a hard dependency
 * Fallback theme generation strategy for theme aggregation.
 * Theme visual regression support.
