@@ -53,7 +53,7 @@ class ThemeAggregator {
     const assets = ThemeAggregator.find(`**/themes/${themeName}/${file}`, options);
 
     // Add the dependency import if it exists.
-    assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${theme}/**/${file}`, options));
+    assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${themeName}/**/${file}`, options));
 
     if (!assets.length) {
       // If root or scope theme files not found, fallback to theme generation.

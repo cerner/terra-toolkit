@@ -3,7 +3,7 @@ Changelog
 Unreleased
 ----------
 ### Fixed
-* Add missing else statement - resolves aggregating themes multiple times.
+* Resolve issues with theme files within node modules being aggregated multiple times.
 
 5.7.1 - (September 12, 2019)
 ----------
