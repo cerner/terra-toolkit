@@ -1,5 +1,8 @@
 Changelog
 =========
+
+5.7.1 - (September 12, 2019)
+----------
 ### Fixed
 * Fixed issue with theme aggregation where the default theme wasn't honored
 
