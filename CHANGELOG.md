@@ -1,5 +1,7 @@
 Changelog
 =========
+### Fixed
+* Fixed issue with theme aggregation where the default theme wasn't honored
 
 5.7.0 - (September 12, 2019)
 ----------
