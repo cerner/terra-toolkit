@@ -13,9 +13,6 @@ Changelog
 * Fallback theme generation strategy for theme aggregation.
 * Theme visual regression support.
 
-### Changed
-* Updated webpack range from "webpack": "^4.30.0" to "webpack": ">=4.30.0 <4.40.0" to avoid consuming buggy behavior in webpack 4.40.0
-
 5.6.2 - (September 6, 2019)
 ----------
 ### Fixed
