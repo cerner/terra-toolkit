@@ -37,7 +37,7 @@ describe('Theme Aggregator', () => {
       const files = ThemeAggregator.aggregateTheme('terra-mock-opaque-theme', options);
       const expected = [
         'sample-component/themes/terra-mock-opaque-theme/scoped-theme.scss',
-        '../tests/jest/fixtures/themes/terra-mock-opaque-theme/scoped-theme.scss'
+        '../tests/jest/fixtures/themes/terra-mock-opaque-theme/scoped-theme.scss',
       ];
 
       expect(files).toEqual(expected);
