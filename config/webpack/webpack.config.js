@@ -137,6 +137,7 @@ const webpackConfig = (options, env, argv) => {
     resolve: {
       extensions: ['.js', '.jsx'],
       modules: resolveModules,
+      mainFields: ['main'],
     },
     output: {
       filename: `${filename}.js`,
@@ -210,7 +211,8 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     resolveModules.unshift(path.resolve(rootPath, 'aggregated-translations'));
   }
 
-  const themeFile = ThemeAggregator.aggregate();
+  const themeOverride = process.env.THEME; // Flexes root theme for theme visual regression testing.
+  const themeFile = ThemeAggregator.aggregate(themeOverride);
 
   const options = {
     rootPath,

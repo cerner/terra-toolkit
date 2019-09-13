@@ -31,13 +31,17 @@ const watch = (compiler) => {
 // Create a webpack dev server instance.
 const startWebpackDevServer = (options) => {
   const {
-    port, index, locale,
+    port, index, locale, theme,
   } = options;
   const host = '0.0.0.0';
   let { config } = options;
   // if config is a function, execute it with prod mode if applicable.
   if (typeof config === 'function') {
-    const env = { ...locale && { defaultLocale: locale } };
+    const env = {
+      ...locale && { defaultLocale: locale },
+      ...theme && { theme },
+    };
+
     config = config(env, { p: true });
   }
 
@@ -85,6 +89,7 @@ export default class ServeStaticService {
   async onPrepare(config = {}) {
     const { site, webpackConfig } = config;
     const locale = process.env.LOCALE || config.locale;
+    const theme = process.env.THEME || config.theme;
     if (!webpackConfig && !site) {
       Logger.warn('No webpack configuration provided', { context });
       return;
@@ -105,6 +110,7 @@ export default class ServeStaticService {
       port,
       index,
       locale,
+      theme,
       production: true,
     };
 
