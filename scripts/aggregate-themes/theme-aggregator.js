@@ -31,7 +31,7 @@ class ThemeAggregator {
     if (fs.existsSync(defaultConfig)) {
       // eslint-disable-next-line global-require, import/no-dynamic-require
       themeConfig = require(defaultConfig);
-      return ThemeAggregator.aggregateThemes({ ...themeConfig, theme });
+      return ThemeAggregator.aggregateThemes({ ...themeConfig, ...theme && { theme } });
     }
 
     return null;
