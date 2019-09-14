@@ -1,5 +1,10 @@
 Changelog
 =========
+
+Unreleased
+----------
+### Fixed
+* Resolve issues with theme files within node modules being aggregated multiple times.
 ### Changed	
 * Revert change to webpack range from "webpack": "^4.30.0" to "webpack": ">=4.30.0 <4.40.0"
 
