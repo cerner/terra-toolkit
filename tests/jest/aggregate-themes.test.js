@@ -30,6 +30,18 @@ describe('Theme Aggregator', () => {
 
       expect(files).toEqual(expected);
     });
+
+    it('returns an array of aggregated scoped theme files paths, including themes within node_modules', () => {
+      const options = { scoped: ['terra-mock-opaque-theme'] };
+
+      const files = ThemeAggregator.aggregateTheme('terra-mock-opaque-theme', options);
+      const expected = [
+        'sample-component/themes/terra-mock-opaque-theme/scoped-theme.scss',
+        '../tests/jest/fixtures/themes/terra-mock-opaque-theme/scoped-theme.scss',
+      ];
+
+      expect(files).toEqual(expected);
+    });
   });
 
   describe('findThemeVariableFiles', () => {
