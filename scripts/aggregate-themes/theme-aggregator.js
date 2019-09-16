@@ -72,8 +72,7 @@ class ThemeAggregator {
         return ThemeAggregator.writeSCSSFile(fileAttrs);
       }
 
-      const name = themeName.name || themeName;
-      Logger.warn(`No theme files found for ${name}.`);
+      Logger.warn(`No theme files found for ${themeName}.`);
       return null;
     }
 
@@ -130,7 +129,9 @@ class ThemeAggregator {
     }
 
     let themesToAggregate = defaultTheme ? [defaultTheme] : [];
-    themesToAggregate = themesToAggregate.concat(scoped);
+    if (scoped.length) {
+      themesToAggregate = themesToAggregate.concat(scoped);
+    }
 
     themesToAggregate.forEach((theme) => {
       asset = ThemeAggregator.aggregateTheme(theme, options, defaultFlag);
