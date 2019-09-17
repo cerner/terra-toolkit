@@ -31,9 +31,11 @@ class ThemeAggregator {
     if (fs.existsSync(defaultConfig)) {
       // eslint-disable-next-line global-require, import/no-dynamic-require
       themeConfig = require(defaultConfig);
-      return ThemeAggregator.aggregateThemes({ ...themeConfig, ...theme && { theme } });
+      const assets = ThemeAggregator.aggregateThemes({ ...themeConfig, ...theme && { theme } });
+      if (assets.length) {
+        return ThemeAggregator.writeJsFile(assets);
+      }
     }
-
     return null;
   }
 
@@ -46,6 +48,11 @@ class ThemeAggregator {
    */
   static aggregateTheme(themeName, options = {}, defaultFlag) {
     const { theme, scoped = [] } = options;
+
+    if (!themeName) {
+      Logger.warn(`Failed to aggregate ${themeName}. Falsey values are not accepted.`);
+      return null;
+    }
 
     const isRoot = themeName === theme && defaultFlag;
     const isScoped = scoped.indexOf(themeName) > -1;
@@ -107,7 +114,7 @@ class ThemeAggregator {
    */
   static aggregateThemes(options) {
     if (!ThemeAggregator.validate(options)) {
-      return null;
+      return [];
     }
 
     // Create generated-themes directory.
@@ -119,8 +126,6 @@ class ThemeAggregator {
       theme: defaultTheme,
       scoped,
     } = options;
-    const assets = [];
-    let asset;
 
     // Guards against default theme and scope theme being equivalent.
     let defaultFlag = false;
@@ -133,20 +138,22 @@ class ThemeAggregator {
       themesToAggregate = themesToAggregate.concat(scoped);
     }
 
+    const assets = [];
+    let asset;
     themesToAggregate.forEach((theme) => {
       asset = ThemeAggregator.aggregateTheme(theme, options, defaultFlag);
       if (asset) {
         if (asset.length > 1) {
           assets.push(...asset);
         } else {
-          assets.push(asset);
+          assets.push(asset.pop());
         }
       }
 
       if (defaultFlag) defaultFlag = false; // There can only be one instance of the default theme. This stops multiple root themes from being generated.
     });
 
-    return ThemeAggregator.writeJsFile(assets);
+    return assets;
   }
 
   /**
