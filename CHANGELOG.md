@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+5.8.0 - (September 16, 2019)
+----------
 ### Fixed
 * Resolve issues with theme files within node modules being aggregated multiple times.
 ### Changed	
