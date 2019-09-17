@@ -129,7 +129,7 @@ class ThemeAggregator {
     }
 
     let themesToAggregate = defaultTheme ? [defaultTheme] : [];
-    if (scoped.length) {
+    if (scoped) {
       themesToAggregate = themesToAggregate.concat(scoped);
     }
 
