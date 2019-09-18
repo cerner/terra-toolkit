@@ -4,13 +4,13 @@ const ThemeAggregator = require('../../scripts/aggregate-themes/theme-aggregator
 global.console = { log: jest.fn(), warn: jest.fn() };
 
 describe('Theme Aggregator', () => {
+  /* eslint-disable no-console */
   describe('validate', () => {
     it('does not warn if there is a default theme but not a scoped theme', () => {
       const options = { theme: 'terra-mock-dark-theme' };
 
       ThemeAggregator.validate(options);
 
-      // eslint-disable-next-line no-console
       expect(console.warn).toHaveBeenCalledTimes(0);
     });
 
@@ -19,7 +19,6 @@ describe('Theme Aggregator', () => {
 
       ThemeAggregator.validate(options);
 
-      // eslint-disable-next-line no-console
       expect(console.warn).toHaveBeenCalledTimes(0);
     });
 
@@ -28,9 +27,12 @@ describe('Theme Aggregator', () => {
 
       ThemeAggregator.validate(options);
 
-      // eslint-disable-next-line no-console
       expect(console.warn).toHaveBeenCalled();
     });
+
+    console.warn.mockClear();
+    console.log.mockClear();
+    /* eslint-enable no-console */
   });
 
   describe('aggregate', () => {
