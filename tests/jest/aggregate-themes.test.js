@@ -3,14 +3,14 @@ const ThemeAggregator = require('../../scripts/aggregate-themes/theme-aggregator
 
 global.console = { log: jest.fn(), warn: jest.fn() };
 
-/* eslint-disable no-console */
-afterEach(() => {
-  console.warn.mockClear();
-  console.log.mockClear();
-});
-
 describe('Theme Aggregator', () => {
   describe('validate', () => {
+    /* eslint-disable no-console */
+    afterEach(() => {
+      console.warn.mockClear();
+      console.log.mockClear();
+    });
+
     it('does not warn if there is a default theme but not a scoped theme', () => {
       const options = { theme: 'terra-mock-dark-theme' };
 
@@ -107,8 +107,6 @@ describe('Theme Aggregator', () => {
     it('warns if a blank value is passed as a themename and returns null', () => {
       const files = ThemeAggregator.aggregateTheme('');
 
-      // eslint-disable-next-line no-console
-      expect(console.warn).toHaveBeenCalled();
       expect(files).toEqual(null);
     });
 
