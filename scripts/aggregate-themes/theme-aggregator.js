@@ -143,7 +143,7 @@ class ThemeAggregator {
     themesToAggregate.forEach((theme) => {
       asset = ThemeAggregator.aggregateTheme(theme, options, defaultFlag);
       if (asset) {
-          assets.push(...asset);
+        assets.push(...asset);
       }
 
       if (defaultFlag) defaultFlag = false; // There can only be one instance of the default theme. This stops multiple root themes from being generated.
