@@ -50,7 +50,6 @@ class ThemeAggregator {
     const { theme, scoped = [] } = options;
 
     if (!themeName) {
-      Logger.warn(`Failed to aggregate '${themeName}'. Falsey values are not accepted.`);
       return null;
     }
 
