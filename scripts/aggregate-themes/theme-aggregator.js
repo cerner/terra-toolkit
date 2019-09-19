@@ -31,9 +31,11 @@ class ThemeAggregator {
     if (fs.existsSync(defaultConfig)) {
       // eslint-disable-next-line global-require, import/no-dynamic-require
       themeConfig = require(defaultConfig);
-      return ThemeAggregator.aggregateThemes({ ...themeConfig, ...theme && { theme } });
+      const assets = ThemeAggregator.aggregateThemes({ ...themeConfig, ...theme && { theme } });
+      if (assets) {
+        return ThemeAggregator.writeJsFile(assets);
+      }
     }
-
     return null;
   }
 
@@ -46,6 +48,10 @@ class ThemeAggregator {
    */
   static aggregateTheme(themeName, options = {}, defaultFlag) {
     const { theme, scoped = [] } = options;
+
+    if (!themeName) {
+      return null;
+    }
 
     const isRoot = themeName === theme && defaultFlag;
     const isScoped = scoped.indexOf(themeName) > -1;
@@ -72,8 +78,7 @@ class ThemeAggregator {
         return ThemeAggregator.writeSCSSFile(fileAttrs);
       }
 
-      const name = themeName.name || themeName;
-      Logger.warn(`No theme files found for ${name}.`);
+      Logger.warn(`No theme files found for ${themeName}.`);
       return null;
     }
 
@@ -104,7 +109,7 @@ class ThemeAggregator {
   /**
    * Aggregates theme assets into a js file.
    * @param {Object} options - The aggregation options.
-   * @returns {string} - The file path of the generated js file.
+   * @returns {array} - An array of aggregated theme files
    */
   static aggregateThemes(options) {
     if (!ThemeAggregator.validate(options)) {
@@ -120,8 +125,6 @@ class ThemeAggregator {
       theme: defaultTheme,
       scoped,
     } = options;
-    const assets = [];
-    let asset;
 
     // Guards against default theme and scope theme being equivalent.
     let defaultFlag = false;
@@ -130,22 +133,26 @@ class ThemeAggregator {
     }
 
     let themesToAggregate = defaultTheme ? [defaultTheme] : [];
-    themesToAggregate = themesToAggregate.concat(scoped);
+    if (scoped) {
+      themesToAggregate = themesToAggregate.concat(scoped);
+    }
 
+    const assets = [];
+    let asset;
     themesToAggregate.forEach((theme) => {
       asset = ThemeAggregator.aggregateTheme(theme, options, defaultFlag);
       if (asset) {
-        if (asset.length > 1) {
-          assets.push(...asset);
-        } else {
-          assets.push(asset);
-        }
+        assets.push(...asset);
       }
 
       if (defaultFlag) defaultFlag = false; // There can only be one instance of the default theme. This stops multiple root themes from being generated.
     });
 
-    return ThemeAggregator.writeJsFile(assets);
+    if (!assets.length) {
+      return null;
+    }
+
+    return assets;
   }
 
   /**
