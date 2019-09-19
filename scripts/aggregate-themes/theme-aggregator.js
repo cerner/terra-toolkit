@@ -32,7 +32,7 @@ class ThemeAggregator {
       // eslint-disable-next-line global-require, import/no-dynamic-require
       themeConfig = require(defaultConfig);
       const assets = ThemeAggregator.aggregateThemes({ ...themeConfig, ...theme && { theme } });
-      if (assets.length) {
+      if (assets) {
         return ThemeAggregator.writeJsFile(assets);
       }
     }
