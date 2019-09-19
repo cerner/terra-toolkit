@@ -113,7 +113,7 @@ class ThemeAggregator {
    */
   static aggregateThemes(options) {
     if (!ThemeAggregator.validate(options)) {
-      return [];
+      return null;
     }
 
     // Create generated-themes directory.
@@ -147,6 +147,10 @@ class ThemeAggregator {
 
       if (defaultFlag) defaultFlag = false; // There can only be one instance of the default theme. This stops multiple root themes from being generated.
     });
+
+    if (!assets.length) {
+      return null;
+    }
 
     return assets;
   }

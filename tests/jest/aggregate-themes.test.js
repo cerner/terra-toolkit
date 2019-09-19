@@ -47,32 +47,32 @@ describe('Theme Aggregator', () => {
   });
 
   describe('aggregateThemes', () => {
-    it('returns an empty array for an empty default theme and empty array scope theme', () => {
+    it('returns null for an empty default theme and empty array scope theme', () => {
       const options = { theme: '', scoped: [] };
 
       const files = ThemeAggregator.aggregateThemes(options);
-      expect(files).toEqual([]);
+      expect(files).toBeNull();
     });
 
-    it('returns an empty array for an null default theme and null array scope theme', () => {
+    it('returns null for an null default theme and null array scope theme', () => {
       const options = { theme: null, scoped: null };
 
       const files = ThemeAggregator.aggregateThemes(options);
-      expect(files).toEqual([]);
+      expect(files).toBeNull();
     });
 
-    it('returns an empty array for a null default theme and scope theme array containing null and a non existent theme.', () => {
+    it('returns null for a null default theme and scope theme array containing null and a non existent theme.', () => {
       const options = { theme: null, scoped: [null, 'non-existent'] };
 
       const files = ThemeAggregator.aggregateThemes(options);
-      expect(files).toEqual([]);
+      expect(files).toBeNull();
     });
 
-    it('returns an empty array for a non existent default theme and empty scope theme', () => {
+    it('returns null for a non existent default theme and empty scope theme', () => {
       const options = { theme: 'unknown-theme', scoped: '' };
 
       const files = ThemeAggregator.aggregateThemes(options);
-      expect(files).toEqual([]);
+      expect(files).toBeNull();
     });
 
     it('returns the aggregated scoped theme for a non existent default theme and defined scope theme', () => {
