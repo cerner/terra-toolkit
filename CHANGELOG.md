@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+5.9.0 - (September 19, 2019)
+----------
 ### Fixed
 * Guard against empty scope value passed by theme config.
 
