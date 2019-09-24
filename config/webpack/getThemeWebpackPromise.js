@@ -34,9 +34,11 @@ const themeConfig = (rootPath, themeFile, cachedObject) => (
             {
               loader: 'css-loader',
               options: {
-                modules: 'global',
+                modules: {
+                  mode: 'global',
+                  localIdentName: '[name]__[local]___[hash:base64:5]',
+                },
                 importLoaders: 2,
-                localIdentName: '[name]__[local]___[hash:base64:5]',
               },
             },
             {
