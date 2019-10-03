@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+5.10.0 - (October 3, 2019)
+----------
 ### Changed
 * Upgraded the version of css-loader from "v2.1.1" to "v3.2.0".
 
