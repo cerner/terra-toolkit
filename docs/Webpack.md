@@ -14,6 +14,11 @@ React 16 depends on the collection types ``Map`` and ``Set`` and it depends on `
 - [babel-loader](https://webpack.js.org/loaders/babel-loader/) - Allows transpiling JavaScript files using [Babel](https://github.com/babel/babel) and webpack.
 - [file-loader](https://webpack.js.org/loaders/file-loader/) - Instructs webpack to emit the required object as file and to return its public URL.
 
+### JavaScript Plugins
+- [DefinePlugin](https://webpack.js.org/plugins/define-plugin/) - Plugin to define global compile-time values, including:
+  - `PACKAGE_VERSION` - The version of the package executing webpack.
+  - `WEBPACK_BUILD_TIMESTAMP` - The time that webpack was executed in ISO8601 format.
+
 ### CSS Loaders and Plugins
 - [autoprefixer](https://github.com/postcss/autoprefixer) - Plugin to parse CSS and add vendor prefixes to CSS rules. This should be configured with [`browserslist-config-terra`](https://github.com/cerner/browserslist-config-terra). \*
 - [css-loader](https://webpack.js.org/loaders/css-loader/) - The css-loader interprets ``@import`` and ``url()`` like ``import/require()`` and will resolve them. The css-loader is also used to parse CSS Modules.

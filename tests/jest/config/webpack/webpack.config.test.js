@@ -4,7 +4,7 @@ jest.mock('postcss-custom-properties');
 jest.mock('mini-css-extract-plugin');
 jest.mock('clean-webpack-plugin');
 jest.mock('terser-webpack-plugin');
-jest.mock('../../../../config/webpack/getDefineBuildStatsPlugin');
+jest.mock('webpack/lib/DefinePlugin');
 
 // Import mocked components
 const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin');
@@ -13,10 +13,12 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const aggregateTranslations = require('terra-aggregate-translations');
+const DefinePlugin = require('webpack/lib/DefinePlugin');
 const webpackConfig = require('../../../../config/webpack/webpack.config');
-const getDefineBuildStatsPlugin = require('../../../../config/webpack/getDefineBuildStatsPlugin');
 
 const outputPath = expect.stringContaining('build');
+
+const mockDate = 1571689941977;
 
 describe('webpack config', () => {
   let config;
@@ -24,6 +26,7 @@ describe('webpack config', () => {
 
   describe('dev or prod config', () => {
     beforeAll(() => {
+      jest.spyOn(Date, 'now').mockImplementation(() => mockDate);
       config = webpackConfig();
     });
 
@@ -77,7 +80,11 @@ describe('webpack config', () => {
       });
       expect(PostCSSAssetsPlugin).toBeCalledWith(postCSSAssetsPluginOptions);
 
-      expect(getDefineBuildStatsPlugin).toBeCalled();
+      const definePluginOptions = expect.objectContaining({
+        PACKAGE_VERSION: JSON.stringify(process.env.npm_package_version),
+        WEBPACK_BUILD_TIMESTAMP: JSON.stringify(new Date(mockDate).toISOString()),
+      });
+      expect(DefinePlugin).toBeCalledWith(definePluginOptions);
     });
 
     it('adds resolve extensions', () => {
@@ -166,7 +173,12 @@ describe('webpack config', () => {
         ignoreOrder: true,
       });
       expect(PostCSSAssetsPlugin).toBeCalled();
-      expect(getDefineBuildStatsPlugin).toBeCalled();
+
+      const definePluginOptions = expect.objectContaining({
+        PACKAGE_VERSION: JSON.stringify(process.env.npm_package_version),
+        WEBPACK_BUILD_TIMESTAMP: JSON.stringify(new Date(mockDate).toISOString()),
+      });
+      expect(DefinePlugin).toBeCalledWith(definePluginOptions);
 
       const cleanPluginOptions = expect.objectContaining({ cleanOnceBeforeBuildPatterns: expect.arrayContaining(['!stats.json']) });
 

@@ -4,6 +4,9 @@ Changelog
 Unreleased
 ----------
 
+### Added
+* Added DefinePlugin to webpack configuration to define build date/time and the version of the executing package.
+
 5.10.0 - (October 3, 2019)
 ----------
 ### Changed

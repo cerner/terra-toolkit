@@ -6,12 +6,12 @@ const rtl = require('postcss-rtl');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const webpack = require('webpack');
 const merge = require('webpack-merge');
 const DuplicatePackageCheckerPlugin = require('@cerner/duplicate-package-checker-webpack-plugin');
 const aggregateTranslations = require('terra-aggregate-translations');
 const ThemeAggregator = require('../../scripts/aggregate-themes/theme-aggregator');
 const getThemeWebpackPromise = require('./getThemeWebpackPromise');
-const getDefineBuildStatsPlugin = require('./getDefineBuildStatsPlugin');
 
 const webpackConfig = (options, env, argv) => {
   const {
@@ -134,7 +134,10 @@ const webpackConfig = (options, env, argv) => {
           'terra-navigation-prompt',
         ],
       }),
-      getDefineBuildStatsPlugin(),
+      new webpack.DefinePlugin({
+        PACKAGE_VERSION: JSON.stringify(process.env.npm_package_version),
+        WEBPACK_BUILD_TIMESTAMP: JSON.stringify(new Date(Date.now()).toISOString()),
+      }),
     ],
     resolve: {
       extensions: ['.js', '.jsx'],
