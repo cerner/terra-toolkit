@@ -11,6 +11,7 @@ const DuplicatePackageCheckerPlugin = require('@cerner/duplicate-package-checker
 const aggregateTranslations = require('terra-aggregate-translations');
 const ThemeAggregator = require('../../scripts/aggregate-themes/theme-aggregator');
 const getThemeWebpackPromise = require('./getThemeWebpackPromise');
+const getDefineBuildStatsPlugin = require('./getDefineBuildStatsPlugin');
 
 const webpackConfig = (options, env, argv) => {
   const {
@@ -133,6 +134,7 @@ const webpackConfig = (options, env, argv) => {
           'terra-navigation-prompt',
         ],
       }),
+      getDefineBuildStatsPlugin(),
     ],
     resolve: {
       extensions: ['.js', '.jsx'],

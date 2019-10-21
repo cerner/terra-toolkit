@@ -4,6 +4,7 @@ jest.mock('postcss-custom-properties');
 jest.mock('mini-css-extract-plugin');
 jest.mock('clean-webpack-plugin');
 jest.mock('terser-webpack-plugin');
+jest.mock('../../../../config/webpack/getDefineBuildStatsPlugin');
 
 // Import mocked components
 const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin');
@@ -13,6 +14,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const aggregateTranslations = require('terra-aggregate-translations');
 const webpackConfig = require('../../../../config/webpack/webpack.config');
+const getDefineBuildStatsPlugin = require('../../../../config/webpack/getDefineBuildStatsPlugin');
 
 const outputPath = expect.stringContaining('build');
 
@@ -62,7 +64,7 @@ describe('webpack config', () => {
 
     it('adds the plugins', () => {
       expect(config).toHaveProperty('plugins');
-      expect(config.plugins).toHaveLength(3);
+      expect(config.plugins).toHaveLength(4);
 
       expect(MiniCssExtractPlugin).toBeCalledWith({
         chunkFilename: '[name].css',
@@ -74,6 +76,8 @@ describe('webpack config', () => {
         plugins: [PostCSSCustomProperties()],
       });
       expect(PostCSSAssetsPlugin).toBeCalledWith(postCSSAssetsPluginOptions);
+
+      expect(getDefineBuildStatsPlugin).toBeCalled();
     });
 
     it('adds resolve extensions', () => {
@@ -154,7 +158,7 @@ describe('webpack config', () => {
 
     it('adds the CleanWebpackPlugin', () => {
       expect(config).toHaveProperty('plugins');
-      expect(config.plugins).toHaveLength(4);
+      expect(config.plugins).toHaveLength(5);
 
       expect(MiniCssExtractPlugin).toBeCalledWith({
         chunkFilename: '[name].css',
@@ -162,6 +166,7 @@ describe('webpack config', () => {
         ignoreOrder: true,
       });
       expect(PostCSSAssetsPlugin).toBeCalled();
+      expect(getDefineBuildStatsPlugin).toBeCalled();
 
       const cleanPluginOptions = expect.objectContaining({ cleanOnceBeforeBuildPatterns: expect.arrayContaining(['!stats.json']) });
 
