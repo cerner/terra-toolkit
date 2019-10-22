@@ -135,8 +135,7 @@ const webpackConfig = (options, env, argv) => {
         ],
       }),
       new webpack.DefinePlugin({
-        PACKAGE_VERSION: JSON.stringify(process.env.npm_package_version),
-        WEBPACK_BUILD_TIMESTAMP: JSON.stringify(new Date(Date.now()).toISOString()),
+        CERNER_BUILD_TIMESTAMP: JSON.stringify(new Date(Date.now()).toISOString()),
       }),
     ],
     resolve: {

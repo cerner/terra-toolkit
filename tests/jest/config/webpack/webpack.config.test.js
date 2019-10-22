@@ -81,8 +81,7 @@ describe('webpack config', () => {
       expect(PostCSSAssetsPlugin).toBeCalledWith(postCSSAssetsPluginOptions);
 
       const definePluginOptions = expect.objectContaining({
-        PACKAGE_VERSION: JSON.stringify(process.env.npm_package_version),
-        WEBPACK_BUILD_TIMESTAMP: JSON.stringify(new Date(mockDate).toISOString()),
+        CERNER_BUILD_TIMESTAMP: JSON.stringify(new Date(mockDate).toISOString()),
       });
       expect(DefinePlugin).toBeCalledWith(definePluginOptions);
     });
@@ -175,8 +174,7 @@ describe('webpack config', () => {
       expect(PostCSSAssetsPlugin).toBeCalled();
 
       const definePluginOptions = expect.objectContaining({
-        PACKAGE_VERSION: JSON.stringify(process.env.npm_package_version),
-        WEBPACK_BUILD_TIMESTAMP: JSON.stringify(new Date(mockDate).toISOString()),
+        CERNER_BUILD_TIMESTAMP: JSON.stringify(new Date(mockDate).toISOString()),
       });
       expect(DefinePlugin).toBeCalledWith(definePluginOptions);
 
