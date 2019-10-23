@@ -4,6 +4,9 @@ Changelog
 Unreleased
 ----------
 
+### Added
+* Added DefinePlugin to webpack configuration to globally define webpack execution timestamp.
+
 5.10.0 - (October 3, 2019)
 ----------
 ### Changed
