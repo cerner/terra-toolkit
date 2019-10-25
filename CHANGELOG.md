@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+5.11.0 - (October 25, 2019)
+----------
 ### Fixed
 * Lock down postcss dependency to v7.0.18
 
