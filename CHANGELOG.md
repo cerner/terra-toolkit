@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Changed
+* Unlocked the version of postcss from "v7.0.18" to "v7.0.21".
 
 5.11.0 - (October 25, 2019)
 ----------
