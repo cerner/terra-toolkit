@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Fixed
+* Lock down postcss dependency to v7.0.18
 
 ### Added
 * Added DefinePlugin to webpack configuration to globally define webpack execution timestamp.
