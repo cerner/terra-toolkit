@@ -75,6 +75,11 @@ const startWebpackDevServer = (options) => {
       }
     });
 
+    compiler.hooks.failed.tap('Failed', () => {
+      Logger.warn('Webpack failed to compile', { context });
+      reject();
+    });
+
     // start that server.
     devServer.listen(port, host, (err) => {
       if (err) {

@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Added
+* Tap into the `failed` webpack compiler hook to flag compilation failure.
 
 5.12.0 - (October 30, 2019)
 ----------
