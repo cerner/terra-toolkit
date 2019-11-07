@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+5.13.0 - (November 7, 2019)
+----------
 ### Added
 * Tap into the `failed` webpack compiler hook to exit the wdio test runner when compilation fails.
 
