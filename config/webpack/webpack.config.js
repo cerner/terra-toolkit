@@ -6,6 +6,7 @@ const rtl = require('postcss-rtl');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const webpack = require('webpack');
 const merge = require('webpack-merge');
 const DuplicatePackageCheckerPlugin = require('@cerner/duplicate-package-checker-webpack-plugin');
 const aggregateTranslations = require('terra-aggregate-translations');
@@ -132,6 +133,9 @@ const webpackConfig = (options, env, argv) => {
           'terra-disclosure-manager',
           'terra-navigation-prompt',
         ],
+      }),
+      new webpack.DefinePlugin({
+        CERNER_BUILD_TIMESTAMP: JSON.stringify(new Date(Date.now()).toISOString()),
       }),
     ],
     resolve: {

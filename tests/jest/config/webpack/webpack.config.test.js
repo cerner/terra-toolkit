@@ -4,6 +4,7 @@ jest.mock('postcss-custom-properties');
 jest.mock('mini-css-extract-plugin');
 jest.mock('clean-webpack-plugin');
 jest.mock('terser-webpack-plugin');
+jest.mock('webpack/lib/DefinePlugin');
 
 // Import mocked components
 const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin');
@@ -12,9 +13,12 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const aggregateTranslations = require('terra-aggregate-translations');
+const DefinePlugin = require('webpack/lib/DefinePlugin');
 const webpackConfig = require('../../../../config/webpack/webpack.config');
 
 const outputPath = expect.stringContaining('build');
+
+const mockDate = 1571689941977;
 
 describe('webpack config', () => {
   let config;
@@ -22,6 +26,7 @@ describe('webpack config', () => {
 
   describe('dev or prod config', () => {
     beforeAll(() => {
+      jest.spyOn(Date, 'now').mockImplementation(() => mockDate);
       config = webpackConfig();
     });
 
@@ -62,7 +67,7 @@ describe('webpack config', () => {
 
     it('adds the plugins', () => {
       expect(config).toHaveProperty('plugins');
-      expect(config.plugins).toHaveLength(3);
+      expect(config.plugins).toHaveLength(4);
 
       expect(MiniCssExtractPlugin).toBeCalledWith({
         chunkFilename: '[name].css',
@@ -74,6 +79,11 @@ describe('webpack config', () => {
         plugins: [PostCSSCustomProperties()],
       });
       expect(PostCSSAssetsPlugin).toBeCalledWith(postCSSAssetsPluginOptions);
+
+      const definePluginOptions = expect.objectContaining({
+        CERNER_BUILD_TIMESTAMP: JSON.stringify(new Date(mockDate).toISOString()),
+      });
+      expect(DefinePlugin).toBeCalledWith(definePluginOptions);
     });
 
     it('adds resolve extensions', () => {
@@ -154,7 +164,7 @@ describe('webpack config', () => {
 
     it('adds the CleanWebpackPlugin', () => {
       expect(config).toHaveProperty('plugins');
-      expect(config.plugins).toHaveLength(4);
+      expect(config.plugins).toHaveLength(5);
 
       expect(MiniCssExtractPlugin).toBeCalledWith({
         chunkFilename: '[name].css',
@@ -162,6 +172,11 @@ describe('webpack config', () => {
         ignoreOrder: true,
       });
       expect(PostCSSAssetsPlugin).toBeCalled();
+
+      const definePluginOptions = expect.objectContaining({
+        CERNER_BUILD_TIMESTAMP: JSON.stringify(new Date(mockDate).toISOString()),
+      });
+      expect(DefinePlugin).toBeCalledWith(definePluginOptions);
 
       const cleanPluginOptions = expect.objectContaining({ cleanOnceBeforeBuildPatterns: expect.arrayContaining(['!stats.json']) });
 
