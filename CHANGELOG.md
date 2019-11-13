@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Added
+* Check to disable accessibility tests for `clinical-lowlight-theme` to prevent color contrast violations.
 
 5.13.0 - (November 7, 2019)
 ----------
