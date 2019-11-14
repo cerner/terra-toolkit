@@ -3,6 +3,27 @@ Changelog
 
 Unreleased
 ----------
+
+5.13.0 - (November 7, 2019)
+----------
+### Added
+* Tap into the `failed` webpack compiler hook to exit the wdio test runner when compilation fails.
+
+5.12.0 - (October 30, 2019)
+----------
+### Changed
+* Unlocked the version of postcss from "v7.0.18" to "v7.0.21".
+
+5.11.0 - (October 25, 2019)
+----------
+### Fixed
+* Lock down postcss dependency to v7.0.18
+
+### Added
+* Added DefinePlugin to webpack configuration to globally define webpack execution timestamp.
+
+5.10.0 - (October 3, 2019)
+----------
 ### Changed
 * Upgraded the version of css-loader from "v2.1.1" to "v3.2.0".
 
