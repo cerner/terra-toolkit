@@ -10,11 +10,8 @@ import determineOptions from './determine-test-options';
  * @param {Object[]} [options.viewports] - the list of Terra viewports to test.
  */
 const runAccessibilityTest = (options) => {
-  const { theme } = global.browser.options;
-  if (theme !== 'clinical-lowlight-theme') {
-    const axeResults = global.browser.axe(options);
-    global.expect(axeResults).to.be.accessible();
-  }
+  const axeResults = global.browser.axe(options);
+  global.expect(axeResults).to.be.accessible();
 };
 
 /**
