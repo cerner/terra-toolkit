@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Fixed
+* Allow custom mismatch tolerance of 0
 
 5.13.0 - (November 7, 2019)
 ----------
