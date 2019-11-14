@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Fixed
+* Allow custom mismatch tolerance of 0
 
 5.13.0 - (November 7, 2019)
 ----------
@@ -26,9 +28,6 @@ Unreleased
 ----------
 ### Changed
 * Upgraded the version of css-loader from "v2.1.1" to "v3.2.0".
-
-### Fixed
-* Allow custom mismatch tolerance of 0
 
 5.9.0 - (September 19, 2019)
 ----------
