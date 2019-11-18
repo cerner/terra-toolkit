@@ -49,7 +49,7 @@ const axeOptions = (args) => {
     options, viewports,
   } = determineArgs(args);
 
-  const globalAxeRules = global.browser.options.axe.options.rules;
+  const globalAxeRules = global.browser.options.axe.options.rules || undefined;
   const customAxeRules = options.rules || options.axeRules;
   const axeRules = { ...globalAxeRules, ...customAxeRules };
 
