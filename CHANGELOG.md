@@ -4,7 +4,7 @@ Changelog
 Unreleased
 ----------
 ### Changed
-* Merging global axe rules with default/normal axe rules to allow axe customizations from custom wdio.conf.js
+* Merged global axe rules with default/normal axe rules to allow axe customizations from custom wdio.conf.js
 
 ### Fixed
 * Allow custom mismatch tolerance of 0
