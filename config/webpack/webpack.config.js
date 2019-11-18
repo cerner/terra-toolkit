@@ -133,7 +133,6 @@ const webpackConfig = (options, env, argv) => {
           'terra-disclosure-manager',
           'terra-i18n',
           'terra-navigation-prompt',
-          'terra-theme-provider',
         ],
       }),
       new webpack.DefinePlugin({
