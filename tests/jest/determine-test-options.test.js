@@ -37,10 +37,18 @@ describe('screenshotOptions', () => {
     expect(options).toHaveProperty('viewports', [customViewport]);
   });
 
-  it('honors custom misMatchTolerance', () => {
-    const options = determineOptions.screenshotOptions([{ misMatchTolerance: 0.2 }]);
+  describe('honors custom misMatchTolerance', () => {
+    it('accepts mismatch greater than 0', () => {
+      const options = determineOptions.screenshotOptions([{ misMatchTolerance: 0.2 }]);
 
-    expect(options).toHaveProperty('misMatchTolerance', 0.2);
+      expect(options).toHaveProperty('misMatchTolerance', 0.2);
+    });
+
+    it('accepts mismatch of 0', () => {
+      const options = determineOptions.screenshotOptions([{ misMatchTolerance: 0 }]);
+
+      expect(options).toHaveProperty('misMatchTolerance', 0);
+    });
   });
 
   it('honors custom name and options', () => {

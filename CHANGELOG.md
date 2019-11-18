@@ -3,8 +3,11 @@ Changelog
 
 Unreleased
 ----------
-### Added
-* Check to disable accessibility tests for `clinical-lowlight-theme` to prevent color contrast violations.
+### Changed
+* Merging global axe rules with default/normal axe rules to allow axe customizations from custom wdio.conf.js
+
+### Fixed
+* Allow custom mismatch tolerance of 0
 
 5.13.0 - (November 7, 2019)
 ----------

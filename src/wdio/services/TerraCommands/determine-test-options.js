@@ -80,7 +80,7 @@ const screenshotOptions = (args) => {
     name,
     selector,
     ...viewports && { viewports },
-    ...options.misMatchTolerance && { misMatchTolerance: options.misMatchTolerance },
+    ...(options.misMatchTolerance !== undefined) && { misMatchTolerance: options.misMatchTolerance },
   };
 };
 
