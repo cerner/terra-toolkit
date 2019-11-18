@@ -50,11 +50,12 @@ const axeOptions = (args) => {
   } = determineArgs(args);
 
   const globalAxeRules = global.browser.options.axe.options.rules;
-  const axeRules = options.rules || options.axeRules;
+  const customAxeRules = options.rules || options.axeRules;
+  const axeRules = { ...globalAxeRules, ...customAxeRules };
 
   return {
     ...viewports && { viewports },
-    ...axeRules && { rules: { ...globalAxeRules, ...axeRules } },
+    ...axeRules && { rules: axeRules },
   };
 };
 
