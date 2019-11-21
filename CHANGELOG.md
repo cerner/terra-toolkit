@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+### Added
+* Add `terra-i18n` to the list provided to the duplicate package checker plugin in the webpack configuration.
+
 ### Changed
 * Merged global axe rules with default/normal axe rules to allow axe customizations from custom wdio.conf.js
 
