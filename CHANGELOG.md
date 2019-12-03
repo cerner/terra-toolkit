@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+5.16.0 - (December 3, 2019)
+----------
 ### Removed
 * Remove `terra-i18n` from the list provided to the duplicate package checker plugin in the webpack configuration.
 
