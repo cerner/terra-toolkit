@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+5.14.0 - (November 26, 2019)
+----------
 ### Added
 * Add `terra-i18n` to the list provided to the duplicate package checker plugin in the webpack configuration.
 
