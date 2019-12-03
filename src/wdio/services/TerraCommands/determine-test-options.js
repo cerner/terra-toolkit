@@ -49,9 +49,17 @@ const axeOptions = (args) => {
     options, viewports,
   } = determineArgs(args);
 
-  const globalAxeRules = (global.browser.options.axe.options) ? global.browser.options.axe.options.rules : undefined;
+  const globalAxeRules = (global.browser.options.axe && global.browser.options.axe.options) ? global.browser.options.axe.options.rules : undefined;
+  // Converting `globalAxeRules` from array of rules object to object of rules.
+  const formattedGlobalRules = globalAxeRules && globalAxeRules.reduce((formattedRules, rule) => {
+    const { id, ...rest } = rule;
+    const rulesObject = formattedRules;
+    rulesObject[id] = rest;
+    return rulesObject;
+  }, {});
   const customAxeRules = options.rules || options.axeRules;
-  const axeRules = { ...globalAxeRules, ...customAxeRules };
+
+  const axeRules = { ...formattedGlobalRules, ...customAxeRules };
 
   return {
     ...viewports && { viewports },
