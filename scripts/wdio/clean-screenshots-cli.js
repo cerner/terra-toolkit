@@ -14,5 +14,4 @@ const {
   removeReference,
 } = commander;
 
-
 cleanScreenshots({ removeReference });
