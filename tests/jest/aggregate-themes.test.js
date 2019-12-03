@@ -211,7 +211,6 @@ describe('Theme Aggregator', () => {
     });
   });
 
-
   describe('writeSCSSFile', () => {
     it('returns the generated SCSS file path relative to the given output path.', () => {
       const theme = 'test-theme';
