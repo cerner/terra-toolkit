@@ -59,7 +59,7 @@ const axeOptions = (args) => {
   }, {});
   const customAxeRules = options.rules || options.axeRules;
 
-  const axeRules = { ...formattedGlobalRules, ...customAxeRules };
+  const axeRules = (formattedGlobalRules || customAxeRules) && { ...formattedGlobalRules, ...customAxeRules };
 
   return {
     ...viewports && { viewports },

@@ -76,22 +76,55 @@ describe('axeOptions', () => {
   });
 
   it('honors custom rule', () => {
-    const customRule = { id: 'landmark-one-main', enabled: false };
-    const options = determineOptions.axeOptions([{ rules: [customRule] }]);
+    const customRule = { 'landmark-one-main': { enabled: false } };
+    const options = determineOptions.axeOptions([{ rules: customRule }]);
 
-    expect(options).toHaveProperty('rules', [customRule]);
+    expect(options).toHaveProperty('rules', customRule);
   });
 
   it('honors custom rule', () => {
-    const customRule = { id: 'landmark-one-main', enabled: false };
-    const options = determineOptions.axeOptions([{ axeRules: [customRule] }]);
+    const customRule = { 'landmark-one-main': { enabled: false } };
+    const options = determineOptions.axeOptions([{ axeRules: customRule }]);
 
-    expect(options).toHaveProperty('rules', [customRule]);
+    expect(options).toHaveProperty('rules', customRule);
   });
 
   it('cannot specify runOnly options', () => {
     const options = determineOptions.axeOptions([{ runOnly: ['stuff'] }]);
 
     expect(options).not.toHaveProperty('runOnly');
+  });
+
+  it('honors global rule', () => {
+    global.browser.options = {
+      ...global.browser.options,
+      axe: {
+        options: {
+          rules: [
+            { id: 'landmark-one-main', enabled: false },
+          ],
+        },
+      },
+    };
+    const options = determineOptions.axeOptions([]);
+
+    expect(options).toHaveProperty('rules', { 'landmark-one-main': { enabled: false } });
+  });
+
+  it('merges and honors global and custom rules', () => {
+    global.browser.options = {
+      ...global.browser.options,
+      axe: {
+        options: {
+          rules: [
+            { id: 'table-duplicate-name', enabled: false },
+          ],
+        },
+      },
+    };
+    const customRule = { 'landmark-one-main': { enabled: false } };
+    const options = determineOptions.axeOptions([{ rules: customRule }]);
+
+    expect(options).toHaveProperty('rules', { ...{ 'table-duplicate-name': { enabled: false } }, ...customRule });
   });
 });
