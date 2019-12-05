@@ -4,6 +4,6 @@ FROM cerner/terra-node-base:latest
 RUN apk add zsh curl wget git \
   && wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
 
-ENV WDIO_BAIL FALSE
+ENV WDIO_BAIL false
 
 CMD "/bin/zsh"
