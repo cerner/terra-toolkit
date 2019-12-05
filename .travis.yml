@@ -27,14 +27,14 @@ jobs:
         - travis_wait docker build -t cerner/terra-node -f ./docker/terra-node/Dockerfile ./docker/terra-node/
         - travis_wait docker build -t cerner/terra-node-base:latest -f ./docker/terra-node-base/Dockerfile ./docker/terra-node-base/
         - travis_wait docker build -t cerner/terra-node-ci:latest -f ./docker/terra-node-ci/Dockerfile ./docker/terra-node-ci/
-        - travis_wait docker build -t cerner/terra-node-term:latest -f ./docker/terra-node-term/Dockerfile ./docker/terra-node-term/
+        - travis_wait docker build -t cerner/terra-node-zsh:latest -f ./docker/terra-node-zsh/Dockerfile ./docker/terra-node-zsh/
         - travis_wait docker push cerner/terra-node
         - travis_wait docker push cerner/terra-node-base:latest
         - travis_wait docker push cerner/terra-node-base:1
         - travis_wait docker push cerner/terra-node-ci:latest
         - travis_wait docker push cerner/terra-node-ci:1
-        - travis_wait docker push cerner/terra-node-term:latest
-        - travis_wait docker push cerner/terra-node-term:1
+        - travis_wait docker push cerner/terra-node-zsh:latest
+        - travis_wait docker push cerner/terra-node-zsh:1
     - stage: build
       before_install: true
       script:
