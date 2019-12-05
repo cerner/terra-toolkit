@@ -1,4 +1,4 @@
-FROM cerner/terra-node-base
+FROM cerner/terra-node-base:latest
 
 # Copy all the things
 ONBUILD COPY . /opt/module
