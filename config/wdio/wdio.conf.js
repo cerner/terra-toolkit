@@ -22,7 +22,7 @@ const internalPort = process.env.WDIO_INTERNAL_PORT || 8080;
 const ci = process.env.CI;
 
 /* Use to bail fast while running locally. */
-const bail = process.env.WDIO_BAIL || ci;
+const bail = process.env.WDIO_BAIL !== 'false' && (process.env.WDIO_BAIL || ci);
 
 /* Use to change the locale used in the wdio run. */
 const locale = process.env.LOCALE;
