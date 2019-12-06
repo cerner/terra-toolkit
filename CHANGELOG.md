@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Added
+* Add new terra docker containers based on alpine for ci and development
 
 5.16.0 - (December 3, 2019)
 ----------
