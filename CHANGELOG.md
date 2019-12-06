@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+### Changed
+* Consume new docker images.
+
 ### Added
 * Add new terra docker containers based on alpine for ci and development
 
