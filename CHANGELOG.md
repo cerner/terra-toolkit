@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Fixed
+* Resetting the viewport to the form factor (if specified) at command line else to the default viewport (huge) for unopinionated tests.
 
 5.16.0 - (December 3, 2019)
 ----------
