@@ -7,7 +7,7 @@ Unreleased
 * Add new terra docker containers based on alpine for ci and development
 
 ### Fixed
-* Resetting the viewport to the form factor (if specified) at command line else to the default viewport (huge) for unopinionated tests.
+* Restore the previous viewport size in Terra.describeViewports helper
 
 5.16.0 - (December 3, 2019)
 ----------
