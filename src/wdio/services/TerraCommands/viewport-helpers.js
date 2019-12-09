@@ -56,10 +56,14 @@ const describeViewports = (title, viewports, fn) => {
     localViewports = viewports.includes(formFactor) ? [formFactor] : [];
   }
 
+  let currentViewportSize;
   localViewports.forEach(viewport => global.describe(`[${viewport}]`, () => {
-    global.before(() => setViewport(viewport));
+    global.before(() => {
+      currentViewportSize = global.browser.getViewportSize();
+      setViewport(viewport);
+    });
     global.describe(title, fn);
-    global.after(() => setViewport(formFactor));
+    global.after(() => global.browser.setViewportSize(currentViewportSize));
   }));
 };
 
