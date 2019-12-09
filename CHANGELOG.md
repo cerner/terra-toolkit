@@ -5,6 +5,7 @@ Unreleased
 ----------
 ### Added
 * Add new terra docker containers based on alpine for ci and development
+* Add support for onBeforeUnload in firefox selenium testing
 
 5.16.0 - (December 3, 2019)
 ----------
