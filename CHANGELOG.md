@@ -5,9 +5,9 @@ Unreleased
 ----------
 ### Added
 * Add `terra-i18n` to the list provided to the duplicate package checker plugin in the webpack configuration.
-
-### Fixed
-* Allow custom mismatch tolerance of 0
+* Added prefix to theme-aggregator
+### Changed
+* Removed blank lines from files
 
 5.13.0 - (November 7, 2019)
 ----------
