@@ -5,6 +5,7 @@ Unreleased
 ----------
 ### Added
 * Add new terra docker containers based on alpine for ci and development
+* Add support for onBeforeUnload in firefox selenium testing
 
 ### Changed
 * Merged global axe rules with default/normal axe rules to allow axe customizations from custom wdio.conf.js
