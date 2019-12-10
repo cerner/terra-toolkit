@@ -4,6 +4,18 @@ Changelog
 Unreleased
 ----------
 ### Added
+* Add new terra docker containers based on alpine for ci and development
+* Add support for onBeforeUnload in firefox selenium testing
+* Adding git to terra-node-base to be able to reference git branches while testing.
+
+5.16.0 - (December 3, 2019)
+----------
+### Removed
+* Remove `terra-i18n` from the list provided to the duplicate package checker plugin in the webpack configuration.
+
+5.14.0 - (November 26, 2019)
+----------
+### Added
 * Add `terra-i18n` to the list provided to the duplicate package checker plugin in the webpack configuration.
 * Added prefix to theme-aggregator
 ### Changed

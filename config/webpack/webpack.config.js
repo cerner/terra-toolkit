@@ -131,7 +131,6 @@ const webpackConfig = (options, env, argv) => {
           'terra-application',
           'terra-breakpoints',
           'terra-disclosure-manager',
-          'terra-i18n',
           'terra-navigation-prompt',
         ],
       }),
