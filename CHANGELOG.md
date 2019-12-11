@@ -11,6 +11,9 @@ Unreleased
 * Add support for onBeforeUnload in firefox selenium testing
 * Adding git to terra-node-base to be able to reference git branches while testing.
 
+### Changes
+* Update the Firefox test browser to use the `selenium/node-firefox:3.141.59-titanium` docker image
+
 5.16.0 - (December 3, 2019)
 ----------
 ### Removed
