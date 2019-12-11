@@ -6,7 +6,7 @@ describe('beAccessible', () => {
     Terra.it.isAccessible({ viewports });
   });
 
-  describe('inaccessible contrast', () => {
+  describe('inaccessible contrast - test rules', () => {
     const ignoredA11y = {
       'color-contrast': { enabled: false },
     };
