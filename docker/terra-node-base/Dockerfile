@@ -6,6 +6,7 @@ EXPOSE 8080
 
 ENV CI true
 
-RUN npm config set unsafe-perm true -g
+RUN npm config set unsafe-perm true -g \
+  && apk add git
 
 WORKDIR /opt/module

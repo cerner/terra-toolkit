@@ -3,9 +3,13 @@ Changelog
 
 Unreleased
 ----------
+
+5.17.0 - (December 10, 2019)
+----------
 ### Added
 * Add new terra docker containers based on alpine for ci and development
 * Add support for onBeforeUnload in firefox selenium testing
+* Adding git to terra-node-base to be able to reference git branches while testing.
 
 ### Fixed
 * Restore the previous viewport size in Terra.describeViewports helper
