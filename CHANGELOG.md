@@ -3,9 +3,13 @@ Changelog
 
 Unreleased
 ----------
+
+5.17.0 - (December 10, 2019)
+----------
 ### Added
 * Add new terra docker containers based on alpine for ci and development
 * Add support for onBeforeUnload in firefox selenium testing
+* Adding git to terra-node-base to be able to reference git branches while testing.
 
 ### Changed
 * Merged global axe rules with default/normal axe rules to allow axe customizations from custom wdio.conf.js
