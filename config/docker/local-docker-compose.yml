@@ -27,7 +27,7 @@ services:
     entrypoint: bash -c 'SE_OPTS="-host $$HOSTNAME" /opt/bin/entry_point.sh'
 
   firefox:
-    image: selenium/node-firefox:3.14.0-helium
+    image: selenium/node-firefox:3.141.59-titanium
     volumes:
       - /dev/shm:/dev/shm
     deploy:
