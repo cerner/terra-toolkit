@@ -3,6 +3,10 @@ Changelog
 
 Unreleased
 ----------
+### Added
+* Added prefix to theme-aggregator
+### Changed
+* Removed blank lines from files
 
 5.17.0 - (December 10, 2019)
 ----------
@@ -23,9 +27,6 @@ Unreleased
 ----------
 ### Added
 * Add `terra-i18n` to the list provided to the duplicate package checker plugin in the webpack configuration.
-* Added prefix to theme-aggregator
-### Changed
-* Removed blank lines from files
 
 5.13.0 - (November 7, 2019)
 ----------
