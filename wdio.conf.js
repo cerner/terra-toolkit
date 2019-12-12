@@ -46,6 +46,10 @@ const config = {
       'tests/wdio/serveStatic-spec.js',
       'tests/wdio/describeViewports-spec.js',
     ],
+    noFormFactor: [
+      'tests/wdio/validateElement-spec.js',
+      'tests/wdio/defaultViewports-spec.js',
+    ],
   },
   // Static site for ServeStaticService
   ...siteExists && { site },

@@ -7,6 +7,8 @@ Unreleased
 * Update the Firefox test browser to use the `selenium/node-firefox:3.141.59-titanium` docker image
 * Consume new docker images.
 
+### Fixed
+* Restore to the previous viewport size in Terra.describeViewports helper.
 
 5.17.0 - (December 10, 2019)
 ----------
