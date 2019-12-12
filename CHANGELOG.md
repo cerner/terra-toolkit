@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Changed
+* Merged global axe rules with default/normal axe rules to allow axe customizations from custom wdio.conf.js
 
 5.17.0 - (December 10, 2019)
 ----------
@@ -12,7 +14,7 @@ Unreleased
 * Adding git to terra-node-base to be able to reference git branches while testing.
 
 ### Changed
-* Merged global axe rules with default/normal axe rules to allow axe customizations from custom wdio.conf.js
+* Update the Firefox test browser to use the `selenium/node-firefox:3.141.59-titanium` docker image
 
 5.16.0 - (December 3, 2019)
 ----------
