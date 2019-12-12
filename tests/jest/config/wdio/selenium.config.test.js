@@ -111,7 +111,6 @@ describe('Wdio Selenium Configuration', () => {
     });
   });
 
-
   describe('ie capabilities', () => {
     it('does not return ie when defined via browsers env and not seleniumGridUrl', () => {
       const seleniumConfig = determineConfig({ browsers: ['ie'] });

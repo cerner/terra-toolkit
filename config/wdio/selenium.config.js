@@ -20,7 +20,7 @@ const chromeConfig = {
 
 const firefoxConfig = {
   browserName: 'firefox',
-  maxInstances: 1,  
+  maxInstances: 1,
   'moz:firefoxOptions': {
     prefs: {
       'dom.disable_beforeunload': false,
