@@ -14,6 +14,7 @@ const SCOPED = 'scoped';
 const ROOT_THEME = `${ROOT}-theme.scss`;
 const SCOPED_THEME = `${SCOPED}-theme.scss`;
 const context = '[terra-theme-aggregator]';
+
 /**
  * Aggregates theme assets into a single file.
  *
