@@ -7,6 +7,10 @@ Unreleased
 * Added prefix to theme-aggregator
 ### Changed
 * Removed blank lines from files
+### Changed
+* Update the Firefox test browser to use the `selenium/node-firefox:3.141.59-titanium` docker image
+* Consume new docker images.
+
 
 5.17.0 - (December 10, 2019)
 ----------
@@ -14,9 +18,6 @@ Unreleased
 * Add new terra docker containers based on alpine for ci and development
 * Add support for onBeforeUnload in firefox selenium testing
 * Adding git to terra-node-base to be able to reference git branches while testing.
-
-### Changes
-* Update the Firefox test browser to use the `selenium/node-firefox:3.141.59-titanium` docker image
 
 5.16.0 - (December 3, 2019)
 ----------
