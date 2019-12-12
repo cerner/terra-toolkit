@@ -1,5 +1,7 @@
 import chai from 'chai';
 
+const Logger = require('../../../../scripts/utils/logger');
+
 /**
   * A chai assertion method to be paired with browser.axe() tests to assert no violations were found
   * on the test page.
@@ -8,10 +10,13 @@ function accessible() {
   // eslint-disable-next-line no-underscore-dangle
   new chai.Assertion(this._obj).to.be.instanceof(Array);
 
+  const axeRuleIdsToDisable = ['scrollable-region-focusable', 'aria-input-field-name'];
+
   // eslint-disable-next-line no-underscore-dangle
   const errors = this._obj
     .filter(test => test.result)
     .reduce((all, test) => all.concat(test.result.violations), [])
+    .filter(test => !axeRuleIdsToDisable.includes(test.id))
     .filter(test => test)
     .map(test => `${JSON.stringify(test, null, 2)}`);
 
@@ -20,6 +25,20 @@ function accessible() {
     `expected no accessibility violations but got:\n\t${errors[0]}`,
     'expected accessibility errors but received none',
   );
+
+  // eslint-disable-next-line no-underscore-dangle
+  let disabledRulesToWarn = this._obj
+    .filter(test => test.result)
+    .reduce((all, test) => all.concat(test.result.violations), [])
+    .filter(test => axeRuleIdsToDisable.includes(test.id));
+
+  if (disabledRulesToWarn.length > 0) {
+    disabledRulesToWarn = disabledRulesToWarn
+      .filter(test => test)
+      .map(test => `${JSON.stringify(test, null, 2)}`);
+
+    Logger.warn(`This test violates the following axe rule, which has been disabled:\n\t${disabledRulesToWarn[0]}.`);
+  }
 }
 
 /**

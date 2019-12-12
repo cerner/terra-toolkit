@@ -90,6 +90,12 @@ const config = {
 
   axe: {
     inject: true,
+    // options: {
+    //   rules: [
+    //         { id: 'scrollable-region-focusable', enabled: false },
+    //         { id: 'aria-input-field-name', enabled: false },
+    //   ],
+    // },
   },
 
   terra: {
