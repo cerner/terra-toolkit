@@ -5,6 +5,10 @@ Unreleased
 ----------
 ### Changed
 * Merged global axe rules with default/normal axe rules to allow axe customizations from custom wdio.conf.js
+* Consume new docker images.
+
+### Fixed
+* Restore to the previous viewport size in Terra.describeViewports helper.
 
 5.17.0 - (December 10, 2019)
 ----------
