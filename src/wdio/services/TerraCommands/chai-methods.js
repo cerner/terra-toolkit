@@ -8,10 +8,23 @@ function accessible() {
   // eslint-disable-next-line no-underscore-dangle
   new chai.Assertion(this._obj).to.be.instanceof(Array);
 
+  // These are the new rules introduced in axe-core v3.3 and v3.4 to disable for now to remain passive.
+  const axeRuleIdsToDisable = [
+    'aria-input-field-name',
+    'aria-roledescription',
+    'aria-toggle-field-name',
+    'avoid-inline-spacing',
+    'input-button-name',
+    'landmark-unique',
+    'role-img-alt',
+    'scrollable-region-focusable',
+  ];
+
   // eslint-disable-next-line no-underscore-dangle
   const errors = this._obj
     .filter(test => test.result)
     .reduce((all, test) => all.concat(test.result.violations), [])
+    .filter(test => !axeRuleIdsToDisable.includes(test.id))
     .filter(test => test)
     .map(test => `${JSON.stringify(test, null, 2)}`);
 
