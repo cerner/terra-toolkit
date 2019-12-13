@@ -13,6 +13,7 @@ const ROOT = 'root';
 const SCOPED = 'scoped';
 const ROOT_THEME = `${ROOT}-theme.scss`;
 const SCOPED_THEME = `${SCOPED}-theme.scss`;
+const context = '[terra-theme-aggregator]';
 
 /**
  * Aggregates theme assets into a single file.
@@ -78,11 +79,11 @@ class ThemeAggregator {
         return ThemeAggregator.writeSCSSFile(fileAttrs);
       }
 
-      Logger.warn(`No theme files found for ${themeName}.`);
+      Logger.warn(`No theme files found for ${themeName}.`, { context });
       return null;
     }
 
-    Logger.log(`Aggregating ${themeName}...`);
+    Logger.log(`Aggregating ${themeName}...`, { context });
     return assets.map(asset => ThemeAggregator.resolve(asset));
   }
 
@@ -99,7 +100,7 @@ class ThemeAggregator {
     assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${themeName}/**/${themeName}.scss`, options));
 
     if (!assets.length) {
-      Logger.warn(`No theme files found for ${themeName}.`);
+      Logger.warn(`No theme files found for ${themeName}.`, { context });
       return null;
     }
 
@@ -118,7 +119,7 @@ class ThemeAggregator {
 
     // Create generated-themes directory.
     fs.ensureDir(OUTPUT_DIR, (err) => {
-      Logger.warn(err);
+      Logger.warn(err, { context });
     });
 
     const {
@@ -194,7 +195,7 @@ class ThemeAggregator {
     const { theme, scoped } = options;
 
     if (!theme && !scoped) {
-      Logger.warn('No theme provided.');
+      Logger.warn('No theme provided.', { context });
       return false;
     }
 
@@ -222,7 +223,7 @@ class ThemeAggregator {
 
     const filePath = path.resolve(outputPath || OUTPUT_PATH, fileName);
     fs.writeFileSync(filePath, file);
-    Logger.log(`Successfully generated ${fileName}.`);
+    Logger.log(`Successfully generated ${fileName}.`, { context });
 
     return [`./${path.relative(outputPath || OUTPUT_PATH, filePath)}`];
   }
@@ -234,7 +235,7 @@ class ThemeAggregator {
    */
   static writeJsFile(imports) {
     if (!imports.length) {
-      Logger.warn(`No themes to import. Skip generating ${OUTPUT}.`);
+      Logger.warn(`No themes to import. Skip generating ${OUTPUT}.`, { context });
       return null;
     }
 
@@ -242,7 +243,7 @@ class ThemeAggregator {
     const file = imports.reduce((acc, s) => `${acc}import '${s}';\n`, '');
     fs.writeFileSync(filePath, `${DISCLAIMER}${file}`);
 
-    Logger.log(`Successfully generated ${OUTPUT}.`);
+    Logger.log(`Successfully generated ${OUTPUT}.`, { context });
     return filePath;
   }
 }
