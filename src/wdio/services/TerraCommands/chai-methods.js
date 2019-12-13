@@ -1,7 +1,5 @@
 import chai from 'chai';
 
-const Logger = require('../../../../scripts/utils/logger');
-
 /**
   * A chai assertion method to be paired with browser.axe() tests to assert no violations were found
   * on the test page.

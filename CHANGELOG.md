@@ -6,7 +6,7 @@ Unreleased
 ### Changed
 * Update the Firefox test browser to use the `selenium/node-firefox:3.141.59-titanium` docker image
 * Consume new docker images.
-* Disable new rules introduced on axe-core v3.3 and v3.4 to remain passive. 
+* Bump axe-core to 3.4.0 and disable new rules introduced on axe-core v3.3 and v3.4 to remain passive. 
 
 ### Fixed
 * Restore to the previous viewport size in Terra.describeViewports helper.
