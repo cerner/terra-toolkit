@@ -10,7 +10,17 @@ function accessible() {
   // eslint-disable-next-line no-underscore-dangle
   new chai.Assertion(this._obj).to.be.instanceof(Array);
 
-  const axeRuleIdsToDisable = ['scrollable-region-focusable', 'aria-input-field-name'];
+  // These are the new rules introduced in axe-core v3.3 and v3.4 to disable for now to remain passive.
+  const axeRuleIdsToDisable = [
+    'aria-input-field-name',
+    'aria-roledescription',
+    'aria-toggle-field-name',
+    'avoid-inline-spacing',
+    'input-button-name',
+    'landmark-unique',
+    'role-img-alt',
+    'scrollable-region-focusable'
+  ];
 
   // eslint-disable-next-line no-underscore-dangle
   const errors = this._obj
@@ -26,19 +36,23 @@ function accessible() {
     'expected accessibility errors but received none',
   );
 
+  // The block of code below is used to display a warning when a test 
+  // violates one of the disabled axe rules defined in axeRuleIdsToDisable.
+  // It is commented out until we can figure out a way to associate the warning message to the test that has the violation.
+  
   // eslint-disable-next-line no-underscore-dangle
-  let disabledRulesToWarn = this._obj
-    .filter(test => test.result)
-    .reduce((all, test) => all.concat(test.result.violations), [])
-    .filter(test => axeRuleIdsToDisable.includes(test.id));
+  // let disabledRulesToWarn = this._obj
+  //   .filter(test => test.result)
+  //   .reduce((all, test) => all.concat(test.result.violations), [])
+  //   .filter(test => axeRuleIdsToDisable.includes(test.id));
 
-  if (disabledRulesToWarn.length > 0) {
-    disabledRulesToWarn = disabledRulesToWarn
-      .filter(test => test)
-      .map(test => `${JSON.stringify(test, null, 2)}`);
+  // if (disabledRulesToWarn.length > 0) {
+  //   disabledRulesToWarn = disabledRulesToWarn
+  //     .filter(test => test)
+  //     .map(test => `${JSON.stringify(test, null, 2)}`);
 
-    Logger.warn(`This test violates the following axe rule, which has been disabled:\n\t${disabledRulesToWarn[0]}.`);
-  }
+  //   Logger.warn(`This test violates the following axe rule, which has been disabled:\n\t${disabledRulesToWarn[0]}.`);
+  // }
 }
 
 /**
