@@ -4,9 +4,8 @@ Changelog
 Unreleased
 ----------
 ### Added
-* Added prefix to theme-aggregator
-### Changed
-* Removed blank lines from files
+* Added log prefix to theme-aggregator
+
 ### Changed
 * Update the Firefox test browser to use the `selenium/node-firefox:3.141.59-titanium` docker image
 * Consume new docker images.
