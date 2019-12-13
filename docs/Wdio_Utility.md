@@ -86,12 +86,12 @@ Then, to assist with testing, the TerraService provides the Terra global helper 
     - Object (optional): the test options. Options include selector, misMatchTolerance and axeRules:
          - selector: the element selector to take a screenshot of. Defaults to the global `terra.selector`. Accessibility testing ignores this option and always tests the whole document.
          - misMatchTolerance: number between 0 and 100 that defines the degree of mismatch to consider two images as identical, increasing this value will decrease test coverage. Defaults to the global `visualRegression.compare.misMatchTolerance`.
-         - axeRules: the [axe rules](https://github.com/dequelabs/axe-core/blob/master/doc/rule-descriptions.md) to use as overrides if necessary.
+         - axeRules: the [axe rules](https://github.com/dequelabs/axe-core/blob/master/doc/rule-descriptions.md) to use as overrides if necessary. The rules specified here take precedence over the rules specified in the global configuration.
     - See [validateElement-spec.js](https://github.com/cerner/terra-toolkit/blob/master/tests/wdio/validateElement-spec.js) for example usage.
     - This helper can be used inside mocha `it` blocks by being called through `Terra.validates.element()`. This takes the same arguments.
 - `Terra.it.isAccessible()` mocha-chai convenience method that runs an axe test for the page.
     - Object (optional): the test options. Options include rules and viewports:
-         - rules: the [axe rules](https://github.com/dequelabs/axe-core/blob/master/doc/rule-descriptions.md) to use as overrides if necessary.
+         - rules: the [axe rules](https://github.com/dequelabs/axe-core/blob/master/doc/rule-descriptions.md) to use as overrides if necessary. The rules specified here take precedence over the rules specified in the global configuration.
          - viewports: the array of viewports dimensions to test accessibility in. Defaults to the current viewport size. **Note - This will significantly slow down tests and it is prefered to instead use a top-level `Terra.describeViewports` block**
     - See [beAccessible-spec.js](https://github.com/cerner/terra-toolkit/blob/master/tests/wdio/beAccessible-spec.js) for examples.
     - This helper can be used inside mocha `it` blocks by being called through `Terra.validates.accessibliity()`. This takes the same arguments.

@@ -76,17 +76,17 @@ describe('axeOptions', () => {
   });
 
   it('honors custom rule', () => {
-    const customRule = { id: 'landmark-one-main', enabled: false };
-    const options = determineOptions.axeOptions([{ rules: [customRule] }]);
+    const customRule = { 'landmark-one-main': { enabled: false } };
+    const options = determineOptions.axeOptions([{ rules: customRule }]);
 
-    expect(options).toHaveProperty('rules', [customRule]);
+    expect(options).toHaveProperty('rules', customRule);
   });
 
   it('honors custom rule', () => {
-    const customRule = { id: 'landmark-one-main', enabled: false };
-    const options = determineOptions.axeOptions([{ axeRules: [customRule] }]);
+    const customRule = { 'landmark-one-main': { enabled: false } };
+    const options = determineOptions.axeOptions([{ axeRules: customRule }]);
 
-    expect(options).toHaveProperty('rules', [customRule]);
+    expect(options).toHaveProperty('rules', customRule);
   });
 
   it('cannot specify runOnly options', () => {

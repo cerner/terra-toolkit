@@ -30,7 +30,18 @@ const injectAxe = (axeOptions) => {
 *
 * @returns {Object} axeResults - the axe results as list of passes, violations, incomplete and inapplicable.
 */
-const runAxeTest = (rules) => {
+const runAxeTest = (axeRules) => {
+  const globalAxeRules = (browser.options.axe && browser.options.axe.options) ? browser.options.axe.options.rules : undefined;
+  // Converting `globalAxeRules` from array of rules object to object of rules.
+  const formattedGlobalRules = globalAxeRules && globalAxeRules.reduce((formattedRules, currentRule) => {
+    const { id, ...rest } = currentRule;
+    const rules = { ...formattedRules };
+    rules[id] = rest;
+    return rules;
+  }, {});
+
+  const rules = (formattedGlobalRules || axeRules) && { ...formattedGlobalRules, ...axeRules };
+
   /* Avoid arrow callback syntax as this function is injected into the browser */
   /* eslint-disable func-names, prefer-arrow-callback, object-shorthand */
   const axeResult = browser.executeAsync(function (opts, done) {

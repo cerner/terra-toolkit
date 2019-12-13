@@ -7,8 +7,8 @@ Unreleased
 * Added log prefix to theme-aggregator
 
 ### Changed
-* Update the Firefox test browser to use the `selenium/node-firefox:3.141.59-titanium` docker image
 * Consume new docker images.
+* Update the Firefox test browser to use the `selenium/node-firefox:3.141.59-titanium` docker image
 * Bump axe-core to 3.4.0 and disable the following new rules introduced on axe-core v3.3 and v3.4 to remain passive.
     - `aria-input-field-name`
     - `aria-roledescription`
@@ -18,6 +18,7 @@ Unreleased
     - `landmark-unique`
     - `role-img-alt`
     - `scrollable-region-focusable`
+* Merged global axe rules with default/normal axe rules to allow axe customizations from custom wdio.conf.js
 
 ### Fixed
 * Restore to the previous viewport size in Terra.describeViewports helper.
