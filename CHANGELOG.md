@@ -6,6 +6,7 @@ Unreleased
 ### Changed
 * Merged global axe rules with default/normal axe rules to allow axe customizations from custom wdio.conf.js
 * Consume new docker images.
+* Update the Firefox test browser to use the `selenium/node-firefox:3.141.59-titanium` docker image
 
 ### Fixed
 * Restore to the previous viewport size in Terra.describeViewports helper.
@@ -16,9 +17,6 @@ Unreleased
 * Add new terra docker containers based on alpine for ci and development
 * Add support for onBeforeUnload in firefox selenium testing
 * Adding git to terra-node-base to be able to reference git branches while testing.
-
-### Changed
-* Update the Firefox test browser to use the `selenium/node-firefox:3.141.59-titanium` docker image
 
 5.16.0 - (December 3, 2019)
 ----------

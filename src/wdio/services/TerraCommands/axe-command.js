@@ -33,11 +33,11 @@ const injectAxe = (axeOptions) => {
 const runAxeTest = (axeRules) => {
   const globalAxeRules = (browser.options.axe && browser.options.axe.options) ? browser.options.axe.options.rules : undefined;
   // Converting `globalAxeRules` from array of rules object to object of rules.
-  const formattedGlobalRules = globalAxeRules && globalAxeRules.reduce((formattedRules, rule) => {
-    const { id, ...rest } = rule;
-    const rulesObject = formattedRules;
-    rulesObject[id] = rest;
-    return rulesObject;
+  const formattedGlobalRules = globalAxeRules && globalAxeRules.reduce((formattedRules, currentRule) => {
+    const { id, ...rest } = currentRule;
+    const rules = { ...formattedRules };
+    rules[id] = rest;
+    return rules;
   }, {});
 
   const rules = (formattedGlobalRules || axeRules) && { ...formattedGlobalRules, ...axeRules };
