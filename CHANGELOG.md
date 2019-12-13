@@ -6,7 +6,7 @@ Unreleased
 ### Changed
 * Update the Firefox test browser to use the `selenium/node-firefox:3.141.59-titanium` docker image
 * Consume new docker images.
-* Disable and warn on the `scrollable-region-focusable` and `aria-input-field-name` new axe rules introduced on v3.4.0 
+* Disable new rules introduced on axe-core v3.3 and v3.4 to remain passive. 
 
 ### Fixed
 * Restore to the previous viewport size in Terra.describeViewports helper.
