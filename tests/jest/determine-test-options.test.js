@@ -94,43 +94,4 @@ describe('axeOptions', () => {
 
     expect(options).not.toHaveProperty('runOnly');
   });
-
-  it('honors global rule', () => {
-    const originalBrowserOptions = global.browser.options;
-    global.browser.options = {
-      ...global.browser.options,
-      axe: {
-        options: {
-          rules: [
-            { id: 'landmark-one-main', enabled: false },
-          ],
-        },
-      },
-    };
-    const options = determineOptions.axeOptions([]);
-
-    expect(options).toHaveProperty('rules', { 'landmark-one-main': { enabled: false } });
-
-    global.browser.options = originalBrowserOptions;
-  });
-
-  it('merges and honors global and custom rules', () => {
-    const originalBrowserOptions = global.browser.options;
-    global.browser.options = {
-      ...global.browser.options,
-      axe: {
-        options: {
-          rules: [
-            { id: 'table-duplicate-name', enabled: false },
-          ],
-        },
-      },
-    };
-    const customRule = { 'landmark-one-main': { enabled: false } };
-    const options = determineOptions.axeOptions([{ rules: customRule }]);
-
-    expect(options).toHaveProperty('rules', { ...{ 'table-duplicate-name': { enabled: false } }, ...customRule });
-
-    global.browser.options = originalBrowserOptions;
-  });
 });
