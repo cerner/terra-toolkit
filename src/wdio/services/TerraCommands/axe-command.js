@@ -30,7 +30,18 @@ const injectAxe = (axeOptions) => {
 *
 * @returns {Object} axeResults - the axe results as list of passes, violations, incomplete and inapplicable.
 */
-const runAxeTest = (rules) => {
+const runAxeTest = (axeRules) => {
+  const globalAxeRules = (browser.options.axe && browser.options.axe.options) ? browser.options.axe.options.rules : undefined;
+  // Converting `globalAxeRules` from array of rules object to object of rules.
+  const formattedGlobalRules = globalAxeRules && globalAxeRules.reduce((formattedRules, rule) => {
+    const { id, ...rest } = rule;
+    const rulesObject = formattedRules;
+    rulesObject[id] = rest;
+    return rulesObject;
+  }, {});
+
+  const rules = (formattedGlobalRules || axeRules) && { ...formattedGlobalRules, ...axeRules };
+
   /* Avoid arrow callback syntax as this function is injected into the browser */
   /* eslint-disable func-names, prefer-arrow-callback, object-shorthand */
   const axeResult = browser.executeAsync(function (opts, done) {
@@ -69,20 +80,9 @@ const axeCommand = (testOptions = {}) => {
     viewports,
   } = testOptions;
 
-  const globalAxeRules = (browser.options.axe && browser.options.axe.options) ? browser.options.axe.options.rules : undefined;
-  // Converting `globalAxeRules` from array of rules object to object of rules.
-  const formattedGlobalRules = globalAxeRules && globalAxeRules.reduce((formattedRules, rule) => {
-    const { id, ...rest } = rule;
-    const rulesObject = formattedRules;
-    rulesObject[id] = rest;
-    return rulesObject;
-  }, {});
-
-  const axeRules = (formattedGlobalRules || rules) && { ...formattedGlobalRules, ...rules };
-
   if (!viewports) {
     // analyze the current viewport
-    return [runAxeTest(axeRules)];
+    return [runAxeTest(rules)];
   }
 
   // get the current viewport
@@ -91,7 +91,7 @@ const axeCommand = (testOptions = {}) => {
   // Get accessibility results for each specified viewport size
   const results = viewports.map((viewport) => {
     browser.setViewportSize(viewport);
-    return runAxeTest(axeRules);
+    return runAxeTest(rules);
   });
 
   // reset viewport back to the current viewport
