@@ -6,7 +6,15 @@ Unreleased
 ### Changed
 * Update the Firefox test browser to use the `selenium/node-firefox:3.141.59-titanium` docker image
 * Consume new docker images.
-* Bump axe-core to 3.4.0 and disable new rules introduced on axe-core v3.3 and v3.4 to remain passive. 
+* Bump axe-core to 3.4.0 and disable the following new rules introduced on axe-core v3.3 and v3.4 to remain passive.
+    - `aria-input-field-name`
+    - `aria-roledescription`
+    - `aria-toggle-field-name`
+    - `avoid-inline-spacing`
+    - `input-button-name`
+    - `landmark-unique`
+    - `role-img-alt`
+    - `scrollable-region-focusable`
 
 ### Fixed
 * Restore to the previous viewport size in Terra.describeViewports helper.

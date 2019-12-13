@@ -17,7 +17,7 @@ function accessible() {
     'input-button-name',
     'landmark-unique',
     'role-img-alt',
-    'scrollable-region-focusable'
+    'scrollable-region-focusable',
   ];
 
   // eslint-disable-next-line no-underscore-dangle
@@ -34,10 +34,10 @@ function accessible() {
     'expected accessibility errors but received none',
   );
 
-  // The block of code below is used to display a warning when a test 
+  // The block of code below is used to display a warning when a test
   // violates one of the disabled axe rules defined in axeRuleIdsToDisable.
   // It is commented out until we can figure out a way to associate the warning message to the test that has the violation.
-  
+
   // eslint-disable-next-line no-underscore-dangle
   // let disabledRulesToWarn = this._obj
   //   .filter(test => test.result)
