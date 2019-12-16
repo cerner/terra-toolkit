@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+5.18.0 - (December 13, 2019)
+----------
 ### Added
 * Added log prefix to theme-aggregator
 
