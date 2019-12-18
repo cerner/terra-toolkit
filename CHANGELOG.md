@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Changes
+* Downgrade axe-core dependency bump to 3.2.0
 
 5.18.0 - (December 13, 2019)
 ----------
