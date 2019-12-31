@@ -56,12 +56,12 @@ class ThemeAggregator {
     const isRoot = themeName === theme && defaultFlag;
     const isScoped = scoped.indexOf(themeName) > -1;
     const file = isScoped && !isRoot ? SCOPED_THEME : ROOT_THEME;
-    const assets = ThemeAggregator.find(`**/themes/${themeName}/${file}`, options);
+    let assets = ThemeAggregator.find(`**/themes/${themeName}/${file}`, options);
 
     // Add the dependency import if it exists.
     assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${themeName}/**/${file}`, options));
-
-    assets.map(asset => ThemeAggregator.resolve(asset));
+    // Resolve aggregated theme paths.
+    assets = assets.map(asset => ThemeAggregator.resolve(asset));
 
     // Theme Generation.
     // @TODO Default to theme generation on next MVB - https://github.com/cerner/terra-toolkit/issues/325
@@ -212,7 +212,7 @@ class ThemeAggregator {
     fs.writeFileSync(filePath, file);
     Logger.log(`Successfully generated ${fileName}.`, { context });
 
-    return [`./${path.relative(outputPath || OUTPUT_PATH, filePath)}`];
+    return `./${path.relative(outputPath || OUTPUT_PATH, filePath)}`;
   }
 
   /**
