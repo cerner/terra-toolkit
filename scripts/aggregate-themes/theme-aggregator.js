@@ -52,7 +52,7 @@ class ThemeAggregator {
 
     if (!themeName) return null;
 
-    Logger.log(`Aggregating ${themeName}...`, { context });
+    Logger.log(`Aggregating ${themeName} files...`, { context });
     const isRoot = themeName === theme && defaultFlag;
     const isScoped = scoped.indexOf(themeName) > -1;
     const file = isScoped && !isRoot ? SCOPED_THEME : ROOT_THEME;
@@ -65,6 +65,7 @@ class ThemeAggregator {
 
     // Theme Generation.
     // @TODO Default to theme generation on next MVB - https://github.com/cerner/terra-toolkit/issues/325
+    Logger.log(`Generating ${themeName} files...`, { context });
     const prefix = isScoped && !isRoot ? SCOPED : ROOT;
     const scopeSelector = isScoped && !isRoot ? `.${themeName}` : `:${ROOT}`;
     const themeFiles = ThemeAggregator.findThemeVariableFiles(themeName, options);
