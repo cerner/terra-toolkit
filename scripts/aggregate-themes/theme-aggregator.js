@@ -50,10 +50,9 @@ class ThemeAggregator {
   static aggregateTheme(themeName, options = {}, defaultFlag) {
     const { theme, scoped = [] } = options;
 
-    if (!themeName) {
-      return null;
-    }
+    if (!themeName) return null;
 
+    Logger.log(`Aggregating ${themeName}...`, { context });
     const isRoot = themeName === theme && defaultFlag;
     const isScoped = scoped.indexOf(themeName) > -1;
     const file = isScoped && !isRoot ? SCOPED_THEME : ROOT_THEME;
@@ -62,29 +61,28 @@ class ThemeAggregator {
     // Add the dependency import if it exists.
     assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${themeName}/**/${file}`, options));
 
+    assets.map(asset => ThemeAggregator.resolve(asset));
+
+    // Theme Generation.
+    // @TODO Default to theme generation on next MVB - https://github.com/cerner/terra-toolkit/issues/325
+    const prefix = isScoped && !isRoot ? SCOPED : ROOT;
+    const scopeSelector = isScoped && !isRoot ? `.${themeName}` : `:${ROOT}`;
+    const themeFiles = ThemeAggregator.findThemeVariableFiles(themeName, options);
+    const fileAttrs = {
+      assets: themeFiles,
+      themeName,
+      prefix,
+      scopeSelector,
+    };
+
+    if (themeFiles) assets.push(ThemeAggregator.writeSCSSFile(fileAttrs));
+
     if (!assets.length) {
-      // If root or scope theme files not found, fallback to theme generation.
-      // @TODO Default to theme generation on next MVB - https://github.com/cerner/terra-toolkit/issues/325
-      const prefix = isScoped && !isRoot ? SCOPED : ROOT;
-      const scopeSelector = isScoped && !isRoot ? `.${themeName}` : `:${ROOT}`;
-      const themeFiles = ThemeAggregator.findThemeVariableFiles(themeName, options);
-      const fileAttrs = {
-        assets: themeFiles,
-        themeName,
-        prefix,
-        scopeSelector,
-      };
-
-      if (themeFiles) {
-        return ThemeAggregator.writeSCSSFile(fileAttrs);
-      }
-
       Logger.warn(`No theme files found for ${themeName}.`, { context });
       return null;
     }
 
-    Logger.log(`Aggregating ${themeName}...`, { context });
-    return assets.map(asset => ThemeAggregator.resolve(asset));
+    return assets;
   }
 
   /**
@@ -113,9 +111,7 @@ class ThemeAggregator {
    * @returns {array} - An array of aggregated theme files
    */
   static aggregateThemes(options) {
-    if (!ThemeAggregator.validate(options)) {
-      return null;
-    }
+    if (!ThemeAggregator.validate(options)) return null;
 
     // Create generated-themes directory.
     fs.ensureDir(OUTPUT_DIR, (err) => {
@@ -129,29 +125,20 @@ class ThemeAggregator {
 
     // Guards against default theme and scope theme being equivalent.
     let defaultFlag = false;
-    if (defaultTheme) {
-      defaultFlag = true;
-    }
+    if (defaultTheme) defaultFlag = true;
 
     let themesToAggregate = defaultTheme ? [defaultTheme] : [];
-    if (scoped) {
-      themesToAggregate = themesToAggregate.concat(scoped);
-    }
+    if (scoped) themesToAggregate = themesToAggregate.concat(scoped);
 
     const assets = [];
     let asset;
     themesToAggregate.forEach((theme) => {
       asset = ThemeAggregator.aggregateTheme(theme, options, defaultFlag);
-      if (asset) {
-        assets.push(...asset);
-      }
-
+      if (asset) assets.push(...asset);
       if (defaultFlag) defaultFlag = false; // There can only be one instance of the default theme. This stops multiple root themes from being generated.
     });
 
-    if (!assets.length) {
-      return null;
-    }
+    if (!assets.length) return null;
 
     return assets;
   }
