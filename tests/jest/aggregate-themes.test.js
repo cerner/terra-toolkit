@@ -47,28 +47,42 @@ describe('Theme Aggregator', () => {
   });
 
   describe('aggregateThemes', () => {
-    it("returns null for { theme: '', scoped: [] }", () => {
+    it('returns null for undefined default and scoped themes - { theme: undefined, scoped: undefined }', () => {
+      const options = { theme: undefined, scoped: undefined };
+
+      const files = ThemeAggregator.aggregateThemes(options);
+      expect(files).toBeNull();
+    });
+
+    it("returns null for blank default theme and empty scoped theme - { theme: '', scoped: [] }", () => {
       const options = { theme: '', scoped: [] };
 
       const files = ThemeAggregator.aggregateThemes(options);
       expect(files).toBeNull();
     });
 
-    it('returns null for { theme: null, scoped: null }', () => {
+    it("returns null for blank default theme and blank scoped theme - { theme: '', scoped: [''] }", () => {
+      const options = { theme: '', scoped: [''] };
+
+      const files = ThemeAggregator.aggregateThemes(options);
+      expect(files).toBeNull();
+    });
+
+    it('returns null for null default and scoped themes - { theme: null, scoped: null }', () => {
       const options = { theme: null, scoped: null };
 
       const files = ThemeAggregator.aggregateThemes(options);
       expect(files).toBeNull();
     });
 
-    it("returns null for { theme: null, scoped: [null, 'non-existent'] }", () => {
+    it("returns null for null default theme and null + unknown scoped themes - { theme: null, scoped: [null, 'non-existent'] }", () => {
       const options = { theme: null, scoped: [null, 'non-existent'] };
 
       const files = ThemeAggregator.aggregateThemes(options);
       expect(files).toBeNull();
     });
 
-    it("returns null for { theme: 'unknown-theme', scoped: '' }", () => {
+    it("returns null for unknown default theme and blank scoped theme - { theme: 'unknown-theme', scoped: '' }", () => {
       const options = { theme: 'unknown-theme', scoped: '' };
 
       const files = ThemeAggregator.aggregateThemes(options);
@@ -101,8 +115,8 @@ describe('Theme Aggregator', () => {
       expect(files).toEqual(expected);
     });
 
-    it('returns aggregated and generated default theme for a defined default theme and non existent scope theme', () => {
-      const options = { theme: 'terra-mock-dark-theme', scoped: ['unkown-theme'] };
+    it('returns aggregated and generated default theme for a defined default theme and unknown scope theme', () => {
+      const options = { theme: 'terra-mock-dark-theme', scoped: ['unknown-theme'] };
 
       const files = ThemeAggregator.aggregateThemes(options);
       const expected = [
