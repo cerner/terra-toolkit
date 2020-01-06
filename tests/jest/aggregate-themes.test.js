@@ -47,35 +47,49 @@ describe('Theme Aggregator', () => {
   });
 
   describe('aggregateThemes', () => {
-    it('returns null for an empty default theme and empty array scope theme', () => {
+    it("returns null for { theme: '', scoped: [] }", () => {
       const options = { theme: '', scoped: [] };
 
       const files = ThemeAggregator.aggregateThemes(options);
       expect(files).toBeNull();
     });
 
-    it('returns null for an null default theme and null array scope theme', () => {
+    it('returns null for { theme: null, scoped: null }', () => {
       const options = { theme: null, scoped: null };
 
       const files = ThemeAggregator.aggregateThemes(options);
       expect(files).toBeNull();
     });
 
-    it('returns null for a null default theme and scope theme array containing null and a non existent theme.', () => {
+    it("returns null for { theme: null, scoped: [null, 'non-existent'] }", () => {
       const options = { theme: null, scoped: [null, 'non-existent'] };
 
       const files = ThemeAggregator.aggregateThemes(options);
       expect(files).toBeNull();
     });
 
-    it('returns null for a non existent default theme and empty scope theme', () => {
+    it("returns null for { theme: 'unknown-theme', scoped: '' }", () => {
       const options = { theme: 'unknown-theme', scoped: '' };
 
       const files = ThemeAggregator.aggregateThemes(options);
       expect(files).toBeNull();
     });
 
-    it('returns the aggregated and generated scoped theme for a non existent default theme and defined scope theme', () => {
+    it('returns the aggregated and generated root + scoped themes for a defined default theme and defined scope theme', () => {
+      const options = { theme: 'terra-mock-solar-theme', scoped: ['terra-mock-dark-theme'] };
+
+      const files = ThemeAggregator.aggregateThemes(options);
+      const expected = [
+        '../tests/jest/fixtures/themes/terra-mock-solar-theme/root-theme.scss',
+        './root-terra-mock-solar-theme.scss',
+        '../tests/jest/fixtures/themes/terra-mock-dark-theme/scoped-theme.scss',
+        './scoped-terra-mock-dark-theme.scss',
+      ];
+
+      expect(files).toEqual(expected);
+    });
+
+    it('returns the aggregated and generated scoped theme for a blank default theme and defined scope theme', () => {
       const options = { theme: '', scoped: ['terra-mock-dark-theme'] };
 
       const files = ThemeAggregator.aggregateThemes(options);
@@ -169,7 +183,7 @@ describe('Theme Aggregator', () => {
   });
 
   describe('find', () => {
-    it('returns the requested files', () => {
+    it('returns the requested files.', () => {
       const options = {};
 
       const file = ThemeAggregator.find('./tests/**/root-theme.scss', options);
@@ -177,6 +191,7 @@ describe('Theme Aggregator', () => {
       const expected = [
         './tests/jest/fixtures/themes/terra-mock-dark-theme/root-theme.scss',
         './tests/jest/fixtures/themes/terra-mock-light-theme/root-theme.scss',
+        './tests/jest/fixtures/themes/terra-mock-solar-theme/root-theme.scss',
       ];
 
       expect(file).toEqual(expected);
@@ -205,6 +220,7 @@ describe('Theme Aggregator', () => {
 
       const expected = [
         './tests/jest/fixtures/themes/terra-mock-light-theme/root-theme.scss',
+        './tests/jest/fixtures/themes/terra-mock-solar-theme/root-theme.scss',
       ];
 
       expect(file).toEqual(expected);
