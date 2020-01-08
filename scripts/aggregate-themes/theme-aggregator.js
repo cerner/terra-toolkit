@@ -41,6 +41,44 @@ class ThemeAggregator {
   }
 
   /**
+   * Aggregates theme assets into a js file.
+   * @param {Object} options - The aggregation options.
+   * @returns {array} - An array of aggregated theme files
+   */
+  static aggregateThemes(options) {
+    if (!ThemeAggregator.validate(options)) return null;
+
+    // Create generated-themes directory.
+    fs.ensureDir(OUTPUT_DIR, (err) => {
+      Logger.warn(err, { LOG_CONTEXT });
+    });
+
+    const {
+      theme: defaultTheme,
+      scoped,
+    } = options;
+
+    // Guards against default theme and scope theme being equivalent.
+    let defaultFlag = false;
+    if (defaultTheme) defaultFlag = true;
+
+    let themesToAggregate = defaultTheme ? [defaultTheme] : [];
+    if (scoped) themesToAggregate = themesToAggregate.concat(scoped);
+
+    const assets = [];
+    let asset;
+    themesToAggregate.forEach((theme) => {
+      asset = ThemeAggregator.aggregateTheme(theme, options, defaultFlag);
+      if (asset) assets.push(...asset);
+      if (defaultFlag) defaultFlag = false; // There can only be one instance of the default theme. This stops multiple root themes from being generated.
+    });
+
+    if (!assets.length) return null;
+
+    return assets;
+  }
+
+  /**
    * Aggregates theme assets.
    * @param {string} theme - The theme to aggregate.
    * @param {Object} options - The aggregation options.
@@ -82,64 +120,6 @@ class ThemeAggregator {
       Logger.warn(`No theme files found for ${themeName}.`, { LOG_CONTEXT });
       return null;
     }
-
-    return assets;
-  }
-
-  /**
-   * Aggregates theme files for generation.
-   * @param {string} themeName - The theme to aggregate.
-   * @param {Object} options - The aggregation options.
-   * @returns {array} - An array of ${themeName} files.
-   */
-  static findThemeVariableFiles(themeName, options = {}) {
-    const assets = ThemeAggregator.find(`**/themes/${themeName}/**/${themeName}.scss`, options);
-
-    // Add the dependency import if it exists.
-    assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${themeName}/**/${themeName}.scss`, options));
-
-    if (!assets.length) {
-      Logger.warn(`No theme files found for ${themeName}.`, { LOG_CONTEXT });
-      return null;
-    }
-
-    return assets;
-  }
-
-  /**
-   * Aggregates theme assets into a js file.
-   * @param {Object} options - The aggregation options.
-   * @returns {array} - An array of aggregated theme files
-   */
-  static aggregateThemes(options) {
-    if (!ThemeAggregator.validate(options)) return null;
-
-    // Create generated-themes directory.
-    fs.ensureDir(OUTPUT_DIR, (err) => {
-      Logger.warn(err, { LOG_CONTEXT });
-    });
-
-    const {
-      theme: defaultTheme,
-      scoped,
-    } = options;
-
-    // Guards against default theme and scope theme being equivalent.
-    let defaultFlag = false;
-    if (defaultTheme) defaultFlag = true;
-
-    let themesToAggregate = defaultTheme ? [defaultTheme] : [];
-    if (scoped) themesToAggregate = themesToAggregate.concat(scoped);
-
-    const assets = [];
-    let asset;
-    themesToAggregate.forEach((theme) => {
-      asset = ThemeAggregator.aggregateTheme(theme, options, defaultFlag);
-      if (asset) assets.push(...asset);
-      if (defaultFlag) defaultFlag = false; // There can only be one instance of the default theme. This stops multiple root themes from being generated.
-    });
-
-    if (!assets.length) return null;
 
     return assets;
   }
@@ -188,6 +168,26 @@ class ThemeAggregator {
     }
 
     return true;
+  }
+
+  /**
+   * Aggregates theme files for generation.
+   * @param {string} themeName - The theme to aggregate.
+   * @param {Object} options - The aggregation options.
+   * @returns {array} - An array of ${themeName} files.
+   */
+  static findThemeVariableFiles(themeName, options = {}) {
+    const assets = ThemeAggregator.find(`**/themes/${themeName}/**/${themeName}.scss`, options);
+
+    // Add the dependency import if it exists.
+    assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${themeName}/**/${themeName}.scss`, options));
+
+    if (!assets.length) {
+      Logger.warn(`No theme files found for ${themeName}.`, { LOG_CONTEXT });
+      return null;
+    }
+
+    return assets;
   }
 
   /**
