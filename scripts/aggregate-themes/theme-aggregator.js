@@ -16,7 +16,8 @@ const SCOPED_THEME = `${SCOPED}-theme.scss`;
 const LOG_CONTEXT = '[terra-theme-aggregator]';
 
 /**
- * Aggregates theme assets into a single file.
+ * Aggregates and generates theme assets.
+ * Aggregates the above assets into a single file.
  *
  * By default the theme will recursively search all dependencies.
  */
@@ -57,7 +58,7 @@ class ThemeAggregator {
       scoped,
     } = options;
 
-    // Guards against default theme and scope theme being equivalent.
+    // This flag guards against default theme and scope theme being equivalent.
     let defaultFlag = false;
     if (defaultTheme) defaultFlag = true;
 
@@ -78,7 +79,7 @@ class ThemeAggregator {
   }
 
   /**
-   * @TODO
+   * Triggers aggregation and generation for a given theme.
    * @param {string} themeName - The theme to aggregate.
    * @param {Object} options - The aggregation options.
    * @param {boolean} defaultFlag - Whether the theme to be generated is a root or scope theme. Guards against default theme and scope theme being equivalent.
@@ -106,7 +107,7 @@ class ThemeAggregator {
   }
 
   /**
-   *
+   * Aggregates the theme by root.scss or scoped.scss file
    * @param {string} themeName - The theme to aggregate.
    * @param {Object} themeScope - Contains boolean attributes that signify whether the theme to aggregate is a root (isRoot) or scoped (isScoped) file.
    * @param {Object} options - The aggregate options.
@@ -123,6 +124,7 @@ class ThemeAggregator {
   }
 
   /**
+   * Generates the theme by themeName.scss file.
    * @TODO Default to theme generation on next MVB - https://github.com/cerner/terra-toolkit/issues/325
    * @param {string} themeName - The theme to aggregate.
    * @param {Object} themeScope - Contains boolean attributes that signify whether the theme to aggregate is a root (isRoot) or scoped (isScoped) file.
@@ -193,7 +195,7 @@ class ThemeAggregator {
   }
 
   /**
-   * Aggregates theme files for generation.
+   * Searches for theme files located within the following directory format: themes->theme-name->theme-name.scss.
    * @param {string} themeName - The theme to aggregate.
    * @param {Object} options - The aggregation options.
    * @returns {array} - An array of ${themeName} files.
