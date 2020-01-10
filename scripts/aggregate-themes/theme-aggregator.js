@@ -134,17 +134,15 @@ class ThemeAggregator {
   static generateTheme(themeName, themeScope, options) {
     const { isRoot, isScoped } = themeScope;
     Logger.log(`Generating ${themeName} files...`, { LOG_CONTEXT });
-    const prefix = isScoped && !isRoot ? SCOPED : ROOT;
-    const scopeSelector = isScoped && !isRoot ? `.${themeName}` : `:${ROOT}`;
-    const themeFiles = ThemeAggregator.findThemeVariableFiles(themeName, options);
+
     const fileAttrs = {
-      assets: themeFiles,
+      assets: ThemeAggregator.findThemeVariableFiles(themeName, options),
       themeName,
-      prefix,
-      scopeSelector,
+      prefix: isScoped && !isRoot ? SCOPED : ROOT,
+      scopeSelector: isScoped && !isRoot ? `.${themeName}` : `:${ROOT}`,
     };
 
-    if (themeFiles) return ThemeAggregator.writeSCSSFile(fileAttrs);
+    if (fileAttrs.assets) return ThemeAggregator.writeSCSSFile(fileAttrs);
     return null;
   }
 
