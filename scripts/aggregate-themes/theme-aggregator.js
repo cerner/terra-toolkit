@@ -48,7 +48,6 @@ class ThemeAggregator {
   static aggregateThemes(options) {
     if (!ThemeAggregator.validate(options)) return null;
 
-    // Create generated-themes directory.
     fs.ensureDir(OUTPUT_DIR, (err) => {
       Logger.warn(err, { LOG_CONTEXT });
     });
@@ -66,43 +65,72 @@ class ThemeAggregator {
     if (scoped) themesToAggregate = themesToAggregate.concat(scoped);
 
     const assets = [];
-    let asset;
     themesToAggregate.forEach((theme) => {
-      asset = ThemeAggregator.aggregateTheme(theme, options, defaultFlag);
+      const asset = ThemeAggregator.processTheme(theme, options, defaultFlag);
       if (asset) assets.push(...asset);
-      if (defaultFlag) defaultFlag = false; // There can only be one instance of the default theme. This stops multiple root themes from being generated.
+
+      // There can only be one instance of the default theme. This stops multiple root themes from being generated.
+      if (defaultFlag) defaultFlag = false;
     });
 
     if (!assets.length) return null;
-
     return assets;
   }
 
   /**
-   * Aggregates theme assets.
-   * @param {string} theme - The theme to aggregate.
+   * @TODO
+   * @param {string} themeName - The theme to aggregate.
    * @param {Object} options - The aggregation options.
    * @param {boolean} defaultFlag - Whether the theme to be generated is a root or scope theme. Guards against default theme and scope theme being equivalent.
    * @returns {array} - An array of file names.
    */
-  static aggregateTheme(themeName, options = {}, defaultFlag) {
-    const { theme, scoped = [] } = options;
-
+  static processTheme(themeName, options = {}, defaultFlag) {
     if (!themeName) return null;
-
     Logger.log(`Aggregating ${themeName} files...`, { LOG_CONTEXT });
+    const { theme, scoped = [] } = options;
     const isRoot = themeName === theme && defaultFlag;
     const isScoped = scoped.indexOf(themeName) > -1;
-    const file = isScoped && !isRoot ? SCOPED_THEME : ROOT_THEME;
-    let assets = ThemeAggregator.find(`**/themes/${themeName}/${file}`, options);
+    const themeScope = { isRoot, isScoped };
+
+    const aggregatedAssets = ThemeAggregator.aggregateTheme(themeName, themeScope, options);
+    // generated theme file should take precedence over aggregated files
+    const generatedAsset = ThemeAggregator.generateTheme(themeName, themeScope, options);
+    if (generatedAsset) aggregatedAssets.push(generatedAsset);
+
+    if (!aggregatedAssets.length) {
+      Logger.warn(`No theme files found for ${themeName}.`, { LOG_CONTEXT });
+      return null;
+    }
+
+    return aggregatedAssets;
+  }
+
+  /**
+   *
+   * @param {string} themeName - The theme to aggregate.
+   * @param {Object} themeScope - Contains boolean attributes that signify whether the theme to aggregate is a root (isRoot) or scoped (isScoped) file.
+   * @param {Object} options - The aggregate options.
+   * @returns {array} - An array of aggregated theme files.
+   */
+  static aggregateTheme(themeName, themeScope, options) {
+    const file = themeScope.isScoped && !themeScope.isRoot ? SCOPED_THEME : ROOT_THEME;
+    const assets = ThemeAggregator.find(`**/themes/${themeName}/${file}`, options);
 
     // Add the dependency import if it exists.
     assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${themeName}/**/${file}`, options));
     // Resolve aggregated theme paths.
-    assets = assets.map(asset => ThemeAggregator.resolve(asset));
+    return assets.map(asset => ThemeAggregator.resolve(asset));
+  }
 
-    // Theme Generation.
-    // @TODO Default to theme generation on next MVB - https://github.com/cerner/terra-toolkit/issues/325
+  /**
+   * @TODO Default to theme generation on next MVB - https://github.com/cerner/terra-toolkit/issues/325
+   * @param {string} themeName - The theme to aggregate.
+   * @param {Object} themeScope - Contains boolean attributes that signify whether the theme to aggregate is a root (isRoot) or scoped (isScoped) file.
+   * @param {Object} options - The aggregate options.
+   * @returns {array} - An array of aggregated theme files.
+   */
+  static generateTheme(themeName, themeScope, options) {
+    const { isRoot, isScoped } = themeScope;
     Logger.log(`Generating ${themeName} files...`, { LOG_CONTEXT });
     const prefix = isScoped && !isRoot ? SCOPED : ROOT;
     const scopeSelector = isScoped && !isRoot ? `.${themeName}` : `:${ROOT}`;
@@ -114,14 +142,8 @@ class ThemeAggregator {
       scopeSelector,
     };
 
-    if (themeFiles) assets.push(ThemeAggregator.writeSCSSFile(fileAttrs));
-
-    if (!assets.length) {
-      Logger.warn(`No theme files found for ${themeName}.`, { LOG_CONTEXT });
-      return null;
-    }
-
-    return assets;
+    if (themeFiles) return ThemeAggregator.writeSCSSFile(fileAttrs);
+    return null;
   }
 
   /**
