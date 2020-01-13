@@ -67,7 +67,7 @@ class ThemeAggregator {
 
     const assets = [];
     themesToAggregate.forEach((theme) => {
-      const asset = ThemeAggregator.processTheme(theme, options, defaultFlag);
+      const asset = ThemeAggregator.triggerAggregationAndGeneration(theme, options, defaultFlag);
       if (asset) assets.push(...asset);
 
       // There can only be one instance of the default theme. This stops multiple root themes from being generated.
@@ -85,7 +85,7 @@ class ThemeAggregator {
    * @param {boolean} defaultFlag - Whether the theme to be generated is a root or scope theme. Guards against default theme and scope theme being equivalent.
    * @returns {array} - An array of file names.
    */
-  static processTheme(themeName, options = {}, defaultFlag) {
+  static triggerAggregationAndGeneration(themeName, options = {}, defaultFlag) {
     if (!themeName) return null;
     Logger.log(`Aggregating ${themeName} files...`, { LOG_CONTEXT });
     const { theme, scoped = [] } = options;
@@ -94,8 +94,9 @@ class ThemeAggregator {
     const themeScope = { isRoot, isScoped };
 
     const aggregatedAssets = ThemeAggregator.aggregateTheme(themeName, themeScope, options);
-    // generated theme file should take precedence over aggregated files
     const generatedAsset = ThemeAggregator.generateTheme(themeName, themeScope, options);
+    // Generated theme file should take precedence over aggregated files.
+    // Therefore, take advantage of css import precdence by adding the aggregated asset last.
     if (generatedAsset) aggregatedAssets.push(generatedAsset);
 
     if (!aggregatedAssets.length) {
@@ -124,26 +125,31 @@ class ThemeAggregator {
   }
 
   /**
-   * Generates the theme by themeName.scss file.
+   * Writes a scss theme file based on generation filename constraints.
    * @TODO Default to theme generation on next MVB - https://github.com/cerner/terra-toolkit/issues/325
    * @param {string} themeName - The theme to aggregate.
    * @param {Object} themeScope - Contains boolean attributes that signify whether the theme to aggregate is a root (isRoot) or scoped (isScoped) file.
    * @param {Object} options - The aggregate options.
-   * @returns {array} - An array of aggregated theme files.
+   * @param {string} outputPath - Path to write the scss file to. Used for testing purposes - overrides the default generated themes path.
+   * @returns {string} - A string containing the relative path to the generacted scss file.
    */
-  static generateTheme(themeName, themeScope, options) {
+  static generateTheme(themeName, themeScope, options, outputPath) {
     const { isRoot, isScoped } = themeScope;
-    Logger.log(`Generating ${themeName} files...`, { LOG_CONTEXT });
+    const assets = ThemeAggregator.findThemeVariableFilesForGeneration(themeName, options);
+    if (!assets) return null;
 
-    const fileAttrs = {
-      assets: ThemeAggregator.findThemeVariableFiles(themeName, options),
-      themeName,
-      prefix: isScoped && !isRoot ? SCOPED : ROOT,
-      scopeSelector: isScoped && !isRoot ? `.${themeName}` : `:${ROOT}`,
-    };
+    const prefix = isScoped && !isRoot ? SCOPED : ROOT;
+    const scopeSelector = isScoped && !isRoot ? `.${themeName}` : `:${ROOT}`;
+    let file = assets.reduce((acc, s) => `${acc}  @import '../${s}';\n`, '');
+    const intro = `${DISCLAIMER}${scopeSelector}`;
+    file = `${intro} {\n${file}}\n`;
 
-    if (fileAttrs.assets) return ThemeAggregator.writeSCSSFile(fileAttrs);
-    return null;
+    const fileName = `${prefix}-${themeName}.scss`;
+    const filePath = path.resolve(outputPath || OUTPUT_PATH, fileName);
+    fs.writeFileSync(filePath, file);
+    Logger.log(`Successfully generated ${fileName}.`, { LOG_CONTEXT });
+
+    return `./${path.relative(outputPath || OUTPUT_PATH, filePath)}`;
   }
 
   /**
@@ -198,7 +204,7 @@ class ThemeAggregator {
    * @param {Object} options - The aggregation options.
    * @returns {array} - An array of ${themeName} files.
    */
-  static findThemeVariableFiles(themeName, options = {}) {
+  static findThemeVariableFilesForGeneration(themeName, options = {}) {
     const assets = ThemeAggregator.find(`**/themes/${themeName}/**/${themeName}.scss`, options);
 
     // Add the dependency import if it exists.
@@ -213,32 +219,6 @@ class ThemeAggregator {
   }
 
   /**
-   * Generates a theme scss file and outputs it to the generated-themes directory.
-   * @param {object} contains requested scss file attrs
-   *   @param {array} assets - The aggregated theme files to import within generated file.
-   *   @param {string} themeName - Name of theme to aggregate.
-   *   @param {string} prefix - Prefix to append to generated file.
-   *   @param {string} scopeSelector - scss scope selector to encase theme.
-   *   @param {string} outputPath - path to write the scss file to. For testing purposes - overrides the default generated-themes path.
-   * @returns {string} - The path of the generated scss file, relative to the working home directory.
-   */
-  static writeSCSSFile({
-    assets, themeName, prefix, scopeSelector, outputPath,
-  }) {
-    const fileName = `${prefix}-${themeName}.scss`;
-    const intro = `${DISCLAIMER}${scopeSelector}`;
-
-    let file = assets.reduce((acc, s) => `${acc}  @import '../${s}';\n`, '');
-    file = `${intro} {\n${file}}\n`;
-
-    const filePath = path.resolve(outputPath || OUTPUT_PATH, fileName);
-    fs.writeFileSync(filePath, file);
-    Logger.log(`Successfully generated ${fileName}.`, { LOG_CONTEXT });
-
-    return `./${path.relative(outputPath || OUTPUT_PATH, filePath)}`;
-  }
-
-  /**
    * Writes a js file containing theme assets.
    * @param {Object[]} imports - An array of files to import.
    * @returns {string} - The filepath of the file.
@@ -249,8 +229,8 @@ class ThemeAggregator {
       return null;
     }
 
-    const filePath = `${path.resolve(OUTPUT_PATH, OUTPUT)}`;
     const file = imports.reduce((acc, s) => `${acc}import '${s}';\n`, '');
+    const filePath = `${path.resolve(OUTPUT_PATH, OUTPUT)}`;
     fs.writeFileSync(filePath, `${DISCLAIMER}${file}`);
 
     Logger.log(`Successfully generated ${OUTPUT}.`, { LOG_CONTEXT });

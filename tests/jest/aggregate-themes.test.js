@@ -269,17 +269,13 @@ describe('Theme Aggregator', () => {
   });
 
   describe('writeSCSSFile', () => {
+  describe('generateTheme', () => {
     it('returns the generated SCSS file path relative to the given output path.', () => {
-      const theme = 'test-theme';
-
       const outputPath = path.resolve(process.cwd(), 'tests', 'jest', 'fixtures', 'generatedThemes');
+      const generatedScssFilePath = ThemeAggregator.generateTheme('terra-mock-dark-theme', { 'isRoot': false, 'isScoped': true }, [], outputPath);
+      const expected = './scoped-terra-mock-dark-theme.scss';
 
-      const scssFile = ThemeAggregator.writeSCSSFile({
-        assets: [theme], themeName: theme, prefix: 'scoped', scopeSelector: theme, outputPath,
-      });
-
-      const expected = './scoped-test-theme.scss';
-      expect(scssFile).toEqual(expected);
+      expect(generatedScssFilePath).toEqual(expected);
     });
   });
 });
