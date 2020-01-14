@@ -220,7 +220,7 @@ class ThemeAggregator {
    * @param {Object} options - The aggregation options.
    * @returns {array} - An array of ${themeName} files.
    */
-  static findThemeVariableFilesForGeneratioa(themeName, options = {}) {
+  static findThemeVariableFilesForGeneration(themeName, options = {}) {
     const assets = ThemeAggregator.find(`**/themes/${themeName}/**/${themeName}.scss`, options);
     // Add the dependency import if it exists.
     assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${themeName}/**/${themeName}.scss`, options));
