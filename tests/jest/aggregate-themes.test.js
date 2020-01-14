@@ -164,9 +164,9 @@ describe('Theme Aggregator', () => {
     });
   });
 
-  describe('processTheme', () => {
+  describe('triggerAggregationAndGeneration', () => {
     it('returns null if a blank theme is passed', () => {
-      const files = ThemeAggregator.processTheme('');
+      const files = ThemeAggregator.triggerAggregationAndGeneration('');
 
       expect(files).toEqual(null);
     });
@@ -174,7 +174,7 @@ describe('Theme Aggregator', () => {
     it('returns an array of aggregated and generated default theme file paths', () => {
       const options = { theme: 'terra-mock-dark-theme' };
 
-      const files = ThemeAggregator.processTheme('terra-mock-dark-theme', options);
+      const files = ThemeAggregator.triggerAggregationAndGeneration('terra-mock-dark-theme', options);
       const expected = [
         '../tests/jest/fixtures/themes/terra-mock-dark-theme/root-theme.scss',
         './root-terra-mock-dark-theme.scss',
@@ -186,7 +186,7 @@ describe('Theme Aggregator', () => {
     it('returns an array of aggregated and generated scoped theme files paths', () => {
       const options = { scoped: ['terra-mock-dark-theme'] };
 
-      const files = ThemeAggregator.processTheme('terra-mock-dark-theme', options);
+      const files = ThemeAggregator.triggerAggregationAndGeneration('terra-mock-dark-theme', options);
       const expected = [
         '../tests/jest/fixtures/themes/terra-mock-dark-theme/scoped-theme.scss',
         './scoped-terra-mock-dark-theme.scss',
@@ -196,11 +196,11 @@ describe('Theme Aggregator', () => {
     });
   });
 
-  describe('findThemeVariableFiles', () => {
+  describe('findThemeVariableFilesForGeneration', () => {
     it("returns the requested theme's files", () => {
       const themeName = 'terra-mock-dark-theme';
 
-      const files = ThemeAggregator.findThemeVariableFiles(themeName);
+      const files = ThemeAggregator.findThemeVariableFilesForGeneration(themeName);
       const expected = ['tests/jest/fixtures/themes/terra-mock-dark-theme/terra-mock-dark-theme.scss'];
 
       expect(files).toEqual(expected);
@@ -268,11 +268,10 @@ describe('Theme Aggregator', () => {
     });
   });
 
-  describe('writeSCSSFile', () => {
   describe('generateTheme', () => {
     it('returns the generated SCSS file path relative to the given output path.', () => {
       const outputPath = path.resolve(process.cwd(), 'tests', 'jest', 'fixtures', 'generatedThemes');
-      const generatedScssFilePath = ThemeAggregator.generateTheme('terra-mock-dark-theme', { 'isRoot': false, 'isScoped': true }, [], outputPath);
+      const generatedScssFilePath = ThemeAggregator.generateTheme('terra-mock-dark-theme', { isRoot: false, isScoped: true }, [], outputPath);
       const expected = './scoped-terra-mock-dark-theme.scss';
 
       expect(generatedScssFilePath).toEqual(expected);

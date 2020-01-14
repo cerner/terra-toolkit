@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Fixed
+* Execute theme generation for theme-aggregator by default, rather than a fall back. This allows applications that pull in old themes and the latest components to correctly contain both theme files.
 
 5.18.1 - (December 18, 2019)
 ----------
