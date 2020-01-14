@@ -34,10 +34,9 @@ class ThemeAggregator {
       // eslint-disable-next-line global-require, import/no-dynamic-require
       themeConfig = require(defaultConfig);
       const assets = ThemeAggregator.aggregateThemes({ ...themeConfig, ...theme && { theme } });
-      if (assets) {
-        return ThemeAggregator.writeJsFile(assets);
-      }
+      if (assets) return ThemeAggregator.writeJsFile(assets);
     }
+
     return null;
   }
 
@@ -96,7 +95,7 @@ class ThemeAggregator {
     const aggregatedAssets = ThemeAggregator.aggregateTheme(themeName, themeScope, options);
     const generatedAsset = ThemeAggregator.generateTheme(themeName, themeScope, options);
     // Generated theme file should take precedence over aggregated files.
-    // Therefore, take advantage of css import precdence by adding the aggregated asset last.
+    // Therefore, take advantage of css import precdence by adding the generated asset last.
     if (generatedAsset) aggregatedAssets.push(generatedAsset);
 
     if (!aggregatedAssets.length) {
@@ -206,14 +205,10 @@ class ThemeAggregator {
    */
   static findThemeVariableFilesForGeneration(themeName, options = {}) {
     const assets = ThemeAggregator.find(`**/themes/${themeName}/**/${themeName}.scss`, options);
-
     // Add the dependency import if it exists.
     assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${themeName}/**/${themeName}.scss`, options));
 
-    if (!assets.length) {
-      Logger.warn(`No theme files found for ${themeName}.`, { LOG_CONTEXT });
-      return null;
-    }
+    if (!assets.length) return null;
 
     return assets;
   }
