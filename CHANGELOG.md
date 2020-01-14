@@ -3,10 +3,12 @@ Changelog
 
 Unreleased
 ----------
+### Added
+* Add `WDIO_IGNORE_COMPARISON_RESULTS` env to disabled assertions on screenshot comparison results 
 
 5.18.1 - (December 18, 2019)
 ----------
-### Changes
+### Changed
 * Downgrade axe-core dependency bump to 3.2.0
 
 5.18.0 - (December 13, 2019)
