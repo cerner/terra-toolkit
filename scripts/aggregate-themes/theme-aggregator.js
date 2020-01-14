@@ -34,7 +34,9 @@ class ThemeAggregator {
       // eslint-disable-next-line global-require, import/no-dynamic-require
       themeConfig = require(defaultConfig);
       const assets = ThemeAggregator.aggregateThemes({ ...themeConfig, ...theme && { theme } });
-      if (assets) return ThemeAggregator.writeJsFile(assets);
+      if (assets) {
+        return ThemeAggregator.writeJsFile(assets);
+      }
     }
 
     return null;
@@ -59,21 +61,32 @@ class ThemeAggregator {
 
     // This flag guards against default theme and scope theme being equivalent.
     let defaultFlag = false;
-    if (defaultTheme) defaultFlag = true;
+    if (defaultTheme) {
+      defaultFlag = true;
+    }
 
     let themesToAggregate = defaultTheme ? [defaultTheme] : [];
-    if (scoped) themesToAggregate = themesToAggregate.concat(scoped);
+    if (scoped) {
+      themesToAggregate = themesToAggregate.concat(scoped);
+    }
 
     const assets = [];
     themesToAggregate.forEach((theme) => {
       const asset = ThemeAggregator.triggerAggregationAndGeneration(theme, options, defaultFlag);
-      if (asset) assets.push(...asset);
+      if (asset) {
+        assets.push(...asset);
+      }
 
       // There can only be one instance of the default theme. This stops multiple root themes from being generated.
-      if (defaultFlag) defaultFlag = false;
+      if (defaultFlag) {
+        defaultFlag = false;
+      }
     });
 
-    if (!assets.length) return null;
+    if (!assets.length) {
+      return null;
+    }
+
     return assets;
   }
 
@@ -96,7 +109,9 @@ class ThemeAggregator {
     const generatedAsset = ThemeAggregator.generateTheme(themeName, themeScope, options);
     // Generated theme file should take precedence over aggregated files.
     // Therefore, take advantage of css import precdence by adding the generated asset last.
-    if (generatedAsset) aggregatedAssets.push(generatedAsset);
+    if (generatedAsset) {
+      aggregatedAssets.push(generatedAsset);
+    }
 
     if (!aggregatedAssets.length) {
       Logger.warn(`No theme files found for ${themeName}.`, { LOG_CONTEXT });
@@ -135,7 +150,9 @@ class ThemeAggregator {
   static generateTheme(themeName, themeScope, options, outputPath) {
     const { isRoot, isScoped } = themeScope;
     const assets = ThemeAggregator.findThemeVariableFilesForGeneration(themeName, options);
-    if (!assets) return null;
+    if (!assets) {
+      return null;
+    }
 
     const prefix = isScoped && !isRoot ? SCOPED : ROOT;
     const scopeSelector = isScoped && !isRoot ? `.${themeName}` : `:${ROOT}`;
@@ -208,7 +225,9 @@ class ThemeAggregator {
     // Add the dependency import if it exists.
     assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${themeName}/**/${themeName}.scss`, options));
 
-    if (!assets.length) return null;
+    if (!assets.length) {
+      return null;
+    }
 
     return assets;
   }
