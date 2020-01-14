@@ -148,18 +148,18 @@ class ThemeAggregator {
    * @returns {string} - A string containing the relative path to the generacted scss file.
    */
   static generateTheme(themeName, themeScope, options, outputPath) {
-    const { isRoot, isScoped } = themeScope;
     const assets = ThemeAggregator.findThemeVariableFilesForGeneration(themeName, options);
     if (!assets) {
       return null;
     }
 
-    const prefix = isScoped && !isRoot ? SCOPED : ROOT;
+    const { isRoot, isScoped } = themeScope;
     const scopeSelector = isScoped && !isRoot ? `.${themeName}` : `:${ROOT}`;
-    let file = assets.reduce((acc, s) => `${acc}  @import '../${s}';\n`, '');
     const intro = `${DISCLAIMER}${scopeSelector}`;
+    let file = assets.reduce((acc, s) => `${acc}  @import '../${s}';\n`, '');
     file = `${intro} {\n${file}}\n`;
 
+    const prefix = isScoped && !isRoot ? SCOPED : ROOT;
     const fileName = `${prefix}-${themeName}.scss`;
     const filePath = path.resolve(outputPath || OUTPUT_PATH, fileName);
     fs.writeFileSync(filePath, file);
@@ -220,7 +220,7 @@ class ThemeAggregator {
    * @param {Object} options - The aggregation options.
    * @returns {array} - An array of ${themeName} files.
    */
-  static findThemeVariableFilesForGeneration(themeName, options = {}) {
+  static findThemeVariableFilesForGeneratioa(themeName, options = {}) {
     const assets = ThemeAggregator.find(`**/themes/${themeName}/**/${themeName}.scss`, options);
     // Add the dependency import if it exists.
     assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${themeName}/**/${themeName}.scss`, options));
