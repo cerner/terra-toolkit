@@ -24,7 +24,7 @@ const ci = process.env.CI;
 /* Use to bail fast while running locally. */
 const bail = process.env.WDIO_BAIL !== 'false' && (process.env.WDIO_BAIL || ci);
 
-/* Use to disabled test assertions on the screenshot(s) comparison results. */
+/* Use to disable test assertions on the screenshot(s) comparison results. */
 const ignoreComparisonResults = process.env.WDIO_IGNORE_COMPARISON_RESULTS === 'true';
 visualRegressionConfig.ignoreComparisonResults = ignoreComparisonResults;
 
