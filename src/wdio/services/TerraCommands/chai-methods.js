@@ -94,8 +94,9 @@ function matchReference() {
   // For example: the latest screenshot of a list has two more items than the reference screenshot so it is 60 pixels taller. That should fail.
   const imagesMatch = screenshots.every(screenshot => (screenshot && screenshot.isSameDimensions && screenshot.isWithinMisMatchTolerance));
 
+  const { ignoreComparisonResults } = global.browser.options.visualRegression;
   this.assert(
-    imagesMatch === true,
+    ignoreComparisonResults || imagesMatch === true,
     `expected to be within the mismatch tolerance, but received the following comparison results \n${comparisonResults}`,
     `did not expect to be within the mismatch tolerance, but received the following comparison results \n${comparisonResults}`,
   );

@@ -54,6 +54,8 @@ exports.config = config;
   * `WDIO_EXTERNAL_PORT` - This specifies the external port that is mapped on the container to the WDIO_INTERNAL_PORT.
   * `WDIO_EXTERNAL_HOST` - This specifies the externally accessible name for the host on which the container is running.
 * In order to stop test runner as soon as a single test has failed, explicitly set the environment variable `WDIO_BAIL` to true. By default all the tests are run regardless of failures.
+* For a dry run of screenshot comparisons, disable assertions on the screenshot comparison results by setting the environment variable `WDIO_IGNORE_COMPARISON_RESULTS` to true.
+
 
 ## Writing Tests
 
