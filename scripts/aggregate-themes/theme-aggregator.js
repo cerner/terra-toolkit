@@ -50,6 +50,7 @@ class ThemeAggregator {
   static aggregateThemes(options) {
     if (!ThemeAggregator.validate(options)) return null;
 
+    // This creates a generated-themes directory to house theme assets.
     fs.ensureDir(OUTPUT_DIR, (err) => {
       Logger.warn(err, { LOG_CONTEXT });
     });
