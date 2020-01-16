@@ -75,7 +75,7 @@ class ThemeAggregator {
       }
     }
 
-    if (scopedThemesToAggregate.length) {
+    if (scopedThemesToAggregate) {
       scopedThemesToAggregate.forEach((theme) => {
         const scopedThemeAssets = ThemeAggregator.triggerAggregationAndGeneration(theme, options, false);
         if (scopedThemeAssets) {
