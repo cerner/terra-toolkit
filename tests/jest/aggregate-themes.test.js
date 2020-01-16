@@ -174,7 +174,7 @@ describe('Theme Aggregator', () => {
     it('returns an array of aggregated and generated default theme file paths', () => {
       const options = { theme: 'terra-mock-dark-theme' };
 
-      const files = ThemeAggregator.triggerAggregationAndGeneration('terra-mock-dark-theme', options);
+      const files = ThemeAggregator.triggerAggregationAndGeneration('terra-mock-dark-theme', options, true);
       const expected = [
         '../tests/jest/fixtures/themes/terra-mock-dark-theme/root-theme.scss',
         './root-terra-mock-dark-theme.scss',
@@ -186,7 +186,7 @@ describe('Theme Aggregator', () => {
     it('returns an array of aggregated and generated scoped theme files paths', () => {
       const options = { scoped: ['terra-mock-dark-theme'] };
 
-      const files = ThemeAggregator.triggerAggregationAndGeneration('terra-mock-dark-theme', options);
+      const files = ThemeAggregator.triggerAggregationAndGeneration('terra-mock-dark-theme', options, false);
       const expected = [
         '../tests/jest/fixtures/themes/terra-mock-dark-theme/scoped-theme.scss',
         './scoped-terra-mock-dark-theme.scss',
@@ -271,7 +271,7 @@ describe('Theme Aggregator', () => {
   describe('generateTheme', () => {
     it('returns the generated SCSS file path relative to the given output path.', () => {
       const outputPath = path.resolve(process.cwd(), 'tests', 'jest', 'fixtures', 'generatedThemes');
-      const generatedScssFilePath = ThemeAggregator.generateTheme('terra-mock-dark-theme', { isRoot: false, isScoped: true }, [], outputPath);
+      const generatedScssFilePath = ThemeAggregator.generateTheme('terra-mock-dark-theme', false, [], outputPath);
       const expected = './scoped-terra-mock-dark-theme.scss';
 
       expect(generatedScssFilePath).toEqual(expected);
