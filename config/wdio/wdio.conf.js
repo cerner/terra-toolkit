@@ -24,6 +24,10 @@ const ci = process.env.CI;
 /* Use to bail fast while running locally. */
 const bail = process.env.WDIO_BAIL !== 'false' && (process.env.WDIO_BAIL || ci);
 
+/* Use to disable test assertions on the screenshot(s) comparison results. */
+const ignoreComparisonResults = process.env.WDIO_IGNORE_COMPARISON_RESULTS === 'true';
+visualRegressionConfig.ignoreComparisonResults = ignoreComparisonResults;
+
 /* Use to change the locale used in the wdio run. */
 const locale = process.env.LOCALE;
 
