@@ -3,8 +3,11 @@ Changelog
 
 Unreleased
 ----------
+
+5.19.0 - (January 17, 2020)
+----------
 ### Added
-* Add `WDIO_IGNORE_COMPARISON_RESULTS` env to disable assertions on screenshot comparison results 
+* Add `WDIO_IGNORE_COMPARISON_RESULTS` env to disable assertions on screenshot comparison results
 
 5.18.1 - (December 18, 2019)
 ----------
