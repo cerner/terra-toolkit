@@ -58,7 +58,7 @@ class ThemeAggregator {
     }
 
     // This creates a generated-themes directory to house theme assets.
-    fs.ensureDir(OUTPUT_DIR, (err) => {
+    fs.ensureDir(OUTPUT_DIR).catch(err => {
       Logger.warn(err, { LOG_CONTEXT });
     });
 
