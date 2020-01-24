@@ -56,3 +56,4 @@ target
 **/wdio/__snapshots__/diff
 errorScreenshots
 **/aggregated-translations/*.*
+generated-themes

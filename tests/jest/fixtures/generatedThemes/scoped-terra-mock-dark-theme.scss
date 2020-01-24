@@ -9,6 +9,6 @@
  *    .dockerignore
  *    .npmignore
  */
-test-theme {
-  @import '../test-theme';
+.terra-mock-dark-theme {
+  @import '../tests/jest/fixtures/themes/terra-mock-dark-theme/terra-mock-dark-theme.scss';
 }

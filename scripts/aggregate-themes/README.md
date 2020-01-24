@@ -37,8 +37,14 @@ project
         ├── component-2.scss
         └── terra-dark-theme.scss
 ```
-*Note*: To support previous functionality, if a project contains existing `root` or `scoped` theme files within namespaced theme directories, terra-toolkit will aggregate these and skip generation. Toolkit will default to theme generation on the 6.0 release.
+*Note*: To support previous functionality, if a project contains existing `root.scss` or `scoped.scss` theme files within namespaced theme directories, terra-toolkit will aggregate those theme files first, then generate theme files second. The CSS import order follows this pattern - existing `root.scss` or `scoped.scss` theme files are imported first, then generated theme files are subsequently imported.
 
+In summary, because of CSS import order, generated theme files will take precedence over existing `root.scss` or `scoped.scss` theme files. Toolkit will default to theme generation on the 6.0 release. Below is an example.
+
+```scss
+import 'orion-fusion-theme/src/scss/root-theme.scss'; // Existing root theme
+import './root-orion-fusion-theme.scss'; // Generated theme file. Takes precedence because it is imported after existing root theme.
+```
 ## Configuration
 
 ### terra-theme.config.js
