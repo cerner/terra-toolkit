@@ -6,9 +6,17 @@ Unreleased
 ### Changed
 * Update copyright to include 2020
 
+### Fixed
+* Execute theme generation for theme-aggregator by default, rather than a fall back. This allows applications that pull in old themes and the latest components to correctly contain both theme files.
+
+5.19.0 - (January 17, 2020)
+----------
+### Added
+* Add `WDIO_IGNORE_COMPARISON_RESULTS` env to disable assertions on screenshot comparison results
+
 5.18.1 - (December 18, 2019)
 ----------
-### Changes
+### Changed
 * Downgrade axe-core dependency bump to 3.2.0
 
 5.18.0 - (December 13, 2019)

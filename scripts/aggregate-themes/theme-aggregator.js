@@ -13,10 +13,11 @@ const ROOT = 'root';
 const SCOPED = 'scoped';
 const ROOT_THEME = `${ROOT}-theme.scss`;
 const SCOPED_THEME = `${SCOPED}-theme.scss`;
-const context = '[terra-theme-aggregator]';
+const LOG_CONTEXT = '[terra-theme-aggregator]';
 
 /**
- * Aggregates theme assets into a single file.
+ * Aggregates and generates theme assets.
+ * Aggregates the above assets into a single file.
  *
  * By default the theme will recursively search all dependencies.
  */
@@ -27,84 +28,23 @@ class ThemeAggregator {
    * @returns {string|null} - The output path of the aggregated theme file. Null if not generated.
    */
   static aggregate(theme) {
-    let themeConfig;
+    let themeConfig = {};
     const defaultConfig = path.resolve(process.cwd(), CONFIG);
     if (fs.existsSync(defaultConfig)) {
       // eslint-disable-next-line global-require, import/no-dynamic-require
       themeConfig = require(defaultConfig);
-      const assets = ThemeAggregator.aggregateThemes({ ...themeConfig, ...theme && { theme } });
-      if (assets) {
-        return ThemeAggregator.writeJsFile(assets);
-      }
     }
+
+    const themeAssets = ThemeAggregator.aggregateThemes({
+      ...themeConfig,
+      ...theme && { theme },
+    });
+
+    if (themeAssets) {
+      return ThemeAggregator.writeJsFile(themeAssets);
+    }
+
     return null;
-  }
-
-  /**
-   * Aggregates theme assets.
-   * @param {string} theme - The theme to aggregate.
-   * @param {Object} options - The aggregation options.
-   * @param {boolean} defaultFlag - Whether the theme to be generated is a root or scope theme. Guards against default theme and scope theme being equivalent.
-   * @returns {array} - An array of file names.
-   */
-  static aggregateTheme(themeName, options = {}, defaultFlag) {
-    const { theme, scoped = [] } = options;
-
-    if (!themeName) {
-      return null;
-    }
-
-    const isRoot = themeName === theme && defaultFlag;
-    const isScoped = scoped.indexOf(themeName) > -1;
-    const file = isScoped && !isRoot ? SCOPED_THEME : ROOT_THEME;
-    const assets = ThemeAggregator.find(`**/themes/${themeName}/${file}`, options);
-
-    // Add the dependency import if it exists.
-    assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${themeName}/**/${file}`, options));
-
-    if (!assets.length) {
-      // If root or scope theme files not found, fallback to theme generation.
-      // @TODO Default to theme generation on next MVB - https://github.com/cerner/terra-toolkit/issues/325
-      const prefix = isScoped && !isRoot ? SCOPED : ROOT;
-      const scopeSelector = isScoped && !isRoot ? `.${themeName}` : `:${ROOT}`;
-      const themeFiles = ThemeAggregator.findThemeVariableFiles(themeName, options);
-      const fileAttrs = {
-        assets: themeFiles,
-        themeName,
-        prefix,
-        scopeSelector,
-      };
-
-      if (themeFiles) {
-        return ThemeAggregator.writeSCSSFile(fileAttrs);
-      }
-
-      Logger.warn(`No theme files found for ${themeName}.`, { context });
-      return null;
-    }
-
-    Logger.log(`Aggregating ${themeName}...`, { context });
-    return assets.map(asset => ThemeAggregator.resolve(asset));
-  }
-
-  /**
-   * Aggregates theme files for generation.
-   * @param {string} themeName - The theme to aggregate.
-   * @param {Object} options - The aggregation options.
-   * @returns {array} - An array of ${themeName} files.
-   */
-  static findThemeVariableFiles(themeName, options = {}) {
-    const assets = ThemeAggregator.find(`**/themes/${themeName}/**/${themeName}.scss`, options);
-
-    // Add the dependency import if it exists.
-    assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${themeName}/**/${themeName}.scss`, options));
-
-    if (!assets.length) {
-      Logger.warn(`No theme files found for ${themeName}.`, { context });
-      return null;
-    }
-
-    return assets;
   }
 
   /**
@@ -117,43 +57,115 @@ class ThemeAggregator {
       return null;
     }
 
-    // Create generated-themes directory.
-    fs.ensureDir(OUTPUT_DIR, (err) => {
-      Logger.warn(err, { context });
+    // This creates a generated-themes directory to house theme assets.
+    fs.ensureDir(OUTPUT_DIR).catch(err => {
+      Logger.warn(err, { LOG_CONTEXT });
     });
 
     const {
-      theme: defaultTheme,
-      scoped,
+      theme: defaultThemeToAggregate,
+      scoped: scopedThemesToAggregate,
     } = options;
 
-    // Guards against default theme and scope theme being equivalent.
-    let defaultFlag = false;
-    if (defaultTheme) {
-      defaultFlag = true;
-    }
-
-    let themesToAggregate = defaultTheme ? [defaultTheme] : [];
-    if (scoped) {
-      themesToAggregate = themesToAggregate.concat(scoped);
-    }
-
-    const assets = [];
-    let asset;
-    themesToAggregate.forEach((theme) => {
-      asset = ThemeAggregator.aggregateTheme(theme, options, defaultFlag);
-      if (asset) {
-        assets.push(...asset);
+    const themeAssets = [];
+    if (defaultThemeToAggregate) {
+      const defaultThemeAsset = ThemeAggregator.triggerAggregationAndGeneration(defaultThemeToAggregate, options, true);
+      if (defaultThemeAsset) {
+        themeAssets.push(...defaultThemeAsset);
       }
+    }
 
-      if (defaultFlag) defaultFlag = false; // There can only be one instance of the default theme. This stops multiple root themes from being generated.
-    });
+    if (scopedThemesToAggregate) {
+      scopedThemesToAggregate.forEach((theme) => {
+        const scopedThemeAssets = ThemeAggregator.triggerAggregationAndGeneration(theme, options, false);
+        if (scopedThemeAssets) {
+          themeAssets.push(...scopedThemeAssets);
+        }
+      });
+    }
 
-    if (!assets.length) {
+    if (!themeAssets.length) {
       return null;
     }
 
-    return assets;
+    return themeAssets;
+  }
+
+  /**
+   * Triggers aggregation and generation for a given theme.
+   * @param {string} themeName - The theme to aggregate.
+   * @param {Object} options - The aggregation options.
+   * @param {boolean} isRoot - Flag that signifies if the theme asset is a root theme.
+   * @returns {array} - An array of theme files.
+   */
+  static triggerAggregationAndGeneration(themeName, options = {}, isRoot) {
+    if (!themeName) {
+      return null;
+    }
+
+    Logger.log(`Aggregating ${themeName} files...`, { LOG_CONTEXT });
+
+    const aggregatedAssets = ThemeAggregator.aggregateTheme(themeName, isRoot, options);
+    const generatedAsset = ThemeAggregator.generateTheme(themeName, isRoot, options);
+
+    if (generatedAsset) {
+      // Generated root or scope files should take precedence over existing root or scope files.
+      // Therefore, take advantage of CSS import precedence by adding the generated asset last.
+      aggregatedAssets.push(generatedAsset);
+    }
+
+    if (!aggregatedAssets.length) {
+      Logger.warn(`No theme files found for ${themeName}.`, { LOG_CONTEXT });
+      return null;
+    }
+
+    return aggregatedAssets;
+  }
+
+  /**
+   * Aggregates the theme by root.scss or scoped.scss file
+   * @param {string} themeName - The theme to aggregate.
+   * @param {Object} isRoot - Flag that signifies if the theme asset is a root theme file.
+   * @param {Object} options - The aggregate options.
+   * @returns {array} - An array of aggregated theme files.
+   */
+  static aggregateTheme(themeName, isRoot, options) {
+    const file = isRoot ? ROOT_THEME : SCOPED_THEME;
+    const assets = ThemeAggregator.find(`**/themes/${themeName}/${file}`, options);
+
+    // Add the dependency import if it exists.
+    assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${themeName}/**/${file}`, options));
+    // Resolve aggregated theme paths.
+    return assets.map(asset => ThemeAggregator.resolve(asset));
+  }
+
+  /**
+   * Writes a scss theme file based on generation filename constraints.
+   * @TODO Default to theme generation on next MVB - https://github.com/cerner/terra-toolkit/issues/325
+   * @param {string} themeName - The theme to aggregate.
+   * @param {Object} isRoot - Flag that signifies if the theme asset is a root theme file.
+   * @param {Object} options - The aggregate options.
+   * @param {string} outputPath - Path to write the scss file to. Used for testing purposes - overrides the default generated themes path.
+   * @returns {string} - A string containing the relative path to the generacted scss file.
+   */
+  static generateTheme(themeName, isRoot, options, outputPath) {
+    const assets = ThemeAggregator.findThemeVariableFilesForGeneration(themeName, options);
+    if (!assets) {
+      return null;
+    }
+
+    const scopeSelector = isRoot ? `:${ROOT}` : `.${themeName}`;
+    const intro = `${DISCLAIMER}${scopeSelector}`;
+    let file = assets.reduce((acc, s) => `${acc}  @import '../${s}';\n`, '');
+    file = `${intro} {\n${file}}\n`;
+
+    const prefix = isRoot ? ROOT : SCOPED;
+    const fileName = `${prefix}-${themeName}.scss`;
+    const filePath = path.resolve(outputPath || OUTPUT_PATH, fileName);
+    fs.writeFileSync(filePath, file);
+    Logger.log(`Successfully generated ${fileName}.`, { LOG_CONTEXT });
+
+    return `./${path.relative(outputPath || OUTPUT_PATH, filePath)}`;
   }
 
   /**
@@ -195,7 +207,7 @@ class ThemeAggregator {
     const { theme, scoped } = options;
 
     if (!theme && !scoped) {
-      Logger.warn('No theme provided.', { context });
+      Logger.warn('No theme provided.', { LOG_CONTEXT });
       return false;
     }
 
@@ -203,29 +215,21 @@ class ThemeAggregator {
   }
 
   /**
-   * Generates a theme scss file and outputs it to the generated-themes directory.
-   * @param {object} contains requested scss file attrs
-   *   @param {array} assets - The aggregated theme files to import within generated file.
-   *   @param {string} themeName - Name of theme to aggregate.
-   *   @param {string} prefix - Prefix to append to generated file.
-   *   @param {string} scopeSelector - scss scope selector to encase theme.
-   *   @param {string} outputPath - path to write the scss file to. For testing purposes - overrides the default generated-themes path.
-   * @returns {string} - The path of the generated scss file, relative to the working home directory.
+   * Searches for theme files located within the following directory format: themes->theme-name->theme-name.scss.
+   * @param {string} themeName - The theme to aggregate.
+   * @param {Object} options - The aggregation options.
+   * @returns {array} - An array of ${themeName} files.
    */
-  static writeSCSSFile({
-    assets, themeName, prefix, scopeSelector, outputPath,
-  }) {
-    const fileName = `${prefix}-${themeName}.scss`;
-    const intro = `${DISCLAIMER}${scopeSelector}`;
+  static findThemeVariableFilesForGeneration(themeName, options = {}) {
+    const assets = ThemeAggregator.find(`**/themes/${themeName}/**/${themeName}.scss`, options);
+    // Add the dependency import if it exists.
+    assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${themeName}/**/${themeName}.scss`, options));
 
-    let file = assets.reduce((acc, s) => `${acc}  @import '../${s}';\n`, '');
-    file = `${intro} {\n${file}}\n`;
+    if (!assets.length) {
+      return null;
+    }
 
-    const filePath = path.resolve(outputPath || OUTPUT_PATH, fileName);
-    fs.writeFileSync(filePath, file);
-    Logger.log(`Successfully generated ${fileName}.`, { context });
-
-    return [`./${path.relative(outputPath || OUTPUT_PATH, filePath)}`];
+    return assets;
   }
 
   /**
@@ -235,15 +239,15 @@ class ThemeAggregator {
    */
   static writeJsFile(imports) {
     if (!imports.length) {
-      Logger.warn(`No themes to import. Skip generating ${OUTPUT}.`, { context });
+      Logger.warn(`No themes to import. Skip generating ${OUTPUT}.`, { LOG_CONTEXT });
       return null;
     }
 
-    const filePath = `${path.resolve(OUTPUT_PATH, OUTPUT)}`;
     const file = imports.reduce((acc, s) => `${acc}import '${s}';\n`, '');
+    const filePath = `${path.resolve(OUTPUT_PATH, OUTPUT)}`;
     fs.writeFileSync(filePath, `${DISCLAIMER}${file}`);
 
-    Logger.log(`Successfully generated ${OUTPUT}.`, { context });
+    Logger.log(`Successfully generated ${OUTPUT}.`, { LOG_CONTEXT });
     return filePath;
   }
 }
