@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Changed
+* Added an 'inTest' env to the serveStaticService to allow webpack to render the test site differently.
 
 5.20.0 - (January 28, 2020)
 ----------
