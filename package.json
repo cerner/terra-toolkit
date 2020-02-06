@@ -49,6 +49,7 @@
     "lint": "eslint --ext .js .",
     "pack": "webpack --config tests/test.config.js -p",
     "postinstall": "node ./scripts/post-install/post-install.js",
+    "precompile": "rm -rf lib",
     "prepare": "npm run compile",
     "prepublishOnly": "npm whoami && check-installed-dependencies && npm test",
     "pretest": "npm run lint",
