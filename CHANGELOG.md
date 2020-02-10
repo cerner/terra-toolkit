@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Added
+* Added `SUPPORTED_LOCALES` global to the webpack bundle
 
 5.20.0 - (January 28, 2020)
 ----------

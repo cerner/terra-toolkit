@@ -67,7 +67,7 @@ describe('webpack config', () => {
 
     it('adds the plugins', () => {
       expect(config).toHaveProperty('plugins');
-      expect(config.plugins).toHaveLength(4);
+      expect(config.plugins).toHaveLength(5);
 
       expect(MiniCssExtractPlugin).toBeCalledWith({
         chunkFilename: '[name].css',
@@ -164,7 +164,7 @@ describe('webpack config', () => {
 
     it('adds the CleanWebpackPlugin', () => {
       expect(config).toHaveProperty('plugins');
-      expect(config.plugins).toHaveLength(5);
+      expect(config.plugins).toHaveLength(6);
 
       expect(MiniCssExtractPlugin).toBeCalledWith({
         chunkFilename: '[name].css',
@@ -205,7 +205,7 @@ describe('webpack config', () => {
   describe('accepts disableAggregateTranslations env variable', () => {
     const disableAggregateTranslations = true;
     beforeAll(() => {
-      config = webpackConfig({ disableAggregateTranslations }, { });
+      config = webpackConfig({ disableAggregateTranslations }, {});
     });
 
     it('and it does not aggregate translations', () => {
@@ -223,20 +223,25 @@ describe('webpack config', () => {
   });
 
   describe('accepts aggregateOptions env variable', () => {
-    const aggregateOptions = { baseDir: 'test/dir' };
+    const aggregateOptions = { baseDir: 'test/dir', locales: ['en', 'es', 'pl'] };
     beforeAll(() => {
-      config = webpackConfig({ aggregateOptions }, { });
+      aggregateTranslations.mockImplementation(() => aggregateOptions.locales);
+      config = webpackConfig({ aggregateOptions }, {});
     });
 
     it('and it aggregates translations with these options', () => {
       expect(aggregateTranslations).toBeCalledWith(expect.objectContaining(aggregateOptions));
+    });
+
+    it('should add the SUPPORTED_LOCALES global with the translation locale options', () => {
+      expect(DefinePlugin).toBeCalledWith({ SUPPORTED_LOCALES: JSON.stringify(aggregateOptions.locales) });
     });
   });
 
   describe('accepts disableHotReloading env variable', () => {
     const disableHotReloading = true;
     beforeAll(() => {
-      config = webpackConfig({ disableHotReloading }, { });
+      config = webpackConfig({ disableHotReloading }, {});
     });
 
     it('and adds to dev server options', () => {
