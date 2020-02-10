@@ -18,6 +18,7 @@ const webpackConfig = (options, env, argv) => {
     rootPath,
     resolveModules,
     staticOptions,
+    supportedLocales,
     themeFile,
   } = options;
 
@@ -137,6 +138,9 @@ const webpackConfig = (options, env, argv) => {
       new webpack.DefinePlugin({
         CERNER_BUILD_TIMESTAMP: JSON.stringify(new Date(Date.now()).toISOString()),
       }),
+      new webpack.DefinePlugin({
+        SUPPORTED_LOCALES: JSON.stringify(supportedLocales),
+      }),
     ],
     resolve: {
       extensions: ['.js', '.jsx'],
@@ -210,8 +214,9 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
 
   const resolveModules = ['node_modules'];
 
+  let supportedLocales;
   if (!disableAggregateTranslations) {
-    aggregateTranslations({ baseDir: rootPath, ...env.aggregateOptions });
+    supportedLocales = aggregateTranslations({ baseDir: rootPath, ...env.aggregateOptions });
     resolveModules.unshift(path.resolve(rootPath, 'aggregated-translations'));
   }
 
@@ -222,6 +227,7 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     rootPath,
     resolveModules,
     staticOptions,
+    supportedLocales,
     themeFile,
   };
 
