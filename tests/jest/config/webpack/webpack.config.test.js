@@ -220,6 +220,10 @@ describe('webpack config', () => {
       expect(config.resolve.modules).toHaveLength(1);
       expect(config.resolveLoader.modules).not.toEqual(expectedModules);
     });
+
+    it('should add the SUPPORTED_LOCALES global as undefined if locale aggregation is disabled', () => {
+      expect(DefinePlugin).toBeCalledWith({ SUPPORTED_LOCALES: undefined });
+    });
   });
 
   describe('accepts aggregateOptions env variable', () => {
