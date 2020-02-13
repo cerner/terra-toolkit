@@ -221,8 +221,8 @@ describe('webpack config', () => {
       expect(config.resolveLoader.modules).not.toEqual(expectedModules);
     });
 
-    it('should add the SUPPORTED_LOCALES global as undefined if locale aggregation is disabled', () => {
-      expect(DefinePlugin).toBeCalledWith({ SUPPORTED_LOCALES: undefined });
+    it('should add the TERRA_SUPPORTED_LOCALES global as undefined if locale aggregation is disabled', () => {
+      expect(DefinePlugin).toBeCalledWith({ TERRA_SUPPORTED_LOCALES: undefined });
     });
   });
 
@@ -237,8 +237,8 @@ describe('webpack config', () => {
       expect(aggregateTranslations).toBeCalledWith(expect.objectContaining(aggregateOptions));
     });
 
-    it('should add the SUPPORTED_LOCALES global with the translation locale options', () => {
-      expect(DefinePlugin).toBeCalledWith({ SUPPORTED_LOCALES: JSON.stringify(aggregateOptions.locales) });
+    it('should add the TERRA_SUPPORTED_LOCALES global with the translation locale options', () => {
+      expect(DefinePlugin).toBeCalledWith({ TERRA_SUPPORTED_LOCALES: JSON.stringify(aggregateOptions.locales) });
     });
   });
 
