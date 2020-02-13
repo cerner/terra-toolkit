@@ -82,6 +82,7 @@ describe('webpack config', () => {
 
       const definePluginOptions = expect.objectContaining({
         CERNER_BUILD_TIMESTAMP: JSON.stringify(new Date(mockDate).toISOString()),
+        TERRA_AGGREGATED_LOCALES: undefined,
       });
       expect(DefinePlugin).toBeCalledWith(definePluginOptions);
     });
@@ -175,6 +176,7 @@ describe('webpack config', () => {
 
       const definePluginOptions = expect.objectContaining({
         CERNER_BUILD_TIMESTAMP: JSON.stringify(new Date(mockDate).toISOString()),
+        TERRA_AGGREGATED_LOCALES: undefined,
       });
       expect(DefinePlugin).toBeCalledWith(definePluginOptions);
 
@@ -205,7 +207,7 @@ describe('webpack config', () => {
   describe('accepts disableAggregateTranslations env variable', () => {
     const disableAggregateTranslations = true;
     beforeAll(() => {
-      config = webpackConfig({ disableAggregateTranslations }, { });
+      config = webpackConfig({ disableAggregateTranslations }, {});
     });
 
     it('and it does not aggregate translations', () => {
@@ -220,23 +222,40 @@ describe('webpack config', () => {
       expect(config.resolve.modules).toHaveLength(1);
       expect(config.resolveLoader.modules).not.toEqual(expectedModules);
     });
+
+    it('should add the TERRA_AGGREGATED_LOCALES global as undefined if locale aggregation is disabled', () => {
+      const expected = {
+        CERNER_BUILD_TIMESTAMP: JSON.stringify(new Date(mockDate).toISOString()),
+        TERRA_AGGREGATED_LOCALES: undefined,
+      };
+      expect(DefinePlugin).toBeCalledWith(expected);
+    });
   });
 
   describe('accepts aggregateOptions env variable', () => {
-    const aggregateOptions = { baseDir: 'test/dir' };
+    const aggregateOptions = { baseDir: 'test/dir', locales: ['en', 'es', 'pl'] };
     beforeAll(() => {
-      config = webpackConfig({ aggregateOptions }, { });
+      aggregateTranslations.mockImplementation(() => aggregateOptions.locales);
+      config = webpackConfig({ aggregateOptions }, {});
     });
 
     it('and it aggregates translations with these options', () => {
       expect(aggregateTranslations).toBeCalledWith(expect.objectContaining(aggregateOptions));
+    });
+
+    it('should add the TERRA_AGGREGATED_LOCALES global with the translation locale options', () => {
+      const expected = {
+        CERNER_BUILD_TIMESTAMP: JSON.stringify(new Date(mockDate).toISOString()),
+        TERRA_AGGREGATED_LOCALES: JSON.stringify(aggregateOptions.locales),
+      };
+      expect(DefinePlugin).toBeCalledWith(expected);
     });
   });
 
   describe('accepts disableHotReloading env variable', () => {
     const disableHotReloading = true;
     beforeAll(() => {
-      config = webpackConfig({ disableHotReloading }, { });
+      config = webpackConfig({ disableHotReloading }, {});
     });
 
     it('and adds to dev server options', () => {
