@@ -82,7 +82,7 @@ describe('webpack config', () => {
 
       const definePluginOptions = expect.objectContaining({
         CERNER_BUILD_TIMESTAMP: JSON.stringify(new Date(mockDate).toISOString()),
-        TERRA_SUPPORTED_LOCALES: undefined,
+        TERRA_AGGREGATED_LOCALES: undefined,
       });
       expect(DefinePlugin).toBeCalledWith(definePluginOptions);
     });
@@ -176,7 +176,7 @@ describe('webpack config', () => {
 
       const definePluginOptions = expect.objectContaining({
         CERNER_BUILD_TIMESTAMP: JSON.stringify(new Date(mockDate).toISOString()),
-        TERRA_SUPPORTED_LOCALES: undefined,
+        TERRA_AGGREGATED_LOCALES: undefined,
       });
       expect(DefinePlugin).toBeCalledWith(definePluginOptions);
 
@@ -223,10 +223,10 @@ describe('webpack config', () => {
       expect(config.resolveLoader.modules).not.toEqual(expectedModules);
     });
 
-    it('should add the TERRA_SUPPORTED_LOCALES global as undefined if locale aggregation is disabled', () => {
+    it('should add the TERRA_AGGREGATED_LOCALES global as undefined if locale aggregation is disabled', () => {
       const expected = {
         CERNER_BUILD_TIMESTAMP: JSON.stringify(new Date(mockDate).toISOString()),
-        TERRA_SUPPORTED_LOCALES: undefined,
+        TERRA_AGGREGATED_LOCALES: undefined,
       };
       expect(DefinePlugin).toBeCalledWith(expected);
     });
@@ -243,10 +243,10 @@ describe('webpack config', () => {
       expect(aggregateTranslations).toBeCalledWith(expect.objectContaining(aggregateOptions));
     });
 
-    it('should add the TERRA_SUPPORTED_LOCALES global with the translation locale options', () => {
+    it('should add the TERRA_AGGREGATED_LOCALES global with the translation locale options', () => {
       const expected = {
         CERNER_BUILD_TIMESTAMP: JSON.stringify(new Date(mockDate).toISOString()),
-        TERRA_SUPPORTED_LOCALES: JSON.stringify(aggregateOptions.locales),
+        TERRA_AGGREGATED_LOCALES: JSON.stringify(aggregateOptions.locales),
       };
       expect(DefinePlugin).toBeCalledWith(expected);
     });

@@ -17,7 +17,7 @@ React 16 depends on the collection types ``Map`` and ``Set`` and it depends on `
 ### JavaScript Plugins
 - [DefinePlugin](https://webpack.js.org/plugins/define-plugin/) - Plugin to define global compile-time values, including:
   - `CERNER_BUILD_TIMESTAMP` - The time that webpack was executed in ISO8601 format.
-  - `TERRA_SUPPORTED_LOCALES` - The list of successfully aggregated locales available to the browser.
+  - `TERRA_AGGREGATED_LOCALES` - The list of successfully aggregated locales available to the browser.
 
 ### CSS Loaders and Plugins
 - [autoprefixer](https://github.com/postcss/autoprefixer) - Plugin to parse CSS and add vendor prefixes to CSS rules. This should be configured with [`browserslist-config-terra`](https://github.com/cerner/browserslist-config-terra). \*

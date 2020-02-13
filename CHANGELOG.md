@@ -4,7 +4,7 @@ Changelog
 Unreleased
 ----------
 ### Added
-* Added `TERRA_SUPPORTED_LOCALES` global to the webpack bundle
+* Added `TERRA_AGGREGATED_LOCALES` global to the webpack bundle
 
 5.20.0 - (January 28, 2020)
 ----------
