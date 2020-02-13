@@ -137,8 +137,6 @@ const webpackConfig = (options, env, argv) => {
       }),
       new webpack.DefinePlugin({
         CERNER_BUILD_TIMESTAMP: JSON.stringify(new Date(Date.now()).toISOString()),
-      }),
-      new webpack.DefinePlugin({
         TERRA_SUPPORTED_LOCALES: JSON.stringify(supportedLocales),
       }),
     ],

@@ -67,7 +67,7 @@ describe('webpack config', () => {
 
     it('adds the plugins', () => {
       expect(config).toHaveProperty('plugins');
-      expect(config.plugins).toHaveLength(5);
+      expect(config.plugins).toHaveLength(4);
 
       expect(MiniCssExtractPlugin).toBeCalledWith({
         chunkFilename: '[name].css',
@@ -82,6 +82,7 @@ describe('webpack config', () => {
 
       const definePluginOptions = expect.objectContaining({
         CERNER_BUILD_TIMESTAMP: JSON.stringify(new Date(mockDate).toISOString()),
+        TERRA_SUPPORTED_LOCALES: undefined,
       });
       expect(DefinePlugin).toBeCalledWith(definePluginOptions);
     });
@@ -164,7 +165,7 @@ describe('webpack config', () => {
 
     it('adds the CleanWebpackPlugin', () => {
       expect(config).toHaveProperty('plugins');
-      expect(config.plugins).toHaveLength(6);
+      expect(config.plugins).toHaveLength(5);
 
       expect(MiniCssExtractPlugin).toBeCalledWith({
         chunkFilename: '[name].css',
@@ -175,6 +176,7 @@ describe('webpack config', () => {
 
       const definePluginOptions = expect.objectContaining({
         CERNER_BUILD_TIMESTAMP: JSON.stringify(new Date(mockDate).toISOString()),
+        TERRA_SUPPORTED_LOCALES: undefined,
       });
       expect(DefinePlugin).toBeCalledWith(definePluginOptions);
 
@@ -222,7 +224,11 @@ describe('webpack config', () => {
     });
 
     it('should add the TERRA_SUPPORTED_LOCALES global as undefined if locale aggregation is disabled', () => {
-      expect(DefinePlugin).toBeCalledWith({ TERRA_SUPPORTED_LOCALES: undefined });
+      const expected = {
+        CERNER_BUILD_TIMESTAMP: JSON.stringify(new Date(mockDate).toISOString()),
+        TERRA_SUPPORTED_LOCALES: undefined,
+      };
+      expect(DefinePlugin).toBeCalledWith(expected);
     });
   });
 
@@ -238,7 +244,11 @@ describe('webpack config', () => {
     });
 
     it('should add the TERRA_SUPPORTED_LOCALES global with the translation locale options', () => {
-      expect(DefinePlugin).toBeCalledWith({ TERRA_SUPPORTED_LOCALES: JSON.stringify(aggregateOptions.locales) });
+      const expected = {
+        CERNER_BUILD_TIMESTAMP: JSON.stringify(new Date(mockDate).toISOString()),
+        TERRA_SUPPORTED_LOCALES: JSON.stringify(aggregateOptions.locales),
+      };
+      expect(DefinePlugin).toBeCalledWith(expected);
     });
   });
 
