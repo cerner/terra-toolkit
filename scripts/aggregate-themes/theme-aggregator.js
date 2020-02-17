@@ -13,7 +13,7 @@ const ROOT = 'root';
 const SCOPED = 'scoped';
 const ROOT_THEME = `${ROOT}-theme.scss`;
 const SCOPED_THEME = `${SCOPED}-theme.scss`;
-const LOG_CONTEXT = '[terra-theme-aggregator]';
+const LOG_CONTEXT = '[Terra-Toolkit:theme-aggregator]';
 
 /**
  * Aggregates and generates theme assets.
