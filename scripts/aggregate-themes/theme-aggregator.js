@@ -59,7 +59,7 @@ class ThemeAggregator {
 
     // This creates a generated-themes directory to house theme assets.
     fs.ensureDir(OUTPUT_DIR).catch(err => {
-      Logger.warn(err, { LOG_CONTEXT });
+      Logger.warn(err, { context: LOG_CONTEXT });
     });
 
     const {
@@ -103,7 +103,7 @@ class ThemeAggregator {
       return null;
     }
 
-    Logger.log(`Aggregating ${themeName} files...`, { LOG_CONTEXT });
+    Logger.log(`Aggregating ${themeName} files...`, { context: LOG_CONTEXT });
 
     const aggregatedAssets = ThemeAggregator.aggregateTheme(themeName, isRoot, options);
     const generatedAsset = ThemeAggregator.generateTheme(themeName, isRoot, options);
@@ -115,7 +115,7 @@ class ThemeAggregator {
     }
 
     if (!aggregatedAssets.length) {
-      Logger.warn(`No theme files found for ${themeName}.`, { LOG_CONTEXT });
+      Logger.warn(`No theme files found for ${themeName}.`, { context: LOG_CONTEXT });
       return null;
     }
 
@@ -163,7 +163,7 @@ class ThemeAggregator {
     const fileName = `${prefix}-${themeName}.scss`;
     const filePath = path.resolve(outputPath || OUTPUT_PATH, fileName);
     fs.writeFileSync(filePath, file);
-    Logger.log(`Successfully generated ${fileName}.`, { LOG_CONTEXT });
+    Logger.log(`Successfully generated ${fileName}.`, { context: LOG_CONTEXT });
 
     return `./${path.relative(outputPath || OUTPUT_PATH, filePath)}`;
   }
@@ -207,7 +207,7 @@ class ThemeAggregator {
     const { theme, scoped } = options;
 
     if (!theme && !scoped) {
-      Logger.warn('No theme provided.', { LOG_CONTEXT });
+      Logger.warn('No theme provided.', { context: LOG_CONTEXT });
       return false;
     }
 
@@ -239,7 +239,7 @@ class ThemeAggregator {
    */
   static writeJsFile(imports) {
     if (!imports.length) {
-      Logger.warn(`No themes to import. Skip generating ${OUTPUT}.`, { LOG_CONTEXT });
+      Logger.warn(`No themes to import. Skip generating ${OUTPUT}.`, { context: LOG_CONTEXT });
       return null;
     }
 
@@ -247,7 +247,7 @@ class ThemeAggregator {
     const filePath = `${path.resolve(OUTPUT_PATH, OUTPUT)}`;
     fs.writeFileSync(filePath, `${DISCLAIMER}${file}`);
 
-    Logger.log(`Successfully generated ${OUTPUT}.`, { LOG_CONTEXT });
+    Logger.log(`Successfully generated ${OUTPUT}.`, { context: LOG_CONTEXT });
     return filePath;
   }
 }
