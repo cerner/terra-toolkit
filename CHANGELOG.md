@@ -6,6 +6,9 @@ Unreleased
 ### Added
 * Added `TERRA_AGGREGATED_LOCALES` global to the webpack bundle
 
+### Fixed
+* Fixed and updated theme-aggregator prefix to [Terra-Toolkit:theme-aggregator] to be consistent with logs from other WDIO services.
+
 5.20.0 - (January 28, 2020)
 ----------
 ### Changed
