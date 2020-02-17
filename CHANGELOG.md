@@ -6,6 +6,9 @@ Unreleased
 ### Added
 * Added `TERRA_AGGREGATED_LOCALES` global to the webpack bundle
 
+### Fixed
+* Re-add log prefix to theme-aggregator
+
 5.20.0 - (January 28, 2020)
 ----------
 ### Changed
