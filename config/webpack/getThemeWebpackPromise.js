@@ -7,6 +7,7 @@ const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin');
 const PostCSSCustomProperties = require('postcss-custom-properties');
 const path = require('path');
 const Logger = require('../../scripts/utils/logger');
+const ThemePlugin = require('../../scripts/postcss/ThemePlugin');
 
 /**
  * This is a basic configuration to webpack just the theme file and grab the resulting css.  Thus,
@@ -15,9 +16,10 @@ const Logger = require('../../scripts/utils/logger');
  * what we normally do.
  * @param {String} rootPath the root path from where the webpack is being run
  * @param {String} themeFile the file to be webpacked
+ * @param {Object} themeConfig configuration to pass to the post css theme plugin
  * @param {Object} cachedObject this object will be populated with the resulting themeable variables and values
  */
-const themeConfig = (rootPath, themeFile, cachedObject) => (
+const webpackThemeConfig = (rootPath, themeFile, themeConfig, cachedObject) => (
   {
     mode: 'production',
     entry: {
@@ -69,6 +71,7 @@ const themeConfig = (rootPath, themeFile, cachedObject) => (
         test: /\.css$/,
         log: false,
         plugins: [
+          ThemePlugin(themeConfig),
           PostCSSCustomProperties({
             preserve: true,
             // Here is where the cachedObject is populated
@@ -93,8 +96,9 @@ const themeConfig = (rootPath, themeFile, cachedObject) => (
  * themeable variables and values.
  * @param {String} rootPath the root path from where the webpack is being run
  * @param {String} themeFile the file to be webpacked
+ *  * @param {Object} themeConfig configuration to pass to the post css theme plugin
  */
-module.exports = (rootPath, themeFile) => {
+module.exports = (rootPath, themeFile, themeConfig) => {
   const cachedObject = {
     // Provide our own toJSON as the default inserts commas in between things like inset values which is invalid CSS
     toJSON: customProperties => (
@@ -107,7 +111,7 @@ module.exports = (rootPath, themeFile) => {
     customProperties: {},
   };
   return new Promise((resolve, reject) => {
-    const compiler = webpack(themeConfig(rootPath, themeFile, cachedObject));
+    const compiler = webpack(webpackThemeConfig(rootPath, themeFile, themeConfig, cachedObject));
     // Set the output file system to MemoryFS so that this all runs in memory
     compiler.outputFileSystem = new MemoryFS();
     compiler.run((error, stats) => {

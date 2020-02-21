@@ -21,6 +21,7 @@ const webpackConfig = (options, env, argv) => {
     staticOptions,
     aggregatedLocales,
     themeFile,
+    defaultTheme,
   } = options;
 
   const production = argv.p;
@@ -29,6 +30,7 @@ const webpackConfig = (options, env, argv) => {
   const filename = argv['output-filename'] || fileNameStategy;
   const outputPath = argv['output-path'] || path.join(rootPath, 'build');
   const publicPath = argv['output-public-path'] || '';
+  const themeConfig = defaultTheme ? { theme: defaultTheme } : undefined;
 
   const devConfig = {
     mode: 'development',
@@ -112,7 +114,7 @@ const webpackConfig = (options, env, argv) => {
         test: /\.css$/,
         log: false,
         plugins: [
-          ThemePlugin(),
+          ThemePlugin(themeConfig),
           PostCSSCustomProperties({
             preserve: true,
             // If we have a theme file, use the webpack promise to webpack it.  This promise will resolve to
@@ -120,7 +122,7 @@ const webpackConfig = (options, env, argv) => {
             // so that they are populated with values if variables aren't supported (e.g. IE10). This dance is
             // necessary when code splitting to ensure the variables and values are applied across all code split
             // css files
-            // ...themeFile && { importFrom: [getThemeWebpackPromise(rootPath, themeFile)] },
+            ...themeFile && { importFrom: [getThemeWebpackPromise(rootPath, themeFile, themeConfig)] },
           }),
         ],
       }),
@@ -220,8 +222,8 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     resolveModules.unshift(path.resolve(rootPath, 'aggregated-translations'));
   }
 
-  const themeOverride = process.env.THEME; // Flexes root theme for theme visual regression testing.
-  const themeFile = ThemeAggregator.aggregate(themeOverride);
+  const defaultTheme = process.env.THEME; // Flexes root theme for theme visual regression testing.
+  const themeFile = ThemeAggregator.aggregate(defaultTheme);
 
   const options = {
     rootPath,
@@ -229,6 +231,7 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     staticOptions,
     aggregatedLocales,
     themeFile,
+    defaultTheme,
   };
 
   return webpackConfig(options, env, argv);
