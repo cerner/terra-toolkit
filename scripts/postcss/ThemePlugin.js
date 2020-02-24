@@ -31,7 +31,7 @@ module.exports = postcss.plugin('postcss-test-plugin', (config) => {
 
   // Find the set of known themes that should not be included.
   const themesToRemove = KNOWNTHEMES.reduce((acc, theme) => {
-    if (!themeConfig.scoped.includes(theme)) {
+    if (themeConfig.scoped && !themeConfig.scoped.includes(theme)) {
       acc.push(`.${theme}`);
     }
     return acc;
