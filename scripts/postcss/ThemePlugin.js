@@ -3,7 +3,7 @@ const path = require('path');
 const postcss = require('postcss');
 
 const CONFIG = 'terra-theme.config.js';
-const KNOWNTHEMES = [
+const SUPPORTED_THEMES = [
   'orion-fusion-theme',
   'clinical-lowlight-theme',
   'cerner-clinical-theme',
@@ -30,7 +30,7 @@ module.exports = postcss.plugin('postcss-test-plugin', (config) => {
   const defaultThemeSelector = `.${themeConfig.theme}`;
 
   // Find the set of known themes that should not be included.
-  const themesToRemove = KNOWNTHEMES.reduce((acc, theme) => {
+  const themesToRemove = SUPPORTED_THEMES.reduce((acc, theme) => {
     if (themeConfig.scoped && !themeConfig.scoped.includes(theme)) {
       acc.push(`.${theme}`);
     }
