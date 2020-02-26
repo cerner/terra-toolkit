@@ -66,7 +66,7 @@ The `exclude` option accepts an array of files to exclude from being aggregated.
 
 #### Theme (Optional)
 
-The `theme` option accepts the string name of a default theme. The default theme will be applied directly to the application.
+The `theme` option accepts the string name of a default theme. The default theme will be applied directly to the application with the use of the terra post css theme plugin.
 
 #### Scoped (Optional)
 
