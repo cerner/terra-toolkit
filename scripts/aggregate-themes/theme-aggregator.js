@@ -70,7 +70,7 @@ class ThemeAggregator {
     if (!scopedThemesToAggregate.includes(defaultThemeToAggregate)) {
       scopedThemesToAggregate = [
         defaultThemeToAggregate,
-        ...options.scoped,
+        ...scopedThemesToAggregate,
       ];
     }
 
