@@ -223,13 +223,12 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
   }
 
   const defaultTheme = process.env.THEME; // Flexes root theme for theme visual regression testing.
+  const themeConfig = defaultTheme ? { theme: defaultTheme } : null;
   let themeFile;
   if (!disableAggregateThemes) {
     themeFile = ThemeAggregator.aggregate(
       null,
-      {
-        theme: defaultTheme,
-      },
+      themeConfig,
       true,
     );
   }

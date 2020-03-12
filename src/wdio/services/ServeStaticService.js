@@ -40,6 +40,7 @@ const startWebpackDevServer = (options) => {
     const env = {
       ...locale && { defaultLocale: locale },
       ...theme && { theme },
+      ...!theme && { disableAggregateThemes: true },
     };
 
     config = config(env, { p: true });
