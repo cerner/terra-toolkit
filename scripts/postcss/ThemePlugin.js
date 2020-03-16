@@ -29,9 +29,11 @@ module.exports = postcss.plugin('postcss-test-plugin', (config) => {
   // Add the . to find the selector.
   const defaultThemeSelector = `.${themeConfig.theme}`;
 
+  const scopedThemes = themeConfig.scoped || [];
+
   // Find the set of known themes that should not be included.
   const themesToRemove = SUPPORTED_THEMES.reduce((acc, theme) => {
-    if (themeConfig.scoped && !themeConfig.scoped.includes(theme)) {
+    if (!scopedThemes.includes(theme)) {
       acc.push(`.${theme}`);
     }
     return acc;
