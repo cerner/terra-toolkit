@@ -4,6 +4,11 @@ Changelog
 Unreleased
 ----------
 
+5.22.0 - (March 17, 2020)
+----------
+### Changed
+* git ignore package-lock.json
+
 5.21.0 - (February 18, 2020)
 ----------
 ### Added
