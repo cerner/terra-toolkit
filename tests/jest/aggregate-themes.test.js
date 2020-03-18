@@ -1,9 +1,18 @@
+jest.mock('glob');
+
 const path = require('path');
+const glob = require('glob');
 const ThemeAggregator = require('../../scripts/aggregate-themes/theme-aggregator');
 
 global.console = { log: jest.fn(), warn: jest.fn() };
 
 describe('Theme Aggregator', () => {
+  beforeEach(() => {
+    glob.sync.mockReturnValue([]);
+  });
+  afterEach(() => {
+    glob.sync.mockReset();
+  });
   describe('validate', () => {
     /* eslint-disable no-console */
     afterEach(() => {
@@ -90,6 +99,15 @@ describe('Theme Aggregator', () => {
     });
 
     it('returns the aggregated and generated root + scoped themes for a defined default theme and defined scope theme', () => {
+      glob.sync
+        .mockReturnValueOnce(['tests/jest/fixtures/themes/terra-mock-solar-theme/root-theme.scss'])
+        .mockReturnValueOnce([])
+        .mockReturnValueOnce(['tests/jest/fixtures/themes/terra-mock-solar-theme/terra-mock-solar-theme.scss'])
+        .mockReturnValueOnce([])
+        .mockReturnValueOnce(['tests/jest/fixtures/themes/terra-mock-dark-theme/scoped-theme.scss'])
+        .mockReturnValueOnce([])
+        .mockReturnValueOnce(['tests/jest/fixtures/themes/terra-mock-dark-theme/terra-mock-dark-theme.scss'])
+        .mockReturnValueOnce([]);
       const options = { theme: 'terra-mock-solar-theme', scoped: ['terra-mock-dark-theme'] };
 
       const files = ThemeAggregator.aggregateThemes(options);
@@ -104,6 +122,11 @@ describe('Theme Aggregator', () => {
     });
 
     it('returns the aggregated and generated root theme for a blank default theme and defined scope theme', () => {
+      glob.sync
+        .mockReturnValueOnce(['tests/jest/fixtures/themes/terra-mock-dark-theme/scoped-theme.scss'])
+        .mockReturnValueOnce([])
+        .mockReturnValueOnce(['tests/jest/fixtures/themes/terra-mock-dark-theme/terra-mock-dark-theme.scss'])
+        .mockReturnValueOnce([]);
       const options = { theme: '', scoped: ['terra-mock-dark-theme'] };
 
       const files = ThemeAggregator.aggregateThemes(options);
@@ -116,6 +139,11 @@ describe('Theme Aggregator', () => {
     });
 
     it('returns the generated scoped theme for a blank default theme and defined scope theme', () => {
+      glob.sync
+        .mockReturnValueOnce([])
+        .mockReturnValueOnce([])
+        .mockReturnValueOnce(['tests/jest/fixtures/themes/terra-mock-rainbow-theme/terra-mock-rainbow-theme.scss'])
+        .mockReturnValueOnce([]);
       const options = { theme: '', scoped: ['terra-mock-rainbow-theme'] };
 
       const files = ThemeAggregator.aggregateThemes(options);
@@ -127,6 +155,11 @@ describe('Theme Aggregator', () => {
     });
 
     it('returns aggregated and generated default theme for a defined default theme and unknown scope theme', () => {
+      glob.sync
+        .mockReturnValueOnce(['tests/jest/fixtures/themes/terra-mock-dark-theme/root-theme.scss'])
+        .mockReturnValueOnce([])
+        .mockReturnValueOnce(['tests/jest/fixtures/themes/terra-mock-dark-theme/terra-mock-dark-theme.scss]'])
+        .mockReturnValueOnce([]);
       const options = { theme: 'terra-mock-dark-theme', scoped: ['unknown-theme'] };
 
       const files = ThemeAggregator.aggregateThemes(options);
@@ -139,6 +172,11 @@ describe('Theme Aggregator', () => {
     });
 
     it('returns the aggregated and generated default theme for a defined default theme and empty scope theme', () => {
+      glob.sync
+        .mockReturnValueOnce(['tests/jest/fixtures/themes/terra-mock-dark-theme/root-theme.scss'])
+        .mockReturnValueOnce([])
+        .mockReturnValueOnce(['tests/jest/fixtures/themes/terra-mock-dark-theme/terra-mock-dark-theme.scss'])
+        .mockReturnValueOnce([]);
       const options = { theme: 'terra-mock-dark-theme', scoped: [] };
 
       const files = ThemeAggregator.aggregateThemes(options);
@@ -151,6 +189,15 @@ describe('Theme Aggregator', () => {
     });
 
     it('returns the generated scoped theme for a blank default theme and defined scope theme', () => {
+      glob.sync
+        .mockReturnValueOnce([])
+        .mockReturnValueOnce([])
+        .mockReturnValueOnce(['tests/jest/fixtures/themes/terra-mock-rainbow-theme/terra-mock-rainbow-theme.scss'])
+        .mockReturnValueOnce([])
+        .mockReturnValueOnce(['tests/jest/fixtures/themes/terra-mock-dark-theme/scoped-theme.scss'])
+        .mockReturnValueOnce([])
+        .mockReturnValueOnce(['tests/jest/fixtures/themes/terra-mock-dark-theme/terra-mock-dark-theme.scss'])
+        .mockReturnValueOnce([]);
       const options = { theme: '', scoped: ['terra-mock-rainbow-theme', 'terra-mock-dark-theme'] };
 
       const files = ThemeAggregator.aggregateThemes(options);
@@ -172,6 +219,11 @@ describe('Theme Aggregator', () => {
     });
 
     it('returns an array of aggregated and generated default theme file paths', () => {
+      glob.sync
+        .mockReturnValueOnce(['tests/jest/fixtures/themes/terra-mock-dark-theme/root-theme.scss'])
+        .mockReturnValueOnce([])
+        .mockReturnValueOnce(['tests/jest/fixtures/themes/terra-mock-dark-theme/terra-mock-dark-theme.scss'])
+        .mockReturnValueOnce([]);
       const options = { theme: 'terra-mock-dark-theme' };
 
       const files = ThemeAggregator.triggerAggregationAndGeneration('terra-mock-dark-theme', options, true);
@@ -184,6 +236,11 @@ describe('Theme Aggregator', () => {
     });
 
     it('returns an array of aggregated and generated scoped theme files paths', () => {
+      glob.sync
+        .mockReturnValueOnce(['tests/jest/fixtures/themes/terra-mock-dark-theme/scoped-theme.scss'])
+        .mockReturnValueOnce([])
+        .mockReturnValueOnce(['tests/jest/fixtures/themes/terra-mock-dark-theme/terra-mock-dark-theme.scss'])
+        .mockReturnValueOnce([]);
       const options = { scoped: ['terra-mock-dark-theme'] };
 
       const files = ThemeAggregator.triggerAggregationAndGeneration('terra-mock-dark-theme', options, false);
@@ -198,6 +255,9 @@ describe('Theme Aggregator', () => {
 
   describe('findThemeVariableFilesForGeneration', () => {
     it("returns the requested theme's files", () => {
+      glob.sync
+        .mockReturnValueOnce(['tests/jest/fixtures/themes/terra-mock-dark-theme/terra-mock-dark-theme.scss'])
+        .mockReturnValueOnce([]);
       const themeName = 'terra-mock-dark-theme';
 
       const files = ThemeAggregator.findThemeVariableFilesForGeneration(themeName);
@@ -209,6 +269,12 @@ describe('Theme Aggregator', () => {
 
   describe('find', () => {
     it('returns the requested files.', () => {
+      glob.sync
+        .mockReturnValueOnce([
+          './tests/jest/fixtures/themes/terra-mock-dark-theme/root-theme.scss',
+          './tests/jest/fixtures/themes/terra-mock-light-theme/root-theme.scss',
+          './tests/jest/fixtures/themes/terra-mock-solar-theme/root-theme.scss',
+        ]);
       const options = {};
 
       const file = ThemeAggregator.find('./tests/**/root-theme.scss', options);
@@ -223,6 +289,8 @@ describe('Theme Aggregator', () => {
     });
 
     it('returns the requested directory', () => {
+      glob.sync
+        .mockReturnValueOnce(['./tests/jest/fixtures/themes/terra-mock-dark-theme/']);
       const options = {};
 
       const file = ThemeAggregator.find('./tests/**/themes/terra-mock-dark-theme/', options).pop();
@@ -239,6 +307,11 @@ describe('Theme Aggregator', () => {
     });
 
     it('returns the requested files excluding the specified file', () => {
+      glob.sync
+        .mockReturnValueOnce([
+          './tests/jest/fixtures/themes/terra-mock-light-theme/root-theme.scss',
+          './tests/jest/fixtures/themes/terra-mock-solar-theme/root-theme.scss',
+        ]);
       const options = { exclude: './tests/jest/fixtures/themes/terra-mock-dark-theme/root-theme.scss' };
 
       const file = ThemeAggregator.find('./tests/**/root-theme.scss', options);
@@ -254,6 +327,8 @@ describe('Theme Aggregator', () => {
 
   describe('resolve', () => {
     it('resolves a file path from the node_modules directory', () => {
+      glob.sync
+        .mockReturnValueOnce(['tests/jest/fixtures/themes/terra-mock-dark-theme/terra-mock-dark-theme.scss']);
       const resolvedFile = ThemeAggregator.resolve('node_modules/terra-mock-dark-theme/root-file.scss');
       const expected = 'terra-mock-dark-theme/root-file.scss';
 
@@ -270,6 +345,9 @@ describe('Theme Aggregator', () => {
 
   describe('generateTheme', () => {
     it('returns the generated SCSS file path relative to the given output path.', () => {
+      glob.sync
+        .mockReturnValueOnce(['tests/jest/fixtures/themes/terra-mock-dark-theme/terra-mock-dark-theme.scss'])
+        .mockReturnValueOnce([]);
       const outputPath = path.resolve(process.cwd(), 'tests', 'jest', 'fixtures', 'generatedThemes');
       const generatedScssFilePath = ThemeAggregator.generateTheme('terra-mock-dark-theme', false, [], outputPath);
       const expected = './scoped-terra-mock-dark-theme.scss';
