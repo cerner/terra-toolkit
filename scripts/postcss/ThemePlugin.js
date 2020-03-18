@@ -11,7 +11,7 @@ const SUPPORTED_THEMES = [
 
 /**
  * The purpose of this plugin is to create a default theme from a scoped theme
- * and to remove any known themes that are not desired.
+ * and to remove any supported themes that are not desired.
  */
 module.exports = postcss.plugin('postcss-test-plugin', (config) => {
   // Retrieve theme config.

@@ -226,6 +226,7 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
   const themeConfig = defaultTheme ? { theme: defaultTheme } : null;
   let themeFile;
   if (!disableAggregateThemes) {
+    // Set the default theme and disable scoped theme aggregation.
     themeFile = ThemeAggregator.aggregate(
       null,
       themeConfig,
