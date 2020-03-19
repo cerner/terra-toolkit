@@ -3,6 +3,8 @@ Changelog
 
 Unreleased
 ----------
+### Changed
+* Clarify node version support
 
 5.22.0 - (March 17, 2020)
 ----------
