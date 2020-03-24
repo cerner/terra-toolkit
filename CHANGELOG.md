@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+5.23.0 - (March 24, 2020)
+----------
 ### Changed
 * Clarify node version support
 
