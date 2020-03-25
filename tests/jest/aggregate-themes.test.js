@@ -60,8 +60,8 @@ describe('Theme Aggregator', () => {
         .mockReturnValueOnce([])
         .mockReturnValueOnce(['tests/jest/fixtures/themes/terra-mock-dark-theme/terra-mock-dark-theme.scss'])
         .mockReturnValueOnce([]);
-      const options = { theme: 'terra-mock-dark-theme', scoped: [] };
-      const file = ThemeAggregator.aggregate(null, options);
+      const config = { theme: 'terra-mock-dark-theme', scoped: [] };
+      const file = ThemeAggregator.aggregate(null, { config });
 
       const expected = '/opt/module/generated-themes/aggregated-themes.js';
 
@@ -74,8 +74,8 @@ describe('Theme Aggregator', () => {
         .mockReturnValueOnce([])
         .mockReturnValueOnce(['tests/jest/fixtures/themes/terra-mock-rainbow-theme/terra-mock-rainbow-theme.scss'])
         .mockReturnValueOnce([]);
-      const options = { theme: 'terra-mock-dark-theme', scoped: [] };
-      const file = ThemeAggregator.aggregate('terra-mock-rainbow-theme', options);
+      const config = { theme: 'terra-mock-dark-theme', scoped: [] };
+      const file = ThemeAggregator.aggregate('terra-mock-rainbow-theme', { config });
 
       const expected = '/opt/module/generated-themes/aggregated-themes.js';
 

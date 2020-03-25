@@ -68,7 +68,6 @@ The theme file declares the ```.orion-fusion-theme``` as a global class and defi
 
 ```scss
 :global {
-  /* stylelint-disable suitcss/custom-property-no-outside-root */
   .orion-fusion-theme {
     --terra-button-background-color-neutral: purple;
   }

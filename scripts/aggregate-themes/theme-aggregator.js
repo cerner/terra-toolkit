@@ -25,9 +25,11 @@ class ThemeAggregator {
   /**
    * Aggregates theme assets.
    * @param {string} theme - The theme to override the default theme. Used for visual regression testing.
+   * @param {object} object.config - Config to override the terra-theme.config.js config.
+   * @param {object} object.aggregateDefaultThemeAsScopedTheme - Bool indicating if aggregate themes should generate the default theme as a root theme or a scoped theme.
    * @returns {string|null} - The output path of the aggregated theme file. Null if not generated.
    */
-  static aggregate(theme, config, aggregateDefaultThemeAsScopedTheme) {
+  static aggregate(theme, { config, aggregateDefaultThemeAsScopedTheme } = { config: undefined, aggregateDefaultThemeAsScopedTheme: false }) {
     let themeConfig = {};
     if (config) {
       themeConfig = config;
