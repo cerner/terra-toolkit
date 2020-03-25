@@ -2,7 +2,7 @@
 
 The purpose of this plugin is to create a default theme from a scoped theme and to remove any known themes that are not desired.
 
-The plugin will read from the same terra-theme.config.js that terra-aggregate translations reads from. Eventually terra-aggregate translations will be deprecated in favor of this strategy.
+The plugin will read from the same terra-theme.config.js that terra-aggregate-themes script reads from. Eventually terra-aggregate-themes will be deprecated in favor of this strategy.
 
 ## Configuration
 
