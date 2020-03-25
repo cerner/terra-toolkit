@@ -9,6 +9,11 @@ Unreleased
 ### Changed
 * For testing, only aggregate the default theme.
 
+5.23.0 - (March 24, 2020)
+----------
+### Changed
+* Clarify node version support
+
 5.22.0 - (March 17, 2020)
 ----------
 ### Changed
