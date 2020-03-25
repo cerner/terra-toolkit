@@ -40,7 +40,7 @@ module.exports = postcss.plugin('postcss-test-plugin', (config) => {
   }, []);
 
   return (root) => {
-    if (defaultThemeSelector || themesToRemove.length > 0) {
+    if (defaultThemeSelector || themesToRemove.length) {
       root.walk((node) => {
         // Clone the default theme node and apply as root.
         if (node.selector === defaultThemeSelector) {
