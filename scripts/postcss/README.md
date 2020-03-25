@@ -49,7 +49,7 @@ export default Component;
 
 The scss file includes the themefile and applies the css variable to the css property. Breaking the theme variable out into their own files is purely convention and not required for this plugin. By convention we name the file ```<component>.<theme>.module.scss```.
 
-component.module.scss
+#### component.module.scss
 
 ```scss
 // Themes
@@ -64,7 +64,8 @@ component.module.scss
 
 The theme file declares the ```.orion-fusion-theme``` as a global class and defines the css variable.
 
-component.orion-fusion-theme.module.scss
+#### component.orion-fusion-theme.module.scss
+
 ```scss
 :global {
   /* stylelint-disable suitcss/custom-property-no-outside-root */
@@ -86,4 +87,3 @@ const ThemePlugin = require('terra-toolkit/scripts/postcss/ThemePlugin');
     ],
 ...
 ```
-
