@@ -79,12 +79,10 @@ const webpackConfig = (options, env, argv) => {
                 // Add unique ident to prevent the loader from searching for a postcss.config file. See: https://github.com/postcss/postcss-loader#plugins
                 ident: 'postcss',
                 sourceMap: true,
-                plugins() {
-                  return [
-                    rtl(),
-                    Autoprefixer(),
-                  ];
-                },
+                plugins: [
+                  rtl(),
+                  Autoprefixer(),
+                ],
               },
             },
             {
