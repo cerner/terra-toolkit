@@ -1,7 +1,7 @@
 # Terra Toolkit Wdio Helpers
 
 ## Wdio Runner
-Terra Toolkit offers its own wdio test runner which runs wdio test runs for specified locales and form factors. This allows for locale test runs that can match parallelized container test runs by synchronously running the wdio for each test run variation. This runner is a replacement for webdriverio's bin script `wdio` by directly calling webdriverio's test launcher module for each test variation.
+Terra Toolkit offers its own wdio test runner which runs wdio test runs for specified locales, themes, and form factors. This allows for locale and/or theme test runs that can match parallelized container test runs by synchronously running the wdio for each test run variation. This runner is a replacement for webdriverio's bin script `wdio` by directly calling webdriverio's test launcher module for each test variation.
 
 Terra's wdio test runner is available via the `tt-wdio` cli or the `wdio-runner` javascript function.
 
@@ -17,7 +17,7 @@ In your package.json
 ```JSON
 {
   "pack": "NODE_ENV=production webpack --config ./webpack.config.js -p",
-  "test:wdio-locally": "npm run pack; tt-wdio --config ./wdio.conf.js --locales ['en','es']; rm -rf ./build"
+  "test:wdio-locally": "npm run pack; tt-wdio --config ./wdio.conf.js --locales ['en','es'] --themes ['orion-fusion-theme','cerner-clinical-theme']; rm -rf ./build"
 }
 ```
 
@@ -31,6 +31,7 @@ runner({
   continueOnFail: true,
   locales: ['en', 'es'],
   browsers: ['chrome', 'firefox'],
+  themes: ['orion-fusion-theme', 'cerner-clinical-theme'],
 });
 ```
 

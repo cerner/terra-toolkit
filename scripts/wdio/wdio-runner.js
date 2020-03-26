@@ -40,6 +40,10 @@ async function wdioRunner(options) {
 
       for (let factor = 0; factor < factors.length; factor += 1) {
         let envValues = `LOCALE=${locale} `;
+        if (theme) {
+          envValues += `THEME=${theme} `;
+        }
+
         let exitProcess = false;
         process.on('SIGINT', () => {
           exitProcess = true;
