@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+5.24.0 - (March 31, 2020)
+----------
 ### Fixed
 * Fix --themes wdio cli flag to be correctly passed to the test runner.
 
