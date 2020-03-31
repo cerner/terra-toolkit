@@ -3,6 +3,7 @@ const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin');
 const PostCSSCustomProperties = require('postcss-custom-properties');
 const path = require('path');
 const rtl = require('postcss-rtl');
+const cssModules = require('postcss-modules');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -59,29 +60,31 @@ const webpackConfig = (options, env, argv) => {
                 sourceMap: true,
               },
             },
-            {
-              loader: 'css-loader',
-              options: {
-                modules: {
-                  mode: 'global',
-                  localIdentName: '[name]__[local]___[hash:base64:5]',
-                },
-                sourceMap: true,
-                importLoaders: 2,
-              },
-            },
+            // {
+            //   loader: 'css-loader',
+            //   options: {
+            //     modules: {
+            //       mode: 'global',
+            //       localIdentName: '[name]__[local]___[hash:base64:5]',
+            //     },
+            //     sourceMap: true,
+            //     importLoaders: 2,
+            //   },
+            // },
             {
               loader: 'postcss-loader',
               options: {
                 // Add unique ident to prevent the loader from searching for a postcss.config file. See: https://github.com/postcss/postcss-loader#plugins
                 ident: 'postcss',
                 sourceMap: true,
-                plugins() {
-                  return [
-                    rtl(),
-                    Autoprefixer(),
-                  ];
-                },
+                plugins: [
+                  cssModules({
+                    scopeBehaviour: 'global',
+                    generateScopedName: '[name]__[local]___[hash:base64:5]',
+                  }),
+                  rtl(),
+                  Autoprefixer(),
+                ],
               },
             },
             {
