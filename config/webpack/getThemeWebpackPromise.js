@@ -48,12 +48,11 @@ const webpackThemeConfig = (rootPath, themeFile, themeConfig, cachedObject) => (
               options: {
                 // Add unique ident to prevent the loader from searching for a postcss.config file. See: https://github.com/postcss/postcss-loader#plugins
                 ident: 'postcss',
-                plugins() {
-                  return [
-                    rtl(),
-                    Autoprefixer(),
-                  ];
-                },
+                plugins: [
+                  ThemePlugin(themeConfig),
+                  rtl(),
+                  Autoprefixer(),
+                ],
               },
             },
             {
@@ -71,7 +70,6 @@ const webpackThemeConfig = (rootPath, themeFile, themeConfig, cachedObject) => (
         test: /\.css$/,
         log: false,
         plugins: [
-          ThemePlugin(themeConfig),
           PostCSSCustomProperties({
             preserve: true,
             // Here is where the cachedObject is populated

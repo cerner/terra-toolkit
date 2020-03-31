@@ -80,6 +80,7 @@ const webpackConfig = (options, env, argv) => {
                 ident: 'postcss',
                 sourceMap: true,
                 plugins: [
+                  ThemePlugin(themeConfig),
                   rtl(),
                   Autoprefixer(),
                 ],
@@ -112,7 +113,6 @@ const webpackConfig = (options, env, argv) => {
         test: /\.css$/,
         log: false,
         plugins: [
-          ThemePlugin(themeConfig),
           PostCSSCustomProperties({
             preserve: true,
             // If we have a theme file, use the webpack promise to webpack it.  This promise will resolve to
