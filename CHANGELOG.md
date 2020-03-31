@@ -9,6 +9,11 @@ Unreleased
 ### Changed
 * For testing, only aggregate the default theme.
 
+5.24.0 - (March 31, 2020)
+----------
+### Fixed
+* Fix --themes wdio cli flag to be correctly passed to the test runner.
+
 5.23.0 - (March 24, 2020)
 ----------
 ### Changed
