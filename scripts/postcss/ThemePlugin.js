@@ -1,7 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const postcss = require('postcss');
-const Tokenizer = require('css-selector-tokenizer');
+const removeCssModulesPseudoClasses = require('./_removeCssModulesPseudoClasses');
 
 const CONFIG = 'terra-theme.config.js';
 const SUPPORTED_THEMES = [
@@ -9,30 +9,6 @@ const SUPPORTED_THEMES = [
   'clinical-lowlight-theme',
   'cerner-clinical-theme',
 ];
-
-const removeCssModulesPseudoClasses = (selector) => {
-  // bail quick if it's not an explicit css module node
-  if (!selector.startsWith(':local') && !selector.startsWith(':global')) {
-    return selector;
-  }
-
-  const node = Tokenizer.parse(selector);
-  node.nodes.forEach(item => {
-    const firstNode = item.nodes[0];
-    const nodeNames = ['local', 'global'];
-    // Pop off the first node
-    if (firstNode && firstNode.type === 'pseudo-class' && nodeNames.includes(firstNode.name)) {
-      item.nodes.splice(0, 2);
-    }
-    // Return the inner node
-    if (firstNode && firstNode.type === 'nested-pseudo-class' && nodeNames.includes(firstNode.name)) {
-      // eslint-disable-next-line no-param-reassign
-      item.nodes = firstNode.nodes;
-    }
-  });
-
-  return Tokenizer.stringify(node);
-};
 
 /**
  * The purpose of this plugin is to create a default theme from a scoped theme
@@ -67,6 +43,7 @@ module.exports = postcss.plugin('postcss-test-plugin', (config) => {
   return (root) => {
     if (defaultThemeSelector || themesToRemove.length) {
       root.walkRules((node) => {
+        // Scrub css modules pseudo classes from the selector
         const selector = removeCssModulesPseudoClasses(node.selector);
         // Clone the default theme node and apply as root.
         if (selector === defaultThemeSelector) {

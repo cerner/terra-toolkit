@@ -14,7 +14,7 @@ describe('Theme Plugin', () => {
     };
 
     const mockRoot = {
-      walk: jest
+      walkRules: jest
         .fn()
         .mockImplementation((func) => func(mockNode)),
       append: jest.fn(),
@@ -24,7 +24,7 @@ describe('Theme Plugin', () => {
 
     instance(mockRoot);
 
-    expect(mockRoot.walk).toHaveBeenCalledTimes(1);
+    expect(mockRoot.walkRules).toHaveBeenCalledTimes(1);
     expect(mockNode.clone).toHaveBeenCalledTimes(1);
     expect(mockRoot.append).toHaveBeenCalledWith('clone');
     expect(mockNode.parent.removeChild).not.toHaveBeenCalled();
@@ -42,7 +42,7 @@ describe('Theme Plugin', () => {
     };
 
     const mockRoot = {
-      walk: jest
+      walkRules: jest
         .fn()
         .mockImplementation((func) => func(mockNode)),
       append: jest.fn(),
@@ -52,7 +52,7 @@ describe('Theme Plugin', () => {
 
     instance(mockRoot);
 
-    expect(mockRoot.walk).toHaveBeenCalledTimes(1);
+    expect(mockRoot.walkRules).toHaveBeenCalledTimes(1);
     expect(mockNode.clone).not.toHaveBeenCalled();
     expect(mockRoot.append).not.toHaveBeenCalled();
     expect(mockNode.parent.removeChild).toHaveBeenCalledTimes(1);
@@ -73,7 +73,7 @@ describe('Theme Plugin', () => {
     };
 
     const mockRoot = {
-      walk: jest
+      walkRules: jest
         .fn()
         .mockImplementation((func) => func(mockNode)),
       append: jest.fn(),
@@ -83,7 +83,7 @@ describe('Theme Plugin', () => {
 
     instance(mockRoot);
 
-    expect(mockRoot.walk).toHaveBeenCalledTimes(1);
+    expect(mockRoot.walkRules).toHaveBeenCalledTimes(1);
     expect(mockNode.clone).not.toHaveBeenCalled();
     expect(mockRoot.append).not.toHaveBeenCalled();
     expect(mockNode.parent.removeChild).not.toHaveBeenCalled();
@@ -106,7 +106,7 @@ describe('Theme Plugin', () => {
     };
 
     const mockRoot = {
-      walk: jest
+      walkRules: jest
         .fn()
         .mockImplementation((func) => func(mockNode)),
       append: jest.fn(),
@@ -116,7 +116,7 @@ describe('Theme Plugin', () => {
 
     instance(mockRoot);
 
-    expect(mockRoot.walk).toHaveBeenCalledTimes(1);
+    expect(mockRoot.walkRules).toHaveBeenCalledTimes(1);
     expect(mockNode.clone).not.toHaveBeenCalled();
     expect(mockRoot.append).not.toHaveBeenCalled();
     expect(mockNode.parent.removeChild).not.toHaveBeenCalled();

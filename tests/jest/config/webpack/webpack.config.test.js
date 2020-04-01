@@ -16,7 +16,6 @@ const TerserPlugin = require('terser-webpack-plugin');
 const aggregateTranslations = require('terra-aggregate-translations');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
 const webpackConfig = require('../../../../config/webpack/webpack.config');
-const ThemePlugin = require('../../../../scripts/postcss/ThemePlugin');
 
 const outputPath = expect.stringContaining('build');
 
@@ -79,7 +78,6 @@ describe('webpack config', () => {
 
       const postCSSAssetsPluginOptions = expect.objectContaining({
         plugins: [
-          ThemePlugin(),
           PostCSSCustomProperties(),
         ],
       });

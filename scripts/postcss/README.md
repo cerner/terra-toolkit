@@ -35,14 +35,18 @@ Component.jsx
 ```jsx
 import React from 'react';
 import styles from './component.module.scss';
+import ThemeContext from 'terra-theme-context';
 
 const cx = classNames.bind(styles);
 
-const Component = ({children}) => (
-  <div className={cx(['div'])}>
-    {children}
-  </div>
-);
+const Component = ({children}) => {
+  const { theme } = React.useContext(ThemeContext);
+  return (
+    <div className={cx('div', theme)}>
+      {children}
+    </div>
+  );
+};
 
 export default Component;
 ```
@@ -53,7 +57,7 @@ The scss file includes the themefile and applies the css variable to the css pro
 
 ```scss
 // Themes
-@import './Button.orion-fusion-theme.module';
+@import './component.orion-fusion-theme.module';
 
 :local {
   .div {
@@ -67,22 +71,28 @@ The theme file declares the ```.orion-fusion-theme``` as a global class and defi
 #### component.orion-fusion-theme.module.scss
 
 ```scss
-:global {
+:local {
   .orion-fusion-theme {
     --terra-button-background-color-neutral: purple;
   }
+}
 ```
 
 ### Webpack
 
-This plugin is already included in the default webpack config. Below is an example of how you could include it in  your own webpack config, but we strongly recommend you extend terra's config instead of creating your own.
+This plugin is already included in the default webpack config. Below is an example of how you could include it in your own webpack config, but we strongly recommend you extend terra's config instead of creating your own. It's intended to be included before css modules are processed.
 
 ```js
 const ThemePlugin = require('terra-toolkit/scripts/postcss/ThemePlugin');
 ...
-  new PostCSSAssetsPlugin({
-    plugins: [
-      ThemePlugin(<optional-override-config>),
-    ],
+  {
+    loader: 'postcss-loader',
+    options: {
+      ident: 'postcss',
+      plugins: [
+        ThemePlugin(themeConfig),
+      ],
+    },
+  },
 ...
 ```
