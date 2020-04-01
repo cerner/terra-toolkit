@@ -5,7 +5,6 @@ jest.mock('mini-css-extract-plugin');
 jest.mock('clean-webpack-plugin');
 jest.mock('terser-webpack-plugin');
 jest.mock('webpack/lib/DefinePlugin');
-jest.mock('../../../../scripts/postcss/ThemePlugin');
 
 // Import mocked components
 const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin');
@@ -77,9 +76,7 @@ describe('webpack config', () => {
       });
 
       const postCSSAssetsPluginOptions = expect.objectContaining({
-        plugins: [
-          PostCSSCustomProperties(),
-        ],
+        plugins: [PostCSSCustomProperties()],
       });
       expect(PostCSSAssetsPlugin).toBeCalledWith(postCSSAssetsPluginOptions);
 
