@@ -34,15 +34,16 @@ Component.jsx
 
 ```jsx
 import React from 'react';
+import { ThemeContext } from 'terra-application/lib/theme';
+
 import styles from './component.module.scss';
-import ThemeContext from 'terra-theme-context';
 
 const cx = classNames.bind(styles);
 
 const Component = ({children}) => {
-  const { theme } = React.useContext(ThemeContext);
+  const theme = React.useContext(ThemeContext);
   return (
-    <div className={cx('div', theme)}>
+    <div className={cx('div', theme.className)}>
       {children}
     </div>
   );
