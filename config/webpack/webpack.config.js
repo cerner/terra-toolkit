@@ -135,6 +135,7 @@ const webpackConfig = (options, env, argv) => {
           'terra-breakpoints',
           'terra-disclosure-manager',
           'terra-navigation-prompt',
+          'terra-theme-context',
         ],
       }),
       new webpack.DefinePlugin({
