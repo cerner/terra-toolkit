@@ -94,7 +94,7 @@ const webpackThemeConfig = (rootPath, themeFile, themeConfig, cachedObject) => (
  * themeable variables and values.
  * @param {String} rootPath the root path from where the webpack is being run
  * @param {String} themeFile the file to be webpacked
- *  * @param {Object} themeConfig configuration to pass to the post css theme plugin
+ *  @param {Object} themeConfig configuration to pass to the post css theme plugin
  */
 module.exports = (rootPath, themeFile, themeConfig) => {
   const cachedObject = {
