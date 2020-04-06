@@ -8,7 +8,7 @@ The plugin will read from the same `terra-theme.config.js` that `terra-aggregate
 
 ### terra-theme.config.js
 
-Below is an example of terra-theme.config
+Below is an example of terra-theme.config. For more theme config information go [here](https://github.com/cerner/terra-toolkit/tree/postcss-theme-plugin/config/webpack/postcss/themeConfig.md).
 
 ```js
 const themeConfig = {
