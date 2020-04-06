@@ -12,6 +12,7 @@ const DuplicatePackageCheckerPlugin = require('@cerner/duplicate-package-checker
 const aggregateTranslations = require('terra-aggregate-translations');
 const ThemeAggregator = require('../../scripts/aggregate-themes/theme-aggregator');
 const getThemeWebpackPromise = require('./getThemeWebpackPromise');
+const ThemePlugin = require('./postcss/ThemePlugin');
 
 const webpackConfig = (options, env, argv) => {
   const {
@@ -20,6 +21,7 @@ const webpackConfig = (options, env, argv) => {
     staticOptions,
     aggregatedLocales,
     themeFile,
+    themeConfig,
   } = options;
 
   const production = argv.p;
@@ -76,12 +78,11 @@ const webpackConfig = (options, env, argv) => {
                 // Add unique ident to prevent the loader from searching for a postcss.config file. See: https://github.com/postcss/postcss-loader#plugins
                 ident: 'postcss',
                 sourceMap: true,
-                plugins() {
-                  return [
-                    rtl(),
-                    Autoprefixer(),
-                  ];
-                },
+                plugins: [
+                  ThemePlugin(themeConfig),
+                  rtl(),
+                  Autoprefixer(),
+                ],
               },
             },
             {
@@ -118,7 +119,7 @@ const webpackConfig = (options, env, argv) => {
             // so that they are populated with values if variables aren't supported (e.g. IE10). This dance is
             // necessary when code splitting to ensure the variables and values are applied across all code split
             // css files
-            ...themeFile && { importFrom: [getThemeWebpackPromise(rootPath, themeFile)] },
+            ...themeFile && { importFrom: [getThemeWebpackPromise(rootPath, themeFile, themeConfig)] },
           }),
         ],
       }),
@@ -133,6 +134,7 @@ const webpackConfig = (options, env, argv) => {
           'terra-breakpoints',
           'terra-disclosure-manager',
           'terra-navigation-prompt',
+          'terra-theme-context',
         ],
       }),
       new webpack.DefinePlugin({
@@ -197,7 +199,7 @@ const webpackConfig = (options, env, argv) => {
 };
 
 const defaultWebpackConfig = (env = {}, argv = {}) => {
-  const { disableAggregateTranslations, disableHotReloading } = env;
+  const { disableAggregateTranslations, disableHotReloading, disableAggregateThemes } = env;
 
   const staticOptions = {
     ...disableHotReloading && {
@@ -218,8 +220,19 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     resolveModules.unshift(path.resolve(rootPath, 'aggregated-translations'));
   }
 
-  const themeOverride = process.env.THEME; // Flexes root theme for theme visual regression testing.
-  const themeFile = ThemeAggregator.aggregate(themeOverride);
+  const defaultTheme = process.env.THEME; // Flexes root theme for theme visual regression testing.
+  const themeConfig = defaultTheme ? { theme: defaultTheme } : null;
+  let themeFile;
+  if (!disableAggregateThemes) {
+    // Set the default theme and disable scoped theme aggregation.
+    themeFile = ThemeAggregator.aggregate(
+      null, // Set the default theme via the config.
+      {
+        config: themeConfig,
+        aggregateDefaultThemeAsScopedTheme: true,
+      },
+    );
+  }
 
   const options = {
     rootPath,
@@ -227,6 +240,7 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     staticOptions,
     aggregatedLocales,
     themeFile,
+    themeConfig,
   };
 
   return webpackConfig(options, env, argv);

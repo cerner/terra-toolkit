@@ -25,19 +25,26 @@ class ThemeAggregator {
   /**
    * Aggregates theme assets.
    * @param {string} theme - The theme to override the default theme. Used for visual regression testing.
+   * @param {object} object.config - Config to override the terra-theme.config.js config.
+   * @param {object} object.aggregateDefaultThemeAsScopedTheme - Bool indicating if aggregate themes should generate the default theme as a root theme or a scoped theme.
    * @returns {string|null} - The output path of the aggregated theme file. Null if not generated.
    */
-  static aggregate(theme) {
+  static aggregate(theme, { config, aggregateDefaultThemeAsScopedTheme } = { config: undefined, aggregateDefaultThemeAsScopedTheme: false }) {
     let themeConfig = {};
-    const defaultConfig = path.resolve(process.cwd(), CONFIG);
-    if (fs.existsSync(defaultConfig)) {
-      // eslint-disable-next-line global-require, import/no-dynamic-require
-      themeConfig = require(defaultConfig);
+    if (config) {
+      themeConfig = config;
+    } else {
+      const defaultConfig = path.resolve(process.cwd(), CONFIG);
+      if (fs.existsSync(defaultConfig)) {
+        // eslint-disable-next-line global-require, import/no-dynamic-require
+        themeConfig = require(defaultConfig);
+      }
     }
 
     const themeAssets = ThemeAggregator.aggregateThemes({
       ...themeConfig,
       ...theme && { theme },
+      aggregateDefaultThemeAsScopedTheme,
     });
 
     if (themeAssets) {
@@ -64,25 +71,31 @@ class ThemeAggregator {
 
     const {
       theme: defaultThemeToAggregate,
-      scoped: scopedThemesToAggregate,
+      scoped: scopedThemesToAggregate = [],
+      aggregateDefaultThemeAsScopedTheme,
     } = options;
 
+    // The default theme is created by the post css theme plugin.
+    if (aggregateDefaultThemeAsScopedTheme && !scopedThemesToAggregate.includes(defaultThemeToAggregate)) {
+      scopedThemesToAggregate.push(defaultThemeToAggregate);
+    }
+
     const themeAssets = [];
-    if (defaultThemeToAggregate) {
+
+    if (!aggregateDefaultThemeAsScopedTheme && defaultThemeToAggregate) {
       const defaultThemeAsset = ThemeAggregator.triggerAggregationAndGeneration(defaultThemeToAggregate, options, true);
       if (defaultThemeAsset) {
         themeAssets.push(...defaultThemeAsset);
       }
     }
 
-    if (scopedThemesToAggregate) {
-      scopedThemesToAggregate.forEach((theme) => {
-        const scopedThemeAssets = ThemeAggregator.triggerAggregationAndGeneration(theme, options, false);
-        if (scopedThemeAssets) {
-          themeAssets.push(...scopedThemeAssets);
-        }
-      });
-    }
+    scopedThemesToAggregate.forEach((theme) => {
+      const scopedThemeAssets = ThemeAggregator.triggerAggregationAndGeneration(theme, options, false);
+      if (scopedThemeAssets) {
+        themeAssets.push(...scopedThemeAssets);
+      }
+    });
+
 
     if (!themeAssets.length) {
       return null;
