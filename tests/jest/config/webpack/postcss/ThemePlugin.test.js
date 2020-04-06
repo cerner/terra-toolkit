@@ -1,4 +1,4 @@
-const ThemePlugin = require('../../scripts/postcss/ThemePlugin');
+const ThemePlugin = require('../../../../../config/webpack/postcss/ThemePlugin');
 
 describe('Theme Plugin', () => {
   it('clones the default theme to root', () => {

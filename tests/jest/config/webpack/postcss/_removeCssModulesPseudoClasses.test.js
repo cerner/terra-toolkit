@@ -1,4 +1,4 @@
-const RemoveCssModulesPseudoClasses = require('../../scripts/postcss/_removeCssModulesPseudoClasses');
+const RemoveCssModulesPseudoClasses = require('../../../../../config/webpack/postcss/_removeCssModulesPseudoClasses');
 
 describe('Remove Css Modules Pseudo Classes', () => {
   it('removes nothing', () => {

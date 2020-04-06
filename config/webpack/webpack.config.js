@@ -12,7 +12,7 @@ const DuplicatePackageCheckerPlugin = require('@cerner/duplicate-package-checker
 const aggregateTranslations = require('terra-aggregate-translations');
 const ThemeAggregator = require('../../scripts/aggregate-themes/theme-aggregator');
 const getThemeWebpackPromise = require('./getThemeWebpackPromise');
-const ThemePlugin = require('../../scripts/postcss/ThemePlugin');
+const ThemePlugin = require('./postcss/ThemePlugin');
 
 const webpackConfig = (options, env, argv) => {
   const {

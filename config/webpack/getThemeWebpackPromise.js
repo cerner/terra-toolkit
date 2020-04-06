@@ -7,7 +7,7 @@ const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin');
 const PostCSSCustomProperties = require('postcss-custom-properties');
 const path = require('path');
 const Logger = require('../../scripts/utils/logger');
-const ThemePlugin = require('../../scripts/postcss/ThemePlugin');
+const ThemePlugin = require('./postcss/ThemePlugin');
 
 /**
  * This is a basic configuration to webpack just the theme file and grab the resulting css.  Thus,
