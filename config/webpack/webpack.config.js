@@ -21,7 +21,7 @@ const webpackConfig = (options, env, argv) => {
     staticOptions,
     aggregatedLocales,
     themeFile,
-    defaultTheme,
+    themeConfig,
   } = options;
 
   const production = argv.p;
@@ -30,7 +30,6 @@ const webpackConfig = (options, env, argv) => {
   const filename = argv['output-filename'] || fileNameStategy;
   const outputPath = argv['output-path'] || path.join(rootPath, 'build');
   const publicPath = argv['output-public-path'] || '';
-  const themeConfig = defaultTheme ? { theme: defaultTheme } : undefined;
 
   const devConfig = {
     mode: 'development',
@@ -241,7 +240,7 @@ const defaultWebpackConfig = (env = {}, argv = {}) => {
     staticOptions,
     aggregatedLocales,
     themeFile,
-    defaultTheme,
+    themeConfig,
   };
 
   return webpackConfig(options, env, argv);

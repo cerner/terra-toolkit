@@ -71,10 +71,9 @@ class ThemeAggregator {
 
     const {
       theme: defaultThemeToAggregate,
+      scoped: scopedThemesToAggregate = [],
       aggregateDefaultThemeAsScopedTheme,
     } = options;
-
-    let scopedThemesToAggregate = options.scoped || [];
 
     // The default theme is created by the post css theme plugin.
     if (aggregateDefaultThemeAsScopedTheme && !scopedThemesToAggregate.includes(defaultThemeToAggregate)) {
@@ -90,14 +89,13 @@ class ThemeAggregator {
       }
     }
 
-    if (scopedThemesToAggregate) {
-      scopedThemesToAggregate.forEach((theme) => {
-        const scopedThemeAssets = ThemeAggregator.triggerAggregationAndGeneration(theme, options, false);
-        if (scopedThemeAssets) {
-          themeAssets.push(...scopedThemeAssets);
-        }
-      });
-    }
+    scopedThemesToAggregate.forEach((theme) => {
+      const scopedThemeAssets = ThemeAggregator.triggerAggregationAndGeneration(theme, options, false);
+      if (scopedThemeAssets) {
+        themeAssets.push(...scopedThemeAssets);
+      }
+    });
+
 
     if (!themeAssets.length) {
       return null;

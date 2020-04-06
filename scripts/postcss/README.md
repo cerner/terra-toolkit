@@ -12,7 +12,6 @@ Below is an example of terra-theme.config
 
 ```js
 const themeConfig = {
-  exclude: [], // Files to exclude. Accepts glob patterns.
   theme: 'terra-dark-theme', // The default theme.
   scoped: ['terra-light-theme', 'terra-lowlight-theme'], // An array of scoped themes.
 };
@@ -28,7 +27,7 @@ To use this plugin you must have strong conventions around your theme name, incl
 
 This plugin makes the assumption that you are declaring theme variables under a global css class i.e. ```.orion-fusion-theme``` and these theme files are included in such a way that they are processed by webpack.
 
-Consider the following example. The React component, `Component.jsx` pulls in and applies css styles from `component.module.scss` to the wrapper div. You will also notice it is getting the current theme set on the application from the `ThemeContext` and is also applying the current theme name to the div. 
+Consider the following example. The React component, `Component.jsx` pulls in and applies css styles from `component.module.scss` to the wrapper div. You will also notice it is getting the current theme set on the application from the `ThemeContext` and is also applying the current theme name to the div.
 
 If the current theme was `orion-fusion-theme` the `orion-fusion-theme` classname would be applied and the styles from `component.orion-fusion-theme.module.scss` would be applied since it is imported into `component.module.scss` and was processed by webpack.
 
