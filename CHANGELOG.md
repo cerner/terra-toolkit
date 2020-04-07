@@ -3,6 +3,9 @@ Changelog
 
 Unreleased
 ----------
+
+5.25.0 - (April 7, 2020)
+----------
 ### Added
 * Include a postcss plugin to apply a scoped theme as the default theme and to remove unlisted supported themes.
 
