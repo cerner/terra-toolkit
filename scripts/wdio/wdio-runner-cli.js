@@ -8,9 +8,10 @@ const parseCLIList = require('../utils/parse-cli-list');
 
 const packageJson = require('../../package.json');
 
-// Parse process arguments
+commander.version(packageJson.version);
+
+// define cli options
 commander
-  .version(packageJson.version)
   .option('--config [path]', 'The wdio config path for the tests. Defaults to wdio.conf.js', undefined)
   .option('--locales [list]', 'The list of locales to test. Defaults to [en]', parseCLIList, undefined)
   .option('--formFactors [list]', 'The list of viewport sizes to test.', parseCLIList, undefined)
@@ -24,7 +25,25 @@ commander
   .option('--baseUrl [path]', '[wdio option] The base URL', undefined)
   .option('--suite [path]', '[wdio option] The suite to run', undefined)
   .option('--spec [path]', '[wdio option] The spec file to run', undefined)
-  .parse(process.argv);
+  
+// create custom 
+commander.on('--help', () => {
+  console.log('\nSupported Environment Variables for default WDIO config:');
+  console.log('  > WDIO_EXTERNAL_HOST - use to pass your host\'s IP when running wdio tests from a VM or behind a proxy');
+  console.log('  > WDIO_EXTERNAL_PORT - use to to override the default host port');
+  console.log('  > WDIO_INTERNAL_PORT - use to override the default container port');
+  console.log('  > WDIO_BAIL -  set as \'false\' to bail fast while running locally');
+  console.log('  > WDIO_IGNORE_COMPARISON_RESULTS - set to \'true\' for a dry run of the screenshot(s) comparison results');
+  console.log('  > LOCALE - use to define the locale used in the wdio run');
+  console.log('  > FORM_FACTOR - use to define the form factor');
+  console.log('  > SITE - use to provide the packed site output path to test against');
+  console.log('  > SELENIUM_GRID_URL - use to set enable running test against a hosted selenium grid');
+  console.log('  > BROWSERS - use to specify the browser(s) to test');
+  console.log('  > THEME - use to specify the theme to test');
+});
+
+// Parse process arguments
+commander.parse(process.argv);
 
 const {
   continueOnFail,

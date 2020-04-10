@@ -29,7 +29,7 @@ class ThemeAggregator {
    * @param {object} object.aggregateDefaultThemeAsScopedTheme - Bool indicating if aggregate themes should generate the default theme as a root theme or a scoped theme.
    * @returns {string|null} - The output path of the aggregated theme file. Null if not generated.
    */
-  static aggregate(theme, { config, aggregateDefaultThemeAsScopedTheme } = { config: undefined, aggregateDefaultThemeAsScopedTheme: false }) {
+  async aggregate(theme, { config, aggregateDefaultThemeAsScopedTheme } = { config: undefined, aggregateDefaultThemeAsScopedTheme: false }) {
     let themeConfig = {};
     if (config) {
       themeConfig = config;
@@ -41,17 +41,16 @@ class ThemeAggregator {
       }
     }
 
-    const themeAssets = ThemeAggregator.aggregateThemes({
+    const themeAssets = await this.aggregateThemes({
       ...themeConfig,
       ...theme && { theme },
       aggregateDefaultThemeAsScopedTheme,
     });
-
-    if (themeAssets) {
-      return ThemeAggregator.writeJsFile(themeAssets);
-    }
-
-    return null;
+    console.log('THEME ASSETS', themeAssets)
+    // .then(themeAssets => ThemeAggregator.writeJsFile(themeAssets));
+    const themeFile = ThemeAggregator.writeJsFile(themeAssets);
+    // return aggregate();
+    return themeFile;
   }
 
   /**
@@ -61,7 +60,7 @@ class ThemeAggregator {
    */
   static aggregateThemes(options) {
     if (!ThemeAggregator.validate(options)) {
-      return null;
+      return Promise.resolve([]);
     }
 
     // This creates a generated-themes directory to house theme assets.
@@ -80,28 +79,15 @@ class ThemeAggregator {
       scopedThemesToAggregate.push(defaultThemeToAggregate);
     }
 
-    const themeAssets = [];
-
+    let aggregateDefaultThemePromise = Promise.resolve([]);
     if (!aggregateDefaultThemeAsScopedTheme && defaultThemeToAggregate) {
-      const defaultThemeAsset = ThemeAggregator.triggerAggregationAndGeneration(defaultThemeToAggregate, options, true);
-      if (defaultThemeAsset) {
-        themeAssets.push(...defaultThemeAsset);
-      }
+      aggregateDefaultThemePromise = ThemeAggregator.triggerAggregationAndGeneration(defaultThemeToAggregate, options, true);
     }
-
-    scopedThemesToAggregate.forEach((theme) => {
-      const scopedThemeAssets = ThemeAggregator.triggerAggregationAndGeneration(theme, options, false);
-      if (scopedThemeAssets) {
-        themeAssets.push(...scopedThemeAssets);
-      }
-    });
-
-
-    if (!themeAssets.length) {
-      return null;
-    }
-
-    return themeAssets;
+    return Promise.all([
+      aggregateDefaultThemePromise,
+      ...scopedThemesToAggregate.map((theme) => ThemeAggregator.triggerAggregationAndGeneration(theme, options, false)),
+    ]).then(resolvedAssets => resolvedAssets.reduce((acc, cur) => acc.concat(cur), []))
+      .catch(() => []);
   }
 
   /**
@@ -113,26 +99,27 @@ class ThemeAggregator {
    */
   static triggerAggregationAndGeneration(themeName, options = {}, isRoot) {
     if (!themeName) {
-      return null;
+      return Promise.resolve([]);
     }
 
     Logger.log(`Aggregating ${themeName} files...`, { context: LOG_CONTEXT });
 
-    const aggregatedAssets = ThemeAggregator.aggregateTheme(themeName, isRoot, options);
-    const generatedAsset = ThemeAggregator.generateTheme(themeName, isRoot, options);
+    return Promise.all([
+      ThemeAggregator.aggregateTheme(themeName, isRoot, options),
+      ThemeAggregator.generateTheme(themeName, isRoot, options),
+    ]).then(([aggregatedAssets, generatedAsset]) => {
+      if (generatedAsset) {
+        // Generated root or scope files should take precedence over existing root or scope files.
+        // Therefore, take advantage of CSS import precedence by adding the generated asset last.
+        aggregatedAssets.push(generatedAsset);
+      }
 
-    if (generatedAsset) {
-      // Generated root or scope files should take precedence over existing root or scope files.
-      // Therefore, take advantage of CSS import precedence by adding the generated asset last.
-      aggregatedAssets.push(generatedAsset);
-    }
+      if (!aggregatedAssets.length) {
+        Logger.warn(`No theme files found for ${themeName}.`, { context: LOG_CONTEXT });
+      }
 
-    if (!aggregatedAssets.length) {
-      Logger.warn(`No theme files found for ${themeName}.`, { context: LOG_CONTEXT });
-      return null;
-    }
-
-    return aggregatedAssets;
+      return aggregatedAssets;
+    }).catch(() => []);
   }
 
   /**
@@ -144,12 +131,20 @@ class ThemeAggregator {
    */
   static aggregateTheme(themeName, isRoot, options) {
     const file = isRoot ? ROOT_THEME : SCOPED_THEME;
-    const assets = ThemeAggregator.find(`**/themes/${themeName}/${file}`, options);
 
-    // Add the dependency import if it exists.
-    assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${themeName}/**/${file}`, options));
-    // Resolve aggregated theme paths.
-    return assets.map(asset => ThemeAggregator.resolve(asset));
+    return Promise.all([
+      ThemeAggregator.find(`**/themes/${themeName}/${file}`, options),
+      ThemeAggregator.find(`${NODE_MODULES}${themeName}/**/${file}`, options),
+    ]).then(([assets, nodeAssets]) => {
+      // Add the dependency import if it exists.
+      assets.unshift(...nodeAssets);
+      // console.log('generateTheme ssets', assets)
+      // console.log('generateTheme nodeAssets', nodeAssets)
+      // console.log('generateTheme returned', assets.map(asset => ThemeAggregator.resolve(asset)));
+
+      // Resolve aggregated theme paths.
+      return assets.map(asset => ThemeAggregator.resolve(asset));
+    }).catch(() => []);
   }
 
   /**
@@ -162,23 +157,29 @@ class ThemeAggregator {
    * @returns {string} - A string containing the relative path to the generacted scss file.
    */
   static generateTheme(themeName, isRoot, options, outputPath) {
-    const assets = ThemeAggregator.findThemeVariableFilesForGeneration(themeName, options);
-    if (!assets) {
-      return null;
-    }
+    // const assets = ThemeAggregator.findThemeVariableFilesForGeneration(themeName, options);
+    // if (!assets) {
+    //   return null;
+    // }
+    return ThemeAggregator.findThemeVariableFilesForGeneration(themeName, options).then((assets) => {
+      // console.log('generateTheme');
+      if (!assets.length) {
+        return null;
+      }
 
-    const scopeSelector = isRoot ? `:${ROOT}` : `.${themeName}`;
-    const intro = `${DISCLAIMER}${scopeSelector}`;
-    let file = assets.reduce((acc, s) => `${acc}  @import '../${s}';\n`, '');
-    file = `${intro} {\n${file}}\n`;
+      const scopeSelector = isRoot ? `:${ROOT}` : `.${themeName}`;
+      const intro = `${DISCLAIMER}${scopeSelector}`;
+      let file = assets.reduce((acc, s) => `${acc}  @import '../${s}';\n`, '');
+      file = `${intro} {\n${file}}\n`;
 
-    const prefix = isRoot ? ROOT : SCOPED;
-    const fileName = `${prefix}-${themeName}.scss`;
-    const filePath = path.resolve(outputPath || OUTPUT_PATH, fileName);
-    fs.writeFileSync(filePath, file);
-    Logger.log(`Successfully generated ${fileName}.`, { context: LOG_CONTEXT });
+      const prefix = isRoot ? ROOT : SCOPED;
+      const fileName = `${prefix}-${themeName}.scss`;
+      const filePath = path.resolve(outputPath || OUTPUT_PATH, fileName);
+      fs.writeFileSync(filePath, file);
+      Logger.log(`Successfully generated ${fileName}.`, { context: LOG_CONTEXT });
 
-    return `./${path.relative(outputPath || OUTPUT_PATH, filePath)}`;
+      return `./${path.relative(outputPath || OUTPUT_PATH, filePath)}`;
+    });
   }
 
   /**
@@ -190,7 +191,7 @@ class ThemeAggregator {
   static find(pattern, options) {
     const { exclude = [] } = options;
 
-    return glob.sync(pattern, { ignore: exclude });
+    return glob(pattern, { ignore: exclude });
   }
 
   /**
@@ -234,15 +235,19 @@ class ThemeAggregator {
    * @returns {array} - An array of ${themeName} files.
    */
   static findThemeVariableFilesForGeneration(themeName, options = {}) {
-    const assets = ThemeAggregator.find(`**/themes/${themeName}/**/${themeName}.scss`, options);
-    // Add the dependency import if it exists.
-    assets.unshift(...ThemeAggregator.find(`${NODE_MODULES}${themeName}/**/${themeName}.scss`, options));
+    return Promise.all([
+      ThemeAggregator.find(`**/themes/${themeName}/**/${themeName}.scss`, options),
+      ThemeAggregator.find(`${NODE_MODULES}${themeName}/**/${themeName}.scss`, options),
+    ]).then(([assets, nodeAssets]) => {
+      // console.log('findThemeVariableFilesForGenerationa ssets', assets)
+      // console.log('findThemeVariableFilesForGeneration nodeAssets', nodeAssets)
 
-    if (!assets.length) {
-      return null;
-    }
+      // Add the dependency import if it exists.
+      assets.unshift(...nodeAssets);
 
-    return assets;
+      // Resolve aggregated theme paths.
+      return assets;
+    }).catch(() => []);
   }
 
   /**

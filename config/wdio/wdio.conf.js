@@ -12,7 +12,7 @@ const visualRegressionConfig = require('./visualRegressionConf');
 /* Use to pass your host's IP when running wdio tests from a VM or behind a proxy. */
 const ip = process.env.WDIO_EXTERNAL_HOST || localIP.address();
 
-/* Use to post the wdio run to a different docker port. */
+/* Use to run wdio tests a different docker port. */
 const externalPort = process.env.WDIO_EXTERNAL_PORT || 8080;
 
 /* Use to run wdio tests on a different port. */

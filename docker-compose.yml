@@ -14,7 +14,7 @@ services:
   dev:
     image: cerner/terra-node-dev:1
     ports:
-      - 8080:8080
+      - 8081:8081
     depends_on:
       - standalone-chrome
     volumes:
