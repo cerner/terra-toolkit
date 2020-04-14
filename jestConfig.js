@@ -1,8 +1,8 @@
 module.exports = {
   collectCoverage: true,
   collectCoverageFrom: [
-    'config/**/*.js',
-    'scripts/aggregate-themes/**/*.js',
+    'packages/**/src/*.js',
+    'packages/**/src/*.jsx',
   ],
   coverageDirectory: 'tests/jest/reports/coverage',
   coverageReporters: [
@@ -17,4 +17,8 @@ module.exports = {
   ],
   roots: [process.cwd()],
   testURL: 'http://localhost',
+  moduleDirectories: [
+    'packages',
+    'node_modules',
+  ],
 };

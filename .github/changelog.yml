@@ -1,3 +1,0 @@
-filename: CHANGELOG.md
-include:
-  - /^bin\/|^config\/|^scripts\/|^src\/|^package.json/
