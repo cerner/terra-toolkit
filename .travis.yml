@@ -21,23 +21,6 @@ before_cache:
   - if [ $TRAVIS_TEST_RESULT == 1 ]; then rm -f $HOME/docker/*.tar.gz; fi
 jobs:
   include:
-    - stage: release terra-node
-      script:
-        - echo "$DOCKER_PASSWORD" | docker login -u "ryanthemanuel" --password-stdin
-        - travis_wait docker build -t cerner/terra-node -f ./docker/terra-node/Dockerfile ./docker/terra-node/
-        - travis_wait docker build -t cerner/terra-node-base:latest -f ./docker/terra-node-base/Dockerfile ./docker/terra-node-base/
-        - travis_wait docker build -t cerner/terra-node-ci:latest -f ./docker/terra-node-ci/Dockerfile ./docker/terra-node-ci/
-        - travis_wait docker build -t cerner/terra-node-dev:latest -f ./docker/terra-node-dev/Dockerfile ./docker/terra-node-dev/
-        - travis_wait docker push cerner/terra-node
-        - travis_wait docker push cerner/terra-node-base:latest
-        - travis_wait docker tag cerner/terra-node-base:latest cerner/terra-node-base:1
-        - travis_wait docker push cerner/terra-node-base:1
-        - travis_wait docker push cerner/terra-node-ci:latest
-        - travis_wait docker tag cerner/terra-node-ci:latest cerner/terra-node-ci:1
-        - travis_wait docker push cerner/terra-node-ci:1
-        - travis_wait docker push cerner/terra-node-dev:latest
-        - travis_wait docker tag cerner/terra-node-dev:latest cerner/terra-node-dev:1
-        - travis_wait docker push cerner/terra-node-dev:1
     - stage: build
       before_install: true
       script:
@@ -48,21 +31,19 @@ jobs:
         - >
           mkdir -p $HOME/docker && docker images -a --filter='dangling=false' --format '{{.Repository}}:{{.Tag}} {{.ID}}'
           | xargs -n 2 -t sh -c 'test -e $HOME/docker/$1.tar.gz || docker save $0 | gzip -2 > $HOME/docker/$1.tar.gz'
-    - stage: lint jest
-      script:
-        - "travis_wait docker-compose run -e HAS_JOSH_K_SEAL_OF_APPROVAL=$HAS_JOSH_K_SEAL_OF_APPROVAL -e TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST -e TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG test-ci sh -c 'npm run lint && npm run jest'"
-    - stage: test
-      script:
-        - "travis_wait docker-compose run test-ci npm run wdio"
-    - stage: clean up cache
-      before_install: true
-      script:
-        - sudo chown -R travis:travis $HOME/docker
-        - 'rm -f $HOME/docker/*.tar.gz'
+    # - stage: lint jest
+    #   script:
+    #     - "travis_wait docker-compose run -e HAS_JOSH_K_SEAL_OF_APPROVAL=$HAS_JOSH_K_SEAL_OF_APPROVAL -e TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST -e TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG test-ci sh -c 'npm run lint && npm run jest'"
+    # - stage: test
+    #   script:
+    #     - "travis_wait docker-compose run test-ci npm run wdio"
+    # - stage: clean up cache
+    #   before_install: true
+    #   script:
+    #     - sudo chown -R travis:travis $HOME/docker
+    #     - 'rm -f $HOME/docker/*.tar.gz'
 stages:
-  - name: release terra-node
-    if: type != pull_request
   - build
-  - lint jest
-  - test
-  - clean up cache
+  # - lint jest
+  # - test
+  # - clean up cache
