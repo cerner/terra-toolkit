@@ -22,11 +22,8 @@
   "bugs": {
     "url": "https://github.com/cerner/terra-toolkit/issues"
   },
-  "browserslist": [
-    "extends browserslist-config-terra"
-  ],
   "eslintConfig": {
-    "extends": "terra",
+    "extends": "./packages/eslint-config-terra/eslint.config.js",
     "settings": {
       "polyfills": [
         "Promise"
@@ -34,10 +31,23 @@
     }
   },
   "scripts": {
+    "bootstrap:hoist": "lerna bootstrap --hoist",
     "clean": "lerna clean --yes && rm -rf node_modules",
-    "clean:install": "npm run clean && npm install"
+    "clean:install": "npm run clean && npm install",
+    "lint": "npm run lint:js",
+    "lint:js": "eslint --ext .js,.jsx .",
+    "postinstall": "npm run bootstrap:hoist"
   },
   "devDependencies": {
+    "@babel/cli": "^7.5.0",
+    "@babel/core": "^7.5.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.5.0",
+    "@babel/plugin-transform-object-assign": "^7.2.0",
+    "@babel/preset-env": "^7.5.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-jest": "^24.8.0",
+    "danger": "^9.1.0",
+    "eslint": "^6.1.0",
     "lerna": "^3.20.2"
   }
 }
