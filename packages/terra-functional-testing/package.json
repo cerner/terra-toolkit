@@ -1,7 +1,7 @@
 {
   "name": "@cerner/terra-functional-testing",
   "version": "0.0.0",
-  "description": "A functional testing utility for applications built using terra.",
+  "description": "A functional testing utility for applications built using Terra.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

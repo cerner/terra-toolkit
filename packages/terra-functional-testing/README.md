@@ -3,7 +3,7 @@
 [![NPM version](https://badgen.net/npm/v/@cerner/terra-functional-testing)](https://www.npmjs.com/package/@cerner/terra-functional-testing)
 [![Build Status](https://badgen.net/travis/cerner/terra-toolkit)](https://travis-ci.com/cerner/terra-toolkit)
 
-A functional testing utility for applications built using terra.
+A functional testing utility for applications built using Terra.
 
 - [Getting Started](#getting-started)
 - [Documentation](https://github.com/cerner/terra-toolkit/tree/master/packages/terra-functional-testing/README.md)
