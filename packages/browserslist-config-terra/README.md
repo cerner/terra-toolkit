@@ -1,10 +1,7 @@
 # BrowsersList Config Terra
 
 [![NPM version](https://badgen.net/npm/v/browserslist-config-terra)](https://www.npmjs.org/package/browserslist-config-terra)
-[![License](https://badgen.net/github/license/cerner/browserslist-config-terra)](https://github.com/cerner/terra/blob/master/packages/browserslist-config-terra/LICENSE)
-[![Build Status](https://badgen.net/travis/cerner/browserslist-config-terra)](https://travis-ci.com/cerner/browserslist-config-terra)
-[![Dependencies status](https://badgen.net/david/dep/cerner/browserslist-config-terra)](https://david-dm.org/cerner/browserslist-config-terra)
-[![devDependencies status](https://badgen.net/david/dev/cerner/browserslist-config-terra)](https://david-dm.org/cerner/browserslist-config-terra?type=dev)
+[![Build Status](https://badgen.net/travis/cerner/terra-toolkit)](https://travis-ci.com/cerner/terra-toolkit)
 
 This configuration reflects Terra's supported browser policy for their UI library and build tools.
 
@@ -54,10 +51,6 @@ browserslist-config-terra is considered to be stable and will follow [SemVer](ht
 3. PATCH versions represent backwards-compatible bug fixes.
 
 Consult the component CHANGELOGs, related issues, and PRs for more information.
-
-## Contributing
-
-Please read through our [contributing guidelines](CONTRIBUTING.md). Included are directions for issue reporting and pull requests.
 
 ## LICENSE
 

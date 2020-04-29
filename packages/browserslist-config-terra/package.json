@@ -1,5 +1,5 @@
 {
-  "name": "browserslist-config-terra",
+  "name": "@cerner/browserslist-config-terra",
   "version": "2.0.0",
   "description": "Terra Browserslist Shared Config",
   "main": "browserslist.config.js",
@@ -24,13 +24,6 @@
   },
   "homepage": "https://github.com/cerner/terra-toolkit",
   "scripts": {
-    "clean": "rm -rf node_modules",
-    "clean:install": "npm run clean && npm install",
-    "lint": "eslint --ext .js,.jsx .",
-    "postpublish": "git push --tag",
-    "prepublishOnly": "npm whoami && npm run lint",
-    "release:major": "npm version major -m 'Released version %s' && npm publish",
-    "release:minor": "npm version minor -m 'Released version %s' && npm publish",
-    "release:patch": "npm version patch -m 'Released version %s' && npm publish"
+    "lint": "eslint --ext .js,.jsx ."
   }
 }

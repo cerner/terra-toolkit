@@ -1,10 +1,7 @@
 # Eslint Config Terra
 
 [![NPM version](https://badgen.net/npm/v/eslint-config-terra)](https://www.npmjs.org/package/eslint-config-terra)
-[![License](https://badgen.net/github/license/cerner/eslint-config-terra)](https://github.com/cerner/terra-toolkit/blob/master/packages/eslint-config-terra/LICENSE)
-[![Build Status](https://badgen.net/travis/cerner/eslint-config-terra)](https://travis-ci.com/cerner/eslint-config-terra)
-[![Dependencies status](https://badgen.net/david/dep/cerner/eslint-config-terra)](https://david-dm.org/cerner/eslint-config-terra)
-[![devDependencies status](https://badgen.net/david/dev/cerner/eslint-config-terra)](https://david-dm.org/cerner/eslint-config-terra?type=dev)
+[![Build Status](https://badgen.net/travis/cerner/terra-toolkit)](https://travis-ci.com/cerner/terra-toolkit)
 
 Terra's sharable ESLint configuration for their UI library and build tools.
 
@@ -53,10 +50,6 @@ eslint-config-terra is considered to be stable and will follow [SemVer](http://s
 3. PATCH versions represent backwards-compatible bug fixes
 
 Consult the component CHANGELOGs, related issues, and PRs for more information.
-
-## Contributing
-
-Please read through our [contributing guidelines](CONTRIBUTING.md). Included are directions for issue reporting and pull requests.
 
 ## LICENSE
 

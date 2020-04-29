@@ -1,5 +1,5 @@
 {
-  "name": "eslint-config-terra",
+  "name": "@cerner/eslint-config-terra",
   "version": "3.10.0",
   "description": "Terra Eslint Config",
   "main": "eslint.config.js",
@@ -24,14 +24,7 @@
   },
   "homepage": "https://github.com/cerner/terra-toolkit",
   "scripts": {
-    "clean": "rm -rf node_modules",
-    "clean:install": "npm run clean && npm install",
-    "lint": "eslint --ext .js,.jsx .",
-    "postpublish": "git push --follow-tags",
-    "prepublishOnly": "npm whoami && npm run lint",
-    "release:major": "npm version major -m 'Released version %s' && npm publish",
-    "release:minor": "npm version minor -m 'Released version %s' && npm publish",
-    "release:patch": "npm version patch -m 'Released version %s' && npm publish"
+    "lint": "eslint --ext .js,.jsx ."
   },
   "dependencies": {
     "eslint-config-airbnb": "^18.0.0",
