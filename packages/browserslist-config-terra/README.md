@@ -5,7 +5,7 @@
 
 This configuration reflects Terra's supported browser policy for their UI library and build tools.
 
-## What is Browserslist?
+## What is Browserslist
 
 [Browserslist](https://github.com/ai/browserslist) is a library to share a browsers list between different front-end tools, like Autoprefixer, Eslint, and Stylelint.
 
@@ -27,9 +27,8 @@ This configuration reflects Terra's supported browser policy for their UI librar
 Install the module
 
 ```shell
-$ npm install browserslist-config-terra --save-dev
+npm install browserslist-config-terra --save-dev
 ```
-
 
 ## Usage
 
@@ -46,6 +45,7 @@ $ npm install browserslist-config-terra --save-dev
 ## Versioning
 
 browserslist-config-terra is considered to be stable and will follow [SemVer](http://semver.org/) for versioning.
+
 1. MAJOR versions represent breaking changes.
 2. MINOR versions represent added functionality in a backwards-compatible manner.
 3. PATCH versions represent backwards-compatible bug fixes.
@@ -58,6 +58,6 @@ Copyright 2018 - 2020 Cerner Innovation, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
-&nbsp;&nbsp;&nbsp;&nbsp;http://www.apache.org/licenses/LICENSE-2.0
+&nbsp;&nbsp;&nbsp;&nbsp;<http://www.apache.org/licenses/LICENSE-2.0>
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
