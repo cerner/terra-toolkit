@@ -3,6 +3,8 @@ ChangeLog
 
 Unreleased
 -----------------
+### Breaking Changes
+* Updated to a scoped packages: @cerner/browserslist-config-terra
 
 2.0.0 - (January 28, 2019)
 ------------------

@@ -3,6 +3,8 @@ ChangeLog
 
 Unreleased
 -----------------
+### Breaking Changes
+* Updated to a scoped packages: @cerner/eslint-config-terra
 
 3.3.0 - (January 28, 2020)
 -----------------

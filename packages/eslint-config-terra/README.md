@@ -1,6 +1,6 @@
 # Eslint Config Terra
 
-[![NPM version](https://badgen.net/npm/v/eslint-config-terra)](https://www.npmjs.org/package/eslint-config-terra)
+[![NPM version](https://badgen.net/npm/v/@carbon/eslint-config-terra)](https://www.npmjs.org/package/@carbon/eslint-config-terra)
 [![Build Status](https://badgen.net/travis/cerner/terra-toolkit)](https://travis-ci.com/cerner/terra-toolkit)
 
 Terra's sharable ESLint configuration for their UI library and build tools.
@@ -9,7 +9,7 @@ Features:
 
 - extends the  [eslint-config-airbnb](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb), which exports ESLint rules, including rules for ECMAScript 6+ and React.
 - checks for proper ReactJS Hooks usage via the [eslint-plugin-react-hooks](https://reactjs.org/docs/hooks-rules.html).
-- checks syntax for targeted browsers support via the [eslint-plugin-compat](https://github.com/amilajack/eslint-plugin-compat). It is recommended to use Terra's targeted browsers which are specified by the [browserslist-config-terra](https://github.com/cerner/browserslist-config-terra) module.
+- checks syntax for targeted browsers support via the [eslint-plugin-compat](https://github.com/amilajack/eslint-plugin-compat). It is recommended to use Terra's targeted browsers which are specified by the [browserslist-config-terra](https://github.com/cerner/terra-toolkit/tree/master/packages/browserslist-config-terra) module.
 - defines the browser and jest environment
 - defines enzyme globals for `shallow`, `render` and `mount` for jest testing
 
