@@ -37,13 +37,13 @@ jobs:
     # - stage: test
     #   script:
     #     - "travis_wait docker-compose run test-ci npm run wdio"
-    # - stage: clean up cache
-    #   before_install: true
-    #   script:
-    #     - sudo chown -R travis:travis $HOME/docker
-    #     - 'rm -f $HOME/docker/*.tar.gz'
+    - stage: clean up cache
+      before_install: true
+      script:
+        - sudo chown -R travis:travis $HOME/docker
+        - 'rm -f $HOME/docker/*.tar.gz'
 stages:
   - build
-  # - lint jest
+  - lint jest
   # - test
   # - clean up cache
