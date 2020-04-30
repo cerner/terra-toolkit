@@ -46,4 +46,4 @@ stages:
   - build
   - lint jest
   # - test
-  # - clean up cache
+  - clean up cache
