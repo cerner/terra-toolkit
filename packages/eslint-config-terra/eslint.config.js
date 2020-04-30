@@ -45,6 +45,7 @@ module.exports = {
       'Object.assign',
       'Object.values',
       'Object.entries',
+      'Promise',
       'Set',
     ],
   },

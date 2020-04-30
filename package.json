@@ -23,18 +23,13 @@
     "url": "https://github.com/cerner/terra-toolkit/issues"
   },
   "browserslist": [
-    "./packages/browserslist-config-terra/browserslist.config.jss"
+    "extends browserslist-config-terra"
   ],
   "eslintConfig": {
-    "extends": "./packages/eslint-config-terra/eslint.config.js",
-    "settings": {
-      "polyfills": [
-        "Promise"
-      ]
-    }
+    "extends": "./packages/eslint-config-terra/eslint.config.js"
   },
   "scripts": {
-    "bootstrap:hoist": "lerna bootstrap --hoist",
+    "bootstrap:hoist": "lerna bootstrap --hoist --force-local",
     "clean": "lerna clean --yes && rm -rf node_modules",
     "clean:install": "npm run clean && npm install",
     "lint": "npm run lint:js",
