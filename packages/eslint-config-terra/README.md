@@ -40,7 +40,7 @@ Then, [define the browsers](https://github.com/amilajack/eslint-plugin-compat#ta
     "extends @cerner/browserslist-config-terra"
   ],
   "eslintConfig": {
-    "extends": "terra"
+    "extends": "@cerner/terra"
   },
 }
 ```
