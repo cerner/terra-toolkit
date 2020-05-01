@@ -37,7 +37,7 @@ Then, [define the browsers](https://github.com/amilajack/eslint-plugin-compat#ta
 ```json
 {
   "browserslist": [
-    "extends browserslist-config-terra"
+    "extends @cerner/browserslist-config-terra"
   ],
   "eslintConfig": {
     "extends": "terra"
