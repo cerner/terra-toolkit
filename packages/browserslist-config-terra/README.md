@@ -43,16 +43,6 @@ npm install @cerner/browserslist-config-terra --save-dev
 }
 ```
 
-## Versioning
-
-browserslist-config-terra is considered to be stable and will follow [SemVer](http://semver.org/) for versioning.
-
-1. MAJOR versions represent breaking changes.
-2. MINOR versions represent added functionality in a backwards-compatible manner.
-3. PATCH versions represent backwards-compatible bug fixes.
-
-Consult the component CHANGELOGs, related issues, and PRs for more information.
-
 ## LICENSE
 
 Copyright 2018 - 2020 Cerner Innovation, Inc.
