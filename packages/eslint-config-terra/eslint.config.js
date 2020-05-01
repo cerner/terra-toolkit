@@ -24,12 +24,16 @@ module.exports = {
     // and include a id/for attribute mapping with label.
     // This config updates the rule to require one or the other.
     'jsx-a11y/label-has-associated-control': [2, { assert: 'either' }],
-    'no-multiple-empty-lines': [1, { max: 1 }],
+    'no-multiple-empty-lines': [1, {
+      max: 1,
+      maxEOF: 1,
+      maxBOF: 0,
+    }],
     'react/destructuring-assignment': 'off',
     'react/forbid-component-props': [2, { forbid: ['style'] }],
     'react/forbid-dom-props': [2, { forbid: ['style'] }],
     'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'warn',
+    'react-hooks/exhaustive-deps': 'error',
     'react/jsx-props-no-spreading': 'off',
     'react/state-in-constructor': 'off',
     'react/jsx-fragments': 'off',
@@ -74,9 +78,11 @@ module.exports = {
       },
     },
     {
-      files: ['**/*/terra-dev-site/**/*.jsx'],
+      files: ['**/*/*-dev-site/**/*.jsx'],
       rules: {
+        "import/no-extraneous-dependencies": "off",
         'import/no-unresolved': 'off',
+        "import/extensions": "off",
       },
     },
   ],
