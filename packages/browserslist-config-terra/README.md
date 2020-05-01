@@ -20,7 +20,8 @@ This configuration reflects Terra's supported browser policy for their UI librar
 | Edge                        | Current |
 | Firefox                     | Current |
 | Internet Explorer           | 10 & 11 |
-| Safari & Mobile Safari      | Current |
+| Safari                      | Current |
+| iOS                         | >= 12   |
 
 ## Installation
 
