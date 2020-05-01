@@ -37,7 +37,7 @@ npm install @cerner/browserslist-config-terra --save-dev
 ```json
 {
   "browserslist": [
-    "extends browserslist-config-terra"
+    "extends @cerner/browserslist-config-terra"
   ]
 }
 ```
