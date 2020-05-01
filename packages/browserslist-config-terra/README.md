@@ -27,7 +27,7 @@ This configuration reflects Terra's supported browser policy for their UI librar
 Install the module
 
 ```shell
-npm install browserslist-config-terra --save-dev
+npm install @cerner/browserslist-config-terra --save-dev
 ```
 
 ## Usage
