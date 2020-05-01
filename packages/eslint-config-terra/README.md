@@ -23,7 +23,7 @@ Install the module
 
 ```shell
 npm install eslint --save-dev
-npm install eslint-config-terra --save-dev
+npm install @cerner/eslint-config-terra --save-dev
 ```
 
 ## Usage
