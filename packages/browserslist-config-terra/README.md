@@ -1,6 +1,6 @@
 # BrowsersList Config Terra
 
-[![NPM version](https://badgen.net/npm/v/@carbon/browserslist-config-terra)](https://www.npmjs.org/package/@carbon/browserslist-config-terra)
+[![NPM version](https://badgen.net/npm/v/@cerner/browserslist-config-terra)](https://www.npmjs.org/package/@cerner/browserslist-config-terra)
 [![Build Status](https://badgen.net/travis/cerner/terra-toolkit)](https://travis-ci.com/cerner/terra-toolkit)
 
 This configuration reflects Terra's supported browser policy for their UI library and build tools.
