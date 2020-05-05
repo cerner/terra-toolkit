@@ -2,8 +2,8 @@
   "version": "independent",
   "command": {
     "publish": {
-      "ignore": [
-        "terra-functional-testing"
+      "ignoreChanges": [
+        "@cerner/terra-functional-testing"
       ]
     }
   },
