@@ -31,19 +31,19 @@ jobs:
         - >
           mkdir -p $HOME/docker && docker images -a --filter='dangling=false' --format '{{.Repository}}:{{.Tag}} {{.ID}}'
           | xargs -n 2 -t sh -c 'test -e $HOME/docker/$1.tar.gz || docker save $0 | gzip -2 > $HOME/docker/$1.tar.gz'
-    # - stage: lint jest
-    #   script:
-    #     - "travis_wait docker-compose run -e HAS_JOSH_K_SEAL_OF_APPROVAL=$HAS_JOSH_K_SEAL_OF_APPROVAL -e TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST -e TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG test-ci sh -c 'npm run lint && npm run jest'"
+    - stage: lint jest
+      script:
+        - "travis_wait docker-compose run -e HAS_JOSH_K_SEAL_OF_APPROVAL=$HAS_JOSH_K_SEAL_OF_APPROVAL -e TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST -e TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG test-ci sh -c 'npm run lint'" # && npm run jest'"
     # - stage: test
     #   script:
     #     - "travis_wait docker-compose run test-ci npm run wdio"
-    # - stage: clean up cache
-    #   before_install: true
-    #   script:
-    #     - sudo chown -R travis:travis $HOME/docker
-    #     - 'rm -f $HOME/docker/*.tar.gz'
+    - stage: clean up cache
+      before_install: true
+      script:
+        - sudo chown -R travis:travis $HOME/docker
+        - 'rm -f $HOME/docker/*.tar.gz'
 stages:
   - build
-  # - lint jest
+  - lint jest
   # - test
-  # - clean up cache
+  - clean up cache

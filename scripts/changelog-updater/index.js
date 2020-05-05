@@ -4,7 +4,25 @@
 const fs = require('fs');
 const path = require('path');
 const { exec } = require('child_process');
-const findAndReplace = require('../common/findAndReplace');
+
+const findAndReplace = (options) => {
+  /* eslint-disable-next-line consistent-return */
+  fs.readFile(options.file, 'utf8', (errMsg, data) => {
+    if (errMsg) {
+      return console.log(errMsg);
+    }
+
+    const result = data.replace(options.regex, options.content);
+
+    fs.writeFile(options.file, result, 'utf8', (error) => {
+      if (error) {
+        console.error(`Error writing content to ${options.file} ${error}\n`);
+      } else {
+        console.log(`Content written to ${options.file}`);
+      }
+    });
+  });
+};
 
 exec('npx lerna updated', (error, stdout) => {
   if (error) {
