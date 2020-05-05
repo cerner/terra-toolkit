@@ -3,10 +3,13 @@ ChangeLog
 
 Unreleased
 -----------------
+
+3.0.0 - (May 5, 2020)
+------------------
 ### Breaking Changes
 * Updated to a scoped packages: @cerner/browserslist-config-terra
 
-2.0.0 - (January 28, 2019)
+2.0.0 - (January 28, 2020)
 ------------------
 ### Breaking
 * Update iOS lower bound from iOS 10 to iOS 12
