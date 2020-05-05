@@ -3,6 +3,9 @@
   "version": "4.0.0",
   "description": "Terra Eslint Config",
   "main": "eslint.config.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cerner/terra-toolkit.git",
