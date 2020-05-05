@@ -3,7 +3,7 @@
   "command": {
     "publish": {
       "ignoreChanges": [
-        "terra-functional-testing"
+        "packages/terra-functional-testing/**"
       ]
     }
   },
