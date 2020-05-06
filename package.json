@@ -22,9 +22,6 @@
   "bugs": {
     "url": "https://github.com/cerner/terra-toolkit/issues"
   },
-  "browserslist": [
-    "extends browserslist-config-terra"
-  ],
   "eslintConfig": {
     "extends": "./packages/eslint-config-terra/eslint.config.js"
   },
@@ -32,13 +29,17 @@
     "bootstrap:hoist": "lerna bootstrap --hoist --force-local",
     "clean": "lerna clean --yes && rm -rf node_modules",
     "clean:install": "npm run clean && npm install",
+    "jest": "jest",
     "lint": "npm run lint:js",
     "lint:js": "eslint --ext .js,.jsx .",
-    "postinstall": "npm run bootstrap:hoist"
+    "postinstall": "link-parent-bin && npm run bootstrap:hoist",
+    "test": "npm run jest"
   },
   "devDependencies": {
     "danger": "^9.1.0",
     "eslint": "^6.1.0",
-    "lerna": "^3.20.2"
+    "jest": "^26.0.1",
+    "lerna": "^3.20.2",
+    "link-parent-bin": "^1.0.0"
   }
 }
