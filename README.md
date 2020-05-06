@@ -8,64 +8,39 @@
   Terra Toolkit
 </h1>
 
-[![NPM version](https://badgen.net/npm/v/terra-toolkit)](https://www.npmjs.org/package/terra-toolkit)
 [![License](https://badgen.net/github/license/cerner/terra-toolkit)](https://github.com/cerner/terra-toolkit/blob/master/LICENSE)
 [![Build Status](https://badgen.net/travis/cerner/terra-toolkit)](https://travis-ci.com/cerner/terra-toolkit)
 [![Dependencies status](https://badgen.net/david/dep/cerner/terra-toolkit)](https://david-dm.org/cerner/terra-toolkit)
 [![devDependencies status](https://badgen.net/david/dev/cerner/terra-toolkit)](https://david-dm.org/cerner/terra-toolkit?type=dev)
+[![lerna](https://badgen.net/badge/maintained%20with/lerna/cc00ff)](https://lerna.js.org/)
 
-Terra Toolkit is a utility module used to facilitate independent development of Terra projects. This toolkit provides build scripts, configurations, and Webdriver Services needed to serve assets, compile webpack, and run webdriver.io tests to streamline development of npm packages.
+Terra Toolkit is a [Lerna](https://github.com/lerna/lerna) repository for common development packages necessary for developing Terra projects.
 
-[terra-core][@terra-core], [terra-clinical][@terra-clinical], and [terra-framework][@terra-framework] are a few examples repositories which are utilizing the utilities offered in this package.
-
-[terra-dev-site][@terra-dev-site] is a node module that extends the configurations offered by toolkit.
-
-- [Getting Started](#getting-started)
-- [Serve Options](#serve-options)
-- [Webdriver.io Utility](#webdriverio-utility)
-- [Webpack Configuration](#webpack-configuration)
+- [Notice](#notice)
+- [Package Status](#package-status)
 - [Versioning](#versioning)
 - [Contributing](#contributing)
 - [LICENSE](#license)
 
-## Getting Started
+## Notice
 
-- Install toolkit and its peer dependencies as dev-dependencies with [npm](https://www.npmjs.com): 
-```bash
-> npm install --save-dev terra-toolkit webpack webpack-cli webpack-dev-server @babel/cli @babel/core 
-```
+The code for the [terra-toolkit](https://www.npmjs.com/package/terra-toolkit) npm dependency has been moved to [terra-toolkit-boneyard](https://github.com/cerner/terra-toolkit-boneyard).
 
-To use Terra Toolkit for local webdriver testing, you must install docker on your machine.
+## Package Status
 
-- Install Docker version 17.09.0 or higher. Installation instructions can be found at https://docs.docker.com/install/.
+![Stable](https://badgen.net/badge/status/Stable/green)
+![Beta](https://badgen.net/badge/status/Beta/orange)
+![Deprecated](https://badgen.net/badge/status/Deprecated/grey)
 
-## Theme Aggregation
-
-Terra Toolkit provides a built-in mechanism for aggregating themes.
-
-See the [Theme Aggregation](https://github.com/cerner/terra-toolkit/blob/master/scripts/aggregate-themes/README.md) to get started.
-
-## Serve Options
-
-Terra Toolkit offers two ways to serve your client side application, `serve` and `serve-static`. Serve provides a hot-reloading, development only option via [webpack-dev-server](https://github.com/webpack/webpack-dev-server), while serve-static is a non-hot-reloading [express](https://expressjs.com/) server. Serve-static supports IE10 and is used in webdriver testing.
-
-See the [Serve Guide](https://github.com/cerner/terra-toolkit/blob/master/scripts/serve/Serve.md) to get started.
-
-## Webdriver.io Utility
-
-[Webdriver.io](http://v4.webdriver.io/) is a framework for writing webdriver powered tests to validate functionality in browsers. The Webdriver.io framework provides services for setting up a selenium server, starting webpack and static servers, running accessibility and visual regression testing, and more.
-
-See the [Webdriver.io Utility Developer's Guide](https://github.com/cerner/terra-toolkit/blob/master/docs/Wdio_Utility.md) to get started.
-
-## Webpack Configuration
-
-[Webpack](https://webpack.js.org/) is a module bundler used to compile modules with dependencies and generate static assets. Webpack is a very powerful tool that is highly configurable and Terra components rely on specific polyfills, webpack loaders and plugins to render correctly. Terra provides a [default webpack configuration](https://github.com/cerner/terra-toolkit/blob/master/config/webpack/webpack.config.js) which we recommend you extend to meet your needs. By using this default configuration, we will manage webpack dependencies and set up translation aggregation.
-
-See the [Webpack Configuration Guide](https://github.com/cerner/terra-toolkit/blob/master/docs/Webpack.md) to get started.
+| Package | Version | Status | Dependencies |
+|---------|---------|--------|--------------|
+| [@cerner/browserslist-config-terra](https://github.com/cerner/terra-toolkit/tree/master/packages/browserslist-config-terra) | [![NPM version](https://badgen.net/npm/v/@cerner/browserslist-config-terra)](https://www.npmjs.org/package/@cerner/browserslist-config-terra) | ![Stable](https://badgen.net/badge/status/Stable/green) | [![@cerner/browserslist-config-terra](https://badgen.net/david/dep/cerner/terra-toolkit/packages/browserslist-config-terra)](https://david-dm.org/cerner/terra-toolkit?path=packages/browserslist-config-terra) |
+| [@cerner/eslint-config-terra](https://github.com/cerner/terra-toolkit/tree/master/packages/eslint-config-terra) | [![NPM version](https://badgen.net/npm/v/@cerner/eslint-config-terra)](https://www.npmjs.org/package/@cerner/eslint-config-terra) | ![Stable](https://badgen.net/badge/status/Stable/green) | [![@cerner/eslint-config-terra](https://badgen.net/david/dep/cerner/terra-toolkit/packages/eslint-config-terra)](https://david-dm.org/cerner/terra-toolkit?path=packages/eslint-config-terra) |
+| [@cerner/terra-functional-testing](https://github.com/cerner/terra-toolkit/tree/master/packages/terra-functional-testing) | [![NPM version](https://badgen.net/npm/v/@cerner/terra-functional-testing)](https://www.npmjs.org/package/@cerner/terra-functional-testing) | ![Stable](https://badgen.net/badge/status/Stable/green) | [![@cerner/terra-functional-testing](https://badgen.net/david/dep/cerner/terra-toolkit/packages/terra-functional-testing)](https://david-dm.org/cerner/terra-toolkit?path=packages/terra-functional-testing) |
 
 ## Versioning
 
-Terra-toolkit is considered to be stable and will follow [SemVer](http://semver.org/) for versioning.
+Terra-toolkit packages are considered to be stable and will follow [SemVer](http://semver.org/) for versioning.
 1. MAJOR versions represent breaking changes
 2. MINOR versions represent added functionality in a backwards-compatible manner
 3. PATCH versions represent backwards-compatible bug fixes
