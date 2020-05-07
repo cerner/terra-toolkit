@@ -39,7 +39,7 @@ class TestRunner {
 
       process.exit(exitCode);
     } catch (error) {
-      console.error('Launcher failed to start the test.\n', error);
+      console.error('[terra-functional-testing] Launcher failed to start the test.\n', error);
       process.exit(1);
     }
   }

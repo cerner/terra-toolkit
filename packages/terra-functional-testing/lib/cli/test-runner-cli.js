@@ -3,7 +3,7 @@ const { TestRunner } = require('../test-runner');
 
 const run = async () => {
   program
-    .option('--config <path>', 'A file path to the test runner configuration.');
+    .option('-c, --config <path>', 'A file path to the test runner configuration.');
 
   program.parse(process.argv);
 
