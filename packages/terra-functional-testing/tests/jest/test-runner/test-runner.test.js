@@ -28,7 +28,7 @@ describe('Test Runner', () => {
       await TestRunner.run({ config: '/config/path' });
 
       expect(TestRunner.configPath).toHaveBeenCalledWith('/config/path');
-      expect(console.error).toHaveBeenCalledWith('Launcher failed to start the test.\n', mockError);
+      expect(console.error).toHaveBeenCalledWith('[terra-functional-testing] Launcher failed to start the test.\n', mockError);
     });
   });
 
@@ -61,7 +61,7 @@ describe('Test Runner', () => {
       jest.spyOn(fs, 'existsSync').mockImplementationOnce(() => false);
 
       const configPath = TestRunner.configPath();
-      const expectedPath = path.resolve(__dirname, '../../../lib/test-runner/wdio.conf.js');
+      const expectedPath = path.resolve(__dirname, '../../../config/wdio/wdio.conf.js');
 
       expect(configPath).toEqual(expectedPath);
       expect(process.cwd).toHaveBeenCalled();

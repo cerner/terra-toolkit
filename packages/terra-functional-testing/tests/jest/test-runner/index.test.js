@@ -1,4 +1,4 @@
-const { TestRunner, defaultConfig } = require('../../../lib/test-runner');
+const { TestRunner, wdioConfig } = require('../../../lib/test-runner');
 
 describe('index', () => {
   it('should export the test runner', () => {
@@ -6,6 +6,6 @@ describe('index', () => {
   });
 
   it('should export the default config', () => {
-    expect(defaultConfig).toBeDefined();
+    expect(wdioConfig).toBeDefined();
   });
 });

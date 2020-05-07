@@ -1,7 +1,7 @@
 const TestRunner = require('./test-runner');
-const defaultConfig = require('./wdio.conf');
+const wdioConfig = require('../../config/wdio/wdio.conf');
 
 module.exports = {
   TestRunner,
-  defaultConfig
+  wdioConfig,
 };
