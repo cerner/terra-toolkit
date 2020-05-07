@@ -20,7 +20,7 @@ class TestRunner {
       return relativeConfigPath;
     }
 
-    return path.resolve(__dirname, '../../config/wdio/wdio.conf.js');
+    return path.resolve(__dirname, '../../config/wdio.conf.js');
   }
 
   /**
