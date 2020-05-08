@@ -3,6 +3,8 @@ ChangeLog
 
 Unreleased
 -----------------
+### Added
+* Add full stack specs to lint overrides to ignore undefined test global lint errors.
 
 4.0.0 - (May 5, 2020)
 ------------------
