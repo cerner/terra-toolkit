@@ -61,7 +61,7 @@ describe('Test Runner', () => {
       jest.spyOn(fs, 'existsSync').mockImplementationOnce(() => false);
 
       const configPath = TestRunner.configPath();
-      const expectedPath = path.resolve(__dirname, '../../../config/wdio.conf.js');
+      const expectedPath = path.resolve(__dirname, '../../../lib/config/wdio.conf.js');
 
       expect(configPath).toEqual(expectedPath);
       expect(process.cwd).toHaveBeenCalled();
