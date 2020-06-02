@@ -7,9 +7,6 @@ const Logger = require('../logger/logger');
 const exec = util.promisify(childProcess.exec);
 const logger = new Logger({ prefix: 'wdio-docker-service' });
 
-const RETRY_COUNT = 30;
-const POLL_INTERVAL = 2000;
-
 class DockerService {
   /**
    * Prepares the docker testing environment.
