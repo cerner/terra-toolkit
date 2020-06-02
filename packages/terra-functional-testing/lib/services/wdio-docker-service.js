@@ -37,7 +37,7 @@ class DockerService {
   }
 
   /**
-   * Deploys the docker stack.
+   * Deploys the docker stack. The previous stack will be removed if it exists.
    */
   async deployStack() {
     // Remove the previous stack if one exists.
@@ -77,7 +77,7 @@ class DockerService {
    * @param {number} interval - The timeout between commands in milliseconds. Defaults to every two seconds.
    * @returns {Promise} - A promise that resolves when the callback accepts the command response.
    */
-  async pollCommand(command, callback, retries = RETRY_COUNT, interval = POLL_INTERVAL) {
+  async pollCommand(command, callback, retries = 30, interval = 2000) {
     return new Promise((resolve, reject) => {
       let retryCount = 0;
       let pollTimeout = null;

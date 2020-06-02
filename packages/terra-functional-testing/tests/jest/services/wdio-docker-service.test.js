@@ -10,7 +10,7 @@ util.promisify.mockImplementation(() => mockExec);
 
 const DockerService = require('../../../lib/services/wdio-docker-service');
 
-describe('WDIO Docker Servoce', () => {
+describe('WDIO Docker Service', () => {
   describe('onPrepare', () => {
     it('should initialize the docker swarm', async () => {
       const service = new DockerService();
@@ -54,8 +54,9 @@ describe('WDIO Docker Servoce', () => {
 
       await service.initializeSwarm();
 
-      expect(mockExec).toHaveBeenCalledWith('docker info --format "{{json .}}"');
       expect(mockExec).toHaveBeenCalledTimes(1);
+      expect(mockExec).toHaveBeenCalledWith('docker info --format "{{json .}}"');
+      expect(mockExec).not.toHaveBeenCalledWith('docker swarm init');
     });
   });
 
@@ -105,6 +106,7 @@ describe('WDIO Docker Servoce', () => {
       await service.removeStack();
 
       expect(mockExec).toHaveBeenCalledTimes(1);
+      expect(mockExec).not.toHaveBeenCalledWith('docker stack rm wdio');
       expect(mockExec).toHaveBeenCalledWith('docker stack ls | grep wdio || true');
     });
 
