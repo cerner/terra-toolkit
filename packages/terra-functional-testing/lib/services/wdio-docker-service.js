@@ -73,15 +73,17 @@ class DockerService {
    * Waits for a command to complete successfully.
    * @param {string} command - The shell command to run.
    * @param {func} callback - A callback function to accept or reject the result of the command. Must return a promise.
+   * @param {number} retries - The number of times to retry the command. Defaults to 30 retries.
+   * @param {number} interval - The timeout between commands in milliseconds. Defaults to every two seconds.
    * @returns {Promise} - A promise that resolves when the callback accepts the command response.
    */
-  async pollCommand(command, callback) {
+  async pollCommand(command, callback, retries = RETRY_COUNT, interval = POLL_INTERVAL) {
     return new Promise((resolve, reject) => {
       let retryCount = 0;
       let pollTimeout = null;
 
       const poll = async () => {
-        if (retryCount >= RETRY_COUNT) {
+        if (retryCount >= retries) {
           clearTimeout(pollTimeout);
           pollTimeout = null;
           reject(Error(logger.format('Timeout. Exceeded retry count.')));
@@ -93,11 +95,11 @@ class DockerService {
           await callback(result).then(() => resolve());
         } catch (error) {
           retryCount += 1;
-          pollTimeout = setTimeout(poll, POLL_INTERVAL);
+          pollTimeout = setTimeout(poll, interval);
         }
       };
 
-      pollTimeout = setTimeout(poll, POLL_INTERVAL);
+      pollTimeout = setTimeout(poll, interval);
     });
   }
 
