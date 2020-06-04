@@ -65,7 +65,7 @@ describe('WDIO Docker Service', () => {
       const service = new DockerService();
 
       jest.spyOn(service, 'removeStack').mockImplementationOnce(() => Promise.resolve());
-      jest.spyOn(service, 'awaitNetworkReady').mockImplementationOnce(() => Promise.resolve());
+      jest.spyOn(service, 'waitForNetworkReady').mockImplementationOnce(() => Promise.resolve());
 
       await service.deployStack();
 
@@ -78,7 +78,7 @@ describe('WDIO Docker Service', () => {
       const service = new DockerService();
 
       jest.spyOn(service, 'removeStack').mockImplementationOnce(() => Promise.resolve());
-      jest.spyOn(service, 'awaitNetworkReady').mockImplementationOnce(() => Promise.resolve());
+      jest.spyOn(service, 'waitForNetworkReady').mockImplementationOnce(() => Promise.resolve());
 
       await service.deployStack();
 
@@ -89,11 +89,11 @@ describe('WDIO Docker Service', () => {
       const service = new DockerService();
 
       jest.spyOn(service, 'removeStack').mockImplementationOnce(() => Promise.resolve());
-      jest.spyOn(service, 'awaitNetworkReady').mockImplementationOnce(() => Promise.resolve());
+      jest.spyOn(service, 'waitForNetworkReady').mockImplementationOnce(() => Promise.resolve());
 
       await service.deployStack();
 
-      expect(service.awaitNetworkReady).toHaveBeenCalled();
+      expect(service.waitForNetworkReady).toHaveBeenCalled();
     });
   });
 
@@ -115,8 +115,8 @@ describe('WDIO Docker Service', () => {
 
       mockExec.mockImplementation(() => Promise.resolve({ stdout: 'Active' }));
 
-      jest.spyOn(service, 'awaitServiceRemoval').mockImplementationOnce(() => Promise.resolve());
-      jest.spyOn(service, 'awaitNetworkRemoval').mockImplementationOnce(() => Promise.resolve());
+      jest.spyOn(service, 'waitForServiceRemoval').mockImplementationOnce(() => Promise.resolve());
+      jest.spyOn(service, 'waitForNetworkRemoval').mockImplementationOnce(() => Promise.resolve());
 
       await service.removeStack();
 
@@ -129,13 +129,13 @@ describe('WDIO Docker Service', () => {
 
       mockExec.mockImplementation(() => Promise.resolve({ stdout: 'Active' }));
 
-      jest.spyOn(service, 'awaitServiceRemoval').mockImplementationOnce(() => Promise.resolve());
-      jest.spyOn(service, 'awaitNetworkRemoval').mockImplementationOnce(() => Promise.resolve());
+      jest.spyOn(service, 'waitForServiceRemoval').mockImplementationOnce(() => Promise.resolve());
+      jest.spyOn(service, 'waitForNetworkRemoval').mockImplementationOnce(() => Promise.resolve());
 
       await service.removeStack();
 
-      expect(service.awaitServiceRemoval).toHaveBeenCalled();
-      expect(service.awaitNetworkRemoval).toHaveBeenCalled();
+      expect(service.waitForServiceRemoval).toHaveBeenCalled();
+      expect(service.waitForNetworkRemoval).toHaveBeenCalled();
     });
   });
 
@@ -169,13 +169,13 @@ describe('WDIO Docker Service', () => {
     });
   });
 
-  describe('awaitNetworkRemoval', () => {
+  describe('waitForNetworkRemoval', () => {
     it('should wait until the network has been removed', async () => {
       const service = new DockerService();
 
       jest.spyOn(service, 'pollCommand').mockImplementationOnce(() => Promise.resolve());
 
-      await service.awaitNetworkRemoval();
+      await service.waitForNetworkRemoval();
 
       expect(service.pollCommand).toHaveBeenCalledWith('docker network ls | grep wdio || true', expect.any(Function));
     });
@@ -189,7 +189,7 @@ describe('WDIO Docker Service', () => {
         return Promise.resolve();
       });
 
-      await service.awaitNetworkRemoval();
+      await service.waitForNetworkRemoval();
 
       expect.assertions(1);
     });
@@ -203,19 +203,19 @@ describe('WDIO Docker Service', () => {
         return Promise.resolve();
       });
 
-      await service.awaitNetworkRemoval();
+      await service.waitForNetworkRemoval();
 
       expect.assertions(1);
     });
   });
 
-  describe('awaitServiceRemoval', () => {
+  describe('waitForServiceRemoval', () => {
     it('should wait until the service has been removed', async () => {
       const service = new DockerService();
 
       jest.spyOn(service, 'pollCommand').mockImplementationOnce(() => Promise.resolve());
 
-      await service.awaitServiceRemoval();
+      await service.waitForServiceRemoval();
 
       expect(service.pollCommand).toHaveBeenCalledWith('docker service ls | grep wdio || true', expect.any(Function));
     });
@@ -229,7 +229,7 @@ describe('WDIO Docker Service', () => {
         return Promise.resolve();
       });
 
-      await service.awaitServiceRemoval();
+      await service.waitForServiceRemoval();
 
       expect.assertions(1);
     });
@@ -243,19 +243,19 @@ describe('WDIO Docker Service', () => {
         return Promise.resolve();
       });
 
-      await service.awaitServiceRemoval();
+      await service.waitForServiceRemoval();
 
       expect.assertions(1);
     });
   });
 
-  describe('awaitNetworkReady', () => {
+  describe('waitForNetworkReady', () => {
     it('should wait until the service is ready', async () => {
       const service = new DockerService();
 
       jest.spyOn(service, 'pollCommand').mockImplementationOnce(() => Promise.resolve());
 
-      await service.awaitNetworkReady();
+      await service.waitForNetworkReady();
 
       // The host and port are undefined for this test.
       expect(service.pollCommand).toHaveBeenCalledWith('curl -sSL http://undefined:undefined/wd/hub/status', expect.any(Function));
@@ -270,7 +270,7 @@ describe('WDIO Docker Service', () => {
         return Promise.resolve();
       });
 
-      await service.awaitNetworkReady();
+      await service.waitForNetworkReady();
 
       expect.assertions(1);
     });
@@ -284,7 +284,7 @@ describe('WDIO Docker Service', () => {
         return Promise.resolve();
       });
 
-      await service.awaitNetworkReady();
+      await service.waitForNetworkReady();
 
       expect.assertions(1);
     });

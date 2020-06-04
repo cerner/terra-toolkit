@@ -46,7 +46,7 @@ class DockerService {
 
     await exec(`docker stack deploy -c ${composeFilePath} wdio`);
 
-    await this.awaitNetworkReady();
+    await this.waitForNetworkReady();
   }
 
   /**
@@ -61,8 +61,8 @@ class DockerService {
       await exec('docker stack rm wdio');
 
       // Ensure the services and network have been removed.
-      await this.awaitServiceRemoval();
-      await this.awaitNetworkRemoval();
+      await this.waitForServiceRemoval();
+      await this.waitForNetworkRemoval();
     }
   }
 
@@ -103,7 +103,7 @@ class DockerService {
   /**
    * Ensures the docker network has been shut down.
    */
-  async awaitNetworkRemoval() {
+  async waitForNetworkRemoval() {
     await this.pollCommand('docker network ls | grep wdio || true', (result) => (
       new Promise((resolve, reject) => {
         const { stdout: networkStatus } = result;
@@ -120,7 +120,7 @@ class DockerService {
   /**
    * Ensures the docker services have been shut down.
    */
-  async awaitServiceRemoval() {
+  async waitForServiceRemoval() {
     await this.pollCommand('docker service ls | grep wdio || true', (result) => (
       new Promise((resolve, reject) => {
         const { stdout: serviceStatus } = result;
@@ -137,7 +137,7 @@ class DockerService {
   /**
    * Ensures the docker network is ready.
    */
-  async awaitNetworkReady() {
+  async waitForNetworkReady() {
     logger.log('Waiting for docker to become ready.');
 
     await this.pollCommand(`curl -sSL http://${this.host}:${this.port}/wd/hub/status`, (result) => (

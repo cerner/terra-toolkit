@@ -84,6 +84,10 @@ exports.config = {
   bail: 0,
   // Set the path to connect to the selenium container.
   path: '/wd/hub',
+  // The hostname of the driver server.
+  hostname: 'localhost',
+  // The port the driver server is on.
+  port: 4444,
   //
   // Set a base URL in order to shorten url command calls. If your `url` parameter starts
   // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
