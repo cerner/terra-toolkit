@@ -1,4 +1,4 @@
-const DockerService = require('../services/wdio-docker-service');
+const SeleniumDockerService = require('../services/wdio-selenium-docker-service');
 
 exports.config = {
   //
@@ -110,7 +110,7 @@ exports.config = {
   // your test setup with almost no effort. Unlike plugins, they don't add new
   // commands. Instead, they hook themselves up into the test process.
   services: [
-    [DockerService],
+    [SeleniumDockerService],
   ],
   // Framework you want to run your specs with.
   // The following are supported: Mocha, Jasmine, and Cucumber

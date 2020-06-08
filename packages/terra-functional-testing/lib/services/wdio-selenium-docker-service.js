@@ -5,9 +5,9 @@ const childProcess = require('child_process');
 const Logger = require('../logger/logger');
 
 const exec = util.promisify(childProcess.exec);
-const logger = new Logger({ prefix: 'wdio-docker-service' });
+const logger = new Logger({ prefix: 'wdio-selenium-docker-service' });
 
-class DockerService {
+class SeleniumDockerService {
   /**
    * Prepares the docker testing environment.
    */
@@ -161,4 +161,4 @@ class DockerService {
   }
 }
 
-module.exports = DockerService;
+module.exports = SeleniumDockerService;
