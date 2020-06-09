@@ -15,6 +15,14 @@ class SeleniumDockerService {
     this.host = config.hostname;
     this.port = config.port;
 
+    // Verify docker is installed before proceeding.
+    try {
+      await exec('docker -v');
+    } catch (error) {
+      logger.error('Docker is not installed. Install docker to continue.');
+      throw error;
+    }
+
     await this.initializeSwarm();
     await this.deployStack();
   }

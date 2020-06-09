@@ -20,7 +20,16 @@ class Logger {
    */
   log(text) {
     // eslint-disable-next-line no-console
-    console.log(this.format(text));
+    console.log(`[INFO] ${this.format(text)}`);
+  }
+
+  /**
+   * Logs an error message to the console.
+   * @param {string} text - The text to be logged.
+   */
+  error(text) {
+    // eslint-disable-next-line no-console
+    console.log(`[ERROR] ${this.format(text)}`);
   }
 }
 

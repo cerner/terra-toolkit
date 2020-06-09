@@ -18,7 +18,20 @@ describe('Logger', () => {
       logger.log('Example text');
 
       // eslint-disable-next-line no-console
-      expect(console.log).toHaveBeenCalledWith('[terra-functional-testing:mock-prefix] Example text');
+      expect(console.log).toHaveBeenCalledWith('[INFO] [terra-functional-testing:mock-prefix] Example text');
+    });
+  });
+
+  describe('error', () => {
+    it('should log an error message to the console', () => {
+      const logger = new Logger({ prefix: 'mock-prefix' });
+
+      jest.spyOn(console, 'log').mockImplementationOnce(() => { });
+
+      logger.error('Example text');
+
+      // eslint-disable-next-line no-console
+      expect(console.log).toHaveBeenCalledWith('[ERROR] [terra-functional-testing:mock-prefix] Example text');
     });
   });
 });

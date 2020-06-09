@@ -33,6 +33,34 @@ describe('WDIO Selenium Docker Service', () => {
 
       expect(service.deployStack).toHaveBeenCalled();
     });
+
+    it('should verify docker is installed before proceeding', async () => {
+      const service = new SeleniumDockerService();
+
+      mockExec.mockImplementation(() => Promise.resolve());
+
+      jest.spyOn(service, 'initializeSwarm').mockImplementationOnce(() => Promise.resolve());
+      jest.spyOn(service, 'deployStack').mockImplementationOnce(() => Promise.resolve());
+
+      await service.onPrepare({});
+
+      expect(mockExec).toHaveBeenCalledWith('docker -v');
+    });
+
+    it('should throw an error if docker is not installed', async () => {
+      const service = new SeleniumDockerService();
+      const mockError = Error('Mock Error');
+
+      mockExec.mockImplementation(() => Promise.reject(mockError));
+
+      try {
+        await service.onPrepare({});
+      } catch (error) {
+        expect(error).toEqual(mockError);
+      }
+
+      expect.assertions(1);
+    });
   });
 
   describe('initializeSwarm', () => {
