@@ -8,6 +8,12 @@ const exec = util.promisify(childProcess.exec);
 const logger = new Logger({ prefix: 'wdio-selenium-docker-service' });
 
 class SeleniumDockerService {
+  constructor(options = {}) {
+    const { image } = options;
+
+    this.image = image || '3.141.59-20200525';
+  }
+
   /**
    * Prepares the docker testing environment.
    */
@@ -48,11 +54,11 @@ class SeleniumDockerService {
     // Remove the previous stack if one exists.
     await this.removeStack();
 
-    logger.log('Deploying docker stack.');
+    logger.log(`Deploying docker stack using selenium ${this.image}.`);
 
     const composeFilePath = path.resolve(__dirname, '../docker/docker-compose.yml');
 
-    await exec(`docker stack deploy -c ${composeFilePath} wdio`);
+    await exec(`IMAGE=${this.image} docker stack deploy -c ${composeFilePath} wdio`);
 
     await this.waitForNetworkReady();
   }
@@ -146,7 +152,7 @@ class SeleniumDockerService {
    * Ensures the docker network is ready.
    */
   async waitForNetworkReady() {
-    logger.log('Waiting for docker to become ready.');
+    logger.log('Waiting for docker selenium to become ready.');
 
     await this.pollCommand(`curl -sSL http://${this.host}:${this.port}/wd/hub/status`, (result) => (
       new Promise((resolve, reject) => {

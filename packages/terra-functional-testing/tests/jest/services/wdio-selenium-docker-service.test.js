@@ -99,7 +99,20 @@ describe('WDIO Selenium Docker Service', () => {
 
       const composeFilePath = path.resolve(__dirname, '../../../lib/docker/docker-compose.yml');
 
-      expect(mockExec).toHaveBeenCalledWith(`docker stack deploy -c ${composeFilePath} wdio`);
+      expect(mockExec).toHaveBeenCalledWith(`IMAGE=3.141.59-20200525 docker stack deploy -c ${composeFilePath} wdio`);
+    });
+
+    it('should deploy the stack with the specified selenium version', async () => {
+      const service = new SeleniumDockerService({ image: 'custom-version' });
+
+      jest.spyOn(service, 'removeStack').mockImplementationOnce(() => Promise.resolve());
+      jest.spyOn(service, 'waitForNetworkReady').mockImplementationOnce(() => Promise.resolve());
+
+      await service.deployStack();
+
+      const composeFilePath = path.resolve(__dirname, '../../../lib/docker/docker-compose.yml');
+
+      expect(mockExec).toHaveBeenCalledWith(`IMAGE=custom-version docker stack deploy -c ${composeFilePath} wdio`);
     });
 
     it('should remove the previous network stack', async () => {
