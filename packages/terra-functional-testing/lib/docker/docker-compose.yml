@@ -2,12 +2,12 @@ version: '3.7'
 
 services:
   hub:
-   image: selenium/hub:${IMAGE}
+   image: selenium/hub:${TERRA_SELENIUM_DOCKER_VERSION}
    ports:
      - "4444:4444"
 
   chrome:
-    image: selenium/node-chrome:${IMAGE}
+    image: selenium/node-chrome:${TERRA_SELENIUM_DOCKER_VERSION}
     # Volume mounting is necessary to ensure the browser does not crash inside the docker container.
     # For more details see: 
     #  https://github.com/SeleniumHQ/docker-selenium#running-the-images
@@ -23,7 +23,7 @@ services:
     entrypoint: bash -c 'SE_OPTS="-host $$HOSTNAME" /opt/bin/entry_point.sh'
 
   firefox:
-    image: selenium/node-firefox:${IMAGE}
+    image: selenium/node-firefox:${TERRA_SELENIUM_DOCKER_VERSION}
     # Volume mounting is necessary to ensure the browser does not crash inside the docker container.
     # For more details see: 
     #  https://github.com/SeleniumHQ/docker-selenium#running-the-images

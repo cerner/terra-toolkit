@@ -9,9 +9,9 @@ const logger = new Logger({ prefix: 'wdio-selenium-docker-service' });
 
 class SeleniumDockerService {
   constructor(options = {}) {
-    const { image } = options;
+    const { version } = options;
 
-    this.image = image || '3.141.59-20200525';
+    this.version = version || '3.141.59-20200525';
   }
 
   /**
@@ -54,11 +54,11 @@ class SeleniumDockerService {
     // Remove the previous stack if one exists.
     await this.removeStack();
 
-    logger.log(`Deploying docker stack using selenium ${this.image}.`);
+    logger.log(`Deploying docker stack using selenium ${this.version}.`);
 
     const composeFilePath = path.resolve(__dirname, '../docker/docker-compose.yml');
 
-    await exec(`IMAGE=${this.image} docker stack deploy -c ${composeFilePath} wdio`);
+    await exec(`TERRA_SELENIUM_DOCKER_VERSION=${this.version} docker stack deploy -c ${composeFilePath} wdio`);
 
     await this.waitForNetworkReady();
   }
@@ -152,7 +152,7 @@ class SeleniumDockerService {
    * Ensures the docker network is ready.
    */
   async waitForNetworkReady() {
-    logger.log('Waiting for docker selenium to become ready.');
+    logger.log('Waiting for the selenium grid to become ready.');
 
     await this.pollCommand(`curl -sSL http://${this.host}:${this.port}/wd/hub/status`, (result) => (
       new Promise((resolve, reject) => {

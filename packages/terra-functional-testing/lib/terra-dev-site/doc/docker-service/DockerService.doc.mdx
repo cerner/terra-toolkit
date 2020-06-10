@@ -34,9 +34,9 @@ export.config = {
 
 ## Options
 
-### image
+### version
 
-The docker selenium image to run tests against.
+The docker selenium image version to run tests against.
 
 Type: `string`
 
@@ -54,7 +54,7 @@ export.config = {
     // ...
     services: [
         [SeleniumDockerService, {
-          image: '3.141.59-20200525'
+          version: '3.141.59-20200525'
         }]
     ],
     // ...
