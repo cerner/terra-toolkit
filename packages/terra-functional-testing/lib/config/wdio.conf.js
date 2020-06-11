@@ -1,3 +1,5 @@
+const SeleniumDockerService = require('../services/wdio-selenium-docker-service');
+
 exports.config = {
   //
   // ====================
@@ -80,6 +82,12 @@ exports.config = {
   // If you only want to run your tests until a specific amount of tests have failed use
   // bail (default is 0 - don't bail, run all tests).
   bail: 0,
+  // Set the path to connect to the selenium container.
+  path: '/wd/hub',
+  // The hostname of the driver server.
+  hostname: 'localhost',
+  // The port the driver server is on.
+  port: 4444,
   //
   // Set a base URL in order to shorten url command calls. If your `url` parameter starts
   // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
@@ -101,7 +109,9 @@ exports.config = {
   // Services take over a specific job you don't want to take care of. They enhance
   // your test setup with almost no effort. Unlike plugins, they don't add new
   // commands. Instead, they hook themselves up into the test process.
-  services: ['chromedriver'],
+  services: [
+    [SeleniumDockerService],
+  ],
   // Framework you want to run your specs with.
   // The following are supported: Mocha, Jasmine, and Cucumber
   // see also: https://webdriver.io/docs/frameworks.html

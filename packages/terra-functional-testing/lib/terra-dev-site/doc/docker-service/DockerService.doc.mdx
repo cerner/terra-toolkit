@@ -1,0 +1,62 @@
+# Selenium Docker Service
+
+The selenium docker service initializes a docker swarm for running functional [WebDriverIO](https://webdriver.io/) tests against a containerized [selenium docker](https://github.com/SeleniumHQ/docker-selenium) environment.
+
+By default, the selenium grid will be deployed locally on the host machine running on port 4444. Google Chrome and Firefox browsers are available on the grid.
+
+## Installation
+
+The selenium docker service should be installed as a development dependency.
+
+```bash
+npm install --save-dev @cerner/terra-functional-testing
+```
+
+## Configuration
+
+To use the service it must be added to the services array in the `wdio.conf.js` file.
+
+```js
+// wdio.conf.js
+const SeleniumDockerService = require('@cerner/terra-functional-testing/lib/services/wdio-selenium-docker-service');
+
+export.config = {
+    // ...
+    services: [
+        [SeleniumDockerService, {
+            // Selenium service options here
+            // ...
+        }]
+    ],
+    // ...
+};
+```
+
+## Options
+
+### version
+
+The docker selenium image version to run tests against.
+
+Type: `string`
+
+Required: `false`
+
+Default: `3.141.59-20200525`
+
+Example:
+
+```js
+// wdio.conf.js
+const SeleniumDockerService = require('@cerner/terra-functional-testing/lib/services/wdio-selenium-docker-service');
+
+export.config = {
+    // ...
+    services: [
+        [SeleniumDockerService, {
+          version: '3.141.59-20200525'
+        }]
+    ],
+    // ...
+};
+```
