@@ -1,4 +1,5 @@
 const SeleniumDockerService = require('../services/wdio-selenium-docker-service');
+const TerraService = require('../services/wdio-terra-service');
 
 exports.config = {
   //
@@ -63,7 +64,7 @@ exports.config = {
   // Define all options that are relevant for the WebdriverIO instance here
   //
   // Level of logging verbosity: trace | debug | info | warn | error | silent
-  logLevel: 'info',
+  logLevel: 'silent',
   //
   // Set specific log levels per logger
   // loggers:
@@ -111,6 +112,7 @@ exports.config = {
   // commands. Instead, they hook themselves up into the test process.
   services: [
     [SeleniumDockerService],
+    [TerraService],
   ],
   // Framework you want to run your specs with.
   // The following are supported: Mocha, Jasmine, and Cucumber
