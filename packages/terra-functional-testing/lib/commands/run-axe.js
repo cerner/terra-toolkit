@@ -1,4 +1,4 @@
-/* global browser, axe */
+/* global browser */
 const injectAxe = require('./inject-axe');
 
 /**
