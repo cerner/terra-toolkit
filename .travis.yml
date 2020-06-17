@@ -45,5 +45,5 @@ jobs:
 stages:
   - build
   - lint jest
-  # - test
+  - test
   - clean up cache
