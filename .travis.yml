@@ -34,9 +34,9 @@ jobs:
     - stage: lint jest
       script:
         - "travis_wait docker-compose run -e HAS_JOSH_K_SEAL_OF_APPROVAL=$HAS_JOSH_K_SEAL_OF_APPROVAL -e TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST -e TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG test-ci sh -c 'npm run lint && npm run jest'"
-    # - stage: test
-    #   script:
-    #     - "travis_wait docker-compose run test-ci npm run wdio"
+    - stage: test
+      script:
+        - "travis_wait docker-compose run test-ci npm run wdio"
     - stage: clean up cache
       before_install: true
       script:

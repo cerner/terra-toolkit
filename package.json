@@ -30,6 +30,7 @@
     "clean": "lerna clean --yes && rm -rf node_modules",
     "clean:install": "npm run clean && npm install",
     "jest": "jest",
+    "wdio": "node ./packages/terra-functional-testing/bin/test-runner.js",
     "lint": "npm run lint:js",
     "lint:js": "eslint --ext .js,.jsx .",
     "postinstall": "link-parent-bin && npm run bootstrap:hoist",
