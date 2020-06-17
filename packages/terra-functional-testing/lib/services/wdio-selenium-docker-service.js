@@ -26,7 +26,7 @@ class SeleniumDockerService {
       await exec('docker -v');
     } catch (error) {
       logger.error('Docker is not installed. Install docker to continue.');
-      throw error;
+      // throw error;
     }
 
     await this.initializeSwarm();
