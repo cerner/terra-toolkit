@@ -2,17 +2,13 @@
 
 /**
  * Injects axe-core into the browser.
+ * @param {Object} options - The axe configuration options.
  */
-const injectAxe = () => {
+const injectAxe = (options) => {
   // eslint-disable-next-line global-require
   const { source } = require('axe-core/axe.min.js');
 
-  // Extract the axe options for the Terra service from the global browser object.
-  const [, options = {}] = browser.options.services.find(([service]) => (
-    typeof service === 'function' && service.name === 'TerraService'
-  ));
-
-  browser.execute(`${source}\n ${options.axe ? `axe.configure(${JSON.stringify(options.axe)})` : ''}`);
+  browser.execute(`${source}\n ${options ? `axe.configure(${JSON.stringify(options)})` : ''}`);
 };
 
 module.exports = injectAxe;
