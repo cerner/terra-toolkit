@@ -38,7 +38,7 @@
     "@wdio/mocha-framework": "^6.1.0",
     "@wdio/spec-reporter": "^6.0.16",
     "@wdio/sync": "^6.1.14",
-    "axe-core": "3.5.4",
+    "axe-core": "3.5.5",
     "commander": "^5.1.0"
   }
 }
