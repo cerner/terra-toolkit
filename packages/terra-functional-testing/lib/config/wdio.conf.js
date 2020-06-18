@@ -1,6 +1,8 @@
 const SeleniumDockerService = require('../services/wdio-selenium-docker-service');
 const TerraService = require('../services/wdio-terra-service');
 
+const { ci } = process.env;
+
 exports.config = {
   //
   // ====================
@@ -83,10 +85,10 @@ exports.config = {
   // If you only want to run your tests until a specific amount of tests have failed use
   // bail (default is 0 - don't bail, run all tests).
   bail: 0,
-  // Set the path to connect to the selenium container.
-  path: '/wd/hub',
-  // The hostname of the driver server.
-  hostname: 'localhost',
+  // Set the path to connect to the selenium container. The path is unset when building on CI.
+  ...(ci ? {} : { path: '/wd/hub' }),
+  // The hostname of the driver server. When building on CI the host is set to standalone-chrome.
+  hostname: ci ? 'standalone-chrome' : 'localhost',
   // The port the driver server is on.
   port: 4444,
   //
@@ -111,7 +113,8 @@ exports.config = {
   // your test setup with almost no effort. Unlike plugins, they don't add new
   // commands. Instead, they hook themselves up into the test process.
   services: [
-    [SeleniumDockerService],
+    // Do not add the docker service when building on CI.
+    ...(ci ? [] : [[SeleniumDockerService]]),
     [TerraService],
   ],
   // Framework you want to run your specs with.
