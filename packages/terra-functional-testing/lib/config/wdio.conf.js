@@ -85,8 +85,8 @@ exports.config = {
   // If you only want to run your tests until a specific amount of tests have failed use
   // bail (default is 0 - don't bail, run all tests).
   bail: 0,
-  // Set the path to connect to the selenium container. The path is unset when building on CI.
-  ...(CI ? {} : { path: '/wd/hub' }),
+  // Set the path to connect to the selenium container.
+  path: '/wd/hub',
   // The hostname of the driver server. When building on CI the host is set to standalone-chrome.
   hostname: CI ? 'standalone-chrome' : 'localhost',
   // The port the driver server is on.
