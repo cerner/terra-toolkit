@@ -4,7 +4,7 @@ const injectAxe = require('./inject-axe');
 /**
  * Executes axe on the browser.
  * @param {Object} overrides - The axe options.
- * @param {Array} overrides.rules - The rule overrides
+ * @param {Array} overrides.rules - The rule overrides.
  */
 const runAxe = (overrides = {}) => {
   // Extract the axe options for the Terra service from the global browser object.
@@ -15,7 +15,7 @@ const runAxe = (overrides = {}) => {
   const { axe: axeOptions } = options;
   const isAxeUnavailable = browser.execute(() => window.axe === undefined);
 
-  // Inject axe-core onto the page if it has not already been initialize.
+  // Inject axe-core onto the page if it has not already been initialized.
   if (isAxeUnavailable) {
     injectAxe(axeOptions);
   }
