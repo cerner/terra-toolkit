@@ -1,0 +1,64 @@
+# Terra Service
+
+The Terra service integrates [axe accessibility](https://github.com/dequelabs/axe-core) testing into the test environment. Invoking the axe engine will perform a static analysis of the current document and dom structure. The axe analysis runs accessibility checks against `wcag2a`, `wcag2aa`, `wcag21aa`, and `section508` standards.
+
+## Installation
+
+The Terra service should be installed as a development dependency.
+
+```bash
+npm install --save-dev @cerner/terra-functional-testing
+```
+## Configuration
+
+To use the service it must be added to the services array in the `wdio.conf.js` file.
+
+```js
+// wdio.conf.js
+const TerraService = require('@cerner/terra-functional-testing/lib/services/wdio-terra-service');
+
+export.config = {
+    // ...
+    services: [
+        [TerraService, {
+            // Terra service options here
+            // ...
+        }]
+    ],
+    // ...
+};
+```
+
+## Options
+
+### axe
+
+The axe configuration options for adding or customizing the rules used during testing. See the [axe API](https://github.com/dequelabs/axe-core/blob/develop/doc/API.md) for more information on configuring rules.
+
+Type: `Object`
+
+Required: `false`
+
+Default: `{}`
+
+Example:
+
+```js
+// wdio.conf.js
+const TerraService = require('@cerner/terra-functional-testing/lib/services/wdio-terra-service');
+
+export.config = {
+    // ...
+    services: [
+        [TerraService, {
+          axe: {
+            rules: [
+              { id: 'color-contrast', enabled: true },
+            ]
+          }
+        }]
+    ],
+    // ...
+};
+```
+

@@ -1,4 +1,7 @@
 const SeleniumDockerService = require('../services/wdio-selenium-docker-service');
+const TerraService = require('../services/wdio-terra-service');
+
+const { CI } = process.env;
 
 exports.config = {
   //
@@ -63,7 +66,7 @@ exports.config = {
   // Define all options that are relevant for the WebdriverIO instance here
   //
   // Level of logging verbosity: trace | debug | info | warn | error | silent
-  logLevel: 'info',
+  logLevel: 'silent',
   //
   // Set specific log levels per logger
   // loggers:
@@ -84,8 +87,8 @@ exports.config = {
   bail: 0,
   // Set the path to connect to the selenium container.
   path: '/wd/hub',
-  // The hostname of the driver server.
-  hostname: 'localhost',
+  // The hostname of the driver server. When building on CI the host is set to standalone-chrome.
+  hostname: CI ? 'standalone-chrome' : 'localhost',
   // The port the driver server is on.
   port: 4444,
   //
@@ -110,7 +113,9 @@ exports.config = {
   // your test setup with almost no effort. Unlike plugins, they don't add new
   // commands. Instead, they hook themselves up into the test process.
   services: [
-    [SeleniumDockerService],
+    // Do not add the docker service when building on CI.
+    ...(CI ? [] : [[SeleniumDockerService]]),
+    [TerraService],
   ],
   // Framework you want to run your specs with.
   // The following are supported: Mocha, Jasmine, and Cucumber
