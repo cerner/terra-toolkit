@@ -30,15 +30,19 @@
     "clean": "lerna clean --yes && rm -rf node_modules",
     "clean:install": "npm run clean && npm install",
     "jest": "jest",
-    "wdio": "node ./packages/terra-functional-testing/bin/test-runner.js",
     "lint": "npm run lint:js",
     "lint:js": "eslint --ext .js,.jsx .",
+    "pack": "webpack --config webpack.config.js -p",
     "postinstall": "link-parent-bin && npm run bootstrap:hoist",
-    "test": "npm run jest"
+    "test": "npm run jest",
+    "wdio": "rm -rf build && npm run pack && npm run wdio-site && npm run wdio-webpack",
+    "wdio-site": "SITE=build node ./packages/terra-functional-testing/bin/test-runner.js",
+    "wdio-webpack": "node ./packages/terra-functional-testing/bin/test-runner.js"
   },
   "devDependencies": {
     "danger": "^9.1.0",
     "eslint": "^6.1.0",
+    "html-webpack-plugin": "^4.3.0",
     "jest": "^26.0.1",
     "lerna": "^3.20.2",
     "link-parent-bin": "^1.0.0"

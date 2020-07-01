@@ -3,11 +3,22 @@
  */
 
 describe('Axe', () => {
-  it('should successfully run axe on the page', () => {
-    browser.url('https://engineering.cerner.com/terra-ui/');
+  it('should successfully run axe on the page and report no violations', () => {
+    browser.url('/accessible.html');
 
     const { result } = browser.axe();
+    const { violations } = result;
 
-    expect(result).toBeDefined();
+    expect(violations.length).toEqual(0);
+  });
+
+  it('should report a color contrast violation', () => {
+    browser.url('/insufficient-color-contrast.html');
+
+    const { result } = browser.axe();
+    const { violations } = result;
+
+    expect(violations.length).toEqual(1);
+    expect(violations[0].id).toEqual('color-contrast');
   });
 });
