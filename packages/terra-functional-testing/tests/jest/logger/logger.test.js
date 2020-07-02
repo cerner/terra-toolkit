@@ -26,12 +26,12 @@ describe('Logger', () => {
     it('should log an error message to the console', () => {
       const logger = new Logger({ prefix: 'mock-prefix' });
 
-      jest.spyOn(console, 'log').mockImplementationOnce(() => { });
+      jest.spyOn(console, 'error').mockImplementationOnce(() => { });
 
       logger.error('Example text');
 
       // eslint-disable-next-line no-console
-      expect(console.log).toHaveBeenCalledWith('[ERROR] [terra-functional-testing:mock-prefix] Example text');
+      expect(console.error).toHaveBeenCalledWith('[ERROR] [terra-functional-testing:mock-prefix] Example text');
     });
   });
 });
