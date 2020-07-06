@@ -13,5 +13,5 @@
 
 Thanks for contributing to Terra! -->
 
-[CONTRIBUTORS.md]: ../blob/master/CONTRIBUTORS.md
-[License]: ../blob/master/LICENSE
+[CONTRIBUTORS.md]: ../blob/main/CONTRIBUTORS.md
+[License]: ../blob/main/LICENSE
