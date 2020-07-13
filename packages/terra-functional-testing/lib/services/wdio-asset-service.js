@@ -1,5 +1,5 @@
-const ExpressServer = require('../express-server/express-server');
-const WebpackServer = require('../webpack-server/webpack-server');
+const ExpressServer = require('../express-server');
+const WebpackServer = require('../webpack-server');
 const Logger = require('../logger/logger');
 
 const logger = new Logger({ prefix: 'wdio-asset-service' });

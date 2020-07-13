@@ -32,7 +32,7 @@
     "jest": "jest",
     "lint": "npm run lint:js",
     "lint:js": "eslint --ext .js,.jsx .",
-    "pack": "webpack --config webpack.config.js -p",
+    "pack": "webpack -p",
     "postinstall": "link-parent-bin && npm run bootstrap:hoist",
     "test": "npm run jest",
     "wdio": "rm -rf build && npm run pack && npm run wdio-site && npm run wdio-webpack",
