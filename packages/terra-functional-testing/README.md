@@ -6,7 +6,7 @@
 A functional testing utility for applications built using Terra.
 
 - [Getting Started](#getting-started)
-- [Documentation](https://github.com/cerner/terra-toolkit/tree/master/packages/terra-functional-testing/README.md)
+- [Documentation](https://github.com/cerner/terra-toolkit/tree/main/packages/terra-functional-testing/README.md)
 - [LICENSE](#license)
 
 ## Getting Started

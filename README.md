@@ -1,6 +1,6 @@
 <!-- Logo -->
 <p align="center">
-  <img height="128" width="128" src="https://github.com/cerner/terra-toolkit/raw/master/terra.png">
+  <img height="128" width="128" src="https://github.com/cerner/terra-toolkit/raw/main/terra.png">
 </p>
 
 <!-- Name -->
@@ -8,7 +8,7 @@
   Terra Toolkit
 </h1>
 
-[![License](https://badgen.net/github/license/cerner/terra-toolkit)](https://github.com/cerner/terra-toolkit/blob/master/LICENSE)
+[![License](https://badgen.net/github/license/cerner/terra-toolkit)](https://github.com/cerner/terra-toolkit/blob/main/LICENSE)
 [![Build Status](https://badgen.net/travis/cerner/terra-toolkit)](https://travis-ci.com/cerner/terra-toolkit)
 [![Dependencies status](https://badgen.net/david/dep/cerner/terra-toolkit)](https://david-dm.org/cerner/terra-toolkit)
 [![devDependencies status](https://badgen.net/david/dev/cerner/terra-toolkit)](https://david-dm.org/cerner/terra-toolkit?type=dev)
@@ -34,9 +34,9 @@ The code for the [terra-toolkit](https://www.npmjs.com/package/terra-toolkit) np
 
 | Package | Version | Status | Dependencies |
 |---------|---------|--------|--------------|
-| [@cerner/browserslist-config-terra](https://github.com/cerner/terra-toolkit/tree/master/packages/browserslist-config-terra) | [![NPM version](https://badgen.net/npm/v/@cerner/browserslist-config-terra)](https://www.npmjs.org/package/@cerner/browserslist-config-terra) | ![Stable](https://badgen.net/badge/status/Stable/green) | [![@cerner/browserslist-config-terra](https://badgen.net/david/dep/cerner/terra-toolkit/packages/browserslist-config-terra)](https://david-dm.org/cerner/terra-toolkit?path=packages/browserslist-config-terra) |
-| [@cerner/eslint-config-terra](https://github.com/cerner/terra-toolkit/tree/master/packages/eslint-config-terra) | [![NPM version](https://badgen.net/npm/v/@cerner/eslint-config-terra)](https://www.npmjs.org/package/@cerner/eslint-config-terra) | ![Stable](https://badgen.net/badge/status/Stable/green) | [![@cerner/eslint-config-terra](https://badgen.net/david/dep/cerner/terra-toolkit/packages/eslint-config-terra)](https://david-dm.org/cerner/terra-toolkit?path=packages/eslint-config-terra) |
-| [@cerner/terra-functional-testing](https://github.com/cerner/terra-toolkit/tree/master/packages/terra-functional-testing) | [![NPM version](https://badgen.net/npm/v/@cerner/terra-functional-testing)](https://www.npmjs.org/package/@cerner/terra-functional-testing) | ![Stable](https://badgen.net/badge/status/Stable/green) | [![@cerner/terra-functional-testing](https://badgen.net/david/dep/cerner/terra-toolkit/packages/terra-functional-testing)](https://david-dm.org/cerner/terra-toolkit?path=packages/terra-functional-testing) |
+| [@cerner/browserslist-config-terra](https://github.com/cerner/terra-toolkit/tree/main/packages/browserslist-config-terra) | [![NPM version](https://badgen.net/npm/v/@cerner/browserslist-config-terra)](https://www.npmjs.org/package/@cerner/browserslist-config-terra) | ![Stable](https://badgen.net/badge/status/Stable/green) | [![@cerner/browserslist-config-terra](https://badgen.net/david/dep/cerner/terra-toolkit/packages/browserslist-config-terra)](https://david-dm.org/cerner/terra-toolkit?path=packages/browserslist-config-terra) |
+| [@cerner/eslint-config-terra](https://github.com/cerner/terra-toolkit/tree/main/packages/eslint-config-terra) | [![NPM version](https://badgen.net/npm/v/@cerner/eslint-config-terra)](https://www.npmjs.org/package/@cerner/eslint-config-terra) | ![Stable](https://badgen.net/badge/status/Stable/green) | [![@cerner/eslint-config-terra](https://badgen.net/david/dep/cerner/terra-toolkit/packages/eslint-config-terra)](https://david-dm.org/cerner/terra-toolkit?path=packages/eslint-config-terra) |
+| [@cerner/terra-functional-testing](https://github.com/cerner/terra-toolkit/tree/main/packages/terra-functional-testing) | [![NPM version](https://badgen.net/npm/v/@cerner/terra-functional-testing)](https://www.npmjs.org/package/@cerner/terra-functional-testing) | ![Stable](https://badgen.net/badge/status/Stable/green) | [![@cerner/terra-functional-testing](https://badgen.net/david/dep/cerner/terra-toolkit/packages/terra-functional-testing)](https://david-dm.org/cerner/terra-toolkit?path=packages/terra-functional-testing) |
 
 ## Versioning
 
