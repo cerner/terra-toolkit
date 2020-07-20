@@ -11,6 +11,9 @@ const {
   LOCALE,
   SITE,
   THEME,
+  WDIO_EXTERNAL_HOST,
+  WDIO_EXTERNAL_PORT,
+  WDIO_INTERNAL_PORT,
 } = process.env;
 
 const defaultWebpackPath = path.resolve(process.cwd(), 'webpack.config.js');
@@ -108,7 +111,7 @@ exports.config = {
   // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
   // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
   // gets prepended directly.
-  baseUrl: `http://${ip.address()}:8080`,
+  baseUrl: `http://${WDIO_EXTERNAL_HOST || ip.address()}:${WDIO_EXTERNAL_PORT || 8080}`,
   //
   // Default timeout for all waitFor* commands.
   waitforTimeout: 10000,
@@ -130,6 +133,7 @@ exports.config = {
       ...SITE && { site: SITE },
       ...LOCALE && { locale: LOCALE },
       ...THEME && { theme: THEME },
+      ...WDIO_INTERNAL_PORT && { port: WDIO_INTERNAL_PORT },
       ...fs.existsSync(defaultWebpackPath) && { config: defaultWebpackPath },
     }],
     // Do not add the docker service when building on CI.
