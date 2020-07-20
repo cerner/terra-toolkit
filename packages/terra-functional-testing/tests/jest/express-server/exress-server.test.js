@@ -22,7 +22,7 @@ describe('Express Server', () => {
       expect(server.host).toEqual('0.0.0.0');
       expect(server.index).toBeUndefined();
       expect(server.port).toEqual('8080');
-      expect(server.site).toEqual('./build');
+      expect(server.site).toBeUndefined();
     });
 
     it('should initialize provided options', () => {

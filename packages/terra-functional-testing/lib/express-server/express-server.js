@@ -16,7 +16,7 @@ class ExpressServer {
     this.host = host || '0.0.0.0';
     this.index = index;
     this.port = port || '8080';
-    this.site = site || './build';
+    this.site = site;
   }
 
   /**
