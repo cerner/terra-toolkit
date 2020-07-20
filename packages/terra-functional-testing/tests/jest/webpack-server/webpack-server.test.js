@@ -24,9 +24,7 @@ describe('Webpack Server', () => {
       expect(server.config).toEqual('config');
       expect(server.host).toEqual('0.0.0.0');
       expect(server.index).toEqual('index.html');
-      expect(server.locale).toBeUndefined();
       expect(server.port).toEqual('8080');
-      expect(server.theme).toBeUndefined();
     });
 
     it('should initialize provided options', () => {
@@ -39,9 +37,7 @@ describe('Webpack Server', () => {
       expect(server.config).toEqual('config');
       expect(server.host).toEqual('0.0.0.0');
       expect(server.index).toEqual('mock');
-      expect(server.locale).toEqual('mock');
       expect(server.port).toEqual('mock');
-      expect(server.theme).toEqual('mock');
     });
   });
 

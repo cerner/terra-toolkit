@@ -6,19 +6,12 @@ const logger = new Logger({ prefix: 'webpack-server' });
 
 class WebpackServer {
   constructor(options = {}) {
-    const {
-      index,
-      locale,
-      port,
-      theme,
-    } = options;
+    const { index, port } = options;
 
     this.config = WebpackServer.config(options);
     this.host = '0.0.0.0';
     this.index = index || 'index.html';
-    this.locale = locale;
     this.port = port || '8080';
-    this.theme = theme;
   }
 
   /**
@@ -27,7 +20,7 @@ class WebpackServer {
    * @returns {Object|func} - The webpack configuration.
    */
   static config(options) {
-    const { config, locale, theme } = options;
+    const { config, locale, theme = 'terra-default-theme' } = options;
 
     // eslint-disable-next-line global-require, import/no-dynamic-require
     const webpackConfig = require(config);
@@ -35,7 +28,7 @@ class WebpackServer {
     if (typeof webpackConfig === 'function') {
       return webpackConfig({
         ...locale && { defaultLocale: locale },
-        ...theme && { theme },
+        theme,
       }, { p: true });
     }
 
