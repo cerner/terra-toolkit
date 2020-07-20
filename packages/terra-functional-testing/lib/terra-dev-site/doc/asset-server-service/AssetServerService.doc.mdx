@@ -1,10 +1,10 @@
-# Asset Service
+# Asset Server Service
 
-The asset service initializes a server to serve compiled assets to the testing environment.
+The asset server service initializes a server to serve compiled assets to the testing environment.
 
 ## Installation
 
-The asset service should be installed as a development dependency.
+The asset server service should be installed as a development dependency.
 
 ```bash
 npm install --save-dev @cerner/terra-functional-testing
@@ -16,13 +16,13 @@ To use the service it must be added to the services array in the `wdio.conf.js` 
 
 ```js
 // wdio.conf.js
-const AssetService = require('@cerner/terra-functional-testing/lib/services/wdio-asset-service');
+const AssetServerService = require('@cerner/terra-functional-testing/lib/services/wdio-asset-server-service');
 
 export.config = {
     // ...
     services: [
-        [AssetService, {
-            // Asset service options here.
+        [AssetServerService, {
+            // Asset server service options here.
             // ...
         }]
     ],
@@ -42,18 +42,18 @@ Type: `string`
 
 Required: `false`
 
-Default: The asset service will check the current working directory for a `webpack.config.js` file.
+Default: The asset server service will check the current working directory for a `webpack.config.js` file.
 
 Example:
 
 ```js
 // wdio.conf.js
-const AssetService = require('@cerner/terra-functional-testing/lib/services/wdio-asset-service');
+const AssetServerService = require('@cerner/terra-functional-testing/lib/services/wdio-asset-server-service');
 
 export.config = {
     // ...
     services: [
-        [AssetService, {
+        [AssetServerService, {
           config: './path/webpack.config.js'
         }]
     ],
@@ -75,12 +75,12 @@ Example:
 
 ```js
 // wdio.conf.js
-const AssetService = require('@cerner/terra-functional-testing/lib/services/wdio-asset-service');
+const AssetServerService = require('@cerner/terra-functional-testing/lib/services/wdio-asset-server-service');
 
 export.config = {
     // ...
     services: [
-        [AssetService, {
+        [AssetServerService, {
           index: 'index.html',
         }]
     ],
@@ -102,12 +102,12 @@ Example:
 
 ```js
 // wdio.conf.js
-const AssetService = require('@cerner/terra-functional-testing/lib/services/wdio-asset-service');
+const AssetServerService = require('@cerner/terra-functional-testing/lib/services/wdio-asset-server-service');
 
 export.config = {
     // ...
     services: [
-        [AssetService, {
+        [AssetServerService, {
           locale: 'en-US',
         }]
     ],
@@ -129,12 +129,12 @@ Example:
 
 ```js
 // wdio.conf.js
-const AssetService = require('@cerner/terra-functional-testing/lib/services/wdio-asset-service');
+const AssetServerService = require('@cerner/terra-functional-testing/lib/services/wdio-asset-server-service');
 
 export.config = {
     // ...
     services: [
-        [AssetService, {
+        [AssetServerService, {
           port: 8080,
         }]
     ],
@@ -158,12 +158,12 @@ Example:
 
 ```js
 // wdio.conf.js
-const AssetService = require('@cerner/terra-functional-testing/lib/services/wdio-asset-service');
+const AssetServerService = require('@cerner/terra-functional-testing/lib/services/wdio-asset-server-service');
 
 export.config = {
     // ...
     services: [
-        [AssetService, {
+        [AssetServerService, {
           site: './build',
         }]
     ],
@@ -185,12 +185,12 @@ Example:
 
 ```js
 // wdio.conf.js
-const AssetService = require('@cerner/terra-functional-testing/lib/services/wdio-asset-service');
+const AssetServerService = require('@cerner/terra-functional-testing/lib/services/wdio-asset-server-service');
 
 export.config = {
     // ...
     services: [
-        [AssetService, {
+        [AssetServerService, {
           theme: 'terra-theme-name',
         }]
     ],

@@ -1,13 +1,13 @@
 jest.mock('../../../lib/logger/logger');
 
-const AssetService = require('../../../lib/services/wdio-asset-service');
+const AssetService = require('../../../lib/services/wdio-asset-server-service');
 const ExpressServer = require('../../../lib/express-server/express-server');
 const WebpackServer = require('../../../lib/webpack-server/webpack-server');
 
 jest.mock('../../../lib/express-server/express-server');
 jest.mock('../../../lib/webpack-server/webpack-server');
 
-describe('WDIO Asset Service', () => {
+describe('WDIO Asset Server Service', () => {
   describe('constructor', () => {
     it('should initialize with the provided options', () => {
       const service = new AssetService({ mock: 'options' });

@@ -4,7 +4,7 @@ const ip = require('ip');
 
 const SeleniumDockerService = require('../services/wdio-selenium-docker-service');
 const TerraService = require('../services/wdio-terra-service');
-const AssetService = require('../services/wdio-asset-service');
+const AssetServerService = require('../services/wdio-asset-server-service');
 
 const {
   CI,
@@ -126,7 +126,7 @@ exports.config = {
   // commands. Instead, they hook themselves up into the test process.
   services: [
     [TerraService],
-    [AssetService, {
+    [AssetServerService, {
       ...SITE && { site: SITE },
       ...LOCALE && { locale: LOCALE },
       ...THEME && { theme: THEME },

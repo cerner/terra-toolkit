@@ -2,15 +2,15 @@ const ExpressServer = require('../express-server');
 const WebpackServer = require('../webpack-server');
 const Logger = require('../logger/logger');
 
-const logger = new Logger({ prefix: 'wdio-asset-service' });
+const logger = new Logger({ prefix: 'wdio-asset-server-service' });
 
-class AssetService {
+class AssetServerService {
   constructor(options = {}) {
     this.options = options;
   }
 
   /**
-   * Prepares the asset service.
+   * Prepares the asset server service.
    */
   async onPrepare() {
     const { config, site } = this.options;
@@ -42,4 +42,4 @@ class AssetService {
   }
 }
 
-module.exports = AssetService;
+module.exports = AssetServerService;
