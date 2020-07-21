@@ -39,6 +39,11 @@
     "@wdio/spec-reporter": "^6.0.16",
     "@wdio/sync": "^6.1.14",
     "axe-core": "3.5.5",
-    "commander": "^5.1.0"
+    "commander": "^5.1.0",
+    "express": "^4.17.1",
+    "ip": "^1.1.5",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
   }
 }
