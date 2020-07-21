@@ -61,10 +61,10 @@ class ExpressServer {
       this.server = app.listen(this.port, this.host, (error) => {
         if (error) {
           reject(error);
+        } else {
+          logger.info(`Express server has started listening at ${`http://${this.host}:${this.port}/`}.`);
+          resolve();
         }
-
-        logger.info(`Express server has started listening at ${`http://${this.host}:${this.port}/`}.`);
-        resolve();
       });
     });
   }

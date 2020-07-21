@@ -101,9 +101,9 @@ class WebpackServer {
       this.server.listen(this.port, this.host, (error) => {
         if (error) {
           reject(error);
+        } else {
+          logger.info(`Webpack server has started listening at ${`http://${this.host}:${this.port}/`}.`);
         }
-
-        logger.info(`Webpack server has started listening at ${`http://${this.host}:${this.port}/`}.`);
       });
     });
   }
