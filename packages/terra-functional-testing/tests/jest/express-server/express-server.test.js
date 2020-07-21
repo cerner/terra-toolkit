@@ -20,18 +20,14 @@ describe('Express Server', () => {
       const server = new ExpressServer();
 
       expect(server.host).toEqual('0.0.0.0');
-      expect(server.index).toBeUndefined();
       expect(server.port).toEqual('8080');
       expect(server.site).toBeUndefined();
     });
 
     it('should initialize provided options', () => {
-      const server = new ExpressServer({
-        host: 'mock', index: 'mock', port: 'mock', site: 'mock',
-      });
+      const server = new ExpressServer({ host: 'mock', port: 'mock', site: 'mock' });
 
       expect(server.host).toEqual('mock');
-      expect(server.index).toEqual('mock');
       expect(server.port).toEqual('mock');
       expect(server.site).toEqual('mock');
     });

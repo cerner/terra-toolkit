@@ -23,20 +23,16 @@ describe('Webpack Server', () => {
 
       expect(server.config).toEqual('config');
       expect(server.host).toEqual('0.0.0.0');
-      expect(server.index).toEqual('index.html');
       expect(server.port).toEqual('8080');
     });
 
     it('should initialize provided options', () => {
       jest.spyOn(WebpackServer, 'config').mockImplementation(() => 'config');
 
-      const server = new WebpackServer({
-        index: 'mock', locale: 'mock', port: 'mock', theme: 'mock',
-      });
+      const server = new WebpackServer({ locale: 'mock', port: 'mock', theme: 'mock' });
 
       expect(server.config).toEqual('config');
       expect(server.host).toEqual('0.0.0.0');
-      expect(server.index).toEqual('mock');
       expect(server.port).toEqual('mock');
     });
   });

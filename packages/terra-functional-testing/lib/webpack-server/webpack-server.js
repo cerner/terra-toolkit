@@ -6,17 +6,16 @@ const logger = new Logger({ prefix: 'webpack-server' });
 
 class WebpackServer {
   constructor(options = {}) {
-    const { index, port } = options;
+    const { host, port } = options;
 
     this.config = WebpackServer.config(options);
-    this.host = '0.0.0.0';
-    this.index = index || 'index.html';
+    this.host = host || '0.0.0.0';
     this.port = port || '8080';
   }
 
   /**
    * Retrieves the webpack configuration.
-   * @param {Object} options - The configuration options.
+   * @param {Object} options - The configuration options.*
    * @returns {Object|func} - The webpack configuration.
    */
   static config(options) {
@@ -90,7 +89,7 @@ class WebpackServer {
         liveReload: false,
         host: this.host,
         port: this.port,
-        index: this.index,
+        index: 'index.html',
         stats: {
           colors: true,
           children: false,

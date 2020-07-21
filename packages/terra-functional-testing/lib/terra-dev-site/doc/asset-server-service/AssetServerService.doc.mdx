@@ -61,33 +61,6 @@ export.config = {
 };
 ```
 
-### index
-
-The asset index.
-
-Type: `string`
-
-Required: `false`
-
-Default: `index.html`
-
-Example:
-
-```js
-// wdio.conf.js
-const AssetServerService = require('@cerner/terra-functional-testing/lib/services/wdio-asset-server-service');
-
-export.config = {
-    // ...
-    services: [
-        [AssetServerService, {
-          index: 'index.html',
-        }]
-    ],
-    // ...
-};
-```
-
 ### locale
 
 An optional locale that will be passed into the webpack configuration as an environment variable.

@@ -6,15 +6,9 @@ const logger = new Logger({ prefix: 'express-server' });
 
 class ExpressServer {
   constructor(options = {}) {
-    const {
-      host,
-      index,
-      port,
-      site,
-    } = options;
+    const { host, port, site } = options;
 
     this.host = host || '0.0.0.0';
-    this.index = index;
     this.port = port || '8080';
     this.site = site;
   }
@@ -26,10 +20,7 @@ class ExpressServer {
   createApp() {
     const app = express();
 
-    app.use(express.static(this.site, {
-      ...this.index && { index: this.index },
-      extensions: ['html', 'htm'],
-    }));
+    app.use(express.static(this.site, { extensions: ['html', 'htm'] }));
 
     app.use([/\/[^.]*$/, '/*.html?'], (_req, res, next) => {
       // Return 404.html if provided.
