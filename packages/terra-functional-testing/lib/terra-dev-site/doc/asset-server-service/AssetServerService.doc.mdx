@@ -32,11 +32,11 @@ export.config = {
 
 ## Options
 
-### config
+### webpackConfig
 
 A path to a webpack configuration file.
 
-Note: The `site` configuration option will take precedence over `config` if both are provided.
+Note: The `site` configuration option will take precedence over `webpackConfig` if both are provided.
 
 Type: `string`
 
@@ -54,7 +54,7 @@ export.config = {
     // ...
     services: [
         [AssetServerService, {
-          config: './path/webpack.config.js'
+          webpackConfig: './path/webpack.config.js'
         }]
     ],
     // ...
@@ -119,7 +119,7 @@ export.config = {
 
 A relative path to a directory of static assets. If provided, an express server will be launched to serve the directory assets.
 
-Note: The `site` configuration option will take precedence over `config` if both are provided.
+Note: The `site` configuration option will take precedence over `webpackConfig` if both are provided.
 
 Type: `string`
 

@@ -19,19 +19,16 @@ class WebpackServer {
    * @returns {Object|func} - The webpack configuration.
    */
   static config(options) {
-    const { config, locale, theme = 'terra-default-theme' } = options;
+    const { locale, theme = 'terra-default-theme', webpackConfig } = options;
 
     // eslint-disable-next-line global-require, import/no-dynamic-require
-    const webpackConfig = require(config);
+    const config = require(webpackConfig);
 
-    if (typeof webpackConfig === 'function') {
-      return webpackConfig({
-        ...locale && { defaultLocale: locale },
-        theme,
-      }, { p: true });
+    if (typeof config === 'function') {
+      return config({ ...locale && { defaultLocale: locale }, theme }, { p: true });
     }
 
-    return webpackConfig;
+    return config;
   }
 
   /**

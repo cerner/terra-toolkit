@@ -13,9 +13,9 @@ class AssetServerService {
    * Prepares the asset server service.
    */
   async onPrepare() {
-    const { config, site } = this.options;
+    const { webpackConfig, site } = this.options;
 
-    if (!config && !site) {
+    if (!webpackConfig && !site) {
       logger.warn('No webpack configuration provided.');
 
       return;

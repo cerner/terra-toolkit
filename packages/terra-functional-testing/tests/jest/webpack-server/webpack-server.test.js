@@ -42,7 +42,7 @@ describe('Webpack Server', () => {
       jest.mock('./mock-webpack.config.js', () => 'mock-webpack');
 
       const options = {
-        config: path.resolve(__dirname, './mock-webpack.config.js'),
+        webpackConfig: path.resolve(__dirname, './mock-webpack.config.js'),
       };
 
       expect(WebpackServer.config(options)).toEqual('mock-webpack');
@@ -52,7 +52,7 @@ describe('Webpack Server', () => {
       jest.mock('./mock-webpack.config.js', () => () => 'mock-webpack-function');
 
       const options = {
-        config: path.resolve(__dirname, './mock-webpack.config.js'),
+        webpackConfig: path.resolve(__dirname, './mock-webpack.config.js'),
       };
 
       expect(WebpackServer.config(options)).toEqual('mock-webpack-function');
@@ -62,7 +62,7 @@ describe('Webpack Server', () => {
       jest.mock('./mock-webpack.config.js', () => (env, args) => ({ ...env, ...args }));
 
       const options = {
-        config: path.resolve(__dirname, './mock-webpack.config.js'),
+        webpackConfig: path.resolve(__dirname, './mock-webpack.config.js'),
         locale: 'en',
         theme: 'lowlight',
       };

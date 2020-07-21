@@ -134,7 +134,7 @@ exports.config = {
       ...LOCALE && { locale: LOCALE },
       ...THEME && { theme: THEME },
       ...WDIO_INTERNAL_PORT && { port: WDIO_INTERNAL_PORT },
-      ...fs.existsSync(defaultWebpackPath) && { config: defaultWebpackPath },
+      ...fs.existsSync(defaultWebpackPath) && { webpackConfig: defaultWebpackPath },
     }],
     // Do not add the docker service when building on CI.
     ...(CI ? [] : [[SeleniumDockerService]]),

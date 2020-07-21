@@ -34,7 +34,7 @@ describe('WDIO Asset Server Service', () => {
     });
 
     it('should start a webpack server if provided a config configuration option', async () => {
-      const service = new AssetService({ config: 'webpack.config.js' });
+      const service = new AssetService({ webpackConfig: 'webpack.config.js' });
 
       await service.onPrepare();
 
