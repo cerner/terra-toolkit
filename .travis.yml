@@ -10,7 +10,7 @@ before_install:
   - npm run clean
 jobs:
   include:
-    - stage: danger lint jest and compile
+    - stage: danger lint and jest
       script:
         # clear the cache of any old build artifacts
         - rm -rf ./travis-build
@@ -38,8 +38,9 @@ jobs:
         - npx lerna publish from-package --yes > publish-output.txt
         # push tags to github based on output written to file
         - node ./scripts/release/gitTagMonoRepo.js
+
 stages:
-  - danger lint jest and compile
+  - danger lint and jest
   - wdio
   - name: publish
     if: type != pull_request

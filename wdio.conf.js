@@ -1,4 +1,3 @@
-const path = require('path');
 const defaultWdioConfig = require('./packages/terra-functional-testing/lib/config/wdio.conf');
 
 const wdioConfig = defaultWdioConfig.config;
