@@ -29,6 +29,7 @@
     "bootstrap:hoist": "lerna bootstrap --hoist --force-local",
     "clean": "lerna clean --yes && rm -rf node_modules",
     "clean:install": "npm run clean && npm install",
+    "danger": "danger ci",
     "jest": "jest",
     "lint": "npm run lint:js",
     "lint:js": "eslint --ext .js,.jsx .",
@@ -37,7 +38,8 @@
     "test": "npm run jest",
     "wdio": "rm -rf build && npm run pack && npm run wdio-site && npm run wdio-webpack",
     "wdio-site": "SITE=build node ./packages/terra-functional-testing/bin/test-runner.js",
-    "wdio-webpack": "node ./packages/terra-functional-testing/bin/test-runner.js"
+    "wdio-webpack": "node ./packages/terra-functional-testing/bin/test-runner.js",
+    "version": "lerna version --no-git-tag-version"
   },
   "devDependencies": {
     "danger": "^9.1.0",
