@@ -27,7 +27,7 @@
   },
   "scripts": {
     "bootstrap:hoist": "lerna bootstrap --hoist --force-local",
-    "clean": "lerna clean --yes && rm -rf node_modules",
+    "clean": "lerna clean --yes && rm -rf node_modules || true",
     "clean:install": "npm run clean && npm install",
     "danger": "danger ci",
     "jest": "jest",
