@@ -41,6 +41,6 @@ jobs:
 stages:
   - danger lint jest and compile
   - wdio
-  - name: publish & deploy
+  - name: publish
     if: type != pull_request
 
