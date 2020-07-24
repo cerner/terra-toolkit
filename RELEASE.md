@@ -17,4 +17,4 @@ You'll need to move the package into the terra-ui team under the Cerner org on n
 - At the top of this page, there should be an input labeled, "Package". Type in the full package name and press enter.
 - This will add the package to ther terra-ui team's packages under the Cerner org on npm and then all team members on the terra-ui team in npm will have access to publish in future releases.
 
-[project-url]: https://www.npmjs.com/org/cerner/team/terra-uißß
+[project-url]: https://www.npmjs.com/org/cerner
