@@ -7,13 +7,14 @@ const TerraService = require('../services/wdio-terra-service');
 const AssetServerService = require('../services/wdio-asset-server-service');
 
 const {
-  CI,
   LOCALE,
   SITE,
   THEME,
+  WDIO_DISABLE_SELENIUM_SERVICE,
   WDIO_EXTERNAL_HOST,
   WDIO_EXTERNAL_PORT,
   WDIO_INTERNAL_PORT,
+  WDIO_HOSTNAME,
 } = process.env;
 
 const defaultWebpackPath = path.resolve(process.cwd(), 'webpack.config.js');
@@ -102,8 +103,8 @@ exports.config = {
   bail: 0,
   // Set the path to connect to the selenium container.
   path: '/wd/hub',
-  // The hostname of the driver server. When building on CI the host is set to standalone-chrome.
-  hostname: CI ? 'standalone-chrome' : 'localhost',
+  // The hostname of the driver server.
+  hostname: WDIO_HOSTNAME || 'localhost',
   // The port the driver server is on.
   port: 4444,
   //
@@ -136,8 +137,8 @@ exports.config = {
       ...WDIO_INTERNAL_PORT && { port: WDIO_INTERNAL_PORT },
       ...fs.existsSync(defaultWebpackPath) && { webpackConfig: defaultWebpackPath },
     }],
-    // Do not add the docker service when building on CI.
-    ...(CI ? [] : [[SeleniumDockerService]]),
+    // Do not add the docker service if disabled.
+    ...(WDIO_DISABLE_SELENIUM_SERVICE ? [] : [[SeleniumDockerService]]),
   ],
   // Framework you want to run your specs with.
   // The following are supported: Mocha, Jasmine, and Cucumber
