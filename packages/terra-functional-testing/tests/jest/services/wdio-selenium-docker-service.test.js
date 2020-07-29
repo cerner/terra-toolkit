@@ -299,7 +299,7 @@ describe('WDIO Selenium Docker Service', () => {
       await service.waitForNetworkReady();
 
       // The host and port are undefined for this test.
-      expect(service.pollCommand).toHaveBeenCalledWith('curl -sSL http://undefined:undefined/wd/hub/status', expect.any(Function));
+      expect(service.pollCommand).toHaveBeenCalledWith('curl -sSL http://undefined:undefined/wd/hub/status', expect.any(Function), 60, 2000);
     });
 
     it('should reject the command if the network is not ready', async () => {

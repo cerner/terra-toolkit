@@ -24,8 +24,6 @@ jobs:
       # Don't clean install
       before_install: skip
       script:
-        # we start up our own standalone chrome instance because the Selenium Docker Service doesn't seem to work here.
-        - docker-compose up -d standalone-chrome-travis
         # using the travis env section to set env variables seems to break cache
         - npm run wdio
 

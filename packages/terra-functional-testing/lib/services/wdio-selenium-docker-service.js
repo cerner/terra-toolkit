@@ -164,7 +164,9 @@ class SeleniumDockerService {
         } else {
           reject();
         }
-      })));
+        // A two minute timeout for the selenium service to become available.
+        // This helps account for pulling the docker images for the very first time.
+      })), 60, 2000);
   }
 
   /**
