@@ -1,6 +1,5 @@
-ChangeLog
-=========
+# Changelog
 
-Unreleased
------------------
+## Unreleased
+
 * Initial stable release
