@@ -88,7 +88,7 @@ class SeleniumDockerService {
    * @param {number} interval - The timeout between commands in milliseconds. Defaults to every two seconds.
    * @returns {Promise} - A promise that resolves when the callback accepts the command response.
    */
-  async pollCommand(command, callback, retries = 60, interval = 2000) {
+  async pollCommand(command, callback, retries = 30, interval = 2000) {
     return new Promise((resolve, reject) => {
       let retryCount = 0;
       let pollTimeout = null;
@@ -164,7 +164,9 @@ class SeleniumDockerService {
         } else {
           reject();
         }
-      })));
+        // A two minute timeout for the selenium service to become available.
+        // This helps account for pulling the docker images for the very first time.
+      })), 60, 2000);
   }
 
   /**
