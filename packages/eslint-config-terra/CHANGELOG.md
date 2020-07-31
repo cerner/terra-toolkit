@@ -103,6 +103,5 @@
 
 ## 1.0.0 - (June 18, 2018)
 
->>>>>>> main
 * Initial stable release
   * Updated to ensure travis builds successfully
