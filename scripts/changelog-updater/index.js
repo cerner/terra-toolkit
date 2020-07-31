@@ -41,9 +41,8 @@ exec('npx lerna changed', (error, stdout) => {
 
         // Default message
         let releaseContent = [
-          'Changed',
-          '',
-          '* Minor dependency version bump',
+          '* Changed',
+          '  * Minor dependency version bump',
           '',
           '',
         ].join('\n');
