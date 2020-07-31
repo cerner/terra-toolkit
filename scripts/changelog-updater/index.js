@@ -1,37 +1,17 @@
 #!/usr/bin/env node
 /* eslint-disable no-console */
-/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 const fs = require('fs');
 const path = require('path');
 const { exec } = require('child_process');
 
-const findAndReplace = (options) => {
-  /* eslint-disable-next-line consistent-return */
-  fs.readFile(options.file, 'utf8', (errMsg, data) => {
-    if (errMsg) {
-      return console.log(errMsg);
-    }
-
-    const result = data.replace(options.regex, options.content);
-
-    fs.writeFile(options.file, result, 'utf8', (error) => {
-      if (error) {
-        console.error(`Error writing content to ${options.file} ${error}\n`);
-      } else {
-        console.log(`Content written to ${options.file}`);
-      }
-    });
-  });
-};
-
-exec('npx lerna updated', (error, stdout) => {
+exec('npx lerna changed', (error, stdout) => {
   if (error) {
     console.error(`exec error: ${error}`);
     return;
   }
 
   // Clean up lerna updated output and convert to an array
-  const updatedPackages = stdout.split('\n').map(x => `packages/${x}`);
+  const updatedPackages = stdout.split('\n').map(x => `packages/${x.replace('@cerner/', '')}`);
   updatedPackages.pop(); // Remove last item as it is an empty string
 
   // Update release version in changelog files
@@ -41,7 +21,7 @@ exec('npx lerna updated', (error, stdout) => {
     const releaseDate = new Date().toLocaleString('en-us', { month: 'long', year: 'numeric', day: 'numeric' });
 
     if (!fs.existsSync(packageFile) || !fs.existsSync(changelogFile)) {
-      return; /* eslint-disable-line no-useless-return */
+      return;
     }
 
     // Read package.json and pull out version
@@ -49,48 +29,45 @@ exec('npx lerna updated', (error, stdout) => {
       if (err) {
         console.error(`Error reading file ${packageFile} ${err}\n`);
       } else {
+        // This is expected to be run after the packages are versioned.
         const { version } = JSON.parse(packageJson);
 
-        // Hard coded for minor updates for now
-        const major = false;
-        const minor = true;
-        const patch = false;
+        const regex = /## Unreleased\n*([^#]*)/;
 
-        if (version) {
-          const majorVersion = version.split('.')[0];
-          const minorVersion = version.split('.')[1];
-          const patchVersion = version.split('.')[2];
+        const changelog = fs.readFileSync(changelogFile, 'utf8');
 
-          let newVersion;
+        // Grab any content in the unreleased section until the next heading (#).
+        const unreleasedContent = changelog.match(regex);
 
-          if (major) {
-            const updatedMajorVersion = parseInt(majorVersion, 10) + 1;
-            newVersion = `${updatedMajorVersion}.0.0`;
-          }
+        // Default message
+        let releaseContent = [
+          '* Changed',
+          '  * Minor dependency version bump',
+          '',
+          '',
+        ].join('\n');
 
-          if (minor) {
-            const updatedMinorVersion = parseInt(minorVersion, 10) + 1;
-            newVersion = `${majorVersion}.${updatedMinorVersion}.0`;
-          }
+        const [, captureGroup] = unreleasedContent;
 
-          if (patch) {
-            const updatedPatchVersion = parseInt(patchVersion, 10) + 1;
-            newVersion = `${majorVersion}.${minorVersion}.${updatedPatchVersion}`;
-          }
-
-          const changelogDoc = `Unreleased
-----------
-${newVersion} - (${releaseDate})
-------------------
-### Changed
-* Minor dependency version bump`;
-          const regex = /Unreleased\n----------/g;
-
-          // Update CHANGELOG.md
-          findAndReplace({
-            file: changelogFile, regex, content: changelogDoc,
-          });
+        // If there was content, don't use the default content.
+        if (captureGroup) {
+          releaseContent = captureGroup;
         }
+
+        // setup change log entry
+        const changelogDoc = [
+          '## Unreleased',
+          '',
+          `## ${version} - (${releaseDate})`,
+          '',
+          releaseContent,
+        ].join('\n');
+
+        // Swap in change log entry
+        const updatedChangelog = changelog.replace(regex, changelogDoc);
+
+        // write out file.
+        fs.writeFileSync(changelogFile, updatedChangelog, { encoding: 'utf8', flag: 'w' });
       }
     });
   });

@@ -39,7 +39,7 @@
     "wdio": "rm -rf build && npm run pack && npm run wdio-site && npm run wdio-webpack",
     "wdio-site": "SITE=build node ./packages/terra-functional-testing/bin/test-runner.js",
     "wdio-webpack": "node ./packages/terra-functional-testing/bin/test-runner.js",
-    "version": "lerna version --no-git-tag-version"
+    "version": "lerna version --no-git-tag-version && node ./scripts/changelog-updater/index.js"
   },
   "devDependencies": {
     "danger": "^9.1.0",
