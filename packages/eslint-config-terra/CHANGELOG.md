@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unreleased
+
 * Added
   * babel-eslint as parser to allow current js functionality, like optional chaining.
 
