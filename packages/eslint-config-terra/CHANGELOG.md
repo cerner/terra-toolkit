@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Added
+  * babel-eslint as parser to allow current js functionality, like optional chaining.
+
 ## 4.0.0 - (May 5, 2020)
 
 * Breaking Change
@@ -94,7 +97,6 @@
 
 * Changed
   * Updated 'jsx-a11y/label-has-for' to require id or nested input for label mapping
-
 ## 1.0.1 - (June 19, 2018)
 
 * Changed
