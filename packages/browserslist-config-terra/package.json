@@ -1,6 +1,6 @@
 {
   "name": "@cerner/browserslist-config-terra",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Terra Browserslist Shared Config",
   "main": "browserslist.config.js",
   "publishConfig": {

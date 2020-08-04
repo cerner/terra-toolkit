@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 4.1.0 - (August 4, 2020)
+
 * Added
   * babel-eslint as parser to allow current js functionality, like optional chaining.
 
