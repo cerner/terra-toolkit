@@ -26,11 +26,22 @@
     "extends": "./packages/eslint-config-terra/eslint.config.js",
     "overrides": [
       {
-        "files": ["./packages/terra-functional-testing/tests/jest/services/wdio-terra-visual-**/**/*.js"],
+        "files": [
+          "./packages/terra-functional-testing/tests/mocha/services/wdio-terra-visual-**/**/*.js"
+        ],
+        "env": {
+          "mocha": true,
+          "node": true
+        },
         "rules": {
           "prefer-arrow-callback": "off",
           "func-names": "off",
-          "import/no-extraneous-dependencies": ["error", {"devDependencies": true }],
+          "import/no-extraneous-dependencies": [
+            "error",
+            {
+              "devDependencies": true
+            }
+          ],
           "space-before-function-paren": "off"
         }
       }
@@ -42,11 +53,12 @@
     "clean:install": "npm run clean && npm install",
     "danger": "danger ci",
     "jest": "jest",
+    "mocha": "cd packages/terra-functional-testing && npm run mocha",
     "lint": "npm run lint:js",
     "lint:js": "eslint --ext .js,.jsx .",
     "pack": "webpack -p",
     "postinstall": "link-parent-bin && npm run bootstrap:hoist",
-    "test": "npm run jest",
+    "test": "npm run jest && npm run mocha",
     "wdio": "rm -rf build && npm run pack && npm run wdio-site && npm run wdio-webpack",
     "wdio-site": "SITE=build node ./packages/terra-functional-testing/bin/test-runner.js",
     "wdio-webpack": "node ./packages/terra-functional-testing/bin/test-runner.js",

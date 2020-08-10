@@ -57,3 +57,4 @@ errorScreenshots
 **/aggregated-translations/*.*
 generated-themes
 package-lock.json
+packages/terra-functional-testing/lib/services/wdio-terra-visual-regression-service
