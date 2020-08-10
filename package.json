@@ -23,7 +23,18 @@
     "url": "https://github.com/cerner/terra-toolkit/issues"
   },
   "eslintConfig": {
-    "extends": "./packages/eslint-config-terra/eslint.config.js"
+    "extends": "./packages/eslint-config-terra/eslint.config.js",
+    "overrides": [
+      {
+        "files": ["./packages/terra-functional-testing/tests/jest/services/wdio-terra-visual-**/**/*.js"],
+        "rules": {
+          "prefer-arrow-callback": "off",
+          "func-names": "off",
+          "import/no-extraneous-dependencies": ["error", {"devDependencies": true }],
+          "space-before-function-paren": "off"
+        }
+      }
+    ]
   },
   "scripts": {
     "bootstrap:hoist": "lerna bootstrap --hoist --force-local",
@@ -42,11 +53,13 @@
     "version": "lerna version --no-git-tag-version && node ./scripts/changelog-updater/index.js"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
     "danger": "^9.1.0",
     "eslint": "^6.1.0",
     "html-webpack-plugin": "^4.3.0",
     "jest": "^26.0.1",
     "lerna": "^3.20.2",
-    "link-parent-bin": "^1.0.0"
+    "link-parent-bin": "^1.0.0",
+    "sinon": "^9.0.2"
   }
 }

@@ -7,8 +7,12 @@
     "access": "public"
   },
   "scripts": {
+    "build": "npm run clean && babel ./src -d lib",
     "lint": "eslint --ext .js,.jsx .",
     "jest": "jest --config ../../jest.config.js",
+    "prebuild": "rm -rf lib/services/wdio-terra-visual-regression",
+    "prepare": "npm run build",
+    "mocha": "mocha --require @babel/register test/mocha/**/*.test.jss",
     "test": "npm run jest"
   },
   "repository": {
