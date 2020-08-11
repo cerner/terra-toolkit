@@ -1,15 +1,19 @@
 import path from 'path';
-import { remote, multiremote } from 'webdriverio';
-import { start } from 'selenium-standalone';
+import { remote, multiremote } from 'webdriverio'; // eslint-disable-line
+import { start } from 'selenium-standalone'; // eslint-disable-line
 import { assert } from 'chai';
 
+/**
+ * THIS TEST IS BROKEN. It is also broke in wdio-novus-visual-regression-service package.
+ * Keeping test file for now. Plan to update and pull these tests into wdio after initial
+ * project integration.
+ */
 import { init } from '../../../../../lib/services/wdio-terra-visual-regression-service';
 import generateUUID from '../../../../../lib/services/wdio-terra-visual-regression-service/utils/generateUUID';
 import compareImages from '../helper/compareImages';
 
-const tmpDir = path.join(process.cwd(), '.tmp');
-const fixtureDir = path.join(process.cwd(), 'test/fixture');
-const screenshotDir = path.join(fixtureDir, '/web/screenshots');
+const tmpDir = path.resolve(__dirname, '..', '..', '..', '..', 'tmp');
+const screenshotDir = path.resolve(__dirname, '..', '..', '..', '..', 'fixtures', 'web', 'screenshots');
 
 const screenResponsiveDocument480 = path.join(screenshotDir, 'desktop-responsive-document-480.png');
 const screenResponsiveElemenentFooter480 = path.join(screenshotDir, 'desktop-responsive-element-footer-480.png');
@@ -19,13 +23,15 @@ let selenium;
 before(async () => {
   selenium = await new Promise((resolve, reject) => {
     start((err, child) => {
-      err ? reject(err) : resolve(child);
+      err ? reject(err) : resolve(child); // eslint-disable-line
     });
   });
 });
 
 after(async () => {
-  selenium.kill();
+  if (selenium) {
+    selenium.kill();
+  }
 });
 
 describe('standalone', () => {
@@ -38,7 +44,6 @@ describe('standalone', () => {
           browserName: 'chrome',
         },
       });
-
       // init wdio-screenshot
       init(browser);
 

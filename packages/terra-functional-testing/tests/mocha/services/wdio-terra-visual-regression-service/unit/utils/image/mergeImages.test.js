@@ -5,8 +5,8 @@ import saveBase64Image from '../../../../../../../lib/services/wdio-terra-visual
 
 import compareImages from '../../../helper/compareImages';
 
-const tmpPath = path.join(process.cwd(), '.tmp');
-const imagePath = path.join(process.cwd(), 'test', 'fixture', 'images');
+const tmpPath = path.resolve(__dirname, '..', '..', '..', '..', '..', '..', 'tmp');
+const imagePath = path.resolve(__dirname, '..', '..', '..', '..', '..', '..', 'fixtures', 'images');
 
 const image100x100 = path.join(imagePath, 'base', '100x100.png');
 const image200x100 = path.join(imagePath, 'base', '200x100.png');

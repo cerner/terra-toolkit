@@ -15,12 +15,12 @@ export async function cropImage(base64Screenshot, cropDimensions) {
   const image = await Jimp.read(new Buffer.from(base64Screenshot, 'base64')); // eslint-disable-line new-cap
 
   if (cropDimensions.getRotation() !== 0) {
-    image.rotate(cropDimensions.getRotation());
+    image.rotate(-cropDimensions.getRotation());
   }
 
   const { height } = image.bitmap;
 
-  const x = cropDimensions.getX();
+  let x = cropDimensions.getX();
   let y = cropDimensions.getY();
 
   if (cropDimensions.getGravity() === 'SouthWest') {

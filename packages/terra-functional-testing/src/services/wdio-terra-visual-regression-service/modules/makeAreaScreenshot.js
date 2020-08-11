@@ -13,7 +13,7 @@ import ScreenDimension from '../utils/ScreenDimension';
 import normalizeScreenshot from '../utils/normalizeScreenshot';
 
 const log = logger('wdio-terra-visual-regression-service:makeAreaScreenshot');
-const tmpDir = path.join(__dirname, '..', '..', '.tmp');
+const tmpDir = path.resolve(__dirname, '..', '..', 'tmp');
 
 async function storeScreenshot(browser, screenDimensions, cropDimensions, base64Screenshot, filePath) {
   const normalizedBase64Screenshot = await normalizeScreenshot(browser, screenDimensions, base64Screenshot);

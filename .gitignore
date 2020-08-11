@@ -34,7 +34,7 @@
 /spec/reports/
 /test/tmp/
 /test/version_tmp/
-/tmp/
+tmp
 /vendor/bundle
 build-iPhoneOS/
 build-iPhoneSimulator/
@@ -58,3 +58,4 @@ errorScreenshots
 generated-themes
 package-lock.json
 packages/terra-functional-testing/lib/services/wdio-terra-visual-regression-service
+.spectre_test_run_url.json

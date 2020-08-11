@@ -1,5 +1,6 @@
 import path from 'path';
 import fsExtra from 'fs-extra';
+import { assert } from 'chai';
 
 import { cropImage } from '../../../../../../../lib/services/wdio-terra-visual-regression-service/utils/image';
 import CropDimension from '../../../../../../../lib/services/wdio-terra-visual-regression-service/utils/CropDimension';
@@ -7,8 +8,8 @@ import saveBase64Image from '../../../../../../../lib/services/wdio-terra-visual
 
 import compareImages from '../../../helper/compareImages';
 
-const tmpPath = path.join(process.cwd(), '.tmp');
-const imagePath = path.join(process.cwd(), 'test', 'fixture', 'images');
+const tmpPath = path.resolve(__dirname, '..', '..', '..', '..', '..', '..', 'tmp');
+const imagePath = path.resolve(__dirname, '..', '..', '..', '..', '..', '..', 'fixtures', 'images');
 
 const imageBase = path.join(imagePath, 'base', '200x100.png');
 
@@ -25,12 +26,11 @@ async function readAsBase64(file) {
 }
 
 describe('cropImage', function() {
-  it('throws error when invalid crop dimensions are provided', async function(done) {
+  it('throws error when invalid crop dimensions are provided', async function() {
     try {
       await cropImage('', {});
-      done('Should throw error');
     } catch (err) {
-      done();
+      assert.match(err.message, /Please provide a valid instance of CropDimension!/);
     }
   });
 

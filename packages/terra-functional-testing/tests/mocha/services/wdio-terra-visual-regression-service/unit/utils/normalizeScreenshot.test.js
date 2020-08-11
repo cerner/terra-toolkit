@@ -12,8 +12,8 @@ import compareImages from '../../helper/compareImages';
 
 import dimensionDesktop from '../../../../../fixtures/dimension/desktop-scroll-both.json';
 
-const screenshotDir = path.join(process.cwd(), 'test', 'fixture', 'screenshot');
-const tmpPath = path.join(process.cwd(), '.tmp');
+const tmpPath = path.resolve(__dirname, '..', '..', '..', '..', '..', 'tmp');
+const screenshotDir = path.resolve(__dirname, '..', '..', '..', '..', '..', 'fixtures', 'screenshot');
 
 async function readAsBase64(file) {
   // read binary data

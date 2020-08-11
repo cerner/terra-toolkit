@@ -7,7 +7,7 @@ import BaseCompare from '../../../../../../lib/services/wdio-terra-visual-regres
 import { Spectre } from '../../../../../../lib/services/wdio-terra-visual-regression-service/compare';
 import { createTestMethodInstance } from '../../helper/compareMethod';
 
-const dirFixture = path.join(__dirname, '../../fixture/');
+const dirFixture = path.resolve(__dirname, '..', '..', '..', '..', '..', 'fixtures');
 
 async function readAsBase64(file) {
   // read binary data

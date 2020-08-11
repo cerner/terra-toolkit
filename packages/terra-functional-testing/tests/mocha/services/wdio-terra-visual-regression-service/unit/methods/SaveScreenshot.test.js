@@ -6,8 +6,8 @@ import fs from 'fs-extra';
 import BaseCompare from '../../../../../../lib/services/wdio-terra-visual-regression-service/methods/BaseCompare';
 import SaveScreenshot from '../../../../../../lib/services/wdio-terra-visual-regression-service/methods/SaveScreenshot';
 
-const dirTmp = path.join(process.cwd(), '.tmp');
-const dirFixture = path.join(__dirname, '../../fixture/');
+const dirTmp = path.resolve(__dirname, '..', '..', '..', '..', '..', 'tmp');
+const dirFixture = path.resolve(__dirname, '..', '..', '..', '..', '..', 'fixtures');
 
 async function readAsBase64(file) {
   // read binary data

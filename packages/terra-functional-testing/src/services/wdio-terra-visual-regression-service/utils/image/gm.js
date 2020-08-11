@@ -5,7 +5,7 @@ import path from 'path';
 import generateUUID from '../generateUUID';
 import CropDimension from '../CropDimension';
 
-const tmpDir = path.join(__dirname, '../../../.tmp');
+const tmpDir = path.join(__dirname, '../../../tmp');
 
 /**
  * Crops an image

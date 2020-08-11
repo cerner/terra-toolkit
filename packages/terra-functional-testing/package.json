@@ -7,12 +7,13 @@
     "access": "public"
   },
   "scripts": {
-    "build": "babel ./src --out-dir lib",
-    "lint": "eslint --ext .js,.jsx .",
+    "compile": "babel ./src --out-dir lib",
+    "lint": "eslint --ext .js,.jsx --ignore-path ../../.eslintignore .",
     "jest": "jest --config ../../jest.config.js",
-    "prebuild": "rm -rf lib/services/wdio-terra-visual-regression",
-    "prepare": "npm run build",
-    "mocha": "mocha --require @babel/register tests/mocha/**/*.test.js",
+    "precompile": "rm -rf lib/services/wdio-terra-visual-regression",
+    "prepare": "npm run compile",
+    "premocha": "rm -rf tests/tmp",
+    "mocha": "mocha --require @babel/register tests/mocha/**/unit/**/*.test.js",
     "test": "npm run jest && npm run mocha"
   },
   "repository": {
@@ -59,7 +60,8 @@
     "uuid": "^8.3.0",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^3.11.0",
+    "which": "^2.0.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
@@ -79,7 +81,6 @@
     "chai": "^4.2.0",
     "mocha": "^8.1.1",
     "nock": "^12.0.3",
-    "np": "^6.3.2",
-    "sinon": "^9.0.2"
+    "np": "^6.3.2"
   }
 }

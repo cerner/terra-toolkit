@@ -8,8 +8,8 @@ import compareImages from '../../helper/compareImages';
 import BaseCompare from '../../../../../../lib/services/wdio-terra-visual-regression-service/methods/BaseCompare';
 import LocalCompare from '../../../../../../lib/services/wdio-terra-visual-regression-service/methods/LocalCompare';
 
-const dirTmp = path.join(process.cwd(), '.tmp');
-const dirFixture = path.join(__dirname, '../../fixture/');
+const dirTmp = path.resolve(__dirname, '..', '..', '..', '..', '..', 'tmp');
+const dirFixture = path.resolve(__dirname, '..', '..', '..', '..', '..', 'fixtures');
 
 async function readAsBase64(file) {
   // read binary data
