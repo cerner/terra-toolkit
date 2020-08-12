@@ -8,8 +8,8 @@ import { assert } from 'chai';
  * Keeping test file for now. Plan to update and pull these tests into wdio after initial
  * project integration.
  */
-import { init } from '../../../../../lib/services/wdio-terra-visual-regression-service';
-import generateUUID from '../../../../../lib/services/wdio-terra-visual-regression-service/utils/generateUUID';
+import { init } from '../../../../../src/services/wdio-terra-visual-regression-service';
+import generateUUID from '../../../../../src/services/wdio-terra-visual-regression-service/utils/generateUUID';
 import compareImages from '../helper/compareImages';
 
 const tmpDir = path.resolve(__dirname, '..', '..', '..', '..', 'tmp');

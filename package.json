@@ -72,7 +72,6 @@
     "html-webpack-plugin": "^4.3.0",
     "jest": "^26.0.1",
     "lerna": "^3.20.2",
-    "link-parent-bin": "^1.0.0",
-    "sinon": "^9.0.2"
+    "link-parent-bin": "^1.0.0"
   }
 }

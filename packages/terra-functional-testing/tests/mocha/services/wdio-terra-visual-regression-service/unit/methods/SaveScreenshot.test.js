@@ -3,8 +3,8 @@ import { assert } from 'chai';
 import { stub } from 'sinon';
 import fs from 'fs-extra';
 
-import BaseCompare from '../../../../../../lib/services/wdio-terra-visual-regression-service/methods/BaseCompare';
-import SaveScreenshot from '../../../../../../lib/services/wdio-terra-visual-regression-service/methods/SaveScreenshot';
+import BaseCompare from '../../../../../../src/services/wdio-terra-visual-regression-service/methods/BaseCompare';
+import SaveScreenshot from '../../../../../../src/services/wdio-terra-visual-regression-service/methods/SaveScreenshot';
 
 const dirTmp = path.resolve(__dirname, '..', '..', '..', '..', '..', 'tmp');
 const dirFixture = path.resolve(__dirname, '..', '..', '..', '..', '..', 'fixtures');

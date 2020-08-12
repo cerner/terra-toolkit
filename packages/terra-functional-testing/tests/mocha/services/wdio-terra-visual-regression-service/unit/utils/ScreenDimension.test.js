@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 
-import ScreenDimension from '../../../../../../lib/services/wdio-terra-visual-regression-service/utils/ScreenDimension';
+import ScreenDimension from '../../../../../../src/services/wdio-terra-visual-regression-service/utils/ScreenDimension';
 import dimensionDesktop from '../../../../../fixtures/dimension/desktop-scroll-both.json';
 
 import dimensionIpad92PortraitScrollVertical from '../../../../../fixtures/dimension/iOS_iPad_Air_9_2_portrait_scroll_vertical.json';

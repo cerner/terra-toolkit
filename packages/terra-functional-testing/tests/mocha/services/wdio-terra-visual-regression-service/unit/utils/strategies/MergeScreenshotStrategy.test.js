@@ -1,5 +1,5 @@
-import MergeScreenshotStrategy from '../../../../../../../lib/services/wdio-terra-visual-regression-service/utils/strategies/MergeScreenshotStrategy';
-import ScreenDimension from '../../../../../../../lib/services/wdio-terra-visual-regression-service/utils/ScreenDimension';
+import MergeScreenshotStrategy from '../../../../../../../src/services/wdio-terra-visual-regression-service/utils/strategies/MergeScreenshotStrategy';
+import ScreenDimension from '../../../../../../../src/services/wdio-terra-visual-regression-service/utils/ScreenDimension';
 
 import testStrategy from '../../../helper/testStrategy';
 import dimensionScrollBoth from '../../../../../../fixtures/dimension/desktop-scroll-both.json';

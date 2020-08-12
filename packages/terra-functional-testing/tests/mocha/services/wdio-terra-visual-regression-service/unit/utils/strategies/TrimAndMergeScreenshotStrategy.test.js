@@ -1,5 +1,5 @@
-import TrimAndMergeScreenshotStrategy, { consts } from '../../../../../../../lib/services/wdio-terra-visual-regression-service/utils/strategies/TrimAndMergeScreenshotStrategy';
-import ScreenDimension from '../../../../../../../lib/services/wdio-terra-visual-regression-service/utils/ScreenDimension';
+import TrimAndMergeScreenshotStrategy, { consts } from '../../../../../../../src/services/wdio-terra-visual-regression-service/utils/strategies/TrimAndMergeScreenshotStrategy';
+import ScreenDimension from '../../../../../../../src/services/wdio-terra-visual-regression-service/utils/ScreenDimension';
 
 import testStrategy from '../../../helper/testStrategy';
 import dimensionScrollBoth from '../../../../../../fixtures/dimension/desktop-scroll-both.json';

@@ -1,10 +1,10 @@
 import { assert } from 'chai';
 import { stub } from 'sinon';
 
-import saveElementScreenshot from '../../../../../../lib/services/wdio-terra-visual-regression-service/commands/saveElementScreenshot';
+import saveElementScreenshot from '../../../../../../src/services/wdio-terra-visual-regression-service/commands/saveElementScreenshot';
 // Note: we import this that way to allow sinon to stub the default method
-import * as makeElementScreenshot from '../../../../../../lib/services/wdio-terra-visual-regression-service/modules/makeElementScreenshot';
-import * as saveBase64Image from '../../../../../../lib/services/wdio-terra-visual-regression-service/utils/saveBase64Image';
+import * as makeElementScreenshot from '../../../../../../src/services/wdio-terra-visual-regression-service/modules/makeElementScreenshot';
+import * as saveBase64Image from '../../../../../../src/services/wdio-terra-visual-regression-service/utils/saveBase64Image';
 
 describe('saveElementScreenshot', function() {
   beforeEach(function() {

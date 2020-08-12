@@ -7,13 +7,13 @@
     "access": "public"
   },
   "scripts": {
-    "compile": "babel ./src --out-dir lib",
+    "compile": "babel src --out-dir lib",
     "lint": "eslint --ext .js,.jsx --ignore-path ../../.eslintignore .",
     "jest": "jest --config ../../jest.config.js",
-    "precompile": "rm -rf lib/services/wdio-terra-visual-regression",
+    "precompile": "rm -rf lib",
     "prepare": "npm run compile",
     "premocha": "rm -rf tests/tmp",
-    "mocha": "mocha --require @babel/register tests/mocha/**/unit/**/*.test.js",
+    "mocha": "MOCHA=true mocha --require @babel/register tests/mocha/**/unit/**/*.test.js",
     "test": "npm run jest && npm run mocha"
   },
   "repository": {
@@ -79,8 +79,10 @@
     "@wdio/selenium-standalone-service": "^6.1.14",
     "@wdio/sync": "^6.3.6",
     "chai": "^4.2.0",
+    "glob": "^7.1.6",
     "mocha": "^8.1.1",
     "nock": "^12.0.3",
-    "np": "^6.3.2"
+    "np": "^6.3.2",
+    "sinon": "^9.0.2"
   }
 }

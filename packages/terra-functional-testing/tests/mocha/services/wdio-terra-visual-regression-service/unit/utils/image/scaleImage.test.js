@@ -1,8 +1,8 @@
 import path from 'path';
 import fsExtra from 'fs-extra';
 
-import { scaleImage } from '../../../../../../../lib/services/wdio-terra-visual-regression-service/utils/image';
-import saveBase64Image from '../../../../../../../lib/services/wdio-terra-visual-regression-service/utils/saveBase64Image';
+import { scaleImage } from '../../../../../../../src/services/wdio-terra-visual-regression-service/utils/image';
+import saveBase64Image from '../../../../../../../src/services/wdio-terra-visual-regression-service/utils/saveBase64Image';
 
 import compareImages from '../../../helper/compareImages';
 

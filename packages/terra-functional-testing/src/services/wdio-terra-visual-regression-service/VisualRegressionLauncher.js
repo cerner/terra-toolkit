@@ -1,5 +1,4 @@
 /* eslint-disable no-undef, no-unused-vars */
-
 import _ from 'lodash';
 import { parse as parsePlatform } from 'platform';
 import logger from '@wdio/logger';

@@ -4,9 +4,9 @@ import path from 'path';
 import _ from 'lodash';
 import fsExtra from 'fs-extra';
 
-import normalizeScreenshot from '../../../../../../lib/services/wdio-terra-visual-regression-service/utils/normalizeScreenshot';
-import ScreenDimension from '../../../../../../lib/services/wdio-terra-visual-regression-service/utils/ScreenDimension';
-import saveBase64Image from '../../../../../../lib/services/wdio-terra-visual-regression-service/utils/saveBase64Image';
+import normalizeScreenshot from '../../../../../../src/services/wdio-terra-visual-regression-service/utils/normalizeScreenshot';
+import ScreenDimension from '../../../../../../src/services/wdio-terra-visual-regression-service/utils/ScreenDimension';
+import saveBase64Image from '../../../../../../src/services/wdio-terra-visual-regression-service/utils/saveBase64Image';
 
 import compareImages from '../../helper/compareImages';
 

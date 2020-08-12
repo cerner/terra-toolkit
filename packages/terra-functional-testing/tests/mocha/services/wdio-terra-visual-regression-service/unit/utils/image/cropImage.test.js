@@ -2,9 +2,9 @@ import path from 'path';
 import fsExtra from 'fs-extra';
 import { assert } from 'chai';
 
-import { cropImage } from '../../../../../../../lib/services/wdio-terra-visual-regression-service/utils/image';
-import CropDimension from '../../../../../../../lib/services/wdio-terra-visual-regression-service/utils/CropDimension';
-import saveBase64Image from '../../../../../../../lib/services/wdio-terra-visual-regression-service/utils/saveBase64Image';
+import { cropImage } from '../../../../../../../src/services/wdio-terra-visual-regression-service/utils/image';
+import CropDimension from '../../../../../../../src/services/wdio-terra-visual-regression-service/utils/CropDimension';
+import saveBase64Image from '../../../../../../../src/services/wdio-terra-visual-regression-service/utils/saveBase64Image';
 
 import compareImages from '../../../helper/compareImages';
 

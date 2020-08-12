@@ -5,8 +5,8 @@ import fs from 'fs-extra';
 
 import compareImages from '../../helper/compareImages';
 
-import BaseCompare from '../../../../../../lib/services/wdio-terra-visual-regression-service/methods/BaseCompare';
-import LocalCompare from '../../../../../../lib/services/wdio-terra-visual-regression-service/methods/LocalCompare';
+import BaseCompare from '../../../../../../src/services/wdio-terra-visual-regression-service/methods/BaseCompare';
+import LocalCompare from '../../../../../../src/services/wdio-terra-visual-regression-service/methods/LocalCompare';
 
 const dirTmp = path.resolve(__dirname, '..', '..', '..', '..', '..', 'tmp');
 const dirFixture = path.resolve(__dirname, '..', '..', '..', '..', '..', 'fixtures');

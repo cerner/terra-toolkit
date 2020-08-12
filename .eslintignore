@@ -1,4 +1,4 @@
 node_modules
 build
 reports
-packages/terra-functional-testing/lib/services/wdio-terra-visual-regression-service
+lib

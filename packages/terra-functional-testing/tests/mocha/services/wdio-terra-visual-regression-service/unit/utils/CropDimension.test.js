@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 
-import CropDimension from '../../../../../../lib/services/wdio-terra-visual-regression-service/utils/CropDimension';
+import CropDimension from '../../../../../../src/services/wdio-terra-visual-regression-service/utils/CropDimension';
 
 describe('CropDimension', function() {
   before(function() {

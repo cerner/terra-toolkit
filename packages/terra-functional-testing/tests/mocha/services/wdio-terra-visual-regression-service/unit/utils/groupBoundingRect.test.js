@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 
-import groupBoundingRect from '../../../../../../lib/services/wdio-terra-visual-regression-service/utils/groupBoundingRect';
+import groupBoundingRect from '../../../../../../src/services/wdio-terra-visual-regression-service/utils/groupBoundingRect';
 
 describe('groupBoundingRect', function() {
   it('should return empty object when an empty array is passed in', function() {

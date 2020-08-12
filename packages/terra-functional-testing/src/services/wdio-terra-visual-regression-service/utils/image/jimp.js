@@ -20,7 +20,7 @@ export async function cropImage(base64Screenshot, cropDimensions) {
 
   const { height } = image.bitmap;
 
-  let x = cropDimensions.getX();
+  const x = cropDimensions.getX();
   let y = cropDimensions.getY();
 
   if (cropDimensions.getGravity() === 'SouthWest') {

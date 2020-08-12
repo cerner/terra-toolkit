@@ -1,7 +1,7 @@
 import { assert } from 'chai';
 
-import CropDimension from '../../../../../lib/services/wdio-terra-visual-regression-service/utils/CropDimension';
-import BaseStrategy from '../../../../../lib/services/wdio-terra-visual-regression-service/utils/strategies/BaseStrategy';
+import CropDimension from '../../../../../src/services/wdio-terra-visual-regression-service/utils/CropDimension';
+import BaseStrategy from '../../../../../src/services/wdio-terra-visual-regression-service/utils/strategies/BaseStrategy';
 
 export default function testStrategy(strategy, steps) {
   assert.instanceOf(strategy, BaseStrategy);

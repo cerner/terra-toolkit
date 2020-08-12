@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 
-import generateUUID from '../../../../../../lib/services/wdio-terra-visual-regression-service/utils/generateUUID';
+import generateUUID from '../../../../../../src/services/wdio-terra-visual-regression-service/utils/generateUUID';
 
 const uuidRegex = /^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$/;
 

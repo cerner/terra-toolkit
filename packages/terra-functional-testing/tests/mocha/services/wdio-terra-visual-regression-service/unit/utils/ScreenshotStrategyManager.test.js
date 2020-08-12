@@ -1,11 +1,11 @@
 import { assert } from 'chai';
 
-import ScreenshotStrategyManager from '../../../../../../lib/services/wdio-terra-visual-regression-service/utils/ScreenshotStrategyManager';
-import BaseStrategy from '../../../../../../lib/services/wdio-terra-visual-regression-service/utils/strategies/BaseStrategy';
-import MergeScreenshotStrategy from '../../../../../../lib/services/wdio-terra-visual-regression-service/utils/strategies/MergeScreenshotStrategy';
-import TrimAndMergeScreenshotStrategy from '../../../../../../lib/services/wdio-terra-visual-regression-service/utils/strategies/TrimAndMergeScreenshotStrategy';
-import FullpageScreenshotStrategy from '../../../../../../lib/services/wdio-terra-visual-regression-service/utils/strategies/FullpageScreenshotStrategy';
-import ScreenDimension from '../../../../../../lib/services/wdio-terra-visual-regression-service/utils/ScreenDimension';
+import ScreenshotStrategyManager from '../../../../../../src/services/wdio-terra-visual-regression-service/utils/ScreenshotStrategyManager';
+import BaseStrategy from '../../../../../../src/services/wdio-terra-visual-regression-service/utils/strategies/BaseStrategy';
+import MergeScreenshotStrategy from '../../../../../../src/services/wdio-terra-visual-regression-service/utils/strategies/MergeScreenshotStrategy';
+import TrimAndMergeScreenshotStrategy from '../../../../../../src/services/wdio-terra-visual-regression-service/utils/strategies/TrimAndMergeScreenshotStrategy';
+import FullpageScreenshotStrategy from '../../../../../../src/services/wdio-terra-visual-regression-service/utils/strategies/FullpageScreenshotStrategy';
+import ScreenDimension from '../../../../../../src/services/wdio-terra-visual-regression-service/utils/ScreenDimension';
 
 import dimensionScrollBoth from '../../../../../fixtures/dimension/desktop-scroll-both.json';
 import dimensionIpad92PortraitZoomed from '../../../../../fixtures/dimension/iOS_iPad_Air_9_2_portrait_zoomed.json';

@@ -4,7 +4,7 @@ import sizeOf from 'image-size';
 import fsExtra from 'fs-extra';
 import path from 'path';
 
-import saveBase64Image from '../../../../../../lib/services/wdio-terra-visual-regression-service/utils/saveBase64Image';
+import saveBase64Image from '../../../../../../src/services/wdio-terra-visual-regression-service/utils/saveBase64Image';
 
 describe('saveBase64Image', function() {
   before(function() {
