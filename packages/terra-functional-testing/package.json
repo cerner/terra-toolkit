@@ -6,6 +6,13 @@
   "publishConfig": {
     "access": "public"
   },
+  "files": [
+    "bin",
+    "lib",
+    "NOTICE",
+    "LICENSE",
+    "*.md"
+  ],
   "scripts": {
     "compile": "babel src --out-dir lib",
     "lint": "eslint --ext .js,.jsx --ignore-path ../../.eslintignore .",
