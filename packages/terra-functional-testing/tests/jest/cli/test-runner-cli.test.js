@@ -1,5 +1,5 @@
-const CLI = require('../../../lib/cli/test-runner-cli');
-const TestRunner = require('../../../lib/test-runner/test-runner');
+const CLI = require('../../../src/cli/test-runner-cli');
+const TestRunner = require('../../../src/test-runner/test-runner');
 
 describe('Test Runner CLI', () => {
   it('should export the test runner cli', () => {

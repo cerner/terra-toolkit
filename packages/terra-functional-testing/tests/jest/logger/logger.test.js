@@ -1,4 +1,4 @@
-const Logger = require('../../../lib/logger/logger');
+const Logger = require('../../../src/logger/logger');
 
 describe('Logger', () => {
   describe('format', () => {

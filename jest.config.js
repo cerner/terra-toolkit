@@ -5,7 +5,7 @@ module.exports = {
   clearMocks: true,
   collectCoverage: true,
   collectCoverageFrom: [
-    'packages/**/lib/**/*.js',
+    'packages/**/src/**/*.js',
     '!packages/terra-functional-testing/lib/services/wdio-terra-visual-regression-service/**/*.js',
   ],
   coverageDirectory: 'tests/jest/reports/coverage',
@@ -18,6 +18,6 @@ module.exports = {
   ],
   roots: [process.cwd()],
   testMatch: [
-    '**/jest/**/(*.)(spec|test).js?(x)',
+    '**/jest/**/*.test.js',
   ],
 };
