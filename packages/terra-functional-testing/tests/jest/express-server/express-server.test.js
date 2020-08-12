@@ -1,7 +1,7 @@
-jest.mock('../../../lib/logger/logger');
+jest.mock('../../../src/logger/logger');
 
 const fs = require('fs');
-const ExpressServer = require('../../../lib/express-server/express-server');
+const ExpressServer = require('../../../src/express-server/express-server');
 
 jest.mock('express', () => {
   const express = jest.fn(() => ({

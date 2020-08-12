@@ -1,4 +1,4 @@
-const CLI = require('../../../lib/cli');
+const CLI = require('../../../src/cli');
 
 describe('index', () => {
   it('should export the test runner cli', () => {

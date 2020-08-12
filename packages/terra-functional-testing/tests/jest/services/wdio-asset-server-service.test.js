@@ -1,11 +1,11 @@
-jest.mock('../../../lib/logger/logger');
+jest.mock('../../../src/logger/logger');
 
-const AssetService = require('../../../lib/services/wdio-asset-server-service');
-const ExpressServer = require('../../../lib/express-server/express-server');
-const WebpackServer = require('../../../lib/webpack-server/webpack-server');
+const AssetService = require('../../../src/services/wdio-asset-server-service');
+const ExpressServer = require('../../../src/express-server/express-server');
+const WebpackServer = require('../../../src/webpack-server/webpack-server');
 
-jest.mock('../../../lib/express-server/express-server');
-jest.mock('../../../lib/webpack-server/webpack-server');
+jest.mock('../../../src/express-server/express-server');
+jest.mock('../../../src/webpack-server/webpack-server');
 
 describe('WDIO Asset Server Service', () => {
   describe('constructor', () => {

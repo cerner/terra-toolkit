@@ -1,4 +1,4 @@
-const TerraService = require('../../../lib/services/wdio-terra-service');
+const TerraService = require('../../../src/services/wdio-terra-service');
 
 describe('WDIO Terra Service', () => {
   it('should add the axe command to the browser object', () => {

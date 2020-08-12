@@ -1,5 +1,5 @@
 jest.mock('util');
-jest.mock('../../../lib/logger/logger');
+jest.mock('../../../src/logger/logger');
 
 const util = require('util');
 const path = require('path');
@@ -8,7 +8,7 @@ const path = require('path');
 const mockExec = jest.fn();
 util.promisify.mockImplementation(() => mockExec);
 
-const SeleniumDockerService = require('../../../lib/services/wdio-selenium-docker-service');
+const SeleniumDockerService = require('../../../src/services/wdio-selenium-docker-service');
 
 describe('WDIO Selenium Docker Service', () => {
   describe('onPrepare', () => {
@@ -97,7 +97,7 @@ describe('WDIO Selenium Docker Service', () => {
 
       await service.deployStack();
 
-      const composeFilePath = path.resolve(__dirname, '../../../lib/docker/docker-compose.yml');
+      const composeFilePath = path.resolve(__dirname, '../../../src/docker/docker-compose.yml');
 
       expect(mockExec).toHaveBeenCalledWith(`TERRA_SELENIUM_DOCKER_VERSION=3.141.59-20200525 docker stack deploy -c ${composeFilePath} wdio`);
     });
@@ -110,7 +110,7 @@ describe('WDIO Selenium Docker Service', () => {
 
       await service.deployStack();
 
-      const composeFilePath = path.resolve(__dirname, '../../../lib/docker/docker-compose.yml');
+      const composeFilePath = path.resolve(__dirname, '../../../src/docker/docker-compose.yml');
 
       expect(mockExec).toHaveBeenCalledWith(`TERRA_SELENIUM_DOCKER_VERSION=custom-version docker stack deploy -c ${composeFilePath} wdio`);
     });

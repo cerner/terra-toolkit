@@ -1,4 +1,4 @@
-const injectAxe = require('../../../lib/commands/inject-axe');
+const injectAxe = require('../../../src/commands/inject-axe');
 
 describe('Inject Axe', () => {
   it('should inject axe into the document', () => {
