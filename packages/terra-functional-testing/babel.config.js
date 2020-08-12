@@ -5,15 +5,15 @@ module.exports = (api) => {
   // mocha doesn't support import syntax -.- (will be updating to jest soon...)
   const mochaTestFiles = [];
   if (process.env.MOCHA === 'true') {
-    mochaTestFiles.push('./src/services/wdio-terra-visual-regression-service/**');
+    mochaTestFiles.push('./src/services/wdio-visual-regression-service/**');
     mochaTestFiles.push('./tests/mocha/**');
   }
 
   return {
     include: [
-      './src/services/wdio-terra-visual-regression-service/modules/**',
-      './src/services/wdio-terra-visual-regression-service/scripts/**',
-      './src/services/wdio-terra-visual-regression-service/utils/**',
+      './src/services/wdio-visual-regression-service/modules/**',
+      './src/services/wdio-visual-regression-service/scripts/**',
+      './src/services/wdio-visual-regression-service/utils/**',
     ].concat(mochaTestFiles),
     presets: [
       '@babel/preset-env',

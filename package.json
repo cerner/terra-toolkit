@@ -27,7 +27,7 @@
     "overrides": [
       {
         "files": [
-          "./packages/terra-functional-testing/tests/mocha/services/wdio-terra-visual-**/**/*.js"
+          "./packages/terra-functional-testing/tests/mocha/services/wdio-visual-regression-service/**/*.js"
         ],
         "env": {
           "mocha": true,

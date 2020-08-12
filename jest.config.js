@@ -6,7 +6,7 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: [
     'packages/**/src/**/*.js',
-    '!packages/terra-functional-testing/src/services/wdio-terra-visual-regression-service/**/*.js',
+    '!packages/terra-functional-testing/src/services/wdio-visual-regression-service/**/*.js',
   ],
   coverageDirectory: 'tests/jest/reports/coverage',
   coverageReporters: [
