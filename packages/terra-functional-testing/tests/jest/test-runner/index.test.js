@@ -1,4 +1,4 @@
-const { TestRunner, wdioConfig } = require('../../../lib/test-runner');
+const { TestRunner, wdioConfig } = require('../../../src/test-runner');
 
 describe('index', () => {
   it('should export the test runner', () => {

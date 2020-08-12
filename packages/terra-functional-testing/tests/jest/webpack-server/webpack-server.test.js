@@ -1,8 +1,8 @@
 jest.mock('webpack');
-jest.mock('../../../lib/logger/logger');
+jest.mock('../../../src/logger/logger');
 
 const path = require('path');
-const WebpackServer = require('../../../lib/webpack-server/webpack-server');
+const WebpackServer = require('../../../src/webpack-server/webpack-server');
 
 const mockWebpackSpy = jest.fn();
 

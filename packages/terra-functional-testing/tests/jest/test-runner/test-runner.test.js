@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const TestRunner = require('../../../lib/test-runner/test-runner');
+const TestRunner = require('../../../src/test-runner/test-runner');
 
 jest.mock('@wdio/cli', () => ({
   default: jest.fn().mockImplementation(() => ({ run: () => Promise.resolve('mock-status-code') })),
@@ -61,7 +61,7 @@ describe('Test Runner', () => {
       jest.spyOn(fs, 'existsSync').mockImplementationOnce(() => false);
 
       const configPath = TestRunner.configPath();
-      const expectedPath = path.resolve(__dirname, '../../../lib/config/wdio.conf.js');
+      const expectedPath = path.resolve(__dirname, '../../../src/config/wdio.conf.js');
 
       expect(configPath).toEqual(expectedPath);
       expect(process.cwd).toHaveBeenCalled();

@@ -1,4 +1,4 @@
-const WebpackServer = require('../../../lib/webpack-server');
+const WebpackServer = require('../../../src/webpack-server');
 
 describe('Webpack Server Index', () => {
   it('should export the webpack server', () => {
