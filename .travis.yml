@@ -17,7 +17,10 @@ jobs:
         - npm run danger
         - npm run lint
         - npm run jest
-    # Split out all the sizes to not eat up all the travis executors at once.
+
+    - stage: mocha
+      script:
+        - npm run mocha
 
     - stage: wdio
       name: wdio
@@ -39,6 +42,7 @@ jobs:
 
 stages:
   - danger lint and jest
+  - mocha
   - wdio
   - name: publish
     if: type != pull_request

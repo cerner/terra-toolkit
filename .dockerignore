@@ -6,6 +6,6 @@ log/*
 tmp
 node_modules
 packages/*/node_modules
+lib
 build
 generated-themes
-packages/terra-functional-testing/lib/services/wdio-terra-visual-regression-service
