@@ -19,6 +19,8 @@ jobs:
         - npm run jest
 
     - stage: mocha
+      # Don't clean install
+      before_install: skip
       script:
         - npm run mocha
 
