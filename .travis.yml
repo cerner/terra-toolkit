@@ -18,21 +18,19 @@ jobs:
         - npm run lint
         - npm run jest
 
-    - stage: mocha
-      # Don't clean install
-      before_install: skip
-      install: skip
-      script:
-        - npm run mocha
-
     - stage: wdio
       name: wdio
       # Don't clean install
       before_install: skip
-      install: skip
       script:
         # using the travis env section to set env variables seems to break cache
         - npm run wdio
+
+    - stage: mocha
+      # Don't clean install
+      before_install: skip
+      script:
+        - npm run mocha
 
     - stage: publish
       script:
@@ -46,8 +44,8 @@ jobs:
 
 stages:
   - danger lint and jest
-  - mocha
   - wdio
+  - mocha
   - name: publish
     if: type != pull_request
 
