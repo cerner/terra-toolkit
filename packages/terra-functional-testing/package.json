@@ -14,7 +14,7 @@
     "*.md"
   ],
   "scripts": {
-    "compile": "babel src --out-dir lib",
+    "compile": "babel src --out-dir lib --copy-files",
     "lint": "eslint --ext .js,.jsx --ignore-path ../../.eslintignore .",
     "jest": "jest --config ../../jest.config.js",
     "precompile": "rm -rf lib",

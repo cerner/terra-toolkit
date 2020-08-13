@@ -21,6 +21,7 @@ jobs:
     - stage: mocha
       # Don't clean install
       before_install: skip
+      install: skip
       script:
         - npm run mocha
 
@@ -28,6 +29,7 @@ jobs:
       name: wdio
       # Don't clean install
       before_install: skip
+      install: skip
       script:
         # using the travis env section to set env variables seems to break cache
         - npm run wdio
