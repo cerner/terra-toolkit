@@ -17,7 +17,6 @@ jobs:
         - npm run danger
         - npm run lint
         - npm run jest
-    # Split out all the sizes to not eat up all the travis executors at once.
 
     - stage: wdio
       name: wdio
@@ -26,6 +25,12 @@ jobs:
       script:
         # using the travis env section to set env variables seems to break cache
         - npm run wdio
+
+    - stage: mocha
+      # Don't clean install
+      before_install: skip
+      script:
+        - npm run mocha
 
     - stage: publish
       script:
@@ -40,6 +45,7 @@ jobs:
 stages:
   - danger lint and jest
   - wdio
+  - mocha
   - name: publish
     if: type != pull_request
 

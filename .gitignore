@@ -34,7 +34,7 @@
 /spec/reports/
 /test/tmp/
 /test/version_tmp/
-/tmp/
+tmp
 /vendor/bundle
 build-iPhoneOS/
 build-iPhoneSimulator/
@@ -57,3 +57,5 @@ errorScreenshots
 **/aggregated-translations/*.*
 generated-themes
 package-lock.json
+.spectre_test_run_url.json
+lib
