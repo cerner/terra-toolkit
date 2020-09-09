@@ -88,5 +88,3 @@ module.exports = {
     },
   ],
 };
-
-// This will fail.
