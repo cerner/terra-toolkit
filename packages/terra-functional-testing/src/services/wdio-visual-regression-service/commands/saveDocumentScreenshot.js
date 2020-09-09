@@ -27,5 +27,3 @@ export default async function async(fileName, options) {
 
   return base64Image;
 }
-
-// This won't fail.
