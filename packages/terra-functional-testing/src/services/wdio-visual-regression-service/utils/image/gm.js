@@ -1,17 +1,17 @@
 import gm from 'gm';
 import fsExtra from 'fs-extra';
 import path from 'path';
+import uuidv4 from 'uuid/v4';
 
-import generateUUID from '../generateUUID';
 import CropDimension from '../CropDimension';
 
 const tmpDir = path.join(__dirname, '../../../tmp');
 
 /**
- * Crops an image
- * @param  {string} base64Screenshot image to crop
- * @param  {CropDimension} cropDimensions   dimensions
- * @return {string}                  cropped image
+ * Crops an image.
+ * @param {string} base64Screenshot - image to crop
+ * @param {CropDimension} cropDimensions - dimensions
+ * @return {Promise} resolves to cropped image
  */
 export async function cropImage(base64Screenshot, cropDimensions) {
   if (!(cropDimensions instanceof CropDimension)) {
@@ -39,10 +39,10 @@ export async function cropImage(base64Screenshot, cropDimensions) {
 }
 
 /**
- * Scales an image down or up
- * @param base64Screenshot  image to scale
- * @param scaleFactor       scale factor, e.g. 0.5 for downscale or 1.5 for upscale
- * @returns {string}        screenshot
+ * Scales an image down or up.
+ * @param {string} base64Screenshot - image to scale
+ * @param {Integer} scaleFactor - scale factor, e.g. 0.5 for downscale or 1.5 for upscale
+ * @return {Promise} resolves to cropped image
  */
 export async function scaleImage(base64Screenshot, scaleFactor) {
   const image = gm(new Buffer.from(base64Screenshot, 'base64')); // eslint-disable-line new-cap
@@ -69,7 +69,7 @@ export async function scaleImage(base64Screenshot, scaleFactor) {
  * @return {string}        screenshot
  */
 export async function mergeImages(images) {
-  const uuid = generateUUID();
+  const uuid = uuidv4();
   const dir = path.join(tmpDir, uuid);
 
   try {
