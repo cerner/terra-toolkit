@@ -62,7 +62,6 @@
     "jimp": "^0.13.0",
     "lodash": "^4.17.19",
     "node-resemble-js": "0.2.0",
-    "nodeclient-spectre": "^1.0.5",
     "platform": "^1.3.6",
     "uuid": "^8.3.0",
     "webpack": "^4.43.0",
