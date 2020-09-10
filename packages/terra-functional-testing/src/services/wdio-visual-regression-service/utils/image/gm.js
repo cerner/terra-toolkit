@@ -41,7 +41,7 @@ export async function cropImage(base64Screenshot, cropDimensions) {
 /**
  * Scales an image down or up.
  * @param {string} base64Screenshot - image to scale
- * @param {Integer} scaleFactor - scale factor, e.g. 0.5 for downscale or 1.5 for upscale
+ * @param {Number} scaleFactor - scale factor, e.g. 0.5 for downscale or 1.5 for upscale
  * @return {Promise} resolves to cropped image
  */
 export async function scaleImage(base64Screenshot, scaleFactor) {
