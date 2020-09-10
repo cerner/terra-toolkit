@@ -4,7 +4,6 @@ import ScreenshotStrategyManager from '../../../../../../src/services/wdio-visua
 import BaseStrategy from '../../../../../../src/services/wdio-visual-regression-service/utils/strategies/BaseStrategy';
 import MergeScreenshotStrategy from '../../../../../../src/services/wdio-visual-regression-service/utils/strategies/MergeScreenshotStrategy';
 import TrimAndMergeScreenshotStrategy from '../../../../../../src/services/wdio-visual-regression-service/utils/strategies/TrimAndMergeScreenshotStrategy';
-import FullpageScreenshotStrategy from '../../../../../../src/services/wdio-visual-regression-service/utils/strategies/FullpageScreenshotStrategy';
 import ScreenDimension from '../../../../../../src/services/wdio-visual-regression-service/utils/ScreenDimension';
 
 import dimensionScrollBoth from '../../../../../fixtures/dimension/desktop-scroll-both.json';
@@ -29,13 +28,6 @@ describe('ScreenshotStrategyManager', function() {
       ...browser,
       desiredCapabilities: {
         browserName: 'mozilla firefox',
-      },
-    };
-
-    this.phantomjs = {
-      ...browser,
-      desiredCapabilities: {
-        browserName: 'phantomjs',
       },
     };
 
@@ -91,19 +83,6 @@ describe('ScreenshotStrategyManager', function() {
       // then
       assert.instanceOf(strategy, BaseStrategy);
       assert.instanceOf(strategy, MergeScreenshotStrategy);
-    }
-  });
-
-  it('returns a instance of FullpageScreenshotStrategy for browsers with support for whole document screenshots', function() {
-    const browsers = [this.phantomjs];
-
-    // eslint-disable-next-line no-restricted-syntax
-    for (const browser of browsers) {
-      // when
-      const strategy = ScreenshotStrategyManager.getStrategy(browser, this.screenDimensions);
-      // then
-      assert.instanceOf(strategy, BaseStrategy);
-      assert.instanceOf(strategy, FullpageScreenshotStrategy);
     }
   });
 
