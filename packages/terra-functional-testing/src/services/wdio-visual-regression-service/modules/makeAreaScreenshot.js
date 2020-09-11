@@ -1,12 +1,12 @@
 import fsExtra from 'fs-extra';
 import path from 'path';
+import uuidv4 from 'uuid/v4';
 import logger from '@wdio/logger';
 
 import ScreenshotStrategyManager from '../utils/ScreenshotStrategyManager';
 import getScreenDimensions from '../scripts/getScreenDimensions';
 import virtualScroll from '../scripts/virtualScroll';
 import pageHeight from '../scripts/pageHeight';
-import generateUUID from '../utils/generateUUID';
 import saveBase64Image from '../utils/saveBase64Image';
 import { cropImage, mergeImages } from '../utils/image';
 import ScreenDimension from '../utils/ScreenDimension';
@@ -42,7 +42,7 @@ export default async function makeAreaScreenshot(browser, startX, startY, endX, 
   const screenshotStrategy = ScreenshotStrategyManager.getStrategy(browser, screenDimension);
   screenshotStrategy.setScrollArea(startX, startY, endX, endY);
 
-  const uuid = generateUUID();
+  const uuid = uuidv4();
 
   const dir = path.join(tmpDir, uuid);
 
