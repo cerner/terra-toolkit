@@ -1,4 +1,5 @@
-/* eslint-disable no-undef, no-unused-vars */
+/* eslint no-unused-vars: ["error", { "args": "none" }] */
+/* global browser */
 import _ from 'lodash';
 import { parse as parsePlatform } from 'platform';
 import logger from '@wdio/logger';
@@ -17,15 +18,12 @@ class VisualRegressionLauncher {
     this.options = options;
     this.currentSuite = null;
     this.currentTest = null;
-    this.currentFeature = null;
-    this.currentScenario = null;
-    this.currentStep = null;
   }
 
   /**
    * Gets executed once before all workers get launched.
-   * @param {Object} config wdio configuration object
-   * @param {Array.<Object>} capabilities list of capabilities details
+   * @param {Object} config - wdio configuration object
+   * @param {[Object]} capabilities - list of capabilities details
    */
   async onPrepare(config) {
     this.validateConfig(config);
@@ -38,8 +36,8 @@ class VisualRegressionLauncher {
    * Gets executed before test execution begins. At this point you can access
    * all global variables, such as `browser`.
    * It is the perfect place to define custom commands.
-   * @param  {object} capabilities desiredCapabilities
-   * @param  {[type]} specs        [description]
+   * @param  {object} capabilities - desiredCapabilities
+   * @param  {[type]} specs
    * @return {Promise}
    */
   async before(capabilities, specs) {
@@ -81,79 +79,31 @@ class VisualRegressionLauncher {
    * Hook that gets executed after the suite has ended
    * @param {Object} suite suite details
    */
-  afterSuite(suite) {
+  afterSuite() {
     this.currentSuite = null;
   }
 
   /**
-   * Function to be executed before a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
-   * @param {Object} test test details
+   * Function to be executed before a test in Mocha.
+   * @param {Object} test - test details
    */
   beforeTest(test) {
     this.currentTest = test;
   }
 
   /**
-   * Function to be executed after a test (in Mocha/Jasmine) or a step (in Cucumber) ends.
-   * @param {Object} test test details
+   * Function to be executed after a test in Mocha.
+   * @param {Object} test - test details
    */
-  afterTest(test) {
+  afterTest(_test) {
     this.currentTest = null;
-  }
-
-  /**
-   * Function to be executed before a feature starts in Cucumber.
-   * @param  {Object} feature feature details
-   */
-  beforeFeature(feature) {
-    this.currentFeature = feature;
-  }
-
-  /**
-   * Function to be executed after a feature ends in Cucumber.
-   * @param  {Object} feature feature details
-   */
-  afterFeature(feature) {
-    this.currentFeature = null;
-  }
-
-  /**
-   * Function to be executed before a scenario starts in Cucumber.
-   * @param  {Object} scenario scenario details
-   */
-  beforeScenario(scenario) {
-    this.currentScenario = scenario;
-  }
-
-  /**
-   * Function to be executed after a scenario ends in Cucumber.
-   * @param  {Object} scenario scenario details
-   */
-  afterScenario(scenario) {
-    this.currentScenario = null;
-  }
-
-  /**
-   * Function to be executed before a step starts in Cucumber.
-   * @param  {Object} step step details
-   */
-  beforeStep(step) {
-    this.currentStep = step;
-  }
-
-  /**
-   * Function to be executed after a step ends in Cucumber.
-   * @param  {Object} stepResult stepResult details
-   */
-  afterStep(stepResult) {
-    this.currentStep = null;
   }
 
   /**
    * Gets executed after all tests are done. You still have access to all global
    * variables from the test.
-   * @param  {object} capabilities desiredCapabilities
-   * @param  {[type]} specs        [description]
+   * @param  {object} capabilities - desiredCapabilities
+   * @param  {[type]} specs
    * @return {Promise}
    */
   async after(capabilities, specs) {
@@ -162,11 +112,11 @@ class VisualRegressionLauncher {
 
   /**
    * Gets executed after all workers got shut down and the process is about to exit.
-   * @param {Object} exitCode 0 - success, 1 - fail
-   * @param {Object} config wdio configuration object
-   * @param {Array.<Object>} capabilities list of capabilities details
+   * @param {Object} exitCode - 0 = success or 1 = fail
+   * @param {Object} config - wdio configuration object
+   * @param {[Object]} capabilities - list of capabilities details
    */
-  async onComplete(exitCode, config, capabilities) {
+  async onComplete(_exitCode, _config, _capabilities) {
     await this.runHook('onComplete');
   }
 
@@ -178,7 +128,7 @@ class VisualRegressionLauncher {
     }
   }
 
-  validateConfig(config) {
+  validateConfig(_config) {
     if (!_.isPlainObject(this.options) || !_.has(this.options, 'compare')) {
       throw new Error('Please provide a visualRegression configuration with a compare method in your wdio-conf.js!');
     }
@@ -262,13 +212,8 @@ class VisualRegressionLauncher {
   getTestDetails() {
     return _.pickBy(
       {
-        // mocha
         suite: this.currentSuite,
         test: this.currentTest,
-        // cucumber
-        feature: this.currentFeature,
-        scenario: this.currentScenario,
-        step: this.currentStep,
       },
       _.identity,
     );
