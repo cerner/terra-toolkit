@@ -1,4 +1,5 @@
 import path from 'path';
+import uuidv4 from 'uuid/v4';
 import { remote, multiremote } from 'webdriverio'; // eslint-disable-line
 import { start } from 'selenium-standalone'; // eslint-disable-line
 import { assert } from 'chai';
@@ -9,7 +10,6 @@ import { assert } from 'chai';
  * project integration.
  */
 import { init } from '../../../../../src/services/wdio-visual-regression-service';
-import generateUUID from '../../../../../src/services/wdio-visual-regression-service/utils/generateUUID';
 import compareImages from '../helper/compareImages';
 
 const tmpDir = path.resolve(__dirname, '..', '..', '..', '..', 'tmp');
@@ -64,7 +64,7 @@ describe('standalone', () => {
     it('saveDocumentScreenshot should work', async () => {
       assert.isFunction(browser.saveDocumentScreenshot);
 
-      const screenPath = path.join(tmpDir, '/desktop-responsive-document-480', `${generateUUID()}.png`);
+      const screenPath = path.join(tmpDir, '/desktop-responsive-document-480', `${uuidv4()()}.png`);
       await browser.saveDocumentScreenshot(screenPath);
 
       await compareImages(screenPath, screenResponsiveDocument480);
@@ -73,7 +73,7 @@ describe('standalone', () => {
     it('saveViewportScreenshot should work', async () => {
       assert.isFunction(browser.saveViewportScreenshot);
 
-      const screenPath = path.join(tmpDir, '/desktop-responsive-viewport-480', `${generateUUID()}.png`);
+      const screenPath = path.join(tmpDir, '/desktop-responsive-viewport-480', `${uuidv4()()}.png`);
       await browser.saveViewportScreenshot(screenPath);
 
       await compareImages(screenPath, screenResponsiveViewport480);
@@ -82,7 +82,7 @@ describe('standalone', () => {
     it('saveElementScreenshot should work', async () => {
       assert.isFunction(browser.saveElementScreenshot);
 
-      const screenPath = path.join(tmpDir, '/desktop-responsive-element-footer-480', `${generateUUID()}.png`);
+      const screenPath = path.join(tmpDir, '/desktop-responsive-element-footer-480', `${uuidv4()()}.png`);
       await browser.saveElementScreenshot(screenPath, '.footer');
       await compareImages(screenPath, screenResponsiveElemenentFooter480);
     });
@@ -131,7 +131,7 @@ describe('standalone', () => {
     it('saveDocumentScreenshot should work on browserA', async () => {
       assert.isFunction(browserA.saveDocumentScreenshot);
 
-      const screenPath = path.join(tmpDir, '/desktop-responsive-document-480', `${generateUUID()}.png`);
+      const screenPath = path.join(tmpDir, '/desktop-responsive-document-480', `${uuidv4()()}.png`);
       await browserA.saveDocumentScreenshot(screenPath);
 
       await compareImages(screenPath, screenResponsiveDocument480);
@@ -140,7 +140,7 @@ describe('standalone', () => {
     it('saveDocumentScreenshot should work on browserB', async () => {
       assert.isFunction(browserA.saveDocumentScreenshot);
 
-      const screenPath = path.join(tmpDir, '/desktop-responsive-document-480', `${generateUUID()}.png`);
+      const screenPath = path.join(tmpDir, '/desktop-responsive-document-480', `${uuidv4()()}.png`);
       await browserB.saveDocumentScreenshot(screenPath);
 
       await compareImages(screenPath, screenResponsiveDocument480);
@@ -149,7 +149,7 @@ describe('standalone', () => {
     it('saveViewportScreenshot should work on browserA', async () => {
       assert.isFunction(browserA.saveViewportScreenshot);
 
-      const screenPath = path.join(tmpDir, '/desktop-responsive-viewport-480', `${generateUUID()}.png`);
+      const screenPath = path.join(tmpDir, '/desktop-responsive-viewport-480', `${uuidv4()()}.png`);
       await browserA.saveViewportScreenshot(screenPath);
 
       await compareImages(screenPath, screenResponsiveViewport480);
@@ -158,7 +158,7 @@ describe('standalone', () => {
     it('saveViewportScreenshot should work on browserB', async () => {
       assert.isFunction(browserB.saveViewportScreenshot);
 
-      const screenPath = path.join(tmpDir, '/desktop-responsive-viewport-480', `${generateUUID()}.png`);
+      const screenPath = path.join(tmpDir, '/desktop-responsive-viewport-480', `${uuidv4()()}.png`);
       await browserB.saveViewportScreenshot(screenPath);
 
       await compareImages(screenPath, screenResponsiveViewport480);
@@ -167,7 +167,7 @@ describe('standalone', () => {
     it('saveElementScreenshot should work on browserA', async () => {
       assert.isFunction(browserA.saveElementScreenshot);
 
-      const screenPath = path.join(tmpDir, '/desktop-responsive-element-footer-480', `${generateUUID()}.png`);
+      const screenPath = path.join(tmpDir, '/desktop-responsive-element-footer-480', `${uuidv4()()}.png`);
       await browserA.saveElementScreenshot(screenPath, '.footer');
       await compareImages(screenPath, screenResponsiveElemenentFooter480);
     });
@@ -175,7 +175,7 @@ describe('standalone', () => {
     it('saveElementScreenshot should work on browserB', async () => {
       assert.isFunction(browserB.saveElementScreenshot);
 
-      const screenPath = path.join(tmpDir, '/desktop-responsive-element-footer-480', `${generateUUID()}.png`);
+      const screenPath = path.join(tmpDir, '/desktop-responsive-element-footer-480', `${uuidv4()()}.png`);
       await browserB.saveElementScreenshot(screenPath, '.footer');
       await compareImages(screenPath, screenResponsiveElemenentFooter480);
     });

@@ -57,5 +57,4 @@ errorScreenshots
 **/aggregated-translations/*.*
 generated-themes
 package-lock.json
-.spectre_test_run_url.json
 lib
