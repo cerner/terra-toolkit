@@ -2,4 +2,4 @@
 
 ## Unreleased
 
-* Initial stable release.
+* Initial stable release
