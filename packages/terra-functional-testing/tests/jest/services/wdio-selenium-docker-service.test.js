@@ -49,7 +49,7 @@ describe('WDIO Selenium Docker Service', () => {
 
     it('should throw an error if docker is not installed', async () => {
       const service = new SeleniumDockerService();
-      const mockError = Error('Mock Error');
+      const mockError = Error('Docker is not installed.');
 
       mockExec.mockImplementation(() => Promise.reject(mockError));
 
@@ -57,6 +57,42 @@ describe('WDIO Selenium Docker Service', () => {
         await service.onPrepare({});
       } catch (error) {
         expect(error).toEqual(mockError);
+      }
+
+      expect.assertions(1);
+    });
+
+    it('should throw a SevereServiceError if initialize swarm fails', async () => {
+      const service = new SeleniumDockerService();
+
+      const mockError = Error('Mock Error.');
+      mockExec.mockImplementation(() => Promise.resolve());
+
+      jest.spyOn(service, 'initializeSwarm').mockImplementationOnce(() => Promise.reject(mockError));
+      jest.spyOn(service, 'deployStack').mockImplementationOnce(() => Promise.resolve());
+
+      try {
+        await service.onPrepare({});
+      } catch (error) {
+        expect(error.name).toEqual('SevereServiceError');
+      }
+
+      expect.assertions(1);
+    });
+
+    it('should throw a SevereServiceError if deploy stack fails', async () => {
+      const service = new SeleniumDockerService();
+
+      const mockError = Error('Mock Error.');
+      mockExec.mockImplementation(() => Promise.resolve());
+
+      jest.spyOn(service, 'initializeSwarm').mockImplementationOnce(() => Promise.resolve());
+      jest.spyOn(service, 'deployStack').mockImplementationOnce(() => Promise.reject(mockError));
+
+      try {
+        await service.onPrepare({});
+      } catch (error) {
+        expect(error.name).toEqual('SevereServiceError');
       }
 
       expect.assertions(1);

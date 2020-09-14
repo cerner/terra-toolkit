@@ -40,6 +40,22 @@ describe('WDIO Asset Server Service', () => {
 
       expect(WebpackServer).toHaveBeenCalledTimes(1);
     });
+
+    it('should throw a SevereServiceError if the server fails to start', async () => {
+      const service = new AssetService({ webpackConfig: 'webpack.config.js' });
+
+      WebpackServer.mockImplementationOnce(() => ({
+        start: () => Promise.reject(),
+      }));
+
+      try {
+        await service.onPrepare();
+      } catch (error) {
+        expect(error.name).toEqual('SevereServiceError');
+      }
+
+      expect.assertions(1);
+    });
   });
 
   describe('onComplete', () => {

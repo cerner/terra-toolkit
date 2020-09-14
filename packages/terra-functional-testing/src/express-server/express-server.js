@@ -41,7 +41,7 @@ class ExpressServer {
     // Check if the site exists prior to starting the express server.
     if (!fs.existsSync(this.site) || (fs.lstatSync(this.site).isDirectory() && fs.readdirSync(this.site).length === 0)) {
       logger.warn(`Cannot serve content from ${this.site} because it does not exist or it is empty.`);
-      return Promise.reject();
+      return Promise.reject(Error(`Cannot serve content from ${this.site} because it does not exist or it is empty.`));
     }
 
     return new Promise((resolve, reject) => {
