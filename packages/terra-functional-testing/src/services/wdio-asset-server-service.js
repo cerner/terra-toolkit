@@ -1,3 +1,4 @@
+const { SevereServiceError } = require('webdriverio');
 const ExpressServer = require('../express-server');
 const WebpackServer = require('../webpack-server');
 const Logger = require('../logger/logger');
@@ -21,13 +22,17 @@ class AssetServerService {
       return;
     }
 
-    if (site) {
-      this.server = new ExpressServer(this.options);
-    } else {
-      this.server = new WebpackServer(this.options);
-    }
+    try {
+      if (site) {
+        this.server = new ExpressServer(this.options);
+      } else {
+        this.server = new WebpackServer(this.options);
+      }
 
-    await this.server.start();
+      await this.server.start();
+    } catch (error) {
+      throw new SevereServiceError(error);
+    }
   }
 
   /**

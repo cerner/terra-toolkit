@@ -49,7 +49,7 @@ describe('Express Server', () => {
 
       jest.spyOn(fs, 'existsSync').mockImplementation(() => false);
 
-      return expect(server.start()).rejects.toBeUndefined();
+      return expect(server.start()).rejects.toThrow('Cannot serve content from undefined because it does not exist or it is empty.');
     });
 
     it('should reject if the site directory exists but is empty', () => {
@@ -59,7 +59,7 @@ describe('Express Server', () => {
       jest.spyOn(fs, 'lstatSync').mockImplementation(() => ({ isDirectory: () => true }));
       jest.spyOn(fs, 'readdirSync').mockImplementation(() => []);
 
-      return expect(server.start()).rejects.toBeUndefined();
+      return expect(server.start()).rejects.toThrow('Cannot serve content from undefined because it does not exist or it is empty.');
     });
 
     it('should start an express server', () => {

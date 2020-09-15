@@ -2,6 +2,7 @@
 const path = require('path');
 const util = require('util');
 const childProcess = require('child_process');
+const { SevereServiceError } = require('webdriverio');
 const Logger = require('../logger/logger');
 
 const exec = util.promisify(childProcess.exec);
@@ -26,11 +27,15 @@ class SeleniumDockerService {
       await exec('docker -v');
     } catch (error) {
       logger.error('Docker is not installed. Install docker to continue.');
-      throw error;
+      throw new SevereServiceError('Docker is not installed.');
     }
 
-    await this.initializeSwarm();
-    await this.deployStack();
+    try {
+      await this.initializeSwarm();
+      await this.deployStack();
+    } catch (error) {
+      throw new SevereServiceError(error);
+    }
   }
 
   /**
