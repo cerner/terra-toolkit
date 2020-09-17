@@ -1,5 +1,4 @@
-// Terra.describeViewports('Viewport Helpers', ['tiny', 'huge'], () => {
-  describe('Viewport Helpers', () => {
+Terra.describeViewports('Viewport Helpers', ['tiny', 'huge'], () => {
   it('creates tiny and huge screens', () => {
     browser.url('/compare.html');
     // Terra.validates.screenshot();
@@ -18,8 +17,8 @@
 
   it('viewport check', () => {
     const currentWindowSize = browser.getWindowSize();
-    // const largeViewport = Terra.viewports('large');
+    const largeViewport = Terra.viewports('large');
 
-    // expect(currentWindowSize.width).toEqual(largeViewport.width);
+    expect(currentWindowSize.width).not.toEqual(largeViewport.width);
   });
 });
