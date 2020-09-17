@@ -1,4 +1,5 @@
 const Logger = require('../logger/logger');
+
 const logger = new Logger({ prefix: 'wdio-terra-service' });
 
 /**

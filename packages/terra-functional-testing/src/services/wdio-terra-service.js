@@ -14,6 +14,7 @@ class TerraService {
 
     /* Add the Jest expect module the use the Jest matchers. */
     global.expect = expect;
+
     /* Add a Terra global with access to Mocha-Chai test helpers. */
     global.Terra = {
       /* `viewports` provides access Terra's list of test viewports. */
@@ -39,7 +40,7 @@ class TerraService {
     if ((commandName === 'refresh' || commandName === 'url') && !error) {
       try {
         // This is only meant as a convenience so failure is not particularly concerning
-        hideInputCaret('body');
+        global.Terra.hideInputCaret('body');
 
         if (global.browser.isExisting('[data-terra-dev-site-loading]')) {
           global.browser.waitUntil(() => (
