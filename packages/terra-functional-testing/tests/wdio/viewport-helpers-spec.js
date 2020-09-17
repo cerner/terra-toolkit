@@ -1,24 +1,25 @@
-Terra.describeViewports('Viewport Helpers', ['tiny', 'huge'], () => {
+// Terra.describeViewports('Viewport Helpers', ['tiny', 'huge'], () => {
+  describe('Viewport Helpers', () => {
   it('creates tiny and huge screens', () => {
     browser.url('/compare.html');
     // Terra.validates.screenshot();
   });
 
-  it('expands the height', () => {
+  it('shrink the height', () => {
     const windowSize = browser.getWindowSize();
     const previousHeight = windowSize.height;
-    windowSize.height = 1000;
+    windowSize.height = 100;
     browser.setWindowSize(windowSize.width, windowSize.height);
 
     const currentWindowSize = browser.getWindowSize();
-    expect(currentWindowSize.height).to.not.equal(previousHeight);
+    expect(currentWindowSize.height).not.toEqual(previousHeight);
     // Terra.validates.screenshot('expands the height');
   });
 
   it('viewport check', () => {
     const currentWindowSize = browser.getWindowSize();
-    const largeViewport = Terra.viewports('large')[0];
+    // const largeViewport = Terra.viewports('large');
 
-    expect(currentWindowSize.width).to.not.equal(largeViewport.width);
+    // expect(currentWindowSize.width).toEqual(largeViewport.width);
   });
 });
