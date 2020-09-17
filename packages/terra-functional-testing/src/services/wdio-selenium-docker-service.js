@@ -22,6 +22,8 @@ class SeleniumDockerService {
     this.host = config.hostname;
     this.port = config.port;
 
+    logger.log(`Running tests against Selenium ${this.version}.`);
+
     // Verify docker is installed before proceeding.
     try {
       await exec('docker -v');

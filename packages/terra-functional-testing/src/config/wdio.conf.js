@@ -7,6 +7,7 @@ const TerraService = require('../services/wdio-terra-service');
 const AssetServerService = require('../services/wdio-asset-server-service');
 
 const {
+  FORM_FACTOR,
   LOCALE,
   SITE,
   THEME,
@@ -165,4 +166,17 @@ exports.config = {
     ui: 'bdd',
     timeout: 60000,
   },
+
+  /* Terra defined viewport sizes. */
+  terraViewports: {
+    tiny: { width: 470, height: 768, name: 'tiny' },
+    small: { width: 622, height: 768, name: 'small' },
+    medium: { width: 838, height: 768, name: 'medium' },
+    large: { width: 1000, height: 768, name: 'large' },
+    huge: { width: 1300, height: 768, name: 'huge' },
+    enormous: { width: 1500, height: 768, name: 'enormous' },
+  },
+
+  /* Use to change the form factor (test viewport) used in the wdio run. */
+  ...FORM_FACTOR && { formFactor: FORM_FACTOR },
 };
