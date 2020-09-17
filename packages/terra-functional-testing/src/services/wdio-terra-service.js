@@ -9,7 +9,7 @@ class TerraService {
    * Service hook executed prior to test execution.
    * Initializes the Terra Service's custom commands.
    */
-  before() {
+  before(capabilities) {
     global.browser.addCommand('axe', axe);
 
     /* Add the Jest expect module the use the Jest matchers. */
@@ -26,8 +26,13 @@ class TerraService {
       hideInputCaret,
     };
 
-    /* Set the viewport size before the spec begins.  */
-    // viewportHelpers.setViewport(global.browser.options.formFactor);
+    /* IE driver takes a longer to be ready for browser interactions. */
+    if (capabilities.browserName === 'internet explorer') {
+      global.browser.pause(10000);
+    }
+
+    /* Set the viewport size before the spec begins. */
+    viewportHelpers.setViewport(global.browser.config.formFactor);
   }
 
   afterCommand(commandName, args, result, error) {
@@ -39,7 +44,7 @@ class TerraService {
         if (global.browser.isExisting('[data-terra-dev-site-loading]')) {
           global.browser.waitUntil(() => (
             global.browser.isExisting('[data-terra-dev-site-content]')
-          ), global.browser.options.waitforTimeout + 2000, '', 100);
+          ), global.browser.config.waitforTimeout + 2000, '', 100);
         }
       } catch (err) {
         // intentionally blank

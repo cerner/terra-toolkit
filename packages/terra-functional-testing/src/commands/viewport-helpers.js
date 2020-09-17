@@ -1,7 +1,4 @@
 const Logger = require('../logger/logger');
-const Config = require('../config/wdio.conf');
-
-const { terraViewports: VIEWPORTS } = Config;
 const logger = new Logger({ prefix: 'wdio-terra-service' });
 
 /**
@@ -11,11 +8,12 @@ const logger = new Logger({ prefix: 'wdio-terra-service' });
 * @return {object} - Terra viewport sizes.
 */
 const getViewports = (...sizes) => {
-  let viewportSizes = Object.keys(VIEWPORTS);
+  const { terraViewports } = global.browser.config;
+  let viewportSizes = Object.keys(terraViewports);
   if (sizes.length) {
     viewportSizes = sizes;
   }
-  return viewportSizes.map(size => VIEWPORTS[size]);
+  return viewportSizes.map(size => terraViewports[size]);
 };
 
 /**
@@ -24,15 +22,16 @@ const getViewports = (...sizes) => {
 * @param {string} [formFactor=huge] - the Terra test viewport.
 */
 const setViewport = (formFactor) => {
+  const { terraViewports } = global.browser.config;
   if (formFactor) {
-    const terraViewport = VIEWPORTS[formFactor];
+    const terraViewport = terraViewports[formFactor];
     if (terraViewport !== undefined && typeof terraViewport === 'object') {
       global.browser.setWindowSize(terraViewport.width, terraViewport.height);
     } else {
       throw logger.error(`The ${formFactor} formFactor supplied is not a viewport size supported by Terra.`);
     }
   } else {
-    const defaultViewport = VIEWPORTS.huge;
+    const defaultViewport = terraViewports.huge;
     global.browser.setWindowSize(defaultViewport.width, defaultViewport.height);
   }
 };
@@ -52,7 +51,7 @@ const describeViewports = (title, viewports, fn) => {
   let localViewports = viewports;
 
   // If formFactor is defined and viewports contains the form factor, run that size else don't run the tests
-  const { formFactor } = global.browser.options;
+  const { formFactor } = global.browser.config;
   if (formFactor) {
     localViewports = viewports.includes(formFactor) ? [formFactor] : [];
   }
