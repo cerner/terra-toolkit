@@ -1,14 +1,18 @@
 Terra.describeViewports('Viewport Helpers', ['tiny', 'huge'], () => {
   it('creates tiny and huge screens', () => {
     browser.url('/compare.html');
-    Terra.validates.screenshot();
+    // Terra.validates.screenshot();
   });
 
   it('expands the height', () => {
     const windowSize = browser.getWindowSize();
+    const previousHeight = windowSize.height;
     windowSize.height = 1000;
     browser.setWindowSize(windowSize.width, windowSize.height);
-    Terra.validates.screenshot('expands the height');
+
+    const currentWindowSize = browser.getWindowSize();
+    expect(currentWindowSize.height).to.not.equal(previousHeight);
+    // Terra.validates.screenshot('expands the height');
   });
 
   it('viewport check', () => {
