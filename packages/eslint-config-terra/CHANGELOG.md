@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Fixed
+  * The badges in the readme were pointing to an incorrect url.
+
 ## 4.1.0 - (August 4, 2020)
 
 * Added
