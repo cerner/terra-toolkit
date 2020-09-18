@@ -1,6 +1,6 @@
 # Eslint Config Terra
 
-[![NPM version](https://badgen.net/npm/v/@carbon/eslint-config-terra)](https://www.npmjs.org/package/@carbon/eslint-config-terra)
+[![NPM version](https://badgen.net/npm/v/@cerner/eslint-config-terra)](https://www.npmjs.org/package/@cerner/eslint-config-terra)
 [![Build Status](https://badgen.net/travis/cerner/terra-toolkit)](https://travis-ci.com/cerner/terra-toolkit)
 
 Terra's sharable ESLint configuration for their UI library and build tools.

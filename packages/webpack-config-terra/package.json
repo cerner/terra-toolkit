@@ -1,0 +1,36 @@
+{
+  "name": "@cerner/webpack-config-terra",
+  "version": "0.0.0",
+  "description": "Terra Webpack Config",
+  "main": "webpack.config.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cerner/terra-toolkit.git",
+    "directory": "packages/webpack-config-terra"
+  },
+  "keywords": [
+    "webpack",
+    "webpack-config",
+    "Cerner",
+    "Terra"
+  ],
+  "author": "Cerner Corporation",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/cerner/terra-toolkit/issues"
+  },
+  "engines": {
+    "node": "^10.13.0 || >=11.10.1"
+  },
+  "homepage": "https://github.com/cerner/terra-toolkit",
+  "scripts": {
+    "lint": "eslint --ext .js,.jsx ."
+  },
+  "dependencies": {
+  },
+  "peerDependencies": {
+  }
+}
