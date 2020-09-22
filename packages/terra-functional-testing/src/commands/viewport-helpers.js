@@ -14,7 +14,7 @@ const getViewports = (...sizes) => {
   if (sizes.length) {
     viewportSizes = sizes;
   }
-  return viewportSizes.map(size => terraViewports[size]);
+  return viewportSizes.map(formFactor => terraViewports[formFactor]);
 };
 
 /**
