@@ -22,18 +22,13 @@ const getViewports = (...sizes) => {
 *
 * @param {string} [formFactor=huge] - the Terra test viewport.
 */
-const setViewport = (formFactor) => {
+const setViewport = (formFactor = 'huge') => {
   const { terraViewports } = global.browser.config;
-  if (formFactor) {
-    const terraViewport = terraViewports[formFactor];
-    if (terraViewport !== undefined && typeof terraViewport === 'object') {
-      global.browser.setWindowSize(terraViewport.width, terraViewport.height);
-    } else {
-      throw logger.error(`The ${formFactor} formFactor supplied is not a viewport size supported by Terra.`);
-    }
+  const terraViewport = terraViewports[formFactor];
+  if (terraViewport !== undefined && typeof terraViewport === 'object') {
+    global.browser.setWindowSize(terraViewport.width, terraViewport.height);
   } else {
-    const defaultViewport = terraViewports.huge;
-    global.browser.setWindowSize(defaultViewport.width, defaultViewport.height);
+    throw logger.error(`The ${formFactor} formFactor supplied is not a viewport size supported by Terra.`);
   }
 };
 

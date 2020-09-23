@@ -130,7 +130,19 @@ exports.config = {
   // your test setup with almost no effort. Unlike plugins, they don't add new
   // commands. Instead, they hook themselves up into the test process.
   services: [
-    [TerraService],
+    [TerraService, {
+      /* Terra defined viewport sizes. */
+      terraViewports: {
+        tiny: { width: 470, height: 768 },
+        small: { width: 622, height: 768 },
+        medium: { width: 838, height: 768 },
+        large: { width: 1000, height: 768 },
+        huge: { width: 1300, height: 768 },
+        enormous: { width: 1500, height: 768 },
+      },
+      /* Use to change the form factor (test viewport) used in the wdio run. */
+      ...FORM_FACTOR && { formFactor: FORM_FACTOR },
+    }],
     [AssetServerService, {
       ...SITE && { site: SITE },
       ...LOCALE && { locale: LOCALE },
@@ -166,17 +178,4 @@ exports.config = {
     ui: 'bdd',
     timeout: 60000,
   },
-
-  /* Terra defined viewport sizes. */
-  terraViewports: {
-    tiny: { width: 470, height: 768, name: 'tiny' },
-    small: { width: 622, height: 768, name: 'small' },
-    medium: { width: 838, height: 768, name: 'medium' },
-    large: { width: 1000, height: 768, name: 'large' },
-    huge: { width: 1300, height: 768, name: 'huge' },
-    enormous: { width: 1500, height: 768, name: 'enormous' },
-  },
-
-  /* Use to change the form factor (test viewport) used in the wdio run. */
-  ...FORM_FACTOR && { formFactor: FORM_FACTOR },
 };
