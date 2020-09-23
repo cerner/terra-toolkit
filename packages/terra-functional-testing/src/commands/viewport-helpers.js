@@ -1,4 +1,5 @@
 const Logger = require('../logger/logger');
+const terraViewports = require('../util/viewports');
 
 const logger = new Logger({ prefix: 'wdio-terra-service' });
 
@@ -9,7 +10,6 @@ const logger = new Logger({ prefix: 'wdio-terra-service' });
 * @return {object} - Terra viewport sizes.
 */
 const getViewports = (...sizes) => {
-  const { terraViewports } = global.browser.config;
   let viewportSizes = Object.keys(terraViewports);
   if (sizes.length) {
     viewportSizes = sizes;
@@ -23,7 +23,6 @@ const getViewports = (...sizes) => {
 * @param {string} [formFactor=huge] - the Terra test viewport.
 */
 const setViewport = (formFactor = 'huge') => {
-  const { terraViewports } = global.browser.config;
   const terraViewport = terraViewports[formFactor];
   if (terraViewport !== undefined && typeof terraViewport === 'object') {
     global.browser.setWindowSize(terraViewport.width, terraViewport.height);

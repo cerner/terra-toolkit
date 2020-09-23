@@ -131,15 +131,6 @@ exports.config = {
   // commands. Instead, they hook themselves up into the test process.
   services: [
     [TerraService, {
-      /* Terra defined viewport sizes. */
-      terraViewports: {
-        tiny: { width: 470, height: 768 },
-        small: { width: 622, height: 768 },
-        medium: { width: 838, height: 768 },
-        large: { width: 1000, height: 768 },
-        huge: { width: 1300, height: 768 },
-        enormous: { width: 1500, height: 768 },
-      },
       /* Use to change the form factor (test viewport) used in the wdio run. */
       ...FORM_FACTOR && { formFactor: FORM_FACTOR },
     }],
