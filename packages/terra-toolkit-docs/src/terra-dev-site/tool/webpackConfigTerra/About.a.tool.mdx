@@ -54,6 +54,7 @@ _\* Required to support IE legacy browsers_
 Terra-toolkit's [default webpack configuration](https://github.com/cerner/terra-toolkit/blob/main/packages/webpack-config-terra/webpack.config.js).
 - Use when building a standalone site.
 - Additional configuration required.
+- Can be extended with terra-dev-site plugins.
 
 By using this default configuration, we will manage webpack dependencies and set up translation aggregation. If you choose not to use the default configuration, Toolkit's configuration can  be extend to meet your needs or it can be used as an guide to build your own.
 
@@ -68,7 +69,7 @@ Webpack environment options can be set via the command line. For example:
 ```bash
 webpack --env.disableHotReloading=true
 ```
-Read more on webpack's doc site[webpack environment options](https://webpack.js.org/api/cli/#environment-options)
+Read more on webpack's doc site about [webpack environment options](https://webpack.js.org/api/cli/#environment-options)
 
 |name|Type|Default|Description|
 |---|---|---|
@@ -76,7 +77,26 @@ Read more on webpack's doc site[webpack environment options](https://webpack.js.
 |`disableHotReloading`|Bool|false|Disable hot reloading, this is generally used by CI.|
 |`disableCSSCustomProperties`|Bool|false|A webpack environment variable `disableCSSCustomProperties` to disable css custom properties.|
 
-#### ENV'
+
+#### options
+
+Options can be supplied to the terra webpack config as the third parameter after `env` and `argv`. For example:
+
+```js
+const webpackConfig = require('webpack-config-terra');
+
+const themeConfig = {
+  theme: 'terra-dark-theme',
+};
+
+module.exports = webpackConfig({}, {}, {themeConfig});
+```
+
+|name|Type|Description|
+|---|---|---|
+|`themeConfig`|object|Override terra-theme.config.js values. Useful when building multiple sites from one webpack config.|
+
+#### ENV
 
 |name|Type|Description|
 |---|---|---|
@@ -97,7 +117,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const merge = require('webpack-merge');
 
 // Import the terra-toolkit configuration.
-const defaultWebpackConfig = require('terra-toolkit/config/webpack/webpack.config');
+const defaultWebpackConfig = require('@cerner/webpack-config-terra');
 
 // Create the app-level configuration
 const appWebpackConfig = () => ({

@@ -44,7 +44,7 @@ describe('webpack config', () => {
     // add the module rules
     expect(config).toHaveProperty('module');
     expect(config).toHaveProperty('module.rules');
-    expect(config.module.rules).toHaveLength(4);
+    expect(config.module.rules[0].oneOf).toHaveLength(4);
 
     const cssLoaders = [
       expect.objectContaining({ loader: expect.stringContaining('mini-css-extract-plugin/dist/loader.js') }),
@@ -60,7 +60,7 @@ describe('webpack config', () => {
       expect.objectContaining({ use: 'file-loader' }),
     ];
 
-    expect(config.module.rules).toEqual(expect.arrayContaining(moduleRules));
+    expect(config.module.rules[0].oneOf).toEqual(expect.arrayContaining(moduleRules));
 
     // adds the plugins
     expect(config).toHaveProperty('plugins');

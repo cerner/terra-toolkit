@@ -13,13 +13,22 @@ const aggregateTranslations = require('terra-aggregate-translations');
 const ThemePlugin = require('./lib/postcss/ThemePlugin');
 const getThemeConfig = require('./lib/utils/_getThemeConfig');
 
-const getLocales = ({ disableAggregateTranslations, rootPath }) => {
+/**
+ * Get the locales to be defined by the webpack build, also aggregates translations, but we should remove that in the future.
+ * @param {object} env the env object
+ * @param {string} rootPath root path of the package.
+ */
+const getLocales = ({ disableAggregateTranslations }, rootPath) => {
   if (!disableAggregateTranslations) {
     return aggregateTranslations({ baseDir: rootPath });
   }
   return undefined;
 };
 
+/**
+ * Get an array of modules that need to be resolved to during the webpack build. Should be removed after aggregate translations is removed.
+ * @param {object} env the env object
+ */
 const getResolveModules = ({ disableAggregateTranslations }) => (
   [
     'node_modules',
@@ -27,6 +36,10 @@ const getResolveModules = ({ disableAggregateTranslations }) => (
   ]
 );
 
+/**
+ * Determines the correct theme config to usee of the three options. Precedence is. ENV, options config, terra-them.config.js
+ * @param {object} options object containing the override config if provided.
+ */
 const determineThemeConfig = ({ themeConfig: overrideThemeConfig }) => {
   const defaultTheme = process.env.THEME; // Flexes root theme for theme visual regression testing.
 
@@ -40,6 +53,10 @@ const determineThemeConfig = ({ themeConfig: overrideThemeConfig }) => {
   return getThemeConfig();
 };
 
+/**
+ * Provides the webpack dev server options to disable hot reloading. I'm going to be honest, it doesn't alway work.
+ * @param {object} env the env object containing the request to disable hot reloading.
+ */
 const getWebpackDevServerStaticOptions = ({ disableHotReloading }) => (
   {
     ...disableHotReloading && {
@@ -49,21 +66,16 @@ const getWebpackDevServerStaticOptions = ({ disableHotReloading }) => (
   }
 );
 
+/**
+ * The extendable webpack config for terra.
+ * @param {object} env environment variables pass to webpack via --env.thing.
+ * @param {object} argv webpack options from the command line arguments, no custom options here.
+ * @param {object} options custom webpack options provided via a config override.
+ */
 const defaultWebpackConfig = (env = {}, argv = {}, options = {}) => {
-  const {
-    disableAggregateTranslations,
-  } = env;
-
   const processPath = process.cwd();
   /* Get the root path of a mono-repo process call */
   const rootPath = processPath.includes('packages') ? processPath.split('packages')[0] : processPath;
-
-  const resolveModules = getResolveModules(env);
-
-  const locales = getLocales({
-    disableAggregateTranslations,
-    rootPath,
-  });
 
   const themeConfig = determineThemeConfig(options);
 
@@ -175,13 +187,13 @@ const defaultWebpackConfig = (env = {}, argv = {}, options = {}) => {
       }),
       new webpack.DefinePlugin({
         CERNER_BUILD_TIMESTAMP: JSON.stringify(new Date(Date.now()).toISOString()),
-        TERRA_AGGREGATED_LOCALES: JSON.stringify(locales),
+        TERRA_AGGREGATED_LOCALES: JSON.stringify(getLocales(env, rootPath)),
         TERRA_THEME_CONFIG: JSON.stringify(themeConfig),
       }),
     ],
     resolve: {
       extensions: ['.js', '.jsx'],
-      modules: resolveModules,
+      modules: getResolveModules(env),
       mainFields: ['main'],
     },
     output: {
