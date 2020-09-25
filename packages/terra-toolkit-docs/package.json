@@ -33,6 +33,7 @@
     "precompile": "rm -rf lib"
   },
   "dependencies": {
+    "@cerner/webpack-config-terra": "^0.0.0"
   },
   "peerDependencies": {
   }

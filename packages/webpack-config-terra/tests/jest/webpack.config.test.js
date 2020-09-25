@@ -208,23 +208,6 @@ describe('webpack config', () => {
     expect(DefinePlugin).toBeCalledWith(expected);
   });
 
-  it('accepts aggregateOptions env variable', () => {
-    const aggregateOptions = { baseDir: 'test/dir', locales: ['en', 'es', 'pl'] };
-    aggregateTranslations.mockImplementation(() => aggregateOptions.locales);
-    webpackConfig({ aggregateOptions }, {});
-
-    // and it aggregates translations with these options
-    expect(aggregateTranslations).toBeCalledWith(expect.objectContaining(aggregateOptions));
-
-    // should add the TERRA_AGGREGATED_LOCALES global with the translation locale options
-    const expected = {
-      CERNER_BUILD_TIMESTAMP: JSON.stringify(new Date(mockDate).toISOString()),
-      TERRA_AGGREGATED_LOCALES: JSON.stringify(aggregateOptions.locales),
-      TERRA_THEME_CONFIG: JSON.stringify({}),
-    };
-    expect(DefinePlugin).toBeCalledWith(expected);
-  });
-
   it('accepts disableHotReloading env variable', () => {
     const disableHotReloading = true;
     const config = webpackConfig({ disableHotReloading }, {});
@@ -264,7 +247,7 @@ describe('webpack config', () => {
       theme: 'test-theme',
     }));
 
-    webpackConfig({ themeConfig: { theme: 'override-theme' } }, {});
+    webpackConfig({}, {}, { themeConfig: { theme: 'override-theme' } });
 
     const expected = {
       CERNER_BUILD_TIMESTAMP: JSON.stringify(new Date(mockDate).toISOString()),

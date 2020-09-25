@@ -13,14 +13,59 @@ const aggregateTranslations = require('terra-aggregate-translations');
 const ThemePlugin = require('./lib/postcss/ThemePlugin');
 const getThemeConfig = require('./lib/utils/_getThemeConfig');
 
-const webpackConfig = (options, env, argv) => {
+const getLocales = ({ disableAggregateTranslations, rootPath }) => {
+  if (!disableAggregateTranslations) {
+    return aggregateTranslations({ baseDir: rootPath });
+  }
+  return undefined;
+};
+
+const getResolveModules = ({ disableAggregateTranslations }) => (
+  [
+    'node_modules',
+    ...disableAggregateTranslations ? [] : ['aggregated-translations'],
+  ]
+);
+
+const determineThemeConfig = ({ themeConfig: overrideThemeConfig }) => {
+  const defaultTheme = process.env.THEME; // Flexes root theme for theme visual regression testing.
+
+  if (defaultTheme) {
+    return { theme: defaultTheme };
+  }
+  if (overrideThemeConfig) {
+    return overrideThemeConfig;
+  }
+
+  return getThemeConfig();
+};
+
+const getWebpackDevServerStaticOptions = ({ disableHotReloading }) => (
+  {
+    ...disableHotReloading && {
+      hot: false,
+      inline: false,
+    },
+  }
+);
+
+const defaultWebpackConfig = (env = {}, argv = {}, options = {}) => {
   const {
+    disableAggregateTranslations,
+  } = env;
+
+  const processPath = process.cwd();
+  /* Get the root path of a mono-repo process call */
+  const rootPath = processPath.includes('packages') ? processPath.split('packages')[0] : processPath;
+
+  const resolveModules = getResolveModules(env);
+
+  const locales = getLocales({
+    disableAggregateTranslations,
     rootPath,
-    resolveModules,
-    staticOptions,
-    aggregatedLocales,
-    themeConfig,
-  } = options;
+  });
+
+  const themeConfig = determineThemeConfig(options);
 
   const production = argv.p;
   const fileNameStategy = production ? '[name]-[chunkhash]' : '[name]';
@@ -109,7 +154,7 @@ const webpackConfig = (options, env, argv) => {
         log: false,
         plugins: [
           PostCSSCustomProperties({
-            preserve: true,
+            preserve: !env.disableCSSCustomProperties,
           }),
         ],
       }),
@@ -129,7 +174,7 @@ const webpackConfig = (options, env, argv) => {
       }),
       new webpack.DefinePlugin({
         CERNER_BUILD_TIMESTAMP: JSON.stringify(new Date(Date.now()).toISOString()),
-        TERRA_AGGREGATED_LOCALES: JSON.stringify(aggregatedLocales),
+        TERRA_AGGREGATED_LOCALES: JSON.stringify(locales),
         TERRA_THEME_CONFIG: JSON.stringify(themeConfig),
       }),
     ],
@@ -145,7 +190,7 @@ const webpackConfig = (options, env, argv) => {
       publicPath,
     },
     devServer: {
-      ...staticOptions,
+      ...getWebpackDevServerStaticOptions(env),
       host: '0.0.0.0',
       publicPath,
       stats: {
@@ -187,53 +232,6 @@ const webpackConfig = (options, env, argv) => {
       ],
     },
   });
-};
-
-const defaultWebpackConfig = (env = {}, argv = {}) => {
-  const {
-    disableAggregateTranslations,
-    disableHotReloading,
-    themeConfig: envThemeConfig,
-  } = env;
-
-  const staticOptions = {
-    ...disableHotReloading && {
-      hot: false,
-      inline: false,
-    },
-  };
-
-  const processPath = process.cwd();
-  /* Get the root path of a mono-repo process call */
-  const rootPath = processPath.includes('packages') ? processPath.split('packages')[0] : processPath;
-
-  const resolveModules = ['node_modules'];
-
-  let aggregatedLocales;
-  if (!disableAggregateTranslations) {
-    aggregatedLocales = aggregateTranslations({ baseDir: rootPath, ...env.aggregateOptions });
-    resolveModules.unshift(path.resolve(rootPath, 'aggregated-translations'));
-  }
-
-  const defaultTheme = process.env.THEME; // Flexes root theme for theme visual regression testing.
-  let themeConfig = {};
-  if (defaultTheme) {
-    themeConfig = { theme: defaultTheme };
-  } else if (envThemeConfig) {
-    themeConfig = envThemeConfig;
-  } else {
-    themeConfig = getThemeConfig();
-  }
-
-  const options = {
-    rootPath,
-    resolveModules,
-    staticOptions,
-    aggregatedLocales,
-    themeConfig,
-  };
-
-  return webpackConfig(options, env, argv);
 };
 
 module.exports = defaultWebpackConfig;

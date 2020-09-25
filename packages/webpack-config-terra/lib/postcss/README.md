@@ -2,13 +2,13 @@
 
 The purpose of this plugin is to create a default theme from a scoped theme and to remove any known themes that are not desired.
 
-The plugin will read from the same `terra-theme.config.js` that `terra-aggregate-themes` script reads from. Eventually `terra-aggregate-theme`s will be deprecated in favor of this strategy.
+The plugin will read from the same `terra-theme.config.js` that `terra-aggregate-themes` script reads from. Eventually `terra-aggregate-themes` will be deprecated in favor of this strategy.
 
 ## Configuration
 
 ### terra-theme.config.js
 
-Below is an example of terra-theme.config. For more theme config information go [here](https://github.com/cerner/terra-toolkit-boneyard/tree/postcss-theme-plugin/config/webpack/postcss/themeConfig.md).
+Below is an example of terra-theme.config. For more theme config information go [here](https://github.com/cerner/terra-toolkit/tree/packages/webpack-config-terra/src/postcss-theme-plugin/config/webpack/postcss/themeConfig.md).
 
 ```js
 const themeConfig = {
