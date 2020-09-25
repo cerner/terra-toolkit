@@ -81,8 +81,8 @@ const defaultWebpackConfig = (env = {}, argv = {}, options = {}) => {
       'regenerator-runtime': 'regenerator-runtime/runtime',
     },
     module: {
-      rules: [
-        {
+      rules: [{
+        oneOf: [{
           test: /\.(jsx|js)$/,
           exclude: /node_modules/,
           use: {
@@ -142,6 +142,7 @@ const defaultWebpackConfig = (env = {}, argv = {}, options = {}) => {
           test: /\.(png|svg|jpg|gif|otf|eot|ttf|svg|woff|woff2)$/,
           use: 'file-loader',
         }],
+      }],
     },
     plugins: [
       new MiniCssExtractPlugin({
