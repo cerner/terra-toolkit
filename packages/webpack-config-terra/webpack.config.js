@@ -74,8 +74,6 @@ const getWebpackDevServerStaticOptions = ({ disableHotReloading }) => (
  */
 const defaultWebpackConfig = (env = {}, argv = {}, options = {}) => {
   const processPath = process.cwd();
-  /* Get the root path of a mono-repo process call */
-  const rootPath = processPath.includes('packages') ? processPath.split('packages')[0] : processPath;
 
   const themeConfig = determineThemeConfig(options);
 
@@ -83,7 +81,7 @@ const defaultWebpackConfig = (env = {}, argv = {}, options = {}) => {
   const fileNameStategy = production ? '[name]-[chunkhash]' : '[name]';
   const chunkFilename = argv['output-chunk-filename'] || fileNameStategy;
   const filename = argv['output-filename'] || fileNameStategy;
-  const outputPath = argv['output-path'] || path.join(rootPath, 'build');
+  const outputPath = argv['output-path'] || path.join(processPath, 'build');
   const publicPath = argv['output-public-path'] || '';
 
   const devConfig = {
@@ -187,7 +185,7 @@ const defaultWebpackConfig = (env = {}, argv = {}, options = {}) => {
       }),
       new webpack.DefinePlugin({
         CERNER_BUILD_TIMESTAMP: JSON.stringify(new Date(Date.now()).toISOString()),
-        TERRA_AGGREGATED_LOCALES: JSON.stringify(getLocales(env, rootPath)),
+        TERRA_AGGREGATED_LOCALES: JSON.stringify(getLocales(env, processPath)),
         TERRA_THEME_CONFIG: JSON.stringify(themeConfig),
       }),
     ],
@@ -213,7 +211,7 @@ const defaultWebpackConfig = (env = {}, argv = {}, options = {}) => {
     },
     devtool: 'eval-source-map',
     resolveLoader: {
-      modules: [path.resolve(path.join(rootPath, 'node_modules'))],
+      modules: [path.resolve(path.join(processPath, 'node_modules'))],
     },
     stats: { children: false },
   };
