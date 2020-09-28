@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 const commander = require('commander');
 const Serve = require('../packages/terra-functional-testing/lib/express-server/index.js');
 

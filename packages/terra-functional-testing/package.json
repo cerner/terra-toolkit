@@ -69,5 +69,13 @@
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0",
     "which": "^2.0.2"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "glob": "^7.1.6",
+    "mocha": "^8.1.1",
+    "nock": "^12.0.3",
+    "np": "^6.3.2",
+    "sinon": "^9.0.2"
   }
 }

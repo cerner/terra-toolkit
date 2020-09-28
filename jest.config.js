@@ -18,6 +18,6 @@ module.exports = {
   ],
   roots: [process.cwd()],
   testMatch: [
-    '**/jest/**/(*.)(spec|test).js?(x)',
+    '**/jest/**/*.test.js',
   ],
 };
