@@ -38,13 +38,21 @@ const getResolveModules = ({ disableAggregateTranslations }) => (
 
 /**
  * Determines the correct theme config to usee of the three options. Precedence is. ENV, options config, terra-them.config.js
+ * @param {object} env the env object
  * @param {object} options object containing the override config if provided.
  */
-const determineThemeConfig = ({ themeConfig: overrideThemeConfig }) => {
-  const defaultTheme = process.env.THEME; // Flexes root theme for theme visual regression testing.
+const determineThemeConfig = ({ defaultTheme }, { themeConfig: overrideThemeConfig }) => {
+  const themeENV = process.env.THEME;
 
-  if (defaultTheme) {
-    return { theme: defaultTheme };
+  if (themeENV) {
+    // eslint-disable-next-line no-console
+    console.warn(`The THEME ENV has been deprecated and will be removed in the next major version. Please use the default theme webpack env option instead, for example "webpack --env.defaultTheme=${themeENV}"`);
+  }
+
+  const aDefaultTheme = defaultTheme || themeENV;
+
+  if (aDefaultTheme) {
+    return { theme: aDefaultTheme };
   }
   if (overrideThemeConfig) {
     return overrideThemeConfig;
@@ -75,7 +83,7 @@ const getWebpackDevServerStaticOptions = ({ disableHotReloading }) => (
 const defaultWebpackConfig = (env = {}, argv = {}, options = {}) => {
   const processPath = process.cwd();
 
-  const themeConfig = determineThemeConfig(options);
+  const themeConfig = determineThemeConfig(env, options);
 
   const production = argv.p;
   const fileNameStategy = production ? '[name]-[chunkhash]' : '[name]';

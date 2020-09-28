@@ -46,3 +46,14 @@ const themeConfig = {
 ### Removed aggregateOptions from env
 
 Similar the env theme config, aggregateOptions was an object added to the env object. Unlike themeConfig we don't know of anyone using aggregateOptions. Instead of moving it to the `options` object we just went ahead and removed it. If you have a use case for config, log an issue and we'll see what we can do.
+
+### deprecating THEME env support
+
+To consolidate our api the THEME env variable is now supplied as the webpack env option `defaultTheme`. For the timebeing both are supported but the THEME env will be removed in the next major version of webpack-config-terra.
+
+```diff
+"scripts": {
+-    "pack": "THEME=terra-dark-theme webpack"
++    "pack": "webpack --env.defaultTheme=terra-dark-theme"
+}
+```

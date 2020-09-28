@@ -76,6 +76,7 @@ Read more on webpack's doc site about [webpack environment options](https://webp
 |`disableAggregateTranslations`|Bool|false|Disable the aggregate translations feature.|
 |`disableHotReloading`|Bool|false|Disable hot reloading, this is generally used by CI.|
 |`disableCSSCustomProperties`|Bool|false|A webpack environment variable `disableCSSCustomProperties` to disable css custom properties.|
+|`defaultTheme`|string|none|Override the default theme set in the terra-theme.config.js file. Useful for testing.|
 
 
 #### options
@@ -95,12 +96,6 @@ module.exports = webpackConfig({}, {}, {themeConfig});
 |name|Type|Description|
 |---|---|---|
 |`themeConfig`|object|Override terra-theme.config.js values. Useful when building multiple sites from one webpack config.|
-
-#### ENV
-
-|name|Type|Description|
-|---|---|---|
-|`THEME`|String|Override the default theme set in the terra-theme.config.js file. Useful for testing.|
 
 ### Extending the Default Config
 
