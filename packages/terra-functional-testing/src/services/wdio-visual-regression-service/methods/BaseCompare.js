@@ -7,8 +7,6 @@ const log = logger('wdio-visual-regression-service:BaseCompare');
 const runtimeConfigPath = __dirname;
 
 export default class BaseCompare {
-  constructor() {}
-
   /**
    * You can do here your image comparison magic.
    */
@@ -16,6 +14,14 @@ export default class BaseCompare {
     return Promise.resolve();
   }
 
+  /**
+   * Creates the screenshot comparison report object.
+   *
+   * @param {Number} misMatchPercentage - the percent mismatched of the latest screenshot compared to the reference screenshot
+   * @param {Boolean} isWithinMisMatchTolerance - whether or not the latest screenshot is a close enough match the reference screenshot
+   * @param {Boolean} isSameDimensions - whether or not the latest screenshot was the same dimensions as the reference screenshot
+   * @return {{misMatchPercentage: Number,isWithinMisMatchTolerance: Boolean, isSameDimensions: Boolean, isExactSameImage: Boolean}}
+   */
   createResultReport(misMatchPercentage, isWithinMisMatchTolerance, isSameDimensions) {
     return {
       misMatchPercentage,
