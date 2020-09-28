@@ -71,7 +71,7 @@
     "lint": "npm run lint:js",
     "mocha": "cd packages/terra-functional-testing && npm run mocha",
     "pack": "webpack -p",
-    "postinstall": "link-parent-bin && npm run bootstrap:hoist",
+    "postinstall": "link-parent-bin && npm run compile && npm run bootstrap:hoist",
     "start": "webpack-dev-server --config webpack.dev-site.config.js",
     "start-heroku": "node ./scripts/hack-express-server.js --port $PORT --site './build' ",
     "test": "npm run lint && npm run jest && npm run mocha && npm run wdio",
