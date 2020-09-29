@@ -9,7 +9,7 @@ export default class BaseCompare {
   }
 
   /**
-   * Returns screenshot comparison report.
+   * Creates the screenshot comparison report object.
    *
    * @param {Number} misMatchPercentage - the percent mismatched of the latest screenshot compared to the reference screenshot
    * @param {Boolean} isWithinMisMatchTolerance - whether or not the latest screenshot is a close enough match the reference screenshot
