@@ -25,6 +25,7 @@ class VisualRegressionLauncher {
       orientations,
       theme,
       viewports,
+      viewportChangePause,
     } = options;
 
     this.compare = new LocalCompare({
@@ -34,7 +35,7 @@ class VisualRegressionLauncher {
     // screenshot looping variables
     this.viewports = viewports || []; // not sure we want to support this / need this
     this.orientations = orientations || []; // not sure we want to support this / need this
-    this.viewportChangePause = 100;
+    this.viewportChangePause = viewportChangePause || 100;
 
     this.currentSuite = null;
     this.currentTest = null;
