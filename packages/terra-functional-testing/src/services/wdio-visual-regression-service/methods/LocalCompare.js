@@ -1,42 +1,131 @@
 import fs from 'fs-extra';
 import resemble from 'node-resemble-js';
 import _ from 'lodash';
+import path from 'path';
 import logger from '@wdio/logger';
 
 import BaseCompare from './BaseCompare';
+import terraViewports from '../../../utils/viewports';
 
 const log = logger('wdio-visual-regression-service:LocalCompare');
+
+const TEST_ID_REGEX = /\[([^)]+)\]/;
 
 export default class LocalCompare extends BaseCompare {
   constructor(options = {}) {
     super();
-    this.getScreenshotFile = options.screenshotName;
-    this.getReferencefile = options.referenceName;
-    this.getDiffFile = options.diffName;
-    this.misMatchTolerance = _.get(options, 'misMatchTolerance', 0.01);
-    this.ignoreComparison = _.get(options, 'ignoreComparison', 'nothing');
+    const {
+      baseScreenshotDir,
+      formFactor,
+      ignoreComparison,
+      locale,
+      misMatchTolerance,
+      theme,
+    } = options;
+
+    this.baseScreenshotDir = baseScreenshotDir;
+    this.formFactor = formFactor;
+    this.locale = locale;
+    this.theme = theme;
+    this.misMatchTolerance = misMatchTolerance;
+    this.ignoreComparison = ignoreComparison;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  createTestName(fullName) {
+    const matches = TEST_ID_REGEX.exec(fullName);
+
+    // If test ID is provided, use the ID for a shorter test name, otherwise use the full name
+    let name = matches ? matches[1] : fullName.trim();
+
+    // Remove white space
+    name = name.replace(/[\s+.]/g, '_');
+
+    // Remove windows reserved characters. See: https://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx#naming_conventions
+    // eslint-disable-next-line no-useless-escape
+    name = name.replace(/[\?\<\>\/\\|\*\"\:\+\.]/g, '-');
+
+    return name;
+  }
+
+  getScreenshotName(context) {
+    const { name } = (context.options || {});
+    const parentName = this.createTestName(context.test.parent);
+    const testName = this.createTestName(name || context.test.title);
+
+    return `${parentName}[${testName}].png`;
+  }
+
+  getFormFactor(browserWidth) {
+    if (this.formFactor !== undefined) {
+      return this.formFactor;
+    }
+
+    // Default to enormous then check if the current viewport is a small form factor
+    let formFactor = 'enormous';
+
+    const viewportSizes = Object.keys(terraViewports);
+    for (let form = 0; form < viewportSizes.length; form += 1) {
+      const viewport = viewportSizes[form];
+      if (browserWidth <= terraViewports[viewport].width) {
+        formFactor = terraViewports[viewport].name;
+        break;
+      }
+    }
+
+    return formFactor;
+  }
+
+  getScreenshotDir(context) {
+    const { desiredCapabilities, meta } = context;
+    const { browserName } = desiredCapabilities;
+    const browserWidth = meta.viewport.width;
+
+    const formFactor = this.getFormFactor(browserWidth);
+    const testForm = `${browserName}_${formFactor}`;
+    const testSpec = path.parse(context.test.file).name;
+
+    return path.join(testForm, testSpec);
+  }
+
+  getScreenshotPaths(context) {
+    let [, specPath] = path.dirname(context.test.file).split(process.cwd());
+
+    // Added to allow for test reusability from terra repositories
+    if (specPath.includes('node_modules')) {
+      [, specPath] = specPath.split('node_modules');
+    }
+
+    const baseScreenshotPath = path.join(this.baseScreenshotDir, specPath, '__snapshots__');
+    const screenshotPath = path.join(this.theme, this.locale, this.getScreenshotDir(context), this.getScreenshotName(context));
+    return {
+      referencePath: path.join(baseScreenshotPath, 'reference', screenshotPath),
+      latestPath: path.join(baseScreenshotPath, 'latest', screenshotPath),
+      diffPath: path.join(baseScreenshotPath, 'diff', screenshotPath),
+    };
   }
 
   async processScreenshot(context, base64Screenshot) {
-    const screenshotPath = this.getScreenshotFile(context);
-    const referencePath = this.getReferencefile(context);
+    const {
+      referencePath,
+      latestPath,
+      diffPath,
+    } = this.getScreenshotPaths(context);
 
-    await fs.outputFile(screenshotPath, base64Screenshot, 'base64');
+    await fs.outputFile(latestPath, base64Screenshot, 'base64');
 
     const referenceExists = await fs.exists(referencePath);
 
     if (referenceExists) {
       log.info('reference exists, compare it with the taken now');
-      const captured = new Buffer.from(base64Screenshot, 'base64'); // eslint-disable-line new-cap
+      const latestScreenshot = new Buffer.from(base64Screenshot, 'base64'); // eslint-disable-line new-cap
       const ignoreComparison = _.get(context, 'options.ignoreComparison', this.ignoreComparison);
 
-      const compareData = await this.compareImages(referencePath, captured, ignoreComparison);
+      const compareData = await this.compareImages(referencePath, latestScreenshot, ignoreComparison);
 
       const { isSameDimensions } = compareData;
       const misMatchPercentage = Number(compareData.misMatchPercentage);
       const misMatchTolerance = _.get(context, 'options.misMatchTolerance', this.misMatchTolerance);
-
-      const diffPath = this.getDiffFile(context);
 
       if (misMatchPercentage > misMatchTolerance) {
         log.info(`Image is different! ${misMatchPercentage}%`);
@@ -58,17 +147,18 @@ export default class LocalCompare extends BaseCompare {
   }
 
   /**
-   * Compares two images with resemble
-   * @param  {Buffer|string} reference path to reference file or buffer
-   * @param  {Buffer|string} screenshot path to file or buffer to compare with reference
-   * @return {{misMatchPercentage: Number, isSameDimensions:Boolean, getImageDataUrl: function}}
+   * Compares the latest image to the latest image with resemble to determine if they are the same.
+   * @param {Buffer|string} reference - path to reference file or buffer for the reference image
+   * @param {Buffer|string} latest - path to file or buffer of the latest image
+   * @param {String} ignoreComparison - the image comparison algorithm to use
+   * @return {{misMatchPercentage: Number, isSameDimensions: Boolean, getImageDataUrl: function}}
    */
   // eslint-disable-next-line class-methods-use-this
-  async compareImages(reference, screenshot, ignore = '') {
+  async compareImages(reference, latest, ignoreComparison = '') {
     return await new Promise(resolve => { // eslint-disable-line no-return-await
-      const image = resemble(reference).compareTo(screenshot);
+      const image = resemble(reference).compareTo(latest);
 
-      switch (ignore) { // eslint-disable-line default-case
+      switch (ignoreComparison) { // eslint-disable-line default-case
         case 'colors':
           image.ignoreColors();
           break;

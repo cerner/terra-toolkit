@@ -22,6 +22,16 @@
   "bugs": {
     "url": "https://github.com/cerner/terra-toolkit/issues"
   },
+  "browserslist": [
+    "iOS >= 12",
+    "last 2 and_chr versions",
+    "last 2 android versions",
+    "last 2 chrome versions",
+    "last 2 edge versions",
+    "last 2 firefox versions",
+    "last 2 ie versions",
+    "last 2 safari versions"
+  ],
   "eslintConfig": {
     "extends": "./packages/eslint-config-terra/eslint.config.js",
     "overrides": [
@@ -58,7 +68,7 @@
     "lint": "npm run lint:js",
     "lint:js": "eslint --ext .js,.jsx .",
     "pack": "webpack -p",
-    "postinstall": "link-parent-bin && npm run bootstrap:hoist",
+    "postinstall": "link-parent-bin && npm run compile && npm run bootstrap:hoist",
     "test": "npm run lint && npm run jest && npm run mocha && npm run wdio",
     "wdio": "rm -rf build && npm run pack && npm run wdio-site && npm run wdio-webpack",
     "wdio-site": "SITE=build node ./packages/terra-functional-testing/bin/test-runner.js",
@@ -66,6 +76,16 @@
     "version": "lerna version --no-git-tag-version && node ./scripts/changelog-updater/index.js"
   },
   "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.1",
+    "@babel/helpers": "^7.10.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.11.0",
+    "@babel/plugin-syntax-async-generators": "^7.8.4",
+    "@babel/plugin-transform-regenerator": "^7.10.4",
+    "@babel/plugin-transform-runtime": "^7.11.0",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.10.5",
     "danger": "^9.1.0",
     "eslint": "^6.1.0",
     "html-webpack-plugin": "^4.3.0",

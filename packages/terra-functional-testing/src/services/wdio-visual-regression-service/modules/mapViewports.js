@@ -15,38 +15,38 @@ const getViewportSize = async function() {
   };
 };
 
-export async function mapViewports(browser, delay, viewports = [], iterateeScreenshot, iterateeProcess) {
+export async function mapViewports(browser, viewportChangePause, viewports = [], takeScreenshot, processScreenshot) {
   const results = [];
 
   if (!viewports.length) {
     const viewport = await getViewportSize();
-    const params = await iterateeScreenshot(viewport);
-    results.push(iterateeProcess(...params));
+    const params = await takeScreenshot(viewport);
+    results.push(processScreenshot(...params));
   } else {
     for (let viewport of viewports) {
       await browser.setWindowSize(viewport.width, viewport.height);
-      await browser.pause(delay);
-      const params = await iterateeScreenshot(viewport);
-      results.push(iterateeProcess(...params));
+      await browser.pause(viewportChangePause);
+      const params = await takeScreenshot(viewport);
+      results.push(processScreenshot(...params));
     }
   }
 
   return Promise.all(results);
 }
 
-export async function mapOrientations(browser, delay, orientations = [], iterateeScreenshot, iterateeProcess) {
+export async function mapOrientations(browser, viewportChangePause, orientations = [], takeScreenshot, processScreenshot) {
   const results = [];
 
   if (!orientations.length) {
     const orientation = await browser.getOrientation();
-    const params = await iterateeScreenshot(orientation);
-    results.push(iterateeProcess(...params));
+    const params = await takeScreenshot(orientation);
+    results.push(processScreenshot(...params));
   } else {
     for (let orientation of orientations) {
       await browser.setOrientation(orientation);
-      await browser.pause(delay);
-      const params = await iterateeScreenshot(orientation);
-      results.push(iterateeProcess(...params));
+      await browser.pause(viewportChangePause);
+      const params = await takeScreenshot(orientation);
+      results.push(processScreenshot(...params));
     }
   }
 

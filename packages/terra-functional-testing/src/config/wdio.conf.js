@@ -2,11 +2,13 @@ const fs = require('fs');
 const path = require('path');
 const ip = require('ip');
 
+const AssetServerService = require('../services/wdio-asset-server-service');
 const SeleniumDockerService = require('../services/wdio-selenium-docker-service');
 const TerraService = require('../services/wdio-terra-service');
-const AssetServerService = require('../services/wdio-asset-server-service');
+const VisualRegressionService = require('../services/wdio-visual-regression-service');
 
 const {
+  FORM_FACTOR,
   LOCALE,
   SITE,
   THEME,
@@ -132,13 +134,22 @@ exports.config = {
     [TerraService],
     [AssetServerService, {
       ...SITE && { site: SITE },
-      ...LOCALE && { locale: LOCALE },
-      ...THEME && { theme: THEME },
+      ...FORM_FACTOR && { formFactor: FORM_FACTOR },
+      locale: LOCALE || 'en',
+      theme: THEME || 'terra-default-theme',
       ...WDIO_INTERNAL_PORT && { port: WDIO_INTERNAL_PORT },
       ...fs.existsSync(defaultWebpackPath) && { webpackConfig: defaultWebpackPath },
     }],
     // Do not add the docker service if disabled.
     ...(WDIO_DISABLE_SELENIUM_SERVICE ? [] : [[SeleniumDockerService]]),
+    [VisualRegressionService, {
+      baseScreenshotDir: process.cwd(),
+      ...FORM_FACTOR && { formFactor: FORM_FACTOR },
+      ignoreComparison: 'nothing',
+      locale: LOCALE || 'en',
+      misMatchTolerance: 0.01,
+      theme: THEME || 'terra-default-theme',
+    }],
   ],
   // Framework you want to run your specs with.
   // The following are supported: Mocha, Jasmine, and Cucumber

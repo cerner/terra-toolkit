@@ -2,8 +2,8 @@
 /* global browser */
 import _ from 'lodash';
 import { parse as parsePlatform } from 'platform';
-import logger from '@wdio/logger';
 
+import LocalCompare from './methods/LocalCompare';
 import makeElementScreenshot from './modules/makeElementScreenshot';
 import makeDocumentScreenshot from './modules/makeDocumentScreenshot';
 import makeViewportScreenshot from './modules/makeViewportScreenshot';
@@ -11,25 +11,33 @@ import makeViewportScreenshot from './modules/makeViewportScreenshot';
 import getUserAgent from './scripts/getUserAgent';
 import { mapViewports, mapOrientations } from './modules/mapViewports';
 
-const log = logger('wdio-visual-regression-service');
-
 class VisualRegressionLauncher {
-  constructor(options) {
-    this.options = options;
+  /**
+   * @param {Object} options - Service configuration options.
+   */
+  constructor(options = {}) {
+    const {
+      baseScreenshotDir,
+      formFactor,
+      ignoreComparison,
+      locale,
+      misMatchTolerance,
+      orientations,
+      theme,
+      viewports,
+    } = options;
+
+    this.compare = new LocalCompare({
+      baseScreenshotDir, formFactor, ignoreComparison, locale, misMatchTolerance, theme,
+    });
+
+    // screenshot looping variables
+    this.viewports = viewports || []; // not sure we want to support this / need this
+    this.orientations = orientations || []; // not sure we want to support this / need this
+    this.viewportChangePause = 100;
+
     this.currentSuite = null;
     this.currentTest = null;
-  }
-
-  /**
-   * Gets executed once before all workers get launched.
-   * @param {Object} config - wdio configuration object
-   * @param {[Object]} capabilities - list of capabilities details
-   */
-  async onPrepare(config) {
-    this.validateConfig(config);
-    this.compare = this.options.compare;
-    log.info('Launching onPrepare functions');
-    await this.runHook('onPrepare');
   }
 
   /**
@@ -41,12 +49,6 @@ class VisualRegressionLauncher {
    * @return {Promise}
    */
   async before(capabilities, specs) {
-    this.validateConfig(browser.config);
-
-    this.compare = this.options.compare;
-    this.viewportChangePause = _.get(browser.config, 'visualRegression.viewportChangePause', 100);
-    this.viewports = _.get(browser.config, 'visualRegression.viewports');
-    this.orientations = _.get(browser.config, 'visualRegression.orientations');
     const userAgent = await browser.execute(getUserAgent);
     const { name, version, ua } = parsePlatform(userAgent);
 
@@ -63,21 +65,18 @@ class VisualRegressionLauncher {
     browser.addCommand('checkElement', this.wrapCommand(browser, 'element', makeElementScreenshot));
     browser.addCommand('checkDocument', this.wrapCommand(browser, 'document', makeDocumentScreenshot));
     browser.addCommand('checkViewport', this.wrapCommand(browser, 'viewport', makeViewportScreenshot));
-
-    await this.runHook('before', this.context);
   }
 
   /**
-   * Hook that gets executed before the suite starts
-   * @param {Object} suite suite details
+   * Hook that gets executed before the suite starts.
+   * @param {Object} suite - suite details
    */
   beforeSuite(suite) {
     this.currentSuite = suite;
   }
 
   /**
-   * Hook that gets executed after the suite has ended
-   * @param {Object} suite suite details
+   * Hook that gets executed after the suite has ended.
    */
   afterSuite() {
     this.currentSuite = null;
@@ -100,40 +99,13 @@ class VisualRegressionLauncher {
   }
 
   /**
-   * Gets executed after all tests are done. You still have access to all global
-   * variables from the test.
-   * @param  {object} capabilities - desiredCapabilities
-   * @param  {[type]} specs
-   * @return {Promise}
+   * Command wrapper to setup the command with the correct context values defined from the global
+   * browser instance.
+   *
+   * @param {object} browser - global wdio browser instance
+   * @param {string} type - the command variant. either document, element or viewport
+   * @param {function} command - the test command that should be executed
    */
-  async after(capabilities, specs) {
-    await this.runHook('after', capabilities, specs);
-  }
-
-  /**
-   * Gets executed after all workers got shut down and the process is about to exit.
-   * @param {Object} exitCode - 0 = success or 1 = fail
-   * @param {Object} config - wdio configuration object
-   * @param {[Object]} capabilities - list of capabilities details
-   */
-  async onComplete(_exitCode, _config, _capabilities) {
-    await this.runHook('onComplete');
-  }
-
-  // eslint-disable-next-line consistent-return
-  async runHook(hookName, ...args) {
-    if (typeof this.compare[hookName] === 'function') {
-      // eslint-disable-next-line no-return-await
-      return await this.compare[hookName](...args);
-    }
-  }
-
-  validateConfig(_config) {
-    if (!_.isPlainObject(this.options) || !_.has(this.options, 'compare')) {
-      throw new Error('Please provide a visualRegression configuration with a compare method in your wdio-conf.js!');
-    }
-  }
-
   wrapCommand(browser, type, command) {
     const baseContext = {
       type,
@@ -141,9 +113,7 @@ class VisualRegressionLauncher {
       desiredCapabilities: this.context.desiredCapabilities,
     };
 
-    const runHook = this.runHook.bind(this);
-
-    const getTestDetails = () => this.getTestDetails();
+    const testDetails = this.getTestDetails();
 
     const resolutionKeySingle = browser.isMobile ? 'orientation' : 'viewport';
     const resolutionKeyPlural = browser.isMobile ? 'orientations' : 'viewports';
@@ -183,26 +153,29 @@ class VisualRegressionLauncher {
 
           const screenshotContext = {
             ...baseContext,
-            ...getTestDetails(),
+            ...testDetails,
             meta,
             options,
           };
 
           const screenshotContextCleaned = _.pickBy(screenshotContext, _.identity);
 
-          await runHook('beforeScreenshot', screenshotContextCleaned);
+          // removes scrollbars, removes / hides elements and scrolls to top
+          await this.compare.beforeScreenshot(screenshotContextCleaned);
 
           const base64Screenshot = await command(browser, ...args);
 
-          await runHook('afterScreenshot', screenshotContextCleaned, base64Screenshot);
+          // re-adds / unhides elements
+          await this.compare.afterScreenshot(screenshotContextCleaned, base64Screenshot);
 
           // pass the following params to next iteratee function
           return [screenshotContextCleaned, base64Screenshot];
         },
+
         // eslint-disable-next-line prefer-arrow-callback
         async function processScreenshot(screenshotContextCleaned, base64Screenshot) {
           // eslint-disable-next-line no-return-await
-          return await runHook('processScreenshot', screenshotContextCleaned, base64Screenshot);
+          return await this.compare.processScreenshot(screenshotContextCleaned, base64Screenshot);
         },
       );
       return results;
