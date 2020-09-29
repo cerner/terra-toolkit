@@ -66,9 +66,9 @@ export default class LocalCompare extends BaseCompare {
 
     const viewportSizes = Object.keys(terraViewports);
     for (let form = 0; form < viewportSizes.length; form += 1) {
-      const viewport = viewportSizes[form];
-      if (browserWidth <= terraViewports[viewport].width) {
-        formFactor = terraViewports[viewport].name;
+      const viewportName = viewportSizes[form];
+      if (browserWidth <= terraViewports[viewportName].width) {
+        formFactor = viewportName;
         break;
       }
     }
