@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/cerner/terra-toolkit",
   "scripts": {
-    "compile": "babel src --out-dir lib --copy-files",
+    "compile": "babel --root-mode upward src --out-dir lib --copy-files",
     "lint": "eslint --ext .js,.jsx .",
     "precompile": "rm -rf lib"
   },
