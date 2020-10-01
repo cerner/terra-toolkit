@@ -14,47 +14,66 @@ Below is the list of polyfills, webpack loaders and plugins Terra components rel
 
 React 16 depends on the collection types ``Map`` and ``Set`` and it depends on ``requestAnimationFrame``, so Terra UI needs a polyfilled environment.
 
-- [core-js](https://github.com/zloirock/core-js) - Provides polyfills necessary for ECMAScript: promises, symbols, collections, iterators, typed arrays, many other features, ECMAScript proposals, some cross-platform WHATWG / W3C features and proposals like URL.\*
-- [regenerator-runtime](https://github.com/facebook/regenerator/tree/master/packages/regenerator-runtime) - Transformer for enabling ECMAScript 6.\*
+* [core-js](https://github.com/zloirock/core-js) - Provides polyfills necessary for ECMAScript: promises, symbols, collections, iterators, typed arrays, many other features, ECMAScript proposals, some cross-platform WHATWG / W3C features and proposals like URL.\*
+* [regenerator-runtime](https://github.com/facebook/regenerator/tree/master/packages/regenerator-runtime) - Transformer for enabling ECMAScript 6.\*
+
+The set of polyfills included by core js an be customized by modifying the `@babel/preset-env` configuration. See [core-js documentation]() for more details.
+
+For example:
+
+```diff
+module.exports = (api) => {
+  api.cache(false);
+  api.assertVersion('^7.4.4');
+
+  return {
+    presets: [
+-     '@babel/preset-env',
++     ['@babel/preset-env', { useBuiltIns: 'entry', corejs: { version: 3.6, proposals: true } }],
+      '@babel/preset-react',
+    ],
+  };
+};
+```
 
 ### JavaScript Loaders
 
-- [babel-loader](https://webpack.js.org/loaders/babel-loader/) - Allows transpiling JavaScript files using [Babel](https://github.com/babel/babel) and webpack.
-- [file-loader](https://webpack.js.org/loaders/file-loader/) - Instructs webpack to emit the required object as file and to return its public URL.
+* [babel-loader](https://webpack.js.org/loaders/babel-loader/) - Allows transpiling JavaScript files using [Babel](https://github.com/babel/babel) and webpack.
+* [file-loader](https://webpack.js.org/loaders/file-loader/) - Instructs webpack to emit the required object as file and to return its public URL.
 
 ### JavaScript Plugins
 
-- [DefinePlugin](https://webpack.js.org/plugins/define-plugin/) - Plugin to define global compile-time values, including:
-  - `CERNER_BUILD_TIMESTAMP` - The time that webpack was executed in ISO8601 format.
-  - `TERRA_AGGREGATED_LOCALES` - The list of successfully aggregated locales available to the browser. See [i18n config](/dev_tools/terra-toolkit-docs/webpack-config-terra/terra-i-18-n-config-js) for more details about the object structure.
-  - `TERRA_THEME_CONFIG` - The scoped and default theme. See [theme config](/dev_tools/terra-toolkit-docs/webpack-config-terra/terra-theme-config-js) for more details about the object structure.
+* [DefinePlugin](https://webpack.js.org/plugins/define-plugin/) - Plugin to define global compile-time values, including:
+  * `CERNER_BUILD_TIMESTAMP` - The time that webpack was executed in ISO8601 format.
+  * `TERRA_AGGREGATED_LOCALES` - The list of successfully aggregated locales available to the browser. See [i18n config](/dev_tools/terra-toolkit-docs/webpack-config-terra/terra-i-18-n-config-js) for more details about the object structure.
+  * `TERRA_THEME_CONFIG` - The scoped and default theme. See [theme config](/dev_tools/terra-toolkit-docs/webpack-config-terra/terra-theme-config-js) for more details about the object structure.
 
 ### CSS Loaders and Plugins
 
-- [autoprefixer](https://github.com/postcss/autoprefixer) - Plugin to parse CSS and add vendor prefixes to CSS rules. This should be configured with [`browserslist-config-terra`](https://github.com/cerner/browserslist-config-terra). \*
-- [css-loader](https://webpack.js.org/loaders/css-loader/) - The css-loader interprets ``@import`` and ``url()`` like ``import/require()`` and will resolve them. The css-loader is also used to parse CSS Modules.
-- [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin) - This plugin extracts CSS into separate files and supports on-demand-loading of CSS and SourceMaps.
-- [postcss-loader](https://webpack.js.org/loaders/postcss-loader/) - Transforms styles with JS plugins.
-- [postcss-assets-webpack-plugin](https://github.com/klimashkin/postcss-assets-webpack-plugin#apply-postcss-plugins-to-webpack-css-asset) - Gets the css, extracted by ExtractTextPlugin and apply postcss plugins to it.
-- [postcss-custom-properties](https://github.com/postcss/postcss-custom-properties) - Transforms W3C CSS Custom Properties to static values.\*
-- [postcss-rtl](https://github.com/vkalinichev/postcss-rtl) - PostCSS-plugin for RTL-adaptivity.
-- [sass-loader](https://webpack.js.org/loaders/sass-loader/) - Loads a SASS/SCSS file and compiles it to CSS.
-- [style-loader](https://webpack.js.org/loaders/style-loader/) - Adds CSS to the DOM by injecting a ``<style>`` tag.
+* [autoprefixer](https://github.com/postcss/autoprefixer) - Plugin to parse CSS and add vendor prefixes to CSS rules. This should be configured with [`browserslist-config-terra`](https://github.com/cerner/browserslist-config-terra). \*
+* [css-loader](https://webpack.js.org/loaders/css-loader/) - The css-loader interprets ``@import`` and ``url()`` like ``import/require()`` and will resolve them. The css-loader is also used to parse CSS Modules.
+* [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin) - This plugin extracts CSS into separate files and supports on-demand-loading of CSS and SourceMaps.
+* [postcss-loader](https://webpack.js.org/loaders/postcss-loader/) - Transforms styles with JS plugins.
+* [postcss-assets-webpack-plugin](https://github.com/klimashkin/postcss-assets-webpack-plugin#apply-postcss-plugins-to-webpack-css-asset) - Gets the css, extracted by ExtractTextPlugin and apply postcss plugins to it.
+* [postcss-custom-properties](https://github.com/postcss/postcss-custom-properties) - Transforms W3C CSS Custom Properties to static values.\*
+* [postcss-rtl](https://github.com/vkalinichev/postcss-rtl) - PostCSS-plugin for RTL-adaptivity.
+* [sass-loader](https://webpack.js.org/loaders/sass-loader/) - Loads a SASS/SCSS file and compiles it to CSS.
+* [style-loader](https://webpack.js.org/loaders/style-loader/) - Adds CSS to the DOM by injecting a ``<style>`` tag.
 
 ### Production Only Plugins
 
-- [clean-webpack-plugin](https://github.com/johnagan/clean-webpack-plugin) -
+* [clean-webpack-plugin](https://github.com/johnagan/clean-webpack-plugin) -
 A webpack plugin to remove/clean your build folder(s) before building.
-- [terser-webpack-plugin](https://webpack.js.org/plugins/terser-webpack-plugin/) - minifies your JavaScript.
+* [terser-webpack-plugin](https://webpack.js.org/plugins/terser-webpack-plugin/) - minifies your JavaScript.
 
 _\* Required to support IE legacy browsers_
 
 ## Configuring Webpack
 
 Terra-toolkit's [default webpack configuration](https://github.com/cerner/terra-toolkit/blob/main/packages/webpack-config-terra/webpack.config.js).
-- Use when building a standalone site.
-- Additional configuration required.
-- Can be extended with terra-dev-site plugins.
+* Use when building a standalone site.
+* Additional configuration required.
+* Can be extended with terra-dev-site plugins.
 
 By using this default configuration, we will manage webpack dependencies and set up translation aggregation. If you choose not to use the default configuration, Toolkit's configuration can  be extend to meet your needs or it can be used as an guide to build your own.
 

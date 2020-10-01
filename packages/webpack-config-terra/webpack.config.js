@@ -95,14 +95,17 @@ const defaultWebpackConfig = (env = {}, argv = {}, options = {}) => {
   const devConfig = {
     mode: 'development',
     entry: {
-      'core-js': 'core-js/stable',
+      'core-js': '@cerner/webpack-config-terra/lib/entry/core-js',
       'regenerator-runtime': 'regenerator-runtime/runtime',
     },
     module: {
       rules: [{
         oneOf: [{
           test: /\.(jsx|js)$/,
-          exclude: /node_modules/,
+          exclude: (modulePath) => (
+            /node_modules/.test(modulePath)
+            && !/@cerner\/webpack-config-terra\/lib\/entry\/core-js/.test(modulePath)
+          ), // exclude everything in node modules except our core-js entry point to allow consumers the ability to customize what polyfills get pulled in.
           use: {
             loader: 'babel-loader',
             options: {

@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const merge = require('webpack-merge');
+const path = require('path');
 const {
   TerraDevSite,
   TerraDevSiteEntrypoints,
@@ -13,6 +14,8 @@ const WebpackConfigTerra = require('./packages/webpack-config-terra/webpack.conf
 */
 const devSiteConfig = (env = {}, argv = {}) => {
   const production = argv.p;
+  const processPath = process.cwd();
+
   return {
     entry: TerraDevSiteEntrypoints,
     plugins: [
@@ -22,8 +25,17 @@ const devSiteConfig = (env = {}, argv = {}) => {
       plugins: [
         new DirectorySwitcherPlugin({
           shouldSwitch: !production,
+          rootDirectories: [
+            processPath,
+            path.resolve(processPath, 'packages', '*'),
+          ],
         }),
-        new LocalPackageAliasPlugin({}),
+        new LocalPackageAliasPlugin({
+          rootDirectories: [
+            processPath,
+            path.resolve(processPath, 'packages', '*'),
+          ],
+        }),
       ],
     },
   };
