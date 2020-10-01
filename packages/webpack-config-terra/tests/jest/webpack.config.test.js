@@ -37,7 +37,7 @@ describe('webpack config', () => {
     // add the polyfills as default entries
     expect(config).toHaveProperty('entry');
     expect(config.entry).toMatchObject({
-      'core-js': 'core-js/stable',
+      'core-js': '@cerner/webpack-config-terra/lib/entry/core-js',
       'regenerator-runtime': 'regenerator-runtime/runtime',
     });
 
