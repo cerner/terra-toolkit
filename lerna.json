@@ -4,9 +4,7 @@
     "publish": {
       "ignoreChanges": [
         "packages/terra-functional-testing/**",
-        "packages/terra-cli/**",
-        "packages/terra-toolkit-docs/**",
-        "packages/webpack-config-terra/**"
+        "packages/terra-cli/**"
       ]
     }
   },
