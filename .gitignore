@@ -58,3 +58,4 @@ errorScreenshots
 generated-themes
 package-lock.json
 lib
+!/packages/webpack-config-terra/lib/

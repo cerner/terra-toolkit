@@ -32,7 +32,7 @@ jobs:
       script:
         - npm run mocha
 
-    - stage: publish
+    - stage: publish & deploy
       script:
         - rm -rf ./travis-build
         # add auth token to .npmrc for lerna publish
@@ -41,11 +41,21 @@ jobs:
         - npx lerna publish from-package --yes > publish-output.txt
         # push tags to github based on output written to file
         - node ./scripts/release/gitTagMonoRepo.js
+      before_deploy:
+        # Build again for deployment because we need the Public path to be updated.
+        - TERRA_DEV_SITE_PUBLIC_PATH='/terra-toolkit/' npm run compile:prod
+      deploy:
+        provider: pages
+        skip_cleanup: true
+        github_token: $GITHUB_TOKEN # Set in travis-ci.com dashboard
+        local_dir: $TRAVIS_BUILD_DIR/build
+        on:
+          branch: main
 
 stages:
   - danger lint and jest
   - wdio
   - mocha
-  - name: publish
+  - name: publish & deploy
     if: type != pull_request
 

@@ -28,9 +28,12 @@
   },
   "homepage": "https://github.com/cerner/terra-toolkit",
   "scripts": {
-    "lint": "eslint --ext .js,.jsx ."
+    "compile": "babel --root-mode upward src --out-dir lib --copy-files",
+    "lint": "eslint --ext .js,.jsx .",
+    "precompile": "rm -rf lib"
   },
   "dependencies": {
+    "@cerner/webpack-config-terra": "^0.0.0"
   },
   "peerDependencies": {
   }
