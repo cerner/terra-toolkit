@@ -1,5 +1,5 @@
 /* global browser, axe */
-const injectAxe = require('./inject-axe');
+const injectAxe = require('./inject');
 
 /**
  * Executes axe on the browser.
