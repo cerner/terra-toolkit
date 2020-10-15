@@ -91,11 +91,13 @@ webpack --env.disableHotReloading=true
 Read more on webpack's doc site about [webpack environment options](https://webpack.js.org/api/cli/#environment-options)
 
 |name|Type|Default|Description|
-|---|---|---|
-|`disableAggregateTranslations`|Bool|false|Disable the aggregate translations feature.|
-|`disableHotReloading`|Bool|false|Disable hot reloading, this is generally used by CI.|
-|`disableCSSCustomProperties`|Bool|false|A webpack environment variable `disableCSSCustomProperties` to disable css custom properties.|
+|---|---|---|---|
+|`disableAggregateTranslations`|Bool|`false`|Disable the aggregate translations feature.|
+|`disableHotReloading`|Bool|`false`|Disable hot reloading, this is generally used by CI.|
+|`disableCSSCustomProperties`|Bool|`false`|A webpack environment variable `disableCSSCustomProperties` to disable css custom properties.|
 |`defaultTheme`|string|none|Override the default theme set in the terra-theme.config.js file. Useful for testing.|
+|`generateLoaderSourceMaps`|Bool|`true` for dev `false` for prod|Used to enable source map generation for prod. This should be used in conjunction with setting the `devtool` webpack option. Caution, This may have a large performance impact, especially with large bundles.|
+
 #### options
 
 Options can be supplied to the terra webpack config as the third parameter after `env` and `argv`. For example:
