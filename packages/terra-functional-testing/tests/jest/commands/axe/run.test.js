@@ -1,5 +1,5 @@
-jest.mock('../../../src/commands/inject-axe');
-const runAxe = require('../../../src/commands/run-axe');
+jest.mock('../../../../src/commands/axe/inject');
+const runAxe = require('../../../../src/commands/axe/run');
 
 describe('Run Axe', () => {
   it('should run axe on the document', () => {
