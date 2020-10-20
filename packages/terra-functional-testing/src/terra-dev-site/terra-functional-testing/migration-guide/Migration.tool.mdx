@@ -1,0 +1,32 @@
+# Migration Guide
+
+A guide for migrating from [terra-toolkit's](https://github.com/cerner/terra-toolkit-boneyard) WDIO testing framework to terra-functional-testing.
+
+## Introduction
+
+Over the years [terra-toolkit](https://github.com/cerner/terra-toolkit-boneyard) has continued to grow and expand; overreaching the responsibilities a single package should have. The decision was reached to reorganize the terra-toolkit utilities into packages that encapsulated specific functionality. terra-functional-testing was created to facilitate the WDIO testing automation framework and make necessary upgrades and changes.
+
+## Getting Started
+
+To get started, read through the changes below and become familiar with the the upgraded packages. There were many breaking changes between WebdriverIO v4 and WebdriverIO v6.
+
+## Breaking Changes
+
+- [WebdriverIO](https://github.com/webdriverio/webdriverio) has been upgraded from [v4](http://v4.webdriver.io/api.html) to [v6](https://webdriver.io/docs/api.html)
+  - WebdriverIO 5
+    - [WebdriverIO v5 Release Blog](https://webdriver.io/blog/2018/12/19/webdriverio-v5-released.html)
+    - [WebdriverIO v5 Release Notes](https://github.com/webdriverio/webdriverio/blob/f759ba10fcd951e1622844de9b0943eb6cc6f14f/CHANGELOG.md#v500-2018-12-20)
+  - WebdriverIO 6
+    - [WebdriverIO v6 Release Blog](https://webdriver.io/blog/2020/03/26/webdriverio-v6-released.html)
+    - [WebdriverIO v6 Release Notes](https://github.com/webdriverio/webdriverio/blob/master/CHANGELOG.md#v600-2020-03-26)
+- [Axe-core](https://github.com/dequelabs/axe-core) has been upgraded from 3.5.3 to 4.0.2
+  - [Axe v4 Release Notes](https://github.com/dequelabs/axe-core/releases/tag/v4.0.0)
+- [Docker Selenium](https://github.com/SeleniumHQ/docker-selenium) images have been upgraded from `3.14.0-helium` to `3.141.59-20200525`
+- The default `American/Chicago` timezone [has been removed](https://github.com/cerner/terra-toolkit-boneyard/issues/7) from the docker images. The timezone will default to the timezone provided by the image
+- Removed `chai` assertions and replaced with `expect` to utilize [WebdriverIO's custom matchers](https://webdriver.io/docs/api/expect-webdriverio.htm) and align more closely with Jest assertions
+- Removed `browser.axe` command
+- Removed `Terra.it.validatesElement()` command
+- Removed `Terra.it.isAccessible()` command
+- Removed `Terra.it.validatesElement()` command
+- Changed `Terra.validates.accessibility()` to only accept an object parameter
+    -  Removed `viewports` and `axeRules` as an options
