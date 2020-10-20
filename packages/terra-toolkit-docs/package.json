@@ -1,0 +1,37 @@
+{
+  "name": "@cerner/terra-toolkit-docs",
+  "version": "1.0.0",
+  "description": "Contains documentation for packages in the terra-toolkit monorepo",
+  "main": "index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cerner/terra-toolkit.git",
+    "directory": "packages/terra-toolkit-docs"
+  },
+  "keywords": [
+    "eslint",
+    "eslint-config",
+    "Cerner",
+    "Terra"
+  ],
+  "author": "Cerner Corporation",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/cerner/terra-toolkit/issues"
+  },
+  "engines": {
+    "node": "^10.13.0"
+  },
+  "homepage": "https://github.com/cerner/terra-toolkit",
+  "scripts": {
+    "compile": "babel --root-mode upward src --out-dir lib --copy-files",
+    "lint": "eslint --ext .js,.jsx .",
+    "precompile": "rm -rf lib"
+  },
+  "dependencies": {
+    "@cerner/webpack-config-terra": "^1.0.0-alpha.0"
+  }
+}

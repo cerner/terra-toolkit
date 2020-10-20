@@ -1,0 +1,59 @@
+import { Badge } from '@cerner/webpack-config-terra/package.json?dev-site-package';
+
+<Badge />
+
+# webpack-config-terra Upgrade Guide
+
+## Changes from terra-toolkit 6.x  to @cerner/webpack-config-terra 1.0.0
+
+We have broken terra-toolkit up into several component parts de-couple major version upgrades to unrelated components. Upgrading WDIO shouldn't affect our webpack version and vice versa.
+
+The webpack config formerly housed in terra toolkit has been migrated to it's own package `@cerner/webpack-config-terra`.
+
+To upgrade change dependency and change how you are requiring the config.
+
+```diff
+- const webpackConfig = require('terra-dev-site/config/webpack/webpack.config');
++ const webpackConfig = require('@cerner/webpack-config-terra');
+```
+
+### Removed RAF
+
+Previously we provided the requestAnimationFrame polyfill but have determined it doesn't need to be polyfilled of our supported browsers. See [caniuse.com](https://caniuse.com/requestanimationframe). This should not affect your application.
+
+### Removed Aggregate themes
+
+When components adhere to the new themeing strategy, aggregate themes is no longer needed. The latest version of all terra components have ben updated to the new strategy, you can tell by checking the theme variable css files are imported directly into the components css file.
+
+### themeConfig moved from env to options
+
+Theme config can be set in three ways. Through the THEME env, by adding a themeConfig option to the env variable when extended through javascript or by setting adding a terra-theme.config.js file to your package root.
+
+Using the terra-theme.config.js file is the preferred method of configuring themes, but in some cases like ci and building multiple sites with one webpack config. The method of adding the themeConfig option to the env variable is kind of weird since the env object is generally reserved for environment variable set through webpack and not objects. To address this we've added an additional options object that can optionally be passed in to the webpack config.
+
+```diff
+const webpackConfig = require('webpack-config-terra');
+
+const themeConfig = {
+  theme: 'terra-dark-theme',
+};
+
+-+module.exports = webpackConfig({themeConfig}, {});
++module.exports = webpackConfig({}, {}, {themeConfig});
+
+```
+
+### Removed aggregateOptions from env
+
+Similar the env theme config, aggregateOptions was an object added to the env object. Unlike themeConfig we don't know of anyone using aggregateOptions. Instead of moving it to the `options` object we just went ahead and removed it. If you have a use case for config, log an issue and we'll see what we can do.
+
+### deprecating THEME env support
+
+To consolidate our api the THEME env variable is now supplied as the webpack env option `defaultTheme`. For the timebeing both are supported but the THEME env will be removed in the next major version of webpack-config-terra.
+
+```diff
+"scripts": {
+-    "pack": "THEME=terra-dark-theme webpack"
++    "pack": "webpack --env.defaultTheme=terra-dark-theme"
+}
+```

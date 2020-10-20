@@ -1,0 +1,37 @@
+{
+  "name": "@cerner/terra-cli",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Terra Cli",
+  "main": "index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cerner/terra-toolkit.git",
+    "directory": "packages/terra-cli"
+  },
+  "keywords": [
+    "eslint",
+    "eslint-config",
+    "Cerner",
+    "Terra"
+  ],
+  "author": "Cerner Corporation",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/cerner/terra-toolkit/issues"
+  },
+  "engines": {
+    "node": "^10.13.0"
+  },
+  "homepage": "https://github.com/cerner/terra-toolkit",
+  "scripts": {
+    "lint": "eslint --ext .js,.jsx ."
+  },
+  "dependencies": {
+  },
+  "peerDependencies": {
+  }
+}
