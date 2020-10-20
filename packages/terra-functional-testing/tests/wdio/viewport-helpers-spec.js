@@ -1,4 +1,4 @@
-Terra.describeViewports('Viewport Helpers', ['tiny', 'huge'], () => {
+describe('Viewport Helpers', () => {
   it('creates tiny and huge screens', () => {
     browser.url('/compare.html');
     // Terra.validates.screenshot();

@@ -11,7 +11,7 @@ const hideInputCaret = (selector) => {
   try {
     global.browser.execute(`document.querySelector("${selector.replace(/"/g, '\\"')}").style.caretColor = "transparent";`);
   } catch (error) {
-    let elem = $(selector);
+    const elem = global.browser.$(selector);
     if (!elem.isExisting()) {
       logger.error(`No element could be found with the selector '${selector}'.`);
     } else {
