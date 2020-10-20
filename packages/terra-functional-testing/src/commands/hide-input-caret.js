@@ -1,5 +1,7 @@
 const Logger = require('../logger/logger');
 
+const logger = new Logger({ prefix: 'wdio-terra-service' });
+
 /**
  * Hides the blinking input caret that appears within editable text areas to prevent inconsistent test failures.
  *
@@ -9,10 +11,11 @@ const hideInputCaret = (selector) => {
   try {
     global.browser.execute(`document.querySelector("${selector.replace(/"/g, '\\"')}").style.caretColor = "transparent";`);
   } catch (error) {
-    if (!global.browser.isExisting(selector)) {
-      throw Logger.error(`No element could be found with the selector '${selector}'.`);
+    let elem = $(selector);
+    if (!elem.isExisting()) {
+      logger.error(`No element could be found with the selector '${selector}'.`);
     } else {
-      throw new Error(error);
+      throw error;
     }
   }
 };

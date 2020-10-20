@@ -1,4 +1,4 @@
-const Viewports = {
+const viewports = {
   tiny: { width: 470, height: 768 },
   small: { width: 622, height: 768 },
   medium: { width: 838, height: 768 },
@@ -7,4 +7,4 @@ const Viewports = {
   enormous: { width: 1500, height: 768 },
 };
 
-module.exports = Viewports;
+module.exports = viewports;
