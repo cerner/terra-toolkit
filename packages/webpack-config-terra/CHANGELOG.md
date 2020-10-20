@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.0.0-alpha.1 - (October 20, 2020)
+
 * Changed
   * Removed default source map generation in loaders for prod.
 

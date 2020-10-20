@@ -1,6 +1,6 @@
 {
   "name": "@cerner/terra-toolkit-docs",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Contains documentation for packages in the terra-toolkit monorepo",
   "main": "index.js",
   "publishConfig": {
@@ -32,6 +32,6 @@
     "precompile": "rm -rf lib"
   },
   "dependencies": {
-    "@cerner/webpack-config-terra": "^1.0.0-alpha.0"
+    "@cerner/webpack-config-terra": "^1.0.0-alpha.1"
   }
 }
