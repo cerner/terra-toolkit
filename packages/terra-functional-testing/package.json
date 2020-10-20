@@ -52,7 +52,7 @@
     "@wdio/mocha-framework": "^6.1.0",
     "@wdio/spec-reporter": "^6.0.16",
     "@wdio/sync": "^6.1.14",
-    "axe-core": "3.5.5",
+    "axe-core": "4.0.2",
     "commander": "^5.1.0",
     "express": "^4.17.1",
     "fs-extra": "^9.0.1",
