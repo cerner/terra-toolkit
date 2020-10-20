@@ -5,12 +5,12 @@ viewportHelpers.setViewport = jest.fn().mockImplementation(() => ({ }));
 
 const mockAddCommand = jest.fn();
 const mockPause = jest.fn();
-const mockIsExisting = jest.fn().mockImplementation(() => true);
+const mockFindElement = jest.fn().mockImplementation(() => true);
 
 global.browser = {
   addCommand: mockAddCommand,
   pause: mockPause,
-  isExisting: mockIsExisting,
+  $: mockFindElement,
   config: {},
 };
 
@@ -61,6 +61,6 @@ describe('WDIO Terra Service', () => {
     service.afterCommand('url', [], 0, undefined);
 
     expect(mockHideInputCaret).toHaveBeenCalledWith('body');
-    expect(mockIsExisting).toHaveBeenCalledWith('[data-terra-dev-site-loading]');
+    expect(mockFindElement).toHaveBeenCalledWith('[data-terra-dev-site-loading]');
   });
 });

@@ -42,9 +42,9 @@ class TerraService {
         // This is only meant as a convenience so failure is not particularly concerning
         global.Terra.hideInputCaret('body');
 
-        if (global.browser.isExisting('[data-terra-dev-site-loading]')) {
+        if (global.browser.$('[data-terra-dev-site-loading]').isExisting()) {
           global.browser.waitUntil(() => (
-            global.browser.isExisting('[data-terra-dev-site-content]')
+            global.browser.$('[data-terra-dev-site-content]').isExisting()
           ), global.browser.config.waitforTimeout + 2000, '', 100);
         }
       } catch (err) {
