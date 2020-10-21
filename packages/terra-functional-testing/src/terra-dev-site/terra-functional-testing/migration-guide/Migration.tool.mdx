@@ -20,13 +20,49 @@ To get started, read through the changes below and become familiar with the the 
     - [WebdriverIO v6 Release Blog](https://webdriver.io/blog/2020/03/26/webdriverio-v6-released.html)
     - [WebdriverIO v6 Release Notes](https://github.com/webdriverio/webdriverio/blob/master/CHANGELOG.md#v600-2020-03-26)
 - [Axe-core](https://github.com/dequelabs/axe-core) has been upgraded from 3.5.3 to 4.0.2
-  - [Axe v4 Release Notes](https://github.com/dequelabs/axe-core/releases/tag/v4.0.0)
+  - [Axe Release Notes](https://github.com/dequelabs/axe-core/releases)
 - [Docker Selenium](https://github.com/SeleniumHQ/docker-selenium) images have been upgraded from `3.14.0-helium` to `3.141.59-20200525`
 - The default `American/Chicago` timezone [has been removed](https://github.com/cerner/terra-toolkit-boneyard/issues/7) from the docker images. The timezone will default to the timezone provided by the image
 - Removed `chai` assertions and replaced with `expect` to utilize [WebdriverIO's custom matchers](https://webdriver.io/docs/api/expect-webdriverio.htm) and align more closely with Jest assertions
 - Removed `browser.axe` command
-- Removed `Terra.it.validatesElement()` command
 - Removed `Terra.it.isAccessible()` command
+- Removed `Terra.it.matchesScreenshot()` command
 - Removed `Terra.it.validatesElement()` command
 - Changed `Terra.validates.accessibility()` to only accept an object parameter
     -  Removed `viewports` and `axeRules` as an options
+
+## Upgrading
+
+### Removing the Terra.it matchers
+
+The `Terra.it` matchers have been removed in an effort to reduce confusion and bad practices while writing tests. The `Terra.it` matcher anonymously wrapped the validation assertion in a global `it` block. To upgrade, replace all occurrences of `Terra.it` commands with the respective `Terra.validates` command and ensure they are wrapped in an `it` block.
+
+```diff
+// ...
+- it('clicks a button', () => {
+-  browser.click('#button-1');
+- });
+-
+- Terra.it.validatesElement('button-1');
+-
+- it('clicks a different button', () => {
+-   browser.click('#button-2');
+- });
+-
+- Terra.it.validatesElement('button-2');
+// ...
+
+// ...
++ it('clicks a button', () => {
++   browser.click('#button-1');
++
++   Terra.validates.element('button-1'); // Must be within an it block.
++ });
++
++ it('clicks a different button', () => {
++   browser.click('#button-2');
++
++   Terra.validates.element('button-2'); // Must be within an it block.
++ });
+// ...
+```
