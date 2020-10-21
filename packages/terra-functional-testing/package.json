@@ -8,8 +8,8 @@
   },
   "scripts": {
     "lint": "eslint --ext .js,.jsx .",
-    "jest": "jest --config ../../jest.config.js",
-    "test": "npm run jest"
+    "jest": "../terra-unit-testing/bin/test-runner.js",
+    "test": "npm run lint && npm run jest"
   },
   "repository": {
     "type": "git",

@@ -54,6 +54,6 @@ target
 **/wdio/__snapshots__/latest
 **/wdio/__snapshots__/diff
 errorScreenshots
-**/aggregated-translations/*.*
+aggregated-translations
 generated-themes
 package-lock.json

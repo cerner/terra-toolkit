@@ -1,0 +1,51 @@
+{
+  "name": "@cerner/terra-unit-testing-react",
+  "version": "0.0.0",
+  "description": "Terra Unit Testing for React",
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "tt-unit-test-react": "bin/test-runner.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cerner/terra-toolkit",
+    "directory": "packages/terra-unit-testing-react"
+  },
+  "keywords": [
+    "unit test react",
+    "terra-unit-testing-react",
+    "Cerner",
+    "Terra"
+  ],
+  "author": "Cerner Corporation",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/cerner/terra-toolkit/issues"
+  },
+  "engines": {
+    "node": "^8.10.0 || ^10.13.0 || >=11.10.1"
+  },
+  "homepage": "https://github.com/cerner/terra-toolkit",
+  "scripts": {
+    "lint": "eslint --ext .js,.jsx .",
+    "jest": "bin/test-runner.js",
+    "test": "npm run lint && npm run jest"
+  },
+  "dependencies": {
+    "@cerner/terra-babel": "^0.0.0",
+    "@cerner/terra-unit-testing": "^0.0.0",
+    "babel-jest": "^26.0.1",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "enzyme-to-json": "^3.4.4",
+    "jest-cli": "^26.0.1",
+    "raf": "^3.4.1",
+    "terra-aggregate-translations": "^1.8.0"
+  },
+  "peerDependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
+}

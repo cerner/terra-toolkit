@@ -1,0 +1,40 @@
+{
+  "name": "@cerner/terra-unit-testing",
+  "version": "0.0.0",
+  "description": "Terra Unit Testing",
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "tt-unit-test": "bin/test-runner.js"
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cerner/terra-toolkit",
+    "directory": "packages/terra-unit-testing"
+  },
+  "keywords": [
+    "unit test",
+    "terra-unit-testing",
+    "Cerner",
+    "Terra"
+  ],
+  "author": "Cerner Corporation",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/cerner/terra-toolkit/issues"
+  },
+  "engines": {
+    "node": "^8.10.0 || ^10.13.0 || >=11.10.1"
+  },
+  "homepage": "https://github.com/cerner/terra-toolkit",
+  "scripts": {
+    "lint": "eslint --ext .js,.jsx .",
+    "jest": "tt-unit-test",
+    "test": "npm run lint && npm run jest"
+  },
+  "dependencies": {
+    "jest-cli": "^26.0.1"
+  }
+}

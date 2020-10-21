@@ -29,17 +29,23 @@
     "bootstrap:hoist": "lerna bootstrap --hoist --force-local",
     "clean": "lerna clean --yes && rm -rf node_modules",
     "clean:install": "npm run clean && npm install",
-    "jest": "jest",
+    "jest": "npm run jest-unit-testing && npm run jest-unit-testing-react",
+    "jest-unit-testing": "packages/terra-unit-testing/bin/test-runner.js --config ./jest.non-react.config.js",
+    "jest-unit-testing-react": "packages/terra-unit-testing-react/bin/test-runner.js --config ./jest.react.config.js",
     "lint": "npm run lint:js",
     "lint:js": "eslint --ext .js,.jsx .",
+    "pack-all": "lerna exec -- npm pack",
     "postinstall": "link-parent-bin && npm run bootstrap:hoist",
-    "test": "npm run jest"
+    "test": "npm run lint && npm run jest"
   },
   "devDependencies": {
-    "danger": "^9.1.0",
+    "danger": "^10.2.0",
     "eslint": "^6.1.0",
-    "jest": "^26.0.1",
+    "intl": "^1.2.5",
     "lerna": "^3.20.2",
-    "link-parent-bin": "^1.0.0"
+    "link-parent-bin": "^1.0.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-intl": "^2.8.0"
   }
 }

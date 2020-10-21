@@ -1,0 +1,47 @@
+{
+  "private": true,
+  "name": "@cerner/terra-babel",
+  "version": "0.0.0",
+  "description": "A functional testing utility for applications built using Terra.",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "compile": "bin/transpile.js src --out-dir lib --copy-files",
+    "lint": "eslint --ext .js,.jsx .",
+    "jest": "jest --config ../../jest.config.js",
+    "test": "npm run jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cerner/terra-toolkit",
+    "directory": "packages/terra-babel"
+  },
+  "keywords": [
+    "Cerner",
+    "Terra",
+    "Terra Toolkit",
+    "terra-toolkit",
+    "terra-babel"
+  ],
+  "author": "Cerner Corporation",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/cerner/terra-toolkit/issues"
+  },
+  "homepage": "https://github.com/cerner/terra-toolkit#readme",
+  "bin": {
+    "tt-transpile": "bin/transpile.js"
+  },
+  "dependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-react": "^7.9.4",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.9.6",
+    "@babel/plugin-transform-async-to-generator": "^7.8.3",
+    "@babel/plugin-transform-object-assign": "^7.8.3",
+    "@babel/plugin-transform-runtime": "^7.9.6",
+    "fs-extra": "^9.0.0"
+  }
+}

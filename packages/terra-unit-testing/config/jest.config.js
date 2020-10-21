@@ -5,9 +5,11 @@ module.exports = {
   clearMocks: true,
   collectCoverage: true,
   collectCoverageFrom: [
-    'packages/**/lib/**/*.js',
+    './**/config/**/*.*',
+    './**/scripts/**/*.*',
+    './**/lib/**/*.*',
   ],
-  coverageDirectory: 'tests/jest/reports/coverage',
+  coverageDirectory: `${process.cwd()}/tests/jest/reports/coverage`,
   coverageReporters: [
     'html',
     'text',
@@ -17,6 +19,6 @@ module.exports = {
   ],
   roots: [process.cwd()],
   testMatch: [
-    '**/jest/**/(*.)(spec|test).js?(x)',
+    `${process.cwd()}/**/jest/**/(*.)(spec|test).js?(x)`,
   ],
 };

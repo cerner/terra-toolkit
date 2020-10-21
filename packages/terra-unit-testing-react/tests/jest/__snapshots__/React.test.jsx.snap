@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Sanity React Jest Test Correctly tests a snapshot 1`] = `
+<div>
+  Test
+</div>
+`;
