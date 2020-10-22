@@ -1,5 +1,5 @@
-jest.mock('../../../src/commands/inject-axe');
-const runAxe = require('../../../src/commands/run-axe');
+jest.mock('../../../../src/commands/axe/inject');
+const runAxe = require('../../../../src/commands/axe/run');
 
 describe('Run Axe', () => {
   it('should run axe on the document', () => {
@@ -32,12 +32,17 @@ describe('Run Axe', () => {
 
   it('should run axe with the service options', () => {
     const TerraService = () => { };
-    const serviceOptions = { axe: { rules: [{ id: 'mock-rule', enabled: true }] } };
+    const serviceOptions = { axe: { rules: { 'mock-rule': { enabled: true } } } };
 
     const mockExecuteAsync = jest.fn().mockImplementation((func, opts) => {
       const { rules } = opts;
 
-      expect(rules).toEqual({ 'mock-rule': { enabled: true, id: 'mock-rule' } });
+      const expectedRules = {
+        'mock-rule': { enabled: true },
+        'scrollable-region-focusable': { enabled: false },
+      };
+
+      expect(rules).toEqual(expectedRules);
       return {};
     });
 
@@ -59,7 +64,12 @@ describe('Run Axe', () => {
     const mockExecuteAsync = jest.fn().mockImplementation((func, opts) => {
       const { rules } = opts;
 
-      expect(rules).toEqual({ 'mock-rule': { enabled: true, id: 'mock-rule' } });
+      const expectedRules = {
+        'mock-rule': { enabled: true },
+        'scrollable-region-focusable': { enabled: false },
+      };
+
+      expect(rules).toEqual(expectedRules);
       return {};
     });
 
@@ -71,19 +81,25 @@ describe('Run Axe', () => {
       },
     };
 
-    runAxe({ rules: { 'mock-rule': { enabled: true, id: 'mock-rule' } } });
+    runAxe({ rules: { 'mock-rule': { enabled: true } } });
 
     expect.assertions(1);
   });
 
   it('should run axe with merged rules from the service and from options provided', () => {
     const TerraService = () => { };
-    const serviceOptions = { axe: { rules: [{ id: 'mock-rule-1', enabled: true }] } };
+    const serviceOptions = { axe: { rules: { 'mock-rule-1': { enabled: true } } } };
 
     const mockExecuteAsync = jest.fn().mockImplementation((func, opts) => {
       const { rules } = opts;
 
-      expect(rules).toEqual({ 'mock-rule-1': { enabled: true, id: 'mock-rule-1' }, 'mock-rule-2': { enabled: true, id: 'mock-rule-2' } });
+      const expectedRules = {
+        'mock-rule-1': { enabled: true },
+        'mock-rule-2': { enabled: true },
+        'scrollable-region-focusable': { enabled: false },
+      };
+
+      expect(rules).toEqual(expectedRules);
       return {};
     });
 
@@ -95,7 +111,7 @@ describe('Run Axe', () => {
       },
     };
 
-    runAxe({ rules: { 'mock-rule-2': { enabled: true, id: 'mock-rule-2' } } });
+    runAxe({ rules: { 'mock-rule-2': { enabled: true } } });
 
     expect.assertions(1);
   });

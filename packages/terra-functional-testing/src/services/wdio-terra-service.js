@@ -1,6 +1,7 @@
 /* eslint-disable class-methods-use-this */
 const expect = require('expect');
-const axe = require('../commands/run-axe');
+const { accessibility } = require('../commands/validates');
+const { toBeAccessible } = require('../commands/expect');
 const viewportHelpers = require('../commands/viewport-helpers');
 const hideInputCaret = require('../commands/hide-input-caret');
 
@@ -10,13 +11,14 @@ class TerraService {
    * Initializes the Terra Service's custom commands.
    */
   before(capabilities) {
-    global.browser.addCommand('axe', axe);
-
     /* Add the Jest expect module the use the Jest matchers. */
     global.expect = expect;
+    global.expect.extend({ toBeAccessible });
 
     /* Add a Terra global with access to Mocha-Chai test helpers. */
     global.Terra = {
+      validates: { accessibility },
+
       /* `viewports` provides access Terra's list of test viewports. */
       viewports: viewportHelpers.getViewports,
 

@@ -3,24 +3,22 @@ const viewportHelpers = require('../../../src/commands/viewport-helpers');
 
 viewportHelpers.setViewport = jest.fn().mockImplementation(() => ({ }));
 
-const mockAddCommand = jest.fn();
 const mockPause = jest.fn();
 const mockFindElement = jest.fn().mockImplementation(() => true);
 
 global.browser = {
-  addCommand: mockAddCommand,
   pause: mockPause,
   $: mockFindElement,
   config: {},
 };
 
 describe('WDIO Terra Service', () => {
-  it('should add the axe command to the browser object', () => {
+  it('should setup the global terra validates accessibility command', () => {
     const service = new TerraService();
 
     service.before({ browserName: 'chrome' });
 
-    expect(mockAddCommand).toHaveBeenCalledWith('axe', expect.any(Function));
+    expect(global.Terra.validates.accessibility).toBeDefined();
   });
 
   it('should set the expect command as a global api', () => {
