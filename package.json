@@ -32,6 +32,9 @@
   "bugs": {
     "url": "https://github.com/cerner/terra-toolkit/issues"
   },
+  "bin": {
+    "terra": "./packages/terra-cli/bin/terra"
+  },
   "eslintConfig": {
     "extends": "./packages/eslint-config-terra/eslint.config.js",
     "overrides": [
@@ -74,10 +77,11 @@
     "postinstall": "link-parent-bin && npm run compile && npm run bootstrap:hoist",
     "start": "webpack-dev-server --config webpack.dev-site.config.js",
     "start-heroku": "node ./scripts/hack-express-server.js --port $PORT --site './build' ",
+    "terra": "node ./packages/terra-cli/bin/terra",
     "test": "npm run lint && npm run jest && npm run mocha && npm run wdio",
-    "version": "lerna version --no-git-tag-version && node ./scripts/changelog-updater/index.js",
-    "wdio-site": "SITE=build node ./packages/terra-functional-testing/bin/test-runner.js",
-    "wdio-webpack": "node ./packages/terra-functional-testing/bin/test-runner.js",
+    "version": "lerna version --no-git-tag-version && npm run terra -- update-changelog",
+    "wdio-site": "SITE=build npm run terra -- wdio",
+    "wdio-webpack": "npm run terra -- wdio",
     "wdio": "rm -rf build && npm run pack && npm run wdio-site && npm run wdio-webpack"
   },
   "devDependencies": {

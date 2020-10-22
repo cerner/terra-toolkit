@@ -1,3 +1,20 @@
-const CLI = require('./test-runner-cli');
+const { TestRunner } = require('../test-runner');
 
-module.exports = CLI;
+const cli = {
+  command: 'wdio',
+  describe: 'Run wdio tests',
+  builder: (yargs) => (
+    yargs.options({
+      c: {
+        type: 'string',
+        alias: 'configuration',
+        describe: 'A file path to the test runner configuration.',
+      },
+    })
+  ),
+  handler: (options) => {
+    TestRunner.run(options);
+  },
+};
+
+module.exports = cli;

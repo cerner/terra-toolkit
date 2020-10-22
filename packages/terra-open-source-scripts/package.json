@@ -1,8 +1,8 @@
 {
-  "name": "@cerner/terra-cli",
+  "name": "@cerner/terra-open-source-scripts",
   "private": true,
   "version": "0.0.0",
-  "description": "Terra Cli",
+  "description": "Terra package with various scripts for open source development",
   "main": "index.js",
   "bin": {
     "terra": "./bin/terra"
@@ -13,11 +13,10 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cerner/terra-toolkit.git",
-    "directory": "packages/terra-cli"
+    "directory": "packages/terra-open-source-scripts"
   },
   "keywords": [
-    "cli",
-    "terra-cli",
+    "terra-open-source-scripts",
     "Cerner",
     "Terra"
   ],
@@ -31,12 +30,11 @@
   },
   "homepage": "https://github.com/cerner/terra-toolkit",
   "scripts": {
-    "lint": "eslint --ext .js,.jsx ."
+    "lint": "eslint --ext .js,.jsx .",
+    "postinstall": "terra add-terra-commands ./scripts/update-changelog"
   },
   "dependencies": {
-    "fs-extra": "^9.0.1",
-    "lockfile": "^1.0.4",
-    "yargs": "^14.2.2"
+    "@cerner/terra-cli": "^0.0.0"
   },
   "peerDependencies": {
   }

@@ -59,3 +59,4 @@ generated-themes
 package-lock.json
 lib
 !/packages/webpack-config-terra/lib/
+packages/terra-cli/configuration.json

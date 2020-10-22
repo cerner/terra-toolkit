@@ -1,9 +1,9 @@
-# CLI
+# Terra Open Source Scripts
 
-[![NPM version](https://badgen.net/npm/v/@cerner/terra-cli)](https://www.npmjs.org/package/@cerner/terra-cli)
+[![NPM version](https://badgen.net/npm/v/@cerner/terra-open-source-scripts)](https://www.npmjs.org/package/@cerner/terra-open-source-scripts)
 [![Build Status](https://badgen.net/travis/cerner/terra-toolkit)](https://travis-ci.com/cerner/terra-toolkit)
 
-Terra's common CLI for package commands.
+Terra's common open source scripts.
 
 ## Versioning
 

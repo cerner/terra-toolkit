@@ -17,6 +17,7 @@
     "compile": "babel src --out-dir lib --copy-files",
     "lint": "eslint --ext .js,.jsx --ignore-path ../../.eslintignore .",
     "jest": "jest --config ../../jest.config.js",
+    "postinstall": "terra add-terra-commands ./lib/cli/index",
     "precompile": "rm -rf lib",
     "prepare": "npm run compile",
     "premocha": "rm -rf tests/tmp",
@@ -72,6 +73,7 @@
     "which": "^2.0.2"
   },
   "devDependencies": {
+    "@cerner/terra-cli": "^0.0.0",
     "chai": "^4.2.0",
     "glob": "^7.1.6",
     "mocha": "^8.1.1",
