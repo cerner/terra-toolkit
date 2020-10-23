@@ -2,6 +2,32 @@
 
 The terra-functional-testing library is a utility for developing automation tests. The library extends the [WebdriverIO Framework](https://webdriver.io/) to facilitate automating accessibility and functional testing for Terra projects.
 
+## Viewports
+
+Tests can be executed in any of the following supported viewports:
+- 'tiny' - width: 470; height 768
+- 'small' - width: 622; height 768
+- 'medium' - width: 838; height 768
+- 'large' - width: 1000; height 768
+- 'huge' - width: 1300; height 768
+- 'enormous' - width: 1500; height 768
+
+### Terra.describeViewports
+
+`Terra.describeViewports` is a top level `describe` block for the spec file. All tests within this block will be executed for each given viewport(s). This block should not be nested within itself. If tests need to run against different viewports, then they should be under a separate top level `Terra.describeViewports` block. Only the above Terra defined viewports are supported. If a form factor is defined in the wdio configuration or environment variable, that form factor will supersede the viewports defined in this block. This block accepts these arguments in the following order:
+- {string} title - The `describe` block title.
+- {string[]} viewports - The list of Terra viewports to test.
+- {function} - the test function to execute for each viewport.
+
+```js
+Terra.describeViewports('Test viewports', ['tiny', 'huge'], () => {
+  it('test tiny and huge screens', () => {
+    browser.url('/testing/route/');
+    Terra.validates.screenshot();
+  });
+});
+```
+
 ## Accessibility Testing
 
 The testing library integrates [axe-core](https://github.com/dequelabs/axe-core) into the testing framework to help automate accessibility testing along side functional testing.
@@ -32,5 +58,20 @@ it('should override a rule configuration', () => {
   const options = { rules: { 'color-contrast': { enabled: false } } };
 
   Terra.validates.accessibility(options);
+});
+```
+
+## Input Caret
+
+###Terra.hideInputCaret
+
+An editable text field in focus will have a blinking caret. Often times this blinking caret causes inconsistent test failures due to the blinking of the caret during screenshot capture. This situation can be avoided by using `Terra.hideInputCaret` to set the CSS caret color to of the element to be transparent. This method must be placed in a `before`, `beforeEach`, or `it` block or it will not be ran. This method accepts a selector string as an argument and will only apply to the first selector if multiple are found.
+
+```js
+it('should hide the caret', () => {
+  Terra.hideInputCaret('#inputID');
+  const element = browser.element('#inputID');
+
+  expect(element.getCssProperty('caretColor').value).to.equal('rgba(0,0,0,0)');
 });
 ```

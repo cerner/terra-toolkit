@@ -132,7 +132,7 @@ exports.config = {
   services: [
     [TerraService, {
       /* Use to change the form factor (test viewport) used in the wdio run. */
-      formFactor: FORM_FACTOR || 'huge',
+      ...FORM_FACTOR && { formFactor: FORM_FACTOR },
     }],
     [AssetServerService, {
       ...SITE && { site: SITE },

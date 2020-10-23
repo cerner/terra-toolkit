@@ -27,7 +27,7 @@ const setViewport = (formFactor = 'huge') => {
   if (terraViewport !== undefined && typeof terraViewport === 'object') {
     global.browser.setWindowSize(terraViewport.width, terraViewport.height);
   } else {
-    throw logger.error(`The ${formFactor} formFactor supplied is not a viewport size supported by Terra.`);
+    logger.error(`The ${formFactor} formFactor supplied is not a viewport size supported by Terra.`);
   }
 };
 
@@ -62,10 +62,8 @@ const describeViewports = (title, viewports, fn) => {
   }));
 };
 
-const methods = {
+module.exports = {
   getViewports,
   setViewport,
   describeViewports,
 };
-
-module.exports = methods;

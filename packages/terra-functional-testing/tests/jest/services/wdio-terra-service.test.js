@@ -5,11 +5,14 @@ viewportHelpers.setViewport = jest.fn().mockImplementation(() => ({ }));
 
 const mockPause = jest.fn();
 const mockFindElement = jest.fn().mockImplementation(() => true);
+const service = () => { };
 
 global.browser = {
   pause: mockPause,
   $: mockFindElement,
-  config: {},
+  options: {
+    services: [[service]],
+  },
 };
 
 describe('WDIO Terra Service', () => {
