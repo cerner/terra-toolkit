@@ -33,7 +33,7 @@ const runAxe = (overrides = {}) => {
   // Merge the global rules and overrides together.
   const rules = {
     ...ruleOverrides,
-    ...axeOptions && axeOptions.rules.reduce((acc, rule) => ({ ...acc, [rule.id]: rule }), {}),
+    ...axeOptions && axeOptions.rules,
     ...overrides.rules,
   };
 
