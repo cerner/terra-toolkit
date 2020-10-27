@@ -1,0 +1,36 @@
+# WebDriverIO Testing
+
+The terra-functional-testing library is a utility for developing automation tests. The library extends the [WebdriverIO Framework](https://webdriver.io/) to facilitate automating accessibility and functional testing for Terra projects.
+
+## Accessibility Testing
+
+The testing library integrates [axe-core](https://github.com/dequelabs/axe-core) into the testing framework to help automate accessibility testing along side functional testing.
+
+Axe will analyze the entire document when run and report accessibility violations. The following [tags](https://github.com/dequelabs/axe-core/blob/develop/doc/API.md#axe-core-tags) are enabled `wcag2a`, `wcag2aa`, `wcag21aa`, and `section508`. Each tag has an associated list of [rules](https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md) that will be checked against the document when axe is run.
+
+Please note that not all accessibility testing can be automated. Axe provides a lightweight static analysis of the entire document to catch common accessibility violations, but it is the responsibility of each team and application to do thorough accessibility and functional testing manually when necessary. 
+
+### Terra.validates.accessibility
+
+The accessibility assertion is available globally. Invoking the assertion will run accessibility checks on the entire document. If accessibility violations are found the test step will fail. It is recommended to run accessibility checks at various steps in a functional workflow to check for violations at different stages of the application.
+
+```js
+it('should report no accessibility violations', () => {
+  browser.url('/testing/route/');
+
+  Terra.validates.accessibility(); // Fails if accessibility violations are found anywhere on the document.
+});
+```
+
+The accessibility assertion accepts [options](https://github.com/dequelabs/axe-core/blob/develop/doc/API.md#options-parameter) that will be passed to axe for the document analysis.
+
+```js
+it('should override a rule configuration', () => {
+  browser.url('/testing/route/');
+
+  // Rule override for this specific test.
+  const options = { rules: { 'color-contrast': { enabled: false } } };
+
+  Terra.validates.accessibility(options);
+});
+```

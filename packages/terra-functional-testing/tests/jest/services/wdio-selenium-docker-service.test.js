@@ -239,7 +239,7 @@ describe('WDIO Selenium Docker Service', () => {
 
       try {
         // Retry 3 times. Repeat every 10 milliseconds.
-        await service.pollCommand('mock command', mockCallback, 3, 10);
+        await service.pollCommand('mock command', mockCallback, 2, 10);
       } catch (error) {
         expect(mockCallback).toHaveBeenCalledTimes(3);
       }

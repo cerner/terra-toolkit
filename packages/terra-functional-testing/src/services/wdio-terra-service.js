@@ -1,5 +1,7 @@
 /* eslint-disable class-methods-use-this */
-const axe = require('../commands/run-axe');
+const expect = require('expect');
+const { accessibility } = require('../commands/validates');
+const { toBeAccessible } = require('../commands/expect');
 
 class TerraService {
   /**
@@ -7,7 +9,11 @@ class TerraService {
    * Initializes the Terra Service's custom commands.
    */
   before() {
-    global.browser.addCommand('axe', axe);
+    global.expect = expect;
+    global.expect.extend({ toBeAccessible });
+
+    global.Terra = {};
+    global.Terra.validates = { accessibility };
   }
 }
 

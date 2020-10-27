@@ -1,5 +1,5 @@
 /* global browser, axe */
-const injectAxe = require('./inject-axe');
+const injectAxe = require('./inject');
 
 /**
  * Executes axe on the browser.
@@ -20,9 +20,20 @@ const runAxe = (overrides = {}) => {
     injectAxe(axeOptions);
   }
 
+  /**
+    * This rule was introduced in axe-core v3.3 and causes failures in many Terra components.
+    * The solution to address this failure vary by component. It is being disabled until a solution is identified in the future.
+    *
+    * Reference: https://github.com/cerner/terra-framework/issues/991
+    */
+  const ruleOverrides = {
+    'scrollable-region-focusable': { enabled: false },
+  };
+
   // Merge the global rules and overrides together.
   const rules = {
-    ...axeOptions && axeOptions.rules.reduce((acc, rule) => ({ ...acc, [rule.id]: rule }), {}),
+    ...ruleOverrides,
+    ...axeOptions && axeOptions.rules,
     ...overrides.rules,
   };
 

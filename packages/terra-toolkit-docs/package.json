@@ -1,7 +1,6 @@
 {
   "name": "@cerner/terra-toolkit-docs",
-  "private": true,
-  "version": "0.0.0",
+  "version": "1.1.0",
   "description": "Contains documentation for packages in the terra-toolkit monorepo",
   "main": "index.js",
   "publishConfig": {
@@ -28,10 +27,11 @@
   },
   "homepage": "https://github.com/cerner/terra-toolkit",
   "scripts": {
-    "lint": "eslint --ext .js,.jsx ."
+    "compile": "babel --root-mode upward src --out-dir lib --copy-files",
+    "lint": "eslint --ext .js,.jsx .",
+    "precompile": "rm -rf lib"
   },
   "dependencies": {
-  },
-  "peerDependencies": {
+    "@cerner/webpack-config-terra": "^1.0.0-alpha.1"
   }
 }
