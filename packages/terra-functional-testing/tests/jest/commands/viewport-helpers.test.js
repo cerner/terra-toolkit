@@ -1,5 +1,5 @@
 const viewportHelpers = require('../../../src/commands/viewport-helpers');
-const terraViewports = require('../../../src/util/viewports');
+const { TERRA_VIEWPORTS } = require('../../../src/static-assets/viewports');
 
 const mockSetWindowSize = jest.fn();
 
@@ -11,23 +11,23 @@ describe('Viewport', () => {
   it('should get all viewports', () => {
     const viewports = viewportHelpers.getViewports();
 
-    expect(viewports[0]).toEqual(terraViewports.tiny);
-    expect(viewports[1]).toEqual(terraViewports.small);
-    expect(viewports[2]).toEqual(terraViewports.medium);
-    expect(viewports[3]).toEqual(terraViewports.large);
-    expect(viewports[4]).toEqual(terraViewports.huge);
-    expect(viewports[5]).toEqual(terraViewports.enormous);
+    expect(viewports[0]).toEqual(TERRA_VIEWPORTS.tiny);
+    expect(viewports[1]).toEqual(TERRA_VIEWPORTS.small);
+    expect(viewports[2]).toEqual(TERRA_VIEWPORTS.medium);
+    expect(viewports[3]).toEqual(TERRA_VIEWPORTS.large);
+    expect(viewports[4]).toEqual(TERRA_VIEWPORTS.huge);
+    expect(viewports[5]).toEqual(TERRA_VIEWPORTS.enormous);
   });
 
   it('should get specified viewport', () => {
     const viewports = viewportHelpers.getViewports('tiny');
 
     expect(viewports.length).toEqual(1);
-    expect(viewports[0]).toEqual(terraViewports.tiny);
+    expect(viewports[0]).toEqual(TERRA_VIEWPORTS.tiny);
   });
 
   it('should set specified viewport', () => {
-    const { width, height } = terraViewports.tiny;
+    const { width, height } = TERRA_VIEWPORTS.tiny;
 
     viewportHelpers.setViewport('tiny');
 
@@ -35,7 +35,7 @@ describe('Viewport', () => {
   });
 
   it('should set default huge viewport', () => {
-    const { width, height } = terraViewports.huge;
+    const { width, height } = TERRA_VIEWPORTS.huge;
 
     viewportHelpers.setViewport();
 
