@@ -1,23 +1,31 @@
-const TerraService = require('../../../src/services/wdio-terra-service');
-const viewportHelpers = require('../../../src/commands/viewport-helpers');
+const WdioTerraService = require('../../../src/services/wdio-terra-service');
+const { setViewport } = require('../../../src/commands/viewport-helpers');
 
-viewportHelpers.setViewport = jest.fn().mockImplementation(() => ({ }));
+jest.mock('../../../src/commands/viewport-helpers');
 
-const mockPause = jest.fn();
-const mockFindElement = jest.fn().mockImplementation(() => true);
-const service = () => { };
+const mockIsExisting = jest.fn().mockImplementation(() => true);
+const element = {
+  waitForExist: () => {},
+  isExisting: mockIsExisting,
+};
+
+const mockFindElement = jest.fn().mockImplementation(() => element);
+const TerraService = () => { };
+const serviceOptions = { formFactor: 'huge' };
 
 global.browser = {
-  pause: mockPause,
   $: mockFindElement,
   options: {
-    services: [[service]],
+    services: [[TerraService, serviceOptions]],
+  },
+  config: {
+    waitforTimeout: 10000,
   },
 };
 
 describe('WDIO Terra Service', () => {
   it('should setup the global terra validates accessibility command', () => {
-    const service = new TerraService();
+    const service = new WdioTerraService();
 
     service.before({ browserName: 'chrome' });
 
@@ -25,7 +33,7 @@ describe('WDIO Terra Service', () => {
   });
 
   it('should set the expect command as a global api', () => {
-    const service = new TerraService();
+    const service = new WdioTerraService();
 
     service.before({ browserName: 'chrome' });
 
@@ -33,26 +41,26 @@ describe('WDIO Terra Service', () => {
   });
 
   it('should set viewport helper commands as as global api', () => {
-    const service = new TerraService();
+    const service = new WdioTerraService();
 
     service.before({ browserName: 'chrome' });
 
-    expect(viewportHelpers.setViewport).toBeCalled();
+    expect(setViewport).toBeCalled();
     expect(global.Terra.viewports).toBeDefined();
     expect(global.Terra.describeViewports).toBeDefined();
     expect(global.Terra.hideInputCaret).toBeDefined();
   });
 
-  it('should pause for browser interaction for IE', () => {
-    const service = new TerraService();
+  it('should wait for browser interaction for IE', () => {
+    const service = new WdioTerraService();
 
     service.before({ browserName: 'internet explorer' });
 
-    expect(mockPause).toHaveBeenCalledWith(10000);
+    expect(mockFindElement).toHaveBeenCalledWith('body');
   });
 
   it('should hide input caret after command', () => {
-    const service = new TerraService();
+    const service = new WdioTerraService();
 
     service.before({ browserName: 'chrome' });
 

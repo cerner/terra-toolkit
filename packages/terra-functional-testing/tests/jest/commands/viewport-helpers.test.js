@@ -41,4 +41,33 @@ describe('Viewport', () => {
 
     expect(global.browser.setWindowSize).toHaveBeenCalledWith(width, height);
   });
+
+  it('should log message for unsupported viewport', () => {
+    jest.spyOn(console, 'error').mockImplementationOnce(() => { });
+
+    viewportHelpers.setViewport('unsupported-viewport');
+
+    // eslint-disable-next-line no-console
+    expect(console.error).toHaveBeenCalledWith('[ERROR] [terra-functional-testing:wdio-terra-service] The unsupported-viewport formFactor supplied is not a viewport size supported by Terra.');
+  });
+
+  it('should describe viewport', () => {
+    const mockBeforeAll = jest.fn();
+    const mockDescribe = jest.fn();
+    const mockAfterAll = jest.fn();
+    const TerraService = () => { };
+    const serviceOptions = { formFactor: 'tiny' };
+
+    global.beforeAll = mockBeforeAll;
+    global.describe = mockDescribe;
+    global.afterAll = mockAfterAll;
+
+    global.browser.options = {
+      services: [[TerraService, serviceOptions]],
+    };
+
+    viewportHelpers.describeViewports('viewport', ['tiny', 'large'], () => {});
+
+    expect(global.describe).toHaveBeenCalled();
+  });
 });

@@ -32,7 +32,10 @@ class TerraService {
 
     // IE driver takes longer to be ready for browser interactions.
     if (capabilities.browserName === 'internet explorer') {
-      global.browser.pause(10000);
+      global.browser.$('body').waitForExist({
+        timeout: global.browser.config.waitforTimeout,
+        interval: 100,
+      });
     }
 
     // Extract the Terra service options from the global browser object.

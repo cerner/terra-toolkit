@@ -45,8 +45,12 @@ const setViewport = (formFactor = 'huge') => {
 const describeViewports = (title, viewports, fn) => {
   let localViewports = viewports;
 
-  // If formFactor is defined and viewports contains the form factor, run that size else don't run the tests
-  const { formFactor } = global.browser.config;
+  // If formFactor is defined and viewports contains this form factor, run that size else don't run the tests
+  const [, options = {}] = global.browser.options.services.find(([service]) => (
+    typeof service === 'function' && service.name === 'TerraService'
+  ));
+
+  const { formFactor } = options;
   if (formFactor) {
     localViewports = viewports.includes(formFactor) ? [formFactor] : [];
   }
