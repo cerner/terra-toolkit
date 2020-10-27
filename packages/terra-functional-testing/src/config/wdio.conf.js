@@ -10,8 +10,6 @@ const VisualRegressionService = require('../services/wdio-visual-regression-serv
 const {
   /* Sets the base screenshot dir path to output screenshots to. */
   BASE_SCREENSHOT_DIR,
-  /* Sets the form factor of the test run. */
-  FORM_FACTOR,
   LOCALE,
   SITE,
   THEME,
@@ -137,7 +135,6 @@ exports.config = {
     [TerraService],
     [AssetServerService, {
       ...SITE && { site: SITE },
-      ...FORM_FACTOR && { formFactor: FORM_FACTOR },
       ...LOCALE && { locale: LOCALE },
       ...THEME && { theme: THEME },
       ...WDIO_INTERNAL_PORT && { port: WDIO_INTERNAL_PORT },
@@ -147,7 +144,6 @@ exports.config = {
     ...(WDIO_DISABLE_SELENIUM_SERVICE ? [] : [[SeleniumDockerService]]),
     [VisualRegressionService, {
       ...BASE_SCREENSHOT_DIR && { baseScreenshotDir: BASE_SCREENSHOT_DIR },
-      ...FORM_FACTOR && { formFactor: FORM_FACTOR },
       ...LOCALE && { locale: LOCALE },
       ...THEME && { theme: THEME },
     }],

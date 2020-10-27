@@ -9,7 +9,7 @@ import makeDocumentScreenshot from './modules/makeDocumentScreenshot';
 import makeViewportScreenshot from './modules/makeViewportScreenshot';
 
 import getUserAgent from './scripts/getUserAgent';
-import getViewportSize from './modules/getViewportSize';
+import getTerraFormFactor from './modules/getTerraFormFactor';
 
 class VisualRegressionLauncher {
   /**
@@ -18,14 +18,12 @@ class VisualRegressionLauncher {
   constructor(options = {}) {
     const {
       baseScreenshotDir,
-      formFactor,
       locale,
       theme,
     } = options;
 
     this.compare = new LocalCompare({
       baseScreenshotDir,
-      formFactor,
       locale,
       theme,
     });
@@ -105,21 +103,19 @@ class VisualRegressionLauncher {
 
     const testDetails = this.getTestDetails();
 
-    const resolutionKeySingle = browser.isMobile ? 'orientation' : 'viewport';
-
     return async function async(...args) {
-      let resolution;
+      let currentFormFactor;
       if (browser.isMobile) {
-        resolution = await browser.getOrientation();
+        currentFormFactor = await browser.getOrientation();
       } else {
-        resolution = await getViewportSize();
+        currentFormFactor = await getTerraFormFactor();
       }
 
       const screenshotContext = {
         ...baseContext,
         ...testDetails,
         meta: {
-          [resolutionKeySingle]: resolution,
+          currentFormFactor,
         },
       };
 

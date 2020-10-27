@@ -14,7 +14,7 @@ const context = {
     title: 'displays a button',
   },
   meta: {
-    viewport: { height: 600, width: 1000 },
+    currentFormFactor: 'large',
   },
 };
 
@@ -55,46 +55,11 @@ describe('BaseCompare', () => {
     });
   });
 
-  describe('BaseCompare.getScreenshotName', () => {
-    it('returns formFactor is defined in constructor', () => {
-      const baseCompare = new BaseCompare({ formFactor: 'tiny' });
-      const result = baseCompare.getFormFactor(300);
-      expect(result).toEqual('tiny');
-    });
-
-    it('determines formFactor from viewport width', () => {
-      const baseCompare = new BaseCompare({});
-      let result = baseCompare.getFormFactor(400);
-      expect(result).toEqual('tiny');
-
-      result = baseCompare.getFormFactor(500);
-      expect(result).toEqual('small');
-
-      result = baseCompare.getFormFactor(700);
-      expect(result).toEqual('medium');
-
-      result = baseCompare.getFormFactor(900);
-      expect(result).toEqual('large');
-
-      result = baseCompare.getFormFactor(1200);
-      expect(result).toEqual('huge');
-
-      result = baseCompare.getFormFactor(1500);
-      expect(result).toEqual('enormous');
-
-      // TO DO: should we fail if it's larger or not an exact terra-viewport?
-      result = baseCompare.getFormFactor(30000);
-      expect(result).toEqual('enormous');
-    });
-  });
-
   it('BaseCompare.getScreenshotDir', () => {
     const baseCompare = new BaseCompare({});
-    const getFormFactorSpy = jest.spyOn(baseCompare, 'getFormFactor');
 
     const result = baseCompare.getScreenshotDir(context);
     expect(result).toEqual(path.join('terra-default-theme', 'en', 'chrome_large', 'test-spec'));
-    expect(getFormFactorSpy).toHaveBeenCalledWith(1000);
   });
 
   describe('BaseCompare.getScreenshotPaths', () => {

@@ -1,7 +1,6 @@
 /* eslint-disable class-methods-use-this, no-unused-vars */
 import path from 'path';
 
-import terraViewports from '../../../utils/viewports';
 
 const TEST_ID_REGEX = /\[([^)]+)\]/;
 
@@ -9,14 +8,12 @@ export default class BaseCompare {
   constructor(options) {
     const {
       baseScreenshotDir,
-      formFactor,
       locale,
       theme,
     } = options;
 
     // screenshot naming config
     this.baseScreenshotDir = baseScreenshotDir || process.cwd();
-    this.formFactor = formFactor;
     this.locale = locale || 'en';
     this.theme = theme || 'terra-default-theme';
   }
@@ -70,32 +67,6 @@ export default class BaseCompare {
   }
 
   /**
-   * Determines the Terra form factor to categorize the screenshot with.
-   * @param {Number} browserWidth - current viewport width of the screen
-   * @returns {String} Terra form factor the current viewport with falls under
-   */
-  getFormFactor(browserWidth) {
-    // what if they change the viewport.
-    if (this.formFactor !== undefined) {
-      return this.formFactor;
-    }
-
-    // Default to enormous then check if the current viewport is a small form factor
-    let formFactor = 'enormous';
-
-    const viewportSizes = Object.keys(terraViewports);
-    for (let form = 0; form < viewportSizes.length; form += 1) {
-      const viewportName = viewportSizes[form];
-      if (browserWidth <= terraViewports[viewportName].width) {
-        formFactor = viewportName;
-        break;
-      }
-    }
-
-    return formFactor;
-  }
-
-  /**
    * Determines the directories to save the screenshot to.
    * @param {Object} context - compare context provided by VisualRegressionLauncher.
    * @returns {String} screenshot directory path
@@ -103,12 +74,7 @@ export default class BaseCompare {
   getScreenshotDir(context) {
     const { browser, meta } = context;
 
-    let formFactor = meta.orientation;
-    if (formFactor === undefined) {
-      const browserWidth = meta.viewport.width;
-      formFactor = this.getFormFactor(browserWidth);
-    }
-
+    const formFactor = meta.currentFormFactor;
     const testForm = `${browser.name}_${formFactor}`;
     const testSpec = path.parse(context.test.file).name;
 
