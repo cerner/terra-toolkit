@@ -16,17 +16,7 @@ class VisualRegressionLauncher {
    * @param {Object} options - Service configuration options.
    */
   constructor(options = {}) {
-    const {
-      baseScreenshotDir,
-      locale,
-      theme,
-    } = options;
-
-    this.compare = new LocalCompare({
-      baseScreenshotDir,
-      locale,
-      theme,
-    });
+    this.compare = new LocalCompare(options);
 
     this.currentSuite = null;
     this.currentTest = null;
@@ -53,6 +43,7 @@ class VisualRegressionLauncher {
       specs,
     };
 
+    // we can probably remove these from the global and use directly in terra Validates Element/screenshot like stephen did with the axe command
     browser.addCommand('checkElement', this.wrapCommand(browser, makeElementScreenshot));
     browser.addCommand('checkDocument', this.wrapCommand(browser, makeDocumentScreenshot));
     browser.addCommand('checkViewport', this.wrapCommand(browser, makeViewportScreenshot));
