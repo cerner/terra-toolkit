@@ -12,28 +12,32 @@ const runAxe = (overrides = {}) => {
     typeof service === 'function' && service.name === 'TerraService'
   ));
 
-  const { axe: axeOptions } = options;
+  const { axe: axeOptions = {} } = options;
+  const { rules: globalRules = {} } = axeOptions;
+
+  const globalRuleOverrides = {
+    /**
+     * This rule was introduced in axe-core v3.3 and causes failures in many Terra components.
+     * The solution to address this failure vary by component. It is being disabled until a solution is identified in the future.
+     *
+     * Reference: https://github.com/cerner/terra-framework/issues/991
+     */
+    'scrollable-region-focusable': { enabled: false },
+    /**
+     * Rules configured through the Terra Service axe options are applied globally.
+     */
+    ...globalRules,
+  };
+
   const isAxeUnavailable = browser.execute(() => window.axe === undefined);
 
   // Inject axe-core onto the page if it has not already been initialized.
   if (isAxeUnavailable) {
-    injectAxe(axeOptions);
+    injectAxe({ ...axeOptions, rules: globalRuleOverrides });
   }
 
-  /**
-    * This rule was introduced in axe-core v3.3 and causes failures in many Terra components.
-    * The solution to address this failure vary by component. It is being disabled until a solution is identified in the future.
-    *
-    * Reference: https://github.com/cerner/terra-framework/issues/991
-    */
-  const ruleOverrides = {
-    'scrollable-region-focusable': { enabled: false },
-  };
-
-  // Merge the global rules and overrides together.
   const rules = {
-    ...ruleOverrides,
-    ...axeOptions && axeOptions.rules,
+    ...globalRuleOverrides,
     ...overrides.rules,
   };
 
@@ -43,7 +47,7 @@ const runAxe = (overrides = {}) => {
     axe.run(document, opts, function (error, result) {
       done({ error, result });
     });
-  }, { rules, restoreScroll: true, runOnly: ['wcag2a', 'wcag2aa', 'wcag21aa', 'section508'] });
+  }, { rules, runOnly: ['wcag2a', 'wcag2aa', 'wcag21aa', 'section508'] });
 };
 
 module.exports = runAxe;

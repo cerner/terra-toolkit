@@ -5,6 +5,7 @@ const ip = require('ip');
 const SeleniumDockerService = require('../services/wdio-selenium-docker-service');
 const TerraService = require('../services/wdio-terra-service');
 const AssetServerService = require('../services/wdio-asset-server-service');
+const AccessibilityReporter = require('../reporters/wdio-accessibility-reporter');
 
 const {
   LOCALE,
@@ -157,7 +158,7 @@ exports.config = {
   // Test reporter for stdout.
   // The only one supported by default is 'dot'
   // see also: https://webdriver.io/docs/dot-reporter.html
-  reporters: ['spec'],
+  reporters: ['spec', AccessibilityReporter],
   //
   // Options to be passed to Mocha.
   // See the full list at http://mochajs.org/

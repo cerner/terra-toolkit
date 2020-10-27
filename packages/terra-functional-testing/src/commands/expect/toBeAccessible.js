@@ -8,7 +8,13 @@ const { runAxe } = require('../axe');
  */
 function toBeAccessible(_, options = {}) {
   const { result } = runAxe(options);
-  const { violations } = result;
+  const { incomplete, violations } = result;
+
+  // Rules that fail but are marked for review are returned in the incomplete array.
+  // https://github.com/dequelabs/axe-core/blob/develop/doc/API.md#results-object
+  if (incomplete && incomplete.length > 0) {
+    process.emit('terra:report:accessibility', { incomplete });
+  }
 
   return {
     pass: violations.length === 0,
