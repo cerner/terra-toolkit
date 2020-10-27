@@ -145,7 +145,6 @@ class VisualRegressionLauncher {
 
     const getTestDetails = () => this.getTestDetails();
 
-    const resolutionKeySingle = browser.isMobile ? 'orientation' : 'viewport';
     const resolutionKeyPlural = browser.isMobile ? 'orientations' : 'viewports';
     const resolutionMap = browser.isMobile ? mapOrientations : mapViewports;
 
@@ -168,7 +167,7 @@ class VisualRegressionLauncher {
         viewportChangePause,
         resolutions,
         // eslint-disable-next-line prefer-arrow-callback
-        async function takeScreenshot(resolution) {
+        async function takeScreenshot(currentFormFactor) {
           const meta = _.pickBy(
             {
               url,
@@ -176,7 +175,7 @@ class VisualRegressionLauncher {
               exclude,
               hide,
               remove,
-              [resolutionKeySingle]: resolution,
+              currentFormFactor,
             },
             _.identity,
           );

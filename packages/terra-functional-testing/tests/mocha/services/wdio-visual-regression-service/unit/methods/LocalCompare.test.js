@@ -48,6 +48,10 @@ describe('LocalCompare', function() {
         diffName: this.getDiffFile,
       });
 
+      this.newScreenshotResults = {
+        isNewScreenshot: true,
+      };
+
       this.resultIdentical = {
         misMatchPercentage: 0,
         isWithinMisMatchTolerance: true,
@@ -85,7 +89,7 @@ describe('LocalCompare', function() {
       assert.isTrue(this.getReferenceFile.calledWithExactly(context), 'Reference getter should receive context as arg');
 
       // check image results
-      assert.deepEqual(results, this.resultIdentical, 'Result should be reported');
+      assert.deepEqual(results, this.newScreenshotResults, 'Result should be reported');
 
       // check if reference image was created
       const existsReference = await fs.exists(this.referencFile);
@@ -104,7 +108,7 @@ describe('LocalCompare', function() {
       assert.isTrue(this.getReferenceFile.calledWithExactly(context), 'Reference getter should receive context as arg');
 
       // check image results
-      assert.deepEqual(resultFirst, this.resultIdentical, 'Result should be reported');
+      assert.deepEqual(resultFirst, this.newScreenshotResults, 'Result should be reported');
 
       // check if reference was created
       const existsReference = await fs.exists(this.screenshotFile);
@@ -145,7 +149,7 @@ describe('LocalCompare', function() {
       assert.isTrue(this.getReferenceFile.calledWithExactly(context), 'Reference getter should receive context as arg');
 
       // check image results
-      assert.deepEqual(resultFirst, this.resultIdentical, 'Result should be reported');
+      assert.deepEqual(resultFirst, this.newScreenshotResults, 'Result should be reported');
 
       // check if reference was created
       const existsReference = await fs.exists(this.screenshotFile);
@@ -163,7 +167,7 @@ describe('LocalCompare', function() {
       assert.isTrue(this.getDiffFile.calledWithExactly(context), 'Diff getter should receive context as arg');
 
       // check diff results
-      assert.isAbove(resultSecond.misMatchPercentage, resultFirst.misMatchPercentage, 'Images should diff');
+      assert.isAbove(resultSecond.misMatchPercentage, 0, 'Images should diff');
       assert.isFalse(resultSecond.isExactSameImage, 'Images should diff');
       assert.isFalse(resultSecond.isWithinMisMatchTolerance, 'Images should be marked as diff');
       assert.isTrue(resultSecond.isSameDimensions, 'Image dimensioms should be the same');
