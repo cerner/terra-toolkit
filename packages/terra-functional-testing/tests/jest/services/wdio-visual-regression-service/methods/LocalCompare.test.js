@@ -20,20 +20,20 @@ async function compareImages(image1, image2, misMatchPercentage = 0) {
     const image = resemble(image1).compareTo(image2);
     image.onComplete(data => {
       expect(data.isSameDimensions).toBeTruthy();
-      expect(Number(data.misMatchPercentage)).toBeCloseTo(0, misMatchPercentage)
+      expect(Number(data.misMatchPercentage)).toBeCloseTo(0, misMatchPercentage);
       resolve();
     });
   });
 }
 
 const context = {
+  browser: {
+    name: 'chrome',
+  },
   test: {
     file: path.join(dirTmp, 'test-spec.js'),
     parent: 'Test Component',
     title: 'displays a button',
-  },
-  desiredCapabilities: {
-    browserName: 'chrome',
   },
   meta: {
     viewport: { height: 600, width: 1000 },
@@ -41,8 +41,11 @@ const context = {
 };
 
 describe('LocalCompare', () => {
+  let localCompare;
+
   beforeAll(async () => {
     await fs.remove(dirTmp);
+    localCompare = new LocalCompare({});
   });
 
   afterEach(async () => {
@@ -50,166 +53,11 @@ describe('LocalCompare', () => {
   });
 
   it('creates a instance of BaseCompare', () => {
-    const localCompare = new LocalCompare();
     expect(localCompare).toBeInstanceOf(BaseCompare);
   });
 
-  it('LocalCompare.createTestName', () => {
-    const localCompare = new LocalCompare();
-    let result = localCompare.createTestName('hello');
-    expect(result).toEqual('hello');
-
-    result = localCompare.createTestName('hello[world]');
-    expect(result).toEqual('world');
-
-    result = localCompare.createTestName('hello world ');
-    expect(result).toEqual('hello_world');
-
-    result = localCompare.createTestName('hello:world?default+08.name yes');
-    expect(result).toEqual('hello-world-default_08_name_yes');
-  });
-
-  describe('LocalCompare.getScreenshotName', () => {
-    it('used parent + test name as screenshot name', () => {
-      const localCompare = new LocalCompare();
-      const createTestNameSpy = jest.spyOn(localCompare, 'createTestName');
-
-      const result = localCompare.getScreenshotName(context);
-      expect(result).toEqual('Test_Component[displays_a_button].png');
-      expect(createTestNameSpy).toHaveBeenNthCalledWith(1, context.test.parent);
-      expect(createTestNameSpy).toHaveBeenNthCalledWith(2, context.test.title);
-    });
-
-    it('uses parent + custom name screenshot name', () => {
-      const localCompare = new LocalCompare();
-      const createTestNameSpy = jest.spyOn(localCompare, 'createTestName');
-      const result = localCompare.getScreenshotName({ ...context, options: { name: 'custom' }});
-      expect(result).toEqual('Test_Component[custom].png');
-      expect(createTestNameSpy).toHaveBeenNthCalledWith(1, context.test.parent);
-      expect(createTestNameSpy).toHaveBeenNthCalledWith(2, 'custom');
-    });
-  });
-
-  describe('LocalCompare.getScreenshotName', () => {
-    it('returns formFactor is defined in constructor', () => {
-      const localCompare = new LocalCompare({ formFactor: 'tiny' });
-      const result = localCompare.getFormFactor(300);
-      expect(result).toEqual('tiny');
-    });
-
-    it('determines formFactor from viewport width', () => {
-      const localCompare = new LocalCompare();
-      let result = localCompare.getFormFactor(400);
-      expect(result).toEqual('tiny');
-
-      result = localCompare.getFormFactor(500);
-      expect(result).toEqual('small');
-
-      result = localCompare.getFormFactor(700);
-      expect(result).toEqual('medium');
-
-      result = localCompare.getFormFactor(900);
-      expect(result).toEqual('large');
-
-      result = localCompare.getFormFactor(1200);
-      expect(result).toEqual('huge');
-
-      result = localCompare.getFormFactor(1500);
-      expect(result).toEqual('enormous');
-
-      // TO DO: should we fail if it's larger or not an exact terra-viewport?
-      result = localCompare.getFormFactor(30000);
-      expect(result).toEqual('enormous');
-    });
-  });
-
-  it('LocalCompare.getScreenshotDir', () => {
-    const localCompare = new LocalCompare();
-    const getFormFactorSpy = jest.spyOn(localCompare, 'getFormFactor');
-
-    const result = localCompare.getScreenshotDir(context);
-    expect(result).toEqual(path.join('chrome_large', 'test-spec'));
-    expect(getFormFactorSpy).toHaveBeenCalledWith(1000);
-  });
-
-  describe('LocalCompare.getScreenshotPaths', () => {
-    it('creates reference, latest, and diff paths with default values', () => {
-      const localCompare = new LocalCompare({
-        baseScreenshotDir: process.cwd(),
-        ignoreComparison: 'nothing',
-        locale: 'en',
-        misMatchTolerance: 0.01,
-        theme: 'cerner-default-theme',
-      });
-
-      const getScreenshotDirSpy = jest.spyOn(localCompare, 'getScreenshotDir').mockReturnValue('screenshotDir');
-      const getScreenshotNameSpy = jest.spyOn(localCompare, 'getScreenshotName').mockReturnValue('screenshotName.png');
-
-      const result = localCompare.getScreenshotPaths(context);
-      expect(result.referencePath).toEqual(path.join(dirTmp, '__snapshots__', 'reference', 'cerner-default-theme', 'en', 'screenshotDir', 'screenshotName.png'));
-      expect(result.latestPath).toEqual(path.join(dirTmp, '__snapshots__', 'latest', 'cerner-default-theme', 'en', 'screenshotDir', 'screenshotName.png'));
-      expect(result.diffPath).toEqual(path.join(dirTmp, '__snapshots__', 'diff', 'cerner-default-theme', 'en', 'screenshotDir', 'screenshotName.png'));
-      expect(getScreenshotDirSpy).toHaveBeenCalledWith(context);
-      expect(getScreenshotNameSpy).toHaveBeenCalledWith(context);
-    });
-
-    it('creates reference, latest, and diff paths for tests pulled from node_modules', () => {
-      const localCompare = new LocalCompare({
-        baseScreenshotDir: process.cwd(),
-        ignoreComparison: 'nothing',
-        locale: 'en',
-        misMatchTolerance: 0.01,
-        theme: 'cerner-default-theme',
-      });
-
-      jest.spyOn(localCompare, 'getScreenshotDir').mockReturnValue('screenshotDir');
-      jest.spyOn(localCompare, 'getScreenshotName').mockReturnValue('screenshotName.png');
-
-      const updatedContext = {
-        ...context,
-        test: {
-          ...context.test,
-          file: path.join(process.cwd(), 'node_modules', 'test', 'wdio', 'test-spec.js'),
-        },
-      };
-      const result = localCompare.getScreenshotPaths(updatedContext);
-      expect(result.referencePath).toEqual(path.join(process.cwd(), 'test', 'wdio', '__snapshots__', 'reference', 'cerner-default-theme', 'en', 'screenshotDir', 'screenshotName.png'));
-      expect(result.latestPath).toEqual(path.join(process.cwd(), 'test', 'wdio', '__snapshots__', 'latest', 'cerner-default-theme', 'en', 'screenshotDir', 'screenshotName.png'));
-      expect(result.diffPath).toEqual(path.join(process.cwd(), 'test', 'wdio', '__snapshots__', 'diff', 'cerner-default-theme', 'en', 'screenshotDir', 'screenshotName.png'));
-    });
-
-    it('creates reference, latest, and diff paths with custom baseScreenshotDir', () => {
-      const localCompare = new LocalCompare({
-        baseScreenshotDir: 'customBaseScreenshotDir',
-        ignoreComparison: 'nothing',
-        locale: 'en',
-        misMatchTolerance: 0.01,
-        theme: 'cerner-default-theme',
-      });
-      jest.spyOn(localCompare, 'getScreenshotDir').mockReturnValue('screenshotDir');
-      jest.spyOn(localCompare, 'getScreenshotName').mockReturnValue('screenshotName.png');
-
-      const result = localCompare.getScreenshotPaths(context);
-      const tempDirPath = path.join('packages', 'terra-functional-testing', 'tests', 'tmp');
-
-      expect(result.referencePath).toEqual(path.join('customBaseScreenshotDir', tempDirPath, '__snapshots__', 'reference', 'cerner-default-theme', 'en', 'screenshotDir', 'screenshotName.png'));
-      expect(result.latestPath).toEqual(path.join('customBaseScreenshotDir', tempDirPath, '__snapshots__', 'latest', 'cerner-default-theme', 'en', 'screenshotDir', 'screenshotName.png'));
-      expect(result.diffPath).toEqual(path.join('customBaseScreenshotDir', tempDirPath, '__snapshots__', 'diff', 'cerner-default-theme', 'en', 'screenshotDir', 'screenshotName.png'));
-    });
-  });
-
   describe('LocalCompare.processScreenshot', () => {
-    let localCompare;
-
     beforeEach(() => {
-      localCompare = new LocalCompare({
-        baseScreenshotDir: process.cwd(),
-        ignoreComparison: 'nothing',
-        locale: 'en',
-        misMatchTolerance: 0.01,
-        theme: 'cerner-default-theme',
-      });
-
       jest.restoreAllMocks();
     });
 
@@ -248,10 +96,7 @@ describe('LocalCompare', () => {
 
       // check image results
       expect(results).toMatchObject({
-        misMatchPercentage: 0,
-        isWithinMisMatchTolerance: true,
-        isSameDimensions: true,
-        isExactSameImage: true,
+        isNewScreenshot: true,
       });
 
       const screenshotPaths = getScreenshotPathsSpy.mock.results[0].value;
@@ -279,10 +124,7 @@ describe('LocalCompare', () => {
 
       // check image results
       expect(resultFirst).toMatchObject({
-        misMatchPercentage: 0,
-        isWithinMisMatchTolerance: true,
-        isSameDimensions: true,
-        isExactSameImage: true,
+        isNewScreenshot: true,
       });
 
       const screenshotPathsFirst = getScreenshotPathsSpy.mock.results[0].value;
@@ -343,10 +185,7 @@ describe('LocalCompare', () => {
 
       // check image results
       expect(resultFirst).toMatchObject({
-        misMatchPercentage: 0,
-        isWithinMisMatchTolerance: true,
-        isSameDimensions: true,
-        isExactSameImage: true,
+        isNewScreenshot: true,
       });
 
       const screenshotPathsFirst = getScreenshotPathsSpy.mock.results[0].value;
@@ -367,7 +206,7 @@ describe('LocalCompare', () => {
       const resultSecond = await localCompare.processScreenshot(context, base64ScreenshotNew);
 
       // check diff results
-      expect(resultSecond.misMatchPercentage).toBeGreaterThan(resultFirst.misMatchPercentage);
+      expect(resultSecond.misMatchPercentage).toBeGreaterThan(0);
       expect(resultSecond.isExactSameImage).toBeFalsy();
       expect(resultSecond.isWithinMisMatchTolerance).toBeFalsy();
       expect(resultSecond.isSameDimensions).toBeTruthy();
@@ -384,6 +223,58 @@ describe('LocalCompare', () => {
 
       // check if diff is correct
       await compareImages(screenshotPathsSecond.diffPath, path.join(dirFixture, 'image', '100x100-diff.png'));
+    });
+
+    it('creates a diff image when latest image has different dimensions', async () => {
+      const base64ScreenshotReference = await readAsBase64(path.join(dirFixture, 'misMatchTolerance', 'base.png'));
+      const base64ScreenshotNew = await readAsBase64(path.join(dirFixture, 'misMatchTolerance', 'within-diff-dimensions.png'));
+
+      const getScreenshotPathsSpy = jest.spyOn(localCompare, 'getScreenshotPaths');
+
+      // 1st run -> create reference
+      const resultFirst = await localCompare.processScreenshot(context, base64ScreenshotReference);
+
+      // check screenshot getter
+      expect(getScreenshotPathsSpy).toHaveBeenCalledTimes(1);
+      expect(getScreenshotPathsSpy).toHaveBeenCalledWith(context);
+
+      // check image results
+      expect(resultFirst).toMatchObject({
+        isNewScreenshot: true,
+      });
+
+      const screenshotPathsFirst = getScreenshotPathsSpy.mock.results[0].value;
+
+      // check if reference image was created
+      const referenceExists = await fs.exists(screenshotPathsFirst.referencePath);
+      expect(referenceExists).toBeTruthy();
+
+      // check if latest image was created
+      const latestExists = await fs.exists(screenshotPathsFirst.latestPath);
+      expect(latestExists).toBeTruthy();
+
+      // check last modified
+      const referenceStatsFirst = await fs.stat(screenshotPathsFirst.referencePath);
+      expect(referenceStatsFirst.mtime.getTime()).toBeGreaterThan(0);
+
+      // 2nd run --> create diff image
+      const resultSecond = await localCompare.processScreenshot(context, base64ScreenshotNew);
+
+      // check diff results
+      expect(resultSecond.misMatchPercentage).toBe(0);
+      expect(resultSecond.isExactSameImage).toBeFalsy();
+      expect(resultSecond.isWithinMisMatchTolerance).toBeTruthy();
+      expect(resultSecond.isSameDimensions).toBeFalsy();
+
+      const screenshotPathsSecond = getScreenshotPathsSpy.mock.results[1].value;
+
+      // check if reference is still the same
+      const referenceStatsSecond = await fs.stat(screenshotPathsSecond.referencePath);
+      expect(referenceStatsSecond.mtime.getTime()).toEqual(referenceStatsFirst.mtime.getTime());
+
+      // check if diff image was created
+      const diffExists = await fs.exists(screenshotPathsSecond.diffPath);
+      expect(diffExists).toBeTruthy();
     });
 
     it('deletes existing diff image when image is in tolerance now', async () => {
@@ -428,24 +319,17 @@ describe('LocalCompare', () => {
 
     beforeAll(async () => {
       screenshotBase = await readAsBase64(path.join(dirFixture, 'misMatchTolerance', 'base.png'));
-      screenshotToleranceDefaultWithin = await readAsBase64(path.join(dirFixture, 'misMatchTolerance', 'default-within.png'),);
+      screenshotToleranceDefaultWithin = await readAsBase64(path.join(dirFixture, 'misMatchTolerance', 'default-within.png'));
       screenshotToleranceDefaultOutside = await readAsBase64(path.join(dirFixture, 'misMatchTolerance', 'default-outside.png'));
       screenshotToleranceCustomWithin = await readAsBase64(path.join(dirFixture, 'misMatchTolerance', 'custom-within.png'));
       screenshotToleranceCustomOutside = await readAsBase64(path.join(dirFixture, 'misMatchTolerance', 'custom-outside.png'));
     });
 
     describe('uses default misMatchTolerance', () => {
-      let localCompare;
       let getScreenshotPathsSpy;
       beforeEach(async () => {
         jest.restoreAllMocks();
-        localCompare = new LocalCompare({
-          baseScreenshotDir: process.cwd(),
-          ignoreComparison: 'ignore',
-          locale: 'en',
-          misMatchTolerance: 0.01,
-          theme: 'cerner-default-theme',
-        });
+        localCompare = new LocalCompare({});
 
         getScreenshotPathsSpy = jest.spyOn(localCompare, 'getScreenshotPaths');
 
@@ -486,72 +370,11 @@ describe('LocalCompare', () => {
       });
     });
 
-    describe('uses custom misMatchTolerance passed in constructor option', () => {
-      let localCompare;
-      let getScreenshotPathsSpy;
-
-      beforeEach(async () => {
-        jest.restoreAllMocks();
-        localCompare = new LocalCompare({
-          baseScreenshotDir: process.cwd(),
-          ignoreComparison: 'ignore',
-          locale: 'en',
-          misMatchTolerance: 0.25,
-          theme: 'cerner-default-theme',
-        });
-
-        getScreenshotPathsSpy = jest.spyOn(localCompare, 'getScreenshotPaths');
-
-        // 1st run -> create reference
-        await localCompare.processScreenshot(context, screenshotBase);
-      });
-
-      it('reports equal when in tolerance', async () => {
-        // compare screenshots
-        const result = await localCompare.processScreenshot(context, screenshotToleranceCustomWithin);
-
-        // check diff results
-        expect(result.misMatchPercentage).toBeLessThanOrEqual(0.25);
-        expect(result.isExactSameImage).toBeFalsy();
-        expect(result.isWithinMisMatchTolerance).toBeTruthy();
-
-        const screenshotPaths = getScreenshotPathsSpy.mock.results[0].value;
-
-        // check if diff image was not created
-        const diffExists = await fs.exists(screenshotPaths.diffPath);
-        expect(diffExists).toBeFalsy();
-      });
-
-      it('reports diff when NOT in tolerance', async () => {
-        // compare screenshots
-        const result = await localCompare.processScreenshot(context, screenshotToleranceCustomOutside);
-
-        // check diff results
-        expect(result.misMatchPercentage).toBeGreaterThan(0.25);
-        expect(result.isExactSameImage).toBeFalsy();
-        expect(result.isWithinMisMatchTolerance).toBeFalsy();
-
-        const screenshotPaths = getScreenshotPathsSpy.mock.results[0].value;
-
-        // check if diff image was created
-        const diffExists = await fs.exists(screenshotPaths.diffPath);
-        expect(diffExists).toBeTruthy();
-      });
-    });
-
     describe('uses custom misMatchTolerance passed in command options', () => {
-      let localCompare;
       let getScreenshotPathsSpy;
 
       beforeEach(async () => {
         jest.restoreAllMocks();
-        localCompare = new LocalCompare({
-          baseScreenshotDir: process.cwd(),
-          ignoreComparison: 'ignore',
-          locale: 'en',
-          misMatchTolerance: 0.10,
-          theme: 'cerner-default-theme',
-        });
 
         getScreenshotPathsSpy = jest.spyOn(localCompare, 'getScreenshotPaths');
 
@@ -615,14 +438,6 @@ describe('LocalCompare', () => {
 
     describe('uses default ignoreComparison', () => {
       it('reports diff when colors differs', async () => {
-        const localCompare = new LocalCompare({
-          baseScreenshotDir: process.cwd(),
-          ignoreComparison: 'ignore',
-          locale: 'en',
-          misMatchTolerance: 0.01,
-          theme: 'cerner-default-theme',
-        });
-
         const getScreenshotPathsSpy = jest.spyOn(localCompare, 'getScreenshotPaths');
 
         // 1st run -> create reference
@@ -648,50 +463,8 @@ describe('LocalCompare', () => {
       });
     });
 
-    describe('uses custom ignoreComparison passed in constructor option', () => {
-      it('reports equal with ignoreComparison=colors when colors differs', async () => {
-        const localCompare = new LocalCompare({
-          baseScreenshotDir: process.cwd(),
-          ignoreComparison: 'colors',
-          locale: 'en',
-          misMatchTolerance: 0.01,
-          theme: 'cerner-default-theme',
-        });
-
-        const getScreenshotPathsSpy = jest.spyOn(localCompare, 'getScreenshotPaths');
-
-        // 1st run -> create reference
-        await localCompare.processScreenshot(context, screenshotRed);
-
-        const screenshotPaths = getScreenshotPathsSpy.mock.results[0].value;
-
-        // check if latest image was created
-        const referenceExists = await fs.exists(screenshotPaths.latestPath);
-        expect(referenceExists).toBeTruthy();
-
-        // compare screenshots
-        const result = await localCompare.processScreenshot(context, screenshotRedDiff);
-
-        // check diff results
-        expect(result.misMatchPercentage).toBeLessThanOrEqual(0.01);
-        expect(result.isExactSameImage).toBeTruthy();
-        expect(result.isWithinMisMatchTolerance).toBeTruthy();
-
-        // check if diff image was not created
-        const diffExists = await fs.exists(screenshotPaths.diffPath);
-        expect(diffExists).toBeFalsy();
-      });
-    });
-
     describe('uses custom ignoreComparison passed in command options', () => {
       it('reports equal with ignoreComparison=colors when colors differs', async () => {
-        const localCompare = new LocalCompare({
-          baseScreenshotDir: process.cwd(),
-          ignoreComparison: 'ignore',
-          locale: 'en',
-          misMatchTolerance: 0.01,
-          theme: 'cerner-default-theme',
-        });
         const getScreenshotPathsSpy = jest.spyOn(localCompare, 'getScreenshotPaths');
 
         // 1st run -> create reference
