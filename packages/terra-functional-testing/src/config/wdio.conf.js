@@ -8,6 +8,9 @@ const TerraService = require('../services/wdio-terra-service');
 const VisualRegressionService = require('../services/wdio-visual-regression-service');
 
 const {
+  /* Sets the base screenshot dir path to output screenshots to. */
+  BASE_SCREENSHOT_DIR,
+  /* Sets the form factor of the test run. */
   FORM_FACTOR,
   LOCALE,
   SITE,
@@ -135,20 +138,18 @@ exports.config = {
     [AssetServerService, {
       ...SITE && { site: SITE },
       ...FORM_FACTOR && { formFactor: FORM_FACTOR },
-      locale: LOCALE || 'en',
-      theme: THEME || 'terra-default-theme',
+      ...LOCALE && { locale: LOCALE },
+      ...THEME && { theme: THEME },
       ...WDIO_INTERNAL_PORT && { port: WDIO_INTERNAL_PORT },
       ...fs.existsSync(defaultWebpackPath) && { webpackConfig: defaultWebpackPath },
     }],
     // Do not add the docker service if disabled.
     ...(WDIO_DISABLE_SELENIUM_SERVICE ? [] : [[SeleniumDockerService]]),
     [VisualRegressionService, {
-      baseScreenshotDir: process.cwd(),
+      ...BASE_SCREENSHOT_DIR && { baseScreenshotDir: BASE_SCREENSHOT_DIR },
       ...FORM_FACTOR && { formFactor: FORM_FACTOR },
-      ignoreComparison: 'nothing',
-      locale: LOCALE || 'en',
-      misMatchTolerance: 0.01,
-      theme: THEME || 'terra-default-theme',
+      ...LOCALE && { locale: LOCALE },
+      ...THEME && { theme: THEME },
     }],
   ],
   // Framework you want to run your specs with.
