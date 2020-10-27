@@ -1,7 +1,6 @@
 /* eslint-disable class-methods-use-this, no-unused-vars */
 import path from 'path';
 
-
 const TEST_ID_REGEX = /\[([^)]+)\]/;
 
 export default class BaseCompare {

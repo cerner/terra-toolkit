@@ -76,18 +76,24 @@ wait x milliseconds after viewport change. It can take a while for the browser t
 wdio-visual-regression-service allows the usage of different screenshot comparison methods.
 
 #### VisualRegressionCompare.LocalCompare
-As it's name suggests *LocalCompare* captures screenshots locally on your computer and compares them against previous runs.
+The *LocalCompare* method captures screenshots on your computer and compares a reference screenshot against the latest (current) screenshots caputred in the test run. If a mismatch occurs, a diff screenshot will be outputed. This is the compare method used by the VisualRegressionService.
+
+The screenshot naming pattern is as follows:
+
+```js
+baseScreenshotDir/test_spec_directory/test_spec_name/__snapshots__/(reference|latest|diff)/theme/locale/browserName_terraViewportName/screenshot.png
+```
 
 You can pass the following options to it's constructor as object:
 
-* **referenceName** `Function` <br />
-pass in a function that returns the filename for the reference screenshot. Function receives a *context* object as first parameter with all relevant information about the command.
+* **baseScreenshotDir** `String` ( default: process.cwd() ) <br />
+pass in a string with the custom base output directory screenshots should be saved to.
 
-* **screenshotName** `Function` <br />
-pass in a function that returns the filename for the current screenshot. Function receives a *context* object as first parameter with all relevant information about the command.
+* **locale** `String` ( default: 'en' ) <br />
+the locale the test runner is testing against. This is used to categorizes screenshots by locale.
 
-* **diffName** `Function` <br />
-pass in a function that returns the filename for the diff screenshot. Function receives a *context* object as first parameter with all relevant information about the command.
+* **theme** `String` ( default: 'terra-default-theme' ) <br />
+the theme the test runner is testing against. This is used to categorizes screenshots by theme.
 
 * **misMatchTolerance** `Number`  ( default: 0.01 ) <br />
 number between 0 and 100 that defines the degree of mismatch to consider two images as identical, increasing this value will decrease test coverage.
