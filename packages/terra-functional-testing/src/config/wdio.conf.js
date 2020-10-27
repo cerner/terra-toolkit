@@ -2,9 +2,9 @@ const fs = require('fs');
 const path = require('path');
 const ip = require('ip');
 
-const AssetServerService = require('../services/wdio-asset-server-service');
 const SeleniumDockerService = require('../services/wdio-selenium-docker-service');
 const TerraService = require('../services/wdio-terra-service');
+const AssetServerService = require('../services/wdio-asset-server-service');
 const VisualRegressionService = require('../services/wdio-visual-regression-service');
 
 const {

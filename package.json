@@ -17,11 +17,6 @@
     "terra-toolkit",
     "UI"
   ],
-  "author": "Cerner Corporation",
-  "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/cerner/terra-toolkit/issues"
-  },
   "browserslist": [
     "iOS >= 12",
     "last 2 and_chr versions",
@@ -32,6 +27,11 @@
     "last 2 ie versions",
     "last 2 safari versions"
   ],
+  "author": "Cerner Corporation",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/cerner/terra-toolkit/issues"
+  },
   "eslintConfig": {
     "extends": "./packages/eslint-config-terra/eslint.config.js",
     "overrides": [

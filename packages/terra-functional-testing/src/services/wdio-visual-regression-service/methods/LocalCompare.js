@@ -10,15 +10,9 @@ const log = logger('wdio-visual-regression-service:LocalCompare');
 export default class LocalCompare extends BaseCompare {
   constructor(options) {
     super(options);
-    const {
-      // onlySaveScreenshots,
-      overrideReferenceScreenshots,
-    } = options;
 
     this.ignoreComparison = 'ignore';
     this.misMatchTolerance = 0.01;
-    // this.onlySaveScreenshots = onlySaveScreenshots || false;
-    this.overrideReferenceScreenshots = overrideReferenceScreenshots || false;
   }
 
   /**
@@ -43,15 +37,7 @@ export default class LocalCompare extends BaseCompare {
 
     const referenceExists = await fs.exists(referencePath);
 
-    // could add this.context.onlySaveScreenshot to allow to hook in to existing but prob don't wnt that. Thinking Derek's usage in full-stack.
-    // const isNewScreenshot = !referenceExists || this.onlySaveScreenshots;
-
     if (!referenceExists) {
-      // if (!referenceExists) {
-      //   log.info('first run - create reference file');
-      // } else {
-      //   log.info('replace existing reference file');
-      // }
       log.info('first run - create reference file');
 
       // only save screenshot
