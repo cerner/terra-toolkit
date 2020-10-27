@@ -1,4 +1,9 @@
-import AccessibilityReporter from '../../../src/reporters/wdio-accessibility-reporter';
+const AccessibilityReporter = require('../../../src/reporters/wdio-accessibility-reporter');
+const testData1 = require('../../fixtures/reporters/test-data-1.json');
+
+jest.mock('chalk', () => ({
+  yellow: (string) => string,
+}));
 
 describe('Accessibility Reporter', () => {
   describe('indent', () => {
@@ -89,14 +94,47 @@ describe('Accessibility Reporter', () => {
     it('should travel the suite tree and generate an accessibility report', () => {
       const reporter = new AccessibilityReporter({});
 
-      const report = reporter.travelSuite({
-        suites: [],
-        tests: [],
-      });
+      reporter.accessibilityResults = {
+        'test-10-0': {},
+        'test-10-1': {},
+        'test-10-2': {},
+      };
 
       jest.spyOn(reporter, 'formatTestWarning').mockImplementation(() => ('warning - mock test title'));
 
+      const report = reporter.travelSuite(testData1);
+
+      const expected = '\n  Example Describe 1\n    Example Describe 2\nwarning - mock test title\nwarning - mock test title\nwarning - mock test title\n\n\n';
+
+      expect(report).toEqual(expected);
+    });
+
+    it('should return an empty string if there are no accessibility warnings', () => {
+      const reporter = new AccessibilityReporter({});
+
+      const report = reporter.travelSuite(testData1);
+
       expect(report).toEqual('');
+    });
+  });
+
+  describe('formatTestWarning', () => {
+    it('should format the test warning', () => {
+      const reporter = new AccessibilityReporter({});
+
+      reporter.tests = {
+        'test-10-0': {
+          title: 'mock title',
+        },
+      };
+
+      reporter.accessibilityResults = {
+        'test-10-0': {
+          incomplete: ['mock warning'],
+        },
+      };
+
+      expect(reporter.formatTestWarning('test-10-0', 2)).toEqual('  warning mock title\n\n   [\n    "mock warning"\n  ]');
     });
   });
 });

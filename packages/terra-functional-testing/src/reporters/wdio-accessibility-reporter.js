@@ -64,11 +64,6 @@ class AccessibilityReporter extends WDIOReporter {
     const output = this.travelSuite(rootSuite);
     const spec = runner.specs[0];
 
-    //
-    const { title, suites, tests } = this.currentSuites[0];
-    console.log(JSON.stringify({ title, suites, tests }, null, 2));
-    //
-
     this.write(`Spec: ${spec}\n${output}`);
   }
 
