@@ -1,0 +1,11 @@
+{
+  "name": "normal-project",
+  "dependencies": {
+    "a": "latest",
+    "b": "latest"
+  },
+  "devDependencies": {
+    "c": "latest",
+    "d": "latest"
+  }
+}

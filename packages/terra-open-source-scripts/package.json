@@ -30,8 +30,9 @@
   },
   "homepage": "https://github.com/cerner/terra-toolkit",
   "scripts": {
+    "compile": "babel src --out-dir lib --copy-files --ignore src/terra-cli",
     "lint": "eslint --ext .js,.jsx .",
-    "postinstall": "terra add-terra-commands ./scripts/update-changelog"
+    "postinstall": "terra add-terra-commands ./scripts/update-changelog ./scripts/git-tag-mono-repo"
   },
   "dependencies": {
     "@cerner/terra-cli": "^0.0.0"

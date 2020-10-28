@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`index should export the test runner cli 1`] = `
+Object {
+  "builder": [Function],
+  "command": "wdio",
+  "describe": "Run wdio tests",
+  "handler": [Function],
+}
+`;

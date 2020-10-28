@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`terra-cli returns the available commands for a non terra-toolkit project 1`] = `
+"Usage: terra <command> [options]
+
+Commands:
+  terra command-1   Run command-1
+  terra command-2   Run command-2
+  terra command-3   Run command-3
+  terra command-4   Run command-4
+  terra command-5   Run command-5
+  terra command-6   Run command-6
+  terra command-7   Run command-7
+  terra command-8   Run command-8
+  terra command-11  Run command-11
+  terra command-12  Run command-12
+
+Options:
+  -h, --help     Show help  [boolean]
+  -v, --version  Show version number  [boolean]
+"
+`;
+
+exports[`terra-cli returns the available commands for terra-toolkit by looking in the packages directory 1`] = `
+"Usage: terra <command> [options]
+
+Commands:
+  terra command-1  Run command-1
+  terra command-2  Run command-2
+  terra command-3  Run command-3
+  terra command-4  Run command-4
+  terra command-5  Run command-5
+  terra command-6  Run command-6
+  terra command-7  Run command-7
+  terra command-8  Run command-8
+
+Options:
+  -h, --help     Show help  [boolean]
+  -v, --version  Show version number  [boolean]
+"
+`;

@@ -31,7 +31,9 @@
   },
   "homepage": "https://github.com/cerner/terra-toolkit",
   "scripts": {
-    "lint": "eslint --ext .js,.jsx ."
+    "jest": "jest --config ../../jest.config.js",
+    "lint": "eslint --ext .js,.jsx .",
+    "test": "npm run jest"
   },
   "dependencies": {
     "fs-extra": "^9.0.1",

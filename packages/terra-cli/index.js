@@ -1,5 +1,6 @@
 const yargs = require('yargs/yargs');
 const path = require('path');
+const fs = require('fs-extra');
 
 const setupCLI = () => {
   const cli = yargs();
@@ -32,22 +33,28 @@ const setupCLI = () => {
     .wrap(cli.terminalWidth());
 };
 
-const requireWithNoError = (id) => {
-  try {
-    // eslint-disable-next-line global-require, import/no-dynamic-require
-    return require(id);
-  } catch {
-    // Do nothing on failure
-  }
-  return undefined;
+const subDirectoriesOfDirectory = (directoryPath) => (
+  fs.readdirSync(directoryPath, { withFileTypes: true })
+    .filter(directoryEntry => directoryEntry.isDirectory())
+    .map(directoryEntry => path.join(directoryPath, directoryEntry.name))
+);
+
+const loadTerraCommands = () => {
+  const { dependencies = [], devDependencies = [], name } = fs.readJSONSync(path.join(process.cwd(), 'package.json'));
+  const firstLevelDependencies = [...Object.keys(dependencies), ...Object.keys(devDependencies)];
+  const firstLevelDependencyPaths = firstLevelDependencies.map(directory => path.join(process.cwd(), 'node_modules', directory));
+  const additionalDependencyPaths = (name === 'terra-toolkit' ? subDirectoriesOfDirectory(path.join(process.cwd(), 'packages')) : []);
+  const terraCLIDirectories = [...firstLevelDependencyPaths, ...additionalDependencyPaths, process.cwd()].map(dependencyPath => path.join(dependencyPath, 'lib', 'terra-cli')).filter(directory => fs.pathExistsSync(directory));
+  return terraCLIDirectories.map((directory) => subDirectoriesOfDirectory(directory)).reduce((previousOutput, value) => previousOutput.concat(value), []);
 };
 
 const terraCLI = (argv) => {
   let cli = setupCLI();
-  const commands = [path.join(__dirname, './scripts/add-terra-commands'), ...(requireWithNoError('./configuration.json') || [])];
+  const commands = loadTerraCommands();
 
   commands.forEach((command) => {
-    const commandConfig = requireWithNoError(command);
+    // eslint-disable-next-line global-require, import/no-dynamic-require
+    const commandConfig = require(command);
     if (commandConfig) {
       cli = cli.command(commandConfig);
     }

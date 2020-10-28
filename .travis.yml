@@ -40,7 +40,7 @@ jobs:
         # Publish to npm write output to file
         - npx lerna publish from-package --yes > publish-output.txt
         # push tags to github based on output written to file
-        - node ./scripts/release/gitTagMonoRepo.js
+        - npm run terra -- git-tag-mono-repo
       before_deploy:
         # Build again for deployment because we need the Public path to be updated.
         - TERRA_DEV_SITE_PUBLIC_PATH='/terra-toolkit/' npm run compile:prod
