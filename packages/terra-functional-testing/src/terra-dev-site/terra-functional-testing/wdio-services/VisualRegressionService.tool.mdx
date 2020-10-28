@@ -21,35 +21,15 @@ Setup wdio-visual-regression-service by adding `visual-regression` to the servic
 var path = require('path');
 var VisualRegressionCompare = require('@cerner/terra-functional-testing/lib/services/wdio-visual-regression-service/compare');
 
-function getScreenshotName(basePath) {
-  return function(context) {
-    var type = context.type;
-    var testName = context.test.title;
-    var browserVersion = parseInt(context.browser.version, 10);
-    var browserName = context.browser.name;
-    var browserViewport = context.meta.viewport;
-    var browserWidth = browserViewport.width;
-    var browserHeight = browserViewport.height;
-
-    return path.join(basePath, `${testName}_${type}_${browserName}_v${browserVersion}_${browserWidth}x${browserHeight}.png`);
-  };
-}
-
 exports.config = {
   // ...
   services: [
     [
       'visual-regression',
       {
-        compare: new VisualRegressionCompare.LocalCompare({
-          referenceName: getScreenshotName(path.join(process.cwd(), 'screenshots/reference')),
-          screenshotName: getScreenshotName(path.join(process.cwd(), 'screenshots/screen')),
-          diffName: getScreenshotName(path.join(process.cwd(), 'screenshots/diff')),
-          misMatchTolerance: 0.01,
-        }),
-        viewportChangePause: 300,
-        viewports: [{ width: 320, height: 480 }, { width: 480, height: 320 }, { width: 1024, height: 768 }],
-        orientations: ['landscape', 'portrait'],
+        baseScreenshotDir: process.cwd(),
+        locale: 'en',
+        theme: 'terra-default-theme',
       }
     ]
   ],
@@ -60,17 +40,14 @@ exports.config = {
 ### Options
 Under the key `visualRegression` in your wdio.config.js you can pass a configuration object with the following structure:
 
-* **compare** `Object` <br />
-screenshot compare method, see [Compare Methods](#compare-methods)
+* **baseScreenshotDir** `String` ( default: process.cwd() ) <br />
+pass in a string with the custom base output directory screenshots should be saved to.
 
-* **viewportChangePause**  `Number`  ( default: 100 ) <br />
-wait x milliseconds after viewport change. It can take a while for the browser to re-paint. This could lead to rendering issues and produces inconsistent results between runs.
+* **locale** `String` ( default: 'en' ) <br />
+the locale the test runner is testing against. This is used to categorizes screenshots by locale.
 
-* **viewports** `Object[{ width: Number, height: Number }]`  ( default: *[current-viewport]* ) (**desktop only**)<br />
-   all screenshots will be taken in different viewport dimensions (e.g. for responsive design tests)
-
-* **orientations** `String[] {landscape, portrait}`  ( default: *[current-orientation]* ) (**mobile only**)<br />
-    all screenshots will be taken in different screen orientations (e.g. for responsive design tests)
+* **theme** `String` ( default: 'terra-default-theme' ) <br />
+the theme the test runner is testing against. This is used to categorizes screenshots by theme.
 
 ### Compare Methods
 wdio-visual-regression-service allows the usage of different screenshot comparison methods.
@@ -95,12 +72,6 @@ the locale the test runner is testing against. This is used to categorizes scree
 * **theme** `String` ( default: 'terra-default-theme' ) <br />
 the theme the test runner is testing against. This is used to categorizes screenshots by theme.
 
-* **misMatchTolerance** `Number`  ( default: 0.01 ) <br />
-number between 0 and 100 that defines the degree of mismatch to consider two images as identical, increasing this value will decrease test coverage.
-
-* **ignoreComparison** `String`  ( default: nothing ) <br />
-pass in a string with value of `nothing` , `colors` or `antialiasing` to adjust the comparison method.
-
 For an example of generating screenshot filenames dependent on the current test name, have a look at the sample code of [Configuration](#configuration).
 
 #### VisualRegressionCompare.SaveScreenshot
@@ -117,10 +88,8 @@ wdio-visual-regression-service enhances an WebdriverIO instance with the followi
 * `browser.checkDocument([{options}]);`
 * `browser.checkElement(elementSelector, [{options}]);`
 
-
 All of these provide options that will help you to capture screenshots in different dimensions or to exclude irrelevant parts (e.g. content). The following options are
 available:
-
 
 * **exclude** `String[]|Object[]` (**not yet implemented**)<br />
   exclude frequently changing parts of your screenshot, you can either pass all kinds of different [WebdriverIO selector strategies](http://webdriver.io/guide/usage/selectors.html)
@@ -132,18 +101,8 @@ available:
 * **remove** `Object[]`<br />
   removes all elements queried by all kinds of different [WebdriverIO selector strategies](http://webdriver.io/guide/usage/selectors.html) (via `display: none`)
 
-* **viewports** `Object[{ width: Number, height: Number }]` (**desktop only**)<br />
-     Overrides the global *viewports* value for this command. All screenshots will be taken in different viewport dimensions (e.g. for responsive design tests)
-
-* **orientations** `String[] {landscape, portrait}` (**mobile only**)<br />
-    Overrides the global *orientations* value for this command. All screenshots will be taken in different screen orientations (e.g. for responsive design tests)
-
 * **misMatchTolerance** `Number` <br />
     Overrides the global *misMatchTolerance* value for this command. Pass in a number between 0 and 100 that defines the degree of mismatch to consider two images as identical.
 
 * **ignoreComparison** `String` <br />
     Overrides the global *ignoreComparison* value for this command. Pass in a string with value of `nothing` , `colors` or `antialiasing` to adjust the comparison method.
-
-* **viewportChangePause**  `Number` <br />
-    Overrides the global *viewportChangePause* value for this command. Wait x milliseconds after viewport change.
-

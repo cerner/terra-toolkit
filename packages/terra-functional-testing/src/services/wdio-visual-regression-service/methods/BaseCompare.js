@@ -4,6 +4,12 @@ import path from 'path';
 const TEST_ID_REGEX = /\[([^)]+)\]/;
 
 export default class BaseCompare {
+  /**
+   * @param {Object} options - Service configuration options.
+   * @param {Object} options.baseScreenshotDir - The base screenshot directory path to save screenshot in
+   * @param {Object} options.locale - The locale being tested
+   * @param {Object} options.theme - The theme being tested
+   */
   constructor(options) {
     const {
       baseScreenshotDir,
@@ -20,7 +26,7 @@ export default class BaseCompare {
   /**
    * You can do here your image comparison magic.
    * @param {Object} context - information provided to process the screenshot
-   * @param {Object} context.browser - { name, version, userAgent }
+   * @param {Object} context.browserInfo - { name, version, userAgent }
    * @param {Object} context.suite - the test suite that is running
    * @param {Object} context.test - the test that is running
    * @param {Object} context.meta - { element, exclude, hide, remove, viewport}
@@ -71,10 +77,10 @@ export default class BaseCompare {
    * @returns {String} screenshot directory path
    */
   getScreenshotDir(context) {
-    const { browser, meta } = context;
+    const { browserInfo, meta } = context;
 
     const formFactor = meta.currentFormFactor;
-    const testForm = `${browser.name}_${formFactor}`;
+    const testForm = `${browserInfo.name}_${formFactor}`;
     const testSpec = path.parse(context.test.file).name;
 
     return path.join(this.theme, this.locale, testForm, testSpec);

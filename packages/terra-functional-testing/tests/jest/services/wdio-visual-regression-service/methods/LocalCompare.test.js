@@ -27,7 +27,7 @@ async function compareImages(image1, image2, misMatchPercentage = 0) {
 }
 
 const context = {
-  browser: {
+  browserInfo: {
     name: 'chrome',
   },
   test: {

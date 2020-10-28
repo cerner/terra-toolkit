@@ -8,6 +8,12 @@ import BaseCompare from './BaseCompare';
 const log = logger('wdio-visual-regression-service:LocalCompare');
 
 export default class LocalCompare extends BaseCompare {
+  /**
+   * @param {Object} options - Service configuration options.
+   * @param {Object} options.baseScreenshotDir - The base screenshot directory path to save screenshot in
+   * @param {Object} options.locale - The locale being tested
+   * @param {Object} options.theme - The theme being tested
+   */
   constructor(options) {
     super(options);
 
@@ -19,10 +25,10 @@ export default class LocalCompare extends BaseCompare {
    * Process for Local Comparison.
    *
    * @param {Object} context - information provided to process the screenshot
-   * @param {Object} context.browser - { name, version, userAgent }
+   * @param {Object} context.browserInfo - { name, version, userAgent }
    * @param {Object} context.suite - the test suite that is running
    * @param {Object} context.test - the test that is running
-   * @param {Object} context.meta - { element, exclude, hide, remove, currentFormFactor }
+   * @param {Object} context.meta - { currentFormFactor }
    * @param {*} base64Screenshot - the screenshot captured by the selenium command to process.
    */
   async processScreenshot(context, base64Screenshot) {

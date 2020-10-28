@@ -11,7 +11,6 @@ module.exports = {
     '!packages/terra-functional-testing/src/services/wdio-visual-regression-service/modules/(a|b|m)*.js',
     '!packages/terra-functional-testing/src/services/wdio-visual-regression-service/scripts/*.js',
     '!packages/terra-functional-testing/src/services/wdio-visual-regression-service/utils/**/*.js',
-    '!packages/terra-functional-testing/src/services/wdio-visual-regression-service/*.js',
   ],
   coverageDirectory: 'tests/jest/reports/coverage',
   coverageReporters: [
