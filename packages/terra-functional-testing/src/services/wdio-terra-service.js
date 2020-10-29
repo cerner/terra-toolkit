@@ -7,6 +7,10 @@ const { getViewports, describeViewports, setViewport } = require('../commands/vi
 const hideInputCaret = require('../commands/hide-input-caret');
 
 class TerraService {
+  constructor(options = {}) {
+    this.formFactor = options.formFactor;
+  }
+
   /**
    * Service hook executed prior to test execution.
    * Initializes the Terra Service's custom commands.
@@ -38,13 +42,8 @@ class TerraService {
       });
     }
 
-    // Extract the Terra service options from the global browser object.
-    const [, options = {}] = global.browser.options.services.find(([service]) => (
-      typeof service === 'function' && service.name === 'TerraService'
-    ));
-
     // Set the viewport size before the spec begins.
-    setViewport(options.formFactor);
+    setViewport(this.formFactor);
   }
 
   afterCommand(commandName, args, result, error) {

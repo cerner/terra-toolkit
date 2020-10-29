@@ -41,7 +41,7 @@ describe('WDIO Terra Service', () => {
   });
 
   it('should set viewport helper commands as as global api', () => {
-    const service = new WdioTerraService();
+    const service = new WdioTerraService({ formFactor: 'huge' });
 
     service.before({ browserName: 'chrome' });
 
