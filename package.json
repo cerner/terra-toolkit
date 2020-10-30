@@ -79,7 +79,7 @@
     "start-heroku": "node ./scripts/hack-express-server.js --port $PORT --site './build' ",
     "terra": "node ./packages/terra-cli/bin/terra",
     "test": "npm run lint && npm run jest && npm run mocha && npm run wdio",
-    "version": "lerna version --no-git-tag-version && npm run terra -- update-changelog",
+    "yupversion": "npm run terra -- version",
     "wdio-site": "SITE=build npm run terra -- wdio",
     "wdio-webpack": "npm run terra -- wdio",
     "wdio": "rm -rf build && npm run pack && npm run wdio-site && npm run wdio-webpack"

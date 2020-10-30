@@ -2,6 +2,8 @@ const yargs = require('yargs/yargs');
 const path = require('path');
 const fs = require('fs-extra');
 
+const Logger = require('./lib/utils/Logger');
+
 const setupCLI = () => {
   const cli = yargs();
 
@@ -39,12 +41,21 @@ const subDirectoriesOfDirectory = (directoryPath) => (
     .map(directoryEntry => path.join(directoryPath, directoryEntry.name))
 );
 
+const terraClIDirectoriesFromPaths = (paths, preferSrc) => (
+  paths.map(dependencyPath => path.join(dependencyPath, preferSrc ? 'src' : 'lib', 'terra-cli')).filter(directory => fs.pathExistsSync(directory))
+);
+
 const loadTerraCommands = () => {
   const { dependencies = [], devDependencies = [], name } = fs.readJSONSync(path.join(process.cwd(), 'package.json'));
   const firstLevelDependencies = [...Object.keys(dependencies), ...Object.keys(devDependencies)];
   const firstLevelDependencyPaths = firstLevelDependencies.map(directory => path.join(process.cwd(), 'node_modules', directory));
   const additionalDependencyPaths = (name === 'terra-toolkit' ? subDirectoriesOfDirectory(path.join(process.cwd(), 'packages')) : []);
-  const terraCLIDirectories = [...firstLevelDependencyPaths, ...additionalDependencyPaths, process.cwd()].map(dependencyPath => path.join(dependencyPath, 'lib', 'terra-cli')).filter(directory => fs.pathExistsSync(directory));
+  const terraCLIDirectories = [
+    // Prefer lib from installed dependencies
+    ...terraClIDirectoriesFromPaths(firstLevelDependencyPaths, false),
+    // Prefer src from local dependencies
+    ...terraClIDirectoriesFromPaths([...additionalDependencyPaths, process.cwd()], true),
+  ];
   return terraCLIDirectories.map((directory) => subDirectoriesOfDirectory(directory)).reduce((previousOutput, value) => previousOutput.concat(value), []);
 };
 
@@ -64,3 +75,4 @@ const terraCLI = (argv) => {
 };
 
 module.exports = terraCLI;
+module.exports.Logger = Logger;

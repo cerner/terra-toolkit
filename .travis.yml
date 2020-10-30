@@ -37,10 +37,8 @@ jobs:
         - rm -rf ./travis-build
         # add auth token to .npmrc for lerna publish
         - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
-        # Publish to npm write output to file
-        - npx lerna publish from-package --yes > publish-output.txt
         # push tags to github based on output written to file
-        - npm run terra -- git-tag-mono-repo
+        - npm run terra -- release
       before_deploy:
         # Build again for deployment because we need the Public path to be updated.
         - TERRA_DEV_SITE_PUBLIC_PATH='/terra-toolkit/' npm run compile:prod

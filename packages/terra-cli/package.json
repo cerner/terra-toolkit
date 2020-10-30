@@ -31,6 +31,7 @@
   },
   "homepage": "https://github.com/cerner/terra-toolkit",
   "scripts": {
+    "compile": "babel src --out-dir lib --copy-files --ignore src/utils",
     "jest": "jest --config ../../jest.config.js",
     "lint": "eslint --ext .js,.jsx .",
     "test": "npm run jest"
@@ -38,6 +39,7 @@
   "dependencies": {
     "fs-extra": "^9.0.1",
     "lockfile": "^1.0.4",
+    "npmlog": "^4.1.2",
     "yargs": "^14.2.2"
   },
   "peerDependencies": {

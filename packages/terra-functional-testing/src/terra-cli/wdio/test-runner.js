@@ -1,6 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 const Launcher = require('@wdio/cli').default;
+const Logger = require('@cerner/terra-cli/lib/utils/Logger');
+
+const logger = new Logger({ prefix: '[terra-functional-testing:wdio' });
 
 class TestRunner {
   /**
@@ -29,19 +32,21 @@ class TestRunner {
    * @returns {Promise} A promise that resolves with the test run exit code.
    */
   static async run(options) {
+    let exitCode;
     try {
       const { config } = options;
 
       const configPath = TestRunner.configPath(config);
       const testRunner = new Launcher(configPath);
 
-      const exitCode = await testRunner.run();
-
-      process.exit(exitCode);
+      exitCode = await testRunner.run();
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('[terra-functional-testing] Launcher failed to start the test.\n', error);
-      process.exit(1);
+      logger.error('Launcher failed to start the test');
+      throw new Error(error);
+    }
+
+    if (exitCode !== 0) {
+      throw new Error(`Launcher returned with an exit code of ${exitCode}`);
     }
   }
 }

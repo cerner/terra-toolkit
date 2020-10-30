@@ -31,12 +31,15 @@
   "homepage": "https://github.com/cerner/terra-toolkit",
   "scripts": {
     "compile": "babel src --out-dir lib --copy-files --ignore src/terra-cli",
-    "lint": "eslint --ext .js,.jsx .",
-    "postinstall": "terra add-terra-commands ./scripts/update-changelog ./scripts/git-tag-mono-repo"
+    "lint": "eslint --ext .js,.jsx ."
   },
   "dependencies": {
-    "@cerner/terra-cli": "^0.0.0"
-  },
-  "peerDependencies": {
+    "@cerner/terra-cli": "^0.0.0",
+    "express": "^4.17.1",
+    "fs-extra": "^9.0.1",
+    "inquirer": "^7.3.3",
+    "npmlog": "^4.1.2",
+    "pacote": "^11.1.11",
+    "strip-ansi": "^6.0.0"
   }
 }

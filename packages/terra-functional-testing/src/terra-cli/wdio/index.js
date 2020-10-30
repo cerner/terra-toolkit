@@ -12,9 +12,7 @@ const cli = {
       },
     })
   ),
-  handler: async (options) => {
-    await TestRunner.run(options);
-  },
+  handler: TestRunner.run,
 };
 
 module.exports = cli;

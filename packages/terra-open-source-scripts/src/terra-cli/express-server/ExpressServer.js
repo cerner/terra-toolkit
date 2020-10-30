@@ -1,15 +1,15 @@
-const fs = require('fs');
+const fs = require('fs-extra');
 const express = require('express');
-const { Logger } = require('@cerner/terra-cli');
+const Logger = require('@cerner/terra-cli/lib/utils/Logger');
 
-const logger = new Logger({ prefix: '[terra-functional-testing:express-server]' });
+const logger = new Logger({ prefix: '[terra-open-source-scripts:express-server]' });
 
 class ExpressServer {
   constructor(options = {}) {
     const { host, port, site } = options;
 
-    this.host = host || '0.0.0.0';
-    this.port = port || '8080';
+    this.host = host;
+    this.port = port;
     this.site = site;
   }
 
@@ -37,14 +37,14 @@ class ExpressServer {
    * Starts the webpack dev server.
    * @returns {Promise} - A promise that resolves when the server has started.
    */
-  start() {
+  async start() {
     // Check if the site exists prior to starting the express server.
-    if (!fs.existsSync(this.site) || (fs.lstatSync(this.site).isDirectory() && fs.readdirSync(this.site).length === 0)) {
-      logger.warn(`Cannot serve content from ${this.site} because it does not exist or it is empty.`);
-      return Promise.reject(Error(`Cannot serve content from ${this.site} because it does not exist or it is empty.`));
+    if (!await fs.pathExists(this.site) || ((await fs.lstat(this.site)).isDirectory() && (await fs.readdir(this.site)).length === 0)) {
+      logger.error(`Cannot serve content from ${this.site} because it does not exist or it is empty.`);
+      throw new Error();
     }
 
-    return new Promise((resolve, reject) => {
+    await new Promise((resolve, reject) => {
       const app = this.createApp();
 
       logger.info('Starting the express server.');
@@ -64,15 +64,15 @@ class ExpressServer {
    * Stops the express server.
    * @returns {Promise} - A promise that resolves when the server has been stopped.
    */
-  stop() {
+  async stop() {
     logger.info('Closing the express server.');
 
     // Resolve immediately if the server is not available.
     if (!this.server) {
-      return Promise.resolve();
+      return;
     }
 
-    return new Promise((resolve) => {
+    await new Promise((resolve) => {
       this.server.close(() => {
         this.server = null;
         resolve();
