@@ -2,8 +2,9 @@ import terraViewports from '../../../utils/viewports';
 
 /**
  * Determines the Terra form factor to for the current viewport size.
- * @param {Number} browserWidth - current width of the viewpoint
- * @returns {String} Terra form factor the current viewport with falls under
+ *
+ * @param {Number} viewpointWidth - Current width of the viewpoint.
+ * @returns {String} - Terra form factor the current viewport with falls under.
  */
 export default function getTerraFormFactor(viewpointWidth) {
   // Default to enormous then check if the current viewport is a small form factor

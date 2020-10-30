@@ -1,7 +1,6 @@
 /* eslint-disable class-methods-use-this, no-unused-vars */
 import path from 'path';
 
-
 const TEST_ID_REGEX = /\[([^)]+)\]/;
 
 export default class BaseCompare {
@@ -21,12 +20,13 @@ export default class BaseCompare {
   /**
    * The subclass extending the BaseCompare class should implement this method to perform
    * the screenshot processing appropriate for the subclass' comparison method.
-   * @param {Object} context - information provided to process the screenshot
-   * @param {Object} context.browser - { name, version, userAgent }
-   * @param {Object} context.suite - the test suite that is running
-   * @param {Object} context.test - the test that is running
-   * @param {Object} context.meta - { element, exclude, hide, remove, viewport}
-   * @param {*} base64Screenshot - the screenshot captured by the selenium command to process.
+   *
+   * @param {Object} context - Information provided to process the screenshot.
+   * @param {Object} context.browser - Contains the browser's name, version, userAgent.
+   * @param {Object} context.suite - The test suite that is running.
+   * @param {Object} context.test - The test that is running.
+   * @param {Object} context.meta - Contains the element, exclude, hide, remove, viewport as meta data to use.
+   * @param {*} base64Screenshot - The screenshot captured by the selenium command to process.
    */
   async processScreenshot(_context, _base64Screenshot) {
     return Promise.resolve();
@@ -34,19 +34,20 @@ export default class BaseCompare {
 
   /**
    * Creates the sanitized test name for the screenshot.
-   * @param {String} fullName - test name
-   * @returns {String} test name
+   *
+   * @param {String} fullName - The test name.
+   * @returns {String} - The test name.
    */
   createTestName(fullName) {
     const matches = TEST_ID_REGEX.exec(fullName);
 
-    // If test ID is provided, use the ID for a shorter test name, otherwise use the full name
+    // If test ID is provided, use the ID for a shorter test name, otherwise use the full name.
     let name = matches ? matches[1] : fullName.trim();
 
-    // Remove white space
+    // Remove white space.
     name = name.replace(/[\s+.]/g, '_');
 
-    // Remove windows reserved characters. See: https://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx#naming_conventions
+    // Remove windows reserved characters. See: https://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx#naming_conventions.
     // eslint-disable-next-line no-useless-escape
     name = name.replace(/[\?\<\>\/\\|\*\"\:\+\.]/g, '-');
 
@@ -55,8 +56,9 @@ export default class BaseCompare {
 
   /**
    * Creates the PNG file name for a screenshot.
-   * @param {Object} context - compare context provided by VisualRegressionLauncher.
-   * @returns {String} full screenshot name with png extension
+   *
+   * @param {Object} context - Compare context provided by VisualRegressionLauncher.
+   * @returns {String} - Full screenshot name with png extension.
    */
   getScreenshotName(context) {
     const { name } = (context.options || {});
@@ -68,8 +70,9 @@ export default class BaseCompare {
 
   /**
    * Determines the directories to save the screenshot to.
-   * @param {Object} context - compare context provided by VisualRegressionLauncher.
-   * @returns {String} screenshot directory path
+   *
+   * @param {Object} context - Compare context provided by VisualRegressionLauncher.
+   * @returns {String} - The screenshot directory path.
    */
   getScreenshotDir(context) {
     const { browser, meta } = context;
@@ -83,8 +86,9 @@ export default class BaseCompare {
 
   /**
    * Determines the reference, latest and diff screenshot names.
-   * @param {Object} context - compare context provided by VisualRegressionLauncher.
-   * @returns {Object} { referencePath, latestPath, diffPath }
+   *
+   * @param {Object} context - Compare context provided by VisualRegressionLauncher.
+   * @returns {Object} - The screenshot names returned as { referencePath, latestPath, diffPath }.
    */
   getScreenshotPaths(context) {
     let [, specPath] = path.dirname(context.test.file).split(process.cwd());
@@ -106,12 +110,11 @@ export default class BaseCompare {
   /**
    * Creates the screenshot comparison report object.
    *
-   * @param {Boolean} referenceExists - whether or not the screenshot was just created
-   * @param {Number} misMatchPercentage - the percent mismatched of the latest screenshot compared to the reference screenshot
-   * @param {Boolean} isWithinMisMatchTolerance - whether or not the latest screenshot is a close enough match the reference screenshot
-   * @param {Boolean} isSameDimensions - whether or not the latest screenshot was the same dimensions as the reference screenshot
-   * @return {{misMatchPercentage: Number,isWithinMisMatchTolerance: Boolean, isSameDimensions: Boolean, isExactSameImage: Boolean}}
-   * @return {Object} the relevant comparison results
+   * @param {Boolean} referenceExists - Whether or not the screenshot was just created.
+   * @param {Number} misMatchPercentage - The percent mismatched of the latest screenshot compared to the reference screenshot.
+   * @param {Boolean} isWithinMisMatchTolerance - Whether or not the latest screenshot is a close enough match the reference screenshot.
+   * @param {Boolean} isSameDimensions - Whether or not the latest screenshot was the same dimensions as the reference screenshot.
+   * @return {Object} - The relevant comparison results to report.
    */
   createResultReport(referenceExists, misMatchPercentage, isWithinMisMatchTolerance, isSameDimensions) {
     if (!referenceExists) {
