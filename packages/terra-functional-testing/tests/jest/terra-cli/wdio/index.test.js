@@ -1,3 +1,6 @@
+jest.mock('@cerner/terra-cli');
+jest.mock('../../../../src/terra-cli/wdio/test-runner');
+
 const command = require('../../../../src/terra-cli/wdio/index');
 const TestRunner = require('../../../../src/terra-cli/wdio/test-runner');
 

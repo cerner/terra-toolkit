@@ -1,35 +1,32 @@
+jest.mock('@cerner/terra-cli');
+
 const fs = require('fs');
 const path = require('path');
 const TestRunner = require('../../../../src/terra-cli/wdio/test-runner');
 
 jest.mock('@wdio/cli', () => ({
-  default: jest.fn().mockImplementation(() => ({ run: () => Promise.resolve('mock-status-code') })),
+  default: jest.fn().mockImplementation(() => ({ run: () => Promise.resolve(0) })),
 }));
 
 describe('Test Runner', () => {
   describe('run', () => {
     it('should run the wdio cli launcher', async () => {
       jest.spyOn(TestRunner, 'configPath').mockImplementationOnce(() => '/example/path');
-      jest.spyOn(process, 'exit').mockImplementationOnce(() => { });
 
       await TestRunner.run({ config: '/config/path' });
 
       expect(TestRunner.configPath).toHaveBeenCalledWith('/config/path');
-      expect(process.exit).toHaveBeenCalledWith('mock-status-code');
     });
 
     it('should catch errors that occur trying to launch the runner', async () => {
-      const mockError = Error('Mock Error');
+      const mockError = new Error('Mock Error');
 
       jest.spyOn(TestRunner, 'configPath').mockImplementationOnce(() => { throw mockError; });
-      jest.spyOn(console, 'error').mockImplementationOnce(() => { });
       jest.spyOn(process, 'exit').mockImplementationOnce(() => { });
 
-      await TestRunner.run({ config: '/config/path' });
+      await expect(TestRunner.run({ config: '/config/path' })).rejects.toThrow(mockError);
 
       expect(TestRunner.configPath).toHaveBeenCalledWith('/config/path');
-      // eslint-disable-next-line no-console
-      expect(console.error).toHaveBeenCalledWith('[terra-functional-testing] Launcher failed to start the test.\n', mockError);
     });
   });
 

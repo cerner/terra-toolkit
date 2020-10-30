@@ -103,7 +103,7 @@ class SeleniumDockerService {
         if (retryCount >= retries) {
           clearTimeout(pollTimeout);
           pollTimeout = null;
-          reject(Error(logger.format('Timeout. Exceeded retry count.')));
+          reject(Error('Timeout. Exceeded retry count.'));
         }
 
         try {

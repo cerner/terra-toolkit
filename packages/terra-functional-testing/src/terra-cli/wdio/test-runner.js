@@ -3,7 +3,7 @@ const path = require('path');
 const Launcher = require('@wdio/cli').default;
 const Logger = require('@cerner/terra-cli/lib/utils/Logger');
 
-const logger = new Logger({ prefix: '[terra-functional-testing:wdio' });
+const logger = new Logger({ prefix: '[terra-functional-testing:wdio]' });
 
 class TestRunner {
   /**
@@ -42,7 +42,7 @@ class TestRunner {
       exitCode = await testRunner.run();
     } catch (error) {
       logger.error('Launcher failed to start the test');
-      throw new Error(error);
+      throw error;
     }
 
     if (exitCode !== 0) {

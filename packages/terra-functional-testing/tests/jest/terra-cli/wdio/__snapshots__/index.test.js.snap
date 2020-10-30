@@ -5,6 +5,6 @@ Object {
   "builder": [Function],
   "command": "wdio",
   "describe": "Run wdio tests",
-  "handler": [Function],
+  "handler": [MockFunction],
 }
 `;

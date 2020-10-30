@@ -1,5 +1,5 @@
 jest.mock('webpack');
-jest.mock('../../../src/logger/logger');
+jest.mock('@cerner/terra-cli');
 
 const path = require('path');
 const WebpackServer = require('../../../src/webpack-server/webpack-server');
