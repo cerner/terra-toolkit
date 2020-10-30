@@ -41,9 +41,6 @@
     "url": "https://github.com/cerner/terra-toolkit/issues"
   },
   "homepage": "https://github.com/cerner/terra-toolkit#readme",
-  "bin": {
-    "tt-test": "bin/test-runner.js"
-  },
   "dependencies": {
     "@babel/runtime": "^7.11.2",
     "@cerner/terra-cli": "^0.0.0",

@@ -77,7 +77,7 @@
     "postinstall": "link-parent-bin && npm run compile && npm run bootstrap:hoist",
     "prepare-for-release": "npm run terra -- prepare-for-release",
     "start": "webpack-dev-server --config webpack.dev-site.config.js",
-    "start-heroku": "node ./scripts/hack-express-server.js --port $PORT --site './build' ",
+    "start-heroku": "npm run terra -- express-server --port $PORT --site './build' ",
     "terra": "node ./packages/terra-cli/bin/terra",
     "test": "npm run lint && npm run jest && npm run mocha && npm run wdio",
     "wdio-site": "SITE=build npm run terra -- wdio",
