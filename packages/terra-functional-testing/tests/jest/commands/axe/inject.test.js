@@ -15,7 +15,7 @@ describe('Inject Axe', () => {
 
   it('should inject axe into the document with the provided options', () => {
     const mockExecute = jest.fn();
-    const mockRules = { rules: { 'mock-rule': { enabled: true } } };
+    const mockRules = { rules: [{ enabled: true, id: 'mock-rule' }] };
 
     global.browser = {
       execute: mockExecute,
