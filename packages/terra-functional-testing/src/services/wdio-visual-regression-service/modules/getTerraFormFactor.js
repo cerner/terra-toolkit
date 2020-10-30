@@ -5,8 +5,7 @@ import terraViewports from '../../../utils/viewports';
  * @param {Number} browserWidth - current width of the viewpoint
  * @returns {String} Terra form factor the current viewport with falls under
  */
-// eslint-disable-next-line
-export default function getTerraFormFactor (viewpointWidth) {
+export default function getTerraFormFactor(viewpointWidth) {
   // Default to enormous then check if the current viewport is a small form factor
   let formFactor = 'enormous';
 

@@ -19,7 +19,8 @@ export default class BaseCompare {
   }
 
   /**
-   * You can do here your image comparison magic.
+   * The subclass extending the BaseCompare class should implement this method to perform
+   * the screenshot processing appropriate for the subclass' comparison method.
    * @param {Object} context - information provided to process the screenshot
    * @param {Object} context.browser - { name, version, userAgent }
    * @param {Object} context.suite - the test suite that is running
@@ -34,9 +35,8 @@ export default class BaseCompare {
   /**
    * Creates the sanitized test name for the screenshot.
    * @param {String} fullName - test name
-   * returns {String} test name
+   * @returns {String} test name
    */
-  // eslint-disable-next-line class-methods-use-this
   createTestName(fullName) {
     const matches = TEST_ID_REGEX.exec(fullName);
 
