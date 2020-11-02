@@ -21,11 +21,11 @@ const runAxe = (overrides = {}) => {
   }
 
   /**
-    * This rule was introduced in axe-core v3.3 and causes failures in many Terra components.
-    * The solution to address this failure vary by component. It is being disabled until a solution is identified in the future.
-    *
-    * Reference: https://github.com/cerner/terra-framework/issues/991
-    */
+   * This rule was introduced in axe-core v3.3 and causes failures in many Terra components.
+   * The solution to address this failure vary by component. It is being disabled until a solution is identified in the future.
+   *
+   * Reference: https://github.com/cerner/terra-framework/issues/991
+   */
   const ruleOverrides = {
     'scrollable-region-focusable': { enabled: false },
   };

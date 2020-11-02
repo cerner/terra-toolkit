@@ -28,6 +28,7 @@ describe('Test Runner', () => {
       await TestRunner.run({ config: '/config/path' });
 
       expect(TestRunner.configPath).toHaveBeenCalledWith('/config/path');
+      // eslint-disable-next-line no-console
       expect(console.error).toHaveBeenCalledWith('[terra-functional-testing] Launcher failed to start the test.\n', mockError);
     });
   });

@@ -55,10 +55,42 @@ export.config = {
             rules: {
               'color-contrast': { enabled: true },
             }
-          }
+          },
         }]
     ],
     // ...
 };
 ```
+
+### formFactor
+
+Tests can be executed in a specific form factor by setting the `formFactor` configuration option or the `FORM_FACTOR` environment variable . The form factors can be any of the following supported viewports: `tiny`; `small`; `medium`; `large`; `huge`; `enormous`. In order for the tests to run in this form factor, it must be one that is already specified in the `Terra.describeViewport` block. 
+
+Type: `String`
+
+Required: `false`
+
+Default: `undefined`
+
+Examples:
+
+```js
+"FORM_FACTOR=huge npm run test:wdio"
+```
+
+```js
+// wdio.conf.js
+const TerraService = require('@cerner/terra-functional-testing/lib/services/wdio-terra-service');
+
+export.config = {
+    // ...
+    services: [
+        [TerraService, {
+          formFactor: 'huge',
+        }]
+    ],
+    // ...
+};
+```
+
 
