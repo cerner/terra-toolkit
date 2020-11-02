@@ -32,7 +32,7 @@ describe('SaveScreenshot', function() {
   });
 
   it('creates a instance of BaseCompare', async function() {
-    const saveScreenshot = new SaveScreenshot();
+    const saveScreenshot = new SaveScreenshot({});
     assert.instanceOf(saveScreenshot, BaseCompare, 'SaveScreenshot should extend BaseCompare');
   });
 
@@ -46,10 +46,7 @@ describe('SaveScreenshot', function() {
       });
 
       this.resultIdentical = {
-        misMatchPercentage: 0,
-        isWithinMisMatchTolerance: true,
-        isSameDimensions: true,
-        isExactSameImage: true,
+        isNewScreenshot: true,
       };
     });
 

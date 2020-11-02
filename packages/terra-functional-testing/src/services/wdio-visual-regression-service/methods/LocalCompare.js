@@ -9,8 +9,8 @@ const log = logger('wdio-visual-regression-service:LocalCompare');
 
 export default class LocalCompare extends BaseCompare {
   constructor(options = {}) {
-    super();
-    this.getScreenshotFile = options.screenshotName;
+    super(options);
+    this.getScreenshotPath = options.screenshotName;
     this.getReferencefile = options.referenceName;
     this.getDiffFile = options.diffName;
     this.misMatchTolerance = _.get(options, 'misMatchTolerance', 0.01);
@@ -18,7 +18,7 @@ export default class LocalCompare extends BaseCompare {
   }
 
   async processScreenshot(context, base64Screenshot) {
-    const screenshotPath = this.getScreenshotFile(context);
+    const screenshotPath = this.getScreenshotPath(context);
     const referencePath = this.getReferencefile(context);
 
     await fs.outputFile(screenshotPath, base64Screenshot, 'base64');
@@ -43,17 +43,17 @@ export default class LocalCompare extends BaseCompare {
         const png = compareData.getDiffImage().pack();
         await this.writeDiff(png, diffPath);
 
-        return this.createResultReport(misMatchPercentage, false, isSameDimensions);
+        return this.createResultReport(referenceExists, misMatchPercentage, false, isSameDimensions);
       } else { // eslint-disable-line no-else-return
         log.info('Image is within tolerance or the same');
         await fs.remove(diffPath);
 
-        return this.createResultReport(misMatchPercentage, true, isSameDimensions);
+        return this.createResultReport(referenceExists, misMatchPercentage, true, isSameDimensions);
       }
     } else { // eslint-disable-line no-else-return
       log.info('first run - create reference file');
       await fs.outputFile(referencePath, base64Screenshot, 'base64');
-      return this.createResultReport(0, true, true);
+      return this.createResultReport(referenceExists);
     }
   }
 
