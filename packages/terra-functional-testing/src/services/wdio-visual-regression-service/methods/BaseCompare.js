@@ -1,6 +1,7 @@
 /* eslint-disable class-methods-use-this, no-unused-vars */
 import path from 'path';
 
+/* Pattern to find the shortened test ID within braces. */
 const TEST_ID_REGEX = /\[([^)]+)\]/;
 
 export default class BaseCompare {
@@ -44,7 +45,7 @@ export default class BaseCompare {
     // If test ID is provided, use the ID for a shorter test name, otherwise use the full name.
     let name = matches ? matches[1] : fullName.trim();
 
-    // Remove white space.
+    // Replace white spaces with underscores.
     name = name.replace(/[\s+.]/g, '_');
 
     // Remove windows reserved characters. See: https://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx#naming_conventions.
