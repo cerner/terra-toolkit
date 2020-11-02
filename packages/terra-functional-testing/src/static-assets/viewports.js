@@ -1,4 +1,4 @@
-const viewports = {
+const TERRA_VIEWPORTS = {
   tiny: { width: 470, height: 768 },
   small: { width: 622, height: 768 },
   medium: { width: 838, height: 768 },
@@ -7,4 +7,4 @@ const viewports = {
   enormous: { width: 1500, height: 768 },
 };
 
-module.exports = viewports;
+module.exports = { TERRA_VIEWPORTS };
