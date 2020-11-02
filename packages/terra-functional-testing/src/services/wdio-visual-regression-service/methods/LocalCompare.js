@@ -59,7 +59,7 @@ export default class LocalCompare extends BaseCompare {
         log.info(`Image is different! ${misMatchPercentage}%`);
         const png = compareData.getDiffImage().pack();
         await this.writeDiff(png, diffPath);
-      } else { // eslint-disable-line no-else-return
+      } else {
         log.info('Image is within tolerance or the same');
         // remove diff screenshot if it existed from a previous run
         await fs.remove(diffPath);
