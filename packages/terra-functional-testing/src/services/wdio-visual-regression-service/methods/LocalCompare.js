@@ -30,6 +30,7 @@ export default class LocalCompare extends BaseCompare {
    * @param {Object} context.test - the test that is running
    * @param {Object} context.meta - { currentFormFactor }
    * @param {*} base64Screenshot - the screenshot captured by the selenium command to process.
+   * @returns {Object} - The relevant comparison results to report.
    */
   async processScreenshot(context, base64Screenshot) {
     const {
@@ -79,7 +80,7 @@ export default class LocalCompare extends BaseCompare {
    * @param {Buffer|string} reference - path to reference file or buffer for the reference image
    * @param {Buffer|string} latest - path to file or buffer of the latest image
    * @param {String} ignoreComparison - the image comparison algorithm to use
-   * @return {{misMatchPercentage: Number, isSameDimensions: Boolean, getImageDataUrl: function}}
+   * @returns {{misMatchPercentage: Number, isSameDimensions: Boolean, getImageDataUrl: function}}
    */
   // eslint-disable-next-line class-methods-use-this
   async compareImages(reference, screenshot, ignore = '') {
@@ -106,7 +107,7 @@ export default class LocalCompare extends BaseCompare {
   /**
    * Writes provided diff by resemble as png
    * @param  {Stream} png node-png file Stream.
-   * @return {Promise}
+   * @returns {Promise}
    */
   // eslint-disable-next-line class-methods-use-this
   async writeDiff(png, filepath) {
