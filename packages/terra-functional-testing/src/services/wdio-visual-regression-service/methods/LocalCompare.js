@@ -16,14 +16,16 @@ export default class LocalCompare extends BaseCompare {
   }
 
   /**
-   * Process for Local Comparison.
+   * Process for Local Comparison of a new latest screenshot against a reference screenshot, if one exists. If the
+   * two images are of a different size or are not within the  mismatch tolerance, a screenshot highlighting the
+   * differences will be created.
    *
-   * @param {Object} context - information provided to process the screenshot
-   * @param {Object} context.browser - { name, version, userAgent }
-   * @param {Object} context.suite - the test suite that is running
-   * @param {Object} context.test - the test that is running
-   * @param {Object} context.meta - { element, exclude, hide, remove, currentFormFactor }
-   * @param {*} base64Screenshot - the screenshot captured by the selenium command to process.
+   * @param {Object} context - Information provided to process the screenshot.
+   * @param {Object} context.browser - Contains the browser's name, version, userAgent.
+   * @param {Object} context.suite - The test suite that is running.
+   * @param {Object} context.test - The test that is running.
+   * @param {Object} context.meta - Contains the element, exclude, hide, remove, viewport as meta data to use.
+   * @param {*} base64Screenshot - The screenshot captured by the selenium command to process.
    */
   async processScreenshot(context, base64Screenshot) {
     const {
@@ -53,7 +55,7 @@ export default class LocalCompare extends BaseCompare {
         log.info(`Image is different! ${misMatchPercentage}%`);
         const png = compareData.getDiffImage().pack();
         await this.writeDiff(png, diffPath);
-      } else { // eslint-disable-line no-else-return
+      } else {
         log.info('Image is within tolerance or the same');
         // remove diff screenshot if it existed from a previous run
         await fs.remove(diffPath);
@@ -70,10 +72,10 @@ export default class LocalCompare extends BaseCompare {
   /**
    * Compares the latest image to the latest image with resemble to determine if they are the same.
    *
-   * @param {Buffer|string} reference - path to reference file or buffer for the reference image
-   * @param {Buffer|string} latest - path to file or buffer of the latest image
-   * @param {String} ignoreComparison - the image comparison algorithm to use
-   * @return {{misMatchPercentage: Number, isSameDimensions: Boolean, getImageDataUrl: function}}
+   * @param {Buffer|string} reference - Path to reference file or buffer for the reference image.
+   * @param {Buffer|string} latest - Path to file or buffer of the latest image.
+   * @param {String} ignoreComparison - The image comparison algorithm to use.
+   * @returns {Object} - The screenshot comparison results returned as { misMatchPercentage: Number, isSameDimensions: Boolean, getImageDataUrl: function }.
    */
   // eslint-disable-next-line class-methods-use-this
   async compareImages(reference, screenshot, ignore = '') {
@@ -98,9 +100,10 @@ export default class LocalCompare extends BaseCompare {
   }
 
   /**
-   * Writes provided diff by resemble as png
-   * @param  {Stream} png node-png file Stream.
-   * @return {Promise}
+   * Writes provided diff by resemble as png.
+   *
+   * @param  {Stream} -png node-png file Stream.
+   * @return {Promise} - Resolves is stream is outputted successfully.
    */
   // eslint-disable-next-line class-methods-use-this
   async writeDiff(png, filepath) {
