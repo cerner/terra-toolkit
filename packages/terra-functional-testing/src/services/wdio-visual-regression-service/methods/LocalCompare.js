@@ -37,7 +37,7 @@ export default class LocalCompare extends BaseCompare {
     // create latest screenshot
     await fs.outputFile(latestPath, base64Screenshot, 'base64');
 
-    const referenceExists = await fs.exists(referencePath);
+    const referenceExists = fs.existsSync(referencePath);
 
     if (referenceExists) {
       log.info('reference exists, compare it with the taken now');

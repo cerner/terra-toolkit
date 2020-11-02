@@ -8,13 +8,6 @@ import LocalCompare from '../../../../../src/services/wdio-visual-regression-ser
 const dirTmp = path.resolve(__dirname, '..', '..', '..', '..', 'tmp');
 const dirFixture = path.resolve(__dirname, '..', '..', '..', '..', 'fixtures');
 
-async function readAsBase64(file) {
-  // read binary data
-  const content = await fs.readFile(file);
-  // convert binary data to base64 encoded string
-  return new Buffer(content).toString('base64'); // eslint-disable-line no-buffer-constructor
-}
-
 async function compareImages(image1, image2, misMatchPercentage = 0) {
   return new Promise(resolve => {
     const image = resemble(image1).compareTo(image2);
@@ -62,7 +55,7 @@ describe('LocalCompare', () => {
     });
 
     it('creates the latest screenshot', async () => {
-      const base64Screenshot = await readAsBase64(path.join(dirFixture, 'image', '100x100.png'));
+      const base64Screenshot = fs.readFileSync(path.join(dirFixture, 'image', '100x100.png'), { encoding: 'base64' });
 
       const getScreenshotPathsSpy = jest.spyOn(localCompare, 'getScreenshotPaths');
 
@@ -75,16 +68,16 @@ describe('LocalCompare', () => {
       const screenshotPaths = getScreenshotPathsSpy.mock.results[0].value;
 
       // check if reference image was created
-      const referenceExists = await fs.exists(screenshotPaths.referencePath);
+      const referenceExists = fs.existsSync(screenshotPaths.referencePath);
       expect(referenceExists).toBeTruthy();
 
       // check if latest image was created
-      const latestExists = await fs.exists(screenshotPaths.latestPath);
+      const latestExists = fs.existsSync(screenshotPaths.latestPath);
       expect(latestExists).toBeTruthy();
     });
 
     it('creates a reference file for the first run', async () => {
-      const base64Screenshot = await readAsBase64(path.join(dirFixture, 'image', '100x100.png'));
+      const base64Screenshot = fs.readFileSync(path.join(dirFixture, 'image', '100x100.png'), { encoding: 'base64' });
 
       const getScreenshotPathsSpy = jest.spyOn(localCompare, 'getScreenshotPaths');
 
@@ -102,16 +95,16 @@ describe('LocalCompare', () => {
       const screenshotPaths = getScreenshotPathsSpy.mock.results[0].value;
 
       // check if reference image was created
-      const referenceExists = await fs.exists(screenshotPaths.referencePath);
+      const referenceExists = fs.existsSync(screenshotPaths.referencePath);
       expect(referenceExists).toBeTruthy();
 
       // check if latest image was created
-      const latestExists = await fs.exists(screenshotPaths.latestPath);
+      const latestExists = fs.existsSync(screenshotPaths.latestPath);
       expect(latestExists).toBeTruthy();
     });
 
     it('does not update the reference image when changes are in tolerance', async () => {
-      const base64Screenshot = await readAsBase64(path.join(dirFixture, 'image', '100x100.png'));
+      const base64Screenshot = fs.readFileSync(path.join(dirFixture, 'image', '100x100.png'), { encoding: 'base64' });
 
       const getScreenshotPathsSpy = jest.spyOn(localCompare, 'getScreenshotPaths');
 
@@ -130,19 +123,19 @@ describe('LocalCompare', () => {
       const screenshotPathsFirst = getScreenshotPathsSpy.mock.results[0].value;
 
       // check if reference image was created
-      const referenceExists = await fs.exists(screenshotPathsFirst.referencePath);
+      const referenceExists = fs.existsSync(screenshotPathsFirst.referencePath);
       expect(referenceExists).toBeTruthy();
 
       // check if latest image was created
-      const latestExists = await fs.exists(screenshotPathsFirst.latestPath);
+      const latestExists = fs.existsSync(screenshotPathsFirst.latestPath);
       expect(latestExists).toBeTruthy();
 
       // check last modified
-      const referenceStatsFirst = await fs.stat(screenshotPathsFirst.referencePath);
-      expect(referenceStatsFirst.mtime.getTime()).toBeGreaterThan(0);
+      const referenceStatsFirst = fs.statSync(screenshotPathsFirst.referencePath);
+      expect(referenceStatsFirst.mtimeMs).toBeGreaterThan(0);
 
-      const latestStatsFirst = await fs.stat(screenshotPathsFirst.latestPath);
-      expect(latestStatsFirst.mtime.getTime()).toBeGreaterThan(0);
+      const latestStatsFirst = fs.statSync(screenshotPathsFirst.latestPath);
+      expect(latestStatsFirst.mtimeMs).toBeGreaterThan(0);
 
       // 2nd run --> go against reference image
       const resultSecond = await localCompare.processScreenshot(context, base64Screenshot);
@@ -162,17 +155,17 @@ describe('LocalCompare', () => {
       const screenshotPathsSecond = getScreenshotPathsSpy.mock.results[1].value;
 
       // check that reference was not updated
-      const referenceStatsSecond = await fs.stat(screenshotPathsSecond.referencePath);
-      expect(referenceStatsSecond.mtime.getTime()).toEqual(referenceStatsFirst.mtime.getTime());
+      const referenceStatsSecond = fs.statSync(screenshotPathsSecond.referencePath);
+      expect(referenceStatsSecond.mtimeMs).toEqual(referenceStatsFirst.mtimeMs);
 
       // check that latest was updated
-      const latestStatsSecond = await fs.stat(screenshotPathsSecond.latestPath);
-      expect(latestStatsSecond.mtime.getTime()).not.toEqual(latestStatsFirst.mtime.getTime());
+      const latestStatsSecond = fs.statSync(screenshotPathsSecond.latestPath);
+      expect(latestStatsSecond.mtimeMs).not.toEqual(latestStatsFirst.mtimeMs);
     });
 
     it('creates a diff image when changes are not in tolerance', async () => {
-      const base64ScreenshotReference = await readAsBase64(path.join(dirFixture, 'image', '100x100.png'));
-      const base64ScreenshotNew = await readAsBase64(path.join(dirFixture, 'image', '100x100-rotated.png'));
+      const base64ScreenshotReference = fs.readFileSync(path.join(dirFixture, 'image', '100x100.png'), { encoding: 'base64' });
+      const base64ScreenshotNew = fs.readFileSync(path.join(dirFixture, 'image', '100x100-rotated.png'), { encoding: 'base64' });
 
       const getScreenshotPathsSpy = jest.spyOn(localCompare, 'getScreenshotPaths');
 
@@ -191,16 +184,16 @@ describe('LocalCompare', () => {
       const screenshotPathsFirst = getScreenshotPathsSpy.mock.results[0].value;
 
       // check if reference image was created
-      const referenceExists = await fs.exists(screenshotPathsFirst.referencePath);
+      const referenceExists = fs.existsSync(screenshotPathsFirst.referencePath);
       expect(referenceExists).toBeTruthy();
 
       // check if latest image was created
-      const latestExists = await fs.exists(screenshotPathsFirst.latestPath);
+      const latestExists = fs.existsSync(screenshotPathsFirst.latestPath);
       expect(latestExists).toBeTruthy();
 
       // check last modified
-      const referenceStatsFirst = await fs.stat(screenshotPathsFirst.referencePath);
-      expect(referenceStatsFirst.mtime.getTime()).toBeGreaterThan(0);
+      const referenceStatsFirst = fs.statSync(screenshotPathsFirst.referencePath);
+      expect(referenceStatsFirst.mtimeMs).toBeGreaterThan(0);
 
       // 2nd run --> create diff image
       const resultSecond = await localCompare.processScreenshot(context, base64ScreenshotNew);
@@ -214,11 +207,11 @@ describe('LocalCompare', () => {
       const screenshotPathsSecond = getScreenshotPathsSpy.mock.results[1].value;
 
       // check if reference is still the same
-      const referenceStatsSecond = await fs.stat(screenshotPathsSecond.referencePath);
-      expect(referenceStatsSecond.mtime.getTime()).toEqual(referenceStatsFirst.mtime.getTime());
+      const referenceStatsSecond = fs.statSync(screenshotPathsSecond.referencePath);
+      expect(referenceStatsSecond.mtimeMs).toEqual(referenceStatsFirst.mtimeMs);
 
       // check if diff image was created
-      const diffExists = await fs.exists(screenshotPathsSecond.diffPath);
+      const diffExists = fs.existsSync(screenshotPathsSecond.diffPath);
       expect(diffExists).toBeTruthy();
 
       // check if diff is correct
@@ -226,8 +219,8 @@ describe('LocalCompare', () => {
     });
 
     it('creates a diff image when latest image has different dimensions', async () => {
-      const base64ScreenshotReference = await readAsBase64(path.join(dirFixture, 'misMatchTolerance', 'base.png'));
-      const base64ScreenshotNew = await readAsBase64(path.join(dirFixture, 'misMatchTolerance', 'within-diff-dimensions.png'));
+      const base64ScreenshotReference = fs.readFileSync(path.join(dirFixture, 'misMatchTolerance', 'base.png'), { encoding: 'base64' });
+      const base64ScreenshotNew = fs.readFileSync(path.join(dirFixture, 'misMatchTolerance', 'within-diff-dimensions.png'), { encoding: 'base64' });
 
       const getScreenshotPathsSpy = jest.spyOn(localCompare, 'getScreenshotPaths');
 
@@ -246,16 +239,16 @@ describe('LocalCompare', () => {
       const screenshotPathsFirst = getScreenshotPathsSpy.mock.results[0].value;
 
       // check if reference image was created
-      const referenceExists = await fs.exists(screenshotPathsFirst.referencePath);
+      const referenceExists = fs.existsSync(screenshotPathsFirst.referencePath);
       expect(referenceExists).toBeTruthy();
 
       // check if latest image was created
-      const latestExists = await fs.exists(screenshotPathsFirst.latestPath);
+      const latestExists = fs.existsSync(screenshotPathsFirst.latestPath);
       expect(latestExists).toBeTruthy();
 
       // check last modified
-      const referenceStatsFirst = await fs.stat(screenshotPathsFirst.referencePath);
-      expect(referenceStatsFirst.mtime.getTime()).toBeGreaterThan(0);
+      const referenceStatsFirst = fs.statSync(screenshotPathsFirst.referencePath);
+      expect(referenceStatsFirst.mtimeMs).toBeGreaterThan(0);
 
       // 2nd run --> create diff image
       const resultSecond = await localCompare.processScreenshot(context, base64ScreenshotNew);
@@ -269,17 +262,17 @@ describe('LocalCompare', () => {
       const screenshotPathsSecond = getScreenshotPathsSpy.mock.results[1].value;
 
       // check if reference is still the same
-      const referenceStatsSecond = await fs.stat(screenshotPathsSecond.referencePath);
-      expect(referenceStatsSecond.mtime.getTime()).toEqual(referenceStatsFirst.mtime.getTime());
+      const referenceStatsSecond = fs.statSync(screenshotPathsSecond.referencePath);
+      expect(referenceStatsSecond.mtimeMs).toEqual(referenceStatsFirst.mtimeMs);
 
       // check if diff image was created
-      const diffExists = await fs.exists(screenshotPathsSecond.diffPath);
+      const diffExists = fs.existsSync(screenshotPathsSecond.diffPath);
       expect(diffExists).toBeTruthy();
     });
 
     it('deletes existing diff image when image is in tolerance now', async () => {
-      const base64ScreenshotReference = await readAsBase64(path.join(dirFixture, 'image', '100x100.png'));
-      const base64ScreenshotNew = await readAsBase64(path.join(dirFixture, 'image', '100x100-rotated.png'));
+      const base64ScreenshotReference = fs.readFileSync(path.join(dirFixture, 'image', '100x100.png'), { encoding: 'base64' });
+      const base64ScreenshotNew = fs.readFileSync(path.join(dirFixture, 'image', '100x100-rotated.png'), { encoding: 'base64' });
 
       const getScreenshotPathsSpy = jest.spyOn(localCompare, 'getScreenshotPaths');
 
@@ -292,7 +285,7 @@ describe('LocalCompare', () => {
       const screenshotPaths = getScreenshotPathsSpy.mock.results[0].value;
 
       // check if diff image was created
-      const diffExistsFirst = await fs.exists(screenshotPaths.diffPath);
+      const diffExistsFirst = fs.existsSync(screenshotPaths.diffPath);
       expect(diffExistsFirst).toBeTruthy();
 
       // 3rd run --> delete existing diff
@@ -305,7 +298,7 @@ describe('LocalCompare', () => {
       await localCompare.processScreenshot(updateContext, base64ScreenshotNew);
 
       // check if diff image was deleted
-      const diffExistsSecond = await fs.exists(screenshotPaths.diffPath);
+      const diffExistsSecond = fs.existsSync(screenshotPaths.diffPath);
       expect(diffExistsSecond).toBeFalsy();
     });
   });
@@ -317,12 +310,12 @@ describe('LocalCompare', () => {
     let screenshotToleranceCustomWithin;
     let screenshotToleranceCustomOutside;
 
-    beforeAll(async () => {
-      screenshotBase = await readAsBase64(path.join(dirFixture, 'misMatchTolerance', 'base.png'));
-      screenshotToleranceDefaultWithin = await readAsBase64(path.join(dirFixture, 'misMatchTolerance', 'default-within.png'));
-      screenshotToleranceDefaultOutside = await readAsBase64(path.join(dirFixture, 'misMatchTolerance', 'default-outside.png'));
-      screenshotToleranceCustomWithin = await readAsBase64(path.join(dirFixture, 'misMatchTolerance', 'custom-within.png'));
-      screenshotToleranceCustomOutside = await readAsBase64(path.join(dirFixture, 'misMatchTolerance', 'custom-outside.png'));
+    beforeAll(() => {
+      screenshotBase = fs.readFileSync(path.join(dirFixture, 'misMatchTolerance', 'base.png'), { encoding: 'base64' });
+      screenshotToleranceDefaultWithin = fs.readFileSync(path.join(dirFixture, 'misMatchTolerance', 'default-within.png'), { encoding: 'base64' });
+      screenshotToleranceDefaultOutside = fs.readFileSync(path.join(dirFixture, 'misMatchTolerance', 'default-outside.png'), { encoding: 'base64' });
+      screenshotToleranceCustomWithin = fs.readFileSync(path.join(dirFixture, 'misMatchTolerance', 'custom-within.png'), { encoding: 'base64' });
+      screenshotToleranceCustomOutside = fs.readFileSync(path.join(dirFixture, 'misMatchTolerance', 'custom-outside.png'), { encoding: 'base64' });
     });
 
     describe('uses default misMatchTolerance', () => {
@@ -349,7 +342,7 @@ describe('LocalCompare', () => {
         const screenshotPaths = getScreenshotPathsSpy.mock.results[0].value;
 
         // check if diff image was not created
-        const diffExists = await fs.exists(screenshotPaths.diffPath);
+        const diffExists = fs.existsSync(screenshotPaths.diffPath);
         expect(diffExists).toBeFalsy();
       });
 
@@ -365,7 +358,7 @@ describe('LocalCompare', () => {
         const screenshotPaths = getScreenshotPathsSpy.mock.results[0].value;
 
         // check if diff image was created
-        const diffExists = await fs.exists(screenshotPaths.diffPath);
+        const diffExists = fs.existsSync(screenshotPaths.diffPath);
         expect(diffExists).toBeTruthy();
       });
     });
@@ -400,7 +393,7 @@ describe('LocalCompare', () => {
         const screenshotPaths = getScreenshotPathsSpy.mock.results[0].value;
 
         // check if diff image was not created
-        const diffExists = await fs.exists(screenshotPaths.diffPath);
+        const diffExists = fs.existsSync(screenshotPaths.diffPath);
         expect(diffExists).toBeFalsy();
       });
 
@@ -422,7 +415,7 @@ describe('LocalCompare', () => {
         const screenshotPaths = getScreenshotPathsSpy.mock.results[0].value;
 
         // check if diff image was created
-        const diffExists = await fs.exists(screenshotPaths.diffPath);
+        const diffExists = fs.existsSync(screenshotPaths.diffPath);
         expect(diffExists).toBeTruthy();
       });
     });
@@ -431,9 +424,9 @@ describe('LocalCompare', () => {
   describe('LocalCompare.processScreenshot-ignoreComparison', () => {
     let screenshotRed;
     let screenshotRedDiff;
-    beforeAll(async () => {
-      screenshotRed = await readAsBase64(path.join(dirFixture, 'ignoreComparison', '100x100-red.png'));
-      screenshotRedDiff = await readAsBase64(path.join(dirFixture, 'ignoreComparison', '100x100-red2.png'));
+    beforeAll(() => {
+      screenshotRed = fs.readFileSync(path.join(dirFixture, 'ignoreComparison', '100x100-red.png'), { encoding: 'base64' });
+      screenshotRedDiff = fs.readFileSync(path.join(dirFixture, 'ignoreComparison', '100x100-red2.png'), { encoding: 'base64' });
     });
 
     describe('uses default ignoreComparison', () => {
@@ -446,7 +439,7 @@ describe('LocalCompare', () => {
         const screenshotPaths = getScreenshotPathsSpy.mock.results[0].value;
 
         // check if latest image was created
-        const referenceExists = await fs.exists(screenshotPaths.latestPath);
+        const referenceExists = fs.existsSync(screenshotPaths.latestPath);
         expect(referenceExists).toBeTruthy();
 
         // compare screenshots
@@ -458,7 +451,7 @@ describe('LocalCompare', () => {
         expect(result.isWithinMisMatchTolerance).toBeFalsy();
 
         // check if diff image was created
-        const diffExists = await fs.exists(screenshotPaths.diffPath);
+        const diffExists = fs.existsSync(screenshotPaths.diffPath);
         expect(diffExists).toBeTruthy();
       });
     });
@@ -473,7 +466,7 @@ describe('LocalCompare', () => {
         const screenshotPaths = getScreenshotPathsSpy.mock.results[0].value;
 
         // check if latest image was created
-        const referenceExists = await fs.exists(screenshotPaths.latestPath);
+        const referenceExists = fs.existsSync(screenshotPaths.latestPath);
         expect(referenceExists).toBeTruthy();
 
         // compare screenshots
@@ -491,7 +484,7 @@ describe('LocalCompare', () => {
         expect(result.isWithinMisMatchTolerance).toBeTruthy();
 
         // check if diff image was not created
-        const diffExists = await fs.exists(screenshotPaths.diffPath);
+        const diffExists = fs.existsSync(screenshotPaths.diffPath);
         expect(diffExists).toBeFalsy();
       });
     });
