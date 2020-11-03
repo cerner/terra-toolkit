@@ -17,7 +17,7 @@ export default class LocalCompare extends BaseCompare {
 
   /**
    * Process for Local Comparison of a new latest screenshot against a reference screenshot, if one exists. If the
-   * two images are of a different size or are not within the  mismatch tolerance, a screenshot highlighting the
+   * two images are of a different size or are not within the mismatch tolerance, a screenshot highlighting the
    * differences will be created.
    *
    * @param {Object} context - Information provided to process the screenshot.
@@ -40,7 +40,7 @@ export default class LocalCompare extends BaseCompare {
     const referenceExists = fs.existsSync(referencePath);
 
     if (referenceExists) {
-      log.info('reference exists, compare it with the taken now');
+      log.info('reference screenshot exists, compare it with the taken screenshot now');
       const latestScreenshot = new Buffer.from(base64Screenshot, 'base64'); // eslint-disable-line new-cap
 
       const ignoreComparison = _.get(context, 'options.ignoreComparison', this.ignoreComparison);
