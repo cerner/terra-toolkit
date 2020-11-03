@@ -23,7 +23,7 @@ class TerraService {
 
     // Add a Terra global with access to Mocha-Chai test helpers.
     global.Terra = {
-      // validates provides access to the chai assertions to use in an it blocks.
+      // validates provides access to the jest assertions to use in an it blocks.
       validates: {
         accessibility,
         element,
