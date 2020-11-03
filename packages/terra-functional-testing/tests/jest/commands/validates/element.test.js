@@ -10,30 +10,30 @@ describe('element', () => {
 
     element();
 
-    expect(accessibility).toHaveBeenCalledWith(undefined);
+    expect(accessibility).toHaveBeenCalledWith({ rules: undefined });
   });
 
   it('should run element with full options', () => {
     global.Terra = {
       serviceOptions: {
-        selector: 'test-selector',
+        selector: 'mock-selector',
       },
     };
 
     element({
       testName: 'test-name',
-      rules: { 'mock-rule': { enabled: true } },
-      selector: 'test-selector',
+      rules: { 'mock-rule': { enabled: false } },
+      selector: 'mock-selector',
       misMatchTolerance: 10,
     });
 
-    expect(accessibility).toHaveBeenCalledWith({ 'mock-rule': { enabled: true } });
+    expect(accessibility).toHaveBeenCalledWith({ rules: { 'mock-rule': { enabled: false } } });
   });
 
   it('should run element with service selector options', () => {
     global.Terra = {
       serviceOptions: {
-        selector: 'test-selector',
+        selector: 'mock-selector',
       },
     };
 
@@ -43,6 +43,6 @@ describe('element', () => {
       misMatchTolerance: 10,
     });
 
-    expect(accessibility).toHaveBeenCalledWith({ 'mock-rule': { enabled: true } });
+    expect(accessibility).toHaveBeenCalledWith({ rules: { 'mock-rule': { enabled: true } } });
   });
 });

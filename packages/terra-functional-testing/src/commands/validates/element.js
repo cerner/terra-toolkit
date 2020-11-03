@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 const accessibility = require('./accessibility');
 
 /**
@@ -14,13 +13,14 @@ const accessibility = require('./accessibility');
  * @param {string} [options.selector] - the element selector to use for the screenshot comparison.
  */
 const element = (options = {}) => {
-  const { rules, misMatchTolerance } = options;
+  const { rules } = options;
 
-  const selector = options.selector || global.Terra.serviceOptions.selector;
-  const testName = options.testName || 'default';
+  accessibility({ rules });
 
-  accessibility(rules);
   // TODO: Validate screen using visual regression
+  // const { misMatchTolerance } = options;
+  // const selector = options.selector || global.Terra.serviceOptions.selector;
+  // const testName = options.testName || 'default';
   // visualRegressionMethods.runMatchScreenshotTest(selector, { misMatchTolerance, testName });
 };
 
