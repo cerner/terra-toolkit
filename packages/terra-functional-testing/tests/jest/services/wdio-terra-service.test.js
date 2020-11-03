@@ -32,6 +32,14 @@ describe('WDIO Terra Service', () => {
     expect(global.Terra.validates.accessibility).toBeDefined();
   });
 
+  it('should setup the global terra validates element command', () => {
+    const service = new WdioTerraService();
+
+    service.before({ browserName: 'chrome' });
+
+    expect(global.Terra.validates.element).toBeDefined();
+  });
+
   it('should set the expect command as a global api', () => {
     const service = new WdioTerraService();
 
@@ -49,6 +57,7 @@ describe('WDIO Terra Service', () => {
     expect(global.Terra.viewports).toBeDefined();
     expect(global.Terra.describeViewports).toBeDefined();
     expect(global.Terra.hideInputCaret).toBeDefined();
+    expect(global.Terra.serviceOptions.formFactor).toBe('huge');
   });
 
   it('should wait for browser interaction for IE', () => {

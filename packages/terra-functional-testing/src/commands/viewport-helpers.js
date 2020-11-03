@@ -46,23 +46,19 @@ const describeViewports = (title, viewports, fn) => {
   let localViewports = viewports;
 
   // If formFactor is defined in the service options/env and viewports contains this form factor, run that size else don't run the tests
-  const [, options = {}] = global.browser.options.services.find(([service]) => (
-    typeof service === 'function' && service.name === 'TerraService'
-  ));
-
-  const { formFactor } = options;
+  const { formFactor } = global.Terra.serviceOptions;
   if (formFactor) {
     localViewports = viewports.includes(formFactor) ? [formFactor] : [];
   }
 
   let currentViewportSize;
   localViewports.forEach(viewport => global.describe(`[${viewport}]`, () => {
-    global.beforeAll(() => {
+    global.before(() => {
       currentViewportSize = global.browser.getWindowSize();
       setViewport(viewport);
     });
     global.describe(title, fn);
-    global.afterAll(() => global.browser.setWindowSize(currentViewportSize.width, currentViewportSize.height));
+    global.after(() => global.browser.setWindowSize(currentViewportSize.width, currentViewportSize.height));
   }));
 };
 

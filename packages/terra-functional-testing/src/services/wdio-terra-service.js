@@ -5,10 +5,11 @@ const { toBeAccessible } = require('../commands/expect');
 const { getViewports, describeViewports, setViewport } = require('../commands/viewport-helpers');
 
 const hideInputCaret = require('../commands/hide-input-caret');
+const { element } = require('../commands/validates');
 
 class TerraService {
   constructor(options = {}) {
-    this.formFactor = options.formFactor;
+    this.serviceOptions = options;
   }
 
   /**
@@ -22,7 +23,11 @@ class TerraService {
 
     // Add a Terra global with access to Mocha-Chai test helpers.
     global.Terra = {
-      validates: { accessibility },
+      // validates provides access to the chai assertions to use in an it blocks.
+      validates: {
+        accessibility,
+        element,
+      },
 
       // viewports provides access Terra's list of test viewports.
       viewports: getViewports,
@@ -32,6 +37,8 @@ class TerraService {
 
       // hideInputCaret hides the blinking input caret that appears in inputs or editable text areas.
       hideInputCaret,
+
+      serviceOptions: this.serviceOptions,
     };
 
     // IE driver takes longer to be ready for browser interactions.
@@ -43,7 +50,7 @@ class TerraService {
     }
 
     // Set the viewport size before the spec begins.
-    setViewport(this.formFactor);
+    setViewport(this.serviceOptions.formFactor);
   }
 
   afterCommand(commandName, args, result, error) {

@@ -52,18 +52,18 @@ describe('Viewport', () => {
   });
 
   it('should describe viewport', () => {
-    const mockBeforeAll = jest.fn();
+    const mockBefore = jest.fn();
     const mockDescribe = jest.fn();
-    const mockAfterAll = jest.fn();
-    const TerraService = () => { };
-    const serviceOptions = { formFactor: 'tiny' };
+    const mockAfter = jest.fn();
 
-    global.beforeAll = mockBeforeAll;
+    global.before = mockBefore;
     global.describe = mockDescribe;
-    global.afterAll = mockAfterAll;
+    global.after = mockAfter;
 
-    global.browser.options = {
-      services: [[TerraService, serviceOptions]],
+    global.Terra = {
+      serviceOptions: {
+        formFactor: 'tiny',
+      },
     };
 
     viewportHelpers.describeViewports('viewport', ['tiny', 'large'], () => {});
