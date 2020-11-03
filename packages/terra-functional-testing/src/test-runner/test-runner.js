@@ -39,6 +39,7 @@ class TestRunner {
 
       process.exit(exitCode);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('[terra-functional-testing] Launcher failed to start the test.\n', error);
       process.exit(1);
     }

@@ -1,4 +1,5 @@
 /* eslint-disable no-restricted-syntax, no-await-in-loop, prefer-const */
+import getTerraFormFactor from './getTerraFormFactor';
 
 // eslint-disable-next-line
 const getViewportSize = async function() {
@@ -20,13 +21,15 @@ export async function mapViewports(browser, delay, viewports = [], iterateeScree
 
   if (!viewports.length) {
     const viewport = await getViewportSize();
-    const params = await iterateeScreenshot(viewport);
+    const currentFormFactor = getTerraFormFactor(viewport.width);
+    const params = await iterateeScreenshot(currentFormFactor);
     results.push(iterateeProcess(...params));
   } else {
     for (let viewport of viewports) {
       await browser.setWindowSize(viewport.width, viewport.height);
       await browser.pause(delay);
-      const params = await iterateeScreenshot(viewport);
+      const currentFormFactor = getTerraFormFactor(viewport.width);
+      const params = await iterateeScreenshot(currentFormFactor);
       results.push(iterateeProcess(...params));
     }
   }
