@@ -115,7 +115,7 @@ export default class BaseCompare {
    * @param {Number} misMatchPercentage - The percent mismatched of the latest screenshot compared to the reference screenshot.
    * @param {Boolean} isWithinMisMatchTolerance - Whether or not the latest screenshot is a close enough match the reference screenshot.
    * @param {Boolean} isSameDimensions - Whether or not the latest screenshot was the same dimensions as the reference screenshot.
-   * @return {Object} - The relevant comparison results to report.
+   * @returns {Object} - The relevant comparison results to report.
    */
   createResultReport(referenceExists, misMatchPercentage, isWithinMisMatchTolerance, isSameDimensions) {
     if (!referenceExists) {

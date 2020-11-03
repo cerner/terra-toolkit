@@ -26,6 +26,7 @@ export default class LocalCompare extends BaseCompare {
    * @param {Object} context.test - The test that is running.
    * @param {Object} context.meta - Contains the element, exclude, hide, remove, viewport as meta data to use.
    * @param {*} base64Screenshot - The screenshot captured by the selenium command to process.
+   * @returns {Object} - The relevant comparison results to report.
    */
   async processScreenshot(context, base64Screenshot) {
     const {
@@ -72,17 +73,17 @@ export default class LocalCompare extends BaseCompare {
   /**
    * Compares the latest image to the latest image with resemble to determine if they are the same.
    *
-   * @param {Buffer|string} reference - Path to reference file or buffer for the reference image.
-   * @param {Buffer|string} latest - Path to file or buffer of the latest image.
+   * @param {String} referencePath - Path to reference image.
+   * @param {Buffer} latestScreenshot - Buffer of the latest image.
    * @param {String} ignoreComparison - The image comparison algorithm to use.
    * @returns {Object} - The screenshot comparison results returned as { misMatchPercentage: Number, isSameDimensions: Boolean, getImageDataUrl: function }.
    */
   // eslint-disable-next-line class-methods-use-this
-  async compareImages(reference, screenshot, ignore = '') {
+  async compareImages(referencePath, latestScreenshot, ignoreComparison = '') {
     return await new Promise(resolve => { // eslint-disable-line no-return-await
-      const image = resemble(reference).compareTo(screenshot);
+      const image = resemble(referencePath).compareTo(latestScreenshot);
 
-      switch (ignore) {
+      switch (ignoreComparison) {
         case 'colors':
           image.ignoreColors();
           break;
@@ -102,8 +103,8 @@ export default class LocalCompare extends BaseCompare {
   /**
    * Writes provided diff by resemble as png.
    *
-   * @param  {Stream} -png node-png file Stream.
-   * @return {Promise} - Resolves is stream is outputted successfully.
+   * @param  {Stream} - png node-png file Stream.
+   * @returns {Promise} - Resolves is stream is outputted successfully.
    */
   // eslint-disable-next-line class-methods-use-this
   async writeDiff(png, filepath) {
