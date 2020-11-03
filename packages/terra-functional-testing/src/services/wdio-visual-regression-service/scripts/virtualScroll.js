@@ -1,6 +1,6 @@
 /**
  * Script to apply a negative 2D-translate transformation method to move the document from its current position
- * to up and to the right for the specified number of pixels horizontally and vertically.
+ * to the specified number of pixels horizontally and vertically.
  *
  * @param {Number} x - The number of pixels moved along the horizontal axis from the current position.
  * @param {Number} y - The number of pixels moved along the vertical axis from the current position.
