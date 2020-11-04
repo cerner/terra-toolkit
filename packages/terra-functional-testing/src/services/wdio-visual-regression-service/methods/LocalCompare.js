@@ -22,14 +22,16 @@ export default class LocalCompare extends BaseCompare {
   }
 
   /**
-   * Process for Local Comparison.
+   * Process for Local Comparison of a new latest screenshot against a reference screenshot, if one exists. If the
+   * two images are of a different size or are not within the mismatch tolerance, a screenshot highlighting the
+   * differences will be created.
    *
-   * @param {Object} context - information provided to process the screenshot
-   * @param {Object} context.browserInfo - { name, version, userAgent }
-   * @param {Object} context.suite - the test suite that is running
-   * @param {Object} context.test - the test that is running
-   * @param {Object} context.meta - { currentFormFactor }
-   * @param {*} base64Screenshot - the screenshot captured by the selenium command to process.
+   * @param {Object} context - Information provided to process the screenshot.
+   * @param {Object} context.browserInfo - Contains the browser's name, version, userAgent.
+   * @param {Object} context.suite - The test suite that is running.
+   * @param {Object} context.test - The test that is running.
+   * @param {Object} context.meta - Contains the currentFormFactor as meta data to use.
+   * @param {*} base64Screenshot - The screenshot captured by the selenium command to process.
    * @returns {Object} - The relevant comparison results to report.
    */
   async processScreenshot(context, base64Screenshot) {
@@ -42,10 +44,10 @@ export default class LocalCompare extends BaseCompare {
     // create latest screenshot
     await fs.outputFile(latestPath, base64Screenshot, 'base64');
 
-    const referenceExists = await fs.exists(referencePath);
+    const referenceExists = fs.existsSync(referencePath);
 
     if (referenceExists) {
-      log.info('reference exists, compare it with the taken now');
+      log.info('reference screenshot exists, compare it with the taken screenshot now');
       const latestScreenshot = new Buffer.from(base64Screenshot, 'base64'); // eslint-disable-line new-cap
 
       const ignoreComparison = _.get(context, 'options.ignoreComparison', this.ignoreComparison);
@@ -77,17 +79,17 @@ export default class LocalCompare extends BaseCompare {
   /**
    * Compares the latest image to the latest image with resemble to determine if they are the same.
    *
-   * @param {Buffer|string} reference - path to reference file or buffer for the reference image
-   * @param {Buffer|string} latest - path to file or buffer of the latest image
-   * @param {String} ignoreComparison - the image comparison algorithm to use
-   * @returns {{misMatchPercentage: Number, isSameDimensions: Boolean, getImageDataUrl: function}}
+   * @param {String} referencePath - Path to reference image.
+   * @param {Buffer} latestScreenshot - Buffer of the latest image.
+   * @param {String} ignoreComparison - The image comparison algorithm to use.
+   * @returns {Object} - The screenshot comparison results returned as { misMatchPercentage: Number, isSameDimensions: Boolean, getImageDataUrl: function }.
    */
   // eslint-disable-next-line class-methods-use-this
-  async compareImages(reference, screenshot, ignore = '') {
+  async compareImages(referencePath, latestScreenshot, ignoreComparison = '') {
     return await new Promise(resolve => { // eslint-disable-line no-return-await
-      const image = resemble(reference).compareTo(screenshot);
+      const image = resemble(referencePath).compareTo(latestScreenshot);
 
-      switch (ignore) {
+      switch (ignoreComparison) {
         case 'colors':
           image.ignoreColors();
           break;
@@ -105,9 +107,10 @@ export default class LocalCompare extends BaseCompare {
   }
 
   /**
-   * Writes provided diff by resemble as png
-   * @param  {Stream} png node-png file Stream.
-   * @returns {Promise}
+   * Writes provided diff by resemble as png.
+   *
+   * @param  {Stream} - png node-png file Stream.
+   * @returns {Promise} - Resolves is stream is outputted successfully.
    */
   // eslint-disable-next-line class-methods-use-this
   async writeDiff(png, filepath) {
