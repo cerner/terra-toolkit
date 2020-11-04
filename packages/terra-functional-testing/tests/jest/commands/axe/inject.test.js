@@ -15,7 +15,7 @@ describe('Inject Axe', () => {
 
   it('should inject axe into the document with the provided options', () => {
     const mockExecute = jest.fn();
-    const mockRules = { rules: [{ enabled: true, id: 'mock-rule' }] };
+    const mockRules = { rules: [{ id: 'mock-rule', enabled: true }] };
 
     global.browser = {
       execute: mockExecute,
@@ -23,6 +23,6 @@ describe('Inject Axe', () => {
 
     injectAxe(mockRules);
 
-    expect(mockExecute).toHaveBeenCalledWith(expect.stringContaining('axe.configure({"rules":[{"enabled":true,"id":"mock-rule"}]})'));
+    expect(mockExecute).toHaveBeenCalledWith(expect.stringContaining('axe.configure({"rules":[{"id":"mock-rule","enabled":true}]})'));
   });
 });

@@ -1,40 +1,7 @@
-const injectAxe = require('../../../../src/commands/axe/inject');
+jest.mock('../../../../src/commands/axe/inject');
 const runAxe = require('../../../../src/commands/axe/run');
 
-jest.mock('../../../../src/commands/axe/inject');
-
 describe('Run Axe', () => {
-  it('should inject axe if not already available', () => {
-    const mockAxeRun = jest.fn().mockImplementation((_document, _opts, func) => {
-      func(jest.fn(), jest.fn());
-    });
-
-    const mockExecuteAsync = jest.fn().mockImplementation((func, opts) => {
-      func(opts, jest.fn());
-      return {};
-    });
-
-    const TerraService = () => { };
-
-    global.browser = {
-      execute: () => true,
-      executeAsync: mockExecuteAsync,
-      options: {
-        services: [[TerraService]],
-      },
-    };
-
-    global.axe = {
-      run: mockAxeRun,
-    };
-
-    runAxe();
-
-    const expectedRules = { rules: [{ enabled: false, id: 'scrollable-region-focusable' }] };
-
-    expect(injectAxe).toHaveBeenCalledWith(expectedRules);
-  });
-
   it('should run axe on the document', () => {
     const mockAxeRun = jest.fn().mockImplementation((_document, opts, func) => {
       func(jest.fn(), jest.fn());
