@@ -91,7 +91,7 @@ describe('Accessibility Reporter', () => {
   });
 
   describe('travelSuite', () => {
-    it('should travel the suite tree and generate an accessibility report', () => {
+    it('should travel a nested suite tree and generate an accessibility report', () => {
       const reporter = new AccessibilityReporter({});
 
       reporter.accessibilityResults = {

@@ -108,7 +108,7 @@ class AccessibilityReporter extends WDIOReporter {
   /**
    * Formats an accessibility warning summary for a test.
    * @param {string} uid - The unique identifier of the test.
-   * @param {number} indent - The indentation the report should have,
+   * @param {number} indent - The indentation the report should have.
    */
   formatTestWarning(uid, indent) {
     const { title } = this.tests[uid];
