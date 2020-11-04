@@ -7,9 +7,9 @@ const TEST_ID_REGEX = /\[([^)]+)\]/;
 export default class BaseCompare {
   /**
    * @param {Object} options - Service configuration options.
-   * @param {Object} options.baseScreenshotDir - The base screenshot directory path to save screenshot in
-   * @param {Object} options.locale - The locale being tested
-   * @param {Object} options.theme - The theme being tested
+   * @param {Object} options.baseScreenshotDir - The base screenshot directory path to save screenshot in.
+   * @param {Object} options.locale - The locale being tested.
+   * @param {Object} options.theme - The theme being tested.
    */
   constructor(options) {
     const {
@@ -32,7 +32,7 @@ export default class BaseCompare {
    * @param {Object} context.browserInfo - Contains the browser's name, version, userAgent.
    * @param {Object} context.suite - The test suite that is running.
    * @param {Object} context.test - The test that is running.
-   * @param {Object} context.meta - Contains the element, exclude, hide, remove, currentFormFactor as meta data to use.
+   * @param {Object} context.meta - Contains the currentFormFactor as meta data to use.
    * @param {*} base64Screenshot - The screenshot captured by the selenium command to process.
    */
   async processScreenshot(_context, _base64Screenshot) {
@@ -80,7 +80,7 @@ export default class BaseCompare {
    *
    * @param {Object} context - Compare context provided by VisualRegressionLauncher.
    * @param {Object} context.browserInfo - Contains the browser's name, version, userAgent.
-   * @param {Object} context.meta - Contains the element, exclude, hide, remove, currentFormFactor as meta data to use.
+   * @param {Object} context.meta - Contains the currentFormFactor as meta data to use.
    * @returns {String} - The screenshot directory path.
    */
   getScreenshotDir(context) {
