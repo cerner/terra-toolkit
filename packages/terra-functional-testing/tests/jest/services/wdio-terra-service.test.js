@@ -32,6 +32,32 @@ describe('WDIO Terra Service', () => {
     expect(global.Terra.validates.accessibility).toBeDefined();
   });
 
+  it('should setup the global terra axe configuration', () => {
+    const service = new WdioTerraService();
+
+    service.before({ browserName: 'chrome' });
+
+    const rules = {
+      'scrollable-region-focusable': { enabled: false },
+      'color-contrast': { enabled: true },
+    };
+
+    expect(global.Terra.axe).toEqual({ rules });
+  });
+
+  it('should disable the axe color contrast rule for lowlight theme', () => {
+    const service = new WdioTerraService({ theme: 'clinical-lowlight-theme' });
+
+    service.before({ browserName: 'chrome' });
+
+    const rules = {
+      'scrollable-region-focusable': { enabled: false },
+      'color-contrast': { enabled: false },
+    };
+
+    expect(global.Terra.axe).toEqual({ rules });
+  });
+
   it('should set the expect command as a global api', () => {
     const service = new WdioTerraService();
 
