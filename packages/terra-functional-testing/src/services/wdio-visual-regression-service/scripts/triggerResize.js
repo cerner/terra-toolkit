@@ -1,8 +1,10 @@
 /**
- * trigger window.resize to re-layout js components
+ * Script to trigger a window resize event to re-layout js components.
+ *
+ * @returns {undefined}
  */
 export default function triggerResize() {
-  const evt = window.document.createEvent('UIEvents');
-  evt.initUIEvent('resize', true, false, window, 0);
-  window.dispatchEvent(evt);
+  const event = window.document.createEvent('UIEvents');
+  event.initUIEvent('resize', true, false, window, 0);
+  window.dispatchEvent(event);
 }
