@@ -7,6 +7,7 @@ const TerraService = require('../services/wdio-terra-service');
 const AssetServerService = require('../services/wdio-asset-server-service');
 
 const {
+  FORM_FACTOR,
   LOCALE,
   SITE,
   THEME,
@@ -129,7 +130,11 @@ exports.config = {
   // your test setup with almost no effort. Unlike plugins, they don't add new
   // commands. Instead, they hook themselves up into the test process.
   services: [
-    [TerraService],
+    [TerraService, {
+      /* Use to change the form factor (test viewport) used in the wdio run. */
+      ...FORM_FACTOR && { formFactor: FORM_FACTOR },
+      ...THEME && { theme: THEME },
+    }],
     [AssetServerService, {
       ...SITE && { site: SITE },
       ...LOCALE && { locale: LOCALE },

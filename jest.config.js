@@ -7,7 +7,7 @@ module.exports = {
   collectCoverageFrom: [
     'packages/**/src/**/*.js',
     '!packages/terra-functional-testing/src/services/wdio-visual-regression-service/commands/*.js',
-    '!packages/terra-functional-testing/src/services/wdio-visual-regression-service/methods/(L|S)*.js',
+    '!packages/terra-functional-testing/src/services/wdio-visual-regression-service/methods/(S)*.js',
     '!packages/terra-functional-testing/src/services/wdio-visual-regression-service/modules/(a|b|m)*.js',
     '!packages/terra-functional-testing/src/services/wdio-visual-regression-service/scripts/*.js',
     '!packages/terra-functional-testing/src/services/wdio-visual-regression-service/utils/**/*.js',
