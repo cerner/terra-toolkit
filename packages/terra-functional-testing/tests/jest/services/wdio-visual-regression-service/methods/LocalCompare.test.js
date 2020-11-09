@@ -290,6 +290,7 @@ describe('LocalCompare', () => {
       await localCompare.processScreenshot(context, base64ScreenshotReference);
 
       // 2nd run --> create diff image
+      await pauseTest(); // pause to ensure time elapses between screenshot creation
       await localCompare.processScreenshot(context, base64ScreenshotNew);
 
       const screenshotPaths = getScreenshotPathsSpy.mock.results[0].value;
@@ -311,8 +312,8 @@ describe('LocalCompare', () => {
       // check if diff image was deleted
       const diffExistsSecond = fs.existsSync(screenshotPaths.diffPath);
       expect(diffExistsSecond).toBeFalsy();
-    });
-  }, TIMEOUT);
+    }, TIMEOUT * 3);
+  });
 
   describe('LocalCompare.processScreenshot-misMatchTolerance', () => {
     let screenshotBase;
@@ -339,7 +340,8 @@ describe('LocalCompare', () => {
 
         // 1st run -> create reference
         await localCompare.processScreenshot(context, screenshotBase);
-      });
+        await pauseTest(); // pause to ensure time elapses between screenshot creation
+      }, TIMEOUT);
 
       it('reports equal when in tolerance', async () => {
         // compare screenshots
