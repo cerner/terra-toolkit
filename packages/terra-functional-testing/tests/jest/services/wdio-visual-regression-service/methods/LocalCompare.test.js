@@ -7,6 +7,7 @@ import LocalCompare from '../../../../../src/services/wdio-visual-regression-ser
 
 const dirTmp = path.resolve(__dirname, '..', '..', '..', '..', 'tmp');
 const dirFixture = path.resolve(__dirname, '..', '..', '..', '..', 'fixtures');
+const TIMEOUT = 10000;
 
 async function compareImages(image1, image2, misMatchPercentage = 0) {
   return new Promise(resolve => {
@@ -32,6 +33,12 @@ const context = {
     viewport: { height: 600, width: 1000 },
   },
 };
+
+const pauseTest = () => new Promise(resolve => {
+  setTimeout(() => {
+    resolve();
+  }, TIMEOUT / 2);
+});
 
 describe('LocalCompare', () => {
   let localCompare;
@@ -138,6 +145,7 @@ describe('LocalCompare', () => {
       expect(latestStatsFirst.mtimeMs).toBeGreaterThan(0);
 
       // 2nd run --> go against reference image
+      await pauseTest(); // pause to ensure time elapses between screenshot creation
       const resultSecond = await localCompare.processScreenshot(context, base64Screenshot);
 
       // check reference getter
@@ -161,7 +169,7 @@ describe('LocalCompare', () => {
       // check that latest was updated
       const latestStatsSecond = fs.statSync(screenshotPathsSecond.latestPath);
       expect(latestStatsSecond.mtimeMs).not.toEqual(latestStatsFirst.mtimeMs);
-    });
+    }, TIMEOUT);
 
     it('creates a diff image when changes are not in tolerance', async () => {
       const base64ScreenshotReference = fs.readFileSync(path.join(dirFixture, 'image', '100x100.png'), { encoding: 'base64' });
@@ -196,6 +204,7 @@ describe('LocalCompare', () => {
       expect(referenceStatsFirst.mtimeMs).toBeGreaterThan(0);
 
       // 2nd run --> create diff image
+      await pauseTest(); // pause to ensure time elapses between screenshot creation
       const resultSecond = await localCompare.processScreenshot(context, base64ScreenshotNew);
 
       // check diff results
@@ -216,7 +225,7 @@ describe('LocalCompare', () => {
 
       // check if diff is correct
       await compareImages(screenshotPathsSecond.diffPath, path.join(dirFixture, 'image', '100x100-diff.png'));
-    });
+    }, TIMEOUT);
 
     it('creates a diff image when latest image has different dimensions', async () => {
       const base64ScreenshotReference = fs.readFileSync(path.join(dirFixture, 'misMatchTolerance', 'base.png'), { encoding: 'base64' });
@@ -251,6 +260,7 @@ describe('LocalCompare', () => {
       expect(referenceStatsFirst.mtimeMs).toBeGreaterThan(0);
 
       // 2nd run --> create diff image
+      await pauseTest(); // pause to ensure time elapses between screenshot creation
       const resultSecond = await localCompare.processScreenshot(context, base64ScreenshotNew);
 
       // check diff results
@@ -268,7 +278,7 @@ describe('LocalCompare', () => {
       // check if diff image was created
       const diffExists = fs.existsSync(screenshotPathsSecond.diffPath);
       expect(diffExists).toBeTruthy();
-    });
+    }, TIMEOUT);
 
     it('deletes existing diff image when image is in tolerance now', async () => {
       const base64ScreenshotReference = fs.readFileSync(path.join(dirFixture, 'image', '100x100.png'), { encoding: 'base64' });
@@ -295,13 +305,14 @@ describe('LocalCompare', () => {
           misMatchTolerance: 100,
         },
       };
+      await pauseTest(); // pause to ensure time elapses between screenshot creation
       await localCompare.processScreenshot(updateContext, base64ScreenshotNew);
 
       // check if diff image was deleted
       const diffExistsSecond = fs.existsSync(screenshotPaths.diffPath);
       expect(diffExistsSecond).toBeFalsy();
     });
-  });
+  }, TIMEOUT);
 
   describe('LocalCompare.processScreenshot-misMatchTolerance', () => {
     let screenshotBase;
