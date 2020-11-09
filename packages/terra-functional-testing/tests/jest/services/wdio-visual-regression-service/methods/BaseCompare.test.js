@@ -5,7 +5,7 @@ import BaseCompare from '../../../../../src/services/wdio-visual-regression-serv
 const dirTmp = path.resolve(__dirname, '..', '..', '..', '..', 'tmp');
 
 const context = {
-  browser: {
+  browserInfo: {
     name: 'chrome',
   },
   test: {
