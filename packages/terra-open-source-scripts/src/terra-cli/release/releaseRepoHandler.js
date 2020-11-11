@@ -24,6 +24,8 @@ module.exports = async () => {
     logger.info('Nothing to publish');
     return;
   }
+  await fs.writeFile(path.join(process.env.HOME, '.npmrc'), `//registry.npmjs.org/:_authToken=${process.env.NPM_TOKEN}`, 'utf-8');
+
   const packageFile = path.resolve(process.cwd(), 'package.json');
 
   // Read package.json and pull out version

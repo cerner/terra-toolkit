@@ -1,4 +1,6 @@
 const childProcess = require('child_process');
+const path = require('path');
+const fs = require('fs-extra');
 const { promisify } = require('util');
 const Logger = require('@cerner/terra-cli/lib/utils/Logger');
 
@@ -6,8 +8,6 @@ const setupGit = require('./setupGit');
 
 const logger = new Logger({ prefix: '[terra-open-source-scripts:release]' });
 const exec = promisify(childProcess.exec);
-
-const filePath = './publish-output.txt';
 
 // Manipulate lerna publish output to find what packages were released and need to be tagged.
 const getTags = (output) => {
@@ -22,11 +22,12 @@ const getTags = (output) => {
 };
 
 module.exports = async () => {
-  const output = await exec(`npx lerna publish from-package --yes > ${filePath}`);
-  logger.info(output);
-  const tags = getTags(output);
+  await fs.writeFile(path.join(process.env.HOME, '.npmrc'), `//registry.npmjs.org/:_authToken=${process.env.NPM_TOKEN}`, 'utf-8');
+  const { stdout } = await exec('npx lerna publish from-package --yes');
+  logger.info(stdout);
+  const tags = getTags(stdout);
   if (tags) {
-    setupGit();
+    await setupGit();
     logger.info('tags', JSON.stringify(tags, null, 2));
     await Promise.all(tags.map(tag => exec(`git tag -a ${tag} -m "${tag}"`)));
     await exec('git push origin --tags');
