@@ -1,5 +1,6 @@
 /**
- * Reads the userAgent sent by your browser.
+ * Script to retrieve the userAgent sent by the browser.
+ *
  * @return {string} userAgent
  */
 export default function getUserAgent() {

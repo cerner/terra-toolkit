@@ -1,41 +1,30 @@
-/* global browser, axe */
+/* global browser, axe, Terra */
 const injectAxe = require('./inject');
 
 /**
  * Executes axe on the browser.
- * @param {Object} overrides - The axe options.
- * @param {Array} overrides.rules - The rule overrides.
+ * @param {Object} options - The axe options.
+ * @param {Array} options.rules - The rule overrides.
  */
-const runAxe = (overrides = {}) => {
-  // Extract the axe options for the Terra service from the global browser object.
-  const [, options = {}] = browser.options.services.find(([service]) => (
-    typeof service === 'function' && service.name === 'TerraService'
-  ));
-
-  const { axe: axeOptions } = options;
+const runAxe = (options = {}) => {
   const isAxeUnavailable = browser.execute(() => window.axe === undefined);
 
   // Inject axe-core onto the page if it has not already been initialized.
   if (isAxeUnavailable) {
-    injectAxe(axeOptions);
+    /**
+     * Converts the global rule overrides into an array.
+     * The axe.configure API requires the rules to be an array of objects. The axe.run API requires
+     * the rules to be an object keyed by the rule ID.
+     */
+    const globalRuleArray = Object.keys(Terra.axe.rules).map((rule) => (
+      { ...Terra.axe.rules[rule], id: rule }
+    ));
+
+    injectAxe({ rules: globalRuleArray });
   }
 
-  /**
-    * This rule was introduced in axe-core v3.3 and causes failures in many Terra components.
-    * The solution to address this failure vary by component. It is being disabled until a solution is identified in the future.
-    *
-    * Reference: https://github.com/cerner/terra-framework/issues/991
-    */
-  const ruleOverrides = {
-    'scrollable-region-focusable': { enabled: false },
-  };
-
-  // Merge the global rules and overrides together.
-  const rules = {
-    ...ruleOverrides,
-    ...axeOptions && axeOptions.rules,
-    ...overrides.rules,
-  };
+  // Merge the global rules and option overrides together.
+  const rules = { ...Terra.axe.rules, ...options.rules };
 
   // eslint-disable-next-line prefer-arrow-callback, func-names
   return browser.executeAsync(function (opts, done) {
@@ -43,7 +32,7 @@ const runAxe = (overrides = {}) => {
     axe.run(document, opts, function (error, result) {
       done({ error, result });
     });
-  }, { rules, restoreScroll: true, runOnly: ['wcag2a', 'wcag2aa', 'wcag21aa', 'section508'] });
+  }, { rules, runOnly: ['wcag2a', 'wcag2aa', 'wcag21aa', 'section508'] });
 };
 
 module.exports = runAxe;

@@ -31,15 +31,46 @@ export.config = {
 
 ## Options
 
-### axe
+### formFactor
 
-The axe configuration options for adding or customizing the rules used during testing. See the [axe API](https://github.com/dequelabs/axe-core/blob/develop/doc/API.md) for more information on configuring rules.
+Tests can be executed in a specific form factor by setting the `formFactor` configuration option or the `FORM_FACTOR` environment variable . The form factors can be any of the following supported viewports: `tiny`; `small`; `medium`; `large`; `huge`; `enormous`. In order for the tests to run in this form factor, it must be one that is already specified in the `Terra.describeViewport` block. 
 
-Type: `Object`
+Type: `String`
 
 Required: `false`
 
-Default: `{}`
+Default: `undefined`
+
+Examples:
+
+```js
+"FORM_FACTOR=huge npm run test:wdio"
+```
+
+```js
+// wdio.conf.js
+const TerraService = require('@cerner/terra-functional-testing/lib/services/wdio-terra-service');
+
+export.config = {
+    // ...
+    services: [
+        [TerraService, {
+          formFactor: 'huge',
+        }]
+    ],
+    // ...
+};
+```
+
+### theme
+
+An optional theme name that will be used to configure the testing environment. This option will flex the axe-core rules used during testing to account for the current theme.
+
+Type: `string`
+
+Required: `false`
+
+Default: `terra-default-theme`
 
 Example:
 
@@ -51,14 +82,9 @@ export.config = {
     // ...
     services: [
         [TerraService, {
-          axe: {
-            rules: {
-              'color-contrast': { enabled: true },
-            }
-          }
+          theme: 'terra-theme-name',
         }]
     ],
     // ...
 };
 ```
-
