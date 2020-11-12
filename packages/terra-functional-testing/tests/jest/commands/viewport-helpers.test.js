@@ -1,4 +1,3 @@
-const { expect } = require('chai');
 const viewportHelpers = require('../../../src/commands/viewport-helpers');
 const { TERRA_VIEWPORTS } = require('../../../src/static-assets/viewports');
 

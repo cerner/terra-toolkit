@@ -43,7 +43,6 @@
   "homepage": "https://github.com/cerner/terra-toolkit#readme",
   "dependencies": {
     "@babel/runtime": "^7.11.2",
-    "@cerner/terra-cli": "^0.0.0",
     "@wdio/cli": "^6.1.4",
     "@wdio/local-runner": "^6.1.4",
     "@wdio/logger": "^6.0.16",
@@ -71,7 +70,11 @@
     "webpack-dev-server": "^3.11.0",
     "which": "^2.0.2"
   },
+  "peerDependencies": {
+    "@cerner/terra-cli": "^0.0.0"
+  },
   "devDependencies": {
+    "@cerner/terra-cli": "^0.0.0",
     "chai": "^4.2.0",
     "glob": "^7.1.6",
     "mocha": "^8.1.1",
