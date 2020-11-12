@@ -8,10 +8,6 @@ Commands:
   terra command-2   Run command-2
   terra command-3   Run command-3
   terra command-4   Run command-4
-  terra command-5   Run command-5
-  terra command-6   Run command-6
-  terra command-7   Run command-7
-  terra command-8   Run command-8
   terra command-11  Run command-11
   terra command-12  Run command-12
 
@@ -29,10 +25,6 @@ Commands:
   terra command-2  Run command-2
   terra command-3  Run command-3
   terra command-4  Run command-4
-  terra command-5  Run command-5
-  terra command-6  Run command-6
-  terra command-7  Run command-7
-  terra command-8  Run command-8
 
 Options:
   -h, --help     Show help  [boolean]

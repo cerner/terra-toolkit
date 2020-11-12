@@ -11,10 +11,11 @@ const exec = promisify(childProcess.exec);
 
 const updateChangelogForPackage = require('./updateChangelogForPackage');
 
-const VERSION_OUTPUT_PATH = path.join(process.cwd(), 'version-output.txt');
+const VERSION_OUTPUT_PATH = path.join(process.cwd(), 'tmp', 'version-output.txt');
 
 module.exports = async () => {
   try {
+    await fs.ensureFile(VERSION_OUTPUT_PATH);
     childProcess.execSync(`script -q ${VERSION_OUTPUT_PATH} lerna version --no-git-tag-version`, { stdio: 'inherit' });
 
     if (stripAnsi(await fs.readFile(VERSION_OUTPUT_PATH, 'utf-8')).includes('lerna success version finished')) {

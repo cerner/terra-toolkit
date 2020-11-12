@@ -4,6 +4,8 @@ const fs = require('fs-extra');
 
 const Logger = require('./lib/utils/Logger');
 
+const DEPENDENCY_ALLOW_LIST = ['terra-functional-testing', 'terra-open-source-scripts'];
+
 const setupCLI = () => {
   const cli = yargs();
 
@@ -35,37 +37,39 @@ const setupCLI = () => {
     .wrap(cli.terminalWidth());
 };
 
-const subDirectoriesOfDirectory = (directoryPath) => (
-  fs.readdirSync(directoryPath, { withFileTypes: true })
-    .filter(directoryEntry => directoryEntry.isDirectory())
-    .map(directoryEntry => path.join(directoryPath, directoryEntry.name))
-);
-
-const terraClIDirectoriesFromPaths = (paths, preferSrc) => (
-  paths.map(dependencyPath => path.join(dependencyPath, preferSrc ? 'src' : 'lib', 'terra-cli')).filter(directory => fs.pathExistsSync(directory))
-);
-
-const loadTerraCommands = () => {
-  const { dependencies = [], devDependencies = [], name } = fs.readJSONSync(path.join(process.cwd(), 'package.json'));
-  const firstLevelDependencies = [...Object.keys(dependencies), ...Object.keys(devDependencies)];
-  const firstLevelDependencyPaths = firstLevelDependencies.map(directory => path.join(process.cwd(), 'node_modules', directory));
-  const additionalDependencyPaths = (name === 'terra-toolkit' ? subDirectoriesOfDirectory(path.join(process.cwd(), 'packages')) : []);
-  const terraCLIDirectories = [
-    // Prefer lib from installed dependencies
-    ...terraClIDirectoriesFromPaths(firstLevelDependencyPaths, false),
-    // Prefer src from local dependencies
-    ...terraClIDirectoriesFromPaths([...additionalDependencyPaths, process.cwd()], true),
-  ];
-  return terraCLIDirectories.map((directory) => subDirectoriesOfDirectory(directory)).reduce((previousOutput, value) => previousOutput.concat(value), []);
+const subDirectoriesOfDirectory = async (directoryPath) => {
+  const currentDirectoryEnries = await fs.readdir(directoryPath, { withFileTypes: true });
+  return currentDirectoryEnries.filter(directoryEntry => directoryEntry.isDirectory())
+    .map(directoryEntry => path.join(directoryPath, directoryEntry.name));
 };
 
-const terraCLI = (argv) => {
-  let cli = setupCLI();
-  const commands = loadTerraCommands();
+const terraClIDirectoriesFromPaths = async (paths, preferSrc) => {
+  const cliDirectories = paths.map(dependencyPath => path.join(dependencyPath, preferSrc ? 'src' : 'lib', 'terra-cli'));
+  const pathExistsForDirectories = await Promise.all(cliDirectories.map((directory) => fs.pathExists(directory)));
+  return cliDirectories.filter((_, index) => pathExistsForDirectories[index]);
+};
 
-  commands.forEach((command) => {
+const loadTerraCommandPaths = async () => {
+  const { name } = fs.readJSONSync(path.join(process.cwd(), 'package.json'));
+  const firstLevelDependencyPaths = DEPENDENCY_ALLOW_LIST.map(dependency => path.join(process.cwd(), 'node_modules', dependency));
+  const toolkitPackagePaths = (name === 'terra-toolkit' ? DEPENDENCY_ALLOW_LIST.map(dependency => path.join(process.cwd(), 'packages', dependency)) : []);
+  const currentProjectPaths = (DEPENDENCY_ALLOW_LIST.includes(name) ? [process.cwd()] : []);
+  const terraCLIDirectories = [
+    // Prefer lib from installed dependencies
+    ...(await terraClIDirectoriesFromPaths(firstLevelDependencyPaths, false)),
+    // Prefer src from local mono repo packages and the current project
+    ...(await terraClIDirectoriesFromPaths([...toolkitPackagePaths, ...currentProjectPaths], true)),
+  ];
+  return (await Promise.all(terraCLIDirectories.map((directory) => subDirectoriesOfDirectory(directory)))).reduce((previousOutput, value) => previousOutput.concat(value), []);
+};
+
+const terraCLI = async (argv) => {
+  let cli = setupCLI();
+  const commandPaths = await loadTerraCommandPaths();
+
+  commandPaths.forEach((commandPath) => {
     // eslint-disable-next-line global-require, import/no-dynamic-require
-    const commandConfig = require(command);
+    const commandConfig = require(commandPath);
     if (commandConfig) {
       cli = cli.command(commandConfig);
     }

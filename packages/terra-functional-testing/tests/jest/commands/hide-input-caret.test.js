@@ -34,8 +34,6 @@ describe('hideInputCaret', () => {
 
     hideInputCaret('test-selector');
 
-    // eslint-disable-next-line no-console
-    expect(console.error).toHaveBeenCalledWith("[ERROR] [terra-functional-testing:wdio-terra-service] No element could be found with the selector 'test-selector'.");
     expect(mockExecute).not.toHaveBeenCalled();
   });
 });

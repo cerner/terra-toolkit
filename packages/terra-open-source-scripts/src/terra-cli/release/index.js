@@ -4,7 +4,7 @@ const isMonoRepo = require('../../utils/isMonoRepo');
 
 const release = {
   command: 'release',
-  describe: 'Tag the repo and release',
+  describe: 'Publish the current project, create git tags, and push the git tags',
   handler: async () => (await isMonoRepo() ? releaseMonoRepoHandler() : releaseRepoHandler()),
 };
 

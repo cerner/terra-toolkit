@@ -11,7 +11,7 @@ describe('terra-cli', () => {
   });
 
   it('returns the available commands for terra-toolkit by looking in the packages directory', async () => {
-    const { stdout } = await exec('../../../../bin/terra --help', { cwd: path.join(__dirname, 'fixtures', 'terra-toolkit') });
+    const { stdout } = await exec('../../../../bin/terra --help', { cwd: path.join(__dirname, 'fixtures', 'terra-toolkit-project') });
     expect(stdout).toMatchSnapshot();
   });
 });

@@ -20,7 +20,7 @@ const express = {
       site: {
         type: 'string',
         demandOption: true,
-        describe: 'The site from which to host the server',
+        describe: 'The directory path from which to serve the static assets',
       },
     })
   ),

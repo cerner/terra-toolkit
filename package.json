@@ -32,9 +32,6 @@
   "bugs": {
     "url": "https://github.com/cerner/terra-toolkit/issues"
   },
-  "bin": {
-    "terra": "./packages/terra-cli/bin/terra"
-  },
   "eslintConfig": {
     "extends": "./packages/eslint-config-terra/eslint.config.js",
     "overrides": [
