@@ -3,6 +3,9 @@ const { promisify } = require('util');
 
 const exec = promisify(childProcess.exec);
 
+/**
+ * Sets up git for travis CI using the GITHUB_TOKEN environment variable
+ */
 module.exports = async () => {
   const travis = process.env.TRAVIS;
 

@@ -46,7 +46,7 @@ class TestRunner {
     }
 
     if (exitCode !== 0) {
-      throw new Error(`Launcher returned with an exit code of ${exitCode}`);
+      throw new Error(`[terra-functional-testing:wdio] Launcher returned with an exit code of ${exitCode}`);
     }
   }
 }
