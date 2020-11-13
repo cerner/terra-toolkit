@@ -1,3 +1,5 @@
+jest.mock('@cerner/terra-cli/lib/utils/Logger');
+
 const viewportHelpers = require('../../../src/commands/viewport-helpers');
 const { TERRA_VIEWPORTS } = require('../../../src/static-assets/viewports');
 

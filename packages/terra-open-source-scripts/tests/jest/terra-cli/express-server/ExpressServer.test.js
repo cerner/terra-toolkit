@@ -1,4 +1,4 @@
-jest.mock('@cerner/terra-cli');
+jest.mock('@cerner/terra-cli/lib/utils/Logger');
 
 const fs = require('fs-extra');
 const ExpressServer = require('../../../../src/terra-cli/express-server/ExpressServer');

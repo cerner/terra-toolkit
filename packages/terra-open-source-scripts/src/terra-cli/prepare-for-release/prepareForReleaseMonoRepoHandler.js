@@ -24,8 +24,8 @@ module.exports = async () => {
 
     if (stripAnsi(await fs.readFile(VERSION_OUTPUT_PATH, 'utf-8')).includes('lerna success version finished')) {
       const { stdout } = await exec('npx lerna changed'); // Clean up lerna updated output and convert to an array
-      const updatedPackages = stdout.split('\n').map(x => `packages/${x.replace('@cerner/', '')}`);
-      updatedPackages.pop(); // Remove last item as it is an empty string
+      // The lines we're looking for don't start with lerna. They're the ones with the changed packages
+      const updatedPackages = stdout.split('\n').filter(x => !x.startsWith('lerna')).map(x => `packages/${x.replace('@cerner/', '')}`);
 
       // Update release version in changelog files
       await Promise.all(updatedPackages.map(packagePath => updateChangelogForPackage(packagePath)));

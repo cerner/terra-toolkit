@@ -4,7 +4,7 @@ const path = require('path');
 module.exports = async (packagePath) => {
   const packageFile = path.resolve(packagePath, 'package.json');
   const changelogFile = path.resolve(packagePath, 'CHANGELOG.md');
-  const releaseDate = new Date().toLocaleString('en-us', { month: 'long', year: 'numeric', day: 'numeric' });
+  const releaseDate = Date.now().toLocaleString('en-us', { month: 'long', year: 'numeric', day: 'numeric' });
 
   if (!(await fs.pathExists(packageFile)) || !(await fs.pathExists(changelogFile))) {
     return;
@@ -48,5 +48,5 @@ module.exports = async (packagePath) => {
   const updatedChangelog = changelog.replace(regex, changelogDoc);
 
   // write out file.
-  fs.writeFile(changelogFile, updatedChangelog);
+  await fs.writeFile(changelogFile, updatedChangelog, { encoding: 'utf8', flag: 'w' });
 };

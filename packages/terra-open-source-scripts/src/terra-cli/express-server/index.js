@@ -1,4 +1,4 @@
-const expressHandler = require('./expressHandler');
+const expressHandler = require('./expressServerHandler');
 
 const express = {
   command: 'express-server',
