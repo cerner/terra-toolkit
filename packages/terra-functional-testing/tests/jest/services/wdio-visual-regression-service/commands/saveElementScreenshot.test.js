@@ -1,6 +1,4 @@
 import saveElementScreenshot from '../../../../../src/services/wdio-visual-regression-service/commands/saveElementScreenshot';
-
-// Note: we import this that way to allow sinon to stub the default method
 import makeElementScreenshot from '../../../../../src/services/wdio-visual-regression-service/modules/makeElementScreenshot';
 import saveBase64Image from '../../../../../src/services/wdio-visual-regression-service/utils/saveBase64Image';
 
