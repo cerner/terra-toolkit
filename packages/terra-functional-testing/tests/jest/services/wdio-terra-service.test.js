@@ -40,6 +40,28 @@ describe('WDIO Terra Service', () => {
     expect(global.Terra.validates.element).toBeDefined();
   });
 
+  it('should setup the global terra axe configuration', () => {
+    const rules = {
+      'scrollable-region-focusable': { enabled: false },
+      'color-contrast': { enabled: true },
+    };
+
+    expect(global.Terra.axe).toEqual({ rules });
+  });
+
+  it('should disable the axe color contrast rule for lowlight theme', () => {
+    const service = new WdioTerraService({ theme: 'clinical-lowlight-theme' });
+
+    service.before({ browserName: 'chrome' });
+
+    const rules = {
+      'scrollable-region-focusable': { enabled: false },
+      'color-contrast': { enabled: false },
+    };
+
+    expect(global.Terra.axe).toEqual({ rules });
+  });
+
   it('should set the expect command as a global api', () => {
     const service = new WdioTerraService();
 
@@ -79,6 +101,6 @@ describe('WDIO Terra Service', () => {
     service.afterCommand('url', [], 0, undefined);
 
     expect(mockHideInputCaret).toHaveBeenCalledWith('body');
-    expect(mockFindElement).toHaveBeenCalledWith('[data-terra-dev-site-loading]');
+    expect(mockFindElement).toHaveBeenCalledWith('[data-terra-test-loading]');
   });
 });
