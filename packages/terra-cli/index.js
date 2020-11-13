@@ -78,7 +78,7 @@ const terraClIDirectoriesFromPaths = async (paths, preferSrc) => {
 const loadTerraCommandPaths = async () => {
   const { name } = fs.readJSONSync(path.join(process.cwd(), 'package.json'));
   // Search the top level node_modules for dependencies in the allow list
-  const firstLevelDependencyPaths = DEPENDENCY_ALLOW_LIST.map(dependency => path.join(process.cwd(), 'node_modules', dependency));
+  const firstLevelDependencyPaths = DEPENDENCY_ALLOW_LIST.map(dependency => path.join(process.cwd(), 'node_modules', ...dependency.split('/')));
   // Only include mono repo packages if it's terra-toolkit and they're in the allow list and drop the @cerner since that's not included in the package directory
   const toolkitPackagePaths = (name === 'terra-toolkit' ? DEPENDENCY_ALLOW_LIST.map(dependency => dependency.replace('@cerner/', '')).map(dependency => path.join(process.cwd(), 'packages', dependency)) : []);
   // Only include the current directory if it's in the allow list
