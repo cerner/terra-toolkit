@@ -1,6 +1,5 @@
 {
   "name": "@cerner/terra-cli",
-  "private": true,
   "version": "0.0.0",
   "description": "Terra Cli",
   "main": "index.js",
