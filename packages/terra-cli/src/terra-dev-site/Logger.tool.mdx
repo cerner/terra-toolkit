@@ -1,0 +1,15 @@
+# Logger
+
+`terra-cli` provides a logger for use when creating cli tools. It is built on top of the [npm logger](https://github.com/npm/npmlog) and supports all log levels that the npm logger supports. It automatically provides a `terra` heading to group terra cli commands in one namespace and a `prefix` prop to group all logs from a given file together.
+
+## Example
+
+The following will log at the info level.
+
+```
+const Logger = require('@cerner/terra-cli/lib/utils/Logger');
+
+const logger = new Logger({ prefix: '[test-logger]' });
+
+logger.info('Logging something at the info level');
+```

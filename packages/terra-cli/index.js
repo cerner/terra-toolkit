@@ -6,7 +6,7 @@ const Logger = require('./lib/utils/Logger');
 
 const logger = new Logger({ prefix: '[terra-cli:terra]' });
 
-const DEPENDENCY_ALLOW_LIST = ['terra-functional-testing', 'terra-open-source-scripts'];
+const DEPENDENCY_ALLOW_LIST = ['@cerner/terra-functional-testing', '@cerner/terra-open-source-scripts'];
 
 /**
  * Does the initial set up of the CLI. This sets up things like help, version, etc.
@@ -79,8 +79,8 @@ const loadTerraCommandPaths = async () => {
   const { name } = fs.readJSONSync(path.join(process.cwd(), 'package.json'));
   // Search the top level node_modules for dependencies in the allow list
   const firstLevelDependencyPaths = DEPENDENCY_ALLOW_LIST.map(dependency => path.join(process.cwd(), 'node_modules', dependency));
-  // Only include mono repo packages if it's terra-toolkit and they're in the allow list
-  const toolkitPackagePaths = (name === 'terra-toolkit' ? DEPENDENCY_ALLOW_LIST.map(dependency => path.join(process.cwd(), 'packages', dependency)) : []);
+  // Only include mono repo packages if it's terra-toolkit and they're in the allow list and drop the @cerner since that's not included in the package directory
+  const toolkitPackagePaths = (name === 'terra-toolkit' ? DEPENDENCY_ALLOW_LIST.map(dependency => dependency.replace('@cerner/', '')).map(dependency => path.join(process.cwd(), 'packages', dependency)) : []);
   // Only include the current directory if it's in the allow list
   const currentProjectPaths = (DEPENDENCY_ALLOW_LIST.includes(name) ? [process.cwd()] : []);
   const terraCLIDirectories = [

@@ -21,6 +21,9 @@ module.exports = {
     'cobertura',
     'text-summary',
   ],
+  modulePathIgnorePatterns: [
+    'packages/terra-cli/tests/jest/fixtures',
+  ],
   roots: [process.cwd()],
   testMatch: [
     '**/jest/**/*.test.js',

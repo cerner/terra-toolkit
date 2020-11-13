@@ -6,6 +6,7 @@ const { promisify } = require('util');
 const Logger = require('@cerner/terra-cli/lib/utils/Logger');
 
 const setupGit = require('./setupGit');
+const setupNPM = require('./setupNPM');
 
 const logger = new Logger({ prefix: '[terra-open-source-scripts:release]' });
 
@@ -39,8 +40,8 @@ module.exports = async () => {
     return;
   }
 
-  // Writes the npm token used to publish to the npm registry. Requires the NPM_TOKEN to be set
-  await fs.writeFile(path.join(process.env.HOME, '.npmrc'), `//registry.npmjs.org/:_authToken=${process.env.NPM_TOKEN}`, 'utf-8');
+  // Setup NPM for the publishing process
+  await setupNPM();
 
   // Actually publish the package to npm
   await exec('npm publish');

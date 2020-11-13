@@ -1,10 +1,9 @@
 const childProcess = require('child_process');
-const path = require('path');
-const fs = require('fs-extra');
 const { promisify } = require('util');
 const Logger = require('@cerner/terra-cli/lib/utils/Logger');
 
 const setupGit = require('./setupGit');
+const setupNPM = require('./setupNPM');
 
 const logger = new Logger({ prefix: '[terra-open-source-scripts:release]' });
 const exec = promisify(childProcess.exec);
@@ -23,8 +22,8 @@ const getTags = (output) => {
 };
 
 module.exports = async () => {
-  // Writes the npm token used to publish to the npm registry. Requires the NPM_TOKEN to be set
-  await fs.writeFile(path.join(process.env.HOME, '.npmrc'), `//registry.npmjs.org/:_authToken=${process.env.NPM_TOKEN}`, 'utf-8');
+  // Setup NPM for the publishing process
+  await setupNPM();
 
   // Capture the stdout from the publish command so that we can parse it for the appropriate tags
   const { stdout } = await exec('npx lerna publish from-package --yes');
