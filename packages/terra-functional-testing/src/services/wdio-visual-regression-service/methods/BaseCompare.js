@@ -5,6 +5,12 @@ import path from 'path';
 const TEST_ID_REGEX = /\[([^)]+)\]/;
 
 export default class BaseCompare {
+  /**
+   * @param {Object} options - Service configuration options.
+   * @param {Object} options.baseScreenshotDir - The base screenshot directory path to save screenshot in.
+   * @param {Object} options.locale - The locale being tested.
+   * @param {Object} options.theme - The theme being tested.
+   */
   constructor(options) {
     const {
       baseScreenshotDir,
@@ -23,10 +29,10 @@ export default class BaseCompare {
    * the screenshot processing appropriate for the subclass' comparison method.
    *
    * @param {Object} context - Information provided to process the screenshot.
-   * @param {Object} context.browser - Contains the browser's name, version, userAgent.
+   * @param {Object} context.browserInfo - Contains the browser's name, version, userAgent.
    * @param {Object} context.suite - The test suite that is running.
    * @param {Object} context.test - The test that is running.
-   * @param {Object} context.meta - Contains the element, exclude, hide, remove, viewport as meta data to use.
+   * @param {Object} context.meta - Contains the currentFormFactor as meta data to use.
    * @param {*} base64Screenshot - The screenshot captured by the selenium command to process.
    */
   async processScreenshot(_context, _base64Screenshot) {
@@ -73,13 +79,15 @@ export default class BaseCompare {
    * Determines the directories to save the screenshot to.
    *
    * @param {Object} context - Compare context provided by VisualRegressionLauncher.
+   * @param {Object} context.browserInfo - Contains the browser's name, version, userAgent.
+   * @param {Object} context.meta - Contains the currentFormFactor as meta data to use.
    * @returns {String} - The screenshot directory path.
    */
   getScreenshotDir(context) {
-    const { browser, meta } = context;
+    const { browserInfo, meta } = context;
 
     const formFactor = meta.currentFormFactor;
-    const testForm = `${browser.name}_${formFactor}`;
+    const testForm = `${browserInfo.name}_${formFactor}`;
     const testSpec = path.parse(context.test.file).name;
 
     return path.join(this.theme, this.locale, testForm, testSpec);
