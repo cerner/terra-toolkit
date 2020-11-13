@@ -12,7 +12,7 @@ class SeleniumDockerService {
   constructor(options = {}) {
     const { version } = options;
 
-    this.version = version || '3.141.59-20200525';
+    this.version = version || '3.14.0-helium';
   }
 
   /**
