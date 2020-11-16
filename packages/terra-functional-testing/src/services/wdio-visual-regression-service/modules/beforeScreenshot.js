@@ -2,7 +2,6 @@ import logger from '@wdio/logger';
 
 import scroll from '../scripts/scroll';
 import scrollbars from '../scripts/scrollbars';
-// import getScrollPosition from '../scripts/getScrollPosition';
 import modifyElements from '../scripts/modifyElements';
 import triggerResize from '../scripts/triggerResize';
 
