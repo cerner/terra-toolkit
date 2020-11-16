@@ -2,12 +2,25 @@ import logger from '@wdio/logger';
 
 import scroll from '../scripts/scroll';
 import scrollbars from '../scripts/scrollbars';
+// import getScrollPosition from '../scripts/getScrollPosition';
 import modifyElements from '../scripts/modifyElements';
 import triggerResize from '../scripts/triggerResize';
 
 const log = logger('wdio-visual-regression-service:beforeScreenshot');
 
-export default async function beforeScreenshot(browser, options) {
+/**
+ * Helper method to prepare the dom for a screenshot by removing scroll bars, hiding and/or removing any elements
+ * indicated in the options and setting the scroll position to 0,0.
+ *
+ * @param {Object} browser - The global webdriver.io WebDriver instance.
+ * @param {Object=} options - The screenshot capturing and comparison options.
+ * @param {String[]} options.hide - The list of elements to set opacity 0 on to 'hide' from the dom when capturing the screenshot.
+ * @param {String[]} options.remove - The list of elements to set display: none on to 'remove' from dom when capturing the screenshot.
+ * @returns {undefined}
+ */
+export default async function beforeScreenshot(browser, options = {}) {
+  const { hide, remove } = options;
+
   // hide scrollbars
   log.info('hide scrollbars');
   await browser.execute(scrollbars, false);
@@ -16,15 +29,15 @@ export default async function beforeScreenshot(browser, options) {
   await browser.execute(triggerResize);
 
   // hide elements
-  if (Array.isArray(options.hide) && options.hide.length) {
-    log.info('hide the following elements: %s', options.hide.join(', '));
-    await browser.execute(modifyElements, options.hide, 'opacity', '0');
+  if (Array.isArray(hide) && hide.length) {
+    log.info('hide the following elements: %s', hide.join(', '));
+    await browser.execute(modifyElements, hide, 'opacity', '0');
   }
 
   // remove elements
-  if (Array.isArray(options.remove) && options.remove.length) {
-    log.info('remove the following elements: %s', options.remove.join(', '));
-    await browser.execute(modifyElements, options.remove, 'display', 'none');
+  if (Array.isArray(remove) && remove.length) {
+    log.info('remove the following elements: %s', remove.join(', '));
+    await browser.execute(modifyElements, remove, 'display', 'none');
   }
 
   // scroll back to start
