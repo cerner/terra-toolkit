@@ -62,6 +62,29 @@ export.config = {
 };
 ```
 
+### selector
+
+An optional selector can be configured to specify the element to be captured in the screenshot. The default selector is `data-terra-test-content`. Accessibility testing ignores this option and always tests the entire document.
+
+Type: `string`
+
+Required: `false`
+
+Default: `[data-terra-test-content] *:first-child`
+
+Example:
+
+```js
+// wdio.conf.js
+export.config = {
+    // ...
+    serviceOptions: {
+        selector: 'selector-name',
+    },
+    // ...
+};
+```
+
 ### theme
 
 An optional theme name that will be used to configure the testing environment. This option will flex the axe-core rules used during testing to account for the current theme.
