@@ -1,3 +1,8 @@
+/**
+ * Script to find the window, body and html dimensions.
+ *
+ * @returns {Object} The window, body and html screen dimensions.
+ */
 export default function getScreenDimension() {
   const { body } = document;
   const html = document.documentElement;
