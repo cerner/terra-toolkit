@@ -1,6 +1,6 @@
 {
   "name": "@cerner/terra-cli",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Terra Cli",
   "main": "index.js",
   "bin": {
@@ -40,7 +40,5 @@
     "lockfile": "^1.0.4",
     "npmlog": "^4.1.2",
     "yargs": "^16.1.1"
-  },
-  "peerDependencies": {
   }
 }
