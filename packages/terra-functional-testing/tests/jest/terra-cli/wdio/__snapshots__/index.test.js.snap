@@ -6,8 +6,8 @@ exports[`index declares the wdio terra-cli command with proper command level hel
 Run wdio tests
 
 Options:
-  --version            Show version number                             [boolean]
-  --help               Show help                                       [boolean]
+      --version        Show version number                             [boolean]
+      --help           Show help                                       [boolean]
   -c, --configuration  A file path to the test runner configuration.    [string]"
 `;
 

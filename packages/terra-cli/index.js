@@ -20,22 +20,22 @@ const setupCLI = () => {
     .strict()
     .fail((msg, err) => {
       // certain yargs validations throw strings
-      const actual = err || new Error(msg);
+      const actualError = err || new Error(msg);
 
       // ValidationErrors are already logged, as are package errors
-      if (actual.name !== 'ValidationError' && !actual.pkg) {
+      if (actualError.name !== 'ValidationError' && !actualError.pkg) {
         // the recommendCommands() message is too terse
-        if (/Did you mean/.test(actual.message)) {
+        if (/Did you mean/.test(actualError.message)) {
           // eslint-disable-next-line no-console
           logger.error(`Unknown command "${cli.parsed.argv._[0]}"`);
         }
 
         // eslint-disable-next-line no-console
-        logger.error(actual.message);
+        logger.error(actualError.message);
       }
 
       // exit non-zero so the CLI can be usefully chained
-      cli.exit(actual.code > 0 ? actual.code : 1, actual);
+      cli.exit(actualError.code > 0 ? actualError.code : 1, actualError);
     })
     .alias('h', 'help')
     .alias('v', 'version')
@@ -61,7 +61,7 @@ const subDirectoriesOfDirectory = async (directoryPath) => {
  * @param {boolean} preferSrc - indicates whether or not src should be used instead of lib. This should be used in cases where the package being searched is local
  * @returns {Array} an array of paths resolved out to the terra-cli directory
  */
-const terraClIDirectoriesFromPaths = async (paths, preferSrc) => {
+const terraClIDirectoriesFromPaths = async ({ paths, preferSrc }) => {
   const cliDirectories = paths.map(dependencyPath => path.join(dependencyPath, preferSrc ? 'src' : 'lib', 'terra-cli'));
   const pathExistsForDirectories = await Promise.all(cliDirectories.map((directory) => fs.pathExists(directory)));
   return cliDirectories.filter((_, index) => pathExistsForDirectories[index]);
@@ -85,9 +85,9 @@ const loadTerraCommandPaths = async () => {
   const currentProjectPaths = (DEPENDENCY_ALLOW_LIST.includes(name) ? [process.cwd()] : []);
   const terraCLIDirectories = [
     // Prefer lib from installed dependencies
-    ...(await terraClIDirectoriesFromPaths(firstLevelDependencyPaths, false)),
+    ...(await terraClIDirectoriesFromPaths({ paths: firstLevelDependencyPaths, preferSrc: false })),
     // Prefer src from local mono repo packages and the current project
-    ...(await terraClIDirectoriesFromPaths([...toolkitPackagePaths, ...currentProjectPaths], true)),
+    ...(await terraClIDirectoriesFromPaths({ paths: [...toolkitPackagePaths, ...currentProjectPaths], preferSrc: true })),
   ];
   // Takes the list of terra-cli paths and finds all subdirectories. The result will be an array of arrays
   const unflattenedCommandPaths = await Promise.all(terraCLIDirectories.map((directory) => subDirectoriesOfDirectory(directory)));
