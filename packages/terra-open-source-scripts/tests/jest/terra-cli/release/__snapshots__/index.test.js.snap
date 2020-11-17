@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`release declares the release terra-cli command with proper command level help 1`] = `
+"terra release
+
+Publish the current project, create git tags, and push the git tags
+
+Options:
+  --version  Show version number                                       [boolean]
+  --help     Show help                                                 [boolean]"
+`;
+
+exports[`release declares the release terra-cli command with proper top level help 1`] = `
+"terra [command]
+
+Commands:
+  terra release  Publish the current project, create git tags, and push the git
+                 tags
+
+Options:
+  --version  Show version number                                       [boolean]
+  --help     Show help                                                 [boolean]"
+`;

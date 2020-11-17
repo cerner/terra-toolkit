@@ -1,8 +1,8 @@
 const fs = require('fs');
 const express = require('express');
-const Logger = require('../logger/logger');
+const { Logger } = require('@cerner/terra-cli');
 
-const logger = new Logger({ prefix: 'express-server' });
+const logger = new Logger({ prefix: '[terra-functional-testing:express-server]' });
 
 class ExpressServer {
   constructor(options = {}) {

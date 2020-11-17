@@ -1,0 +1,43 @@
+# Terra CLI
+
+Terra CLI is a command line builder that supports creating [yargs commands](https://github.com/yargs/yargs/blob/master/docs/advanced.md#commands) via defining [command modules](https://github.com/yargs/yargs/blob/master/docs/advanced.md#providing-a-command-module). Currently, terra-cli searches for a `terra-cli` directory in a given dependency and assumes that all subdirectories are separate command modules defined via `index.js` files in those subdirectories.
+
+## Allow List
+
+To limit who can create these commands, terra-cli currently uses an allow list to only search for the following dependencies:
+
+* @cerner/terra-functional-testing
+* @cerner/terra-open-source-scripts
+
+## Dependency Searching
+
+The search paths that terra-cli uses to search for terra-cli commands includes (constrained by the [allow list](#allow-list) mentioned above):
+
+* The current project's src directory
+* The src directory within subdirectories of the packages directory if the current project is `terra-toolkit`
+* The lib directory within subdirectories of the node_modules directory
+
+We use the src directory in the first two cases to allow for easier local development.
+
+## Example command
+
+If you want to create a command `test`, you should add a file at `src/terra-cli/test/index.js` within a dependency in the allowlist. This file should be set up to be copied but not transpiled over to the `lib` directory. The file should contain something similar to:
+
+```javascript
+const test = {
+  command: 'test',
+  describe: 'Test command description',
+  builder: (yargs) => testOptionsBuilder,
+  handler: testHandler,
+};
+
+module.exports = test;
+```
+
+For more information on how to create these modules see the [yargs documentation](https://github.com/yargs/yargs/blob/master/docs/advanced.md#providing-a-command-module).
+
+To run this command, you would execute:
+
+```sh
+terra test <options>
+```

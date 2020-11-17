@@ -1,4 +1,6 @@
-const Logger = require('../logger/logger');
+const Logger = require('@cerner/terra-cli/lib/utils/Logger');
+
+const logger = new Logger({ prefix: '[terra-functional-testing:wdio-terra-service]' });
 
 /**
  * Hides the blinking input caret that appears within editable text areas to prevent inconsistent test failures.
@@ -9,7 +11,6 @@ const hideInputCaret = (selector) => {
   if (global.browser.$(selector).isExisting()) {
     global.browser.execute(`document.querySelector("${selector.replace(/"/g, '\\"')}").style.caretColor = "transparent";`);
   } else {
-    const logger = new Logger({ prefix: 'wdio-terra-service' });
     logger.error(`No element could be found with the selector '${selector}'.`);
   }
 };

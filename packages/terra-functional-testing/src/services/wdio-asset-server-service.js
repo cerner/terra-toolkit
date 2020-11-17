@@ -1,9 +1,9 @@
 const { SevereServiceError } = require('webdriverio');
+const { Logger } = require('@cerner/terra-cli');
 const ExpressServer = require('../express-server');
 const WebpackServer = require('../webpack-server');
-const Logger = require('../logger/logger');
 
-const logger = new Logger({ prefix: 'wdio-asset-server-service' });
+const logger = new Logger({ prefix: '[terra-functional-testing:wdio-asset-server-service]' });
 
 class AssetServerService {
   constructor(options = {}) {

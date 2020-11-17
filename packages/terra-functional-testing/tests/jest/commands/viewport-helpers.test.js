@@ -1,3 +1,5 @@
+jest.mock('@cerner/terra-cli/lib/utils/Logger');
+
 const viewportHelpers = require('../../../src/commands/viewport-helpers');
 const { TERRA_VIEWPORTS } = require('../../../src/static-assets/viewports');
 
@@ -42,13 +44,10 @@ describe('Viewport', () => {
     expect(global.browser.setWindowSize).toHaveBeenCalledWith(width, height);
   });
 
-  it('should log message for unsupported viewport', () => {
-    jest.spyOn(console, 'error').mockImplementationOnce(() => { });
-
+  it('should not set the window size for unsupported viewport', () => {
     viewportHelpers.setViewport('unsupported-viewport');
 
-    // eslint-disable-next-line no-console
-    expect(console.error).toHaveBeenCalledWith('[ERROR] [terra-functional-testing:wdio-terra-service] The unsupported-viewport formFactor supplied is not a viewport size supported by Terra.');
+    expect(global.browser.setWindowSize).not.toHaveBeenCalled();
   });
 
   it('should describe viewport', () => {

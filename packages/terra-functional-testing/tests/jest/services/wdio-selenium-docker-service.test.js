@@ -1,5 +1,5 @@
 jest.mock('util');
-jest.mock('../../../src/logger/logger');
+jest.mock('@cerner/terra-cli');
 
 const util = require('util');
 const path = require('path');
