@@ -1,9 +1,11 @@
 {
   "name": "@cerner/terra-cli",
-  "private": true,
   "version": "0.0.0",
   "description": "Terra Cli",
   "main": "index.js",
+  "bin": {
+    "terra": "./bin/terra"
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -13,8 +15,8 @@
     "directory": "packages/terra-cli"
   },
   "keywords": [
-    "eslint",
-    "eslint-config",
+    "cli",
+    "terra-cli",
     "Cerner",
     "Terra"
   ],
@@ -28,9 +30,16 @@
   },
   "homepage": "https://github.com/cerner/terra-toolkit",
   "scripts": {
-    "lint": "eslint --ext .js,.jsx ."
+    "compile": "babel src --out-dir lib --copy-files --ignore src/utils",
+    "jest": "jest --config ../../jest.config.js",
+    "lint": "eslint --ext .js,.jsx .",
+    "test": "npm run jest"
   },
   "dependencies": {
+    "fs-extra": "^9.0.1",
+    "lockfile": "^1.0.4",
+    "npmlog": "^4.1.2",
+    "yargs": "^16.1.1"
   },
   "peerDependencies": {
   }

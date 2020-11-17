@@ -1,0 +1,40 @@
+jest.mock('@cerner/terra-cli');
+jest.mock('../../../../src/terra-cli/wdio/test-runner');
+
+const yargs = require('yargs');
+const command = require('../../../../src/terra-cli/wdio/index');
+const TestRunner = require('../../../../src/terra-cli/wdio/test-runner');
+
+describe('index', () => {
+  it('declares the wdio terra-cli command with proper top level help', async () => {
+    const parser = yargs.command(command).scriptName('terra').help();
+    const helpOutput = await new Promise((resolve) => {
+      parser.parse('--help', (err, argv, output) => {
+        resolve(output);
+      });
+    });
+    expect(helpOutput).toMatchSnapshot();
+  });
+
+  it('declares the wdio terra-cli command with proper command level help', async () => {
+    const parser = yargs.command(command).scriptName('terra').help();
+    const helpOutput = await new Promise((resolve) => {
+      parser.parse('wdio --help', (err, argv, output) => {
+        resolve(output);
+      });
+    });
+    expect(helpOutput).toMatchSnapshot();
+  });
+
+  it('should invoke the test runner with the default command line arguments', async () => {
+    const { handler } = command;
+
+    jest.spyOn(TestRunner, 'run').mockImplementationOnce(() => { });
+
+    const config = {};
+
+    await handler(config);
+
+    expect(TestRunner.run).toHaveBeenCalledWith(config);
+  });
+});

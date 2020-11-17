@@ -6,6 +6,7 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: [
     'packages/**/src/**/*.js',
+    '!packages/terra-cli/tests/**/*.js',
     '!packages/terra-functional-testing/src/services/wdio-visual-regression-service/commands/*.js',
     '!packages/terra-functional-testing/src/services/wdio-visual-regression-service/methods/(S)*.js',
     '!packages/terra-functional-testing/src/services/wdio-visual-regression-service/modules/(a|b|m)*.js',
@@ -19,6 +20,9 @@ module.exports = {
     'lcov',
     'cobertura',
     'text-summary',
+  ],
+  modulePathIgnorePatterns: [
+    'packages/terra-cli/tests/jest/fixtures',
   ],
   roots: [process.cwd()],
   testMatch: [

@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`express-server declares the express-server terra-cli command with proper command level help 1`] = `
+"terra express-server
+
+Start a simple express-server hosting a directory
+
+Options:
+  --version  Show version number                                       [boolean]
+  --help     Show help                                                 [boolean]
+  --port     The port on which to host the server       [number] [default: 8080]
+  --host     The host on which to host the server    [string] [default: 0.0.0.0]
+  --site     The directory path from which to serve the static assets
+                                                             [string] [required]"
+`;
+
+exports[`express-server declares the express-server terra-cli command with proper top level help 1`] = `
+"terra [command]
+
+Commands:
+  terra express-server  Start a simple express-server hosting a directory
+
+Options:
+  --version  Show version number                                       [boolean]
+  --help     Show help                                                 [boolean]"
+`;

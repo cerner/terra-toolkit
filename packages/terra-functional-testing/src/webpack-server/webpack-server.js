@@ -1,8 +1,8 @@
 const WebpackDevServer = require('webpack-dev-server');
 const webpack = require('webpack');
-const Logger = require('../logger/logger');
+const { Logger } = require('@cerner/terra-cli');
 
-const logger = new Logger({ prefix: 'webpack-server' });
+const logger = new Logger({ prefix: '[terra-functional-testing:webpack-server]' });
 
 class WebpackServer {
   constructor(options = {}) {
@@ -45,7 +45,7 @@ class WebpackServer {
       const watcher = origWatch.call(compiler, watchOptions, handler);
       // Remove the 'watch' function from the returned watcher.
       watcher.watch = () => {
-        logger.log('Hot reloading has been disabled for tests.');
+        logger.info('Hot reloading has been disabled for tests.');
       };
       return watcher;
     };
