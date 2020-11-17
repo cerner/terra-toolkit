@@ -1,7 +1,8 @@
-const Logger = require('../logger/logger');
+const Logger = require('@cerner/terra-cli/lib/utils/Logger');
+
 const { TERRA_VIEWPORTS } = require('../static-assets/viewports');
 
-const logger = new Logger({ prefix: 'wdio-terra-service' });
+const logger = new Logger({ prefix: '[terra-functional-testing:wdio-terra-service]' });
 
 /**
  * Convenience method for getting the Terra test viewports by name.

@@ -1,4 +1,4 @@
-jest.mock('../../../src/logger/logger');
+jest.mock('@cerner/terra-cli');
 
 const AssetService = require('../../../src/services/wdio-asset-server-service');
 const ExpressServer = require('../../../src/express-server/express-server');

@@ -1,4 +1,4 @@
-# Eslint Config Terra
+# CLI
 
 [![NPM version](https://badgen.net/npm/v/@cerner/terra-cli)](https://www.npmjs.org/package/@cerner/terra-cli)
 [![Build Status](https://badgen.net/travis/cerner/terra-toolkit)](https://travis-ci.com/cerner/terra-toolkit)

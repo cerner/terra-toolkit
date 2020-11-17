@@ -14,7 +14,7 @@
     "*.md"
   ],
   "scripts": {
-    "compile": "babel src --out-dir lib --copy-files",
+    "compile": "babel src --out-dir lib --copy-files --ignore src/terra-cli",
     "lint": "eslint --ext .js,.jsx --ignore-path ../../.eslintignore .",
     "jest": "jest --config ../../jest.config.js",
     "precompile": "rm -rf lib",
@@ -41,9 +41,6 @@
     "url": "https://github.com/cerner/terra-toolkit/issues"
   },
   "homepage": "https://github.com/cerner/terra-toolkit#readme",
-  "bin": {
-    "tt-test": "bin/test-runner.js"
-  },
   "dependencies": {
     "@babel/runtime": "^7.11.2",
     "@wdio/cli": "^6.1.4",
@@ -73,12 +70,17 @@
     "webpack-dev-server": "^3.11.0",
     "which": "^2.0.2"
   },
+  "peerDependencies": {
+    "@cerner/terra-cli": "^0.0.0"
+  },
   "devDependencies": {
+    "@cerner/terra-cli": "^0.0.0",
     "chai": "^4.2.0",
     "glob": "^7.1.6",
     "mocha": "^8.1.1",
     "nock": "^12.0.3",
     "np": "^6.3.2",
-    "sinon": "^9.0.2"
+    "sinon": "^9.0.2",
+    "yargs": "^16.1.1"
   }
 }

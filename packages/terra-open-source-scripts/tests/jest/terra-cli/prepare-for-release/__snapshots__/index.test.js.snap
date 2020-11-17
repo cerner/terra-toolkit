@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`prepare-for-release declares the prepare-for-release terra-cli command with proper command level help 1`] = `
+"terra prepare-for-release
+
+Prepare the project for release by updating the version and changelog of the
+project(s)
+
+Options:
+  --version  Show version number                                       [boolean]
+  --help     Show help                                                 [boolean]"
+`;
+
+exports[`prepare-for-release declares the prepare-for-release terra-cli command with proper top level help 1`] = `
+"terra [command]
+
+Commands:
+  terra prepare-for-release  Prepare the project for release by updating the
+                             version and changelog of the project(s)
+
+Options:
+  --version  Show version number                                       [boolean]
+  --help     Show help                                                 [boolean]"
+`;
