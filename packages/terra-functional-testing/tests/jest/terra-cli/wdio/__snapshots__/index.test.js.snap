@@ -1,10 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`index should export the test runner cli 1`] = `
-Object {
-  "builder": [Function],
-  "command": "wdio",
-  "describe": "Run wdio tests",
-  "handler": [MockFunction],
-}
+exports[`index declares the wdio terra-cli command with proper command level help 1`] = `
+"terra wdio
+
+Run wdio tests
+
+Options:
+  --version            Show version number                             [boolean]
+  --help               Show help                                       [boolean]
+  -c, --configuration  A file path to the test runner configuration.    [string]"
+`;
+
+exports[`index declares the wdio terra-cli command with proper top level help 1`] = `
+"terra [command]
+
+Commands:
+  terra wdio  Run wdio tests
+
+Options:
+  --version  Show version number                                       [boolean]
+  --help     Show help                                                 [boolean]"
 `;

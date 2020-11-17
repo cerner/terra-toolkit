@@ -10,7 +10,7 @@ const ReleaseCommand = require('../../../../src/terra-cli/release');
 
 describe('release', () => {
   it('declares the release terra-cli command with proper top level help', async () => {
-    const parser = yargs.command(ReleaseCommand).help();
+    const parser = yargs.command(ReleaseCommand).scriptName('terra').help();
     const helpOutput = await new Promise((resolve) => {
       parser.parse('--help', (err, argv, output) => {
         resolve(output);
@@ -20,7 +20,7 @@ describe('release', () => {
   });
 
   it('declares the release terra-cli command with proper command level help', async () => {
-    const parser = yargs.command(ReleaseCommand).help();
+    const parser = yargs.command(ReleaseCommand).scriptName('terra').help();
     const helpOutput = await new Promise((resolve) => {
       parser.parse('release --help', (err, argv, output) => {
         resolve(output);

@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`release declares the release terra-cli command with proper command level help 1`] = `
-"processChild.js release
+"terra release
 
 Publish the current project, create git tags, and push the git tags
 
@@ -11,11 +11,11 @@ Options:
 `;
 
 exports[`release declares the release terra-cli command with proper top level help 1`] = `
-"processChild.js [command]
+"terra [command]
 
 Commands:
-  processChild.js release  Publish the current project, create git tags, and
-                           push the git tags
+  terra release  Publish the current project, create git tags, and push the git
+                 tags
 
 Options:
   --version  Show version number                                       [boolean]

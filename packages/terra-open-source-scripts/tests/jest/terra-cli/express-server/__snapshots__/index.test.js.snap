@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`express-server declares the express-server terra-cli command with proper command level help 1`] = `
-"processChild.js express-server
+"terra express-server
 
 Start a simple express-server hosting a directory
 
@@ -15,11 +15,10 @@ Options:
 `;
 
 exports[`express-server declares the express-server terra-cli command with proper top level help 1`] = `
-"processChild.js [command]
+"terra [command]
 
 Commands:
-  processChild.js express-server  Start a simple express-server hosting a
-                                  directory
+  terra express-server  Start a simple express-server hosting a directory
 
 Options:
   --version  Show version number                                       [boolean]
