@@ -84,16 +84,10 @@ pass in a function that returns the filename for the current screenshot. Functio
 
 ## Usage
 wdio-visual-regression-service enhances an WebdriverIO instance with the following commands:
-* `browser.checkViewport([{options}]);`
-* `browser.checkDocument([{options}]);`
-* `browser.checkElement(elementSelector, [{options}]);`
+* `browser.checkElement(elementSelector, {options});`
 
 All of these provide options that will help you to capture screenshots in different dimensions or to exclude irrelevant parts (e.g. content). The following options are
 available:
-
-* **exclude** `String[]|Object[]` (**not yet implemented**)<br />
-  exclude frequently changing parts of your screenshot, you can either pass all kinds of different [WebdriverIO selector strategies](http://webdriver.io/guide/usage/selectors.html)
-  that queries one or multiple elements or you can define x and y values which stretch a rectangle or polygon
 
 * **hide** `Object[]`<br />
   hides all elements queried by all kinds of different [WebdriverIO selector strategies](http://webdriver.io/guide/usage/selectors.html) (via `visibility: hidden`)
