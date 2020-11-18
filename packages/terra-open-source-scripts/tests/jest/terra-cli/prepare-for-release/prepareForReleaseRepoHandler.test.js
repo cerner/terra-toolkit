@@ -1,15 +1,13 @@
 jest.mock('inquirer');
 jest.mock('npmlog');
 jest.mock('util');
+jest.mock('@npmcli/promise-spawn');
 jest.mock('../../../../src/terra-cli/prepare-for-release/updateChangelogForPackage');
 
 const inquirer = require('inquirer');
 const log = require('npmlog');
-const { promisify } = require('util');
+const spawn = require('@npmcli/promise-spawn');
 const updateChangelogForPackage = require('../../../../src/terra-cli/prepare-for-release/updateChangelogForPackage');
-
-const mockExec = jest.fn();
-promisify.mockImplementation(() => mockExec);
 
 const prepareForReleaseRepoHandler = require('../../../../src/terra-cli/prepare-for-release/prepareForReleaseRepoHandler');
 
@@ -30,7 +28,7 @@ describe('prepareForReleaseRepoHandler', () => {
       },
     ]);
     expect(log.resume).toHaveBeenCalled();
-    expect(mockExec).toHaveBeenCalledWith('npm --no-git-tag-version version patch');
+    expect(spawn).toHaveBeenCalledWith('npm', ['--no-git-tag-version', 'version', 'patch'], { stdioString: true });
     expect(updateChangelogForPackage).toHaveBeenCalledWith(process.cwd());
   });
 
@@ -50,7 +48,7 @@ describe('prepareForReleaseRepoHandler', () => {
       },
     ]);
     expect(log.resume).toHaveBeenCalled();
-    expect(mockExec).toHaveBeenCalledWith('npm --no-git-tag-version version minor');
+    expect(spawn).toHaveBeenCalledWith('npm', ['--no-git-tag-version', 'version', 'minor'], { stdioString: true });
     expect(updateChangelogForPackage).toHaveBeenCalledWith(process.cwd());
   });
 
@@ -70,7 +68,7 @@ describe('prepareForReleaseRepoHandler', () => {
       },
     ]);
     expect(log.resume).toHaveBeenCalled();
-    expect(mockExec).toHaveBeenCalledWith('npm --no-git-tag-version version major');
+    expect(spawn).toHaveBeenCalledWith('npm', ['--no-git-tag-version', 'version', 'major'], { stdioString: true });
     expect(updateChangelogForPackage).toHaveBeenCalledWith(process.cwd());
   });
 });
