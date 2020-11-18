@@ -1,16 +1,13 @@
-jest.mock('util');
+jest.mock('@npmcli/promise-spawn');
 jest.mock('fs-extra');
 jest.mock('pacote');
 jest.mock('../../../../src/terra-cli/release/setupNPM');
 jest.mock('../../../../src/terra-cli/release/setupGit');
 
+const spawn = require('@npmcli/promise-spawn');
 const pacote = require('pacote');
 const path = require('path');
 const fs = require('fs-extra');
-const { promisify } = require('util');
-
-const mockExec = jest.fn();
-promisify.mockImplementation(() => mockExec);
 
 const setupNPM = require('../../../../src/terra-cli/release/setupNPM');
 const setupGit = require('../../../../src/terra-cli/release/setupGit');
@@ -28,9 +25,9 @@ describe('releaseRepoHandler', () => {
       registry: 'https://registry.npmjs.org/',
     });
     expect(setupNPM).toHaveBeenCalled();
-    expect(mockExec).toHaveBeenCalledWith('npm publish');
+    expect(spawn).toHaveBeenCalledWith('npm', ['publish'], { stdioString: true });
     expect(setupGit).toHaveBeenCalled();
-    expect(mockExec).toHaveBeenCalledWith('git tag -a v1.3.0 -m "v1.3.0"');
-    expect(mockExec).toHaveBeenCalledWith('git push origin --tags');
+    expect(spawn).toHaveBeenCalledWith('git', ['tag', '-a', 'v1.3.0', '-m', '"v1.3.0"'], { stdioString: true });
+    expect(spawn).toHaveBeenCalledWith('git', ['push', 'origin', '--tags'], { stdioString: true });
   });
 });
