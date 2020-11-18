@@ -4,8 +4,6 @@ import { parse as parsePlatform } from 'platform';
 
 import { LocalCompare } from './compare';
 import makeElementScreenshot from './modules/makeElementScreenshot';
-import makeDocumentScreenshot from './modules/makeDocumentScreenshot';
-import makeViewportScreenshot from './modules/makeViewportScreenshot';
 
 import getUserAgent from './scripts/getUserAgent';
 import getTerraFormFactor from './modules/getTerraFormFactor';
@@ -13,9 +11,9 @@ import getTerraFormFactor from './modules/getTerraFormFactor';
 class VisualRegressionLauncher {
   /**
    * @param {Object} options - Service configuration options.
-   * @param {Object} options.baseScreenshotDir - The base screenshot directory path to save screenshot in
-   * @param {Object} options.locale - The locale being tested
-   * @param {Object} options.theme - The theme being tested
+   * @param {Object} options.baseScreenshotDir - The base screenshot directory path to save screenshot in.
+   * @param {Object} options.locale - The locale being tested.
+   * @param {Object} options.theme - The theme being tested.
    */
   constructor(options) {
     this.compare = new LocalCompare(options);
@@ -44,8 +42,6 @@ class VisualRegressionLauncher {
     };
 
     browser.addCommand('checkElement', this.wrapCommand(browser, makeElementScreenshot));
-    browser.addCommand('checkDocument', this.wrapCommand(browser, makeDocumentScreenshot));
-    browser.addCommand('checkViewport', this.wrapCommand(browser, makeViewportScreenshot));
   }
 
   /**
@@ -81,13 +77,24 @@ class VisualRegressionLauncher {
 
   /**
    * Command wrapper to setup the command with the correct context values defined from the global
-   * browser instance.
+   * webdriver.IO WebDriver instance.
    *
-   * @param {object} browser - global wdio browser instance
-   * @param {function} command - the test command that should be executed
+   * @param {object} browser - The global webdriver.IO WebDriver instance.
+   * @param {function} command - The test command that should be executed.
    */
   wrapCommand(browser, command) {
-    return async function wrappedScreenshotCommand(...args) {
+    /**
+     * The wrapped command with access to the global webdriver.IO WebDriver instance.
+     *
+     * @param {String} elementSelector - The css selector of the element that should be captured in the screenshot.
+     * @param {Object=} options - The screenshot capturing and comparison options.
+     * @param {String[]} options.hide - The list of elements to set opacity 0 on to 'hide' from the dom when capturing the screenshot.
+     * @param {String[]} options.remove - The list of elements to set display: none on to 'remove' from dom when capturing the screenshot.
+     * @param {String} options.ignoreComparison - The image comparison algorithm to use when processing the screenshot comparison.
+     * @param {Number} options.misMatchTolerance - The acceptable mismatch tolerance the screenshot can have when processing the screenshot comparison.
+     * @returns {Object} - The screenshot comparison results returned as { misMatchPercentage: Number, isSameDimensions: Boolean, getImageDataUrl: function }.
+     */
+    return async function wrappedScreenshotCommand(elementSelector, options) {
       let currentFormFactor;
       if (browser.isMobile) {
         currentFormFactor = await browser.getOrientation();
@@ -105,8 +112,7 @@ class VisualRegressionLauncher {
       };
 
       const screenshotContextCleaned = _.pickBy(screenshotContext, _.identity);
-
-      const base64Screenshot = await command(browser, ...args);
+      const base64Screenshot = await command(browser, elementSelector, options);
       const results = await this.compare.processScreenshot(screenshotContextCleaned, base64Screenshot);
       return results;
     }.bind(this);

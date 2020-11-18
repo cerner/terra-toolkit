@@ -58,8 +58,6 @@ describe('VisualRegressionLauncher', () => {
       await service.before({}, []);
 
       expect(global.browser.addCommand).toHaveBeenNthCalledWith(1, 'checkElement', expect.any(Function));
-      expect(global.browser.addCommand).toHaveBeenNthCalledWith(2, 'checkDocument', expect.any(Function));
-      expect(global.browser.addCommand).toHaveBeenNthCalledWith(3, 'checkViewport', expect.any(Function));
     });
   });
 
@@ -96,6 +94,7 @@ describe('VisualRegressionLauncher', () => {
   describe('VisualRegressionLauncher.wrapCommand', () => {
     const service = new VisualRegressionLauncher({});
     const mockCommand = jest.fn().mockReturnValue('mock screenshot');
+    const mockSelector = '[data-test-content]';
     const mockArgs = { name: 'mock' };
 
     afterAll(() => {
@@ -129,10 +128,10 @@ describe('VisualRegressionLauncher', () => {
       };
 
       const wrappedCommand = service.wrapCommand(global.browser, mockCommand);
-      const results = await wrappedCommand(mockArgs);
+      const results = await wrappedCommand(mockSelector, mockArgs);
 
       expect(getTerraFormFactor).toHaveBeenCalled();
-      expect(mockCommand).toHaveBeenCalledWith(global.browser, mockArgs);
+      expect(mockCommand).toHaveBeenCalledWith(global.browser, mockSelector, mockArgs);
       expect(service.compare.processScreenshot).toHaveBeenCalledWith(expectedScreenshotContext, 'mock screenshot');
       expect(results).toBe('mocked screenshot results');
     });
@@ -161,10 +160,10 @@ describe('VisualRegressionLauncher', () => {
       };
 
       const wrappedCommand = service.wrapCommand(global.browser, mockCommand);
-      const results = await wrappedCommand(mockArgs);
+      const results = await wrappedCommand(mockSelector, mockArgs);
 
       expect(global.browser.getOrientation).toHaveBeenCalled();
-      expect(mockCommand).toHaveBeenCalledWith(global.browser, mockArgs);
+      expect(mockCommand).toHaveBeenCalledWith(global.browser, mockSelector, mockArgs);
       expect(service.compare.processScreenshot).toHaveBeenCalledWith(expectedScreenshotContext, 'mock screenshot');
       expect(results).toBe('mocked screenshot results');
     });
