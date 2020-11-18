@@ -26,12 +26,10 @@ const setupCLI = () => {
       if (actualError.name !== 'ValidationError' && !actualError.pkg) {
         // the recommendCommands() message is too terse
         if (/Did you mean/.test(actualError.message)) {
-          // eslint-disable-next-line no-console
-          logger.error(`Unknown command "${cli.parsed.argv._[0]}"`);
+          logger.error(`Unknown command "${cli.parsed.argv._[0]}". ${actualError.message}`);
+        } else {
+          logger.error(actualError.stack);
         }
-
-        // eslint-disable-next-line no-console
-        logger.error(actualError.message);
       }
 
       // exit non-zero so the CLI can be usefully chained

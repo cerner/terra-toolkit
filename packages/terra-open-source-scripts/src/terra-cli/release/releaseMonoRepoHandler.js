@@ -26,7 +26,7 @@ module.exports = async () => {
   await setupNPM();
 
   // Capture the stdout from the publish command so that we can parse it for the appropriate tags
-  const { stdout } = await exec('npx lerna publish from-package --yes');
+  const { stdout } = await exec('npx lerna publish from-package --yes', { maxBuffer: 1024 * 1024 * 1024 });
   logger.info(stdout);
 
   // Retrieve the tags that were published
@@ -34,7 +34,7 @@ module.exports = async () => {
   if (tags) {
     // Setup git
     await setupGit();
-    logger.info('tags', JSON.stringify(tags, null, 2));
+    logger.info(`tags ${JSON.stringify(tags, null, 2)}`);
 
     // Tag based on what was published and push those tags to origin
     await Promise.all(tags.map(tag => exec(`git tag -a ${tag} -m "${tag}"`)));

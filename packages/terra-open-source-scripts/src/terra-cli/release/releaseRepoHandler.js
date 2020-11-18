@@ -44,7 +44,7 @@ module.exports = async () => {
   await setupNPM();
 
   // Actually publish the package to npm
-  await exec('npm publish');
+  await exec('npm publish', { maxBuffer: 1024 * 1024 * 1024 });
 
   // Setup git
   await setupGit(name, version);
