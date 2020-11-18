@@ -12,7 +12,7 @@ module.exports = async () => {
   if (travis) {
     await exec('git config --global user.email "travis@travis-ci.org"');
     await exec('git config --global user.name "Travis CI"');
-    const remoteUrl = (await exec('git config --get remote.origin.url', { encoding: 'utf8' })).trim();
+    const remoteUrl = (await exec('git config --get remote.origin.url', { encoding: 'utf8' })).stdout.trim();
     const token = process.env.GITHUB_TOKEN;
     const newUrl = remoteUrl.replace('https://', `https://${token}@`);
     await exec(`git remote set-url origin "${newUrl}" > /dev/null 2>&1`);

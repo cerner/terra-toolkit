@@ -17,7 +17,7 @@ describe('setupGit', () => {
 
     mockExec.mockResolvedValueOnce();
     mockExec.mockResolvedValueOnce();
-    mockExec.mockResolvedValueOnce('    https://remote-url   ');
+    mockExec.mockResolvedValueOnce({ stdout: '    https://remote-url   ' });
     mockExec.mockResolvedValueOnce();
 
     await setupGit();
