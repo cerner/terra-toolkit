@@ -71,7 +71,7 @@
     "which": "^2.0.2"
   },
   "peerDependencies": {
-    "@cerner/terra-cli": "^0.0.0"
+    "@cerner/terra-cli": "^1.0.0"
   },
   "devDependencies": {
     "@cerner/terra-cli": "^1.0.0",

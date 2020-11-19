@@ -35,7 +35,7 @@ module.exports = async () => {
     logger.info('tags', JSON.stringify(tags, null, 2));
 
     // Tag based on what was published and push those tags to origin
-    await Promise.all(tags.map(tag => spawn('git', ['tag', '-a', tag, '-m', `"${tag}"`], { stdioString: true })));
+    await Promise.all(tags.map(tag => spawn('git', ['tag', '-a', tag, '-m', tag], { stdioString: true })));
     await spawn('git', ['push', 'origin', '--tags'], { stdioString: true });
   } else {
     logger.info('Nothing to tag');
