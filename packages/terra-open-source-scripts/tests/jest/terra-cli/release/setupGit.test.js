@@ -1,11 +1,7 @@
-jest.mock('util');
 jest.mock('fs-extra');
+jest.mock('@npmcli/promise-spawn');
 
-const { promisify } = require('util');
-
-const mockExec = jest.fn();
-promisify.mockImplementation(() => mockExec);
-
+const spawn = require('@npmcli/promise-spawn');
 const setupGit = require('../../../../src/terra-cli/release/setupGit');
 
 describe('setupGit', () => {
@@ -15,17 +11,17 @@ describe('setupGit', () => {
     const oldGithubToken = process.env.GITHUB_TOKEN;
     process.env.GITHUB_TOKEN = 'token';
 
-    mockExec.mockResolvedValueOnce();
-    mockExec.mockResolvedValueOnce();
-    mockExec.mockResolvedValueOnce({ stdout: '    https://remote-url   ' });
-    mockExec.mockResolvedValueOnce();
+    spawn.mockResolvedValueOnce();
+    spawn.mockResolvedValueOnce();
+    spawn.mockResolvedValueOnce({ stdout: '    https://remote-url   ' });
+    spawn.mockResolvedValueOnce();
 
     await setupGit();
 
-    expect(mockExec).toHaveBeenCalledWith('git config --global user.email "travis@travis-ci.org"');
-    expect(mockExec).toHaveBeenCalledWith('git config --global user.name "Travis CI"');
-    expect(mockExec).toHaveBeenCalledWith('git config --get remote.origin.url', { encoding: 'utf8' });
-    expect(mockExec).toHaveBeenCalledWith('git remote set-url origin "https://token@remote-url" > /dev/null 2>&1');
+    expect(spawn).toHaveBeenCalledWith('git', ['config', '--global', 'user.email', '"travis@travis-ci.org"'], { stdioString: true });
+    expect(spawn).toHaveBeenCalledWith('git', ['config', '--global', 'user.name', '"Travis CI"'], { stdioString: true });
+    expect(spawn).toHaveBeenCalledWith('git', ['config', '--get', 'remote.origin.url'], { stdioString: true });
+    expect(spawn).toHaveBeenCalledWith('git', ['remote', 'set-url', 'origin', '"https://token@remote-url"'], { stdio: 'ignore', stdioString: true });
 
     process.env.TRAVIS = oldTravis;
     process.env.GITHUB_TOKEN = oldGithubToken;

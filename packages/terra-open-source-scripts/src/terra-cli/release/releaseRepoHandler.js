@@ -1,16 +1,13 @@
 const pacote = require('pacote');
 const path = require('path');
 const fs = require('fs-extra');
-const childProcess = require('child_process');
-const { promisify } = require('util');
+const spawn = require('@npmcli/promise-spawn');
 const Logger = require('@cerner/terra-cli/lib/utils/Logger');
 
 const setupGit = require('./setupGit');
 const setupNPM = require('./setupNPM');
 
 const logger = new Logger({ prefix: '[terra-open-source-scripts:release]' });
-
-const exec = promisify(childProcess.exec);
 
 /**
  * Determines whether the name and version of a given package is already published
@@ -44,13 +41,13 @@ module.exports = async () => {
   await setupNPM();
 
   // Actually publish the package to npm
-  await exec('npm publish');
+  await spawn('npm', ['publish'], { stdioString: true });
 
   // Setup git
   await setupGit(name, version);
 
   // Tag based on what was published and push those tags to origin
   const tag = `v${version}`;
-  await exec(`git tag -a ${tag} -m "${tag}"`);
-  await exec('git push origin --tags');
+  await spawn('git', ['tag', '-a', tag, '-m', `"${tag}"`], { stdioString: true });
+  await spawn('git', ['push', 'origin', '--tags'], { stdioString: true });
 };

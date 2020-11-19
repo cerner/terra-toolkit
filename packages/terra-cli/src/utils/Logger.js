@@ -22,10 +22,10 @@ class Logger {
  * 2. Attaching the prefix set up for the current logger
  */
 Object.keys(log.levels).forEach((level) => {
-  Logger.prototype[level] = function logMessage(message) {
+  Logger.prototype[level] = function logMessage(...message) {
     const oldHeading = log.heading;
     log.heading = 'terra';
-    log[level](this.prefix, message);
+    log[level](this.prefix, ...message);
     log.heading = oldHeading;
   };
 });

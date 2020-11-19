@@ -1,13 +1,11 @@
 const childProcess = require('child_process');
 const fs = require('fs-extra');
 const path = require('path');
-const { promisify } = require('util');
 const stripAnsi = require('strip-ansi');
+const spawn = require('@npmcli/promise-spawn');
 const Logger = require('@cerner/terra-cli/lib/utils/Logger');
 
 const logger = new Logger({ prefix: '[terra-open-source-scripts:version]' });
-
-const exec = promisify(childProcess.exec);
 
 const updateChangelogForPackage = require('./updateChangelogForPackage');
 
@@ -23,7 +21,7 @@ module.exports = async () => {
     childProcess.execSync(`script -q ${VERSION_OUTPUT_PATH} lerna version --no-git-tag-version`, { stdio: 'inherit' });
 
     if (stripAnsi(await fs.readFile(VERSION_OUTPUT_PATH, 'utf-8')).includes('lerna success version finished')) {
-      const { stdout } = await exec('npx lerna changed'); // Clean up lerna updated output and convert to an array
+      const { stdout } = await spawn('npx', ['lerna', 'changed'], { stdioString: true });
       // The lines we're looking for don't start with lerna. They're the ones with the changed packages
       const updatedPackages = stdout.split('\n').filter(x => !x.startsWith('lerna')).map(x => `packages/${x.replace('@cerner/', '')}`);
 
