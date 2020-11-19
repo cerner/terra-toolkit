@@ -1,6 +1,6 @@
 {
   "name": "@cerner/terra-cli",
-  "version": "1.1.0",
+  "version": "1.0.0",
   "description": "Terra Cli",
   "main": "index.js",
   "bin": {
