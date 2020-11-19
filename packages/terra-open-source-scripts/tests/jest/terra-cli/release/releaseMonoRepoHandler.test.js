@@ -28,9 +28,9 @@ Successfully published:
     expect(setupNPM).toHaveBeenCalled();
     expect(spawn).toHaveBeenCalledWith('npx', ['lerna', 'publish', 'from-package', '--yes'], { stdioString: true });
     expect(setupGit).toHaveBeenCalled();
-    expect(spawn).toHaveBeenCalledWith('git', ['tag', '-a', 'terra-clinical-data-grid@2.29.0', '-m', '"terra-clinical-data-grid@2.29.0"'], { stdioString: true });
-    expect(spawn).toHaveBeenCalledWith('git', ['tag', '-a', 'terra-clinical-detail-view@3.24.0', '-m', '"terra-clinical-detail-view@3.24.0"'], { stdioString: true });
-    expect(spawn).toHaveBeenCalledWith('git', ['tag', '-a', 'terra-clinical-header@3.21.0', '-m', '"terra-clinical-header@3.21.0"'], { stdioString: true });
+    expect(spawn).toHaveBeenCalledWith('git', ['tag', '-a', 'terra-clinical-data-grid@2.29.0', '-m', 'terra-clinical-data-grid@2.29.0'], { stdioString: true });
+    expect(spawn).toHaveBeenCalledWith('git', ['tag', '-a', 'terra-clinical-detail-view@3.24.0', '-m', 'terra-clinical-detail-view@3.24.0'], { stdioString: true });
+    expect(spawn).toHaveBeenCalledWith('git', ['tag', '-a', 'terra-clinical-header@3.21.0', '-m', 'terra-clinical-header@3.21.0'], { stdioString: true });
     expect(spawn).toHaveBeenCalledWith('git', ['push', 'origin', '--tags'], { stdioString: true });
   });
 

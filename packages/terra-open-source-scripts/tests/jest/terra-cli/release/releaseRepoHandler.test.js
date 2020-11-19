@@ -27,7 +27,7 @@ describe('releaseRepoHandler', () => {
     expect(setupNPM).toHaveBeenCalled();
     expect(spawn).toHaveBeenCalledWith('npm', ['publish'], { stdioString: true });
     expect(setupGit).toHaveBeenCalled();
-    expect(spawn).toHaveBeenCalledWith('git', ['tag', '-a', 'v1.3.0', '-m', '"v1.3.0"'], { stdioString: true });
+    expect(spawn).toHaveBeenCalledWith('git', ['tag', '-a', 'v1.3.0', '-m', 'v1.3.0'], { stdioString: true });
     expect(spawn).toHaveBeenCalledWith('git', ['push', 'origin', '--tags'], { stdioString: true });
   });
 });
