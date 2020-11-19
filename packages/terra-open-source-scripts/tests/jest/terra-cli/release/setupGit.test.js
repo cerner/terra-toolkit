@@ -18,10 +18,10 @@ describe('setupGit', () => {
 
     await setupGit();
 
-    expect(spawn).toHaveBeenCalledWith('git', ['config', '--global', 'user.email', '"travis@travis-ci.org"'], { stdioString: true });
-    expect(spawn).toHaveBeenCalledWith('git', ['config', '--global', 'user.name', '"Travis CI"'], { stdioString: true });
+    expect(spawn).toHaveBeenCalledWith('git', ['config', '--global', 'user.email', 'travis@travis-ci.org'], { stdioString: true });
+    expect(spawn).toHaveBeenCalledWith('git', ['config', '--global', 'user.name', 'Travis CI'], { stdioString: true });
     expect(spawn).toHaveBeenCalledWith('git', ['config', '--get', 'remote.origin.url'], { stdioString: true });
-    expect(spawn).toHaveBeenCalledWith('git', ['remote', 'set-url', 'origin', '"https://token@remote-url"'], { stdio: 'ignore', stdioString: true });
+    expect(spawn).toHaveBeenCalledWith('git', ['remote', 'set-url', 'origin', 'https://token@remote-url'], { stdio: 'ignore', stdioString: true });
 
     process.env.TRAVIS = oldTravis;
     process.env.GITHUB_TOKEN = oldGithubToken;
