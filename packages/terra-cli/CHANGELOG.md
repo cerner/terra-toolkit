@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.1.0 - (November 18, 2020)
+
 * Added
   * Updated the logger to accept multiple messages
 

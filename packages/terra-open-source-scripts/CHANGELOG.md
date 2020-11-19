@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.1.0 - (November 18, 2020)
+
 * Fixed
   * Fix issue with the stdio buffers running out of space on calls to exec by switching to spawn instead
 
