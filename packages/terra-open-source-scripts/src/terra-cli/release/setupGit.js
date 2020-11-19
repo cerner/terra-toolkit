@@ -12,6 +12,6 @@ module.exports = async () => {
     const remoteUrl = (await spawn('git', ['config', '--get', 'remote.origin.url'], { stdioString: true })).stdout.trim();
     const token = process.env.GITHUB_TOKEN;
     const newUrl = remoteUrl.replace('https://', `https://${token}@`);
-    await spawn('git', ['remote', 'set-url', 'origin', `"${newUrl}"`], { stdio: 'ignore', stdioString: true });
+    await spawn('git', ['remote', 'set-url', 'origin', newUrl], { stdio: 'ignore', stdioString: true });
   }
 };
