@@ -33,9 +33,9 @@
     "@npmcli/promise-spawn": "^1.2.0",
     "express": "^4.17.1",
     "fs-extra": "^9.0.1",
-    "inquirer": "^7.3.3",
     "npmlog": "^4.1.2",
     "pacote": "^11.1.11",
+    "prompts": "^2.3.2",
     "strip-ansi": "^6.0.0"
   },
   "peerDependencies": {

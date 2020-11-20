@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+  * Update to use `prompts` instead of `inquirer`. It has a smaller memory footprint
+
 ## 1.1.0 - (November 19, 2020)
 
 * Fixed
