@@ -1,19 +1,19 @@
-import logger from '@wdio/logger';
+import Logger from '@cerner/terra-cli/lib/utils/Logger';
 
 import MergeViewportStrategy from './strategies/MergeScreenshotStrategy';
 import TrimAndMergeViewportStrategy from './strategies/TrimAndMergeScreenshotStrategy';
 
-const log = logger('wdio-visual-regression-service:ScreenshotStrategyManager');
+const logger = new Logger('[wdio-visual-regression-service:ScreenshotStrategyManager]');
 
 export default class ScreenshotStrategyManager {
   static getStrategy(browser, screenDimensions) {
     const { isIOS } = browser;
     if (isIOS) {
-      log.info('use iOS Trim and Merge viewport strategy');
+      logger.verbose('use iOS Trim and Merge viewport strategy');
       return new TrimAndMergeViewportStrategy(screenDimensions);
     }
 
-    log.info('use merge viewport strategy');
+    logger.verbose('use merge viewport strategy');
     return new MergeViewportStrategy(screenDimensions);
   }
 }

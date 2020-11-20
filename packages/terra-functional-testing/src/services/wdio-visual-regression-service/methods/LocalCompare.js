@@ -1,11 +1,11 @@
 import fs from 'fs-extra';
 import resemble from 'node-resemble-js';
 import _ from 'lodash';
-import logger from '@wdio/logger';
+import Logger from '@cerner/terra-cli/lib/utils/Logger';
 
 import BaseCompare from './BaseCompare';
 
-const log = logger('wdio-visual-regression-service:LocalCompare');
+const logger = new Logger('[wdio-visual-regression-service:LocalCompare]');
 
 export default class LocalCompare extends BaseCompare {
   /**
@@ -47,7 +47,7 @@ export default class LocalCompare extends BaseCompare {
     const referenceExists = fs.existsSync(referencePath);
 
     if (referenceExists) {
-      log.info('reference screenshot exists, compare it with the taken screenshot now');
+      logger.verbose('reference screenshot exists, compare it with the taken screenshot now');
       const latestScreenshot = new Buffer.from(base64Screenshot, 'base64'); // eslint-disable-line new-cap
 
       const ignoreComparison = _.get(context, 'options.ignoreComparison', this.ignoreComparison);
@@ -59,11 +59,11 @@ export default class LocalCompare extends BaseCompare {
 
       const isWithinMisMatchTolerance = misMatchPercentage <= misMatchTolerance;
       if (!isWithinMisMatchTolerance || !isSameDimensions) {
-        log.info(`Image is different! ${misMatchPercentage}%`);
+        logger.verbose(`Image is different! ${misMatchPercentage}%`);
         const png = compareData.getDiffImage().pack();
         await this.writeDiff(png, diffPath);
       } else {
-        log.info('Image is within tolerance or the same');
+        logger.verbose('Image is within tolerance or the same');
         // remove diff screenshot if it existed from a previous run
         await fs.remove(diffPath);
       }
@@ -71,7 +71,7 @@ export default class LocalCompare extends BaseCompare {
       return this.createResultReport(referenceExists, misMatchPercentage, isWithinMisMatchTolerance, isSameDimensions);
     }
 
-    log.info('first run - create reference file');
+    logger.verbose('first run - create reference file');
     await fs.outputFile(referencePath, base64Screenshot, 'base64');
     return this.createResultReport(referenceExists);
   }

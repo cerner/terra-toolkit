@@ -1,9 +1,9 @@
-import logger from '@wdio/logger';
+import Logger from '@cerner/terra-cli/lib/utils/Logger';
 import which from 'which';
 import * as jimp from './jimp';
 import * as gm from './gm';
 
-const log = logger('wdio-visual-regression-service:image');
+const logger = new Logger('[wdio-visual-regression-service:image]');
 
 let gmInstalled = false;
 
@@ -13,7 +13,7 @@ try {
   // do nothing
 }
 
-log.debug(`Use image processing library: ${gmInstalled ? 'GraphicsMagick' : 'Jimp'}`);
+logger.verbose(`Use image processing library: ${gmInstalled ? 'GraphicsMagick' : 'Jimp'}`);
 
 const { cropImage, mergeImages, scaleImage } = gmInstalled ? gm : jimp;
 export { cropImage, scaleImage, mergeImages };
