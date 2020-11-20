@@ -24,15 +24,15 @@ module.exports = {
     // Replaces jsx-a11y/label-has-for rule. By default, it wants inputs to be both wrapped in a label
     // and include a id/for attribute mapping with label.
     // This config updates the rule to require one or the other.
-    'jsx-a11y/label-has-associated-control': [2, { assert: 'either' }],
-    'no-multiple-empty-lines': [1, {
+    'jsx-a11y/label-has-associated-control': ['error', { assert: 'either' }],
+    'no-multiple-empty-lines': ['warn', {
       max: 1,
       maxEOF: 1,
       maxBOF: 0,
     }],
     'react/destructuring-assignment': 'off',
-    'react/forbid-component-props': [2, { forbid: ['style'] }],
-    'react/forbid-dom-props': [2, { forbid: ['style'] }],
+    'react/forbid-component-props': ['error', { forbid: ['style'] }],
+    'react/forbid-dom-props': ['error', { forbid: ['style'] }],
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'error',
     'react/jsx-props-no-spreading': 'off',
