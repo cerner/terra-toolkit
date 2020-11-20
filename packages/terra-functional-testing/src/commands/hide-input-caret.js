@@ -1,4 +1,4 @@
-const Logger = require('@cerner/terra-cli/lib/utils/Logger');
+const { Logger } = require('@cerner/terra-cli');
 
 const logger = new Logger({ prefix: '[terra-functional-testing:wdio-terra-service]' });
 

@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const Launcher = require('@wdio/cli').default;
-const Logger = require('@cerner/terra-cli/lib/utils/Logger');
+const { Logger } = require('@cerner/terra-cli');
 
 const logger = new Logger({ prefix: '[terra-functional-testing:wdio]' });
 

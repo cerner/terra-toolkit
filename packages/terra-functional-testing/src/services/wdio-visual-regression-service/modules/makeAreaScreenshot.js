@@ -1,7 +1,7 @@
 import fsExtra from 'fs-extra';
 import path from 'path';
 import uuidv4 from 'uuid/v4';
-import Logger from '@cerner/terra-cli/lib/utils/Logger';
+import { Logger } from '@cerner/terra-cli';
 
 import ScreenshotStrategyManager from '../utils/ScreenshotStrategyManager';
 import getScreenDimensions from '../scripts/getScreenDimensions';

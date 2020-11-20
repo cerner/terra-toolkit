@@ -1,4 +1,4 @@
-import Logger from '@cerner/terra-cli/lib/utils/Logger';
+import { Logger } from '@cerner/terra-cli';
 import which from 'which';
 import * as jimp from './jimp';
 import * as gm from './gm';

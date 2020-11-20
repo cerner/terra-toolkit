@@ -1,4 +1,4 @@
-import Logger from '@cerner/terra-cli/lib/utils/Logger';
+import { Logger } from '@cerner/terra-cli';
 
 import MergeViewportStrategy from './strategies/MergeScreenshotStrategy';
 import TrimAndMergeViewportStrategy from './strategies/TrimAndMergeScreenshotStrategy';

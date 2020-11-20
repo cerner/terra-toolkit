@@ -1,4 +1,4 @@
-import Logger from '@cerner/terra-cli/lib/utils/Logger';
+import { Logger } from '@cerner/terra-cli';
 
 import scrollbars from '../scripts/scrollbars';
 import modifyElements from '../scripts/modifyElements';

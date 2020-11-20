@@ -1,7 +1,7 @@
 import fs from 'fs-extra';
 import resemble from 'node-resemble-js';
 import _ from 'lodash';
-import Logger from '@cerner/terra-cli/lib/utils/Logger';
+import { Logger } from '@cerner/terra-cli';
 
 import BaseCompare from './BaseCompare';
 

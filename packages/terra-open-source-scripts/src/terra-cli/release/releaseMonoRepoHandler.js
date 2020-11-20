@@ -1,5 +1,5 @@
 const spawn = require('@npmcli/promise-spawn');
-const Logger = require('@cerner/terra-cli/lib/utils/Logger');
+const { Logger } = require('@cerner/terra-cli');
 
 const setupGit = require('./setupGit');
 const setupNPM = require('./setupNPM');
