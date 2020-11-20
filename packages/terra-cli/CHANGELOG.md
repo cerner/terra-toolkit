@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Added
+  * Added additional logging context for when commands error out with some stderr information
+
 ## 1.1.0 - (November 19, 2020)
 
 * Added
