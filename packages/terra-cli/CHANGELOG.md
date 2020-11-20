@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+  * Updated the doc to use a simpler import of the terra-cli logger
+
 ## 1.1.0 - (November 19, 2020)
 
 * Added
