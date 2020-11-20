@@ -5,6 +5,9 @@
 * Fixed
   * The badges in the readme were pointing to an incorrect url.
 
+* Changed
+  * Updated eslint config file to use `off`, `warn` and `error` instead of `0`, `1` and `2`.
+
 ## 4.1.0 - (August 4, 2020)
 
 * Added
