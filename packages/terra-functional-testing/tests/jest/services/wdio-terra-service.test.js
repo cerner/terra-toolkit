@@ -77,9 +77,7 @@ describe('WDIO Terra Service', () => {
 
     expect(setViewport).toBeCalled();
     expect(global.Terra.viewports).toBeDefined();
-    expect(global.Terra.describeViewports).toBeDefined();
     expect(global.Terra.hideInputCaret).toBeDefined();
-    expect(global.Terra.serviceOptions.formFactor).toBe('huge');
   });
 
   it('should wait for browser interaction for IE', () => {
@@ -102,5 +100,25 @@ describe('WDIO Terra Service', () => {
 
     expect(mockHideInputCaret).toHaveBeenCalledWith('body');
     expect(mockFindElement).toHaveBeenCalledWith('[data-terra-test-loading]');
+  });
+
+  it('should define commands in beforeSession', () => {
+    const service = new WdioTerraService({ formFactor: 'huge' });
+    service.beforeSession();
+    expect(global.Terra.describeViewports).toBeDefined();
+    expect(global.Terra.serviceOptions.formFactor).toBe('huge');
+  });
+
+  it('should set define all commands', () => {
+    const service = new WdioTerraService({ formFactor: 'huge' });
+
+    service.beforeSession();
+    service.before({ browserName: 'chrome' });
+
+    expect(setViewport).toBeCalled();
+    expect(global.Terra.viewports).toBeDefined();
+    expect(global.Terra.describeViewports).toBeDefined();
+    expect(global.Terra.hideInputCaret).toBeDefined();
+    expect(global.Terra.serviceOptions.formFactor).toBe('huge');
   });
 });

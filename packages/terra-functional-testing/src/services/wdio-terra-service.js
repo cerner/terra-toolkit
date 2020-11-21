@@ -9,8 +9,34 @@ const { element } = require('../commands/validates');
 
 class TerraService {
   constructor(options = {}) {
-    const theme = { theme: 'terra-default-theme' };
-    this.serviceOptions = { ...theme, ...options };
+    this.serviceOptions = {
+      theme: 'terra-default-theme',
+      ...options,
+    };
+  }
+
+  onPrepare(config) {
+    // Add the configurations at the top level service options to the Terra Service options.
+    this.serviceOptions = {
+      selector: '[data-terra-test-content] *:first-child',
+      ...this.serviceOptions,
+      ...config.serviceOptions,
+    };
+  }
+
+  beforeSession() {
+    global.Terra = {
+      /*
+       This command must be defined in the beforeSession hook instead of together with the other Terra custom commands in the
+       before hook. The reason being webdriverio v6 now executed the describe block prior to running the before hook.
+       Therefore, this command needs to be defined before the test starts in the testing life cycle.
+
+       Reference: https://github.com/webdriverio/webdriverio/issues/6119
+      */
+      describeViewports,
+
+      serviceOptions: this.serviceOptions,
+    };
   }
 
   /**
@@ -18,14 +44,14 @@ class TerraService {
    * Initializes the Terra Service's custom commands.
    */
   before(capabilities) {
-    this.serviceOptions = { ...this.serviceOptions, ...global.browser.config.serviceOptions };
-
     // Set Jest's expect module as the global assertion framework.
     global.expect = expect;
     global.expect.extend({ toBeAccessible });
 
     // Add a Terra global with access to Mocha-Chai test helpers.
     global.Terra = {
+      ...global.Terra,
+
       // validates provides access to the jest assertions to use in an it blocks.
       validates: {
         accessibility,
@@ -35,13 +61,8 @@ class TerraService {
       // Provides access to Terra's list of supported testing viewports.
       viewports: getViewports,
 
-      // Provides a custom describe block for looping test viewports.
-      describeViewports,
-
       // Hides the blinking input caret that appears in inputs or editable text areas.
       hideInputCaret,
-
-      serviceOptions: this.serviceOptions,
 
       axe: {
         /**

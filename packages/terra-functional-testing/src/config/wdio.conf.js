@@ -172,7 +172,5 @@ exports.config = {
     timeout: 60000,
   },
 
-  serviceOptions: {
-    selector: '[data-terra-test-content] *:first-child',
-  },
+  serviceOptions: {},
 };

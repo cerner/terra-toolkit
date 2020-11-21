@@ -8,9 +8,17 @@ describe('element', () => {
       serviceOptions: {},
     };
 
-    element();
+    element('test-name');
 
     expect(accessibility).toHaveBeenCalledWith({ rules: undefined });
+  });
+
+  it('should throw error when no test name provided', () => {
+    try {
+      element();
+    } catch (error) {
+      expect(error.message).toEqual('[terra-functional-testing:wdio] Terra.validate.element requires a test name as the first argument.');
+    }
   });
 
   it('should run element with full options', () => {
@@ -20,8 +28,7 @@ describe('element', () => {
       },
     };
 
-    element({
-      testName: 'test-name',
+    element('test-name', {
       rules: { 'mock-rule': { enabled: false } },
       selector: 'mock-selector',
       misMatchTolerance: 10,
@@ -37,8 +44,7 @@ describe('element', () => {
       },
     };
 
-    element({
-      testName: 'test-name',
+    element('test-name', {
       rules: { 'mock-rule': { enabled: true } },
       misMatchTolerance: 10,
     });

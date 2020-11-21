@@ -38,7 +38,7 @@ Please note that not all accessibility testing can be automated. Axe provides a 
 
 ### Terra.validates.accessibility
 
-The accessibility assertion is available globally. Invoking the assertion will run accessibility checks on the entire document. If accessibility violations are found the test step will fail. It is recommended to run accessibility checks at various steps in a functional workflow to check for violations at different stages of the application.
+The accessibility assertion should only be invoked inside an `it` block. Invoking the assertion will run accessibility checks on the entire document. If accessibility violations are found the test step will fail. It is recommended to run accessibility checks at various steps in a functional workflow to check for violations at different stages of the application.
 
 ```js
 it('should report no accessibility violations', () => {
@@ -66,7 +66,7 @@ A screenshot can be captured at any given point in a test. The captured screensh
 
 ### Terra.validates.element
 
-The element assertion is available globally. Invoking the assertion will capture a screenshot at the time it is invoked. If no reference screenshot exists, one will be created in the `reference` folder with the given screenshot name. If such reference screenshot already exists, the new screenshot will be compared with the reference screenshot to validate visually that they are within the mismatch tolerance. If the mismatch exceeds the tolerance, the test step will fail and a screenshot showing the difference will be generated.
+The element assertion should only be invoked inside an `it` block. Invoking the assertion will capture a screenshot at the time it is invoked. If no reference screenshot exists, one will be created in the `reference` folder with the given screenshot name. If such reference screenshot already exists, the new screenshot will be compared with the reference screenshot to validate visually that they are within the mismatch tolerance. If the mismatch exceeds the tolerance, the test step will fail and a screenshot showing the difference will be generated.
 
 A name must be provided to be used as the screenshot name. In addition to capturing a screenshot and performing screenshot validation, the assertion also runs accessibility checks on the entire document. 
 
