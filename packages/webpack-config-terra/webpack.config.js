@@ -7,7 +7,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const webpack = require('webpack');
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const DuplicatePackageCheckerPlugin = require('@cerner/duplicate-package-checker-webpack-plugin');
 const aggregateTranslations = require('terra-aggregate-translations');
 const ThemePlugin = require('./lib/postcss/ThemePlugin');
@@ -107,6 +107,7 @@ const defaultWebpackConfig = (env = {}, argv = {}, options = {}) => {
             /node_modules/.test(modulePath)
             && !/@cerner\/webpack-config-terra\/lib\/entry\/core-js/.test(modulePath)
           ), // exclude everything in node modules except our core-js entry point to allow consumers the ability to customize what polyfills get pulled in.
+          enforce: 'post',
           use: {
             loader: 'babel-loader',
             options: {
@@ -119,9 +120,6 @@ const defaultWebpackConfig = (env = {}, argv = {}, options = {}) => {
           use: [
             {
               loader: MiniCssExtractPlugin.loader,
-              options: {
-                hmr: !production, // only enable hot module reloading in development
-              },
             },
             {
               loader: 'css-loader',
@@ -137,14 +135,14 @@ const defaultWebpackConfig = (env = {}, argv = {}, options = {}) => {
             {
               loader: 'postcss-loader',
               options: {
-                // Add unique ident to prevent the loader from searching for a postcss.config file. See: https://github.com/postcss/postcss-loader#plugins
-                ident: 'postcss',
                 sourceMap,
-                plugins: [
-                  ThemePlugin(themeConfig),
-                  rtl(),
-                  Autoprefixer(),
-                ],
+                postcssOptions: {
+                  plugins: [
+                    ThemePlugin(themeConfig),
+                    rtl(),
+                    Autoprefixer(),
+                  ],
+                },
               },
             },
             {
