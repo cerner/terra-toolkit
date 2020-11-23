@@ -7,7 +7,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const webpack = require('webpack');
-const { merge } = require('webpack-merge');
+const { mergeWithCustomize } = require('webpack-merge');
 const DuplicatePackageCheckerPlugin = require('@cerner/duplicate-package-checker-webpack-plugin');
 const aggregateTranslations = require('terra-aggregate-translations');
 const ThemePlugin = require('./lib/postcss/ThemePlugin');
@@ -229,7 +229,7 @@ const defaultWebpackConfig = (env = {}, argv = {}, options = {}) => {
     return devConfig;
   }
 
-  return merge.strategy({
+  return mergeWithCustomize({
     devtool: 'replace',
   })(devConfig, {
     mode: 'production',
