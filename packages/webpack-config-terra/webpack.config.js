@@ -107,7 +107,6 @@ const defaultWebpackConfig = (env = {}, argv = {}, options = {}) => {
             /node_modules/.test(modulePath)
             && !/@cerner\/webpack-config-terra\/lib\/entry\/core-js/.test(modulePath)
           ), // exclude everything in node modules except our core-js entry point to allow consumers the ability to customize what polyfills get pulled in.
-          enforce: 'post',
           use: {
             loader: 'babel-loader',
             options: {
