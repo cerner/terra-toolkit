@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.2.0 - (November 24, 2020)
+
 * Changed
   * Update to use `prompts` instead of `inquirer`. It has a smaller memory footprint
   * Updated to use a simpler import of the terra-cli logger
