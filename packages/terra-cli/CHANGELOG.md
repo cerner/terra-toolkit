@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Added
+  * Added additional logging context for when commands error out with some stderr information
+  
 * Changed
   * Updated the doc to use a simpler import of the terra-cli logger
 

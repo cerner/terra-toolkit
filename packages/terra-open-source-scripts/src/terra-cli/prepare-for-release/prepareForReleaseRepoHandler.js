@@ -1,4 +1,4 @@
-const inquirer = require('inquirer');
+const prompts = require('prompts');
 const log = require('npmlog');
 const spawn = require('@npmcli/promise-spawn');
 const updateChangelogForPackage = require('./updateChangelogForPackage');
@@ -6,12 +6,12 @@ const updateChangelogForPackage = require('./updateChangelogForPackage');
 const promptForVersionType = async () => {
   // Pause the npm logger while we prompt for the type of release we want to perform
   log.pause();
-  const { versionType } = await inquirer.prompt([
+  const { versionType } = await prompts([
     {
-      type: 'list',
+      type: 'select',
       name: 'versionType',
       message: 'What type of release do you want to version for?',
-      choices: ['major', 'minor', 'patch'],
+      choices: [{ title: 'major', value: 'major' }, { title: 'minor', value: 'minor' }, { title: 'patch', value: 'patch' }],
       pageSize: 3,
     },
   ]);
