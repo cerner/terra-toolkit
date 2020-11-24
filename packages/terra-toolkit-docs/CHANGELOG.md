@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Updated
+  * Updated example involving usage of webpack merge.
+
 ## 1.1.0 - (October 20, 2020)
 
 * Changed
