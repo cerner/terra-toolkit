@@ -1,4 +1,4 @@
-import logger from '@wdio/logger';
+import { Logger } from '@cerner/terra-cli';
 
 import makeAreaScreenshot from './makeAreaScreenshot';
 import beforeScreenshot from './beforeScreenshot';
@@ -7,7 +7,7 @@ import afterScreenshot from './afterScreenshot';
 import groupBoundingRect from '../utils/groupBoundingRect';
 import getBoundingRects from '../scripts/getBoundingRects';
 
-const log = logger('wdio-visual-regression-service:makeDocumentScreenshot');
+const logger = new Logger('[wdio-visual-regression-service:makeDocumentScreenshot]');
 
 /**
  * Captures a screenshot of a given element if the element is within the viewport dimensions.
@@ -23,7 +23,7 @@ const log = logger('wdio-visual-regression-service:makeDocumentScreenshot');
  * @returns {String} - The base64 string of the screenshot image that was captured.
  */
 export default async function makeElementScreenshot(browser, elementSelector, options = {}) {
-  log.info('start element screenshot');
+  logger.verbose('start element screenshot');
 
   // hide scrollbars, scroll to start, hide & remove elements, wait for render
   await beforeScreenshot(browser, options);
@@ -44,7 +44,7 @@ export default async function makeElementScreenshot(browser, elementSelector, op
   // show scrollbars, show & add elements
   await afterScreenshot(browser, options);
 
-  log.info('end element screenshot');
+  logger.verbose('end element screenshot');
 
   return base64Image;
 }

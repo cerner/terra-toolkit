@@ -1,9 +1,9 @@
-import logger from '@wdio/logger';
+import { Logger } from '@cerner/terra-cli';
 
 import scrollbars from '../scripts/scrollbars';
 import modifyElements from '../scripts/modifyElements';
 
-const log = logger('wdio-visual-regression-service:after');
+const logger = new Logger('[wdio-visual-regression-service:afterScreenshot]');
 
 /**
  * Helper method to prepare the dom for a screenshot by removing scroll bars, hiding and/or removing any elements
@@ -20,17 +20,17 @@ export default async function beforeScreenshot(browser, options = {}) {
 
   // show elements
   if (Array.isArray(hide) && hide.length) {
-    log.info('show the following elements again: %s', hide.join(', '));
+    logger.verbose('show the following elements again: %s', hide.join(', '));
     await browser.execute(modifyElements, hide, 'opacity', '');
   }
 
   // add elements again
   if (Array.isArray(remove) && remove.length) {
-    log.info('add the following elements again: %s', remove.join(', '));
+    logger.verbose('add the following elements again: %s', remove.join(', '));
     await browser.execute(modifyElements, remove, 'display', '');
   }
 
   // show scrollbars
-  log.info('show scrollbars again');
+  logger.verbose('show scrollbars again');
   await browser.execute(scrollbars, true);
 }

@@ -4,6 +4,9 @@
 
 * Added
   * Added additional logging context for when commands error out with some stderr information
+  
+* Changed
+  * Updated the doc to use a simpler import of the terra-cli logger
 
 ## 1.1.0 - (November 19, 2020)
 
