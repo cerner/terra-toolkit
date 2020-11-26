@@ -17,16 +17,6 @@
     "terra-toolkit",
     "UI"
   ],
-  "browserslist": [
-    "iOS >= 12",
-    "last 2 and_chr versions",
-    "last 2 android versions",
-    "last 2 chrome versions",
-    "last 2 edge versions",
-    "last 2 firefox versions",
-    "last 2 ie versions",
-    "last 2 safari versions"
-  ],
   "author": "Cerner Corporation",
   "license": "Apache-2.0",
   "bugs": {
@@ -92,8 +82,8 @@
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.10.5",
+    "@cerner/browserslist-config-terra": "^3.0.0",
     "@octokit/core": "^3.1.2",
-    "browserslist-config-terra": "^1.2.0",
     "bufferutil": "^4.0.1",
     "commander": "^5.1.0",
     "core-js": "^3.1.3",
