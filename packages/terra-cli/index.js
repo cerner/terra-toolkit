@@ -29,6 +29,9 @@ const setupCLI = () => {
           logger.error(`Unknown command "${cli.parsed.argv._[0]}". ${actualError.message}`);
         } else {
           logger.error(actualError.stack);
+          if (actualError.stderr) {
+            logger.error(actualError.stderr);
+          }
         }
       }
 

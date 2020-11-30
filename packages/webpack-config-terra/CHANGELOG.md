@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 1.0.0 - (November 24, 2020)
+
+* Changed
+  * Updated dependencies.
+
 ## 1.0.0-alpha.1 - (October 20, 2020)
 
 * Changed

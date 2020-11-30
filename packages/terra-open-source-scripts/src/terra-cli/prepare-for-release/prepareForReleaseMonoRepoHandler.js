@@ -3,7 +3,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const stripAnsi = require('strip-ansi');
 const spawn = require('@npmcli/promise-spawn');
-const Logger = require('@cerner/terra-cli/lib/utils/Logger');
+const { Logger } = require('@cerner/terra-cli');
 
 const logger = new Logger({ prefix: '[terra-open-source-scripts:version]' });
 

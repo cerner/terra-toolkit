@@ -1,6 +1,6 @@
 const fs = require('fs-extra');
 const express = require('express');
-const Logger = require('@cerner/terra-cli/lib/utils/Logger');
+const { Logger } = require('@cerner/terra-cli');
 
 const logger = new Logger({ prefix: '[terra-open-source-scripts:express-server]' });
 

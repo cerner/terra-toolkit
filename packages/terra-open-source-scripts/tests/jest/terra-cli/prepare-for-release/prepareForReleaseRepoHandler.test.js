@@ -1,10 +1,10 @@
-jest.mock('inquirer');
+jest.mock('prompts');
 jest.mock('npmlog');
 jest.mock('util');
 jest.mock('@npmcli/promise-spawn');
 jest.mock('../../../../src/terra-cli/prepare-for-release/updateChangelogForPackage');
 
-const inquirer = require('inquirer');
+const prompts = require('prompts');
 const log = require('npmlog');
 const spawn = require('@npmcli/promise-spawn');
 const updateChangelogForPackage = require('../../../../src/terra-cli/prepare-for-release/updateChangelogForPackage');
@@ -13,17 +13,17 @@ const prepareForReleaseRepoHandler = require('../../../../src/terra-cli/prepare-
 
 describe('prepareForReleaseRepoHandler', () => {
   it('prompts for a version, updates the version, and updates the change log of the current repo for a patch version', async () => {
-    inquirer.prompt.mockResolvedValueOnce({ versionType: 'patch' });
+    prompts.mockResolvedValueOnce({ versionType: 'patch' });
 
     await prepareForReleaseRepoHandler();
 
     expect(log.pause).toHaveBeenCalled();
-    expect(inquirer.prompt).toHaveBeenCalledWith([
+    expect(prompts).toHaveBeenCalledWith([
       {
-        type: 'list',
+        type: 'select',
         name: 'versionType',
         message: 'What type of release do you want to version for?',
-        choices: ['major', 'minor', 'patch'],
+        choices: [{ title: 'major', value: 'major' }, { title: 'minor', value: 'minor' }, { title: 'patch', value: 'patch' }],
         pageSize: 3,
       },
     ]);
@@ -33,17 +33,17 @@ describe('prepareForReleaseRepoHandler', () => {
   });
 
   it('prompts for a version, updates the version, and updates the change log of the current repo for a minor version', async () => {
-    inquirer.prompt.mockResolvedValueOnce({ versionType: 'minor' });
+    prompts.mockResolvedValueOnce({ versionType: 'minor' });
 
     await prepareForReleaseRepoHandler();
 
     expect(log.pause).toHaveBeenCalled();
-    expect(inquirer.prompt).toHaveBeenCalledWith([
+    expect(prompts).toHaveBeenCalledWith([
       {
-        type: 'list',
+        type: 'select',
         name: 'versionType',
         message: 'What type of release do you want to version for?',
-        choices: ['major', 'minor', 'patch'],
+        choices: [{ title: 'major', value: 'major' }, { title: 'minor', value: 'minor' }, { title: 'patch', value: 'patch' }],
         pageSize: 3,
       },
     ]);
@@ -53,17 +53,17 @@ describe('prepareForReleaseRepoHandler', () => {
   });
 
   it('prompts for a version, updates the version, and updates the change log of the current repo for a major version', async () => {
-    inquirer.prompt.mockResolvedValueOnce({ versionType: 'major' });
+    prompts.mockResolvedValueOnce({ versionType: 'major' });
 
     await prepareForReleaseRepoHandler();
 
     expect(log.pause).toHaveBeenCalled();
-    expect(inquirer.prompt).toHaveBeenCalledWith([
+    expect(prompts).toHaveBeenCalledWith([
       {
-        type: 'list',
+        type: 'select',
         name: 'versionType',
         message: 'What type of release do you want to version for?',
-        choices: ['major', 'minor', 'patch'],
+        choices: [{ title: 'major', value: 'major' }, { title: 'minor', value: 'minor' }, { title: 'patch', value: 'patch' }],
         pageSize: 3,
       },
     ]);

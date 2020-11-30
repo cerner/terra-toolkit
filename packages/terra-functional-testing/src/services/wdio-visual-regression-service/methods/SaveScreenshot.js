@@ -1,8 +1,8 @@
 import fs from 'fs-extra';
-import logger from '@wdio/logger';
+import { Logger } from '@cerner/terra-cli';
 import BaseCompare from './BaseCompare';
 
-const log = logger('wdio-visual-regression-service:SaveScreenshot');
+const logger = new Logger('[wdio-visual-regression-service:SaveScreenshot]');
 
 export default class SaveScreenshot extends BaseCompare {
   constructor(options = {}) {
@@ -13,7 +13,7 @@ export default class SaveScreenshot extends BaseCompare {
   async processScreenshot(context, base64Screenshot) {
     const screenshotPath = this.getScreenshotPath(context);
 
-    log.info(`create screenshot file at ${screenshotPath}`);
+    logger.verbose(`create screenshot file at ${screenshotPath}`);
     await fs.outputFile(screenshotPath, base64Screenshot, 'base64');
     return this.createResultReport(false);
   }
