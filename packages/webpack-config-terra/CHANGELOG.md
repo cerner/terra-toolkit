@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+  * Upgrade to postcss 8.
+
 ## 1.0.0 - (November 24, 2020)
 
 * Changed
