@@ -1,6 +1,6 @@
 {
   "name": "@cerner/webpack-config-terra",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0",
   "description": "Terra Webpack Config",
   "main": "webpack.config.js",
   "publishConfig": {

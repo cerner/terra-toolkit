@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 4.2.0 - (November 24, 2020)
+
 * Fixed
   * The badges in the readme were pointing to an incorrect url.
 
