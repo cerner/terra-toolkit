@@ -171,6 +171,4 @@ exports.config = {
     ui: 'bdd',
     timeout: 60000,
   },
-
-  serviceOptions: {},
 };
