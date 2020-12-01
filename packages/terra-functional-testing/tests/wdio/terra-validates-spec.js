@@ -2,7 +2,7 @@
  * This spec file is used for integration testing the Terra.validates commands.
  */
 
-describe('Terra.validates.accessibility', () => {
+Terra.describeViewports('Terra.validates.accessibility', ['small', 'large'], () => {
   it('should report no accessibility violations', () => {
     browser.url('/accessible.html');
 
