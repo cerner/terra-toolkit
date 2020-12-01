@@ -13,7 +13,7 @@ const SUPPORTED_THEMES = [
  * The purpose of this plugin is to create a default theme from a scoped theme
  * and to remove any supported themes that are not desired.
  */
-module.exports = postcss.plugin('terra-theme-plugin', (config) => {
+module.exports = (config) => {
   // Retrieve theme config.
   const themeConfig = config || getThemeConfig();
 
@@ -30,22 +30,26 @@ module.exports = postcss.plugin('terra-theme-plugin', (config) => {
     return acc;
   }, []);
 
-  return (root) => {
-    if (defaultThemeSelector || themesToRemove.length) {
-      root.walkRules((node) => {
-        // Scrub css modules pseudo classes from the selector
-        const selector = removeCssModulesPseudoClasses(node.selector);
-        // Clone the default theme node and apply as root.
-        if (selector === defaultThemeSelector) {
-          const clone = node.clone({ selector: ':root' });
-          root.append(clone);
-        }
+  return {
+    postcssPlugin: 'terra-theme-plugin',
+    Once (root) {
+      if (defaultThemeSelector || themesToRemove.length) {
+        root.walkRules((node) => {
+          // Scrub css modules pseudo classes from the selector
+          const selector = removeCssModulesPseudoClasses(node.selector);
+          // Clone the default theme node and apply as root.
+          if (selector === defaultThemeSelector) {
+            const clone = node.clone({ selector: ':root' });
+            root.append(clone);
+          }
 
-        // Remove the undesired theme node from it's parent.
-        if (themesToRemove.includes(selector)) {
-          node.parent.removeChild(node);
-        }
-      });
+          // Remove the undesired theme node from it's parent.
+          if (themesToRemove.includes(selector)) {
+            node.parent.removeChild(node);
+          }
+        });
+      }
     }
-  };
-});
+  }
+};
+module.exports.postcss = true
