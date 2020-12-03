@@ -85,7 +85,7 @@ const defaultWebpackConfig = (env = {}, argv = {}, options = {}) => {
 
   const themeConfig = determineThemeConfig(env, options);
 
-  const production = argv.p;
+  const production = argv.p || argv.mode === 'production';
   const fileNameStategy = production ? '[name]-[chunkhash]' : '[name]';
   const chunkFilename = argv['output-chunk-filename'] || fileNameStategy;
   const filename = argv['output-filename'] || fileNameStategy;
