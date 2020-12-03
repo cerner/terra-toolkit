@@ -2,11 +2,14 @@
 
 ## Unreleased
 
+* Added
+  * Added orion-full-stack-testing to allow list
+
 ## 1.2.0 - (November 24, 2020)
 
 * Added
   * Added additional logging context for when commands error out with some stderr information
-  
+
 * Changed
   * Updated the doc to use a simpler import of the terra-cli logger
 
