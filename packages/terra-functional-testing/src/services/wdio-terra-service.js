@@ -5,13 +5,38 @@ const { toBeAccessible } = require('../commands/expect');
 const { getViewports, describeViewports, setViewport } = require('../commands/viewport-helpers');
 
 const hideInputCaret = require('../commands/hide-input-caret');
+const { element } = require('../commands/validates');
 
 class TerraService {
   constructor(options = {}) {
-    const { formFactor, theme } = options;
+    this.serviceOptions = {
+      theme: 'terra-default-theme',
+      ...options,
+    };
+  }
 
-    this.formFactor = formFactor;
-    this.theme = theme || 'terra-default-theme';
+  onPrepare(config) {
+    // Add the configurations at the top level service options to the Terra Service options.
+    this.serviceOptions = {
+      selector: '[data-terra-test-content] *:first-child',
+      ...this.serviceOptions,
+      ...config.serviceOptions,
+    };
+  }
+
+  beforeSession() {
+    global.Terra = {
+      /*
+       This command must be defined in the beforeSession hook instead of together with the other Terra custom commands in the
+       before hook. The reason being webdriverio v6 now executed the describe block prior to running the before hook.
+       Therefore, this command needs to be defined before the test starts in the testing life cycle.
+
+       Reference: https://github.com/webdriverio/webdriverio/issues/6119
+      */
+      describeViewports,
+
+      serviceOptions: this.serviceOptions,
+    };
   }
 
   /**
@@ -25,13 +50,16 @@ class TerraService {
 
     // Add a Terra global with access to Mocha-Chai test helpers.
     global.Terra = {
-      validates: { accessibility },
+      ...global.Terra,
+
+      // validates provides access to the jest assertions to use in an it blocks.
+      validates: {
+        accessibility,
+        element,
+      },
 
       // Provides access to Terra's list of supported testing viewports.
       viewports: getViewports,
-
-      // Provides a custom describe block for looping test viewports.
-      describeViewports,
 
       // Hides the blinking input caret that appears in inputs or editable text areas.
       hideInputCaret,
@@ -53,7 +81,7 @@ class TerraService {
            * The lowlight theme adheres to a non-default color contrast ratio and fails the default ratio check.
            * The color-contrast ratio check is disabled for lowlight theme testing.
            */
-          'color-contrast': { enabled: this.theme !== 'clinical-lowlight-theme' },
+          'color-contrast': { enabled: this.serviceOptions.theme !== 'clinical-lowlight-theme' },
         },
       },
     };
@@ -67,7 +95,7 @@ class TerraService {
     }
 
     // Set the viewport size before the spec begins.
-    setViewport(this.formFactor);
+    setViewport(this.serviceOptions.formFactor);
   }
 
   afterCommand(commandName, _args, _result, error) {
@@ -76,8 +104,8 @@ class TerraService {
         // This is only meant as a convenience so failure is not particularly concerning.
         global.Terra.hideInputCaret('body');
 
-        if (global.browser.$('[data-terra-dev-site-loading]').isExisting()) {
-          global.browser.$('[data-terra-dev-site-content]').waitForExist({
+        if (global.browser.$('[data-terra-test-loading]').isExisting()) {
+          global.browser.$('[data-terra-test-content]').waitForExist({
             timeout: global.browser.config.waitforTimeout + 2000,
             interval: 100,
           });
