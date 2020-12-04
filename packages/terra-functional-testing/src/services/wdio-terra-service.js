@@ -27,27 +27,6 @@ class TerraService {
       ...this.options,
       ...serviceOptions,
     };
-
-    /**
-     * Global axe override options.
-     * Options modified here will be applied globally for all tests.
-     */
-    this.axeOptions = {
-      rules: {
-        /**
-         * This rule was introduced in axe-core v3.3 and causes failures in many Terra components.
-         * The solution to address this failure vary by component. It is being disabled until a solution is identified in the future.
-         *
-         * Reference: https://github.com/cerner/terra-framework/issues/991
-         */
-        'scrollable-region-focusable': { enabled: false },
-        /**
-         * The lowlight theme adheres to a non-default color contrast ratio and fails the default ratio check.
-         * The color-contrast ratio check is disabled for lowlight theme testing.
-         */
-        'color-contrast': { enabled: this.options.theme !== 'clinical-lowlight-theme' },
-      },
-    };
   }
 
   /**
@@ -63,7 +42,10 @@ class TerraService {
      *
      * Reference: https://github.com/webdriverio/webdriverio/issues/6119
      */
-    global.Terra.describeViewports = describeViewports.bind(null, this.options.formFactor);
+    global.Terra.describeViewports = describeViewports;
+
+    // Add the service options to the global.
+    global.Terra.serviceOptions = this.options;
   }
 
   /**
@@ -80,11 +62,28 @@ class TerraService {
     global.Terra.hideInputCaret = hideInputCaret;
 
     // Setup and expose the validates utility functions.
-    global.Terra.validates = {};
-    // Bind the default selector to ensure it is always passes as the first parameter when calling validates element.
-    global.Terra.validates.element = element.bind(null, this.options.selector);
-    // Bind the global axe options to ensure they are always passes as the first parameter when calling validates accessibility.
-    global.Terra.validates.accessibility = accessibility.bind(null, this.axeOptions);
+    global.Terra.validates = { accessibility, element };
+
+    /**
+     * Global axe override options.
+     * Options modified here will be applied globally for all tests.
+     */
+    global.Terra.axe = {
+      rules: {
+        /**
+         * This rule was introduced in axe-core v3.3 and causes failures in many Terra components.
+         * The solution to address this failure vary by component. It is being disabled until a solution is identified in the future.
+         *
+         * Reference: https://github.com/cerner/terra-framework/issues/991
+         */
+        'scrollable-region-focusable': { enabled: false },
+        /**
+         * The lowlight theme adheres to a non-default color contrast ratio and fails the default ratio check.
+         * The color-contrast ratio check is disabled for lowlight theme testing.
+         */
+        'color-contrast': { enabled: this.options.theme !== 'clinical-lowlight-theme' },
+      },
+    };
 
     // IE driver takes longer to be ready for browser interactions.
     if (capabilities.browserName === 'internet explorer') {

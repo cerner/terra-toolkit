@@ -13,7 +13,7 @@ const accessibility = require('./accessibility');
  */
 const element = (testName, options = {}) => {
   if (!testName || typeof testName !== 'string' || testName.length === 0) {
-    throw new Error('[terra-functional-testing:wdio] Terra.validates.element requires a test name as the first argument.');
+    throw new Error('[terra-functional-testing:wdio] Terra.validate.element requires a test name as the first argument.');
   }
 
   const { rules } = options;
