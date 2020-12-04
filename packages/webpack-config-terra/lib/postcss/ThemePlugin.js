@@ -52,4 +52,4 @@ module.exports = (config) => {
     }
   }
 };
-module.exports.postcss = true
+module.exports.postcss = true // distinguish between require('plugin') and require('plugin')(opts) end-user calls
