@@ -2,7 +2,7 @@ const Autoprefixer = require('autoprefixer');
 const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin');
 const PostCSSCustomProperties = require('postcss-custom-properties');
 const path = require('path');
-const rtl = require('postcss-rtl');
+const rtl = require('@mjhenkes/postcss-rtl');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -85,7 +85,7 @@ const defaultWebpackConfig = (env = {}, argv = {}, options = {}) => {
 
   const themeConfig = determineThemeConfig(env, options);
 
-  const production = argv.p;
+  const production = argv.p || argv.mode === 'production';
   const fileNameStategy = production ? '[name]-[chunkhash]' : '[name]';
   const chunkFilename = argv['output-chunk-filename'] || fileNameStategy;
   const filename = argv['output-filename'] || fileNameStategy;
