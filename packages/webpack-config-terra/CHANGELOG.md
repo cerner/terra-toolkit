@@ -4,6 +4,9 @@
 
 * Changed
   * Upgrade to postcss 8.
+    * AutoPrefixer to v10
+    * PostCss config to a forked version to support postcss8
+  * Support webpack 5
 
 ## 1.0.0 - (November 24, 2020)
 
