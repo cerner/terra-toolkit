@@ -11,7 +11,7 @@ const {
 
 class TerraService {
   constructor(options = {}) {
-    this.options = options;
+    this.serviceOptions = options;
   }
 
   /**
@@ -21,10 +21,10 @@ class TerraService {
   onPrepare(config) {
     const { serviceOptions } = config;
 
-    this.options = {
+    this.serviceOptions = {
       theme: 'terra-default-theme',
       selector: '[data-terra-test-content] *:first-child',
-      ...this.options,
+      ...this.serviceOptions,
       ...serviceOptions,
     };
   }
@@ -45,7 +45,7 @@ class TerraService {
     global.Terra.describeViewports = describeViewports;
 
     // Add the service options to the global.
-    global.Terra.serviceOptions = this.options;
+    global.Terra.serviceOptions = this.serviceOptions;
   }
 
   /**
@@ -81,7 +81,7 @@ class TerraService {
          * The lowlight theme adheres to a non-default color contrast ratio and fails the default ratio check.
          * The color-contrast ratio check is disabled for lowlight theme testing.
          */
-        'color-contrast': { enabled: this.options.theme !== 'clinical-lowlight-theme' },
+        'color-contrast': { enabled: this.serviceOptions.theme !== 'clinical-lowlight-theme' },
       },
     };
 
@@ -94,7 +94,7 @@ class TerraService {
     }
 
     // Set the viewport size before the spec begins.
-    setViewport(this.options.formFactor || 'huge');
+    setViewport(this.serviceOptions.formFactor || 'huge');
   }
 
   afterCommand(commandName, _args, _result, error) {
