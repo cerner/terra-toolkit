@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.3.0 - (December 4, 2020)
+
 * Added
   * Added orion-full-stack-testing to allow list
 
