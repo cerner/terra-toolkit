@@ -79,7 +79,7 @@
     "test": "npm run lint && npm run jest && npm run mocha && npm run wdio",
     "wdio-site": "SITE=build npm run terra -- wdio",
     "wdio-webpack": "npm run terra -- wdio",
-    "wdio": "rm -rf build && npm run pack && npm run wdio-site && npm run wdio-webpack"
+    "wdio": "rm -rf build && npm run pack && npm run wdio-site && npm run wdio-webpack && npm run wdio-site && npm run wdio-webpack && npm run wdio-site && npm run wdio-webpack"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
