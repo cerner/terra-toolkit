@@ -62,3 +62,4 @@ lib
 !/packages/webpack-config-terra/lib/
 !/packages/terra-cli/tests/jest/fixtures/*/node_modules/
 !/packages/terra-cli/tests/jest/fixtures/**/lib/
+!/packages/duplicate-package-checker-webpack-plugin/tests/jest/*/node_modules/
