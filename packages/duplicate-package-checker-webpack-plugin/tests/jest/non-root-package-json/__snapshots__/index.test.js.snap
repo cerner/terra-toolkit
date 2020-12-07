@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dependency tree with non-root package.json should output warnings 1`] = `
+"a
+  Multiple versions of a found:
+    1.0.0 ./~/a
+    2.0.0 ./~/b/~/a
+"
+`;
