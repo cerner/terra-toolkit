@@ -103,6 +103,7 @@ class SeleniumDockerService {
         if (retryCount >= retries) {
           clearTimeout(pollTimeout);
           pollTimeout = null;
+          logger.info('Timeout. Exceeded retry count.');
           reject(Error('Timeout. Exceeded retry count.'));
         }
 
@@ -124,14 +125,17 @@ class SeleniumDockerService {
    * Ensures the docker network has been shut down.
    */
   async waitForNetworkRemoval() {
+    logger.info('**********waitForNetworkRemoval**********');
     await this.pollCommand('docker network ls | grep wdio || true', (result) => (
       new Promise((resolve, reject) => {
         const { stdout: networkStatus } = result;
 
         // Reject if there is an active network returned.
         if (networkStatus) {
+          logger.error('**********Docker network unable to shutdown**********', networkStatus);
           reject();
         } else {
+          logger.info('**********Docker network is shutdown**********', result);
           resolve();
         }
       })));
@@ -141,14 +145,17 @@ class SeleniumDockerService {
    * Ensures the docker services have been shut down.
    */
   async waitForServiceRemoval() {
+    logger.info('**********waitForServiceRemoval**********');
     await this.pollCommand('docker service ls | grep wdio || true', (result) => (
       new Promise((resolve, reject) => {
         const { stdout: serviceStatus } = result;
 
         // Reject if there is an active service returned.
         if (serviceStatus) {
+          logger.error('**********Docker services unable to shutdown**********', serviceStatus);
           reject();
         } else {
+          logger.info('**********Docker services is shutdown**********', result);
           resolve();
         }
       })));
@@ -166,8 +173,10 @@ class SeleniumDockerService {
         const { value } = JSON.parse(stdout);
 
         if (value.ready) {
+          logger.info('Selenium grid is ready.', value);
           resolve();
         } else {
+          logger.info('Selenium grid is not ready...still waiting.');
           reject();
         }
         // A two minute timeout for the selenium service to become available.

@@ -75,6 +75,7 @@ class ExpressServer {
     return new Promise((resolve) => {
       this.server.close(() => {
         this.server = null;
+        logger.info('*******Express server is closed********');
         resolve();
       });
     });

@@ -119,6 +119,7 @@ class WebpackServer {
     return new Promise((resolve) => {
       this.server.close(() => {
         this.server = null;
+        logger.info('*******Webpack server is closed********');
         resolve();
       });
     });
