@@ -7,17 +7,19 @@ const assert = require('assert');
 const chalk = require('chalk');
 const MakeConfig = require('./make.webpack.config');
 
+const chalkLevel = chalk.level;
+
 describe('Simple dependency tree', () => {
   beforeEach(() => {
     /**
      * Travis-ci doesn't support colorized string generation with Chalk. To prevent snapshot mismatches
      * with Travis's test output, Chalk is disabled for snapshot tests.
      */
-    chalk.enabled = false;
+    chalk.level = 0;
   });
 
   afterEach(() => {
-    chalk.enabled = true;
+    chalk.level = chalkLevel;
   });
 
   it('should output warnings', (done) => {

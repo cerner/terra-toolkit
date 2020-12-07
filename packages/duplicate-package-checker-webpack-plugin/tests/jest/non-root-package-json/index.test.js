@@ -2,17 +2,19 @@ const webpack = require('webpack');
 const chalk = require('chalk');
 const config = require('./webpack.config');
 
+const chalkLevel = chalk.level;
+
 describe('Dependency tree with non-root package.json', () => {
   beforeEach(() => {
     /**
      * Travis-ci doesn't support colorized string generation with Chalk. To prevent snapshot mismatches
      * with Travis's test output, Chalk is disabled for snapshot tests.
      */
-    chalk.enabled = false;
+    chalk.level = 0;
   });
 
   afterEach(() => {
-    chalk.enabled = true;
+    chalk.level = chalkLevel;
   });
 
   it('should output warnings', (done) => {

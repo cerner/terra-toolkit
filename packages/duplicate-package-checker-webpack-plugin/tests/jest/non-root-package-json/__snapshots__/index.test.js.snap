@@ -2,8 +2,8 @@
 
 exports[`Dependency tree with non-root package.json should output warnings 1`] = `
 "a
-[0m  Multiple versions of [0m[32m[1ma[22m[39m[37m found:[39m
-[37m[39m    [32m[1m1.0.0[22m[39m [37m[1m./~/a[22m[39m
-    [32m[1m2.0.0[22m[39m [37m[1m./~/b/~/a[22m[39m
+  Multiple versions of a found:
+    1.0.0 ./~/a
+    2.0.0 ./~/b/~/a
 "
 `;
