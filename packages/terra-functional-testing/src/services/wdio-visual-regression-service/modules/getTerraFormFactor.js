@@ -1,4 +1,4 @@
-import { TERRA_VIEWPORTS } from '../../../static-assets/viewports';
+import { TERRA_VIEWPORTS } from '../../../constants';
 /**
  * Determines the Terra form factor to for the current viewport size.
  *
