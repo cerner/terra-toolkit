@@ -23,7 +23,7 @@ Motivation: https://github.com/webpack/webpack/issues/385 and https://github.com
 ## Install
 
 ```sh
-npm install duplicate-package-checker-webpack-plugin --save-dev
+npm install @cerner/duplicate-package-checker-webpack-plugin --save-dev
 ```
 
 ## Configuration
@@ -31,7 +31,7 @@ npm install duplicate-package-checker-webpack-plugin --save-dev
 Add the plugin to your webpack config:
 
 ```js
-var DuplicatePackageCheckerPlugin = require("duplicate-package-checker-webpack-plugin");
+var DuplicatePackageCheckerPlugin = require("@cerner/duplicate-package-checker-webpack-plugin");
 
 module.exports = {
   plugins: [new DuplicatePackageCheckerPlugin()]
@@ -126,4 +126,3 @@ If your project is using an old version of a package and a dependency is using a
 ### File issues!
 
 If your project has a dependency and it's using an outdated version of a package, file an issue and notify the author to update the dependencies. Let's help keep our projects green and our applications secure, performant and bug-free!
-
