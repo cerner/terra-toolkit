@@ -1,11 +1,10 @@
 const { Logger } = require('@cerner/terra-cli');
 
-const logger = new Logger({ prefix: '[terra-functional-testing:wdio-terra-service]' });
+const logger = new Logger({ prefix: '[terra-functional-testing:hideInputCaret]' });
 
 /**
  * Hides the blinking input caret that appears within editable text areas to prevent inconsistent test failures.
- *
- * @param {string} selector The selector for the element to hide the caret of
+ * @param {string} selector - The target element selector.
  */
 const hideInputCaret = (selector) => {
   if (global.browser.$(selector).isExisting()) {

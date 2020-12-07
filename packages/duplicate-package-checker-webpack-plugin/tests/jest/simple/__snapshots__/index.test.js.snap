@@ -1,0 +1,123 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Simple dependency tree should ignore excluded duplicates by name 1`] = `
+"b
+  Multiple versions of b found:
+    1.0.0 ./~/b
+    2.0.0 ./~/c/~/d/~/b
+
+Check how you can resolve duplicate packages: 
+https://github.com/cerner/terra-toolkit/tree/main/packages/duplicate-package-checker-webpack-plugin#resolving-duplicate-packages-in-your-bundle
+"
+`;
+
+exports[`Simple dependency tree should output errors 1`] = `
+"a
+  Multiple versions of a found:
+    1.0.0 ./~/a
+    2.0.0 ./~/b/~/a
+"
+`;
+
+exports[`Simple dependency tree should output errors 2`] = `
+"b
+  Multiple versions of b found:
+    1.0.0 ./~/b
+    2.0.0 ./~/c/~/d/~/b
+
+Check how you can resolve duplicate packages: 
+https://github.com/cerner/terra-toolkit/tree/main/packages/duplicate-package-checker-webpack-plugin#resolving-duplicate-packages-in-your-bundle
+"
+`;
+
+exports[`Simple dependency tree should output errors if duplicate packages are found within alwaysEmitErrorsFor 1`] = `
+"a
+  Multiple versions of a found:
+    1.0.0 ./~/a
+    2.0.0 ./~/b/~/a
+"
+`;
+
+exports[`Simple dependency tree should output errors if duplicate packages are found within alwaysEmitErrorsFor 2`] = `
+"b
+  Multiple versions of b found:
+    1.0.0 ./~/b
+    2.0.0 ./~/c/~/d/~/b
+
+Check how you can resolve duplicate packages: 
+https://github.com/cerner/terra-toolkit/tree/main/packages/duplicate-package-checker-webpack-plugin#resolving-duplicate-packages-in-your-bundle
+"
+`;
+
+exports[`Simple dependency tree should output errors in production mode 1`] = `
+"a
+  Multiple versions of a found:
+    1.0.0 ./~/a
+    2.0.0 ./~/b/~/a
+"
+`;
+
+exports[`Simple dependency tree should output errors in production mode 2`] = `
+"b
+  Multiple versions of b found:
+    1.0.0 ./~/b
+    2.0.0 ./~/c/~/d/~/b
+
+Check how you can resolve duplicate packages: 
+https://github.com/cerner/terra-toolkit/tree/main/packages/duplicate-package-checker-webpack-plugin#resolving-duplicate-packages-in-your-bundle
+"
+`;
+
+exports[`Simple dependency tree should output warnings 1`] = `
+"a
+  Multiple versions of a found:
+    1.0.0 ./~/a
+    2.0.0 ./~/b/~/a
+"
+`;
+
+exports[`Simple dependency tree should output warnings 2`] = `
+"b
+  Multiple versions of b found:
+    1.0.0 ./~/b
+    2.0.0 ./~/c/~/d/~/b
+
+Check how you can resolve duplicate packages: 
+https://github.com/cerner/terra-toolkit/tree/main/packages/duplicate-package-checker-webpack-plugin#resolving-duplicate-packages-in-your-bundle
+"
+`;
+
+exports[`Simple dependency tree should output warnings in verbose 1`] = `
+"a
+  Multiple versions of a found:
+    1.0.0 ./~/a from ./entry.js
+    2.0.0 ./~/b/~/a from ./~/b/index.js
+"
+`;
+
+exports[`Simple dependency tree should output warnings in verbose 2`] = `
+"b
+  Multiple versions of b found:
+    1.0.0 ./~/b from ./entry.js
+    2.0.0 ./~/c/~/d/~/b from ./~/c/~/d/index.js
+
+Check how you can resolve duplicate packages: 
+https://github.com/cerner/terra-toolkit/tree/main/packages/duplicate-package-checker-webpack-plugin#resolving-duplicate-packages-in-your-bundle
+"
+`;
+
+exports[`Simple dependency tree should respect showHelp option 1`] = `
+[Error: a
+  Multiple versions of a found:
+    1.0.0 ./~/a
+    2.0.0 ./~/b/~/a
+]
+`;
+
+exports[`Simple dependency tree should respect showHelp option 2`] = `
+[Error: b
+  Multiple versions of b found:
+    1.0.0 ./~/b
+    2.0.0 ./~/c/~/d/~/b
+]
+`;

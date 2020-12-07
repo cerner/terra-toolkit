@@ -1,7 +1,7 @@
 const WdioTerraService = require('../../../src/services/wdio-terra-service');
-const { setViewport } = require('../../../src/commands/viewport-helpers');
+const { setViewport } = require('../../../src/commands/utils');
 
-jest.mock('../../../src/commands/viewport-helpers');
+jest.mock('../../../src/commands/utils');
 
 const mockIsExisting = jest.fn().mockImplementation(() => true);
 const element = {
@@ -22,6 +22,8 @@ global.browser = {
     waitforTimeout: 10000,
   },
 };
+
+global.Terra = {};
 
 describe('WDIO Terra Service', () => {
   it('should setup the global terra validates accessibility command', () => {

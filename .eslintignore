@@ -3,3 +3,4 @@ build
 reports
 lib
 **/aggregated-translations/*.*
+dist

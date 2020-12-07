@@ -39,6 +39,7 @@ tmp
 build-iPhoneOS/
 build-iPhoneSimulator/
 build/
+dist/
 build/Release
 coverage
 jspm_packages
@@ -61,3 +62,4 @@ lib
 !/packages/webpack-config-terra/lib/
 !/packages/terra-cli/tests/jest/fixtures/*/node_modules/
 !/packages/terra-cli/tests/jest/fixtures/**/lib/
+!/packages/duplicate-package-checker-webpack-plugin/tests/jest/**/node_modules/

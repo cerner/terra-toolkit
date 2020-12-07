@@ -26,6 +26,7 @@ Cerner Corporation
 - Avinash Gupta [@avinashg1994]
 - Jack Vande Ven [@jv075002]
 - Saurabh Khare [@saurabhkhare86]
+- Dianna McGinn [@DMcginn]
 
 [@emilyrohrbough]: https://github.com/emilyrohrbough
 [@brettjankord]: https://github.com/bjankord
@@ -53,3 +54,4 @@ Cerner Corporation
 [@avinashg1994]: https://github.com/avinashg1994
 [@jv075002]: https://github.com/jv075002
 [@saurabhkhare86]: https://github.com/SaurabhKhare86
+[@DMcginn]: https://github.com/DMcginn
