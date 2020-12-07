@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.0 - (December 7, 2020)
+
 * Changed
   * Support Webpack 5.
   * Update version of chalk used.
