@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.1.0 - (December 7, 2020)
+
 * Changed
   * Upgrade to postcss 8.
     * AutoPrefixer to v10
