@@ -1,7 +1,7 @@
 const fs = require('fs-extra');
 const glob = require('glob');
 const path = require('path');
-const Logger = require('../utils/logger');
+const logging = require('webpack/lib/logging/runtime');
 
 const CONFIG = 'terra-theme.config.js';
 const DISCLAIMER = fs.readFileSync(path.resolve(__dirname, 'disclaimer.txt'), 'utf8');
@@ -13,7 +13,9 @@ const ROOT = 'root';
 const SCOPED = 'scoped';
 const ROOT_THEME = `${ROOT}-theme.scss`;
 const SCOPED_THEME = `${SCOPED}-theme.scss`;
-const LOG_CONTEXT = '[Terra-Toolkit:theme-aggregator]';
+const LOG_CONTEXT = 'webpack-config-terra:theme-aggregator';
+
+const Logger = logging.getLogger(LOG_CONTEXT);
 
 /**
  * Aggregates and generates theme assets.
@@ -66,7 +68,7 @@ class ThemeAggregator {
 
     // This creates a generated-themes directory to house theme assets.
     fs.ensureDir(OUTPUT_DIR).catch(err => {
-      Logger.warn(err, { context: LOG_CONTEXT });
+      Logger.warn(err);
     });
 
     const {
@@ -118,7 +120,7 @@ class ThemeAggregator {
       return null;
     }
 
-    Logger.log(`Aggregating ${themeName} files...`, { context: LOG_CONTEXT });
+    Logger.log(`Aggregating ${themeName} files...`);
 
     const aggregatedAssets = ThemeAggregator.aggregateTheme(themeName, isRoot, options);
     const generatedAsset = ThemeAggregator.generateTheme(themeName, isRoot, options);
@@ -130,7 +132,7 @@ class ThemeAggregator {
     }
 
     if (!aggregatedAssets.length) {
-      Logger.warn(`No theme files found for ${themeName}.`, { context: LOG_CONTEXT });
+      Logger.warn(`No theme files found for ${themeName}.`);
       return null;
     }
 
@@ -178,7 +180,7 @@ class ThemeAggregator {
     const fileName = `${prefix}-${themeName}.scss`;
     const filePath = path.resolve(outputPath || OUTPUT_PATH, fileName);
     fs.writeFileSync(filePath, file);
-    Logger.log(`Successfully generated ${fileName}.`, { context: LOG_CONTEXT });
+    Logger.log(`Successfully generated ${fileName}.`);
 
     return `./${path.relative(outputPath || OUTPUT_PATH, filePath)}`;
   }
@@ -222,7 +224,7 @@ class ThemeAggregator {
     const { theme, scoped } = options;
 
     if (!theme && !scoped) {
-      Logger.warn('No theme provided.', { context: LOG_CONTEXT });
+      Logger.warn('No theme provided.');
       return false;
     }
 
@@ -254,7 +256,7 @@ class ThemeAggregator {
    */
   static writeJsFile(imports) {
     if (!imports.length) {
-      Logger.warn(`No themes to import. Skip generating ${OUTPUT}.`, { context: LOG_CONTEXT });
+      Logger.warn(`No themes to import. Skip generating ${OUTPUT}.`);
       return null;
     }
 
@@ -262,7 +264,7 @@ class ThemeAggregator {
     const filePath = `${path.resolve(OUTPUT_PATH, OUTPUT)}`;
     fs.writeFileSync(filePath, `${DISCLAIMER}${file}`);
 
-    Logger.log(`Successfully generated ${OUTPUT}.`, { context: LOG_CONTEXT });
+    Logger.log(`Successfully generated ${OUTPUT}.`);
     return filePath;
   }
 }

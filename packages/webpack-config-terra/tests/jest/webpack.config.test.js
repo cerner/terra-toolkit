@@ -5,7 +5,7 @@ jest.mock('mini-css-extract-plugin');
 jest.mock('clean-webpack-plugin');
 jest.mock('terser-webpack-plugin');
 jest.mock('webpack/lib/DefinePlugin');
-jest.mock('../../lib/utils/_getThemeConfig');
+jest.mock('../../src/utils/_getThemeConfig');
 
 // Import mocked components
 const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin');
@@ -15,8 +15,8 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const aggregateTranslations = require('terra-aggregate-translations');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
-const webpackConfig = require('../../webpack.config');
-const getThemeConfig = require('../../lib/utils/_getThemeConfig');
+const webpackConfig = require('../../src/webpack.config');
+const getThemeConfig = require('../../src/utils/_getThemeConfig');
 
 const outputPath = expect.stringContaining('build');
 

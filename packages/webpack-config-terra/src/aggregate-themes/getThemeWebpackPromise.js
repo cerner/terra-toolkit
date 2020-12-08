@@ -6,8 +6,10 @@ const Autoprefixer = require('autoprefixer');
 const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin');
 const PostCSSCustomProperties = require('postcss-custom-properties');
 const path = require('path');
-const Logger = require('webpack/lib/logging/runtime');
+const logging = require('webpack/lib/logging/runtime');
 const ThemePlugin = require('../postcss/ThemePlugin');
+
+const Logger = logging.getLogger('webpack-config-terra');
 
 /**
  * This is a basic configuration to webpack just the theme file and grab the resulting css.  Thus,
@@ -46,8 +48,6 @@ const webpackThemeConfig = (rootPath, themeFile, themeConfig, cachedObject) => (
             {
               loader: 'postcss-loader',
               options: {
-                // Add unique ident to prevent the loader from searching for a postcss.config file. See: https://github.com/postcss/postcss-loader#plugins
-                ident: 'postcss',
                 plugins: [
                   ThemePlugin(themeConfig),
                   rtl(),
