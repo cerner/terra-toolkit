@@ -27,14 +27,18 @@ class TestRunner {
   }
 
   /**
-   * Starts the test runner.
+   * Runs the test runner.
    * @param {Object} options - The test run options.
+   * @param {string} options.config - A file path to the test runner configuration.
+   * @param {string} options.locale - A language locale for the test run.
    * @returns {Promise} A promise that resolves with the test run exit code.
    */
   static async run(options) {
     let exitCode;
     try {
-      const { config } = options;
+      const { config, locale } = options;
+
+      process.env.LOCALE = locale;
 
       const configPath = TestRunner.configPath(config);
       const testRunner = new Launcher(configPath);
@@ -47,6 +51,22 @@ class TestRunner {
 
     if (exitCode !== 0) {
       throw new Error(`[terra-functional-testing:wdio] Launcher returned with an exit code of ${exitCode}`);
+    }
+  }
+
+  /**
+   * Starts the test runner(s).
+   * @param {string} options.config - A file path to the test runner configuration.
+   * @param {string} options.locales - A list of language locales for the test run.
+   */
+  static async start(options) {
+    const { config, locales } = options;
+
+    for (let localeIndex = 0; localeIndex < locales.length; localeIndex += 1) {
+      const locale = locales[localeIndex];
+
+      // eslint-disable-next-line no-await-in-loop
+      await TestRunner.run({ config, locale });
     }
   }
 }

@@ -7,12 +7,17 @@ const cli = {
     yargs.options({
       c: {
         type: 'string',
-        alias: 'configuration',
+        alias: 'config',
         describe: 'A file path to the test runner configuration.',
+      },
+      locales: {
+        type: 'array',
+        describe: 'A list of language locales for the test run.',
+        default: ['en'],
       },
     })
   ),
-  handler: TestRunner.run,
+  handler: TestRunner.start,
 };
 
 module.exports = cli;
