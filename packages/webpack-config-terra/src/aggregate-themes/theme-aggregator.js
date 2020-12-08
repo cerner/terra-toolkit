@@ -120,7 +120,7 @@ class ThemeAggregator {
       return null;
     }
 
-    Logger.log(`Aggregating ${themeName} files...`);
+    Logger.info(`Aggregating ${themeName} files...`);
 
     const aggregatedAssets = ThemeAggregator.aggregateTheme(themeName, isRoot, options);
     const generatedAsset = ThemeAggregator.generateTheme(themeName, isRoot, options);
@@ -180,7 +180,7 @@ class ThemeAggregator {
     const fileName = `${prefix}-${themeName}.scss`;
     const filePath = path.resolve(outputPath || OUTPUT_PATH, fileName);
     fs.writeFileSync(filePath, file);
-    Logger.log(`Successfully generated ${fileName}.`);
+    Logger.info(`Successfully generated ${fileName}.`);
 
     return `./${path.relative(outputPath || OUTPUT_PATH, filePath)}`;
   }
@@ -264,7 +264,7 @@ class ThemeAggregator {
     const filePath = `${path.resolve(OUTPUT_PATH, OUTPUT)}`;
     fs.writeFileSync(filePath, `${DISCLAIMER}${file}`);
 
-    Logger.log(`Successfully generated ${OUTPUT}.`);
+    Logger.info(`Successfully generated ${OUTPUT}.`);
     return filePath;
   }
 }

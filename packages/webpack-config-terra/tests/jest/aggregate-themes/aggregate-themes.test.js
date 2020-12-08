@@ -5,7 +5,7 @@ const path = require('path');
 const glob = require('glob');
 const logging = require('webpack/lib/logging/runtime');
 
-const logger = { log: jest.fn(), warn: jest.fn() };
+const logger = { info: jest.fn(), warn: jest.fn() };
 logging.getLogger.mockReturnValue(logger);
 
 const ThemeAggregator = require('../../../src/aggregate-themes/theme-aggregator');

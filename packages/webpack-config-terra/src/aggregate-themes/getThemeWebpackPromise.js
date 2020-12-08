@@ -48,11 +48,13 @@ const webpackThemeConfig = (rootPath, themeFile, themeConfig, cachedObject) => (
             {
               loader: 'postcss-loader',
               options: {
-                plugins: [
-                  ThemePlugin(themeConfig),
-                  rtl(),
-                  Autoprefixer(),
-                ],
+                postcssOptions: {
+                  plugins: [
+                    ThemePlugin(themeConfig),
+                    rtl(),
+                    Autoprefixer(),
+                  ],
+                },
               },
             },
             {
