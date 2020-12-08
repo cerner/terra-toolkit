@@ -6,6 +6,8 @@ jest.mock('clean-webpack-plugin');
 jest.mock('terser-webpack-plugin');
 jest.mock('webpack/lib/DefinePlugin');
 jest.mock('../../src/utils/_getThemeConfig');
+jest.mock('../../src/aggregate-themes/theme-aggregator');
+jest.mock('../../src/aggregate-themes/getThemeWebpackPromise');
 
 // Import mocked components
 const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin');
@@ -15,8 +17,11 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const aggregateTranslations = require('terra-aggregate-translations');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
+const ThemeAggregator = require('../../src/aggregate-themes/theme-aggregator');
+const getThemeWebpackPromise = require('../../src/aggregate-themes/getThemeWebpackPromise');
 const webpackConfig = require('../../src/webpack.config');
 const getThemeConfig = require('../../src/utils/_getThemeConfig');
+
 
 const outputPath = expect.stringContaining('build');
 
@@ -257,5 +262,21 @@ describe('webpack config', () => {
       }),
     };
     expect(DefinePlugin).toBeCalledWith(expected);
+  });
+
+  it('enablesAggregateThemes', () => {
+    const enableAggregateThemes = true;
+    ThemeAggregator.aggregate.mockReturnValue('./aggregate-themes/fixtures/generatedThemes/scoped-terra-mock-dark-theme.scss');
+    getThemeWebpackPromise.mockReturnValue();
+    const config = webpackConfig({ enableAggregateThemes }, {});
+
+    const expectedOuput = {
+      'core-js': '@cerner/webpack-config-terra/lib/entry/core-js',
+      'regenerator-runtime': 'regenerator-runtime/runtime',
+      theme: './aggregate-themes/fixtures/generatedThemes/scoped-terra-mock-dark-theme.scss',
+    };
+
+    expect(config.entry).toEqual(expect.objectContaining(expectedOuput));
+    expect(getThemeWebpackPromise).toBeCalled();
   });
 });

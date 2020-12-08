@@ -10,10 +10,14 @@ const webpack = require('webpack');
 const { mergeWithCustomize } = require('webpack-merge');
 const DuplicatePackageCheckerPlugin = require('@cerner/duplicate-package-checker-webpack-plugin');
 const aggregateTranslations = require('terra-aggregate-translations');
+const logging = require('webpack/lib/logging/runtime');
+
 const ThemePlugin = require('./postcss/ThemePlugin');
 const getThemeConfig = require('./utils/_getThemeConfig');
 const ThemeAggregator = require('./aggregate-themes/theme-aggregator');
 const getThemeWebpackPromise = require('./aggregate-themes/getThemeWebpackPromise');
+
+const Logger = logging.getLogger('webpack-config-terra');
 
 /**
  * Get the locales to be defined by the webpack build, also aggregates translations, but we should remove that in the future.
@@ -47,8 +51,7 @@ const determineThemeConfig = ({ defaultTheme }, { themeConfig: overrideThemeConf
   const themeENV = process.env.THEME;
 
   if (themeENV) {
-    // eslint-disable-next-line no-console
-    console.warn(`The THEME ENV has been deprecated and will be removed in the next major version. Please use the default theme webpack env option instead, for example "webpack --env.defaultTheme=${themeENV}"`);
+    Logger.warn(`The THEME ENV has been deprecated and will be removed in the next major version. Please use the default theme webpack env option instead, for example "webpack --env.defaultTheme=${themeENV}"`);
   }
 
   const aDefaultTheme = defaultTheme || themeENV;
@@ -77,8 +80,8 @@ const getWebpackDevServerStaticOptions = ({ disableHotReloading }) => (
 );
 
 const getAggregateThemeFile = ({ env, themeConfig }) => {
-  const { enableAggregateTranslations } = env;
-  if (enableAggregateTranslations) {
+  const { enableAggregateThemes } = env;
+  if (enableAggregateThemes) {
     return ThemeAggregator.aggregate(
       null, // Set the default theme via the config.
       {
