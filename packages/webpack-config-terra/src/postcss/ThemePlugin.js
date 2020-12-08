@@ -1,4 +1,3 @@
-const postcss = require('postcss');
 const removeCssModulesPseudoClasses = require('./_removeCssModulesPseudoClasses');
 const getThemeConfig = require('../utils/_getThemeConfig');
 
@@ -32,7 +31,7 @@ module.exports = (config) => {
 
   return {
     postcssPlugin: 'terra-theme-plugin',
-    Once (root) {
+    Once(root) {
       if (defaultThemeSelector || themesToRemove.length) {
         root.walkRules((node) => {
           // Scrub css modules pseudo classes from the selector
@@ -49,7 +48,7 @@ module.exports = (config) => {
           }
         });
       }
-    }
-  }
+    },
+  };
 };
-module.exports.postcss = true // distinguish between require('plugin') and require('plugin')(opts) end-user calls
+module.exports.postcss = true;// distinguish between require('plugin') and require('plugin')(opts) end-user calls

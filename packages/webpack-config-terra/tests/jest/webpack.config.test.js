@@ -22,7 +22,6 @@ const getThemeWebpackPromise = require('../../src/aggregate-themes/getThemeWebpa
 const webpackConfig = require('../../src/webpack.config');
 const getThemeConfig = require('../../src/utils/_getThemeConfig');
 
-
 const outputPath = expect.stringContaining('build');
 
 getThemeConfig.mockImplementation(() => ({ }));
