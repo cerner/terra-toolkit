@@ -6,6 +6,7 @@
   * Drop support for node versions below version 10.
   * Require stylelint version 13.
   * Use jest for tests.
+  * Scope package under @cerner.
 
 ## 3.7.0 - (July 28, 2020)
 
