@@ -27,6 +27,8 @@ Cerner Corporation
 - Jack Vande Ven [@jv075002]
 - Saurabh Khare [@saurabhkhare86]
 - Dianna McGinn [@DMcginn]
+- Alex Brisimitzakis [@AlexB98]
+- Saket Bajaj [@saket2403]
 
 [@emilyrohrbough]: https://github.com/emilyrohrbough
 [@brettjankord]: https://github.com/bjankord
@@ -55,3 +57,5 @@ Cerner Corporation
 [@jv075002]: https://github.com/jv075002
 [@saurabhkhare86]: https://github.com/SaurabhKhare86
 [@DMcginn]: https://github.com/DMcginn
+[@AlexB98]: https://github.com/AlexB98
+[@saket2403]: https://github.com/saket2403
