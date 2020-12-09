@@ -66,7 +66,6 @@
     "danger": "danger ci",
     "heroku-postbuild": "npm install --only=dev && npm run compile:prod",
     "heroku-prebuild": "npx lerna init",
-    "jest": "jest",
     "lint:js": "eslint --ext .js,.jsx .",
     "lint": "npm run lint:js",
     "mocha": "cd packages/terra-functional-testing && npm run mocha",
@@ -76,7 +75,7 @@
     "start": "webpack-dev-server --config webpack.dev-site.config.js",
     "start-heroku": "npm run terra -- express-server --port $PORT --site './build' ",
     "terra": "node ./packages/terra-cli/bin/terra",
-    "test": "npm run lint && npm run jest && npm run mocha && npm run wdio",
+    "test": "npm run lint && npm run mocha && npm run wdio",
     "wdio-site": "SITE=build npm run terra -- wdio",
     "wdio-webpack": "npm run terra -- wdio",
     "wdio": "rm -rf build && npm run pack && npm run wdio-site && npm run wdio-webpack && npm run wdio-site && npm run wdio-webpack && npm run wdio-site && npm run wdio-webpack"
