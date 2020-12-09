@@ -34,8 +34,6 @@
   ],
   "scripts": {
     "compile": "babel src --out-dir lib --copy-files --ignore src",
-    "clean": "rm -rf node_modules",
-    "clean:install": "npm run clean && npm install",
     "lint": "eslint --ext .js,.jsx .",
     "test": "tape lib/**/__tests__/**/*.js"
   },
