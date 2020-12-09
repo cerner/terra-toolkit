@@ -1,8 +1,8 @@
 /* eslint-disable class-methods-use-this */
 const path = require('path');
 const util = require('util');
-const http = require('http');
-const retry = require('async/retry');
+// const http = require('http');
+// const retry = require('async/retry');
 const childProcess = require('child_process');
 const { SevereServiceError } = require('webdriverio');
 const { Logger } = require('@cerner/terra-cli');
