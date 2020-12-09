@@ -5,8 +5,10 @@
 * Breaking
   * Drop support for node versions below version 10.
   * Require stylelint version 13.
-  * Use jest for tests.
   * Scope package under @cerner.
+
+* Changed
+  * Use jest for tests.
 
 ## 3.7.0 - (July 28, 2020)
 
