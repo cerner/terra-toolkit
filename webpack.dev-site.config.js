@@ -8,7 +8,7 @@ const {
   LocalPackageAliasPlugin,
 } = require('terra-dev-site');
 
-const WebpackConfigTerra = require('./packages/webpack-config-terra/webpack.config');
+const WebpackConfigTerra = require('./packages/webpack-config-terra/lib/webpack.config');
 /**
 * Generates the file representing app name configuration.
 */
