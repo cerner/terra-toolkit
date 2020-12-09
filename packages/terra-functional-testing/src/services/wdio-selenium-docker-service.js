@@ -61,7 +61,7 @@ class SeleniumDockerService {
    */
   async deployStack() {
     // Remove the previous stack if one exists.
-    await this.removeStack();
+    // await this.removeStack();
 
     logger.info(`Deploying docker stack using selenium ${this.version}.`);
 
@@ -245,7 +245,7 @@ class SeleniumDockerService {
    * Removes the docker stack and network.
    */
   async onComplete() {
-    await this.removeStack();
+    // await this.removeStack();
 
     logger.info('**********START waiting******', new Date().getTime());
     await this.resolveAfter10Seconds();
@@ -256,7 +256,7 @@ class SeleniumDockerService {
     return new Promise(resolve => {
       setTimeout(() => {
         resolve();
-      }, 10000);
+      }, 20000);
     });
   }
 }
