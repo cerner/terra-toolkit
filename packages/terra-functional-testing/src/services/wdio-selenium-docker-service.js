@@ -245,11 +245,11 @@ class SeleniumDockerService {
    * Removes the docker stack and network.
    */
   async onComplete() {
-    // await this.removeStack();
+    await this.removeStack();
 
-    logger.info('**********START waiting******', new Date().getTime());
-    await this.resolveAfter10Seconds();
-    logger.info('**********END waiting******', new Date().getTime());
+    // logger.info('**********START waiting******', new Date().getTime());
+    // await this.resolveAfter10Seconds();
+    // logger.info('**********END waiting******', new Date().getTime());
   }
 
   resolveAfter10Seconds() {
