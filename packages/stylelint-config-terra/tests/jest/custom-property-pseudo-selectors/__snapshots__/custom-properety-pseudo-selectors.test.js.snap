@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`custom-property-pseudo-selectors does error with a custom properties that declares pseudo selectors in the wrong order 1`] = `
+Array [
+  Object {
+    "column": 27,
+    "line": 1,
+    "rule": "terra/custom-property-pseudo-selectors",
+    "severity": "error",
+    "text": "Expected --test-focus-hover-color to include all ancestor psuedo selectors in order: [hover,focus] (terra/custom-property-pseudo-selectors)",
+  },
+]
+`;
+
+exports[`custom-property-pseudo-selectors does error with a custom properties that does not include the ancestor pseudo selectors 1`] = `
+Array [
+  Object {
+    "column": 15,
+    "line": 1,
+    "rule": "terra/custom-property-pseudo-selectors",
+    "severity": "error",
+    "text": "Expected --test-color to include all ancestor psuedo selectors in order: [hover] (terra/custom-property-pseudo-selectors)",
+  },
+]
+`;
+
+exports[`custom-property-pseudo-selectors does error with a custom properties that does not include the pseudo selector 1`] = `
+Array [
+  Object {
+    "column": 15,
+    "line": 1,
+    "rule": "terra/custom-property-pseudo-selectors",
+    "severity": "error",
+    "text": "Expected --test-color to include all ancestor psuedo selectors in order: [hover] (terra/custom-property-pseudo-selectors)",
+  },
+]
+`;

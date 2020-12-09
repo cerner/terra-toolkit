@@ -29,7 +29,8 @@
   },
   "homepage": "https://github.com/cerner/terra-toolkit",
   "files": [
-    "lib"
+    "lib",
+    "stylelint.config.js"
   ],
   "scripts": {
     "compile": "babel src --out-dir lib --copy-files --ignore src",
