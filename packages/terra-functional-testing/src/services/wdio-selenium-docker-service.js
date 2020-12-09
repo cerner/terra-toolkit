@@ -1,6 +1,8 @@
 /* eslint-disable class-methods-use-this */
 const path = require('path');
 const util = require('util');
+const http = require('http');
+const retry = require('async/retry');
 const childProcess = require('child_process');
 const { SevereServiceError } = require('webdriverio');
 const { Logger } = require('@cerner/terra-cli');
@@ -11,9 +13,10 @@ const exec = util.promisify(childProcess.exec);
 
 class SeleniumDockerService {
   constructor(options = {}) {
+    // this.getSeleniumStatus = this.getSeleniumStatus.bind(this);
     const { version } = options;
 
-    this.version = version || '3.14.0-helium';
+    this.version = version || '3.14';
   }
 
   /**
@@ -67,6 +70,7 @@ class SeleniumDockerService {
     await exec(`TERRA_SELENIUM_DOCKER_VERSION=${this.version} docker stack deploy -c ${composeFilePath} wdio`);
 
     await this.waitForNetworkReady();
+    // await this.ensureSelenium();
   }
 
   /**
@@ -132,7 +136,7 @@ class SeleniumDockerService {
 
         // Reject if there is an active network returned.
         if (networkStatus) {
-          logger.error('**********Docker network unable to shutdown**********', networkStatus);
+          logger.info('**********Docker network is not yet shutdown**********', networkStatus);
           reject();
         } else {
           logger.info('**********Docker network is shutdown**********', result);
@@ -152,7 +156,7 @@ class SeleniumDockerService {
 
         // Reject if there is an active service returned.
         if (serviceStatus) {
-          logger.error('**********Docker services unable to shutdown**********', serviceStatus);
+          logger.info('**********Docker services is not yet shutdown**********', serviceStatus);
           reject();
         } else {
           logger.info('**********Docker services is shutdown**********', result);
@@ -183,6 +187,59 @@ class SeleniumDockerService {
         // This helps account for pulling the docker images for the very first time.
       })), 60, 2000);
   }
+
+  // ensureSelenium() {
+  //   logger.info('***************ensureSelenium************');
+
+  //   return new Promise((resolve, reject) => {
+  //     logger.info('Ensuring selenium status is ready');
+  //     retry(
+  //       { times: 60, interval: 2000 },
+  //       this.getSeleniumStatus, (err, result) => {
+  //         if (err) {
+  //           reject(logger.error(JSON.stringify(err)));
+  //         } else {
+  //           resolve(result);
+  //         }
+  //       },
+  //     );
+  //   });
+  // }
+
+  // getSeleniumStatus(callback) {
+  //   logger.info('***************getSeleniumStatus************');
+  //   http.get({
+  //     host: this.host,
+  //     port: this.port,
+  //     path: path.posix.join('/wd/hub', 'status'),
+  //   }, (res) => {
+  //     const { statusCode } = res;
+
+  //     if (statusCode !== 200) {
+  //       callback('Request failed');
+  //       return;
+  //     }
+
+  //     res.setEncoding('utf8');
+  //     let rawData = '';
+  //     res.on('data', (chunk) => { rawData += chunk; });
+  //     res.on('end', () => {
+  //       try {
+  //         const status = JSON.parse(rawData);
+  //         if (status.value && status.value.ready) {
+  //           callback(null, status);
+  //         } else {
+  //           callback(status);
+  //         }
+  //       } catch (e) {
+  //         callback(`Request failed: ${e.message}`);
+  //       }
+  //     });
+  //   }).on('error', (e) => {
+  //     logger.info('***************getSeleniumStatus request failed************', e.message);
+  //     callback(`Request failed: ${e.message}`);
+  //   });
+  // }
 
   /**
    * Removes the docker stack and network.
