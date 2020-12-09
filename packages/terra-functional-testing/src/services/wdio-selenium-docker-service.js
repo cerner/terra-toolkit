@@ -16,7 +16,7 @@ class SeleniumDockerService {
     // this.getSeleniumStatus = this.getSeleniumStatus.bind(this);
     const { version } = options;
 
-    this.version = version || '3.14';
+    this.version = version || '3.14.0-helium';
   }
 
   /**
@@ -246,6 +246,18 @@ class SeleniumDockerService {
    */
   async onComplete() {
     await this.removeStack();
+
+    logger.info('**********START waiting******', new Date().getTime());
+    await this.resolveAfter10Seconds();
+    logger.info('**********END waiting******', new Date().getTime());
+  }
+
+  resolveAfter10Seconds() {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve();
+      }, 10000);
+    });
   }
 }
 

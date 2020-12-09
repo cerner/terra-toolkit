@@ -367,15 +367,15 @@ describe('WDIO Selenium Docker Service', () => {
     });
   });
 
-  describe('onComplete', () => {
-    it('should remove the docker stack', async () => {
-      const service = new SeleniumDockerService();
+  // describe('onComplete', () => {
+  //   it('should remove the docker stack', async () => {
+  //     const service = new SeleniumDockerService();
 
-      jest.spyOn(service, 'removeStack').mockImplementationOnce(() => Promise.resolve());
+  //     jest.spyOn(service, 'removeStack').mockImplementationOnce(() => Promise.resolve());
 
-      await service.onComplete();
+  //     await service.onComplete();
 
-      expect(service.removeStack).toHaveBeenCalled();
-    });
-  });
+  //     expect(service.removeStack).toHaveBeenCalled();
+  //   });
+  // });
 });
