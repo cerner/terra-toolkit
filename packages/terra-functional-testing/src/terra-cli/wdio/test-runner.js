@@ -37,6 +37,7 @@ class TestRunner {
    */
   static async run(options) {
     let exitCode;
+
     try {
       const {
         config,
@@ -48,7 +49,6 @@ class TestRunner {
       process.env.LOCALE = locale;
       process.env.THEME = theme;
 
-      // A form factor is optional. Only assign the ENV if a value is provided.
       if (formFactor) {
         process.env.FORM_FACTOR = formFactor;
       }
@@ -89,7 +89,9 @@ class TestRunner {
      */
     for (let themeIndex = 0; themeIndex < themes.length; themeIndex += 1) {
       for (let localeIndex = 0; localeIndex < locales.length; localeIndex += 1) {
-        for (let formFactorIndex = 0; formFactorIndex <= formFactors.length; formFactorIndex += 1) {
+        let formFactorIndex = 0;
+
+        do {
           const formFactor = formFactors[formFactorIndex];
           const locale = locales[localeIndex];
           const theme = themes[themeIndex];
@@ -101,7 +103,9 @@ class TestRunner {
             locale,
             theme,
           });
-        }
+
+          formFactorIndex += 1;
+        } while (formFactorIndex < formFactors.length);
       }
     }
   }
