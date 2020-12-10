@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+* Changed
+  * Update webpack-config-terra-documentation.
+  * Update webpack-config-terra upgrade guide.
+
 ## 1.3.0 - (December 7, 2020)
 
 * Changed

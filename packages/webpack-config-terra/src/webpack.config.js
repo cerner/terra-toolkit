@@ -10,8 +10,14 @@ const webpack = require('webpack');
 const { mergeWithCustomize } = require('webpack-merge');
 const DuplicatePackageCheckerPlugin = require('@cerner/duplicate-package-checker-webpack-plugin');
 const aggregateTranslations = require('terra-aggregate-translations');
-const ThemePlugin = require('./lib/postcss/ThemePlugin');
-const getThemeConfig = require('./lib/utils/_getThemeConfig');
+const logging = require('webpack/lib/logging/runtime');
+
+const ThemePlugin = require('./postcss/ThemePlugin');
+const getThemeConfig = require('./utils/_getThemeConfig');
+const ThemeAggregator = require('./aggregate-themes/theme-aggregator');
+const getThemeWebpackPromise = require('./aggregate-themes/getThemeWebpackPromise');
+
+const Logger = logging.getLogger('webpack-config-terra');
 
 /**
  * Get the locales to be defined by the webpack build, also aggregates translations, but we should remove that in the future.
@@ -45,8 +51,7 @@ const determineThemeConfig = ({ defaultTheme }, { themeConfig: overrideThemeConf
   const themeENV = process.env.THEME;
 
   if (themeENV) {
-    // eslint-disable-next-line no-console
-    console.warn(`The THEME ENV has been deprecated and will be removed in the next major version. Please use the default theme webpack env option instead, for example "webpack --env.defaultTheme=${themeENV}"`);
+    Logger.warn(`The THEME ENV has been deprecated and will be removed in the next major version. Please use the default theme webpack env option instead, for example "webpack --env.defaultTheme=${themeENV}"`);
   }
 
   const aDefaultTheme = defaultTheme || themeENV;
@@ -74,6 +79,20 @@ const getWebpackDevServerStaticOptions = ({ disableHotReloading }) => (
   }
 );
 
+const getAggregateThemeFile = ({ env, themeConfig }) => {
+  const { enableAggregateThemes } = env;
+  if (enableAggregateThemes) {
+    return ThemeAggregator.aggregate(
+      null, // Set the default theme via the config.
+      {
+        config: themeConfig,
+        aggregateDefaultThemeAsScopedTheme: true,
+      },
+    );
+  }
+  return undefined;
+};
+
 /**
  * The extendable webpack config for terra.
  * @param {object} env environment variables pass to webpack via --env.thing.
@@ -84,6 +103,7 @@ const defaultWebpackConfig = (env = {}, argv = {}, options = {}) => {
   const processPath = process.cwd();
 
   const themeConfig = determineThemeConfig(env, options);
+  const aggregateThemeFile = getAggregateThemeFile({ env, themeConfig, processPath });
 
   const production = argv.p || argv.mode === 'production';
   const fileNameStategy = production ? '[name]-[chunkhash]' : '[name]';
@@ -98,6 +118,7 @@ const defaultWebpackConfig = (env = {}, argv = {}, options = {}) => {
     entry: {
       'core-js': '@cerner/webpack-config-terra/lib/entry/core-js',
       'regenerator-runtime': 'regenerator-runtime/runtime',
+      ...aggregateThemeFile && { theme: aggregateThemeFile },
     },
     module: {
       rules: [{
@@ -174,6 +195,12 @@ const defaultWebpackConfig = (env = {}, argv = {}, options = {}) => {
         plugins: [
           PostCSSCustomProperties({
             preserve: !env.disableCSSCustomProperties,
+            // If we have a theme file, use the webpack promise to webpack it.  This promise will resolve to
+            // an object with themeable variables and values. This will then be used to update the end state CSS
+            // so that they are populated with values if variables aren't supported (e.g. IE10). This dance is
+            // necessary when code splitting to ensure the variables and values are applied across all code split
+            // css files
+            ...aggregateThemeFile && { importFrom: [getThemeWebpackPromise(processPath, aggregateThemeFile, themeConfig)] },
           }),
         ],
       }),

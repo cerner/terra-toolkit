@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+* Changed
+  * Added optional support for aggregate themes.
+  * Make postcss a peer dependency.
+
 ## 1.1.0 - (December 7, 2020)
 
 * Changed
