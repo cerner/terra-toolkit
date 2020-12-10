@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`custom-property-no-duplicate-declaration does error with nested duplicate custom properties 1`] = `
+Array [
+  Object {
+    "column": 11,
+    "line": 1,
+    "rule": "terra/custom-property-no-duplicate-declaration",
+    "severity": "error",
+    "text": "Unexpected duplicate property declaration. --test-color has already been declared as #000. (terra/custom-property-no-duplicate-declaration)",
+  },
+]
+`;
+
+exports[`custom-property-no-duplicate-declaration does error with reversed sibling duplicate custom properties 1`] = `
+Array [
+  Object {
+    "column": 11,
+    "line": 1,
+    "rule": "terra/custom-property-no-duplicate-declaration",
+    "severity": "error",
+    "text": "Unexpected duplicate property declaration. --test-color has already been declared as #000. (terra/custom-property-no-duplicate-declaration)",
+  },
+]
+`;
+
+exports[`custom-property-no-duplicate-declaration does error with sibling duplicate custom properties 1`] = `
+Array [
+  Object {
+    "column": 49,
+    "line": 1,
+    "rule": "terra/custom-property-no-duplicate-declaration",
+    "severity": "error",
+    "text": "Unexpected duplicate property declaration. --test-color has already been declared as #000. (terra/custom-property-no-duplicate-declaration)",
+  },
+]
+`;

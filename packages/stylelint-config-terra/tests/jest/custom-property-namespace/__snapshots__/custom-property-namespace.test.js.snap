@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`custom-property-namespace does error with no custom namespace 1`] = `
+Array [
+  Object {
+    "column": 9,
+    "line": 1,
+    "rule": "terra/custom-property-namespace",
+    "severity": "error",
+    "text": "Expected --test-color to be prefixed with the namespace: --mock-namespace (terra/custom-property-namespace)",
+  },
+]
+`;
+
+exports[`custom-property-namespace does error with no default namespace 1`] = `
+Array [
+  Object {
+    "column": 9,
+    "line": 1,
+    "rule": "terra/custom-property-namespace",
+    "severity": "error",
+    "text": "Expected --test-color to be prefixed with the namespace: --stylelint-config-terra (terra/custom-property-namespace)",
+  },
+]
+`;

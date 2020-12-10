@@ -1,0 +1,63 @@
+import { Badge } from '@cerner/stylelint-config-terra/package.json?dev-site-package';
+
+<Badge />
+
+# Stylelint Config Terra
+
+This configuration reflects Terra's supported stylelint policy for their UI library stylesheets. It extends the  [stylelint-config-sass-guidelines](https://github.com/bjankord/stylelint-config-sass-guidelines) configuration which is based on [sass-guidelines](https://sass-guidelin.es/). Additionally, this configuration utilizes the [stylelint-no-unsupported-browser-features](https://github.com/ismay/stylelint-no-unsupported-browser-features) plugin to check if the styles used are supported by the local browserslist being targeted.
+
+## What is Stylelint?
+
+[Stylelint](https://stylelint.io/) is a mighty, modern CSS linter and fixer that helps you avoid errors and enforce consistent conventions in your stylesheets.
+
+## Installation
+
+Install the module
+
+```shell
+$ npm install stylelint --save-dev
+$ npm install @cerner/stylelint-config-terra --save-dev
+```
+
+## Usage
+
+### package.json
+
+```json
+{
+  "stylelint": {
+    "extends": "@cerner/stylelint-config-terra"
+  }
+}
+```
+
+### Extending Terra's Configuration
+
+It is possible to specify and override the rules defined by stylelint-config-terra. Read more about it [here](https://stylelint.io/user-guide/configuration/#extends).
+
+For example, it is possible to override the browsers specified to the no-unsupported-browser-features plugin.
+
+```json
+{
+  "stylelint": {
+    "extends @cerner/stylelint-config-terra",
+    "rules": {
+      "plugin/no-unsupported-browser-features": [
+        true,
+        "browsers": ["iOS >= 10"],
+        "severity": "warning",
+      ]
+    }
+  }
+}
+```
+
+## Custom Lint Rules
+
+The following custom rules are enabled by default.
+
+* [terra/custom-property-name](/dev_tools/terra-toolkit-docs/stylelint-config-terra/custom-rules/custom-property-name): Requires custom properties to be suffixed with the css property name.
+* [terra/custom-property-namespace](/dev_tools/terra-toolkit-docs/stylelint-config-terra/custom-rules/custom-property-namespace): Requires custom properties to be prefixed with a namespace.
+* [terra/custom-property-no-duplication-declaration](/dev_tools/terra-toolkit-docs/stylelint-config-terra/custom-rules/custom-property-no-duplicate-declaration): Disallows a custom property to be declared more than once with a different fallback value.
+* [terra/custom-property-pattern](/dev_tools/terra-toolkit-docs/stylelint-config-terra/custom-rules/custom-property-pattern): Requires custom properties to be written in lowercase alphanumeric characters and hyphens.
+* [terra/custom-property-pseudo-selectors](/dev_tools/terra-toolkit-docs/stylelint-config-terra/custom-rules/custom-property-pseudo-selectors): Requires custom properties to include all ancestor pseudo selectors in order.

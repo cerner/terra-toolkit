@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+ * Remove unused script from package.json
+
 ## 2.0.0 - (December 7, 2020)
 
 * Changed

@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`custom-property-pattern does error with custom property with underscores 1`] = `
+Array [
+  Object {
+    "column": 9,
+    "line": 1,
+    "rule": "terra/custom-property-pattern",
+    "severity": "error",
+    "text": "Expected --test_color to include only lowercase alphanumeric characters and hyphens (terra/custom-property-pattern)",
+  },
+]
+`;
+
+exports[`custom-property-pattern does error with custom property with uppercase characters 1`] = `
+Array [
+  Object {
+    "column": 9,
+    "line": 1,
+    "rule": "terra/custom-property-pattern",
+    "severity": "error",
+    "text": "Expected --Test-color to include only lowercase alphanumeric characters and hyphens (terra/custom-property-pattern)",
+  },
+]
+`;

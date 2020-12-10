@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`custom-property-name does error with a mismatched name 1`] = `
+Array [
+  Object {
+    "column": 9,
+    "line": 1,
+    "rule": "terra/custom-property-name",
+    "severity": "error",
+    "text": "Expected --test-color-primary to be suffixed with -color (terra/custom-property-name)",
+  },
+]
+`;
+
+exports[`custom-property-name does error with a mismatched name with hyphen 1`] = `
+Array [
+  Object {
+    "column": 9,
+    "line": 1,
+    "rule": "terra/custom-property-name",
+    "severity": "error",
+    "text": "Expected --test-icon to be suffixed with -background-image (terra/custom-property-name)",
+  },
+]
+`;
