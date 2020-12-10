@@ -60,16 +60,6 @@ The following custom rules are enabled by default.
 * [terra/custom-property-pattern](https://github.com/cerner/terra-toolkit/blob/main/packages/stylelint-config-terra/src/rules/custom-property-pattern): Requires custom properties to be written in lowercase alphanumeric characters and hyphens.
 * [terra/custom-property-pseudo-selectors](https://github.com/cerner/terra-toolkit/blob/main/packages/stylelint-config-terra/src/rules/custom-property-pseudo-selectors): Requires custom properties to include all ancestor pseudo selectors in order.
 
-## Versioning
-
-stylelint-config-terra is considered to be stable and will follow [SemVer](http://semver.org/) for versioning.
-
-1. MAJOR versions represent breaking changes
-2. MINOR versions represent added functionality in a backwards-compatible manner
-3. PATCH versions represent backwards-compatible bug fixes
-
-Consult the component CHANGELOGs, related issues, and PRs for more information.
-
 ## Contributing
 
 Please read through our [contributing guidelines](CONTRIBUTING.md). Included are directions for issue reporting and pull requests.
