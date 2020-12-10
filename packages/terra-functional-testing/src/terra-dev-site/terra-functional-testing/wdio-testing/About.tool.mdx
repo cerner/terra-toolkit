@@ -27,8 +27,13 @@ A test runner is provided for local development and should be invoked using the 
 
 The following example will run the test suite a total of four times. Once for each permutation of the specified locales and form factors.
 
-```
-terra -- wdio --locales en fr --formFactors tiny huge
+package.json
+```json
+{
+  "scripts": {
+    "wdio": "npm run terra -- wdio --locales en fr --formFactors tiny huge"
+  }
+}
 ```
 
 ## Form Factors
@@ -42,7 +47,7 @@ Tests can be executed in any of the following supported form factors:
 | medium   | 838   | 768    |
 | large    | 1000  | 768    |
 | huge     | 1300  | 768    |
-| Enormous | 1500  | 768    |
+| enormous | 1500  | 768    |
 
 ### Terra.describeViewports
 
