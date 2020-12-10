@@ -1,8 +1,6 @@
 /* eslint-disable class-methods-use-this */
 const path = require('path');
 const util = require('util');
-// const http = require('http');
-// const retry = require('async/retry');
 const childProcess = require('child_process');
 const { SevereServiceError } = require('webdriverio');
 const { Logger } = require('@cerner/terra-cli');
@@ -13,7 +11,6 @@ const exec = util.promisify(childProcess.exec);
 
 class SeleniumDockerService {
   constructor(options = {}) {
-    // this.getSeleniumStatus = this.getSeleniumStatus.bind(this);
     const { version } = options;
 
     this.version = version || '3.14.0-helium';
@@ -69,8 +66,10 @@ class SeleniumDockerService {
 
     await exec(`TERRA_SELENIUM_DOCKER_VERSION=${this.version} docker stack deploy -c ${composeFilePath} wdio`);
 
+    // Ensure the services and network have been removed.
+    await this.waitForServiceCreation();
+    await this.waitForNetworkCreation();
     await this.waitForNetworkReady();
-    // await this.ensureSelenium();
   }
 
   /**
@@ -123,6 +122,45 @@ class SeleniumDockerService {
 
       pollTimeout = setTimeout(poll, interval);
     });
+  }
+
+  /**
+   * Ensures the docker network has been created.
+   */
+  async waitForNetworkCreation() {
+    logger.info('**********waitForNetworkCreation**********');
+    await this.pollCommand('docker network ls | grep wdio', (result) => (
+      new Promise((resolve, reject) => {
+        const { stdout: networkStatus } = result;
+
+        if (networkStatus) {
+          logger.info('**********Docker network is created**********', networkStatus);
+          resolve();
+        } else {
+          logger.info('**********Docker network is not yet created**********', result);
+          reject();
+        }
+      })));
+  }
+
+  /**
+   * Ensures the docker services have been created.
+   */
+  async waitForServiceCreation() {
+    logger.info('**********waitForServiceRemoval**********');
+    await this.pollCommand('docker service ls | grep wdio', (result) => (
+      new Promise((resolve, reject) => {
+        const { stdout: serviceStatus } = result;
+
+        // Reject if there is an active service returned.
+        if (serviceStatus) {
+          logger.info('**********Docker services is created**********', serviceStatus);
+          resolve();
+        } else {
+          logger.info('**********Docker services is not yet created**********', result);
+          reject();
+        }
+      })));
   }
 
   /**
@@ -188,64 +226,11 @@ class SeleniumDockerService {
       })), 60, 2000);
   }
 
-  // ensureSelenium() {
-  //   logger.info('***************ensureSelenium************');
-
-  //   return new Promise((resolve, reject) => {
-  //     logger.info('Ensuring selenium status is ready');
-  //     retry(
-  //       { times: 60, interval: 2000 },
-  //       this.getSeleniumStatus, (err, result) => {
-  //         if (err) {
-  //           reject(logger.error(JSON.stringify(err)));
-  //         } else {
-  //           resolve(result);
-  //         }
-  //       },
-  //     );
-  //   });
-  // }
-
-  // getSeleniumStatus(callback) {
-  //   logger.info('***************getSeleniumStatus************');
-  //   http.get({
-  //     host: this.host,
-  //     port: this.port,
-  //     path: path.posix.join('/wd/hub', 'status'),
-  //   }, (res) => {
-  //     const { statusCode } = res;
-
-  //     if (statusCode !== 200) {
-  //       callback('Request failed');
-  //       return;
-  //     }
-
-  //     res.setEncoding('utf8');
-  //     let rawData = '';
-  //     res.on('data', (chunk) => { rawData += chunk; });
-  //     res.on('end', () => {
-  //       try {
-  //         const status = JSON.parse(rawData);
-  //         if (status.value && status.value.ready) {
-  //           callback(null, status);
-  //         } else {
-  //           callback(status);
-  //         }
-  //       } catch (e) {
-  //         callback(`Request failed: ${e.message}`);
-  //       }
-  //     });
-  //   }).on('error', (e) => {
-  //     logger.info('***************getSeleniumStatus request failed************', e.message);
-  //     callback(`Request failed: ${e.message}`);
-  //   });
-  // }
-
   /**
    * Removes the docker stack and network.
    */
   async onComplete() {
-    // await this.removeStack();
+    await this.removeStack();
 
     // logger.info('**********START waiting******', new Date().getTime());
     // await this.resolveAfter10Seconds();
