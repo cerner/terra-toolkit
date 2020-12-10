@@ -1,5 +1,3 @@
-const browserslist = require('@cerner/browserslist-config-terra');
-
 module.exports = {
   extends: 'stylelint-config-sass-guidelines',
   plugins: [
@@ -29,7 +27,6 @@ module.exports = {
     'plugin/no-unsupported-browser-features': [
       true,
       {
-        browsers: browserslist,
         ignore: [
           'calc', // "calc" is only partially supported by Android Browser 4.4.3-4.4.4
           'css-gradients', // is only partially supported by Safari 12,11.1, iOS Safari 10.0-10.2,10.3,11.0-11.2,11.3-11.4,12.0-12.1

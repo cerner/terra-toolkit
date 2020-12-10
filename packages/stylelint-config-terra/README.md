@@ -3,7 +3,7 @@
 [![NPM version](https://badgen.net/npm/v/stylelint-config-terra)](https://www.npmjs.org/package/@cerner/stylelint-config-terra)
 [![Build Status](https://badgen.net/travis/cerner/terra-toolkit)](https://travis-ci.com/cerner/terra-toolkit)
 
-This configuration reflects Terra's supported stylelint policy for their UI library stylesheets. It extends the  [stylelint-config-sass-guidelines](https://github.com/bjankord/stylelint-config-sass-guidelines) configuration which is based on [sass-guidelines](https://sass-guidelin.es/). Additionally, this configuration utilizes the [stylelint-no-unsupported-browser-features](https://github.com/ismay/stylelint-no-unsupported-browser-features) plugin to check if the styles used are supported by the browsers being targeted. Terra's targeted browsers are specified by the [browserslist-config-terra](https://github.com/cerner/browserslist-config-terra) module.
+This configuration reflects Terra's supported stylelint policy for their UI library stylesheets. It extends the  [stylelint-config-sass-guidelines](https://github.com/bjankord/stylelint-config-sass-guidelines) configuration which is based on [sass-guidelines](https://sass-guidelin.es/). Additionally, this configuration utilizes the [stylelint-no-unsupported-browser-features](https://github.com/ismay/stylelint-no-unsupported-browser-features) plugin to check if the styles used are supported by the local browserslist being targeted.
 
 ## What is Stylelint?
 
