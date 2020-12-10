@@ -132,3 +132,14 @@ To consolidate our api the THEME env variable is now supplied as the webpack env
 +    "pack": "webpack --env.defaultTheme=terra-dark-theme"
 }
 ```
+
+### Postcss 8 as peer dependency
+
+Postcss is now a required peer dependency. It must be added as a dev dependency to your package.
+
+```diff
+  "devDependencies": {
++   "postcss": "^8.0.0",
+  }
+}
+```
