@@ -12,18 +12,6 @@ Array [
 ]
 `;
 
-exports[`custom-property-name does error with a mismatched name with hypen 1`] = `
-Array [
-  Object {
-    "column": 9,
-    "line": 1,
-    "rule": "terra/custom-property-name",
-    "severity": "error",
-    "text": "Expected --test-icon to be suffixed with -background-image (terra/custom-property-name)",
-  },
-]
-`;
-
 exports[`custom-property-name does error with a mismatched name with hyphen 1`] = `
 Array [
   Object {
