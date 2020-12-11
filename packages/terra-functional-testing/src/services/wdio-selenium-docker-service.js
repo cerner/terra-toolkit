@@ -242,7 +242,7 @@ class SeleniumDockerService {
     return new Promise(resolve => {
       setTimeout(() => {
         resolve();
-      }, 10000);
+      }, 5000);
     });
   }
 }
