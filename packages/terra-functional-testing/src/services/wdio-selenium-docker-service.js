@@ -67,6 +67,7 @@ class SeleniumDockerService {
     await exec(`TERRA_SELENIUM_DOCKER_VERSION=${this.version} docker stack deploy -c ${composeFilePath} wdio`);
 
     // Ensure the services and network have been removed.
+    await this.resolveAfter10Seconds();
     await this.waitForServiceCreation();
     await this.waitForNetworkCreation();
     await this.waitForNetworkReady();
@@ -147,7 +148,7 @@ class SeleniumDockerService {
    * Ensures the docker services have been created.
    */
   async waitForServiceCreation() {
-    logger.info('**********waitForServiceRemoval**********');
+    logger.info('**********waitForServiceCreation**********');
     await this.pollCommand('docker service ls | grep wdio', (result) => (
       new Promise((resolve, reject) => {
         const { stdout: serviceStatus } = result;
@@ -241,7 +242,7 @@ class SeleniumDockerService {
     return new Promise(resolve => {
       setTimeout(() => {
         resolve();
-      }, 20000);
+      }, 10000);
     });
   }
 }
