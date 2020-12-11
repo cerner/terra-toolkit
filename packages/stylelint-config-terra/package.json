@@ -8,6 +8,10 @@
     "url": "git+https://github.com/cerner/terra-toolkit.git",
     "directory": "packages/stylelint-config-terra"
   },
+  "private": true,
+  "publishConfig": {
+    "access": "public"
+  },
   "keywords": [
     "stylelint",
     "stylelint-config",
