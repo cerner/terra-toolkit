@@ -67,4 +67,56 @@ describe('Test Runner', () => {
       expect(fs.existsSync).toHaveBeenCalledWith('/cwd/wdio.conf.js');
     });
   });
+
+  // Start
+  describe('start', () => {
+    it('should initiate a test runner for each theme and locale permutation', async () => {
+      jest.spyOn(TestRunner, 'run').mockImplementation(() => Promise.resolve());
+
+      await TestRunner.start({ config: '/path', locales: ['en', 'fr'], themes: ['terra-default-theme', 'terra-mock-theme'] });
+
+      expect(TestRunner.run).toHaveBeenCalledTimes(4);
+      expect(TestRunner.run).toHaveBeenCalledWith({ config: '/path', theme: 'terra-default-theme', locale: 'en' });
+      expect(TestRunner.run).toHaveBeenCalledWith({ config: '/path', theme: 'terra-default-theme', locale: 'fr' });
+      expect(TestRunner.run).toHaveBeenCalledWith({ config: '/path', theme: 'terra-mock-theme', locale: 'en' });
+      expect(TestRunner.run).toHaveBeenCalledWith({ config: '/path', theme: 'terra-mock-theme', locale: 'fr' });
+    });
+
+    it('should initiate a test runner for each theme, locale, and form factor permutation', async () => {
+      jest.spyOn(TestRunner, 'run').mockImplementation(() => Promise.resolve());
+
+      await TestRunner.start({
+        config: '/path',
+        locales: ['en', 'fr'],
+        themes: ['terra-default-theme', 'terra-mock-theme'],
+        formFactors: ['tiny', 'large'],
+      });
+
+      expect(TestRunner.run).toHaveBeenCalledTimes(8);
+      expect(TestRunner.run).toHaveBeenCalledWith({
+        config: '/path', theme: 'terra-default-theme', locale: 'en', formFactor: 'tiny',
+      });
+      expect(TestRunner.run).toHaveBeenCalledWith({
+        config: '/path', theme: 'terra-default-theme', locale: 'en', formFactor: 'large',
+      });
+      expect(TestRunner.run).toHaveBeenCalledWith({
+        config: '/path', theme: 'terra-default-theme', locale: 'fr', formFactor: 'tiny',
+      });
+      expect(TestRunner.run).toHaveBeenCalledWith({
+        config: '/path', theme: 'terra-default-theme', locale: 'fr', formFactor: 'large',
+      });
+      expect(TestRunner.run).toHaveBeenCalledWith({
+        config: '/path', theme: 'terra-mock-theme', locale: 'en', formFactor: 'tiny',
+      });
+      expect(TestRunner.run).toHaveBeenCalledWith({
+        config: '/path', theme: 'terra-mock-theme', locale: 'en', formFactor: 'large',
+      });
+      expect(TestRunner.run).toHaveBeenCalledWith({
+        config: '/path', theme: 'terra-mock-theme', locale: 'fr', formFactor: 'tiny',
+      });
+      expect(TestRunner.run).toHaveBeenCalledWith({
+        config: '/path', theme: 'terra-mock-theme', locale: 'fr', formFactor: 'large',
+      });
+    });
+  });
 });

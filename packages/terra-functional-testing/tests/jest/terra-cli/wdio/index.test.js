@@ -9,7 +9,7 @@ describe('index', () => {
   it('declares the wdio terra-cli command with proper top level help', async () => {
     const parser = yargs.command(command).scriptName('terra').help();
     const helpOutput = await new Promise((resolve) => {
-      parser.parse('--help', (err, argv, output) => {
+      parser.parse('--help', (_err, _argv, output) => {
         resolve(output);
       });
     });
@@ -19,7 +19,7 @@ describe('index', () => {
   it('declares the wdio terra-cli command with proper command level help', async () => {
     const parser = yargs.command(command).scriptName('terra').help();
     const helpOutput = await new Promise((resolve) => {
-      parser.parse('wdio --help', (err, argv, output) => {
+      parser.parse('wdio --help', (_err, _argv, output) => {
         resolve(output);
       });
     });
@@ -29,12 +29,12 @@ describe('index', () => {
   it('should invoke the test runner with the default command line arguments', async () => {
     const { handler } = command;
 
-    jest.spyOn(TestRunner, 'run').mockImplementationOnce(() => { });
+    jest.spyOn(TestRunner, 'start').mockImplementationOnce(() => { });
 
     const config = {};
 
     await handler(config);
 
-    expect(TestRunner.run).toHaveBeenCalledWith(config);
+    expect(TestRunner.start).toHaveBeenCalledWith(config);
   });
 });

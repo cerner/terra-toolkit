@@ -2,15 +2,52 @@
 
 The terra-functional-testing library is a utility for developing automation tests. The library extends the [WebdriverIO Framework](https://webdriver.io/) to facilitate automating accessibility and functional testing for Terra projects.
 
-## Viewports
+## Getting Started
 
-Tests can be executed in any of the following supported viewports:
-- 'tiny' - width: 470; height: 768
-- 'small' - width: 622; height: 768
-- 'medium' - width: 838; height: 768
-- 'large' - width: 1000; height: 768
-- 'huge' - width: 1300; height: 768
-- 'enormous' - width: 1500; height: 768
+To get started ensure [docker](https://www.docker.com/) has been installed. The terra-functional-testing library uses docker to setup and run tests in a containerized environment.
+
+Install with npm:
+
+```
+npm install --save-dev @cerner/terra-functional-testing 
+```
+
+## Test Runner
+
+A test runner is provided for local development and should be invoked using the [terra-cli](dev_tools/terra-cli/terra-cli).
+
+### Options
+
+| Option Name | Type   | Required | Default                 | Description                                                                                   |
+|-------------|--------|----------|-------------------------|-----------------------------------------------------------------------------------------------|
+| config      | string | false    |                         | A file path to the test runner configuration.                                                 |
+| formFactors | array  | false    |                         | A list of form factors for the test run. One of tiny, small, medium, large, huge, or enormous |
+| locales     | array  | false    | ['en']                  | A list of language locales for the test run.                                                  |
+| themes      | array  | false    | ['terra-default-theme'] | A list of themes for the test run.                                                            |
+
+The following example will run the test suite a total of four times. Once for each permutation of the specified locales and form factors.
+
+package.json
+```json
+{
+  "scripts": {
+    "wdio": "npm run terra -- wdio --locales en fr --formFactors tiny huge"
+  }
+}
+```
+
+## Form Factors
+
+Tests can be executed in any of the following supported form factors:
+
+| Size     | Width | Height |
+|----------|-------|--------|
+| tiny     | 470   | 768    |
+| small    | 622   | 768    |
+| medium   | 838   | 768    |
+| large    | 1000  | 768    |
+| huge     | 1300  | 768    |
+| enormous | 1500  | 768    |
 
 ### Terra.describeViewports
 
@@ -62,6 +99,7 @@ it('should override a rule configuration', () => {
 ```
 
 ## Validating element
+
 A screenshot can be captured at any given point in a test. The captured screenshot will be used as a reference artifact. Element validation is done by comparing the reference screenshot against the screenshot captured in future test runs at the same point in the test.
 
 ### Terra.validates.element
