@@ -9,6 +9,7 @@
 
 * Changed
   * Use jest for tests.
+  * Added publish config to package.json.
 
 ## 3.7.0 - (July 28, 2020)
 
