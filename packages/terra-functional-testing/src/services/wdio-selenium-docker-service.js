@@ -67,7 +67,7 @@ class SeleniumDockerService {
     await exec(`TERRA_SELENIUM_DOCKER_VERSION=${this.version} docker stack deploy -c ${composeFilePath} wdio`);
 
     // Ensure the services and network have been removed.
-    await this.resolveAfter10Seconds();
+    await this.wait(3000);
     await this.waitForServiceCreation();
     await this.waitForNetworkCreation();
     await this.waitForNetworkReady();
@@ -232,17 +232,13 @@ class SeleniumDockerService {
    */
   async onComplete() {
     await this.removeStack();
-
-    // logger.info('**********START waiting******', new Date().getTime());
-    // await this.resolveAfter10Seconds();
-    // logger.info('**********END waiting******', new Date().getTime());
   }
 
-  resolveAfter10Seconds() {
+  wait(milliseconds) {
     return new Promise(resolve => {
       setTimeout(() => {
         resolve();
-      }, 2000);
+      }, milliseconds);
     });
   }
 }
