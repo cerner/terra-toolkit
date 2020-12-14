@@ -66,6 +66,12 @@ class SeleniumDockerService {
 
     await exec(`TERRA_SELENIUM_DOCKER_VERSION=${this.version} docker stack deploy -c ${composeFilePath} wdio`);
 
+    // There are occasions where the docker stack deployment is not completely ready when running back-to-back wdio test runs.
+    // As a result, the test run is unable to start and receives the 'Error forwarding the new session cannot find : Capabilities {browserName: chrome}' error.
+    // This waits for 5 seconds and ensure the services and network are created and ready.
+    await this.wait(5000);
+    await this.waitForServiceCreation();
+    await this.waitForNetworkCreation();
     await this.waitForNetworkReady();
   }
 
@@ -118,6 +124,40 @@ class SeleniumDockerService {
 
       pollTimeout = setTimeout(poll, interval);
     });
+  }
+
+  /**
+   * Ensures the docker network has been created.
+   */
+  async waitForNetworkCreation() {
+    await this.pollCommand('docker network ls | grep wdio', (result) => (
+      new Promise((resolve, reject) => {
+        const { stdout: networkStatus } = result;
+
+        // Resolve if the wdio services are created.
+        if (networkStatus) {
+          resolve();
+        } else {
+          reject();
+        }
+      })));
+  }
+
+  /**
+   * Ensures the docker services have been created.
+   */
+  async waitForServiceCreation() {
+    await this.pollCommand('docker service ls | grep wdio', (result) => (
+      new Promise((resolve, reject) => {
+        const { stdout: serviceStatus } = result;
+
+        // Resolve if the wdio network is created.
+        if (serviceStatus) {
+          resolve();
+        } else {
+          reject();
+        }
+      })));
   }
 
   /**
@@ -180,6 +220,19 @@ class SeleniumDockerService {
    */
   async onComplete() {
     await this.removeStack();
+  }
+
+  /**
+   * Waits for the specified period of time.
+   * @param {number} milliseconds - The number of milliseconds to wait.
+   * @returns {Promise} - A promise that resolves after waiting for the specified period of time.
+   */
+  wait(milliseconds) {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve();
+      }, milliseconds);
+    });
   }
 }
 
