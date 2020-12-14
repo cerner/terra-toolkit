@@ -67,7 +67,7 @@ class SeleniumDockerService {
     await exec(`TERRA_SELENIUM_DOCKER_VERSION=${this.version} docker stack deploy -c ${composeFilePath} wdio`);
 
     // Ensure the services and network have been removed.
-    await this.wait(3000);
+    await this.wait(5000);
     await this.waitForServiceCreation();
     await this.waitForNetworkCreation();
     await this.waitForNetworkReady();
