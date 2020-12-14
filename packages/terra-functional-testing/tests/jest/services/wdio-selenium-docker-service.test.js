@@ -497,7 +497,7 @@ describe('WDIO Selenium Docker Service', () => {
 
       const afterDate = new Date();
 
-      expect(beforeDate.getTime() - afterDate.getTime()).toBeGreaterThanOrEqual(waitTIme);
+      expect(afterDate.getTime() - beforeDate.getTime()).toBeGreaterThanOrEqual(waitTIme);
     });
   });
 });
