@@ -33,6 +33,11 @@ class TestRunner {
    * @param {string} options.formFactor - A form factor for the test run.
    * @param {string} options.locale - A language locale for the test run.
    * @param {string} options.theme - A theme for the test run.
+   * @param {string} options.hostname - Automation driver host address.
+   * @param {number} options.port - Automation driver port.
+   * @param {string} options.baseUrl - The base url.
+   * @param {array} options.suite - Overrides specs and runs only the defined suites.
+   * @param {array} options.spec - A list of spec file paths.
    * @returns {Promise} A promise that resolves with the test run exit code.
    */
   static async run(options) {
@@ -44,6 +49,7 @@ class TestRunner {
         formFactor,
         locale,
         theme,
+        ...launcherOptions // hostname, port, baseUrl, suite, and spec
       } = options;
 
       process.env.LOCALE = locale;
@@ -54,7 +60,7 @@ class TestRunner {
       }
 
       const configPath = TestRunner.configPath(config);
-      const testRunner = new Launcher(configPath);
+      const testRunner = new Launcher(configPath, launcherOptions);
 
       exitCode = await testRunner.run();
     } catch (error) {
@@ -73,6 +79,11 @@ class TestRunner {
    * @param {string} options.formFactors - A list of form factors for the test run.
    * @param {string} options.locales - A list of language locales for the test run.
    * @param {string} options.themes - A list of themes for the test run.
+   * @param {string} options.hostname - Automation driver host address.
+   * @param {number} options.port - Automation driver port.
+   * @param {string} options.baseUrl - The base url.
+   * @param {array} options.suite - Overrides specs and runs only the defined suites.
+   * @param {array} options.spec - A list of spec file paths.
    */
   static async start(options) {
     const {
@@ -80,6 +91,7 @@ class TestRunner {
       formFactors = [],
       locales,
       themes,
+      ...launcherOptions // hostname, port, baseUrl, suite, and spec
     } = options;
 
     /**
@@ -102,6 +114,7 @@ class TestRunner {
             formFactor,
             locale,
             theme,
+            ...launcherOptions,
           });
 
           formFactorIndex += 1;
