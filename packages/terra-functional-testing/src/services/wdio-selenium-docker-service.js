@@ -66,9 +66,9 @@ class SeleniumDockerService {
 
     await exec(`TERRA_SELENIUM_DOCKER_VERSION=${this.version} docker stack deploy -c ${composeFilePath} wdio`);
 
-    // There are occasions where the docker stack deployment is not completely ready when running back-to-back wdio test runs.
+    // There are occasions where the docker stack deployment is not completely ready when running back-to-back wdio test sessions.
     // As a result, the test run is unable to start and receives the 'Error forwarding the new session cannot find : Capabilities {browserName: chrome}' error.
-    // This waits for 5 seconds and ensure the services and network are created and ready.
+    // This waits for 5 seconds and checks that the services and network are created to ensure a reliable test run.
     await this.wait(5000);
     await this.waitForServiceCreation();
     await this.waitForNetworkCreation();
