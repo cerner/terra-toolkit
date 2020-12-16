@@ -127,6 +127,9 @@ describe('Test Runner', () => {
         themes: ['terra-default-theme'],
         hostname: 'hostname',
         port: 8080,
+        baseUrl: '/',
+        suite: 'test-suite',
+        spec: '/spec/',
       });
 
       expect(TestRunner.run).toHaveBeenCalledWith({
@@ -135,6 +138,9 @@ describe('Test Runner', () => {
         locale: 'en',
         hostname: 'hostname',
         port: 8080,
+        baseUrl: '/',
+        suite: 'test-suite',
+        spec: '/spec/',
       });
     });
   });
