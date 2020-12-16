@@ -33,15 +33,19 @@ npm install @cerner/browserslist-config-terra --save-dev
 
 ## Usage
 
-### package.json
+Terra's browserslist configuration should be extended from within a `.browserslistrc` file. Create a `.browserslistrc` if one does not already exist and extend from @cerner/browserslist-config-terra.
 
-```json
-{
-  "browserslist": [
-    "extends @cerner/browserslist-config-terra"
-  ]
-}
+.browserslistrc
+
 ```
+extends @cerner/browserslist-config-terra
+```
+
+## Additional Notes
+
+The `.browserslist` file should be added to `.npmignore` to prevent being released. Projects that implement the [files](https://docs.npmjs.com/cli/v6/configuring-npm/package-json#files) key in the package.json do not need to add the `.browserslist` file to the `.npmignore`.
+
+Do not extend the browserslist from within the package.json. This will create an implicit dependency that impacts all downstream consumers of the project.
 
 ## LICENSE
 
