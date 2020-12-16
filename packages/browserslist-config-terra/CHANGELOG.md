@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+  * Added additional documentation to the upgrade guide
+
 ## 3.1.0 - (August 4, 2020)
 
 * Changed
