@@ -3,7 +3,7 @@
 ## Unreleased
 
 * Changed
-  * Added additional documentation to the upgrade guide
+  * Update README documentation
 
 ## 3.1.0 - (August 4, 2020)
 
