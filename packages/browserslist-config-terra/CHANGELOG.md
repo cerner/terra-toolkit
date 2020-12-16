@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+  * Update README documentation
+
 ## 3.1.0 - (August 4, 2020)
 
 * Changed
