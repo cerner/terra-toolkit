@@ -4,8 +4,9 @@
 
 * Changed
   * Update webpack-config-terra documentation.
-  * Add stylelint-config-terra documentation
   * Update webpack-config-terra upgrade guide.
+  * Add stylelint-config-terra documentation
+  * Add browserslist-config-terra upgrade guide
 
 ## 1.3.0 - (December 7, 2020)
 
