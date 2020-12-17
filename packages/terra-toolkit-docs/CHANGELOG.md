@@ -7,6 +7,7 @@
   * Update webpack-config-terra upgrade guide.
   * Add stylelint-config-terra documentation
   * Add browserslist-config-terra upgrade guide
+  * Moved Terra-cli docs into terra-toolkit-docs
 
 ## 1.3.0 - (December 7, 2020)
 
