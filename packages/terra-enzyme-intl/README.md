@@ -10,7 +10,7 @@
 
 [![NPM version](https://badgen.net/npm/v/terra-enzyme-intl)](https://www.npmjs.org/package/terra-enzyme-intl)
 [![License](https://badgen.net/github/license/cerner/terra-enzyme-intl)](https://github.com/cerner/terra-enzyme-intl/blob/main/LICENSE)
-[![Build Status](https://badgen.net/travis/cerner/terra-enzyme-intl)](https://travis-ci.com/cerner/terra-enzyme-intl)
+[![Build Status](https://badgen.net/travis/cerner/terra-toolkit)](https://travis-ci.com/cerner/terra-toolkit)
 [![Dependencies status](https://badgen.net/david/dep/cerner/terra-enzyme-intl)](https://david-dm.org/cerner/terra-enzyme-intl)
 [![devDependencies status](https://badgen.net/david/dev/cerner/terra-enzyme-intl)](https://david-dm.org/cerner/terra-enzyme-intl?type=dev)
 
@@ -20,8 +20,7 @@ Enzyme helpers for fortifying tests that depend on react-intl by decoupling the 
 
 Install with [npmjs](https://www.npmjs.com):
 
-* `npm install --save-dev terra-enzyme-intl`
-* `yarn add --dev terra-enzyme-intl`
+* `npm install --save-dev @cerner/terra-enzyme-intl`
 
 ## Usage
 

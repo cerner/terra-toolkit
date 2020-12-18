@@ -23,9 +23,9 @@
   ],
   "author": "Cerner Corporation",
   "license": "Apache-2.0",
-  "homepage": "https://github.com/cerner/terra-enzyme-intl#readme",
+  "homepage": "https://github.com/cerner/terra-toolkit/packages/terra-enzyme-intl#readme",
   "bugs": {
-    "url": "https://github.com/cerner/terra-enzyme-intl/issues"
+    "url": "https://github.com/cerner/terra-toolkit/issues"
   },
   "files": [
     "lib"
