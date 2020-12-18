@@ -1,15 +1,6 @@
-<!-- Logo -->
-<p align="center">
-  <img height="128" width="128" src="https://github.com/cerner/terra-enzyme-intl/raw/main/terra.png">
-</p>
+# Terra Enzyme Intl
 
-<!-- Name -->
-<h1 align="center">
-  Terra Enzyme Intl
-</h1>
-
-[![NPM version](https://badgen.net/npm/v/terra-enzyme-intl)](https://www.npmjs.org/package/terra-enzyme-intl)
-[![License](https://badgen.net/github/license/cerner/terra-enzyme-intl)](https://github.com/cerner/terra-enzyme-intl/blob/main/LICENSE)
+[![NPM version](https://badgen.net/npm/v/@cerner/terra-enzyme-intl)](https://www.npmjs.com/package/@cerner/terra-enzyme-intl)
 [![Build Status](https://badgen.net/travis/cerner/terra-toolkit)](https://travis-ci.com/cerner/terra-toolkit)
 [![Dependencies status](https://badgen.net/david/dep/cerner/terra-enzyme-intl)](https://david-dm.org/cerner/terra-enzyme-intl)
 [![devDependencies status](https://badgen.net/david/dev/cerner/terra-enzyme-intl)](https://david-dm.org/cerner/terra-enzyme-intl?type=dev)
@@ -177,3 +168,13 @@ const id = 'Foo.id';
 const result = foo(id, mockIntl);
 expect(result).toMatchSnapshot(); // OK, doesn't depend on real translations
 ```
+
+## LICENSE
+
+Copyright 2018 - 2020 Cerner Innovation, Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+
+&nbsp;&nbsp;&nbsp;&nbsp;<http://www.apache.org/licenses/LICENSE-2.0>
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.

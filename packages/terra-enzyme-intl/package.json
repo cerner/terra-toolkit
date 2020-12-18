@@ -4,11 +4,12 @@
   "description": "Enzyme helpers for fortifying tests that depend on react-intl by decoupling the need for actual translations.",
   "main": "lib/index.js",
   "engines": {
-    "node": ">=8.9.2"
+    "node": ">=10"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cerner/terra-enzyme-intl.git"
+    "url": "git+https://github.com/cerner/terra-toolkit.git",
+    "directory": "packages/terra-enzyme-intl"
   },
   "keywords": [
     "Cerner",
