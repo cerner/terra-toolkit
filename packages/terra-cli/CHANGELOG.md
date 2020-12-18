@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+  * Moved documentation to terra-toolkit-docs
+
 ## 1.3.0 - (December 4, 2020)
 
 * Added
