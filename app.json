@@ -30,5 +30,8 @@
   },
   "stack": "heroku-16",
   "addons": [],
-  "buildpacks": []
+  "buildpacks": [],
+  "engines": {
+    "npm": "6.x"
+  }
 }
