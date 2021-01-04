@@ -4,7 +4,8 @@
   "version": "5.25.0",
   "description": "Utilities to help when developing terra modules.",
   "engines": {
-    "node": ">=10 <13"
+    "node": ">=10 <13",
+    "npm": ">=6.9.0"
   },
   "repository": {
     "type": "git",
@@ -93,11 +94,15 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.10.5",
     "@octokit/core": "^3.1.2",
+    "babel-jest": "^24.8.0",
     "bufferutil": "^4.0.1",
     "commander": "^5.1.0",
     "core-js": "^3.1.3",
     "danger": "^9.1.0",
     "eslint": "^6.1.0",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.10.0",
+    "enzyme-to-json": "^3.3.5",
     "html-webpack-plugin": "^4.3.0",
     "jest": "^26.0.1",
     "lerna": "^3.20.2",
@@ -105,6 +110,7 @@
     "postcss": "^8.2.1",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
+    "react-intl-2": "npm:react-intl@^2.9.0",
     "regenerator-runtime": "^0.13.2",
     "stylelint": "^13.0.0",
     "terra-dev-site": "^6.5.0",
