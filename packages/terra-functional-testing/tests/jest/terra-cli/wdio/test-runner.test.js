@@ -68,7 +68,6 @@ describe('Test Runner', () => {
     });
   });
 
-  // Start
   describe('start', () => {
     it('should initiate a test runner for each theme and locale permutation', async () => {
       jest.spyOn(TestRunner, 'run').mockImplementation(() => Promise.resolve());
@@ -116,6 +115,32 @@ describe('Test Runner', () => {
       });
       expect(TestRunner.run).toHaveBeenCalledWith({
         config: '/path', theme: 'terra-mock-theme', locale: 'fr', formFactor: 'large',
+      });
+    });
+
+    it('should initiate a test runner with custom hostname and port options', async () => {
+      jest.spyOn(TestRunner, 'run').mockImplementation(() => Promise.resolve());
+
+      await TestRunner.start({
+        config: '/path',
+        locales: ['en'],
+        themes: ['terra-default-theme'],
+        hostname: 'hostname',
+        port: 8080,
+        baseUrl: '/',
+        suite: 'test-suite',
+        spec: '/spec/',
+      });
+
+      expect(TestRunner.run).toHaveBeenCalledWith({
+        config: '/path',
+        theme: 'terra-default-theme',
+        locale: 'en',
+        hostname: 'hostname',
+        port: 8080,
+        baseUrl: '/',
+        suite: 'test-suite',
+        spec: '/spec/',
       });
     });
   });

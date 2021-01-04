@@ -24,6 +24,26 @@ const cli = {
         describe: 'A list of themes for the test run.',
         default: ['terra-default-theme'],
       },
+      hostname: {
+        type: 'string',
+        describe: 'Automation driver host address.',
+      },
+      port: {
+        type: 'number',
+        describe: 'Automation driver port.',
+      },
+      baseUrl: {
+        type: 'string',
+        describe: 'The base url.',
+      },
+      suite: {
+        type: 'array',
+        describe: 'Overrides specs and runs only the defined suites.',
+      },
+      spec: {
+        type: 'array',
+        describe: 'A list of spec file paths.',
+      },
     })
   ),
   handler: TestRunner.start,
