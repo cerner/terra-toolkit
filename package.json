@@ -4,7 +4,8 @@
   "version": "5.25.0",
   "description": "Utilities to help when developing terra modules.",
   "engines": {
-    "node": ">=8.10.0 <12"
+    "node": ">=8.10.0 <12",
+    "npm": "^6.9.0"
   },
   "repository": {
     "type": "git",
