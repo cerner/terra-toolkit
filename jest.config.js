@@ -13,6 +13,9 @@ module.exports = {
     '!packages/terra-functional-testing/src/services/wdio-visual-regression-service/scripts/*.js',
     '!packages/terra-functional-testing/src/services/wdio-visual-regression-service/utils/**/*.js',
   ],
+  setupFiles: [
+    './jestSetup.js',
+  ],
   coverageDirectory: 'tests/jest/reports/coverage',
   coverageReporters: [
     'html',
@@ -24,8 +27,14 @@ module.exports = {
   modulePathIgnorePatterns: [
     'packages/terra-cli/tests/jest/fixtures',
   ],
+  snapshotSerializers: [
+    './node_modules/enzyme-to-json/serializer',
+  ],
   roots: [process.cwd()],
   testMatch: [
-    '**/jest/**/*.test.js',
+    '**/jest/**/*.test.js?(x)',
   ],
+  transform: {
+    '^.+\\.(js|jsx)$': './jestBabelTransform',
+  },
 };

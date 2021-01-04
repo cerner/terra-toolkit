@@ -1,0 +1,211 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mountWithIntl using FormattedMessage should match the snapshot 1`] = `
+<FormattedMessageSubject
+  foo="bar"
+>
+  <div>
+    <FormattedMessage
+      id="TerraEnzymeIntl.helloWorld"
+    >
+      TerraEnzymeIntl.helloWorld
+    </FormattedMessage>
+    <FormattedMessage
+      id="TerraEnzymeIntl.buttonText"
+    >
+      <button
+        type="button"
+      >
+        TerraEnzymeIntl.buttonText
+      </button>
+    </FormattedMessage>
+    {
+  "foo": "bar"
+}
+  </div>
+</FormattedMessageSubject>
+`;
+
+exports[`mountWithIntl using injectIntl should match the snapshot 1`] = `
+<injectIntl(Component)
+  foo="bar"
+>
+  <Component
+    foo="bar"
+    intl={
+      Object {
+        "defaultFormats": Object {},
+        "defaultLocale": "en",
+        "defaultRichTextElements": undefined,
+        "formatDate": [Function],
+        "formatDateTimeRange": [Function],
+        "formatDateToParts": [Function],
+        "formatDisplayName": [Function],
+        "formatList": [Function],
+        "formatMessage": [Function],
+        "formatNumber": [Function],
+        "formatNumberToParts": [Function],
+        "formatPlural": [Function],
+        "formatRelativeTime": [Function],
+        "formatTime": [Function],
+        "formatTimeToParts": [Function],
+        "formats": Object {},
+        "formatters": Object {
+          "getDateTimeFormat": [Function],
+          "getDisplayNames": [Function],
+          "getListFormat": [Function],
+          "getMessageFormat": [Function],
+          "getNumberFormat": [Function],
+          "getPluralRules": [Function],
+          "getRelativeTimeFormat": [Function],
+        },
+        "locale": "en",
+        "messages": null,
+        "onError": [Function],
+        "textComponent": Symbol(react.fragment),
+        "timeZone": undefined,
+        "wrapRichTextChunksInFragment": undefined,
+      }
+    }
+  >
+    <div>
+      TerraEnzymeIntl.helloWorld
+      <button
+        type="button"
+      >
+        TerraEnzymeIntl.buttonText
+      </button>
+      {
+  "foo": "bar"
+}
+    </div>
+  </Component>
+</injectIntl(Component)>
+`;
+
+exports[`mountWithIntl with a wrapping component should match the snapshot 1`] = `
+<FormattedMessageSubject
+  foo="bar"
+>
+  <div>
+    <FormattedMessage
+      id="TerraEnzymeIntl.helloWorld"
+    >
+      TerraEnzymeIntl.helloWorld
+    </FormattedMessage>
+    <FormattedMessage
+      id="TerraEnzymeIntl.buttonText"
+    >
+      <button
+        type="button"
+      >
+        TerraEnzymeIntl.buttonText
+      </button>
+    </FormattedMessage>
+    {
+  "foo": "bar"
+}
+  </div>
+</FormattedMessageSubject>
+`;
+
+exports[`renderWithIntl using FormattedMessage should match the snapshot 1`] = `
+<div>
+  TerraEnzymeIntl.helloWorld
+  <button
+    type="button"
+  >
+    TerraEnzymeIntl.buttonText
+  </button>
+  {
+  "foo": "bar"
+}
+</div>
+`;
+
+exports[`renderWithIntl using injectIntl should match the snapshot 1`] = `
+<div>
+  TerraEnzymeIntl.helloWorld
+  <button
+    type="button"
+  >
+    TerraEnzymeIntl.buttonText
+  </button>
+  {
+  "foo": "bar"
+}
+</div>
+`;
+
+exports[`renderWithIntl with a wrapping component should match the snapshot 1`] = `
+<div>
+  <FormattedMessage
+    id="TerraEnzymeIntl.helloWorld"
+  />
+  <FormattedMessage
+    id="TerraEnzymeIntl.buttonText"
+  >
+    <Component />
+  </FormattedMessage>
+  {
+  "foo": "bar"
+}
+</div>
+`;
+
+exports[`shallowWithIntl using FormattedMessage should match the snapshot 1`] = `
+<div>
+  <FormattedMessage
+    id="TerraEnzymeIntl.helloWorld"
+  />
+  <FormattedMessage
+    id="TerraEnzymeIntl.buttonText"
+  >
+    <Component />
+  </FormattedMessage>
+  {
+  "foo": "bar"
+}
+</div>
+`;
+
+exports[`shallowWithIntl using injectIntl should match the snapshot 1`] = `
+<Component
+  foo="bar"
+  intl={
+    Object {
+      "defaultFormats": Object {},
+      "defaultLocale": "en",
+      "defaultRichTextElements": undefined,
+      "formatDate": [Function],
+      "formatDateTimeRange": [Function],
+      "formatDateToParts": [Function],
+      "formatDisplayName": [Function],
+      "formatList": [Function],
+      "formatMessage": [Function],
+      "formatNumber": [Function],
+      "formatNumberToParts": [Function],
+      "formatPlural": [Function],
+      "formatRelativeTime": [Function],
+      "formatTime": [Function],
+      "formatTimeToParts": [Function],
+      "formats": Object {},
+      "formatters": Object {
+        "getDateTimeFormat": [Function],
+        "getDisplayNames": [Function],
+        "getListFormat": [Function],
+        "getMessageFormat": [Function],
+        "getNumberFormat": [Function],
+        "getPluralRules": [Function],
+        "getRelativeTimeFormat": [Function],
+      },
+      "locale": "en",
+      "messages": null,
+      "onError": [Function],
+      "textComponent": Symbol(react.fragment),
+      "timeZone": undefined,
+      "wrapRichTextChunksInFragment": undefined,
+    }
+  }
+/>
+`;
