@@ -10,6 +10,7 @@
 * Changed
   * Use jest for tests.
   * Added publish config to package.json.
+  * Opened the node version to allow versions higher than node 10.
 
 ## 3.7.0 - (July 28, 2020)
 

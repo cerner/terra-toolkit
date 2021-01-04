@@ -5,6 +5,7 @@
 * Changed
   * Added optional support for aggregate themes.
   * Make postcss a peer dependency.
+  * Opened the node version to allow versions higher than node 10.
 
 ## 1.1.0 - (December 7, 2020)
 
