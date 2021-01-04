@@ -32,6 +32,6 @@
   "addons": [],
   "buildpacks": [],
   "engines": {
-    "npm": "6.x"
+    "npm": "6.14"
   }
 }
