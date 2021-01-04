@@ -6,6 +6,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "engines": {
+    "node": ">=10 <13"
+  },
   "files": [
     "bin",
     "lib",
