@@ -109,7 +109,7 @@
     "postcss": "^8.2.1",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
-    "react-intl-2.9.0": "npm:react-intl@^2.9.0",
+    "react-intl-2": "npm:react-intl@^2.9.0",
     "regenerator-runtime": "^0.13.2",
     "stylelint": "^13.0.0",
     "terra-dev-site": "^6.5.0",

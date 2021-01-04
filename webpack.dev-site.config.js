@@ -23,7 +23,7 @@ const devSiteConfig = (env = {}, argv = {}) => {
     ],
     resolve: {
       alias: {
-        'react-intl': 'react-intl-2.9.0',
+        'react-intl': 'react-intl-2',
       },
       plugins: [
         new DirectorySwitcherPlugin({
