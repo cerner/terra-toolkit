@@ -1,0 +1,99 @@
+# Browserslist Config Terra Upgrade Guide
+
+## Changes from 2.0 to 3.0
+
+The `browserslist-config-terra` package has been repackaged as `@cerner/browserslist-config-terra`. This update scopes the package under the `@cerner` npm organization.
+
+Note: There were no changes to the range of supported browsers. The major version bump is to account for the scoped repackage.
+
+## Upgrading
+
+As part of this upgrade we've discovered issues with the prior strategy of defining and extending the browserslist. It is no longer recommended to extend the browserslist from the package.json. For this reason projects should instead implement a `.browserslistrc` file as part of this upgrade.
+
+For an upgrade example see the [changes](https://github.com/cerner/terra-application/commit/a9801e9ccd5e264274582240bf174e3a2006998c) to terra-application.
+
+To get started with the upgrade install `@cerner/browserslist-config-terra` as a development dependency.
+
+```sh
+npm install --save-dev @cerner/browserslist-config-terra
+```
+
+After installation remove prior references to the old browserslist from the package.json. The `browserslist` key should also be removed if present.
+
+package.json
+
+```diff
+{
+- "browserslist": [
+-   "extends browserslist-config-terra"
+- ],
+  "devDependencies": {
++   "@cerner/browserslist-config-terra": "^3.0.0"
+-   "browserslist-config-terra": "^2.0.0"
+  }
+}
+```
+
+Create a `.browserslistrc` file and extend `@cerner/browserslist-config-terra`.
+
+.browserslistrc
+
+```
+extends @cerner/browserslist-config-terra
+```
+
+Add `.browserslistrc` to the `.npmignore` to prevent being released. Projects that implement the [files](https://docs.npmjs.com/cli/v6/configuring-npm/package-json#files) key in the package.json do not need to add the `.browserslistrc` file to the `.npmignore`.
+
+To complete the upgrade verify the changes by doing a clean install and starting the development webpack-dev-server. The browserslist is used during webpack and a successful start of the development server is a good indicator of a successful upgrade.
+
+## FAQ
+
+### After upgrading I am seeing the following error: Error: Cannot find module 'browserslist-config-terra'
+
+This error indicates a transitive dependency is extending `browserslist-config-terra` in the package.json using the `browserslist` key. Until all dependencies have been upgraded and implemented the `.browserslistrc` file both versions of browserslist-config-terra will be required as development dependencies.
+
+Add `browserslist-config-terra` as a development dependency. 
+
+```sh
+npm install --save-dev browserslist-config-terra
+```
+
+```diff
+{
+  "devDependencies": {
++   "browserslist-config-terra": "^2.0.0"
+  }
+}
+```
+
+Note: A project may have a dependency on both `browserslist-config-terra` and `@cerner/browserslist-config-terra`. This is okay. Once all dependencies have been upgraded `browserslist-config-terra` can be removed. 
+
+### Prior to upgrading I am seeing the following error: Error: Cannot find module '@cerner/browserslist-config-terra'
+
+This error indicates a transitive dependency has upgraded to `@cerner/browserslist-config-terra` but did not implement the `.browserslistrc` as part of the upgrade. Packages that define a `browserslist` in the package.json create an implicit requirement that cascades to all consuming projects. When a `browserslist` is defined in the package.json it is read during webpack. The extended browserslist must be defined by the project running webpack.
+
+There are two options to resolve this error.
+
+Option 1: Use this guide to upgrade to `@cerner/browserslist-config-terra`.
+
+Option 2: Add `@cerner/browserslist-config-terra` as a devDependency.
+
+```sh
+npm install --save-dev @cerner/browserslist-config-terra
+```
+
+```diff
+{
+  "devDependencies": {
++   "@cerner/browserslist-config-terra": "^3.0.0"
+  }
+}
+```
+
+Note: A project may have a dependency on both `browserslist-config-terra` and `@cerner/browserslist-config-terra`. This is okay. Once all dependencies have been upgraded `browserslist-config-terra` can be removed.
+
+## Related Resources
+
+- [Initial discovery of the cascading issue](https://github.com/cerner/terra-application/pull/74)
+- [Investigation into the issue](https://github.com/cerner/terra-application/issues/109)
+- [Resolution and example upgrade pull request](https://github.com/cerner/terra-application/pull/114)
