@@ -24,7 +24,7 @@
     "linter"
   ],
   "engines": {
-    "node": "^10.0.0"
+    "node": ">=10"
   },
   "author": "Cerner Corporation",
   "license": "Apache-2.0",
