@@ -8,6 +8,7 @@
   * Add stylelint-config-terra documentation
   * Add browserslist-config-terra upgrade guide
   * Moved Terra-cli docs into terra-toolkit-docs
+  * Opened the node version to allow versions higher than node 10.
 
 ## 1.3.0 - (December 7, 2020)
 
