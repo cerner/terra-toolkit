@@ -1,8 +1,12 @@
 {
+  "private": true,
   "name": "@cerner/terra-enzyme-intl",
   "version": "3.4.0",
   "description": "Enzyme helpers for fortifying tests that depend on react-intl by decoupling the need for actual translations.",
   "main": "lib/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "engines": {
     "node": ">=10"
   },
