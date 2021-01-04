@@ -22,6 +22,9 @@ const devSiteConfig = (env = {}, argv = {}) => {
       new TerraDevSite({ env }),
     ],
     resolve: {
+      alias: {
+        'react-intl': 'react-intl-2.9.0',
+      },
       plugins: [
         new DirectorySwitcherPlugin({
           shouldSwitch: !production,
