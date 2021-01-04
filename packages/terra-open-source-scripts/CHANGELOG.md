@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+  * Opened the node version to allow versions higher than node 10.
+
 ## 1.3.0 - (December 4, 2020)
 
 * Changed
