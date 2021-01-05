@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.1.0 - (January 5, 2021)
+
 * Changed
  * Remove unused script from package.json
 

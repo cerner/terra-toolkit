@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 3.2.0 - (January 5, 2021)
+
 * Changed
   * Update README documentation
 
