@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 4.0.0 - (January 5, 2021)
+
 * Breaking
   * Drop support for node versions below version 10.
   * Require stylelint version 13.
