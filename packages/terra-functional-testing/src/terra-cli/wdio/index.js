@@ -5,6 +5,10 @@ const cli = {
   describe: 'Run wdio tests',
   builder: (yargs) => (
     yargs.options({
+      browsers: {
+        type: 'array',
+        describe: 'A list of browsers for the test run.',
+      },
       c: {
         type: 'string',
         alias: 'config',
@@ -13,6 +17,10 @@ const cli = {
       formFactors: {
         type: 'array',
         describe: 'A list of form factors for the test run.',
+      },
+      gridUrl: {
+        type: 'string',
+        describe: 'The remote selenium grid address.',
       },
       locales: {
         type: 'array',
