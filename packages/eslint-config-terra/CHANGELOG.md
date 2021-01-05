@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 4.3.0 - (January 5, 2021)
+
 * Changed
   * Opened the node version to allow versions higher than node 10.
 
