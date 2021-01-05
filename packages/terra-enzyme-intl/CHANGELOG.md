@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 4.0.0 - (January 5, 2021)
+
 * Breaking Change
   * Removed `mountContext` and `shallowContext`
   * Updated `mockIntl` to match latest intl shape

@@ -3,8 +3,7 @@
   "command": {
     "publish": {
       "ignoreChanges": [
-        "packages/terra-functional-testing/**",
-        "packages/terra-enzyme-intl/**"
+        "packages/terra-functional-testing/**"
       ]
     }
   },

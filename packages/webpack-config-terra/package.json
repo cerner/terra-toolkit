@@ -1,6 +1,6 @@
 {
   "name": "@cerner/webpack-config-terra",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Terra Webpack Config",
   "main": "lib/webpack.config.js",
   "publishConfig": {
@@ -35,7 +35,7 @@
     "jest": "jest --config ../../jest.config.js"
   },
   "dependencies": {
-    "@cerner/duplicate-package-checker-webpack-plugin": "^2.0.0",
+    "@cerner/duplicate-package-checker-webpack-plugin": "^2.1.0",
     "@mjhenkes/postcss-rtl": "^2.0.0",
     "autoprefixer": "^10.0.0",
     "babel-loader": "^8.0.5",
