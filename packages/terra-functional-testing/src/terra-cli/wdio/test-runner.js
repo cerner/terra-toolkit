@@ -75,8 +75,10 @@ class TestRunner {
 
   /**
    * Starts the test runner.
+   * @param {string} options.browsers - A list of browsers for the test run.
    * @param {string} options.config - A file path to the test runner configuration.
    * @param {string} options.formFactors - A list of form factors for the test run.
+   * @param {string} options.gridUrl - The remote selenium grid address.
    * @param {string} options.locales - A list of language locales for the test run.
    * @param {string} options.themes - A list of themes for the test run.
    * @param {string} options.hostname - Automation driver host address.
@@ -87,12 +89,22 @@ class TestRunner {
    */
   static async start(options) {
     const {
+      browsers,
       config,
       formFactors = [],
+      gridUrl,
       locales,
       themes,
       ...launcherOptions // hostname, port, baseUrl, suite, and spec
     } = options;
+
+    if (browsers) {
+      process.env.BROWSERS = browsers;
+    }
+
+    if (gridUrl) {
+      process.env.SELENIUM_GRID_URL = gridUrl;
+    }
 
     /**
      * The following code loops through each permutation of theme, locale, and form factor.

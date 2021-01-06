@@ -8,8 +8,10 @@ Run wdio tests
 Options:
       --version      Show version number                               [boolean]
       --help         Show help                                         [boolean]
+      --browsers     A list of browsers for the test run.                [array]
   -c, --config       A file path to the test runner configuration.      [string]
       --formFactors  A list of form factors for the test run.            [array]
+      --gridUrl      The remote selenium grid address.                  [string]
       --locales      A list of language locales for the test run.
                                                        [array] [default: [\\"en\\"]]
       --themes       A list of themes for the test run.

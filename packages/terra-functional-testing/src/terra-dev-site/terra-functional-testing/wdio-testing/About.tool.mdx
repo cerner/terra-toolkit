@@ -20,8 +20,10 @@ A test runner is provided for local development and should be invoked using the 
 
 | Option Name | Type   | Required | Default                 | Description                                                                                   |
 |-------------|--------|----------|-------------------------|-----------------------------------------------------------------------------------------------|
+| browsers    | array  | false    |                         | A list of browsers for the test run.                                                          |
 | config      | string | false    |                         | A file path to the test runner configuration.                                                 |
 | formFactors | array  | false    |                         | A list of form factors for the test run. One of tiny, small, medium, large, huge, or enormous |
+| gridUrl     | string | false    |                         | The remote selenium grid address.                                                             |
 | locales     | array  | false    | ['en']                  | A list of language locales for the test run.                                                  |
 | themes      | array  | false    | ['terra-default-theme'] | A list of themes for the test run.                                                            |
 | hostname    | string | false    | localhost               | Automation driver host address.                                                               |
