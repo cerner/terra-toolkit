@@ -9,6 +9,7 @@ const AccessibilityReporter = require('../reporters/wdio-accessibility-reporter'
 
 const {
   FORM_FACTOR,
+  KEEP_DOCKER_STACK,
   LOCALE,
   SITE,
   THEME,
@@ -144,7 +145,9 @@ exports.config = {
       ...fs.existsSync(defaultWebpackPath) && { webpackConfig: defaultWebpackPath },
     }],
     // Do not add the docker service if disabled.
-    ...(WDIO_DISABLE_SELENIUM_SERVICE ? [] : [[SeleniumDockerService]]),
+    ...(WDIO_DISABLE_SELENIUM_SERVICE ? [] : [[SeleniumDockerService, {
+      ...KEEP_DOCKER_STACK && { keepDockerStack: KEEP_DOCKER_STACK },
+    }]]),
   ],
   // Framework you want to run your specs with.
   // The following are supported: Mocha, Jasmine, and Cucumber

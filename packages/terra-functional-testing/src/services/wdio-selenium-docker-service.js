@@ -11,9 +11,10 @@ const exec = util.promisify(childProcess.exec);
 
 class SeleniumDockerService {
   constructor(options = {}) {
-    const { version } = options;
+    const { version, keepDockerStack } = options;
 
     this.version = version || '3.14.0-helium';
+    this.keepDockerStack = keepDockerStack;
   }
 
   /**
@@ -57,22 +58,19 @@ class SeleniumDockerService {
    * Deploys the docker stack. The previous stack will be removed if it exists.
    */
   async deployStack() {
-    // Remove the previous stack if one exists.
-    await this.removeStack();
+    const { stdout: stackInfo } = await exec('docker stack ls | grep wdio || true');
 
-    logger.info(`Deploying docker stack using selenium ${this.version}.`);
+    if (!stackInfo) {
+      logger.info(`Deploying docker stack using selenium ${this.version}.`);
 
-    const composeFilePath = path.resolve(__dirname, '../docker/docker-compose.yml');
+      const composeFilePath = path.resolve(__dirname, '../docker/docker-compose.yml');
 
-    await exec(`TERRA_SELENIUM_DOCKER_VERSION=${this.version} docker stack deploy -c ${composeFilePath} wdio`);
+      await exec(`TERRA_SELENIUM_DOCKER_VERSION=${this.version} docker stack deploy -c ${composeFilePath} wdio`);
 
-    // There are occasions where the docker stack deployment is not completely ready when running back-to-back wdio test sessions.
-    // As a result, the test run is unable to start and receives the 'Error forwarding the new session cannot find : Capabilities {browserName: chrome}' error.
-    // This waits for 5 seconds and checks that the services and network are created to ensure a reliable test run.
-    await this.wait(5000);
-    await this.waitForServiceCreation();
-    await this.waitForNetworkCreation();
-    await this.waitForNetworkReady();
+      await this.waitForServiceCreation();
+      await this.waitForNetworkCreation();
+      await this.waitForNetworkReady();
+    }
   }
 
   /**
@@ -219,7 +217,12 @@ class SeleniumDockerService {
    * Removes the docker stack and network.
    */
   async onComplete() {
-    await this.removeStack();
+    // When multiple test sessions are executed sequentially as specified in the WDIO script in the package.json file, the KEEP_DOCKER_STACK env variable
+    // is used to indicate no to remove the currently deployed docker stack as it will be used again for the next test session.
+    // The docker stack is expected to be removed by the last test session when no KEEP_DOCKER_STACK is provided.
+    if (!this.keepDockerStack) {
+      await this.removeStack();
+    }
   }
 
   /**

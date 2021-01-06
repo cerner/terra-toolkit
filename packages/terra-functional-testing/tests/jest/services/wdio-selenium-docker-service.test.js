@@ -157,6 +157,16 @@ describe('WDIO Selenium Docker Service', () => {
       expect(mockExec).toHaveBeenCalledWith(`TERRA_SELENIUM_DOCKER_VERSION=custom-version docker stack deploy -c ${composeFilePath} wdio`);
     });
 
+    it('should deploy the stack with the keepDockerStack option set ', async () => {
+      const service = new SeleniumDockerService({ keepDockerStack: true });
+
+      jest.spyOn(service, 'removeStack').mockImplementationOnce(() => Promise.resolve());
+
+      await service.onComplete();
+
+      expect(service.removeStack).not.toHaveBeenCalled();
+    });
+
     it('should remove the previous network stack', async () => {
       const service = new SeleniumDockerService();
 
