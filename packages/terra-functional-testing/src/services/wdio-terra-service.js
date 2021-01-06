@@ -98,6 +98,12 @@ class TerraService {
   }
 
   afterCommand(commandName, _args, _result, error) {
+    // Expose flag to disable hidden input caret function for full stack testing; IE cannot handle multiple async afterCommand requests.
+    const { disabledTerraServiceAfterCommand } = this.serviceOptions;
+    if (disabledTerraServiceAfterCommand) {
+      return;
+    }
+
     if ((commandName === 'refresh' || commandName === 'url') && !error) {
       try {
         // This is only meant as a convenience so failure is not particularly concerning.
