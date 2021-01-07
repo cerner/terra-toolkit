@@ -8,8 +8,8 @@ const dispatchCustomEvent = (name, metaData) => {
       window.dispatchEvent(event);
     }, name, metaData);
   } catch (error) {
-    throw new Error(error);
+    throw new Error(`dispatchCustomEvent failed: ${error}`);
   }
 };
 
-export default dispatchCustomEvent;
+module.exports = dispatchCustomEvent;

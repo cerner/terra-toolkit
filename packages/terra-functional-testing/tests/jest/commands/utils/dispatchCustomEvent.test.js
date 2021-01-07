@@ -2,21 +2,22 @@ const dispatchCustomEvent = require('../../../../src/commands/utils/dispatchCust
 
 describe('dispatchCustomEvent', () => {
   it('execute a specified function via browser.execute', () => {
+    const mockFn = jest.fn();
     global.browser = {
-      execute: jest.fn(),
+      execute: mockFn,
     };
 
-    const mockFn = jest.fn();
-    dispatchCustomEvent(mockFn);
+    dispatchCustomEvent('mock', 'mock');
     expect(mockFn).toBeCalled();
   });
+
   it('throws an error outputted via browser.execute', () => {
+    const mockError = new Error('mock error');
     global.browser = {
-      execute: () => { throw 'mock fail'; },
+      execute: () => { throw mockError; },
     };
 
     const mockFn = jest.fn();
-
-    expect(() => dispatchCustomEvent(mockFn)).toThrow('mock fail');
+    expect(() => dispatchCustomEvent(mockFn)).toThrow(`dispatchCustomEvent failed: ${mockError}`);
   });
 });
