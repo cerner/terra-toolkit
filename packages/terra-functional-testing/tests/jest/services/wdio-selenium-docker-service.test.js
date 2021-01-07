@@ -128,8 +128,8 @@ describe('WDIO Selenium Docker Service', () => {
     it('should deploy the stack', async () => {
       const service = new SeleniumDockerService();
 
-      jest.spyOn(service, 'removeStack').mockImplementationOnce(() => Promise.resolve());
-      jest.spyOn(service, 'wait').mockImplementationOnce(() => Promise.resolve());
+      mockExec.mockImplementation(() => Promise.resolve({ stdout: '' }));
+
       jest.spyOn(service, 'waitForServiceCreation').mockImplementationOnce(() => Promise.resolve());
       jest.spyOn(service, 'waitForNetworkCreation').mockImplementationOnce(() => Promise.resolve());
       jest.spyOn(service, 'waitForNetworkReady').mockImplementationOnce(() => Promise.resolve());
@@ -144,8 +144,8 @@ describe('WDIO Selenium Docker Service', () => {
     it('should deploy the stack with the specified selenium version', async () => {
       const service = new SeleniumDockerService({ version: 'custom-version' });
 
-      jest.spyOn(service, 'removeStack').mockImplementationOnce(() => Promise.resolve());
-      jest.spyOn(service, 'wait').mockImplementationOnce(() => Promise.resolve());
+      mockExec.mockImplementation(() => Promise.resolve({ stdout: '' }));
+
       jest.spyOn(service, 'waitForServiceCreation').mockImplementationOnce(() => Promise.resolve());
       jest.spyOn(service, 'waitForNetworkCreation').mockImplementationOnce(() => Promise.resolve());
       jest.spyOn(service, 'waitForNetworkReady').mockImplementationOnce(() => Promise.resolve());
@@ -157,35 +157,11 @@ describe('WDIO Selenium Docker Service', () => {
       expect(mockExec).toHaveBeenCalledWith(`TERRA_SELENIUM_DOCKER_VERSION=custom-version docker stack deploy -c ${composeFilePath} wdio`);
     });
 
-    it('should deploy the stack with the keepDockerStack option set ', async () => {
-      const service = new SeleniumDockerService({ keepDockerStack: true });
-
-      jest.spyOn(service, 'removeStack').mockImplementationOnce(() => Promise.resolve());
-
-      await service.onComplete();
-
-      expect(service.removeStack).not.toHaveBeenCalled();
-    });
-
-    it('should remove the previous network stack', async () => {
-      const service = new SeleniumDockerService();
-
-      jest.spyOn(service, 'removeStack').mockImplementationOnce(() => Promise.resolve());
-      jest.spyOn(service, 'wait').mockImplementationOnce(() => Promise.resolve());
-      jest.spyOn(service, 'waitForServiceCreation').mockImplementationOnce(() => Promise.resolve());
-      jest.spyOn(service, 'waitForNetworkCreation').mockImplementationOnce(() => Promise.resolve());
-      jest.spyOn(service, 'waitForNetworkReady').mockImplementationOnce(() => Promise.resolve());
-
-      await service.deployStack();
-
-      expect(service.removeStack).toHaveBeenCalled();
-    });
-
     it('should wait for the network to become ready', async () => {
       const service = new SeleniumDockerService();
 
-      jest.spyOn(service, 'removeStack').mockImplementationOnce(() => Promise.resolve());
-      jest.spyOn(service, 'wait').mockImplementationOnce(() => Promise.resolve());
+      mockExec.mockImplementation(() => Promise.resolve({ stdout: '' }));
+
       jest.spyOn(service, 'waitForServiceCreation').mockImplementationOnce(() => Promise.resolve());
       jest.spyOn(service, 'waitForNetworkCreation').mockImplementationOnce(() => Promise.resolve());
       jest.spyOn(service, 'waitForNetworkReady').mockImplementationOnce(() => Promise.resolve());
@@ -197,18 +173,21 @@ describe('WDIO Selenium Docker Service', () => {
       expect(service.waitForNetworkReady).toHaveBeenCalled();
     });
 
-    it('should wait for docker stack deployment', async () => {
+    it('should not deploy the stack if already deployed', async () => {
       const service = new SeleniumDockerService();
 
-      jest.spyOn(service, 'removeStack').mockImplementationOnce(() => Promise.resolve());
-      jest.spyOn(service, 'wait').mockImplementationOnce(() => Promise.resolve());
+      mockExec.mockImplementation(() => Promise.resolve({ stdout: 'Active' }));
+
       jest.spyOn(service, 'waitForServiceCreation').mockImplementationOnce(() => Promise.resolve());
       jest.spyOn(service, 'waitForNetworkCreation').mockImplementationOnce(() => Promise.resolve());
       jest.spyOn(service, 'waitForNetworkReady').mockImplementationOnce(() => Promise.resolve());
 
       await service.deployStack();
 
-      expect(service.wait).toHaveBeenCalledWith(5000);
+      expect(mockExec).toHaveBeenCalled();
+      expect(service.waitForServiceCreation).not.toHaveBeenCalled();
+      expect(service.waitForNetworkCreation).not.toHaveBeenCalled();
+      expect(service.waitForNetworkReady).not.toHaveBeenCalled();
     });
   });
 
@@ -486,6 +465,17 @@ describe('WDIO Selenium Docker Service', () => {
   });
 
   describe('onComplete', () => {
+    it('should keep the docker stack', async () => {
+      const service = new SeleniumDockerService({ keepDockerStack: true });
+      service.keepAliveSeleniumDockerService = true;
+
+      jest.spyOn(service, 'removeStack').mockImplementationOnce(() => Promise.resolve());
+
+      await service.onComplete();
+
+      expect(service.removeStack).not.toHaveBeenCalled();
+    });
+
     it('should remove the docker stack', async () => {
       const service = new SeleniumDockerService();
 
@@ -494,20 +484,6 @@ describe('WDIO Selenium Docker Service', () => {
       await service.onComplete();
 
       expect(service.removeStack).toHaveBeenCalled();
-    });
-  });
-
-  describe('wait', () => {
-    it('should wait', async () => {
-      const service = new SeleniumDockerService();
-      const waitTIme = 1000;
-      const beforeDate = new Date();
-
-      await service.wait(waitTIme);
-
-      const afterDate = new Date();
-
-      expect(afterDate.getTime() - beforeDate.getTime()).toBeGreaterThanOrEqual(waitTIme);
     });
   });
 });

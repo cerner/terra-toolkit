@@ -44,6 +44,11 @@ const cli = {
         type: 'array',
         describe: 'A list of spec file paths.',
       },
+      keepAliveSeleniumDockerService: {
+        type: 'boolean',
+        describe: 'Determines to keep the selenium docker service running upon test completion.',
+        default: false,
+      },
     })
   ),
   handler: TestRunner.start,

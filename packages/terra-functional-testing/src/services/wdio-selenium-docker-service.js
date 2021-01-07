@@ -11,10 +11,9 @@ const exec = util.promisify(childProcess.exec);
 
 class SeleniumDockerService {
   constructor(options = {}) {
-    const { version, keepDockerStack } = options;
+    const { version } = options;
 
     this.version = version || '3.14.0-helium';
-    this.keepDockerStack = keepDockerStack;
   }
 
   /**
@@ -23,6 +22,7 @@ class SeleniumDockerService {
   async onPrepare(config) {
     this.host = config.hostname;
     this.port = config.port;
+    this.keepAliveSeleniumDockerService = config.keepAliveSeleniumDockerService;
 
     // Verify docker is installed before proceeding.
     try {
@@ -217,25 +217,13 @@ class SeleniumDockerService {
    * Removes the docker stack and network.
    */
   async onComplete() {
-    // When multiple test sessions are executed sequentially as specified in the WDIO script in the package.json file, the KEEP_DOCKER_STACK env variable
-    // is used to indicate no to remove the currently deployed docker stack as it will be used again for the next test session.
-    // The docker stack is expected to be removed by the last test session when no KEEP_DOCKER_STACK is provided.
-    if (!this.keepDockerStack) {
+    // When multiple test sessions are executed sequentially as specified in the WDIO script in the package.json file, the keepAliveSeleniumDockerService cli option
+    // is used to indicate not to remove the currently deployed docker stack upon test completion as it will be used again for the next test session.
+    // The docker stack is expected to be removed by the last test session when no keepAliveSeleniumDockerService cli option is specified.
+    if (!this.keepAliveSeleniumDockerService) {
+      logger.info('Closing the selenium docker service.');
       await this.removeStack();
     }
-  }
-
-  /**
-   * Waits for the specified period of time.
-   * @param {number} milliseconds - The number of milliseconds to wait.
-   * @returns {Promise} - A promise that resolves after waiting for the specified period of time.
-   */
-  wait(milliseconds) {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        resolve();
-      }, milliseconds);
-    });
   }
 }
 

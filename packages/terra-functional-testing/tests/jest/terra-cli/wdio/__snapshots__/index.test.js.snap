@@ -6,19 +6,25 @@ exports[`index declares the wdio terra-cli command with proper command level hel
 Run wdio tests
 
 Options:
-      --version      Show version number                               [boolean]
-      --help         Show help                                         [boolean]
-  -c, --config       A file path to the test runner configuration.      [string]
-      --formFactors  A list of form factors for the test run.            [array]
-      --locales      A list of language locales for the test run.
-                                                       [array] [default: [\\"en\\"]]
-      --themes       A list of themes for the test run.
+      --version                         Show version number            [boolean]
+      --help                            Show help                      [boolean]
+  -c, --config                          A file path to the test runner
+                                        configuration.                  [string]
+      --formFactors                     A list of form factors for the test run.
+                                                                         [array]
+      --locales                         A list of language locales for the test
+                                        run.           [array] [default: [\\"en\\"]]
+      --themes                          A list of themes for the test run.
                                       [array] [default: [\\"terra-default-theme\\"]]
-      --hostname     Automation driver host address.                    [string]
-      --port         Automation driver port.                            [number]
-      --baseUrl      The base url.                                      [string]
-      --suite        Overrides specs and runs only the defined suites.   [array]
-      --spec         A list of spec file paths.                          [array]"
+      --hostname                        Automation driver host address. [string]
+      --port                            Automation driver port.         [number]
+      --baseUrl                         The base url.                   [string]
+      --suite                           Overrides specs and runs only the
+                                        defined suites.                  [array]
+      --spec                            A list of spec file paths.       [array]
+      --keepAliveSeleniumDockerService  Determines to keep the selenium docker
+                                        service running upon test completion.
+                                                      [boolean] [default: false]"
 `;
 
 exports[`index declares the wdio terra-cli command with proper top level help 1`] = `
