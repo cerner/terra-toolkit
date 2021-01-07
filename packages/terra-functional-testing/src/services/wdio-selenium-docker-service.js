@@ -221,7 +221,6 @@ class SeleniumDockerService {
     // is used to indicate not to remove the currently deployed docker stack upon test completion as it will be used again for the next test session.
     // The docker stack is expected to be removed by the last test session when no keepAliveSeleniumDockerService cli option is specified.
     if (!this.keepAliveSeleniumDockerService) {
-      logger.info('Closing the selenium docker service.');
       await this.removeStack();
     }
   }
