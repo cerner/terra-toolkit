@@ -31,6 +31,7 @@ class TestRunner {
    * @param {Object} options - The test run options.
    * @param {string} options.config - A file path to the test runner configuration.
    * @param {string} options.formFactor - A form factor for the test run.
+   * @param {boolean} options.keepAliveSeleniumDockerService - Determines to keep the selenium docker service running upon test completion.
    * @param {string} options.locale - A language locale for the test run.
    * @param {string} options.theme - A theme for the test run.
    * @param {string} options.hostname - Automation driver host address.
@@ -38,7 +39,6 @@ class TestRunner {
    * @param {string} options.baseUrl - The base url.
    * @param {array} options.suite - Overrides specs and runs only the defined suites.
    * @param {array} options.spec - A list of spec file paths.
-   * @param {boolean} options.keepAliveSeleniumDockerService - Determines to keep the selenium docker service running upon test completion.
    * @returns {Promise} A promise that resolves with the test run exit code.
    */
   static async run(options) {
@@ -76,8 +76,11 @@ class TestRunner {
 
   /**
    * Starts the test runner.
+   * @param {string} options.browsers - A list of browsers for the test run.
    * @param {string} options.config - A file path to the test runner configuration.
    * @param {string} options.formFactors - A list of form factors for the test run.
+   * @param {string} options.gridUrl - The remote selenium grid address.
+   * @param {boolean} options.keepAliveSeleniumDockerService - Determines to keep the selenium docker service running upon test completion.
    * @param {string} options.locales - A list of language locales for the test run.
    * @param {string} options.themes - A list of themes for the test run.
    * @param {string} options.hostname - Automation driver host address.
@@ -85,16 +88,25 @@ class TestRunner {
    * @param {string} options.baseUrl - The base url.
    * @param {array} options.suite - Overrides specs and runs only the defined suites.
    * @param {array} options.spec - A list of spec file paths.
-   * @param {boolean} options.keepAliveSeleniumDockerService - Determines to keep the selenium docker service running upon test completion.
    */
   static async start(options) {
     const {
+      browsers,
       config,
       formFactors = [],
+      gridUrl,
       locales,
       themes,
       ...launcherOptions // hostname, port, baseUrl, suite, spec, and keepAliveSeleniumDockerService
     } = options;
+
+    if (browsers) {
+      process.env.BROWSERS = browsers;
+    }
+
+    if (gridUrl) {
+      process.env.SELENIUM_GRID_URL = gridUrl;
+    }
 
     /**
      * The following code loops through each permutation of theme, locale, and form factor.

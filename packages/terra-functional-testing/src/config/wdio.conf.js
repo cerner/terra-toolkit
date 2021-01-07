@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const ip = require('ip');
+const getCapabilities = require('./utils/getCapabilities');
 
 const SeleniumDockerService = require('../services/wdio-selenium-docker-service');
 const TerraService = require('../services/wdio-terra-service');
@@ -8,8 +9,10 @@ const AssetServerService = require('../services/wdio-asset-server-service');
 const AccessibilityReporter = require('../reporters/wdio-accessibility-reporter');
 
 const {
+  BROWSERS,
   FORM_FACTOR,
   LOCALE,
+  SELENIUM_GRID_URL,
   SITE,
   THEME,
   WDIO_DISABLE_SELENIUM_SERVICE,
@@ -19,6 +22,8 @@ const {
   WDIO_HOSTNAME,
 } = process.env;
 
+// Convert BROWSERS into an array. When assigned to a process.env it is cast as a string.
+const browsers = BROWSERS ? BROWSERS.split(',') : undefined;
 const defaultWebpackPath = path.resolve(process.cwd(), 'webpack.config.js');
 
 exports.config = {
@@ -65,18 +70,7 @@ exports.config = {
   // Sauce Labs platform configurator - a great tool to configure your capabilities:
   // https://docs.saucelabs.com/reference/platforms-configurator
   //
-  capabilities: [{
-    // maxInstances can get overwritten per capability. So if you have an in-house Selenium
-    // grid with only 5 firefox instances available you can make sure that not more than
-    // 5 instances get started at a time.
-    maxInstances: 5,
-    //
-    browserName: 'chrome',
-    // If outputDir is provided WebdriverIO can capture driver session logs
-    // it is possible to configure which logTypes to include/exclude.
-    // excludeDriverLogs: ['*'], // pass '*' to exclude all driver session logs
-    // excludeDriverLogs: ['bugreport', 'server'],
-  }],
+  capabilities: getCapabilities(browsers, !!SELENIUM_GRID_URL),
   //
   // ===================
   // Test Configurations
@@ -106,9 +100,9 @@ exports.config = {
   // Set the path to connect to the selenium container.
   path: '/wd/hub',
   // The hostname of the driver server.
-  hostname: WDIO_HOSTNAME || 'localhost',
-  // The port the driver server is on.
-  port: 4444,
+  hostname: SELENIUM_GRID_URL || WDIO_HOSTNAME || 'localhost',
+  // The port the driver server is on. The selenium grid uses port 80.
+  port: SELENIUM_GRID_URL ? 80 : 4444,
   //
   // Set a base URL in order to shorten url command calls. If your `url` parameter starts
   // with `/`, the base url gets prepended, not including the path portion of your baseUrl.

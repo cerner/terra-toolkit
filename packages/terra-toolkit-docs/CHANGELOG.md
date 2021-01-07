@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.4.0 - (January 5, 2021)
+
 * Changed
   * Update webpack-config-terra documentation.
   * Update webpack-config-terra upgrade guide.
