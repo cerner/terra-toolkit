@@ -7,7 +7,7 @@ describe('dispatchCustomEvent', () => {
       execute: mockFn,
     };
 
-    dispatchCustomEvent('mock', 'mock');
+    dispatchCustomEvent({ name: 'mock' });
     expect(mockFn).toBeCalled();
   });
 
@@ -17,7 +17,6 @@ describe('dispatchCustomEvent', () => {
       execute: () => { throw mockError; },
     };
 
-    const mockFn = jest.fn();
-    expect(() => dispatchCustomEvent(mockFn)).toThrow(`dispatchCustomEvent failed: ${mockError}`);
+    expect(() => dispatchCustomEvent({ name: 'mock' })).toThrow(`dispatchCustomEvent failed: ${mockError}`);
   });
 });
