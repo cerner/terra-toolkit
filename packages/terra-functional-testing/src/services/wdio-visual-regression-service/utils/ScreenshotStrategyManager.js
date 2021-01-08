@@ -1,11 +1,11 @@
-import { Logger } from '@cerner/terra-cli';
+const { Logger } = require('@cerner/terra-cli');
 
-import MergeViewportStrategy from './strategies/MergeScreenshotStrategy';
-import TrimAndMergeViewportStrategy from './strategies/TrimAndMergeScreenshotStrategy';
+const MergeViewportStrategy = require('./strategies/MergeScreenshotStrategy');
+const TrimAndMergeViewportStrategy = require('./strategies/TrimAndMergeScreenshotStrategy');
 
 const logger = new Logger('[wdio-visual-regression-service:ScreenshotStrategyManager]');
 
-export default class ScreenshotStrategyManager {
+class ScreenshotStrategyManager {
   static getStrategy(browser, screenDimensions) {
     const { isIOS } = browser;
     if (isIOS) {
@@ -17,3 +17,5 @@ export default class ScreenshotStrategyManager {
     return new MergeViewportStrategy(screenDimensions);
   }
 }
+
+module.exports = ScreenshotStrategyManager;

@@ -1,16 +1,16 @@
-import fsExtra from 'fs-extra';
-import path from 'path';
-import uuidv4 from 'uuid/v4';
-import { Logger } from '@cerner/terra-cli';
+const fsExtra = require('fs-extra');
+const path = require('path');
+const uuidv4 = require('uuid/v4');
+const { Logger } = require('@cerner/terra-cli');
 
-import ScreenshotStrategyManager from '../utils/ScreenshotStrategyManager';
-import getScreenDimensions from '../scripts/getScreenDimensions';
-import virtualScroll from '../scripts/virtualScroll';
-import pageHeight from '../scripts/pageHeight';
-import saveBase64Image from '../utils/saveBase64Image';
-import { cropImage, mergeImages } from '../utils/image';
-import ScreenDimension from '../utils/ScreenDimension';
-import normalizeScreenshot from '../utils/normalizeScreenshot';
+const ScreenshotStrategyManager = require('../utils/ScreenshotStrategyManager');
+const getScreenDimensions = require('../scripts/getScreenDimensions');
+const virtualScroll = require('../scripts/virtualScroll');
+const pageHeight = require('../scripts/pageHeight');
+const saveBase64Image = require('../utils/saveBase64Image');
+const { cropImage, mergeImages } = require('../utils/image');
+const ScreenDimension = require('../utils/ScreenDimension');
+const { normalizeScreenshot } = require('../utils/normalizeScreenshot');
 
 const logger = new Logger('[wdio-visual-regression-service:makeAreaScreenshot]');
 const tmpDir = path.resolve(__dirname, '..', '..', 'tmp');
@@ -30,7 +30,7 @@ async function storeScreenshot(browser, screenDimensions, cropDimensions, base64
   await saveBase64Image(filePath, croppedBase64Screenshot);
 }
 
-export default async function makeAreaScreenshot(browser, startX, startY, endX, endY) {
+async function makeAreaScreenshot(browser, startX, startY, endX, endY) {
   logger.verbose('requested a screenshot for the following area: %j', {
     startX, startY, endX, endY,
   });
@@ -113,3 +113,5 @@ export default async function makeAreaScreenshot(browser, startX, startY, endX, 
     throw e;
   }
 }
+
+module.exports = makeAreaScreenshot;

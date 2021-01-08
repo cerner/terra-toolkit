@@ -1,6 +1,6 @@
-import CropDimension from '../CropDimension';
+const CropDimension = require('../CropDimension');
 
-export default class BaseStrategy {
+class BaseStrategy {
   constructor(screenDimensions) {
     this.screenDimensions = screenDimensions;
 
@@ -74,3 +74,5 @@ export default class BaseStrategy {
     return new CropDimension(adjustedWidth, adjustedHeight, x, y, top, rotation);
   }
 }
+
+module.exports = BaseStrategy;

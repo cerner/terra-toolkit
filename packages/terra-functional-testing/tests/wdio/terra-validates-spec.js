@@ -7,6 +7,7 @@ Terra.describeViewports('Terra.validates.accessibility', ['small', 'large'], () 
     browser.url('/accessible.html');
 
     Terra.validates.accessibility();
+    Terra.validates.element('test-name');
   });
 
   it('should report an accessibility violation', () => {

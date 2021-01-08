@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 const expect = require('expect');
-const { accessibility, element } = require('../commands/validates');
+const { accessibility, element, screenshot } = require('../commands/validates');
 const { toBeAccessible } = require('../commands/expect');
 const {
   describeViewports,
@@ -62,7 +62,7 @@ class TerraService {
     global.Terra.hideInputCaret = hideInputCaret;
 
     // Setup and expose the validates utility functions.
-    global.Terra.validates = { accessibility, element };
+    global.Terra.validates = { accessibility, element, screenshot };
 
     /**
      * Global axe override options.

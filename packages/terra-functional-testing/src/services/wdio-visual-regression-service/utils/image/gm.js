@@ -1,9 +1,8 @@
-import gm from 'gm';
-import fsExtra from 'fs-extra';
-import path from 'path';
-import uuidv4 from 'uuid/v4';
-
-import CropDimension from '../CropDimension';
+const gm = require('gm');
+const fsExtra = require('fs-extra');
+const path = require('path');
+const uuidv4 = require('uuid/v4');
+const CropDimension = require('../CropDimension');
 
 const tmpDir = path.join(__dirname, '../../../tmp');
 
@@ -13,7 +12,7 @@ const tmpDir = path.join(__dirname, '../../../tmp');
  * @param {CropDimension} cropDimensions - dimensions
  * @return {Promise} resolves to cropped image
  */
-export async function cropImage(base64Screenshot, cropDimensions) {
+async function cropImage(base64Screenshot, cropDimensions) {
   if (!(cropDimensions instanceof CropDimension)) {
     throw new Error('Please provide a valid instance of CropDimension!');
   }
@@ -44,7 +43,7 @@ export async function cropImage(base64Screenshot, cropDimensions) {
  * @param {Number} scaleFactor - scale factor, e.g. 0.5 for downscale or 1.5 for upscale
  * @return {Promise} resolves to cropped image
  */
-export async function scaleImage(base64Screenshot, scaleFactor) {
+async function scaleImage(base64Screenshot, scaleFactor) {
   const image = gm(new Buffer.from(base64Screenshot, 'base64')); // eslint-disable-line new-cap
 
   const percent = scaleFactor * 100;
@@ -68,7 +67,7 @@ export async function scaleImage(base64Screenshot, scaleFactor) {
  * @param  {string[][]} images array of images
  * @return {string}        screenshot
  */
-export async function mergeImages(images) {
+async function mergeImages(images) {
   const uuid = uuidv4();
   const dir = path.join(tmpDir, uuid);
 
@@ -129,3 +128,9 @@ export async function mergeImages(images) {
     throw e;
   }
 }
+
+module.exports = {
+  cropImage,
+  mergeImages,
+  scaleImage,
+};

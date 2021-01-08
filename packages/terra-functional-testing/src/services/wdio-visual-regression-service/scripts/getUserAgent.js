@@ -3,6 +3,8 @@
  *
  * @return {string} userAgent
  */
-export default function getUserAgent() {
+function getUserAgent() {
   return window.navigator.userAgent;
 }
+
+module.exports = getUserAgent;

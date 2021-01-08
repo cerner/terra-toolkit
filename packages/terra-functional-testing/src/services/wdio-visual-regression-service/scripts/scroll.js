@@ -5,6 +5,8 @@
  * @param {Number} y - The pixel along the vertical axis of the document.
  * @returns {undefined}
  */
-export default function scroll(x, y) {
+function scroll(x, y) {
   window.scrollTo(x, y);
 }
+
+module.exports = scroll;

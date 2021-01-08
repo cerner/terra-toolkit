@@ -1,12 +1,10 @@
 /* global browser */
-import _ from 'lodash';
-import { parse as parsePlatform } from 'platform';
-
-import { LocalCompare } from './compare';
-import makeElementScreenshot from './modules/makeElementScreenshot';
-
-import getUserAgent from './scripts/getUserAgent';
-import getTerraFormFactor from './modules/getTerraFormFactor';
+const _ = require('lodash');
+const { parse } = require('platform');
+const { LocalCompare } = require('./compare');
+const makeElementScreenshot = require('./modules/makeElementScreenshot');
+const getUserAgent = require('./scripts/getUserAgent');
+const getTerraFormFactor = require('./modules/getTerraFormFactor');
 
 class VisualRegressionLauncher {
   /**
@@ -31,7 +29,7 @@ class VisualRegressionLauncher {
    */
   async before() {
     const userAgent = await browser.execute(getUserAgent);
-    const { name, version, ua } = parsePlatform(userAgent);
+    const { name, version, ua } = parse(userAgent);
 
     this.context = {
       browserInfo: {

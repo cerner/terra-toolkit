@@ -3,8 +3,10 @@
  *
  * @returns {undefined}
  */
-export default function triggerResize() {
+function triggerResize() {
   const event = window.document.createEvent('UIEvents');
   event.initUIEvent('resize', true, false, window, 0);
   window.dispatchEvent(event);
 }
+
+module.exports = triggerResize;

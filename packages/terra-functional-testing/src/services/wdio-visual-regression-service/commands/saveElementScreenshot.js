@@ -1,6 +1,6 @@
-import _ from 'lodash';
-import makeElementScreenshot from '../modules/makeElementScreenshot';
-import saveBase64Image from '../utils/saveBase64Image';
+const _ = require('lodash');
+const makeElementScreenshot = require('../modules/makeElementScreenshot');
+const saveBase64Image = require('../utils/saveBase64Image');
 
 /**
  * Captures and can save a screenshot of a given element if the element is within the viewport dimensions.
@@ -16,7 +16,7 @@ import saveBase64Image from '../utils/saveBase64Image';
  * @returns {String} - The base64 string of the screenshot image that was captured.
  */
 // Note: function name must be async to signalize WebdriverIO that this function returns a promise
-export default async function async(fileName, elementSelector, options) {
+async function async(fileName, elementSelector, options) {
   /* eslint-disable no-param-reassign */
   if ((_.isString(fileName) || _.isArray(fileName)) && _.isPlainObject(elementSelector) && _.isUndefined(options)) {
     options = elementSelector;
@@ -42,3 +42,5 @@ export default async function async(fileName, elementSelector, options) {
 
   return base64Image;
 }
+
+module.exports = async;

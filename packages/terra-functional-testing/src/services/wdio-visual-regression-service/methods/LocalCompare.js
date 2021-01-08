@@ -1,13 +1,17 @@
-import fs from 'fs-extra';
-import resemble from 'node-resemble-js';
-import _ from 'lodash';
-import { Logger } from '@cerner/terra-cli';
-
-import BaseCompare from './BaseCompare';
+// import fs from 'fs-extra';
+// import resemble from 'node-resemble-js';
+// import _ from 'lodash';
+// import { Logger } from '@cerner/terra-cli';
+// import BaseCompare from './BaseCompare';
+const fs = require('fs-extra');
+const resemble = require('node-resemble-js');
+const _ = require('lodash');
+const { Logger } = require('@cerner/terra-cli');
+const BaseCompare = require('./BaseCompare');
 
 const logger = new Logger('[wdio-visual-regression-service:LocalCompare]');
 
-export default class LocalCompare extends BaseCompare {
+class LocalCompare extends BaseCompare {
   /**
    * @param {Object} options - Service configuration options.
    * @param {Object} options.baseScreenshotDir - The base screenshot directory path to save screenshot in.
@@ -132,3 +136,5 @@ export default class LocalCompare extends BaseCompare {
     });
   }
 }
+
+module.exports = LocalCompare;

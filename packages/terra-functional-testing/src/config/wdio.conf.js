@@ -7,6 +7,8 @@ const SeleniumDockerService = require('../services/wdio-selenium-docker-service'
 const TerraService = require('../services/wdio-terra-service');
 const AssetServerService = require('../services/wdio-asset-server-service');
 const AccessibilityReporter = require('../reporters/wdio-accessibility-reporter');
+const visualRegressionConfig = require('./visualRegressionConf');
+const VisualRegressionLauncher = require('../services/wdio-visual-regression-service');
 
 const {
   BROWSERS,
@@ -20,11 +22,16 @@ const {
   WDIO_EXTERNAL_PORT,
   WDIO_INTERNAL_PORT,
   WDIO_HOSTNAME,
+  WDIO_IGNORE_COMPARISON_RESULTS,
 } = process.env;
 
 // Convert BROWSERS into an array. When assigned to a process.env it is cast as a string.
 const browsers = BROWSERS ? BROWSERS.split(',') : undefined;
 const defaultWebpackPath = path.resolve(process.cwd(), 'webpack.config.js');
+
+//
+// Use to disable test assertions on the screenshot(s) comparison results. */
+visualRegressionConfig.ignoreComparisonResults = WDIO_IGNORE_COMPARISON_RESULTS === 'true';
 
 exports.config = {
   //
@@ -137,6 +144,13 @@ exports.config = {
       ...WDIO_INTERNAL_PORT && { port: WDIO_INTERNAL_PORT },
       ...fs.existsSync(defaultWebpackPath) && { webpackConfig: defaultWebpackPath },
     }],
+    [VisualRegressionLauncher, {
+      compare: visualRegressionConfig.compare,
+      viewportChangePause: visualRegressionConfig.viewportChangePause,
+      baseScreenshotDir: process.cwd(),
+      ...LOCALE && { locale: LOCALE },
+      ...THEME && { theme: THEME },
+    }],
     // Do not add the docker service if disabled.
     ...(WDIO_DISABLE_SELENIUM_SERVICE ? [] : [[SeleniumDockerService]]),
   ],
@@ -165,4 +179,6 @@ exports.config = {
     ui: 'bdd',
     timeout: 60000,
   },
+
+  visualRegression: visualRegressionConfig,
 };

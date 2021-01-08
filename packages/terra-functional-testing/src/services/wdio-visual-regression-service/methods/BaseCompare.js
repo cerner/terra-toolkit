@@ -1,10 +1,11 @@
 /* eslint-disable class-methods-use-this, no-unused-vars */
-import path from 'path';
+// import path from 'path';
+const path = require('path');
 
 /* Pattern to find the shortened test ID within braces. */
 const TEST_ID_REGEX = /\[([^)]+)\]/;
 
-export default class BaseCompare {
+class BaseCompare {
   /**
    * @param {Object} options - Service configuration options.
    * @param {Object} options.baseScreenshotDir - The base screenshot directory path to save screenshot in.
@@ -138,3 +139,5 @@ export default class BaseCompare {
     };
   }
 }
+
+module.exports = BaseCompare;
