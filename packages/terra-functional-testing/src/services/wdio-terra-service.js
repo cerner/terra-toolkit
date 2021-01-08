@@ -4,9 +4,9 @@ const { accessibility, element } = require('../commands/validates');
 const { toBeAccessible } = require('../commands/expect');
 const {
   describeViewports,
-  dispatchCustomEvent,
   getViewports,
   hideInputCaret,
+  setLocale,
   setViewport,
 } = require('../commands/utils');
 
@@ -59,7 +59,7 @@ class TerraService {
     global.expect.extend({ toBeAccessible });
 
     // Setup and expose global utility functions.
-    global.Terra.dispatchCustomEvent = dispatchCustomEvent;
+    global.Terra.setLocale = setLocale;
     global.Terra.viewports = getViewports;
     global.Terra.hideInputCaret = hideInputCaret;
 

@@ -18,4 +18,17 @@ const dispatchCustomEvent = (options) => {
   }
 };
 
-module.exports = dispatchCustomEvent;
+/**
+ * Utility to update terra-application's locale via custom event
+ * @param {string} locale - name of locale to update to
+ */
+const setLocale = (locale) => {
+  const event = {
+    name: 'applicationBase.testOverride',
+    metaData: { locale },
+  };
+
+  dispatchCustomEvent(event);
+};
+
+module.exports = setLocale;

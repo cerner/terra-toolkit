@@ -160,18 +160,13 @@ it('should hide the caret', () => {
 });
 ```
 
-## Dispatch Custom Event
+## Locale Update (Case by Case)
 
-### Terra.dispatchCustomEvent
-Fire a custom event with `metadata`. Use this to manually update a deployed terra application's locale, or fire updates for a custom event listener. This method accepts an object containing the event `name` (string) and event `metaData` (object).
+### Terra.setLocale
+Use this to manually update a terra application's locale on a case by case basis. Particularly useful for testing locale changes on a deployed application. This method accepts a string containing the `locale` (string) to update to.
 
 ```js
 it('should update an application's locale, () => {
-  const event = {
-    name: 'applicationBase.testOverride',
-    metaData: { locale: 'ar' }
-  };
-
-  Terra.dispatchCustomEvent(event);
+  Terra.setLocale('en');
 });
 ```
