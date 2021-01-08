@@ -1,6 +1,6 @@
 /* global $ */
 describe('dispatchCustomEvent', () => {
-  before(() => {
+  it('sends a custom event that injects a string into a paragraph', () => {
     browser.url('/dispatch-custom-event.html');
 
     /* Setup event listener that injects a string into a paragraph. */
@@ -14,15 +14,12 @@ describe('dispatchCustomEvent', () => {
 
       window.addEventListener('mockCustomEvent', eventListenerHandler);
     });
-  });
 
-  it('sends a custom event that injects a string into a paragraph', () => {
     const injectedString = 'mock';
     Terra.dispatchCustomEvent({
       name: 'mockCustomEvent',
       metaData: { injectedString },
     });
-    console.log(`custom-event-paragraph: ${JSON.stringify($('#custom-event-paragraph'))}`);
     const actualString = $('#custom-event-paragraph').getText();
     expect(actualString).toEqual(injectedString);
   });
