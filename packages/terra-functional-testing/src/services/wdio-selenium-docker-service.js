@@ -22,6 +22,7 @@ class SeleniumDockerService {
   async onPrepare(config) {
     this.host = config.hostname;
     this.port = config.port;
+    this.keepAliveSeleniumDockerService = config.keepAliveSeleniumDockerService;
 
     // Verify docker is installed before proceeding.
     try {
@@ -57,16 +58,19 @@ class SeleniumDockerService {
    * Deploys the docker stack. The previous stack will be removed if it exists.
    */
   async deployStack() {
-    // Remove the previous stack if one exists.
-    await this.removeStack();
+    const { stdout: stackInfo } = await exec('docker stack ls | grep wdio || true');
 
-    logger.info(`Deploying docker stack using selenium ${this.version}.`);
+    if (!stackInfo) {
+      logger.info(`Deploying docker stack using selenium ${this.version}.`);
 
-    const composeFilePath = path.resolve(__dirname, '../docker/docker-compose.yml');
+      const composeFilePath = path.resolve(__dirname, '../docker/docker-compose.yml');
 
-    await exec(`TERRA_SELENIUM_DOCKER_VERSION=${this.version} docker stack deploy -c ${composeFilePath} wdio`);
+      await exec(`TERRA_SELENIUM_DOCKER_VERSION=${this.version} docker stack deploy -c ${composeFilePath} wdio`);
 
-    await this.waitForNetworkReady();
+      await this.waitForServiceCreation();
+      await this.waitForNetworkCreation();
+      await this.waitForNetworkReady();
+    }
   }
 
   /**
@@ -118,6 +122,40 @@ class SeleniumDockerService {
 
       pollTimeout = setTimeout(poll, interval);
     });
+  }
+
+  /**
+   * Ensures the docker network has been created.
+   */
+  async waitForNetworkCreation() {
+    await this.pollCommand('docker network ls | grep wdio', (result) => (
+      new Promise((resolve, reject) => {
+        const { stdout: networkStatus } = result;
+
+        // Resolve if the wdio services are created.
+        if (networkStatus) {
+          resolve();
+        } else {
+          reject();
+        }
+      })));
+  }
+
+  /**
+   * Ensures the docker services have been created.
+   */
+  async waitForServiceCreation() {
+    await this.pollCommand('docker service ls | grep wdio', (result) => (
+      new Promise((resolve, reject) => {
+        const { stdout: serviceStatus } = result;
+
+        // Resolve if the wdio network is created.
+        if (serviceStatus) {
+          resolve();
+        } else {
+          reject();
+        }
+      })));
   }
 
   /**
@@ -179,7 +217,12 @@ class SeleniumDockerService {
    * Removes the docker stack and network.
    */
   async onComplete() {
-    await this.removeStack();
+    // When multiple test sessions are executed sequentially as specified in the WDIO script in the package.json file, the keepAliveSeleniumDockerService cli option
+    // is used to indicate not to remove the currently deployed docker stack upon test completion as it will be used again for the next test session.
+    // The docker stack is expected to be removed by the last test session when no keepAliveSeleniumDockerService cli option is specified.
+    if (!this.keepAliveSeleniumDockerService) {
+      await this.removeStack();
+    }
   }
 }
 
