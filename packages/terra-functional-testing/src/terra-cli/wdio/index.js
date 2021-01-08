@@ -22,6 +22,11 @@ const cli = {
         type: 'string',
         describe: 'The remote selenium grid address.',
       },
+      keepAliveSeleniumDockerService: {
+        type: 'boolean',
+        describe: 'Determines to keep the selenium docker service running upon test completion.',
+        default: false,
+      },
       locales: {
         type: 'array',
         describe: 'A list of language locales for the test run.',

@@ -18,19 +18,22 @@ A test runner is provided for local development and should be invoked using the 
 
 ### Options
 
-| Option Name | Type   | Required | Default                 | Description                                                                                   |
-|-------------|--------|----------|-------------------------|-----------------------------------------------------------------------------------------------|
-| browsers    | array  | false    |                         | A list of browsers for the test run.                                                          |
-| config      | string | false    |                         | A file path to the test runner configuration.                                                 |
-| formFactors | array  | false    |                         | A list of form factors for the test run. One of tiny, small, medium, large, huge, or enormous |
-| gridUrl     | string | false    |                         | The remote selenium grid address.                                                             |
-| locales     | array  | false    | ['en']                  | A list of language locales for the test run.                                                  |
-| themes      | array  | false    | ['terra-default-theme'] | A list of themes for the test run.                                                            |
-| hostname    | string | false    | localhost               | Automation driver host address.                                                               |
-| port        | number | false    | 4444                    | Automation driver port.                                                                       |
-| baseUrl     | string | false    |                         | The base url.                                                                                 |
-| suite       | array  | false    |                         | Overrides specs and runs only the defined suites.                                             |
-| spec        | array  | false    |                         | A list of spec file paths.                                                                    |
+| Option Name                    | Type    | Required | Default                 | Description                                                                                   |
+|--------------------------------|---------|----------|-------------------------|-----------------------------------------------------------------------------------------------|
+| browsers                       | array   | false    |                         | A list of browsers for the test run.                                                          |
+| config                         | string  | false    |                         | A file path to the test runner configuration.                                                 |
+| formFactors                    | array   | false    |                         | A list of form factors for the test run. One of tiny, small, medium, large, huge, or enormous |
+| gridUrl                        | string  | false    |                         | The remote selenium grid address.                                                             |
+| keepAliveSeleniumDockerService | boolean | false    | false                   | Determines to keep the selenium docker service running upon test completion.                  |
+| locales                        | array   | false    | ['en']                  | A list of language locales for the test run.                                                  |
+| themes                         | array   | false    | ['terra-default-theme'] | A list of themes for the test run.                                                            |
+| hostname                       | string  | false    | localhost               | Automation driver host address.                                                               |
+| port                           | number  | false    | 4444                    | Automation driver port.                                                                       |
+| baseUrl                        | string  | false    |                         | The base url.                                                                                 |
+| suite                          | array   | false    |                         | Overrides specs and runs only the defined suites.                                             |
+| spec                           | array   | false    |                         | A list of spec file paths.                                                                    |
+
+
 
 The following example will run the test suite a total of four times. Once for each permutation of the specified locales and form factors.
 
