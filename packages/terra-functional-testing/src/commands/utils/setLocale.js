@@ -9,7 +9,7 @@ const logger = new Logger({ prefix: '[terra-functional-testing:setLocale]' });
  */
 const setLocale = (locale) => {
   if (typeof locale === 'undefined' || !locale) {
-    logger.error(`Unsupported locale supplied to setLocale. "${locale}" is not a Terra supported viewport.`);
+    logger.error(`Unsupported locale supplied to setLocale. "${locale}" is not a valid locale.`);
     return;
   }
 
