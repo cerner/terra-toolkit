@@ -1,11 +1,11 @@
-const setLocale = require('../../../../src/commands/utils/setLocale');
+const setApplicationLocale = require('../../../../src/commands/utils/setApplicationLocale');
 const dispatchCustomEvent = require('../../../../src/commands/utils/dispatchCustomEvent');
 
 jest.mock('../../../../src/commands/utils/dispatchCustomEvent');
 
-describe('setLocale', () => {
+describe('setApplicationLocale', () => {
   it('executes dispatchCustomEvent with a specified locale', () => {
-    setLocale('ar');
+    setApplicationLocale('ar');
     const expectedEvent = {
       name: 'applicationBase.testOverride',
       metaData: { locale: 'ar' },

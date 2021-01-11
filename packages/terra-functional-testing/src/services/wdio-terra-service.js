@@ -6,7 +6,7 @@ const {
   describeViewports,
   getViewports,
   hideInputCaret,
-  setLocale,
+  setApplicationLocale,
   setViewport,
 } = require('../commands/utils');
 
@@ -59,7 +59,7 @@ class TerraService {
     global.expect.extend({ toBeAccessible });
 
     // Setup and expose global utility functions.
-    global.Terra.setLocale = setLocale;
+    global.Terra.setApplicationLocale = setApplicationLocale;
     global.Terra.viewports = getViewports;
     global.Terra.hideInputCaret = hideInputCaret;
 

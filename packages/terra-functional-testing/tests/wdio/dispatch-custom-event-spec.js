@@ -1,4 +1,6 @@
 /* global $ */
+const dispatchCustomEvent = require('../../src/commands/utils/dispatchCustomEvent');
+
 describe('dispatchCustomEvent', () => {
   it('sends a custom event that injects a string into a paragraph', () => {
     browser.url('/dispatch-custom-event.html');
@@ -16,7 +18,7 @@ describe('dispatchCustomEvent', () => {
     });
 
     const injectedString = 'mock';
-    Terra.dispatchCustomEvent({
+    dispatchCustomEvent({
       name: 'mockCustomEvent',
       metaData: { injectedString },
     });
