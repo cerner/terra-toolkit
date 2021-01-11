@@ -31,6 +31,7 @@ class TestRunner {
    * @param {Object} options - The test run options.
    * @param {string} options.config - A file path to the test runner configuration.
    * @param {string} options.formFactor - A form factor for the test run.
+   * @param {boolean} options.keepAliveSeleniumDockerService - Determines to keep the selenium docker service running upon test completion.
    * @param {string} options.locale - A language locale for the test run.
    * @param {string} options.theme - A theme for the test run.
    * @param {string} options.hostname - Automation driver host address.
@@ -49,7 +50,7 @@ class TestRunner {
         formFactor,
         locale,
         theme,
-        ...launcherOptions // hostname, port, baseUrl, suite, and spec
+        ...launcherOptions // hostname, port, baseUrl, suite, spec, and keepAliveSeleniumDockerService
       } = options;
 
       process.env.LOCALE = locale;
@@ -79,6 +80,7 @@ class TestRunner {
    * @param {string} options.config - A file path to the test runner configuration.
    * @param {string} options.formFactors - A list of form factors for the test run.
    * @param {string} options.gridUrl - The remote selenium grid address.
+   * @param {boolean} options.keepAliveSeleniumDockerService - Determines to keep the selenium docker service running upon test completion.
    * @param {string} options.locales - A list of language locales for the test run.
    * @param {string} options.themes - A list of themes for the test run.
    * @param {string} options.hostname - Automation driver host address.
@@ -95,7 +97,7 @@ class TestRunner {
       gridUrl,
       locales,
       themes,
-      ...launcherOptions // hostname, port, baseUrl, suite, and spec
+      ...launcherOptions // hostname, port, baseUrl, suite, spec, and keepAliveSeleniumDockerService
     } = options;
 
     if (browsers) {
