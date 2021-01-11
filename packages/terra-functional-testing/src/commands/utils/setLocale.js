@@ -1,28 +1,18 @@
-/**
- * Utility to send a custom event containing metadata.
- * @param {string} options.name - name of event
- * @param {object} options.metaData - metadata pertaining to event
- */
-const dispatchCustomEvent = (options) => {
-  const { name, metaData } = options;
-  try {
-    global.browser.execute((eventName, eventMetaData) => {
-      /* If IE support is removed, convert below to use event constructors. */
-      const event = document.createEvent('Event');
-      event.initEvent(eventName, true, true);
-      event.metaData = eventMetaData;
-      window.dispatchEvent(event);
-    }, name, metaData);
-  } catch (error) {
-    throw new Error(`dispatchCustomEvent failed: ${error}`);
-  }
-};
+const { Logger } = require('@cerner/terra-cli');
+const dispatchCustomEvent = require('./dispatchCustomEvent');
+
+const logger = new Logger({ prefix: '[terra-functional-testing:setLocale]' });
 
 /**
- * Utility to update terra-application's locale via custom event
+ * Updates terra-application's locale via custom event
  * @param {string} locale - name of locale to update to
  */
 const setLocale = (locale) => {
+  if (typeof locale === 'undefined' || !locale) {
+    logger.error(`Unsupported locale supplied to setLocale. "${locale}" is not a Terra supported viewport.`);
+    return;
+  }
+
   const event = {
     name: 'applicationBase.testOverride',
     metaData: { locale },
