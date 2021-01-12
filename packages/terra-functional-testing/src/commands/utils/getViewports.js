@@ -10,7 +10,11 @@ const ALL_VIEWPORTS = Object.keys(TERRA_VIEWPORTS);
 const getViewports = (...sizes) => {
   const viewports = sizes.length > 0 ? sizes : ALL_VIEWPORTS;
 
-  return viewports.map((name) => TERRA_VIEWPORTS[name]);
+  return viewports.map((name) => {
+    const { height, width } = TERRA_VIEWPORTS[name];
+
+    return { height, width, name };
+  });
 };
 
 module.exports = getViewports;
