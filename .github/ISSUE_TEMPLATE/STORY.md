@@ -1,6 +1,7 @@
 ---
 name: "Story"
 about: Document specifics of a story
+labels: Story
 title: ''
 assignees: ''
 
