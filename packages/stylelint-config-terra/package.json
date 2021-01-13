@@ -1,0 +1,54 @@
+{
+  "name": "@cerner/stylelint-config-terra",
+  "version": "4.0.0",
+  "description": "Terra Stylelint Shared Config",
+  "main": "stylelint.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cerner/terra-toolkit.git",
+    "directory": "packages/stylelint-config-terra"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "stylelint",
+    "stylelint-config",
+    "Cerner",
+    "Terra",
+    "autoprefixer",
+    "css",
+    "scss",
+    "lint",
+    "linter"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "author": "Cerner Corporation",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/cerner/terra-toolkit/issues"
+  },
+  "homepage": "https://github.com/cerner/terra-toolkit",
+  "files": [
+    "lib",
+    "stylelint.config.js"
+  ],
+  "scripts": {
+    "compile": "babel src --out-dir lib --copy-files --ignore src",
+    "lint": "eslint --ext .js,.jsx .",
+    "jest": "jest --config ../../jest.config.js"
+  },
+  "dependencies": {
+    "find-up": "^4.0.0",
+    "postcss-value-parser": "^4.0.0",
+    "stylelint-config-sass-guidelines": "^7.1.0",
+    "stylelint-no-unsupported-browser-features": "^4.1.0",
+    "stylelint-order": "^4.1.0",
+    "stylelint-scss": "^3.11.0"
+  },
+  "peerDependencies": {
+    "stylelint": "^13.0.0"
+  }
+}

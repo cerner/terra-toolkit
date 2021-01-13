@@ -4,7 +4,8 @@
   "version": "5.25.0",
   "description": "Utilities to help when developing terra modules.",
   "engines": {
-    "node": ">=8.10.0 <12"
+    "node": ">=10 <13",
+    "npm": ">=6.9.0"
   },
   "repository": {
     "type": "git",
@@ -79,7 +80,7 @@
     "test": "npm run lint && npm run jest && npm run mocha && npm run wdio",
     "wdio-site": "SITE=build npm run terra -- wdio",
     "wdio-webpack": "npm run terra -- wdio",
-    "wdio": "rm -rf build && npm run pack && npm run wdio-site && npm run wdio-webpack"
+    "wdio": "rm -rf build && npm run pack && SITE=build npm run terra -- wdio --keepAliveSeleniumDockerService true && npm run terra -- wdio"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
@@ -93,19 +94,25 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.10.5",
     "@octokit/core": "^3.1.2",
-    "browserslist-config-terra": "^1.2.0",
+    "babel-jest": "^24.8.0",
     "bufferutil": "^4.0.1",
     "commander": "^5.1.0",
     "core-js": "^3.1.3",
     "danger": "^9.1.0",
     "eslint": "^6.1.0",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.10.0",
+    "enzyme-to-json": "^3.3.5",
     "html-webpack-plugin": "^4.3.0",
     "jest": "^26.0.1",
     "lerna": "^3.20.2",
     "link-parent-bin": "^1.0.0",
+    "postcss": "^8.2.1",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
+    "react-intl-2": "npm:react-intl@^2.9.0",
     "regenerator-runtime": "^0.13.2",
+    "stylelint": "^13.0.0",
     "terra-dev-site": "^6.5.0",
     "utf-8-validate": "^5.0.2",
     "webpack": "^4.43.0",

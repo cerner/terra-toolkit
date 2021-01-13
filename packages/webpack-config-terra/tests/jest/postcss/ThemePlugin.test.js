@@ -22,7 +22,7 @@ describe('Theme Plugin', () => {
 
     const instance = ThemePlugin(config);
 
-    instance(mockRoot);
+    instance.Once(mockRoot);
 
     expect(mockRoot.walkRules).toHaveBeenCalledTimes(1);
     expect(mockNode.clone).toHaveBeenCalledTimes(1);
@@ -50,7 +50,7 @@ describe('Theme Plugin', () => {
 
     const instance = ThemePlugin(config);
 
-    instance(mockRoot);
+    instance.Once(mockRoot);
 
     expect(mockRoot.walkRules).toHaveBeenCalledTimes(1);
     expect(mockNode.clone).not.toHaveBeenCalled();
@@ -81,7 +81,7 @@ describe('Theme Plugin', () => {
 
     const instance = ThemePlugin(config);
 
-    instance(mockRoot);
+    instance.Once(mockRoot);
 
     expect(mockRoot.walkRules).toHaveBeenCalledTimes(1);
     expect(mockNode.clone).not.toHaveBeenCalled();
@@ -114,7 +114,7 @@ describe('Theme Plugin', () => {
 
     const instance = ThemePlugin(config);
 
-    instance(mockRoot);
+    instance.Once(mockRoot);
 
     expect(mockRoot.walkRules).toHaveBeenCalledTimes(1);
     expect(mockNode.clone).not.toHaveBeenCalled();

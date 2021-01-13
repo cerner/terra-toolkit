@@ -1,0 +1,38 @@
+import { Badge } from '@cerner/stylelint-config-terra/package.json?dev-site-package';
+
+<Badge />
+
+# stylelint-config-terra Upgrade Guide
+
+## Changes from stylelint-config-terra 3.x  to @cerner/stylelint-config-terra 4.0.0
+
+### Node 10
+
+Node 10 is not the minimum supported version. Upgrade to node 10.
+
+### Stylelint 13
+
+Stylelint version 13 is now required.
+
+### @cerner scoping
+
+The package is now scoped under @cerner.
+
+### Upgrading
+
+Upgrades are confined to the consuming packages package.json file.
+
+```diff
+{
+  "stylelint": {
+-   "extends": "stylelint-config-terra",
++   "extends": "@cerner/stylelint-config-terra",
+  },
+  "devDependencies": {
++   "@cerner/stylelint-config-terra": "^4.0.0",
+-   "stylelint": "^11.0.0",
++   "stylelint": "^13.0.0",
+-   "stylelint-config-terra": "^3.2.0",
+  }
+}
+```

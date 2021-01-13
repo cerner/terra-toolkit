@@ -22,6 +22,12 @@ module.exports = (env = {}) => {
         chunks: ['index'],
         filename: 'insufficient-color-contrast.html',
       }),
+      new HtmlWebpackPlugin({
+        lang: defaultLocale,
+        template: path.join(__dirname, 'packages', 'terra-functional-testing', 'tests', 'fixtures', 'dispatch-custom-event.html'),
+        chunks: ['index'],
+        filename: 'dispatch-custom-event.html',
+      }),
     ],
     output: {
       path: path.join(process.cwd(), 'build'),

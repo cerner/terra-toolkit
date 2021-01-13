@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Simple dependency tree should not output warnings if not strict 1`] = `
+"a
+  Multiple versions of a found:
+    2.0.0 ./~/b/~/a
+    2.5.0 ./~/c/~/a
+
+Check how you can resolve duplicate packages: 
+https://github.com/cerner/terra-toolkit/tree/main/packages/duplicate-package-checker-webpack-plugin#resolving-duplicate-packages-in-your-bundle
+"
+`;
+
+exports[`Simple dependency tree should output warnings if strict 1`] = `
+"a
+  Multiple versions of a found:
+    1.0.0 ./~/a
+    2.0.0 ./~/b/~/a
+    2.5.0 ./~/c/~/a
+"
+`;
+
+exports[`Simple dependency tree should output warnings if strict 2`] = `
+"b
+  Multiple versions of b found:
+    1.0.0 ./~/b
+    2.0.0 ./~/c/~/a/~/b
+
+Check how you can resolve duplicate packages: 
+https://github.com/cerner/terra-toolkit/tree/main/packages/duplicate-package-checker-webpack-plugin#resolving-duplicate-packages-in-your-bundle
+"
+`;

@@ -1,7 +1,7 @@
 const WdioTerraService = require('../../../src/services/wdio-terra-service');
-const { setViewport } = require('../../../src/commands/viewport-helpers');
+const { setViewport } = require('../../../src/commands/utils');
 
-jest.mock('../../../src/commands/viewport-helpers');
+jest.mock('../../../src/commands/utils');
 
 const mockIsExisting = jest.fn().mockImplementation(() => true);
 const element = {
@@ -23,6 +23,8 @@ global.browser = {
   },
 };
 
+global.Terra = {};
+
 describe('WDIO Terra Service', () => {
   it('should setup the global terra validates accessibility command', () => {
     const service = new WdioTerraService();
@@ -32,11 +34,15 @@ describe('WDIO Terra Service', () => {
     expect(global.Terra.validates.accessibility).toBeDefined();
   });
 
-  it('should setup the global terra axe configuration', () => {
+  it('should setup the global terra validates element command', () => {
     const service = new WdioTerraService();
 
     service.before({ browserName: 'chrome' });
 
+    expect(global.Terra.validates.element).toBeDefined();
+  });
+
+  it('should setup the global terra axe configuration', () => {
     const rules = {
       'scrollable-region-focusable': { enabled: false },
       'color-contrast': { enabled: true },
@@ -73,7 +79,6 @@ describe('WDIO Terra Service', () => {
 
     expect(setViewport).toBeCalled();
     expect(global.Terra.viewports).toBeDefined();
-    expect(global.Terra.describeViewports).toBeDefined();
     expect(global.Terra.hideInputCaret).toBeDefined();
   });
 
@@ -96,6 +101,26 @@ describe('WDIO Terra Service', () => {
     service.afterCommand('url', [], 0, undefined);
 
     expect(mockHideInputCaret).toHaveBeenCalledWith('body');
-    expect(mockFindElement).toHaveBeenCalledWith('[data-terra-dev-site-loading]');
+    expect(mockFindElement).toHaveBeenCalledWith('[data-terra-test-loading]');
+  });
+
+  it('should define commands in beforeSession', () => {
+    const service = new WdioTerraService({ formFactor: 'huge' });
+    service.beforeSession();
+    expect(global.Terra.describeViewports).toBeDefined();
+    expect(global.Terra.serviceOptions.formFactor).toBe('huge');
+  });
+
+  it('should set define all commands', () => {
+    const service = new WdioTerraService({ formFactor: 'huge' });
+
+    service.beforeSession();
+    service.before({ browserName: 'chrome' });
+
+    expect(setViewport).toBeCalled();
+    expect(global.Terra.viewports).toBeDefined();
+    expect(global.Terra.describeViewports).toBeDefined();
+    expect(global.Terra.hideInputCaret).toBeDefined();
+    expect(global.Terra.serviceOptions.formFactor).toBe('huge');
   });
 });

@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+## 1.4.0 - (January 5, 2021)
+
+* Changed
+  * Moved documentation to terra-toolkit-docs
+  * Opened the node version to allow versions higher than node 10.
+
+## 1.3.0 - (December 4, 2020)
+
 * Added
   * Added orion-full-stack-testing to allow list
 

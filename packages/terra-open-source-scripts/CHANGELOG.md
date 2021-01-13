@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+## 1.4.0 - (January 5, 2021)
+
+* Changed
+  * Opened the node version to allow versions higher than node 10.
+
+## 1.3.0 - (December 4, 2020)
+
+* Changed
+  * Minor dependency version bump
+
 ## 1.2.0 - (November 24, 2020)
 
 * Changed

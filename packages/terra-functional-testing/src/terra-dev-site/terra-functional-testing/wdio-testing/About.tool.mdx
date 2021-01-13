@@ -2,15 +2,62 @@
 
 The terra-functional-testing library is a utility for developing automation tests. The library extends the [WebdriverIO Framework](https://webdriver.io/) to facilitate automating accessibility and functional testing for Terra projects.
 
-## Viewports
+## Getting Started
 
-Tests can be executed in any of the following supported viewports:
-- 'tiny' - width: 470; height: 768
-- 'small' - width: 622; height: 768
-- 'medium' - width: 838; height: 768
-- 'large' - width: 1000; height: 768
-- 'huge' - width: 1300; height: 768
-- 'enormous' - width: 1500; height: 768
+To get started ensure [docker](https://www.docker.com/) has been installed. The terra-functional-testing library uses docker to setup and run tests in a containerized environment.
+
+Install with npm:
+
+```
+npm install --save-dev @cerner/terra-functional-testing
+```
+
+## Test Runner
+
+A test runner is provided for local development and should be invoked using the [terra-cli](dev_tools/terra-cli/terra-cli).
+
+### Options
+
+| Option Name                    | Type    | Required | Default                 | Description                                                                                   |
+|--------------------------------|---------|----------|-------------------------|-----------------------------------------------------------------------------------------------|
+| browsers                       | array   | false    |                         | A list of browsers for the test run.                                                          |
+| config                         | string  | false    |                         | A file path to the test runner configuration.                                                 |
+| formFactors                    | array   | false    |                         | A list of form factors for the test run. One of tiny, small, medium, large, huge, or enormous |
+| gridUrl                        | string  | false    |                         | The remote selenium grid address.                                                             |
+| keepAliveSeleniumDockerService | boolean | false    | false                   | Determines to keep the selenium docker service running upon test completion.                  |
+| locales                        | array   | false    | ['en']                  | A list of language locales for the test run.                                                  |
+| themes                         | array   | false    | ['terra-default-theme'] | A list of themes for the test run.                                                            |
+| hostname                       | string  | false    | localhost               | Automation driver host address.                                                               |
+| port                           | number  | false    | 4444                    | Automation driver port.                                                                       |
+| baseUrl                        | string  | false    |                         | The base url.                                                                                 |
+| suite                          | array   | false    |                         | Overrides specs and runs only the defined suites.                                             |
+| spec                           | array   | false    |                         | A list of spec file paths.                                                                    |
+
+
+
+The following example will run the test suite a total of four times. Once for each permutation of the specified locales and form factors.
+
+package.json
+```json
+{
+  "scripts": {
+    "wdio": "npm run terra -- wdio --locales en fr --formFactors tiny huge"
+  }
+}
+```
+
+## Form Factors
+
+Tests can be executed in any of the following supported form factors:
+
+| Size     | Width | Height |
+|----------|-------|--------|
+| tiny     | 470   | 768    |
+| small    | 622   | 768    |
+| medium   | 838   | 768    |
+| large    | 1000  | 768    |
+| huge     | 1300  | 768    |
+| enormous | 1500  | 768    |
 
 ### Terra.describeViewports
 
@@ -34,11 +81,11 @@ The testing library integrates [axe-core](https://github.com/dequelabs/axe-core)
 
 Axe will analyze the entire document when run and report accessibility violations. The following [tags](https://github.com/dequelabs/axe-core/blob/develop/doc/API.md#axe-core-tags) are enabled `wcag2a`, `wcag2aa`, `wcag21aa`, and `section508`. Each tag has an associated list of [rules](https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md) that will be checked against the document when axe is run.
 
-Please note that not all accessibility testing can be automated. Axe provides a lightweight static analysis of the entire document to catch common accessibility violations, but it is the responsibility of each team and application to do thorough accessibility and functional testing manually when necessary. 
+Please note that not all accessibility testing can be automated. Axe provides a lightweight static analysis of the entire document to catch common accessibility violations, but it is the responsibility of each team and application to do thorough accessibility and functional testing manually when necessary.
 
 ### Terra.validates.accessibility
 
-The accessibility assertion is available globally. Invoking the assertion will run accessibility checks on the entire document. If accessibility violations are found the test step will fail. It is recommended to run accessibility checks at various steps in a functional workflow to check for violations at different stages of the application.
+The accessibility assertion should only be invoked inside an `it` block. Invoking the assertion will run accessibility checks on the entire document. If accessibility violations are found the test step will fail. It is recommended to run accessibility checks at various steps in a functional workflow to check for violations at different stages of the application.
 
 ```js
 it('should report no accessibility violations', () => {
@@ -61,6 +108,43 @@ it('should override a rule configuration', () => {
 });
 ```
 
+## Validating element
+
+A screenshot can be captured at any given point in a test. The captured screenshot will be used as a reference artifact. Element validation is done by comparing the reference screenshot against the screenshot captured in future test runs at the same point in the test.
+
+### Terra.validates.element
+
+The element assertion should only be invoked inside an `it` block. Invoking the assertion will capture a screenshot at the time it is invoked. If no reference screenshot exists, one will be created in the `reference` folder with the given screenshot name. If such reference screenshot already exists, the new screenshot will be compared with the reference screenshot to validate visually that they are within the mismatch tolerance. If the mismatch exceeds the tolerance, the test step will fail and a screenshot showing the difference will be generated.
+
+A name must be provided to be used as the screenshot name. In addition to capturing a screenshot and performing screenshot validation, the assertion also runs accessibility checks on the entire document.
+
+```js
+it('should validate the element', () => {
+  browser.url('/testing/route/');
+
+  Terra.validates.element('screenshot-name'); // Fails if the new screenshot doesn't visually match the reference screenshot.
+});
+```
+
+The element assertion accepts an optional second argument with the following keys.
+  * `rules` - the accessibility [rules](https://github.com/dequelabs/axe-core/blob/master/doc/rule-descriptions.md) to use as overrides if necessary.
+  * `selector` - the element selector to use to capture the element for screenshot comparison. The default selector is `data-terra-test-content`.
+  * `misMatchTolerance` - the number between 0 and 100 that defines the degree of mismatch to consider two images as identical. Increasing this value will decrease level of test coverage.
+
+```js
+it('should validate the element with options', () => {
+  browser.url('/testing/route/');
+
+  const options = {
+    rules: { 'color-contrast': { enabled: false } },
+    selector: '#element-id',
+    misMatchTolerance: 10,
+  };
+
+  Terra.validates.element('screenshot-name', options);
+});
+```
+
 ## Input Caret
 
 ### Terra.hideInputCaret
@@ -73,5 +157,16 @@ it('should hide the caret', () => {
   const element = browser.element('#inputID');
 
   expect(element.getCssProperty('caretColor').value).to.equal('rgba(0,0,0,0)');
+});
+```
+
+## Locale Update (Case by Case)
+
+### Terra.setApplicationLocale
+Use `Terra.setApplicationLocale` to update a terra application's locale on a case by case basis; particularly useful for testing locale changes on a deployed application. This method accepts a string containing the `locale` to update to.
+
+```js
+it('should update an application's locale, () => {
+  Terra.setApplicationLocale('en');
 });
 ```

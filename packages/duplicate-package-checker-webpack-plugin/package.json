@@ -1,0 +1,47 @@
+{
+  "name": "@cerner/duplicate-package-checker-webpack-plugin",
+  "version": "2.1.0",
+  "description": "Webpack plugin that warns you when multiple versions of the same package exist in a build.",
+  "main": "lib/index.js",
+  "engines": {
+    "node": ">=10"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cerner/terra-toolkit.git",
+    "directory": "packages/duplicate-package-checker-webpack-plugin"
+  },
+  "keywords": [
+    "Cerner",
+    "Terra",
+    "duplicate-package-checker-webpack-plugin",
+    "webpack"
+  ],
+  "author": "Cerner Corporation",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/cerner/terra-toolkit/issues"
+  },
+  "scripts": {
+    "compile": "babel src --out-dir lib --copy-files --ignore src",
+    "jest": "jest --config ../../jest.config.js",
+    "lint": "eslint --ext .js,.jsx .",
+    "test": "npm run jest"
+  },
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "find-root": "^1.0.0",
+    "lodash.groupby": "^4.6.0",
+    "semver": "^7.3.4"
+  },
+  "peerDependencies": {
+    "webpack": "^4.30.0 || ^5.0.0"
+  },
+  "homepage": "https://github.com/cerner/terra-toolkit",
+  "files": [
+    "lib"
+  ]
+}
