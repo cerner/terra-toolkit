@@ -60,19 +60,21 @@ export default class LocalCompare extends BaseCompare {
 
       const isWithinMisMatchTolerance = misMatchPercentage <= misMatchTolerance;
       if (!isWithinMisMatchTolerance || !isSameDimensions) {
-        logger.verbose(`Image is different! ${misMatchPercentage}%`);
-        const png = compareData.getDiffImage().pack();
-        await this.writeDiff(png, diffPath);
+        if (this.updateScreenshots) {
+          logger.verbose('update screenshots override reference file');
+          await fs.outputFile(referencePath, base64Screenshot, 'base64');
+        } else {
+          logger.verbose(`Image is different! ${misMatchPercentage}%`);
+          const png = compareData.getDiffImage().pack();
+          await this.writeDiff(png, diffPath);
+        }
       } else {
         logger.verbose('Image is within tolerance or the same');
         // remove diff screenshot if it existed from a previous run
         await fs.remove(diffPath);
       }
 
-      if (this.updateScreenshots) {
-        logger.verbose('update screenshots override reference file');
-        await fs.outputFile(referencePath, base64Screenshot, 'base64');
-      }
+
       return this.createResultReport(referenceExists, misMatchPercentage, isWithinMisMatchTolerance, isSameDimensions);
     }
 
