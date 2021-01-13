@@ -17,7 +17,6 @@ export default class LocalCompare extends BaseCompare {
   constructor(options) {
     super(options);
 
-    this.updateScreenshots = options.updateScreenshots;
     this.ignoreComparison = 'ignore';
     this.misMatchTolerance = 0.01;
   }

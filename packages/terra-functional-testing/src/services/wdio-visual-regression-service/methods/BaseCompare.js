@@ -16,12 +16,14 @@ export default class BaseCompare {
       baseScreenshotDir,
       locale,
       theme,
+      updateScreenshots,
     } = options;
 
     // screenshot naming config
     this.baseScreenshotDir = baseScreenshotDir || process.cwd();
     this.locale = locale || 'en';
     this.theme = theme || 'terra-default-theme';
+    this.updateScreenshots = updateScreenshots;
   }
 
   /**
@@ -135,6 +137,7 @@ export default class BaseCompare {
       isWithinMisMatchTolerance,
       isSameDimensions,
       isExactSameImage: misMatchPercentage === 0 && isSameDimensions,
+      screenshotWasUpdated: this.updateScreenshots,
     };
   }
 }
