@@ -37,6 +37,11 @@ const cli = {
         describe: 'A list of themes for the test run.',
         default: ['terra-default-theme'],
       },
+      updateScreenshots: {
+        type: 'boolean',
+        describe: 'Whether or not the screenshots should be updated automatically.',
+        default: false,
+      },
       hostname: {
         type: 'string',
         describe: 'Automation driver host address.',

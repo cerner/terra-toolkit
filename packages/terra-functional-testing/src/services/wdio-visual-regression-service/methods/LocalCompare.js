@@ -17,6 +17,7 @@ export default class LocalCompare extends BaseCompare {
   constructor(options) {
     super(options);
 
+    this.updateScreenshots = options.updateScreenshots;
     this.ignoreComparison = 'ignore';
     this.misMatchTolerance = 0.01;
   }
@@ -47,7 +48,7 @@ export default class LocalCompare extends BaseCompare {
     const referenceExists = fs.existsSync(referencePath);
 
     if (referenceExists) {
-      logger.verbose('reference screenshot exists, compare it with the taken screenshot now');
+      logger.verbose('reference screenshot exists, compare it with the screenshot taken now');
       const latestScreenshot = new Buffer.from(base64Screenshot, 'base64'); // eslint-disable-line new-cap
 
       const ignoreComparison = _.get(context, 'options.ignoreComparison', this.ignoreComparison);
@@ -68,6 +69,10 @@ export default class LocalCompare extends BaseCompare {
         await fs.remove(diffPath);
       }
 
+      if (this.updateScreenshots) {
+        logger.verbose('update screenshots override reference file');
+        await fs.outputFile(referencePath, base64Screenshot, 'base64');
+      }
       return this.createResultReport(referenceExists, misMatchPercentage, isWithinMisMatchTolerance, isSameDimensions);
     }
 

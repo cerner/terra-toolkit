@@ -83,6 +83,7 @@ class TestRunner {
    * @param {boolean} options.keepAliveSeleniumDockerService - Determines to keep the selenium docker service running upon test completion.
    * @param {string} options.locales - A list of language locales for the test run.
    * @param {string} options.themes - A list of themes for the test run.
+   * @param {string} options.updateScreenshots - Whether or not the screenshots should be updated automatically.
    * @param {string} options.hostname - Automation driver host address.
    * @param {number} options.port - Automation driver port.
    * @param {string} options.baseUrl - The base url.
@@ -97,6 +98,7 @@ class TestRunner {
       gridUrl,
       locales,
       themes,
+      updateScreenshots,
       ...launcherOptions // hostname, port, baseUrl, suite, spec, and keepAliveSeleniumDockerService
     } = options;
 
@@ -106,6 +108,10 @@ class TestRunner {
 
     if (gridUrl) {
       process.env.SELENIUM_GRID_URL = gridUrl;
+    }
+
+    if (updateScreenshots) {
+      process.env.UPDATE_WDIO_SCREENSHOTS = updateScreenshots;
     }
 
     /**

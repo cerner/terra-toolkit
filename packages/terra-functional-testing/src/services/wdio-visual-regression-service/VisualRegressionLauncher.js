@@ -14,6 +14,7 @@ class VisualRegressionLauncher {
    * @param {Object} options.baseScreenshotDir - The base screenshot directory path to save screenshot in.
    * @param {Object} options.locale - The locale being tested.
    * @param {Object} options.theme - The theme being tested.
+   * @param {Object} options.updateScreenshots - The theme being tested.
    */
   constructor(options) {
     this.compare = new LocalCompare(options);
