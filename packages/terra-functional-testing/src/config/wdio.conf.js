@@ -7,6 +7,7 @@ const SeleniumDockerService = require('../services/wdio-selenium-docker-service'
 const TerraService = require('../services/wdio-terra-service');
 const AssetServerService = require('../services/wdio-asset-server-service');
 const AccessibilityReporter = require('../reporters/wdio-accessibility-reporter');
+const TestService = require('../services/wdio-test-service');
 
 const {
   BROWSERS,
@@ -139,6 +140,7 @@ exports.config = {
     }],
     // Do not add the docker service if disabled.
     ...(WDIO_DISABLE_SELENIUM_SERVICE ? [] : [[SeleniumDockerService]]),
+    [TestService],
   ],
   // Framework you want to run your specs with.
   // The following are supported: Mocha, Jasmine, and Cucumber
