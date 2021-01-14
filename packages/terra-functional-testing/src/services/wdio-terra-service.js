@@ -8,6 +8,7 @@ const {
   hideInputCaret,
   setApplicationLocale,
   setViewport,
+  saveScreenshot,
 } = require('../commands/utils');
 
 class TerraService {
@@ -62,6 +63,7 @@ class TerraService {
     global.Terra.setApplicationLocale = setApplicationLocale;
     global.Terra.viewports = getViewports;
     global.Terra.hideInputCaret = hideInputCaret;
+    global.Terra.saveScreenshot = saveScreenshot;
 
     // Setup and expose the validates utility functions.
     global.Terra.validates = { accessibility, element };

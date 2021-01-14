@@ -1,12 +1,14 @@
+const { setApplicationLocale } = require('../commands/utils');
+
 class TestService {
   constructor(options = {}) {
     this.serviceOptions = options;
   }
 
   afterCommand(commandName, _args, _result, error) {
-    console.log(`Terra global: ${JSON.stringify(global.Terra)}`);
+    console.log(`Terra setApplicationLocale: ${JSON.stringify(global.Terra.setApplicationLocale)}`);
     if ((commandName === 'url' || commandName === 'refresh') && !error) {
-      global.Terra.setApplicationLocale('ar');
+      setApplicationLocale('ar');
     }
   }
 }
