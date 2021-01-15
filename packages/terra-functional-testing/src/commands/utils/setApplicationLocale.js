@@ -18,6 +18,7 @@ const setApplicationLocale = (locale) => {
     metaData: { locale },
   };
 
+  console.log(`call setApplicationLocale. locale : ${locale}`);
   dispatchCustomEvent(event);
 };
 

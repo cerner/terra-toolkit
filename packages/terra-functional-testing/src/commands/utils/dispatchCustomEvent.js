@@ -5,6 +5,7 @@
  */
 const dispatchCustomEvent = (options) => {
   const { name, metaData } = options;
+  console.log(`dispatchCustomEvent. name: ${name} metaData: ${JSON.stringify(metaData)}`);
   try {
     global.browser.execute(function dispatch (eventName, eventMetaData) {
       /* If IE support is removed, convert below to use event constructors. */
