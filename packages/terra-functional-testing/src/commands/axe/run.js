@@ -7,7 +7,8 @@ const injectAxe = require('./inject');
  * @param {Array} options.rules - The rule overrides.
  */
 const runAxe = (options = {}) => {
-  const isAxeUnavailable = browser.execute(() => window.axe === undefined);
+  // eslint-disable-next-line prefer-arrow-callback
+  const isAxeUnavailable = browser.execute(function getAxeStatus() { return window.axe === undefined; });
 
   // Inject axe-core onto the page if it has not already been initialized.
   if (isAxeUnavailable) {
