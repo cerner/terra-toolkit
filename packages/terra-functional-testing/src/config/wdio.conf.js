@@ -116,7 +116,7 @@ exports.config = {
   //
   // Default timeout in milliseconds for request
   // if browser driver or grid doesn't send response
-  connectionRetryTimeout: 120000,
+  connectionRetryTimeout: 180000,
   //
   // Default request retries count
   connectionRetryCount: 3,
@@ -139,7 +139,7 @@ exports.config = {
       ...fs.existsSync(defaultWebpackPath) && { webpackConfig: defaultWebpackPath },
     }],
     // Do not add the docker service if disabled.
-    ...(WDIO_DISABLE_SELENIUM_SERVICE ? [] : [[SeleniumDockerService]]),
+    ...(WDIO_DISABLE_SELENIUM_SERVICE || SELENIUM_GRID_URL ? [] : [[SeleniumDockerService]]),
     [TestService],
   ],
   // Framework you want to run your specs with.
