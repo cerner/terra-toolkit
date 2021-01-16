@@ -27,7 +27,7 @@ class VisualRegressionLauncher {
    * @param {[type]} specs
    * @return null
    */
-  async before() {
+  async before(capabilities) {
     const userAgent = await browser.execute(getUserAgent);
     const { name, version, ua } = parse(userAgent);
 
@@ -37,6 +37,7 @@ class VisualRegressionLauncher {
         version,
         userAgent: ua,
       },
+      desiredCapabilities: capabilities,
     };
 
     browser.addCommand('checkElement', this.wrapCommand(browser, makeElementScreenshot));
@@ -102,11 +103,13 @@ class VisualRegressionLauncher {
 
       const screenshotContext = {
         browserInfo: this.context.browserInfo,
+        desiredCapabilities: this.context.desiredCapabilities,
         suite: this.currentSuite,
         test: this.currentTest,
         meta: {
           currentFormFactor,
         },
+        options,
       };
 
       const screenshotContextCleaned = _.pickBy(screenshotContext, _.identity);

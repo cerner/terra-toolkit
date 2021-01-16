@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
 const expect = require('expect');
 const { accessibility, element, screenshot } = require('../commands/validates');
-const { toBeAccessible } = require('../commands/expect');
+const { toBeAccessible, toMatchReference } = require('../commands/expect');
 const {
   describeViewports,
   getViewports,
@@ -19,11 +19,12 @@ class TerraService {
    * @param {object} config - The WebdriverIO configuration object.
    */
   onPrepare(config) {
-    const { serviceOptions } = config;
+    const { serviceOptions, ignoreComparisonResults } = config;
 
     this.serviceOptions = {
       theme: 'terra-default-theme',
       selector: '[data-terra-test-content] *:first-child',
+      ignoreComparisonResults,
       ...this.serviceOptions,
       ...serviceOptions,
     };
@@ -43,6 +44,7 @@ class TerraService {
      * Reference: https://github.com/webdriverio/webdriverio/issues/6119
      */
     global.Terra.describeViewports = describeViewports;
+    global.Terra.viewports = getViewports;
 
     // Add the service options to the global.
     global.Terra.serviceOptions = this.serviceOptions;
@@ -55,10 +57,9 @@ class TerraService {
   before(capabilities) {
     // Set Jest's expect module as the global assertion framework.
     global.expect = expect;
-    global.expect.extend({ toBeAccessible });
+    global.expect.extend({ toBeAccessible, toMatchReference });
 
     // Setup and expose global utility functions.
-    global.Terra.viewports = getViewports;
     global.Terra.hideInputCaret = hideInputCaret;
 
     // Setup and expose the validates utility functions.

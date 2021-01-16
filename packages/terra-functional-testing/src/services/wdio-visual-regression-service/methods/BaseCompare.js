@@ -80,15 +80,16 @@ class BaseCompare {
    * Determines the directories to save the screenshot to.
    *
    * @param {Object} context - Compare context provided by VisualRegressionLauncher.
-   * @param {Object} context.browserInfo - Contains the browser's name, version, userAgent.
+   * @param {Object} context.desiredCapabilities - Contains the browser's name and capabilities.
    * @param {Object} context.meta - Contains the currentFormFactor as meta data to use.
    * @returns {String} - The screenshot directory path.
    */
   getScreenshotDir(context) {
-    const { browserInfo, meta } = context;
+    const { desiredCapabilities, meta } = context;
+    const { browserName } = desiredCapabilities;
 
     const formFactor = meta.currentFormFactor;
-    const testForm = `${browserInfo.name}_${formFactor}`;
+    const testForm = `${browserName}_${formFactor}`;
     const testSpec = path.parse(context.test.file).name;
 
     return path.join(this.theme, this.locale, testForm, testSpec);

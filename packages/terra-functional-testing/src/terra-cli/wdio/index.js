@@ -22,6 +22,11 @@ const cli = {
         type: 'string',
         describe: 'The remote selenium grid address.',
       },
+      ignoreComparisonResults: {
+        type: 'boolean',
+        describe: 'Whether or not to disable test assertions on the screenshot comparison result.',
+        default: false,
+      },
       keepAliveSeleniumDockerService: {
         type: 'boolean',
         describe: 'Determines to keep the selenium docker service running upon test completion.',

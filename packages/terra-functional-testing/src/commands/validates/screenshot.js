@@ -17,19 +17,32 @@ const screenshot = (testName, options = {}) => {
   }
 
   const { selector, viewports } = options;
+  const wrappedOptions = {
+    name: testName,
+    ...options,
+  };
 
-  const screenshots = global.browser.checkElement(selector || global.Terra.serviceOptions.selector, options);
+  const screenshotResult = global.browser.checkElement(selector || global.Terra.serviceOptions.selector, wrappedOptions);
+
+  /*
+  // TODO: Need to discuss if we want to continue to support passing down viewports too Terra.validate.screenshot.
+  // If so, we need checkElements to return an array of screenshots for each passed in viewport.
 
   if (viewports && viewports.length) {
-    global.expect(screenshots, 'the number of screenshot results to match the number of specified viewports').to.have.lengthOf(viewports.length);
+    global.expect(screenshotResults.length).toEqual(viewports.length);
 
-    // add viewport name for meaningful results message if a failure occurs
+    // Add viewport name for meaningful results message if a failure occurs
     viewports.forEach((viewport, index) => {
-      screenshots[index].viewport = viewport.name; // TODO: Need to add `name` to viewport
+      screenshotResults[index].viewport = viewport.name;
     });
   }
+  */
 
-  global.expect(screenshots).to.matchReference(); // TODO: Add chai
+  if (viewports) {
+    screenshotResult.viewport = viewports.name;
+  }
+
+  global.expect(screenshotResult).toMatchReference();
 };
 
 module.exports = screenshot;

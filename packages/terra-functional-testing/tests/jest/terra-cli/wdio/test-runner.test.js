@@ -130,6 +130,7 @@ describe('Test Runner', () => {
         baseUrl: '/',
         suite: 'test-suite',
         spec: '/spec/',
+        ignoreComparisonResults: true,
         keepAliveSeleniumDockerService: true,
       });
 
@@ -142,6 +143,7 @@ describe('Test Runner', () => {
         baseUrl: '/',
         suite: 'test-suite',
         spec: '/spec/',
+        ignoreComparisonResults: true,
         keepAliveSeleniumDockerService: true,
       });
     });
