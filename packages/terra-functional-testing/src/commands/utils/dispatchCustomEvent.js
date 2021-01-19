@@ -8,13 +8,12 @@ const dispatchCustomEvent = (options) => {
   console.log(`dispatchCustomEvent. name: ${name} metaData: ${JSON.stringify(metaData)}`);
   try {
     // eslint-disable-next-line prefer-arrow-callback
-    global.browser.executeAsync(function dispatchEvent(eventName, eventMetaData, done) {
+    global.browser.execute(function dispatchEvent(eventName, eventMetaData) {
       /* If IE support is removed, convert below to use event constructors. */
       const event = document.createEvent('Event');
       event.initEvent(eventName, true, true);
       event.metaData = eventMetaData;
       window.dispatchEvent(event);
-      done(event);
     }, name, metaData);
   } catch (error) {
     throw new Error(`dispatchCustomEvent failed: ${error}`);
