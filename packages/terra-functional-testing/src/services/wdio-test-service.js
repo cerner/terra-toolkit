@@ -7,7 +7,7 @@ class TestService {
 
   afterCommand(commandName, _args, _result, error) {
     if ((commandName === 'url' || commandName === 'refresh') && !error) {
-      // Terra.setApplicationLocale('de');
+      Terra.setApplicationLocale('de');
     }
   }
 }

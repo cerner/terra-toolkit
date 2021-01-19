@@ -111,8 +111,6 @@ class TerraService {
             interval: 100,
           });
         }
-
-        Terra.setApplicationLocale('de');
       } catch (err) {
         // Intentionally blank. If this fails we don't want to warn because the user can't fix the issue.
       }
