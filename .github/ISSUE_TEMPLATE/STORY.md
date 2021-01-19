@@ -1,5 +1,5 @@
 ---
-name: "Story"
+name: "\U0001F4D6 Story"
 about: Document specifics of a story
 labels: Story
 title: ''
