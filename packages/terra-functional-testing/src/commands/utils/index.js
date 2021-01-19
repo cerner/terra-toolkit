@@ -3,7 +3,6 @@ const getViewports = require('./getViewports');
 const hideInputCaret = require('./hideInputCaret');
 const setApplicationLocale = require('./setApplicationLocale');
 const setViewport = require('./setViewport');
-const saveScreenshot = require('./saveScreenshot');
 
 module.exports = {
   describeViewports,
@@ -11,5 +10,4 @@ module.exports = {
   hideInputCaret,
   setApplicationLocale,
   setViewport,
-  saveScreenshot,
 };
