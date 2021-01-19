@@ -7,7 +7,7 @@ describe('dispatchCustomEvent', () => {
 
     /* Setup event listener that injects a string into a paragraph. */
     // eslint-disable-next-line prefer-arrow-callback
-    browser.execute(function addParagraphEventListener () {
+    browser.execute(function addParagraphEventListener() {
       const eventListenerHandler = (event) => {
         const paragraph = document.getElementById('custom-event-paragraph');
         const { metaData } = event;
