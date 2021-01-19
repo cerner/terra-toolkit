@@ -1,5 +1,5 @@
-const AccessibilityReporter = require('../../../src/reporters/wdio-accessibility-reporter');
-const testData1 = require('../../fixtures/reporters/test-data-1.json');
+const AccessibilityReporter = require('../../../../src/reporters/accessibility-reporter/wdio-accessibility-reporter');
+const testData1 = require('../../../fixtures/reporters/test-data-1.json');
 
 jest.mock('chalk', () => ({
   yellow: (string) => string,
