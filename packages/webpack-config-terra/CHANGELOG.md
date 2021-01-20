@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Added
+  * Added `browser` to webpack module list.
+
 ## 1.2.0 - (January 5, 2021)
 
 * Changed
