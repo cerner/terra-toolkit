@@ -103,7 +103,7 @@ exports.config = {
   // The hostname of the driver server.
   hostname: SELENIUM_GRID_URL || WDIO_HOSTNAME || 'localhost',
   // The port the driver server is on. The selenium grid uses port 80.
-  port: SELENIUM_GRID_URL ? 80 : 4444,
+  port: 4444,
   //
   // Set a base URL in order to shorten url command calls. If your `url` parameter starts
   // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
