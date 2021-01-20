@@ -1,0 +1,37 @@
+{
+  "name": "@cerner/package-json-lint",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Package JSON linter",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cerner/terra-toolkit.git",
+    "directory": "packages/package-json-lint"
+  },
+  "keywords": [
+    "lint",
+    "package.json",
+    "package-json-lint",
+    "Cerner"
+  ],
+  "author": "Cerner Corporation",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/cerner/terra-toolkit/issues"
+  },
+  "engines": {
+    "node": "^10.13.0"
+  },
+  "homepage": "https://github.com/cerner/terra-toolkit",
+  "scripts": {
+    "compile": "babel src --out-dir lib --copy-files",
+    "jest": "jest --config ../../jest.config.js",
+    "lint": "eslint --ext .js,.jsx .",
+    "test": "npm run jest"
+  },
+  "dependencies": {
+  }
+}
