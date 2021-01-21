@@ -1,6 +1,6 @@
 # Spec Reporter
 
-The Spec Reporter writes test results to a JSON file.
+The Spec Reporter writes test results to file in JSON format.
 
 ## Installation
 
@@ -16,24 +16,28 @@ To use the reporter add it to the reporters array in the `wdio.conf.js` file.
 
 Note: The spec reporter is enabled by default in the `terra-functional-testing` wdio configuration. If you are using/extending the default `wdio.conf.js` it is not necessary to reimport the reporter.
 
+Configuration options are defined using the `reporterOptions` key in the `wdio.conf.js`.
+
 ```js
 // wdio.conf.js
 const { SpecReporter } = require('@cerner/terra-functional-testing/lib/reporters/spec-reporter');
 
 export.config = {
-    // ...
-    reporters: [SpecReporter],
-    // ...
+  // ...
+  reporters: [SpecReporter],
+
+  reporterOptions: {
+    // Reporter override options go here.
+  }
+  // ...
 };
 ```
 
 ## Options
 
-Reporter options are defined using the `reporterOptions` key in the `wdio.conf.js`.
-
 ### outputDir
 
-A path to the output directory the results files will be written to.
+A path to the output directory the results files will be written.
 
 Type: `string`
 
@@ -48,12 +52,119 @@ Example:
 const { SpecReporter } = require('@cerner/terra-functional-testing/lib/reporters/spec-reporter');
 
 export.config = {
-    // ...
-    reporters: [SpecReporter],
+  // ...
+  reporters: [SpecReporter],
 
-    reporterOptions: {
-      outputDir: 'reports'
-    }
-    // ...
+  reporterOptions: {
+    outputDir: 'reports'
+  }
+  // ...
+};
+```
+
+## Result Files
+
+The spec reporter generates an output file for each individual spec file. This is due to changes in WebDriverIO that create a reporter instance per spec file.
+
+The spec reporter offers utilities for merging multiple result files into a single file and cleaning up individual files. Merged result files will be generated using the following format:
+
+`results-<locale>-<theme>-<form-factor>-<browser>-<repo-name>.json`
+
+## Merge Results
+
+Upon completion of the test run the result files can be merged together using the `mergeResults` function exported by the reporter.
+
+```js
+// wdio.conf.js
+const { SpecReporter, mergeResults } = require('@cerner/terra-functional-testing/lib/reporters/spec-reporter');
+
+export.config = {
+  // ...
+  reporters: [SpecReporter],
+  // ...
+  onComplete() {
+    mergeResults();
+  }
+  // ...
+};
+```
+
+## Options
+
+### outputDir
+
+A path to the output directory the results files will be written. This should match the output directory specified for the reporter.
+
+Type: `string`
+
+Required: `false`
+
+Default: The default output directory is `/test(s)/wdio/reports`.
+
+Example:
+
+```js
+// wdio.conf.js
+const { SpecReporter, mergeResults } = require('@cerner/terra-functional-testing/lib/reporters/spec-reporter');
+
+export.config = {
+  // ...
+  onComplete() {
+    // Specify an output directory. 
+    // The output directory should include the previously generated result files.
+    mergeResults('/reports/');
+  }
+  // ...
+};
+```
+
+### options
+
+An object that identifies the attributes of the test run. These options will be used to uniquely identify the merged output file. Available options are `theme`, `locale`, and `formFactor`.
+
+Type: `Object`
+
+Required: `false`
+
+Default: `undefined`
+
+Example:
+
+```js
+// wdio.conf.js
+const { SpecReporter, mergeResults } = require('@cerner/terra-functional-testing/lib/reporters/spec-reporter');
+
+export.config = {
+  // ...
+  onComplete() {
+    const options = {
+      locale: 'en', 
+      formFactor: 'huge' 
+      theme: 'terra-default-theme', 
+    };
+
+    mergeResults('/reports/', options);
+  }
+  // ...
+};
+```
+
+## Clean Results
+
+To clean individual result files the spec reporter exports a `cleanResults` function. This function will remove all individual spec result files, but will not remove the merged output files.
+
+```js
+// wdio.conf.js
+const { SpecReporter, cleanResults } = require('@cerner/terra-functional-testing/lib/reporters/spec-reporter');
+
+export.config = {
+  // ...
+  reporters: [SpecReporter],
+  // ...
+  onPrepare() {
+    // Remove previous result files.
+    cleanResults('/results/');
+  }
+  // ...
 };
 ```
