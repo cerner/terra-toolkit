@@ -1,5 +1,4 @@
 /* eslint-disable class-methods-use-this, no-unused-vars */
-// import path from 'path';
 const path = require('path');
 
 /* Pattern to find the shortened test ID within braces. */

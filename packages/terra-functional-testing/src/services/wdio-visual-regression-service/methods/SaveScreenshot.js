@@ -1,6 +1,3 @@
-// import fs from 'fs-extra';
-// import { Logger } from '@cerner/terra-cli';
-// import BaseCompare from './BaseCompare';
 const fs = require('fs-extra');
 const { Logger } = require('@cerner/terra-cli');
 const BaseCompare = require('./BaseCompare');

@@ -1,8 +1,3 @@
-// import fs from 'fs-extra';
-// import resemble from 'node-resemble-js';
-// import _ from 'lodash';
-// import { Logger } from '@cerner/terra-cli';
-// import BaseCompare from './BaseCompare';
 const fs = require('fs-extra');
 const resemble = require('node-resemble-js');
 const _ = require('lodash');
