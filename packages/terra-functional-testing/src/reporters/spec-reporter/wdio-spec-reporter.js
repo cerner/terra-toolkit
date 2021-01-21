@@ -9,21 +9,11 @@ class SpecReporter extends WDIOReporter {
    * @param {RunnerStats} runner - The test runner stats object.
    */
   onRunnerEnd(runner) {
-    const { cid, config } = runner;
-    const { reporterOptions = {} } = config;
-    const { outputDir = getOutputDir() } = reporterOptions;
-
     // The root suite is always at index 0 and is guaranteed to exist.
     const rootSuite = this.currentSuites[0];
     const results = SpecReporter.formatResults(rootSuite, runner);
-    const fileName = path.join(outputDir, `wdio-spec-results-${cid}.json`);
 
-    // Create the output directory if it does not already exist.
-    if (!fs.existsSync(outputDir)) {
-      fs.mkdirSync(outputDir, { recursive: true });
-    }
-
-    fs.writeFileSync(fileName, JSON.stringify(results, null, 2));
+    SpecReporter.writeResults(runner, results);
   }
 
   /**
@@ -132,6 +122,26 @@ class SpecReporter extends WDIOReporter {
     }
 
     return process.cwd().split(path.sep).pop();
+  }
+
+  /**
+   * Writes the spec results to file.
+   * @param {RunnerStats} runner - The test runner stats object.
+   * @param {Object} results - A formatted results object for a spec file.
+   */
+  static writeResults(runner, results) {
+    const { cid, config } = runner;
+    const { reporterOptions = {} } = config;
+    const { outputDir = getOutputDir() } = reporterOptions;
+
+    // Create the output directory if it does not already exist.
+    if (!fs.existsSync(outputDir)) {
+      fs.mkdirSync(outputDir, { recursive: true });
+    }
+
+    const fileName = path.join(outputDir, `wdio-spec-results-${cid}.json`);
+
+    fs.writeFileSync(fileName, JSON.stringify(results, null, 2));
   }
 }
 

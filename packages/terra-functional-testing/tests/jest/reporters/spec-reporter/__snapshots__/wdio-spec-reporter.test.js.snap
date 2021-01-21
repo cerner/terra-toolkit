@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Spec Reporter formatResults should format the suite results 1`] = `
+Object {
+  "capabilities": Object {
+    "browserName": undefined,
+    "platform": undefined,
+    "version": undefined,
+  },
+  "end": undefined,
+  "packageName": "terra-toolkit",
+  "spec": "/mock/spec",
+  "start": undefined,
+  "suites": Array [
+    Object {
+      "duration": undefined,
+      "end": "2020-10-27T01:14:33.644Z",
+      "fullTitle": "Example Describe 1",
+      "start": "2020-10-27T01:14:33.430Z",
+      "suites": Array [
+        Object {
+          "duration": undefined,
+          "end": "2020-10-27T01:14:33.643Z",
+          "fullTitle": "Example Describe 1 Example Describe 2",
+          "start": "2020-10-27T01:14:33.430Z",
+          "suites": Array [],
+          "tests": Array [
+            Object {
+              "duration": undefined,
+              "end": "2020-10-27T01:14:33.532Z",
+              "error": undefined,
+              "fullTitle": "Example Describe 1 Example Describe 2 example it 1",
+              "start": "2020-10-27T01:14:33.431Z",
+              "state": "passed",
+              "title": "example it 1",
+            },
+            Object {
+              "duration": undefined,
+              "end": "2020-10-27T01:14:33.585Z",
+              "error": undefined,
+              "fullTitle": "Example Describe 1 Example Describe 2 example it 2",
+              "start": "2020-10-27T01:14:33.532Z",
+              "state": "passed",
+              "title": "example it 2",
+            },
+            Object {
+              "duration": undefined,
+              "end": "2020-10-27T01:14:33.643Z",
+              "error": undefined,
+              "fullTitle": "Example Describe 1 Example Describe 2 example it 3",
+              "start": "2020-10-27T01:14:33.586Z",
+              "state": "passed",
+              "title": "example it 3",
+            },
+          ],
+          "title": "Example Describe 2",
+        },
+      ],
+      "tests": Array [],
+      "title": "Example Describe 1",
+    },
+  ],
+  "tests": Array [],
+}
+`;
+
+exports[`Spec Reporter formatTests should format the test results 1`] = `
+Array [
+  Object {
+    "duration": undefined,
+    "end": "2020-10-27T01:14:33.532Z",
+    "error": undefined,
+    "fullTitle": "Example Describe 1 Example Describe 2 example it 1",
+    "start": "2020-10-27T01:14:33.431Z",
+    "state": "passed",
+    "title": "example it 1",
+  },
+  Object {
+    "duration": undefined,
+    "end": "2020-10-27T01:14:33.585Z",
+    "error": undefined,
+    "fullTitle": "Example Describe 1 Example Describe 2 example it 2",
+    "start": "2020-10-27T01:14:33.532Z",
+    "state": "passed",
+    "title": "example it 2",
+  },
+  Object {
+    "duration": undefined,
+    "end": "2020-10-27T01:14:33.643Z",
+    "error": undefined,
+    "fullTitle": "Example Describe 1 Example Describe 2 example it 3",
+    "start": "2020-10-27T01:14:33.586Z",
+    "state": "passed",
+    "title": "example it 3",
+  },
+]
+`;
