@@ -16,6 +16,9 @@ Options:
                                                                          [array]
       --gridUrl                         The remote selenium grid address.
                                                                         [string]
+      --ignoreComparisonResults         Whether or not to disable test
+                                        assertions on the screenshot comparison
+                                        result.       [boolean] [default: false]
       --keepAliveSeleniumDockerService  Determines to keep the selenium docker
                                         service running upon test completion.
                                                       [boolean] [default: false]

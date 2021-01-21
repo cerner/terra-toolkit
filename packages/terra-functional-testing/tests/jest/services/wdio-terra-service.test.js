@@ -78,7 +78,6 @@ describe('WDIO Terra Service', () => {
     service.before({ browserName: 'chrome' });
 
     expect(setViewport).toBeCalled();
-    expect(global.Terra.viewports).toBeDefined();
     expect(global.Terra.hideInputCaret).toBeDefined();
   });
 
@@ -108,6 +107,7 @@ describe('WDIO Terra Service', () => {
     const service = new WdioTerraService({ formFactor: 'huge' });
     service.beforeSession();
     expect(global.Terra.describeViewports).toBeDefined();
+    expect(global.Terra.viewports).toBeDefined();
     expect(global.Terra.serviceOptions.formFactor).toBe('huge');
   });
 

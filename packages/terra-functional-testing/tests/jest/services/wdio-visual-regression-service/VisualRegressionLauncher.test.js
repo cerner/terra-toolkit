@@ -125,6 +125,9 @@ describe('VisualRegressionLauncher', () => {
         meta: {
           currentFormFactor: 'huge',
         },
+        options: {
+          name: 'mock',
+        },
       };
 
       const wrappedCommand = service.wrapCommand(global.browser, mockCommand);
@@ -156,6 +159,9 @@ describe('VisualRegressionLauncher', () => {
         test: 'test2',
         meta: {
           currentFormFactor: 'landscape',
+        },
+        options: {
+          name: 'mock',
         },
       };
 

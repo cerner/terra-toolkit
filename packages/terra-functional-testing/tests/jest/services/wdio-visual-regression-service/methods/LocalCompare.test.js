@@ -21,8 +21,8 @@ async function compareImages(image1, image2, misMatchPercentage = 0) {
 }
 
 const context = {
-  browserInfo: {
-    name: 'chrome',
+  desiredCapabilities: {
+    browserName: 'chrome',
   },
   test: {
     file: path.join(dirTmp, 'test-spec.js'),

@@ -7,16 +7,11 @@
  * @param {boolean} screenshot.isWithinMisMatchTolerance - If the latest screenshot was within the mismatch tolerance.
  * @param {boolean} screenshot.isExactSameImage - If the latest screenshot matched the reference screenshot exactly, i.e. 0% mismatch.
  * @param {Number} screenshot.misMatchPercentage - The mismatch percentage when comparing the latest screenshot to the reference screenshot.
- * @param {Number} screenshot.viewport - The viewport that the latest screenshot was taken in.
  * @returns {String} - A message describing the status of the screenshot.
  */
 function getComparisonResult(screenshot) {
-  const { viewport, misMatchPercentage, isSameDimensions } = screenshot;
+  const { misMatchPercentage, isSameDimensions } = screenshot;
   const relevantInformation = {};
-
-  if (viewport) {
-    relevantInformation.viewport = viewport;
-  }
 
   if (!isSameDimensions) {
     relevantInformation.isSameDimensions = isSameDimensions;
@@ -36,7 +31,6 @@ function getComparisonResult(screenshot) {
  * @param {boolean} screenshot.isWithinMisMatchTolerance - If the latest screenshot was within the mismatch tolerance.
  * @param {boolean} screenshot.isExactSameImage - If the latest screenshot matched the reference screenshot exactly, i.e. 0% mismatch.
  * @param {Number} screenshot.misMatchPercentage - The mismatch percentage when comparing the latest screenshot to the reference screenshot.
- * @param {Number} screenshot.viewport - The viewport that the latest screenshot was taken in.
  * @returns {Object} - An object that indicates if the assertion passed or failed with a message.
  */
 function toMatchReference(receivedScreenshot) {

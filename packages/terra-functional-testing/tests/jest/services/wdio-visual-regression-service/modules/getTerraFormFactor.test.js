@@ -1,16 +1,33 @@
 import getTerraFormFactor from '../../../../../src/services/wdio-visual-regression-service/modules/getTerraFormFactor';
 
 describe('getTerraFormFactor', () => {
-  it.each([
-    [400, 'tiny'],
-    [500, 'small'],
-    [700, 'medium'],
-    [900, 'large'],
-    [1200, 'huge'],
-    [1500, 'enormous'],
-    [3000, 'enormous'],
-  ])('when viewpoint width is %d, returns %s', (viewpointWidth, expectedFormFactor) => {
-    const result = getTerraFormFactor(viewpointWidth);
-    expect(result).toEqual(expectedFormFactor);
+  it('should return the small viewport', () => {
+    const size = {
+      screenWidth: 622,
+      screenHeight: 768,
+    };
+
+    global.browser = {
+      execute: () => size,
+    };
+
+    const result = getTerraFormFactor();
+
+    expect(result).toEqual('small');
+  });
+
+  it('should return huge as the default viewport size', () => {
+    const size = {
+      screenWidth: 3000,
+      screenHeight: 768,
+    };
+
+    global.browser = {
+      execute: () => size,
+    };
+
+    const result = getTerraFormFactor();
+
+    expect(result).toEqual('huge');
   });
 });

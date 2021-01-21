@@ -5,12 +5,11 @@ import BaseCompare from '../../../../../src/services/wdio-visual-regression-serv
 const dirTmp = path.resolve(__dirname, '..', '..', '..', '..', 'tmp');
 
 const context = {
-  browserInfo: {
-    name: 'chrome',
+  desiredCapabilities: {
+    browserName: 'chrome',
   },
   test: {
     file: path.join(dirTmp, 'test-spec.js'),
-    parent: 'Test Component',
     title: 'displays a button',
   },
   meta: {
@@ -35,23 +34,21 @@ describe('BaseCompare', () => {
   });
 
   describe('BaseCompare.getScreenshotName', () => {
-    it('used parent + test name as screenshot name', () => {
+    it('used test name as screenshot name', () => {
       const baseCompare = new BaseCompare({});
       const createTestNameSpy = jest.spyOn(baseCompare, 'createTestName');
 
       const result = baseCompare.getScreenshotName(context);
-      expect(result).toEqual('Test_Component[displays_a_button].png');
-      expect(createTestNameSpy).toHaveBeenNthCalledWith(1, context.test.parent);
-      expect(createTestNameSpy).toHaveBeenNthCalledWith(2, context.test.title);
+      expect(result).toEqual('displays_a_button.png');
+      expect(createTestNameSpy).toHaveBeenNthCalledWith(1, context.test.title);
     });
 
-    it('uses parent + custom name screenshot name', () => {
+    it('uses custom name screenshot name', () => {
       const baseCompare = new BaseCompare({});
       const createTestNameSpy = jest.spyOn(baseCompare, 'createTestName');
       const result = baseCompare.getScreenshotName({ ...context, options: { name: 'custom' } });
-      expect(result).toEqual('Test_Component[custom].png');
-      expect(createTestNameSpy).toHaveBeenNthCalledWith(1, context.test.parent);
-      expect(createTestNameSpy).toHaveBeenNthCalledWith(2, 'custom');
+      expect(result).toEqual('custom.png');
+      expect(createTestNameSpy).toHaveBeenNthCalledWith(1, 'custom');
     });
   });
 
