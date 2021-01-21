@@ -144,7 +144,7 @@ exports.config = {
       ...THEME && { theme: THEME },
     }],
     // Do not add the docker service if disabled.
-    ...(WDIO_DISABLE_SELENIUM_SERVICE ? [] : [[SeleniumDockerService]]),
+    ...(WDIO_DISABLE_SELENIUM_SERVICE || SELENIUM_GRID_URL ? [] : [[SeleniumDockerService]]),
   ],
   // Framework you want to run your specs with.
   // The following are supported: Mocha, Jasmine, and Cucumber

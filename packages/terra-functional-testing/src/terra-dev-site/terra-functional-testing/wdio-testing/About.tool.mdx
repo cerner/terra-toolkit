@@ -9,7 +9,7 @@ To get started ensure [docker](https://www.docker.com/) has been installed. The 
 Install with npm:
 
 ```
-npm install --save-dev @cerner/terra-functional-testing 
+npm install --save-dev @cerner/terra-functional-testing
 ```
 
 ## Test Runner
@@ -42,7 +42,7 @@ package.json
 ```json
 {
   "scripts": {
-    "wdio": "npm run terra -- wdio --locales en fr --formFactors tiny huge"
+    "wdio": "npm run terra wdio --locales en fr --formFactors tiny huge"
   }
 }
 ```
@@ -82,7 +82,7 @@ The testing library integrates [axe-core](https://github.com/dequelabs/axe-core)
 
 Axe will analyze the entire document when run and report accessibility violations. The following [tags](https://github.com/dequelabs/axe-core/blob/develop/doc/API.md#axe-core-tags) are enabled `wcag2a`, `wcag2aa`, `wcag21aa`, and `section508`. Each tag has an associated list of [rules](https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md) that will be checked against the document when axe is run.
 
-Please note that not all accessibility testing can be automated. Axe provides a lightweight static analysis of the entire document to catch common accessibility violations, but it is the responsibility of each team and application to do thorough accessibility and functional testing manually when necessary. 
+Please note that not all accessibility testing can be automated. Axe provides a lightweight static analysis of the entire document to catch common accessibility violations, but it is the responsibility of each team and application to do thorough accessibility and functional testing manually when necessary.
 
 ### Terra.validates.accessibility
 
@@ -117,7 +117,7 @@ A screenshot can be captured at any given point in a test. The captured screensh
 
 The element assertion should only be invoked inside an `it` block. Invoking the assertion will capture a screenshot at the time it is invoked. If no reference screenshot exists, one will be created in the `reference` folder with the given screenshot name. If such reference screenshot already exists, the new screenshot will be compared with the reference screenshot to validate visually that they are within the mismatch tolerance. If the mismatch exceeds the tolerance, the test step will fail and a screenshot showing the difference will be generated.
 
-A name must be provided to be used as the screenshot name. In addition to capturing a screenshot and performing screenshot validation, the assertion also runs accessibility checks on the entire document. 
+A name must be provided to be used as the screenshot name. In addition to capturing a screenshot and performing screenshot validation, the assertion also runs accessibility checks on the entire document.
 
 ```js
 it('should validate the element', () => {
@@ -158,5 +158,16 @@ it('should hide the caret', () => {
   const element = browser.element('#inputID');
 
   expect(element.getCssProperty('caretColor').value).to.equal('rgba(0,0,0,0)');
+});
+```
+
+## Locale Update (Case by Case)
+
+### Terra.setApplicationLocale
+Use `Terra.setApplicationLocale` to update a terra application's locale on a case by case basis; particularly useful for testing locale changes on a deployed application. This method accepts a string containing the `locale` to update to.
+
+```js
+it('should update an application's locale, () => {
+  Terra.setApplicationLocale('en');
 });
 ```
