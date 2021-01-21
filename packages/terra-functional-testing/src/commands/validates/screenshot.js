@@ -12,7 +12,7 @@
  */
 const screenshot = (testName, options = {}) => {
   if (!testName || typeof testName !== 'string' || testName.length === 0) {
-    throw new Error('[terra-functional-testing:screenshot] Terra.validate.screenshot requires a test name as the first argument.');
+    throw new Error('[terra-functional-testing:screenshot] Terra.validate.screenshot requires a unique test name as the first argument.');
   }
 
   const { selector } = options;

@@ -14,7 +14,7 @@ const screenshot = require('./screenshot');
  */
 const element = (testName, options = {}) => {
   if (!testName || typeof testName !== 'string' || testName.length === 0) {
-    throw new Error('[terra-functional-testing:element] Terra.validate.element requires a test name as the first argument.');
+    throw new Error('[terra-functional-testing:element] Terra.validate.element requires a unique test name as the first argument.');
   }
 
   const { rules, misMatchTolerance, selector } = options;
