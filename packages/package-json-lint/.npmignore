@@ -1,0 +1,6 @@
+*.log
+target
+reports
+tests/**/__snapshots__/
+screenshots
+errorScreenshots
