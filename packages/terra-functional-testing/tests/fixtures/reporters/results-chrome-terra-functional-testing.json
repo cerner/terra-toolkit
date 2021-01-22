@@ -1,0 +1,228 @@
+{
+  "packageName": "terra-functional-testing",
+  "capabilities": {
+    "browserName": "chrome",
+    "platform": "Linux",
+    "version": "69.0.3497.100"
+  },
+  "specs": [
+    {
+      "spec": "/terra-toolkit/packages/terra-functional-testing/tests/wdio/dispatch-custom-event-spec.js",
+      "start": "2021-01-22T00:15:24.205Z",
+      "end": "2021-01-22T00:15:24.541Z",
+      "suites": [
+        {
+          "title": "dispatchCustomEvent",
+          "fullTitle": "dispatchCustomEvent",
+          "duration": 269,
+          "start": "2021-01-22T00:15:24.209Z",
+          "end": "2021-01-22T00:15:24.478Z",
+          "tests": [
+            {
+              "title": "sends a custom event that injects a string into a paragraph",
+              "fullTitle": "dispatchCustomEvent sends a custom event that injects a string into a paragraph",
+              "duration": 268,
+              "start": "2021-01-22T00:15:24.209Z",
+              "end": "2021-01-22T00:15:24.477Z",
+              "state": "passed"
+            }
+          ],
+          "suites": []
+        }
+      ],
+      "tests": []
+    },
+    {
+      "spec": "/terra-toolkit/packages/terra-functional-testing/tests/wdio/terra-validates-spec.js",
+      "start": "2021-01-22T00:15:26.122Z",
+      "end": "2021-01-22T00:15:28.886Z",
+      "suites": [
+        {
+          "title": "[small]",
+          "fullTitle": "[small]",
+          "duration": 1450,
+          "start": "2021-01-22T00:15:26.125Z",
+          "end": "2021-01-22T00:15:27.575Z",
+          "tests": [],
+          "suites": [
+            {
+              "title": "Terra.validates.accessibility",
+              "fullTitle": "[small] Terra.validates.accessibility",
+              "duration": 1212,
+              "start": "2021-01-22T00:15:26.250Z",
+              "end": "2021-01-22T00:15:27.462Z",
+              "tests": [
+                {
+                  "title": "should report no accessibility violations",
+                  "fullTitle": "[small] Terra.validates.accessibility should report no accessibility violations",
+                  "duration": 531,
+                  "start": "2021-01-22T00:15:26.250Z",
+                  "end": "2021-01-22T00:15:26.781Z",
+                  "state": "passed"
+                },
+                {
+                  "title": "should report an accessibility violation",
+                  "fullTitle": "[small] Terra.validates.accessibility should report an accessibility violation",
+                  "duration": 345,
+                  "start": "2021-01-22T00:15:26.781Z",
+                  "end": "2021-01-22T00:15:27.126Z",
+                  "state": "passed"
+                },
+                {
+                  "title": "should report no accessibility violations when a rule override is provided",
+                  "fullTitle": "[small] Terra.validates.accessibility should report no accessibility violations when a rule override is provided",
+                  "duration": 335,
+                  "start": "2021-01-22T00:15:27.126Z",
+                  "end": "2021-01-22T00:15:27.461Z",
+                  "state": "passed"
+                }
+              ],
+              "suites": []
+            }
+          ]
+        },
+        {
+          "title": "[large]",
+          "fullTitle": "[large]",
+          "duration": 1249,
+          "start": "2021-01-22T00:15:27.575Z",
+          "end": "2021-01-22T00:15:28.824Z",
+          "tests": [],
+          "suites": [
+            {
+              "title": "Terra.validates.accessibility",
+              "fullTitle": "[large] Terra.validates.accessibility",
+              "duration": 1005,
+              "start": "2021-01-22T00:15:27.708Z",
+              "end": "2021-01-22T00:15:28.713Z",
+              "tests": [
+                {
+                  "title": "should report no accessibility violations",
+                  "fullTitle": "[large] Terra.validates.accessibility should report no accessibility violations",
+                  "duration": 317,
+                  "start": "2021-01-22T00:15:27.708Z",
+                  "end": "2021-01-22T00:15:28.025Z",
+                  "state": "passed"
+                },
+                {
+                  "title": "should report an accessibility violation",
+                  "fullTitle": "[large] Terra.validates.accessibility should report an accessibility violation",
+                  "duration": 413,
+                  "start": "2021-01-22T00:15:28.025Z",
+                  "end": "2021-01-22T00:15:28.438Z",
+                  "state": "passed"
+                },
+                {
+                  "title": "should report no accessibility violations when a rule override is provided",
+                  "fullTitle": "[large] Terra.validates.accessibility should report no accessibility violations when a rule override is provided",
+                  "duration": 275,
+                  "start": "2021-01-22T00:15:28.438Z",
+                  "end": "2021-01-22T00:15:28.713Z",
+                  "state": "passed"
+                }
+              ],
+              "suites": []
+            }
+          ]
+        }
+      ],
+      "tests": []
+    },
+    {
+      "spec": "/terra-toolkit/packages/terra-functional-testing/tests/wdio/viewport-helpers-spec.js",
+      "start": "2021-01-22T00:15:30.392Z",
+      "end": "2021-01-22T00:15:31.559Z",
+      "suites": [
+        {
+          "title": "[small]",
+          "fullTitle": "[small]",
+          "duration": 587,
+          "start": "2021-01-22T00:15:30.396Z",
+          "end": "2021-01-22T00:15:30.983Z",
+          "tests": [],
+          "suites": [
+            {
+              "title": "Viewport Helpers",
+              "fullTitle": "[small] Viewport Helpers",
+              "duration": 345,
+              "start": "2021-01-22T00:15:30.527Z",
+              "end": "2021-01-22T00:15:30.872Z",
+              "tests": [
+                {
+                  "title": "creates tiny and huge screens",
+                  "fullTitle": "[small] Viewport Helpers creates tiny and huge screens",
+                  "duration": 202,
+                  "start": "2021-01-22T00:15:30.527Z",
+                  "end": "2021-01-22T00:15:30.729Z",
+                  "state": "passed"
+                },
+                {
+                  "title": "shrink the height",
+                  "fullTitle": "[small] Viewport Helpers shrink the height",
+                  "duration": 131,
+                  "start": "2021-01-22T00:15:30.729Z",
+                  "end": "2021-01-22T00:15:30.860Z",
+                  "state": "passed"
+                },
+                {
+                  "title": "viewport check",
+                  "fullTitle": "[small] Viewport Helpers viewport check",
+                  "duration": 11,
+                  "start": "2021-01-22T00:15:30.861Z",
+                  "end": "2021-01-22T00:15:30.872Z",
+                  "state": "passed"
+                }
+              ],
+              "suites": []
+            }
+          ]
+        },
+        {
+          "title": "[large]",
+          "fullTitle": "[large]",
+          "duration": 513,
+          "start": "2021-01-22T00:15:30.983Z",
+          "end": "2021-01-22T00:15:31.496Z",
+          "tests": [],
+          "suites": [
+            {
+              "title": "Viewport Helpers",
+              "fullTitle": "[large] Viewport Helpers",
+              "duration": 283,
+              "start": "2021-01-22T00:15:31.100Z",
+              "end": "2021-01-22T00:15:31.383Z",
+              "tests": [
+                {
+                  "title": "creates tiny and huge screens",
+                  "fullTitle": "[large] Viewport Helpers creates tiny and huge screens",
+                  "duration": 141,
+                  "start": "2021-01-22T00:15:31.100Z",
+                  "end": "2021-01-22T00:15:31.241Z",
+                  "state": "passed"
+                },
+                {
+                  "title": "shrink the height",
+                  "fullTitle": "[large] Viewport Helpers shrink the height",
+                  "duration": 128,
+                  "start": "2021-01-22T00:15:31.242Z",
+                  "end": "2021-01-22T00:15:31.370Z",
+                  "state": "passed"
+                },
+                {
+                  "title": "viewport check",
+                  "fullTitle": "[large] Viewport Helpers viewport check",
+                  "duration": 13,
+                  "start": "2021-01-22T00:15:31.370Z",
+                  "end": "2021-01-22T00:15:31.383Z",
+                  "state": "passed"
+                }
+              ],
+              "suites": []
+            }
+          ]
+        }
+      ],
+      "tests": []
+    }
+  ]
+}

@@ -4,7 +4,7 @@ const getOutputDir = require('../../../../src/reporters/spec-reporter/get-output
 
 jest.mock('../../../../src/reporters/spec-reporter/get-output-dir');
 
-describe('Clean Results', () => {
+describe('cleanResults', () => {
   afterEach(() => {
     // Restore all fs mocks.
     jest.restoreAllMocks();
