@@ -1,4 +1,5 @@
 const prompts = require('prompts');
+const fs = require('fs-extra');
 const path = require('path');
 const log = require('npmlog');
 const spawn = require('@npmcli/promise-spawn');
@@ -29,5 +30,6 @@ module.exports = async () => {
   // Update the changelog for the current package
   await updateChangelogForPackage(process.cwd());
 
-  logReleasingPackages([`${path.basename(process.cwd())}@${stdout.substring(1)}`]);
+  const { name: packageName } = await fs.readJSON(path.join(process.cwd(), 'package.json'));
+  logReleasingPackages([`${packageName}@${stdout.substring(1)}`]);
 };
