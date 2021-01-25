@@ -102,25 +102,20 @@ class TerraService {
   afterCommand(commandName, _args, _result, error) {
     if ((commandName === 'refresh' || commandName === 'url') && !error) {
       try {
-        // IE driver takes longer to be ready for browser interactions.
-        // if (capabilities.browserName === 'internet explorer') {
-        //   global.browser.$('body').waitForExist({
-        //     timeout: global.browser.config.waitforTimeout,
-        //     interval: 100,
-        //   });
-        // }
         browser.execute(function test() {
           console.log('[wdio-terra-service] test function');
         });
-        // Terra.setApplicationLocale('de');
         // This is only meant as a convenience so failure is not particularly concerning.
-        // global.Terra.hideInputCaret('body');
+        global.Terra.hideInputCaret('body');
 
-        // if (global.browser.$('[data-terra-test-loading]').isExisting()) {
-        //   global.browser.$('[data-terra-test-content]').waitForExist({
-        //     timeout: global.browser.config.waitforTimeout + 2000,
-        //     interval: 100,
-        //   });}
+        if (global.browser.$('[data-terra-test-loading]').isExisting()) {
+          global.browser.$('[data-terra-test-content]').waitForExist({
+            timeout: global.browser.config.waitforTimeout + 2000,
+            interval: 100,
+          });
+        }
+
+        Terra.setApplicationLocale('de');
       } catch (err) {
         console.error(`afterCommand error: ${err}`);
         // Intentionally blank. If this fails we don't want to warn because the user can't fix the issue.
