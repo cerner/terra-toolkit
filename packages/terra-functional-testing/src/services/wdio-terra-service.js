@@ -16,26 +16,23 @@ class TerraService {
   }
 
   /**
-   * Service hook executed before worker processes are launched.
+   * Service hook executed prior to initializing the webdriver session.
    * @param {object} config - The WebdriverIO configuration object.
    */
-  onPrepare(config) {
+  beforeSession(config) {
+    global.Terra = {};
     const { serviceOptions, ignoreComparisonResults } = config;
 
     this.serviceOptions = {
       theme: 'terra-default-theme',
       selector: '[data-terra-test-content] *:first-child',
-      ignoreComparisonResults,
       ...this.serviceOptions,
+      ignoreComparisonResults: ignoreComparisonResults === true,
       ...serviceOptions,
     };
-  }
 
-  /**
-   * Service hook executed prior to initializing the webdriver session.
-   */
-  beforeSession() {
-    global.Terra = {};
+    // Add the service options to the global.
+    global.Terra.serviceOptions = this.serviceOptions;
 
     /**
      * This command must be defined in the beforeSession hook instead of together with the other Terra custom commands in the
@@ -46,9 +43,6 @@ class TerraService {
      */
     global.Terra.describeViewports = describeViewports;
     global.Terra.viewports = getViewports;
-
-    // Add the service options to the global.
-    global.Terra.serviceOptions = this.serviceOptions;
   }
 
   /**

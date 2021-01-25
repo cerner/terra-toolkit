@@ -15,7 +15,7 @@ describe('element', () => {
     try {
       element();
     } catch (error) {
-      expect(error.message).toEqual('[terra-functional-testing:element] Terra.validate.element requires a test name as the first argument.');
+      expect(error.message).toEqual('[terra-functional-testing:element] Terra.validate.element requires a unique test name as the first argument.');
     }
   });
 
@@ -23,7 +23,7 @@ describe('element', () => {
     try {
       element('');
     } catch (error) {
-      expect(error.message).toEqual('[terra-functional-testing:element] Terra.validate.element requires a test name as the first argument.');
+      expect(error.message).toEqual('[terra-functional-testing:element] Terra.validate.element requires a unique test name as the first argument.');
     }
   });
 
@@ -31,7 +31,7 @@ describe('element', () => {
     try {
       element({});
     } catch (error) {
-      expect(error.message).toEqual('[terra-functional-testing:element] Terra.validate.element requires a test name as the first argument.');
+      expect(error.message).toEqual('[terra-functional-testing:element] Terra.validate.element requires a unique test name as the first argument.');
     }
   });
 

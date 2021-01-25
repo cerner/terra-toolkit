@@ -5,7 +5,7 @@ describe('screenshot', () => {
     try {
       screenshot();
     } catch (error) {
-      expect(error.message).toEqual('[terra-functional-testing:screenshot] Terra.validate.screenshot requires a test name as the first argument.');
+      expect(error.message).toEqual('[terra-functional-testing:screenshot] Terra.validate.screenshot requires a unique test name as the first argument.');
     }
   });
 
@@ -13,7 +13,7 @@ describe('screenshot', () => {
     try {
       screenshot('');
     } catch (error) {
-      expect(error.message).toEqual('[terra-functional-testing:screenshot] Terra.validate.screenshot requires a test name as the first argument.');
+      expect(error.message).toEqual('[terra-functional-testing:screenshot] Terra.validate.screenshot requires a unique test name as the first argument.');
     }
   });
 
@@ -21,7 +21,7 @@ describe('screenshot', () => {
     try {
       screenshot({});
     } catch (error) {
-      expect(error.message).toEqual('[terra-functional-testing:screenshot] Terra.validate.screenshot requires a test name as the first argument.');
+      expect(error.message).toEqual('[terra-functional-testing:screenshot] Terra.validate.screenshot requires a unique test name as the first argument.');
     }
   });
 });
