@@ -1,5 +1,3 @@
-// const { setApplicationLocale } = require('../commands/utils');
-
 class TestService {
   constructor(options = {}) {
     this.serviceOptions = options;
@@ -7,7 +5,9 @@ class TestService {
 
   afterCommand(commandName, _args, _result, error) {
     if ((commandName === 'url' || commandName === 'refresh') && !error) {
-      // Terra.setApplicationLocale('de');
+      browser.execute(function test() {
+        console.log('[wdio-test-service] test function');
+      });
     }
   }
 }

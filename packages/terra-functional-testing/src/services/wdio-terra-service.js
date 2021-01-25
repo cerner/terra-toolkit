@@ -105,17 +105,6 @@ class TerraService {
         browser.execute(function test() {
           console.log('[wdio-terra-service] test function');
         });
-        // This is only meant as a convenience so failure is not particularly concerning.
-        global.Terra.hideInputCaret('body');
-
-        if (global.browser.$('[data-terra-test-loading]').isExisting()) {
-          global.browser.$('[data-terra-test-content]').waitForExist({
-            timeout: global.browser.config.waitforTimeout + 2000,
-            interval: 100,
-          });
-        }
-
-        Terra.setApplicationLocale('de');
       } catch (err) {
         console.error(`afterCommand error: ${err}`);
         // Intentionally blank. If this fails we don't want to warn because the user can't fix the issue.
