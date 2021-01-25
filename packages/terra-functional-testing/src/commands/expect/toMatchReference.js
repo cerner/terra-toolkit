@@ -1,5 +1,5 @@
 /**
- * Helper method to determine which comparison results are relevant for if the chai screenshot assertion
+ * Helper method to determine which comparison results are relevant if the screenshot assertion
  * fails.
  *
  * @param {Object} screenshot - The comparison result
