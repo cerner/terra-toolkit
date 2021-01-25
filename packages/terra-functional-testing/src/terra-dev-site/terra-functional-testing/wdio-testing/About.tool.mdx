@@ -111,13 +111,48 @@ it('should override a rule configuration', () => {
 
 ## Validating element
 
-A screenshot can be captured at any given point in a test. The captured screenshot will be used as a reference artifact. Element validation is done by comparing the reference screenshot against the screenshot captured in future test runs at the same point in the test.
+A screenshot can be captured at any given point inside an `it` block in a test. The captured screenshot will be used as a reference artifact. Element validation is done by comparing the reference screenshot against the screenshot captured in future test runs at the same point in the test.
+
+### Terra.validates.screenshot
+
+The screenshot assertion should only be invoked inside an `it` block. Invoking the assertion will capture a screenshot at the time it is invoked. If no reference screenshot exists, one will be created in the `reference` folder with the given screenshot name. If such reference screenshot already exists, the new screenshot will be compared with the reference screenshot to validate visually that they are within the mismatch tolerance. If the mismatch exceeds the tolerance, the test step will fail and a screenshot showing the difference will be generated.
+
+A name must be provided to be used as the screenshot name.
+
+```js
+it('should validate the screenshot', () => {
+  browser.url('/testing/route/');
+
+  Terra.validates.screenshot('screenshot-name'); // Fails if the new screenshot doesn't visually match the reference screenshot.
+});
+```
+
+The screenshot naming pattern is as follows:
+
+```js
+baseScreenshotDir/test_spec_directory/test_spec_name/__snapshots__/(reference|latest|diff)/theme/locale/browserName_terraViewportName/screenshot-name.png
+```
+
+The screenshot assertion accepts an optional second argument with the following keys.
+  * `selector` - the element selector to use to capture the element for screenshot comparison. The default selector is `data-terra-test-content`.
+  * `misMatchTolerance` - the number between 0 and 100 that defines the degree of mismatch to consider two images as identical. Increasing this value will decrease level of test coverage.
+
+```js
+it('should validate the screenshot with options', () => {
+  browser.url('/testing/route/');
+
+  const options = {
+    selector: '#element-id',
+    misMatchTolerance: 10,
+  };
+
+  Terra.validates.screenshot('screenshot-name', options);
+});
+```
 
 ### Terra.validates.element
 
-The element assertion should only be invoked inside an `it` block. Invoking the assertion will capture a screenshot at the time it is invoked. If no reference screenshot exists, one will be created in the `reference` folder with the given screenshot name. If such reference screenshot already exists, the new screenshot will be compared with the reference screenshot to validate visually that they are within the mismatch tolerance. If the mismatch exceeds the tolerance, the test step will fail and a screenshot showing the difference will be generated.
-
-A name must be provided to be used as the screenshot name. In addition to capturing a screenshot and performing screenshot validation, the assertion also runs accessibility checks on the entire document.
+The element assertion basically performs both `Terra.validates.accessibility` and `Terra.validates.screenshot` assertions. Like these two assertions the element assertion should also only be invoked inside an `it` block.
 
 ```js
 it('should validate the element', () => {
