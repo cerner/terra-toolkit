@@ -14,6 +14,7 @@ const {
   FORM_FACTOR,
   LOCALE,
   SELENIUM_GRID_URL,
+  SELENIUM_GRID_PORT,
   SITE,
   THEME,
   WDIO_DISABLE_SELENIUM_SERVICE,
@@ -65,7 +66,7 @@ exports.config = {
   // and 30 processes will get spawned. The property handles how many capabilities
   // from the same test should run tests.
   //
-  maxInstances: 10,
+  maxInstances: 1,
   //
   // If you have trouble getting all important capabilities together, check out the
   // Sauce Labs platform configurator - a great tool to configure your capabilities:
@@ -103,7 +104,7 @@ exports.config = {
   // The hostname of the driver server.
   hostname: SELENIUM_GRID_URL || WDIO_HOSTNAME || 'localhost',
   // The port the driver server is on. The selenium grid uses port 80.
-  port: 4444,
+  port: parseInt(SELENIUM_GRID_PORT) || 80,
   //
   // Set a base URL in order to shorten url command calls. If your `url` parameter starts
   // with `/`, the base url gets prepended, not including the path portion of your baseUrl.

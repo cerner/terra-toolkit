@@ -7,7 +7,16 @@ class TestService {
 
   afterCommand(commandName, _args, _result, error) {
     if ((commandName === 'url' || commandName === 'refresh') && !error) {
-      Terra.setApplicationLocale('de');
+      // IE driver takes longer to be ready for browser interactions.
+      // if (global.browser.capabilities.browserName === 'internet explorer') {
+      //   global.browser.$('body').waitForExist({
+      //     timeout: global.browser.config.waitforTimeout,
+      //     interval: 100,
+      //   });
+      // }
+      browser.execute(function test() {
+        console.log('[wdio-terra-service] test function');
+      });
     }
   }
 }
