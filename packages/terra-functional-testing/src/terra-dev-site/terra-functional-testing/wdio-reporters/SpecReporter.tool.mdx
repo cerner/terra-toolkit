@@ -1,36 +1,20 @@
 # Spec Reporter
 
-The Spec Reporter writes test results to file in JSON format.
-
-## Installation
-
-The spec reporter should be installed as a development dependency.
-
-```bash
-npm install --save-dev @cerner/terra-functional-testing
-```
+The Spec Reporter writes test results to file in JSON format and is enabled by default in the `terra-functional-testing` wdio configuration.
 
 ## Configuration
-
-To use the reporter add it to the reporters array in the `wdio.conf.js` file.
-
-Note: The spec reporter is enabled by default in the `terra-functional-testing` wdio configuration. If you are using/extending the default `wdio.conf.js` it is not necessary to reimport the reporter.
 
 Configuration options are defined using the `reporterOptions` key in the `wdio.conf.js`.
 
 ```js
 // wdio.conf.js
-const { SpecReporter } = require('@cerner/terra-functional-testing/lib/reporters/spec-reporter');
+const config = require('@cerner/terra-functional-testing/lib/config/wdio.conf').config;
 
-export.config = {
-  // ...
-  reporters: [SpecReporter],
-
-  reporterOptions: {
-    // Reporter override options go here.
-  }
-  // ...
+config.reporterOptions = {
+  // Reporter override options go here.
 };
+
+exports.config = config;
 ```
 
 ## Options
@@ -43,34 +27,65 @@ Type: `string`
 
 Required: `false`
 
-Default: The default output directory is `/test(s)/wdio/reports`.
+Default: The default output directory is `/tests/wdio/reports`.
 
 Example:
 
 ```js
 // wdio.conf.js
+const config = require('@cerner/terra-functional-testing/lib/config/wdio.conf').config;
+
+config.reporterOptions = {
+  outputDir: '/reports'
+};
+
+exports.config = config;
+```
+
+## Advanced - Stand Alone
+
+The following section is only applicable if using the spec reporter standalone. The default `wdio.conf.js` is setup to automatically merge and output the result files.
+
+### Installation
+
+The spec reporter should be installed as a development dependency.
+
+```bash
+npm install --save-dev @cerner/terra-functional-testing
+```
+
+### Setup
+
+To use the reporter add it to the reporters array in the `wdio.conf.js` file.
+
+Note: The spec reporter is enabled by default in the `terra-functional-testing` wdio configuration. If you are using/extending the default `wdio.conf.js` it is not necessary to reimport the reporter.
+
+Configuration options are defined using the `reporterOptions` key in the `wdio.conf.js`.
+
+```js
+// wdio.conf.js
 const { SpecReporter } = require('@cerner/terra-functional-testing/lib/reporters/spec-reporter');
 
-export.config = {
+exports.config = {
   // ...
   reporters: [SpecReporter],
 
   reporterOptions: {
-    outputDir: 'reports'
+    // Reporter override options go here.
   }
   // ...
 };
 ```
 
-## Result Files
+### Result Files
 
 The spec reporter generates an output file for each individual spec file. This is due to changes in WebDriverIO that create a reporter instance per spec file.
 
-The spec reporter offers utilities for merging multiple result files into a single file and cleaning up individual files. Merged result files will be generated using the following format:
+The spec reporter offers utilities for merging multiple result files into a single file and cleaning up files. Merged result files will be generated using the following format:
 
 `results-<locale>-<theme>-<form-factor>-<browser>-<repo-name>.json`
 
-## Merge Results
+### Merge Results
 
 Upon completion of the test run the result files can be merged together using the `mergeResults` function exported by the reporter.
 
@@ -78,7 +93,7 @@ Upon completion of the test run the result files can be merged together using th
 // wdio.conf.js
 const { SpecReporter, mergeResults } = require('@cerner/terra-functional-testing/lib/reporters/spec-reporter');
 
-export.config = {
+exports.config = {
   // ...
   reporters: [SpecReporter],
   // ...
@@ -89,9 +104,9 @@ export.config = {
 };
 ```
 
-## Options
+#### Parameters
 
-### outputDir
+##### outputDir
 
 A path to the output directory the results files will be written. This should match the output directory specified for the reporter.
 
@@ -107,7 +122,7 @@ Example:
 // wdio.conf.js
 const { SpecReporter, mergeResults } = require('@cerner/terra-functional-testing/lib/reporters/spec-reporter');
 
-export.config = {
+exports.config = {
   // ...
   onComplete() {
     // Specify an output directory. 
@@ -118,7 +133,7 @@ export.config = {
 };
 ```
 
-### options
+#### options
 
 An object that identifies the attributes of the test run. These options will be used to uniquely identify the merged output file. Available options are `theme`, `locale`, and `formFactor`.
 
@@ -134,7 +149,7 @@ Example:
 // wdio.conf.js
 const { SpecReporter, mergeResults } = require('@cerner/terra-functional-testing/lib/reporters/spec-reporter');
 
-export.config = {
+exports.config = {
   // ...
   onComplete() {
     const options = {
@@ -149,7 +164,7 @@ export.config = {
 };
 ```
 
-## Clean Results
+### Clean Results
 
 To clean individual result files the spec reporter exports a `cleanResults` function. This function will remove all individual spec result files, but will not remove the merged output files.
 
@@ -157,7 +172,7 @@ To clean individual result files the spec reporter exports a `cleanResults` func
 // wdio.conf.js
 const { SpecReporter, cleanResults } = require('@cerner/terra-functional-testing/lib/reporters/spec-reporter');
 
-export.config = {
+exports.config = {
   // ...
   reporters: [SpecReporter],
   // ...
