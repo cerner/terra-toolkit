@@ -1,6 +1,6 @@
 {
   "name": "@cerner/terra-open-source-scripts",
-  "version": "1.5.0",
+  "version": "1.4.0",
   "description": "Terra package with various scripts for open source development",
   "main": "index.js",
   "publishConfig": {
