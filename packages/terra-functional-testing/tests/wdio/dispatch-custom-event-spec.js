@@ -1,4 +1,3 @@
-/* global $ */
 const dispatchCustomEvent = require('../../src/commands/utils/dispatchCustomEvent');
 
 describe('dispatchCustomEvent', () => {
@@ -6,7 +5,8 @@ describe('dispatchCustomEvent', () => {
     browser.url('/dispatch-custom-event.html');
 
     /* Setup event listener that injects a string into a paragraph. */
-    browser.execute(() => {
+    // eslint-disable-next-line prefer-arrow-callback
+    browser.execute(function addParagraphEventListener() {
       const eventListenerHandler = (event) => {
         const paragraph = document.getElementById('custom-event-paragraph');
         const { metaData } = event;
