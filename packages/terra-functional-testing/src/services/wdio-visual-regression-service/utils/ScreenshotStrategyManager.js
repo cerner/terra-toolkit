@@ -1,7 +1,7 @@
 const { Logger } = require('@cerner/terra-cli');
 
 const MergeViewportStrategy = require('./strategies/MergeScreenshotStrategy');
-const TrimAndMergeViewportStrategy = require('./strategies/TrimAndMergeScreenshotStrategy');
+const { TrimAndMergeScreenshotStrategy } = require('./strategies/TrimAndMergeScreenshotStrategy');
 
 const logger = new Logger('[wdio-visual-regression-service:ScreenshotStrategyManager]');
 
@@ -10,7 +10,7 @@ class ScreenshotStrategyManager {
     const { isIOS } = browser;
     if (isIOS) {
       logger.verbose('use iOS Trim and Merge viewport strategy');
-      return new TrimAndMergeViewportStrategy(screenDimensions);
+      return new TrimAndMergeScreenshotStrategy(screenDimensions);
     }
 
     logger.verbose('use merge viewport strategy');

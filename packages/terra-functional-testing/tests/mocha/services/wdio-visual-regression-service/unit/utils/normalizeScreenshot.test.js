@@ -1,16 +1,16 @@
-import { assert } from 'chai';
-import glob from 'glob';
-import path from 'path';
-import _ from 'lodash';
-import fsExtra from 'fs-extra';
+const { assert } = require('chai');
+const glob = require('glob');
+const path = require('path');
+const _ = require('lodash');
+const fsExtra = require('fs-extra');
 
-import normalizeScreenshot from '../../../../../../src/services/wdio-visual-regression-service/utils/normalizeScreenshot';
-import ScreenDimension from '../../../../../../src/services/wdio-visual-regression-service/utils/ScreenDimension';
-import saveBase64Image from '../../../../../../src/services/wdio-visual-regression-service/utils/saveBase64Image';
+const { normalizeScreenshot } = require('../../../../../../src/services/wdio-visual-regression-service/utils/normalizeScreenshot');
+const ScreenDimension = require('../../../../../../src/services/wdio-visual-regression-service/utils/ScreenDimension');
+const saveBase64Image = require('../../../../../../src/services/wdio-visual-regression-service/utils/saveBase64Image');
 
-import compareImages from '../../helper/compareImages';
+const compareImages = require('../../helper/compareImages');
 
-import dimensionDesktop from '../../../../../fixtures/dimension/desktop-scroll-both.json';
+const dimensionDesktop = require('../../../../../fixtures/dimension/desktop-scroll-both.json');
 
 const tmpPath = path.resolve(__dirname, '..', '..', '..', '..', '..', 'tmp');
 const screenshotDir = path.resolve(__dirname, '..', '..', '..', '..', '..', 'fixtures', 'screenshot');
