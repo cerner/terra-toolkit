@@ -2,9 +2,6 @@
 
 ## Unreleased
 
-* Changed
-  * Added $ to globals
-
 ## 4.0.0 - (January 5, 2021)
 
 * Breaking
