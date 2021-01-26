@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.5.0 - (January 26, 2021)
+
 * Changed
   * Added a log for the releasing packages to the prepare-for-release script. The intent of this is to provide the releaser with a message they can use to copy and paste in a notification channel at release time.
 
