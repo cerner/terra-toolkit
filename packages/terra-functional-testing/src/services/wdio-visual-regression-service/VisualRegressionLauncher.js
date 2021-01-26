@@ -1,5 +1,6 @@
 /* global browser */
-const _ = require('lodash');
+const lodashIdentity = require('lodash.identity');
+const lodashPickby = require('lodash.pickby');
 const { parse } = require('platform');
 const { LocalCompare } = require('./compare');
 const makeElementScreenshot = require('./modules/makeElementScreenshot');
@@ -112,7 +113,7 @@ class VisualRegressionLauncher {
         options,
       };
 
-      const screenshotContextCleaned = _.pickBy(screenshotContext, _.identity);
+      const screenshotContextCleaned = lodashPickby(screenshotContext, lodashIdentity);
       const base64Screenshot = await command(browser, elementSelector, options);
       const results = await this.compare.processScreenshot(screenshotContextCleaned, base64Screenshot);
       return results;

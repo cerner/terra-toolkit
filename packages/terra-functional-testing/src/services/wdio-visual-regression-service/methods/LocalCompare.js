@@ -1,6 +1,6 @@
 const fs = require('fs-extra');
 const resemble = require('node-resemble-js');
-const _ = require('lodash');
+const lodashGet = require('lodash.get');
 const { Logger } = require('@cerner/terra-cli');
 const BaseCompare = require('./BaseCompare');
 
@@ -49,12 +49,12 @@ class LocalCompare extends BaseCompare {
       logger.verbose('reference screenshot exists, compare it with the taken screenshot now');
       const latestScreenshot = new Buffer.from(base64Screenshot, 'base64'); // eslint-disable-line new-cap
 
-      const ignoreComparison = _.get(context, 'options.ignoreComparison', this.ignoreComparison);
+      const ignoreComparison = lodashGet(context, 'options.ignoreComparison', this.ignoreComparison);
       const compareData = await this.compareImages(referencePath, latestScreenshot, ignoreComparison);
 
       const { isSameDimensions } = compareData;
       const misMatchPercentage = Number(compareData.misMatchPercentage);
-      const misMatchTolerance = _.get(context, 'options.misMatchTolerance', this.misMatchTolerance);
+      const misMatchTolerance = lodashGet(context, 'options.misMatchTolerance', this.misMatchTolerance);
 
       const isWithinMisMatchTolerance = misMatchPercentage <= misMatchTolerance;
       if (!isWithinMisMatchTolerance || !isSameDimensions) {

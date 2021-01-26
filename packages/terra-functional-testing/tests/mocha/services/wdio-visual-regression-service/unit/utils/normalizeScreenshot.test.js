@@ -1,7 +1,10 @@
 const { assert } = require('chai');
 const glob = require('glob');
 const path = require('path');
-const _ = require('lodash');
+const lodashGroupBy = require('lodash.groupby');
+const lodashMap = require('lodash.map');
+const lodashMapKeys = require('lodash.mapkeys');
+const lodashMapValues = require('lodash.mapvalues');
 const fsExtra = require('fs-extra');
 
 const { normalizeScreenshot } = require('../../../../../../src/services/wdio-visual-regression-service/utils/normalizeScreenshot');
@@ -56,7 +59,7 @@ describe('normalizeScreenshot', function() {
       };
     });
 
-    _.map(data, ({
+    lodashMap(data, ({
       browserName, screenshotFile, expectedScreenshotFile, dimensionsFile,
     }) => {
       context(browserName, function() {
@@ -88,7 +91,7 @@ describe('normalizeScreenshot', function() {
 
     const data = files.map(file => {
       const dir = path.dirname(file);
-      const [version, device, test] = _.times(2)
+      const [version, device, test] = [0, 1]
         .reduce((f) => f.concat(path.dirname(f[f.length - 1])), [dir])
         .reverse()
         .map(f => path.basename(f).replace(/_/g, ' '));
@@ -105,11 +108,11 @@ describe('normalizeScreenshot', function() {
       };
     });
 
-    const testData = _.mapValues(_.groupBy(data, 'version'), list => _.groupBy(list, 'device'));
+    const testData = lodashMapValues(lodashGroupBy(data, 'version'), list => lodashGroupBy(list, 'device'));
 
-    _.mapKeys(testData, (devices, version) => {
+    lodashMapKeys(testData, (devices, version) => {
       context(version, function() {
-        _.mapKeys(devices, (list, device) => {
+        lodashMapKeys(devices, (list, device) => {
           context(device, function() {
             list.forEach(({
               test, screenshotFile, expectedScreenshotFile, dimensionsFile, skipFile, dir,
