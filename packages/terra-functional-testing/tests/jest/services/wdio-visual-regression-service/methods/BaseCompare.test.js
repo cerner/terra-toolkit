@@ -10,10 +10,12 @@ const context = {
   },
   test: {
     file: path.join(dirTmp, 'test-spec.js'),
-    title: 'displays a button',
   },
   meta: {
     currentFormFactor: 'large',
+  },
+  options: {
+    name: 'displays a button',
   },
 };
 
@@ -40,7 +42,7 @@ describe('BaseCompare', () => {
 
       const result = baseCompare.getScreenshotName(context);
       expect(result).toEqual('displays_a_button.png');
-      expect(createTestNameSpy).toHaveBeenNthCalledWith(1, context.test.title);
+      expect(createTestNameSpy).toHaveBeenNthCalledWith(1, context.options.name);
     });
 
     it('uses custom name screenshot name', () => {

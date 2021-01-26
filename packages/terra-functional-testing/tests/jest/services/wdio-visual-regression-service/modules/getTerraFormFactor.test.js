@@ -28,6 +28,6 @@ describe('getTerraFormFactor', () => {
 
     const result = getTerraFormFactor();
 
-    expect(result).toEqual('huge');
+    expect(result).toEqual('enormous');
   });
 });

@@ -39,7 +39,7 @@ function getTerraFormFactor() {
     }
   }
 
-  return 'huge';
+  return 'enormous';
 }
 
 module.exports = getTerraFormFactor;

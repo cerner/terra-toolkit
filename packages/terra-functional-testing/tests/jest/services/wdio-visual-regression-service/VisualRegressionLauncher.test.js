@@ -41,7 +41,7 @@ describe('VisualRegressionLauncher', () => {
 
     it('determines the capabilities', async () => {
       expect(service.context).toBeNull();
-      const capabilities = {browserName: 'chrome'}
+      const capabilities = { browserName: 'chrome' };
       await service.before(capabilities, []);
 
       expect(service.context).toHaveProperty('desiredCapabilities', {

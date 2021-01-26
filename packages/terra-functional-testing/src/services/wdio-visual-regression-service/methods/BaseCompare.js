@@ -69,7 +69,7 @@ class BaseCompare {
    */
   getScreenshotName(context) {
     const { name } = (context.options || {});
-    const testName = this.createTestName(name || context.test.title);
+    const testName = this.createTestName(name);
 
     return `${testName}.png`;
   }

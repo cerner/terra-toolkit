@@ -27,10 +27,12 @@ const context = {
   test: {
     file: path.join(dirTmp, 'test-spec.js'),
     parent: 'Test Component',
-    title: 'displays a button',
   },
   meta: {
     viewport: { height: 600, width: 1000 },
+  },
+  options: {
+    name: 'displays a button',
   },
 };
 
@@ -304,6 +306,7 @@ describe('LocalCompare', () => {
         ...context,
         options: {
           mismatchTolerance: 100,
+          name: 'displays a button',
         },
       };
       await pauseTest(); // pause to ensure time elapses between screenshot creation
@@ -394,6 +397,7 @@ describe('LocalCompare', () => {
           ...context,
           options: {
             mismatchTolerance: 0.25,
+            name: 'displays a button',
           },
         };
         const result = await localCompare.processScreenshot(updateContext, screenshotToleranceCustomWithin);
@@ -416,6 +420,7 @@ describe('LocalCompare', () => {
           ...context,
           options: {
             mismatchTolerance: 0.25,
+            name: 'displays a button',
           },
         };
         const result = await localCompare.processScreenshot(updateContext, screenshotToleranceCustomOutside);
@@ -487,6 +492,7 @@ describe('LocalCompare', () => {
           ...context,
           options: {
             ignoreComparison: 'colors',
+            name: 'displays a button',
           },
         };
         const result = await localCompare.processScreenshot(updateContext, screenshotRedDiff);
