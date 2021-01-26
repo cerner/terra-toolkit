@@ -1,4 +1,4 @@
-jest.mock('terra-aggregate-translations');
+jest.mock('@cerner/terra-aggregate-translations');
 jest.mock('postcss-assets-webpack-plugin');
 jest.mock('postcss-custom-properties');
 jest.mock('mini-css-extract-plugin');
