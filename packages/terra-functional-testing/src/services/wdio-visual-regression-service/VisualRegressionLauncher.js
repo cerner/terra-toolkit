@@ -1,10 +1,8 @@
 /* global browser */
 const lodashIdentity = require('lodash.identity');
 const lodashPickby = require('lodash.pickby');
-const { parse } = require('platform');
 const { LocalCompare } = require('./compare');
 const makeElementScreenshot = require('./modules/makeElementScreenshot');
-const getUserAgent = require('./scripts/getUserAgent');
 const getTerraFormFactor = require('./modules/getTerraFormFactor');
 
 class VisualRegressionLauncher {
@@ -29,15 +27,7 @@ class VisualRegressionLauncher {
    * @return null
    */
   async before(capabilities) {
-    const userAgent = await browser.execute(getUserAgent);
-    const { name, version, ua } = parse(userAgent);
-
     this.context = {
-      browserInfo: {
-        name,
-        version,
-        userAgent: ua,
-      },
       desiredCapabilities: capabilities,
     };
 
@@ -103,7 +93,6 @@ class VisualRegressionLauncher {
       }
 
       const screenshotContext = {
-        browserInfo: this.context.browserInfo,
         desiredCapabilities: this.context.desiredCapabilities,
         suite: this.currentSuite,
         test: this.currentTest,

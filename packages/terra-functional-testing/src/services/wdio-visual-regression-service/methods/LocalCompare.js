@@ -26,7 +26,7 @@ class LocalCompare extends BaseCompare {
    * differences will be created.
    *
    * @param {Object} context - Information provided to process the screenshot.
-   * @param {Object} context.browserInfo - Contains the browser's name, version, userAgent.
+   * @param {Object} context.desiredCapabilities - Contains the browser name and capabilities.
    * @param {Object} context.suite - The test suite that is running.
    * @param {Object} context.test - The test that is running.
    * @param {Object} context.meta - Contains the currentFormFactor as meta data to use.
