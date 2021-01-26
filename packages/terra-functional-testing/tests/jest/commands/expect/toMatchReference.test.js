@@ -11,7 +11,7 @@ describe('toMatchReference', () => {
     const receivedScreenshot = {
       isNewScreenshot: false,
       isSameDimensions: true,
-      isWithinMisMatchTolerance: true,
+      isWithinMismatchTolerance: true,
       misMatchPercentage: 0.10,
     };
 
@@ -34,7 +34,7 @@ describe('toMatchReference', () => {
     const receivedScreenshot = {
       isNewScreenshot: false,
       isSameDimensions: true,
-      isWithinMisMatchTolerance: false,
+      isWithinMismatchTolerance: false,
       misMatchPercentage: 0.10,
     };
 
@@ -47,7 +47,7 @@ describe('toMatchReference', () => {
     const receivedScreenshot = {
       isNewScreenshot: false,
       isSameDimensions: false,
-      isWithinMisMatchTolerance: true,
+      isWithinMismatchTolerance: true,
       misMatchPercentage: 0.10,
     };
 

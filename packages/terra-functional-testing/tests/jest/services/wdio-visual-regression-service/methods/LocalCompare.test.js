@@ -155,7 +155,7 @@ describe('LocalCompare', () => {
       // check if image is reported as same
       expect(resultSecond).toMatchObject({
         misMatchPercentage: 0,
-        isWithinMisMatchTolerance: true,
+        isWithinMismatchTolerance: true,
         isSameDimensions: true,
         isExactSameImage: true,
       });
@@ -210,7 +210,7 @@ describe('LocalCompare', () => {
       // check diff results
       expect(resultSecond.misMatchPercentage).toBeGreaterThan(0);
       expect(resultSecond.isExactSameImage).toBeFalsy();
-      expect(resultSecond.isWithinMisMatchTolerance).toBeFalsy();
+      expect(resultSecond.isWithinMismatchTolerance).toBeFalsy();
       expect(resultSecond.isSameDimensions).toBeTruthy();
 
       const screenshotPathsSecond = getScreenshotPathsSpy.mock.results[1].value;
@@ -228,8 +228,8 @@ describe('LocalCompare', () => {
     }, TIMEOUT);
 
     it('creates a diff image when latest image has different dimensions', async () => {
-      const base64ScreenshotReference = fs.readFileSync(path.join(dirFixture, 'misMatchTolerance', 'base.png'), { encoding: 'base64' });
-      const base64ScreenshotNew = fs.readFileSync(path.join(dirFixture, 'misMatchTolerance', 'within-diff-dimensions.png'), { encoding: 'base64' });
+      const base64ScreenshotReference = fs.readFileSync(path.join(dirFixture, 'mismatchTolerance', 'base.png'), { encoding: 'base64' });
+      const base64ScreenshotNew = fs.readFileSync(path.join(dirFixture, 'mismatchTolerance', 'within-diff-dimensions.png'), { encoding: 'base64' });
 
       const getScreenshotPathsSpy = jest.spyOn(localCompare, 'getScreenshotPaths');
 
@@ -266,7 +266,7 @@ describe('LocalCompare', () => {
       // check diff results
       expect(resultSecond.misMatchPercentage).toBe(0);
       expect(resultSecond.isExactSameImage).toBeFalsy();
-      expect(resultSecond.isWithinMisMatchTolerance).toBeTruthy();
+      expect(resultSecond.isWithinMismatchTolerance).toBeTruthy();
       expect(resultSecond.isSameDimensions).toBeFalsy();
 
       const screenshotPathsSecond = getScreenshotPathsSpy.mock.results[1].value;
@@ -303,7 +303,7 @@ describe('LocalCompare', () => {
       const updateContext = {
         ...context,
         options: {
-          misMatchTolerance: 100,
+          mismatchTolerance: 100,
         },
       };
       await pauseTest(); // pause to ensure time elapses between screenshot creation
@@ -315,7 +315,7 @@ describe('LocalCompare', () => {
     }, TIMEOUT * 3);
   });
 
-  describe('LocalCompare.processScreenshot-misMatchTolerance', () => {
+  describe('LocalCompare.processScreenshot-mismatchTolerance', () => {
     let screenshotBase;
     let screenshotToleranceDefaultWithin;
     let screenshotToleranceDefaultOutside;
@@ -323,14 +323,14 @@ describe('LocalCompare', () => {
     let screenshotToleranceCustomOutside;
 
     beforeAll(() => {
-      screenshotBase = fs.readFileSync(path.join(dirFixture, 'misMatchTolerance', 'base.png'), { encoding: 'base64' });
-      screenshotToleranceDefaultWithin = fs.readFileSync(path.join(dirFixture, 'misMatchTolerance', 'default-within.png'), { encoding: 'base64' });
-      screenshotToleranceDefaultOutside = fs.readFileSync(path.join(dirFixture, 'misMatchTolerance', 'default-outside.png'), { encoding: 'base64' });
-      screenshotToleranceCustomWithin = fs.readFileSync(path.join(dirFixture, 'misMatchTolerance', 'custom-within.png'), { encoding: 'base64' });
-      screenshotToleranceCustomOutside = fs.readFileSync(path.join(dirFixture, 'misMatchTolerance', 'custom-outside.png'), { encoding: 'base64' });
+      screenshotBase = fs.readFileSync(path.join(dirFixture, 'mismatchTolerance', 'base.png'), { encoding: 'base64' });
+      screenshotToleranceDefaultWithin = fs.readFileSync(path.join(dirFixture, 'mismatchTolerance', 'default-within.png'), { encoding: 'base64' });
+      screenshotToleranceDefaultOutside = fs.readFileSync(path.join(dirFixture, 'mismatchTolerance', 'default-outside.png'), { encoding: 'base64' });
+      screenshotToleranceCustomWithin = fs.readFileSync(path.join(dirFixture, 'mismatchTolerance', 'custom-within.png'), { encoding: 'base64' });
+      screenshotToleranceCustomOutside = fs.readFileSync(path.join(dirFixture, 'mismatchTolerance', 'custom-outside.png'), { encoding: 'base64' });
     });
 
-    describe('uses default misMatchTolerance', () => {
+    describe('uses default mismatchTolerance', () => {
       let getScreenshotPathsSpy;
       beforeEach(async () => {
         jest.restoreAllMocks();
@@ -350,7 +350,7 @@ describe('LocalCompare', () => {
         // check diff results
         expect(result.misMatchPercentage).toBeLessThanOrEqual(0.01);
         expect(result.isExactSameImage).toBeFalsy();
-        expect(result.isWithinMisMatchTolerance).toBeTruthy();
+        expect(result.isWithinMismatchTolerance).toBeTruthy();
 
         const screenshotPaths = getScreenshotPathsSpy.mock.results[0].value;
 
@@ -366,7 +366,7 @@ describe('LocalCompare', () => {
         // check diff results
         expect(result.misMatchPercentage).toBeGreaterThan(0.01);
         expect(result.isExactSameImage).toBeFalsy();
-        expect(result.isWithinMisMatchTolerance).toBeFalsy();
+        expect(result.isWithinMismatchTolerance).toBeFalsy();
 
         const screenshotPaths = getScreenshotPathsSpy.mock.results[0].value;
 
@@ -376,7 +376,7 @@ describe('LocalCompare', () => {
       });
     });
 
-    describe('uses custom misMatchTolerance passed in command options', () => {
+    describe('uses custom mismatchTolerance passed in command options', () => {
       let getScreenshotPathsSpy;
 
       beforeEach(async () => {
@@ -393,7 +393,7 @@ describe('LocalCompare', () => {
         const updateContext = {
           ...context,
           options: {
-            misMatchTolerance: 0.25,
+            mismatchTolerance: 0.25,
           },
         };
         const result = await localCompare.processScreenshot(updateContext, screenshotToleranceCustomWithin);
@@ -401,7 +401,7 @@ describe('LocalCompare', () => {
         // check diff results
         expect(result.misMatchPercentage).toBeLessThanOrEqual(0.25);
         expect(result.isExactSameImage).toBeFalsy();
-        expect(result.isWithinMisMatchTolerance).toBeTruthy();
+        expect(result.isWithinMismatchTolerance).toBeTruthy();
 
         const screenshotPaths = getScreenshotPathsSpy.mock.results[0].value;
 
@@ -415,7 +415,7 @@ describe('LocalCompare', () => {
         const updateContext = {
           ...context,
           options: {
-            misMatchTolerance: 0.25,
+            mismatchTolerance: 0.25,
           },
         };
         const result = await localCompare.processScreenshot(updateContext, screenshotToleranceCustomOutside);
@@ -423,7 +423,7 @@ describe('LocalCompare', () => {
         // check diff results
         expect(result.misMatchPercentage).toBeGreaterThan(0.25);
         expect(result.isExactSameImage).toBeFalsy();
-        expect(result.isWithinMisMatchTolerance).toBeFalsy();
+        expect(result.isWithinMismatchTolerance).toBeFalsy();
 
         const screenshotPaths = getScreenshotPathsSpy.mock.results[0].value;
 
@@ -461,7 +461,7 @@ describe('LocalCompare', () => {
         // check diff results
         expect(result.misMatchPercentage).toBeGreaterThan(0);
         expect(result.isExactSameImage).toBeFalsy();
-        expect(result.isWithinMisMatchTolerance).toBeFalsy();
+        expect(result.isWithinMismatchTolerance).toBeFalsy();
 
         // check if diff image was created
         const diffExists = fs.existsSync(screenshotPaths.diffPath);
@@ -494,7 +494,7 @@ describe('LocalCompare', () => {
         // check diff results
         expect(result.misMatchPercentage).toBeLessThan(0.01);
         expect(result.isExactSameImage).toBeTruthy();
-        expect(result.isWithinMisMatchTolerance).toBeTruthy();
+        expect(result.isWithinMismatchTolerance).toBeTruthy();
 
         // check if diff image was not created
         const diffExists = fs.existsSync(screenshotPaths.diffPath);

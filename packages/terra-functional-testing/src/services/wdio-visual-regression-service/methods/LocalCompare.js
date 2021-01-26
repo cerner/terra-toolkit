@@ -17,7 +17,7 @@ class LocalCompare extends BaseCompare {
     super(options);
 
     this.ignoreComparison = 'ignore';
-    this.misMatchTolerance = 0.01;
+    this.mismatchTolerance = 0.01;
   }
 
   /**
@@ -54,10 +54,10 @@ class LocalCompare extends BaseCompare {
 
       const { isSameDimensions } = compareData;
       const misMatchPercentage = Number(compareData.misMatchPercentage);
-      const misMatchTolerance = lodashGet(context, 'options.misMatchTolerance', this.misMatchTolerance);
+      const mismatchTolerance = lodashGet(context, 'options.mismatchTolerance', this.mismatchTolerance);
 
-      const isWithinMisMatchTolerance = misMatchPercentage <= misMatchTolerance;
-      if (!isWithinMisMatchTolerance || !isSameDimensions) {
+      const isWithinMismatchTolerance = misMatchPercentage <= mismatchTolerance;
+      if (!isWithinMismatchTolerance || !isSameDimensions) {
         logger.verbose(`Image is different! ${misMatchPercentage}%`);
         const png = compareData.getDiffImage().pack();
         await this.writeDiff(png, diffPath);
@@ -67,7 +67,7 @@ class LocalCompare extends BaseCompare {
         await fs.remove(diffPath);
       }
 
-      return this.createResultReport(referenceExists, misMatchPercentage, isWithinMisMatchTolerance, isSameDimensions);
+      return this.createResultReport(referenceExists, misMatchPercentage, isWithinMismatchTolerance, isSameDimensions);
     }
 
     logger.verbose('first run - create reference file');

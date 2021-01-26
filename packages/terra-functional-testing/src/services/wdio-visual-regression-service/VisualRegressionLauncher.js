@@ -91,7 +91,7 @@ class VisualRegressionLauncher {
      * @param {String[]} options.hide - The list of elements to set opacity 0 on to 'hide' from the dom when capturing the screenshot.
      * @param {String[]} options.remove - The list of elements to set display: none on to 'remove' from dom when capturing the screenshot.
      * @param {String} options.ignoreComparison - The image comparison algorithm to use when processing the screenshot comparison.
-     * @param {Number} options.misMatchTolerance - The acceptable mismatch tolerance the screenshot can have when processing the screenshot comparison.
+     * @param {Number} options.mismatchTolerance - The acceptable mismatch tolerance the screenshot can have when processing the screenshot comparison.
      * @returns {Object} - The screenshot comparison results returned as { misMatchPercentage: Number, isSameDimensions: Boolean, getImageDataUrl: function }.
      */
     return async function wrappedScreenshotCommand(elementSelector, options) {

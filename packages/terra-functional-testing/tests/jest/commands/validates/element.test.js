@@ -8,7 +8,7 @@ describe('element', () => {
     element('test-name');
 
     expect(accessibility).toHaveBeenCalledWith({ rules: undefined });
-    expect(screenshot).toHaveBeenCalledWith('test-name', { misMatchTolerance: undefined, selector: undefined });
+    expect(screenshot).toHaveBeenCalledWith('test-name', { mismatchTolerance: undefined, selector: undefined });
   });
 
   it('should throw error when no test name is provided', () => {
@@ -39,10 +39,10 @@ describe('element', () => {
     element('test-name', {
       rules: { 'mock-rule': { enabled: false } },
       selector: 'mock-selector',
-      misMatchTolerance: 10,
+      mismatchTolerance: 10,
     });
 
     expect(accessibility).toHaveBeenCalledWith({ rules: { 'mock-rule': { enabled: false } } });
-    expect(screenshot).toHaveBeenCalledWith('test-name', { misMatchTolerance: 10, selector: 'mock-selector' });
+    expect(screenshot).toHaveBeenCalledWith('test-name', { mismatchTolerance: 10, selector: 'mock-selector' });
   });
 });

@@ -9,7 +9,7 @@ const screenshot = require('./screenshot');
  * @param {string} [testName] - the required test case name.
  * @param {Object} [options] - the test options
  * @param {Object} [options.rules] - the axe rules to use to assert accessibility.
- * @param {Number} [options.misMatchTolerance] - the mismatch tolerance for the screenshot comparison.
+ * @param {Number} [options.mismatchTolerance] - the mismatch tolerance for the screenshot comparison.
  * @param {string} [options.selector] - the element selector to use for the screenshot comparison.
  */
 const element = (testName, options = {}) => {
@@ -17,10 +17,10 @@ const element = (testName, options = {}) => {
     throw new Error('[terra-functional-testing:element] Terra.validate.element requires a unique test name as the first argument.');
   }
 
-  const { rules, misMatchTolerance, selector } = options;
+  const { rules, mismatchTolerance, selector } = options;
 
   accessibility({ rules });
-  screenshot(testName, { misMatchTolerance, selector });
+  screenshot(testName, { mismatchTolerance, selector });
 };
 
 module.exports = element;

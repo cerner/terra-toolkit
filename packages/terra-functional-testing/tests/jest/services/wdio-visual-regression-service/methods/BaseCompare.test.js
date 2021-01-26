@@ -143,7 +143,7 @@ describe('BaseCompare', () => {
         const results = baseCompare.createResultReport(true, 0, true, true);
         expect(results).toEqual(expect.objectContaining({
           misMatchPercentage: 0,
-          isWithinMisMatchTolerance: true,
+          isWithinMismatchTolerance: true,
           isSameDimensions: true,
           isExactSameImage: true,
         }));
@@ -153,7 +153,7 @@ describe('BaseCompare', () => {
         const results = baseCompare.createResultReport(true, 0, true, false);
         expect(results).toEqual(expect.objectContaining({
           misMatchPercentage: 0,
-          isWithinMisMatchTolerance: true,
+          isWithinMismatchTolerance: true,
           isSameDimensions: false,
           isExactSameImage: false,
         }));
@@ -163,7 +163,7 @@ describe('BaseCompare', () => {
         const results = baseCompare.createResultReport(true, 30, true, false);
         expect(results).toEqual(expect.objectContaining({
           misMatchPercentage: 30,
-          isWithinMisMatchTolerance: true,
+          isWithinMismatchTolerance: true,
           isSameDimensions: false,
           isExactSameImage: false,
         }));
