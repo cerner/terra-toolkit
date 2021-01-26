@@ -78,7 +78,7 @@
     "start-heroku": "npm run terra -- express-server --port $PORT --site './build' ",
     "terra": "node ./packages/terra-cli/bin/terra",
     "test": "npm run lint && npm run jest && npm run mocha && npm run wdio",
-    "vanilla-selenium": "node ./packages/terra-functional-testing/tests/wdio/test-spec.js",
+    "vanilla-selenium": "node ./packages/terra-functional-testing/tests/wdio/vanilla-selenium-spec.js",
     "wdio-ie": "rm -f ./ie-verification.png && npm run terra -- wdio --gridUrl grid314.test.devcernerpowerchart.com --browsers ie --spec ./packages/terra-functional-testing/tests/wdio/test-spec.js",
     "wdio-ie-local-hub": "rm -f ./ie-verification.png && SELENIUM_GRID_PORT=4444 npm run terra -- wdio --gridUrl '10.188.194.84' --browsers ie --spec ./packages/terra-functional-testing/tests/wdio/test-spec.js",
     "wdio-site": "SITE=build npm run terra -- wdio",
