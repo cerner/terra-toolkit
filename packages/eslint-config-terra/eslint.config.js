@@ -76,6 +76,7 @@ module.exports = {
         before: true,
         browser: true,
         Terra: true,
+        $: true,
       },
     },
     {
