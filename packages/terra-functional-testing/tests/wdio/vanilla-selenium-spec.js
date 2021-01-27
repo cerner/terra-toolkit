@@ -12,20 +12,26 @@ function dispatchEvent(eventName, eventMetaData) {
 
 (async function reducedTestCase() {
   const driver = new Builder()
-    .usingServer("http://10.188.194.84:4444/wd/hub")
+    .usingServer("http://10.188.198.242:4444/wd/hub")
     .withCapabilities(Capabilities.ie(ieOptions))
     .build();
   try {
     await driver.get('https://engineering.cerner.com/terra-application/tests/terra-application/application-base/private/test-overrides-test/');
-    // await driver.executeScript(function() { dispatchEvent('applicationBase.testOverride', { locale: 'es' }); });
-    // await driver.executeScript(function() { dispatchEvent('applicationBase.testOverride', { locale: 'fr' }); });
-    await driver.executeScript("window.open()");
-    await driver.executeScript("console.log('test')");
+    await driver.executeScript(function(event) {
+      dispatchEvent(event.name, event.metaData);
+    }, { name: 'applicationBase.testOverride', metaData: { locale: 'en-US' }});
+    await driver.executeScript(function(event) {
+      dispatchEvent(event.name, event.metaData);
+    }, { name: 'applicationBase.testOverride', metaData: { locale: 'fr' }});
+    // await driver.executeScript("getStatus");
+    // await driver.executeScript("console.log('test')");
     await driver.navigate().refresh();
-    // await driver.executeScript(function() { dispatchEvent('applicationBase.testOverride', { locale: 'de' }); });
-    // await driver.executeScript(function() { dispatchEvent('applicationBase.testOverride', { locale: 'pt' }); });
-    await driver.executeScript("console.log('test')");
-    await driver.executeScript("console.log('test')");
+    await driver.executeScript(function(event) {
+      dispatchEvent(event.name, event.metaData);
+    }, { name: 'applicationBase.testOverride', metaData: { locale: 'pt' }});
+    await driver.executeScript(function(event) {
+      dispatchEvent(event.name, event.metaData);
+    }, { name: 'applicationBase.testOverride', metaData: { locale: 'de' }});
   } finally {
     await driver.quit();
   }
