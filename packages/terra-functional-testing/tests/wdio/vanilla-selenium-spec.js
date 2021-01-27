@@ -20,16 +20,12 @@ function dispatchEvent(eventName, eventMetaData) {
     await driver.executeScript(function(event) {
       dispatchEvent(event.name, event.metaData);
     }, { name: 'applicationBase.testOverride', metaData: { locale: 'en-US' }});
-    await driver.executeScript(function(event) {
-      dispatchEvent(event.name, event.metaData);
-    }, { name: 'applicationBase.testOverride', metaData: { locale: 'fr' }});
+    await driver.executeScript(function() { console.log('test'); });
     await driver.navigate().refresh();
     await driver.executeScript(function(event) {
       dispatchEvent(event.name, event.metaData);
     }, { name: 'applicationBase.testOverride', metaData: { locale: 'pt' }});
-    await driver.executeScript(function(event) {
-      dispatchEvent(event.name, event.metaData);
-    }, { name: 'applicationBase.testOverride', metaData: { locale: 'de' }});
+    await driver.executeScript(function() { console.log('test'); });
   } finally {
     await driver.quit();
   }
