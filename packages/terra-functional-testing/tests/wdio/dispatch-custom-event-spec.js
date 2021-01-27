@@ -1,4 +1,3 @@
-/* global $ */
 const dispatchCustomEvent = require('../../src/commands/utils/dispatchCustomEvent');
 
 describe('dispatchCustomEvent', () => {

@@ -1,4 +1,4 @@
-jest.mock('terra-aggregate-translations');
+jest.mock('@cerner/terra-aggregate-translations');
 jest.mock('postcss-assets-webpack-plugin');
 jest.mock('postcss-custom-properties');
 jest.mock('mini-css-extract-plugin');
@@ -15,7 +15,7 @@ const PostCSSCustomProperties = require('postcss-custom-properties');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const aggregateTranslations = require('terra-aggregate-translations');
+const aggregateTranslations = require('@cerner/terra-aggregate-translations');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
 const ThemeAggregator = require('../../src/aggregate-themes/theme-aggregator');
 const getThemeWebpackPromise = require('../../src/aggregate-themes/getThemeWebpackPromise');
