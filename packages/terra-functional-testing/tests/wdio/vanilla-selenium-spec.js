@@ -23,8 +23,6 @@ function dispatchEvent(eventName, eventMetaData) {
     await driver.executeScript(function(event) {
       dispatchEvent(event.name, event.metaData);
     }, { name: 'applicationBase.testOverride', metaData: { locale: 'fr' }});
-    // await driver.executeScript("getStatus");
-    // await driver.executeScript("console.log('test')");
     await driver.navigate().refresh();
     await driver.executeScript(function(event) {
       dispatchEvent(event.name, event.metaData);
