@@ -135,7 +135,7 @@ If you are using Rails/Webpacker, you can generate the aggregate-translation fil
 ```js
 const { environment } = require('@rails/webpacker')
 
-const aggregateTranslations = require('terra-aggregate-translations');
+const aggregateTranslations = require('@cerner/terra-aggregate-translations');
 
 // generate the 'aggregated-translations' in 'tmp'
 aggregateTranslations({
