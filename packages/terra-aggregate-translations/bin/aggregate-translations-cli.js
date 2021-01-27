@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const commander = require('commander');
-const supportedLocales = require('../config/i18nSupportedLocales');
+const supportedLocales = require('../lib/config/i18nSupportedLocales');
 
 const aggregateTranslations = require('../lib/aggregate-translations');
 
