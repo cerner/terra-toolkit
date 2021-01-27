@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.3.0 - (January 27, 2021)
+
 * Added
   * Added `browser` to `resolve.mainFields` in webpack module list.
   

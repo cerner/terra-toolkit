@@ -1,7 +1,6 @@
 {
-  "private": true,
   "name": "@cerner/terra-aggregate-translations",
-  "version": "1.12.0",
+  "version": "2.0.0",
   "description": "The terra-aggregate-translations pre-build tool assists with creating the translation, intl loader and translation loader files that are configured for the specified locales. This tool is offered as a CLI script and as a setup function.",
   "publishConfig": {
     "access": "public"

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.0 - (January 27, 2021)
+
 * Breaking
   * Drop support for node versions below version 10.
   * Scope package under @cerner.
