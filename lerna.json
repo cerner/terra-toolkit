@@ -4,7 +4,8 @@
     "publish": {
       "ignoreChanges": [
         "packages/package-json-lint/**",
-        "packages/terra-functional-testing/**"
+        "packages/terra-functional-testing/**",
+        "packages/terra-aggregate-translations/**"
       ]
     }
   },

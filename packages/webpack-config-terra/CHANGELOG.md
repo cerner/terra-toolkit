@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+  * Passively consume @cerner/terra-aggregate-translations package.
+
 ## 1.2.0 - (January 5, 2021)
 
 * Changed
