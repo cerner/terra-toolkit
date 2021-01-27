@@ -1,0 +1,323 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`write compiled i18n loaders for fse fileSystem writes a translation file for a non-terra-supported locale 1`] = `
+"'use strict';
+
+var loadCyIntl = function loadCyIntl() {
+  return require.ensure([], function (require) {
+    return require('intl/locale-data/jsonp/cy.js');
+  }, 'cy-intl-local');
+};
+
+var intlLoaders = {
+  'cy': loadCyIntl
+};
+
+module.exports = intlLoaders;"
+`;
+
+exports[`write compiled i18n loaders for fse fileSystem writes a translation file for a non-terra-supported locale 2`] = `
+"'use strict';
+
+var loadCyTranslations = function loadCyTranslations(callback, scope) {
+  return require.ensure([], function (require) {
+    // eslint-disable-next-line
+    var i18n = require('./cy.js');
+    callback.call(scope, i18n);
+    return i18n;
+  }, 'cy-translations');
+};
+
+var translationsLoaders = {
+  'cy': loadCyTranslations
+};
+
+module.exports = translationsLoaders;"
+`;
+
+exports[`write compiled i18n loaders for fse fileSystem writes a translation file for a non-terra-supported locale 3`] = `undefined`;
+
+exports[`write compiled i18n loaders for fse fileSystem writes compiled loader files 1`] = `
+"'use strict';
+
+var loadEnIntl = function loadEnIntl() {
+  return require.ensure([], function (require) {
+    return require('intl/locale-data/jsonp/en.js');
+  }, 'en-intl-local');
+};
+
+var loadEnUSIntl = function loadEnUSIntl() {
+  return require.ensure([], function (require) {
+    return require('intl/locale-data/jsonp/en-US.js');
+  }, 'en-US-intl-local');
+};
+
+var loadEsIntl = function loadEsIntl() {
+  return require.ensure([], function (require) {
+    return require('intl/locale-data/jsonp/es.js');
+  }, 'es-intl-local');
+};
+
+var intlLoaders = {
+  'en': loadEnIntl,
+  'en-US': loadEnUSIntl,
+  'es': loadEsIntl
+};
+
+module.exports = intlLoaders;"
+`;
+
+exports[`write compiled i18n loaders for fse fileSystem writes compiled loader files 2`] = `
+"'use strict';
+
+var loadEnTranslations = function loadEnTranslations(callback, scope) {
+  return require.ensure([], function (require) {
+    // eslint-disable-next-line
+    var i18n = require('./en.js');
+    callback.call(scope, i18n);
+    return i18n;
+  }, 'en-translations');
+};
+
+var loadEnUSTranslations = function loadEnUSTranslations(callback, scope) {
+  return require.ensure([], function (require) {
+    // eslint-disable-next-line
+    var i18n = require('./en-US.js');
+    callback.call(scope, i18n);
+    return i18n;
+  }, 'en-US-translations');
+};
+
+var loadEsTranslations = function loadEsTranslations(callback, scope) {
+  return require.ensure([], function (require) {
+    // eslint-disable-next-line
+    var i18n = require('./es.js');
+    callback.call(scope, i18n);
+    return i18n;
+  }, 'es-translations');
+};
+
+var translationsLoaders = {
+  'en': loadEnTranslations,
+  'en-US': loadEnUSTranslations,
+  'es': loadEsTranslations
+};
+
+module.exports = translationsLoaders;"
+`;
+
+exports[`write compiled i18n loaders for fse fileSystem writes compiled loader files 3`] = `undefined`;
+
+exports[`write compiled i18n loaders for fse fileSystem writes compiled loader files with modern format if specified 1`] = `
+"'use strict';
+
+const loadEnIntl = () =>
+   import('intl/locale-data/jsonp/en.js')
+   .catch(error => console.log('An error occurred while loading intl/locale-data/jsonp/en.js' + \\"\\\\n\\" + error));
+
+const loadEnUSIntl = () =>
+   import('intl/locale-data/jsonp/en-US.js')
+   .catch(error => console.log('An error occurred while loading intl/locale-data/jsonp/en-US.js' + \\"\\\\n\\" + error));
+
+const loadEsIntl = () =>
+   import('intl/locale-data/jsonp/es.js')
+   .catch(error => console.log('An error occurred while loading intl/locale-data/jsonp/es.js' + \\"\\\\n\\" + error));
+
+var intlLoaders = {
+  'en': loadEnIntl,
+  'en-US': loadEnUSIntl,
+  'es': loadEsIntl
+};
+
+module.exports = intlLoaders;"
+`;
+
+exports[`write compiled i18n loaders for fse fileSystem writes compiled loader files with modern format if specified 2`] = `
+"'use strict';
+
+const loadEnTranslations = (callback, scope) =>
+   import( /* webpackChunkName: \\"en-translations\\" */ 'en.js')
+     .then((module) => { callback.call(scope, module);})
+     .catch(error => console.log('An error occurred while loading en.js' + \\"\\\\n\\" + error));
+
+const loadEnUSTranslations = (callback, scope) =>
+   import( /* webpackChunkName: \\"en-US-translations\\" */ 'en-US.js')
+     .then((module) => { callback.call(scope, module);})
+     .catch(error => console.log('An error occurred while loading en-US.js' + \\"\\\\n\\" + error));
+
+const loadEsTranslations = (callback, scope) =>
+   import( /* webpackChunkName: \\"es-translations\\" */ 'es.js')
+     .then((module) => { callback.call(scope, module);})
+     .catch(error => console.log('An error occurred while loading es.js' + \\"\\\\n\\" + error));
+
+var translationsLoaders = {
+  'en': loadEnTranslations,
+  'en-US': loadEnUSTranslations,
+  'es': loadEsTranslations
+};
+
+module.exports = translationsLoaders;"
+`;
+
+exports[`write compiled i18n loaders for fse fileSystem writes compiled loader files with modern format if specified 3`] = `undefined`;
+
+exports[`write compiled i18n loaders for memoryFS fileSystem writes a translation file for a non-terra-supported locale 1`] = `
+"'use strict';
+
+var loadCyIntl = function loadCyIntl() {
+  return require.ensure([], function (require) {
+    return require('intl/locale-data/jsonp/cy.js');
+  }, 'cy-intl-local');
+};
+
+var intlLoaders = {
+  'cy': loadCyIntl
+};
+
+module.exports = intlLoaders;"
+`;
+
+exports[`write compiled i18n loaders for memoryFS fileSystem writes a translation file for a non-terra-supported locale 2`] = `
+"'use strict';
+
+var loadCyTranslations = function loadCyTranslations(callback, scope) {
+  return require.ensure([], function (require) {
+    // eslint-disable-next-line
+    var i18n = require('./cy.js');
+    callback.call(scope, i18n);
+    return i18n;
+  }, 'cy-translations');
+};
+
+var translationsLoaders = {
+  'cy': loadCyTranslations
+};
+
+module.exports = translationsLoaders;"
+`;
+
+exports[`write compiled i18n loaders for memoryFS fileSystem writes a translation file for a non-terra-supported locale 3`] = `undefined`;
+
+exports[`write compiled i18n loaders for memoryFS fileSystem writes compiled loader files 1`] = `
+"'use strict';
+
+var loadEnIntl = function loadEnIntl() {
+  return require.ensure([], function (require) {
+    return require('intl/locale-data/jsonp/en.js');
+  }, 'en-intl-local');
+};
+
+var loadEnUSIntl = function loadEnUSIntl() {
+  return require.ensure([], function (require) {
+    return require('intl/locale-data/jsonp/en-US.js');
+  }, 'en-US-intl-local');
+};
+
+var loadEsIntl = function loadEsIntl() {
+  return require.ensure([], function (require) {
+    return require('intl/locale-data/jsonp/es.js');
+  }, 'es-intl-local');
+};
+
+var intlLoaders = {
+  'en': loadEnIntl,
+  'en-US': loadEnUSIntl,
+  'es': loadEsIntl
+};
+
+module.exports = intlLoaders;"
+`;
+
+exports[`write compiled i18n loaders for memoryFS fileSystem writes compiled loader files 2`] = `
+"'use strict';
+
+var loadEnTranslations = function loadEnTranslations(callback, scope) {
+  return require.ensure([], function (require) {
+    // eslint-disable-next-line
+    var i18n = require('./en.js');
+    callback.call(scope, i18n);
+    return i18n;
+  }, 'en-translations');
+};
+
+var loadEnUSTranslations = function loadEnUSTranslations(callback, scope) {
+  return require.ensure([], function (require) {
+    // eslint-disable-next-line
+    var i18n = require('./en-US.js');
+    callback.call(scope, i18n);
+    return i18n;
+  }, 'en-US-translations');
+};
+
+var loadEsTranslations = function loadEsTranslations(callback, scope) {
+  return require.ensure([], function (require) {
+    // eslint-disable-next-line
+    var i18n = require('./es.js');
+    callback.call(scope, i18n);
+    return i18n;
+  }, 'es-translations');
+};
+
+var translationsLoaders = {
+  'en': loadEnTranslations,
+  'en-US': loadEnUSTranslations,
+  'es': loadEsTranslations
+};
+
+module.exports = translationsLoaders;"
+`;
+
+exports[`write compiled i18n loaders for memoryFS fileSystem writes compiled loader files 3`] = `undefined`;
+
+exports[`write compiled i18n loaders for memoryFS fileSystem writes compiled loader files with modern format if specified 1`] = `
+"'use strict';
+
+const loadEnIntl = () =>
+   import('intl/locale-data/jsonp/en.js')
+   .catch(error => console.log('An error occurred while loading intl/locale-data/jsonp/en.js' + \\"\\\\n\\" + error));
+
+const loadEnUSIntl = () =>
+   import('intl/locale-data/jsonp/en-US.js')
+   .catch(error => console.log('An error occurred while loading intl/locale-data/jsonp/en-US.js' + \\"\\\\n\\" + error));
+
+const loadEsIntl = () =>
+   import('intl/locale-data/jsonp/es.js')
+   .catch(error => console.log('An error occurred while loading intl/locale-data/jsonp/es.js' + \\"\\\\n\\" + error));
+
+var intlLoaders = {
+  'en': loadEnIntl,
+  'en-US': loadEnUSIntl,
+  'es': loadEsIntl
+};
+
+module.exports = intlLoaders;"
+`;
+
+exports[`write compiled i18n loaders for memoryFS fileSystem writes compiled loader files with modern format if specified 2`] = `
+"'use strict';
+
+const loadEnTranslations = (callback, scope) =>
+   import( /* webpackChunkName: \\"en-translations\\" */ 'en.js')
+     .then((module) => { callback.call(scope, module);})
+     .catch(error => console.log('An error occurred while loading en.js' + \\"\\\\n\\" + error));
+
+const loadEnUSTranslations = (callback, scope) =>
+   import( /* webpackChunkName: \\"en-US-translations\\" */ 'en-US.js')
+     .then((module) => { callback.call(scope, module);})
+     .catch(error => console.log('An error occurred while loading en-US.js' + \\"\\\\n\\" + error));
+
+const loadEsTranslations = (callback, scope) =>
+   import( /* webpackChunkName: \\"es-translations\\" */ 'es.js')
+     .then((module) => { callback.call(scope, module);})
+     .catch(error => console.log('An error occurred while loading es.js' + \\"\\\\n\\" + error));
+
+var translationsLoaders = {
+  'en': loadEnTranslations,
+  'en-US': loadEnUSTranslations,
+  'es': loadEsTranslations
+};
+
+module.exports = translationsLoaders;"
+`;
+
+exports[`write compiled i18n loaders for memoryFS fileSystem writes compiled loader files with modern format if specified 3`] = `undefined`;

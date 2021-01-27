@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 4.4.0 - (January 27, 2021)
+
+* Changed
+  * Added $ to globals for usage in WDIO spec tests
+
 ## 4.3.0 - (January 5, 2021)
 
 * Changed
