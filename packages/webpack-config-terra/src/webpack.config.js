@@ -227,7 +227,7 @@ const defaultWebpackConfig = (env = {}, argv = {}, options = {}) => {
     resolve: {
       extensions: ['.js', '.jsx'],
       modules: getResolveModules(env),
-      mainFields: ['main'],
+      mainFields: ['browser', 'main'],
     },
     output: {
       filename: `${filename}.js`,

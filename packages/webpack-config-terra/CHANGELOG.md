@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Added
+  * Added `browser` to `resolve.mainFields` in webpack module list.
+  
 * Changed
   * Passively consume @cerner/terra-aggregate-translations package.
 
