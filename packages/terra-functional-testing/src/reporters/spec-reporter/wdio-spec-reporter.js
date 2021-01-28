@@ -18,7 +18,7 @@ class SpecReporter extends WDIOReporter {
 
   /**
    * Formats the test runner spec results.
-   * @param {SuiteStats} runner - The root suite object.
+   * @param {SuiteStats} rootSuite - The root suite object.
    * @param {RunnerStats} runner - The test runner stats object.
    * @returns {Object} - A formatted results object for a single spec file.
    */

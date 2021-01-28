@@ -96,7 +96,7 @@ const writeResultsToFile = (outputDir, results, options) => {
 
 /**
  * Merges the spec reporter results into a single file (per browser).
- * @param {Object} metadata - Additional metadata to include in the output file.
+ * @param {Object} options - Additional option data to include in the output file.
  */
 const mergeResults = (options = {}) => {
   const outputDir = getOutputDir();
