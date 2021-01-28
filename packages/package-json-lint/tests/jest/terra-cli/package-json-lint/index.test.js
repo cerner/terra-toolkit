@@ -6,7 +6,7 @@ const PackageJsonLintCommand = require('../../../../src/terra-cli/package-json-l
 
 describe('package-json-lint', () => {
   it('declares the package-json-lint terra-cli command with proper top level help', async () => {
-    const parser = yargs.command(PrepareForReleaseCommand).scriptName('terra').help();
+    const parser = yargs.command(PackageJsonLintCommand).scriptName('terra').help();
     const helpOutput = await new Promise((resolve) => {
       parser.parse('--help', (err, argv, output) => {
         resolve(output);
@@ -16,7 +16,7 @@ describe('package-json-lint', () => {
   });
 
   it('declares the package-json-lint terra-cli command with proper command level help', async () => {
-    const parser = yargs.command(PrepareForReleaseCommand).scriptName('terra').help();
+    const parser = yargs.command(PackageJsonLintCommand).scriptName('terra').help();
     const helpOutput = await new Promise((resolve) => {
       parser.parse('prepare-for-release --help', (err, argv, output) => {
         resolve(output);
@@ -26,7 +26,7 @@ describe('package-json-lint', () => {
   });
 
   it('uses the appropriate handler when calling package-json-lint', async () => {
-    await PrepareForReleaseCommand.handler();
+    await PackageJsonLintCommand.handler();
     expect(lint).toHaveBeenCalled();
   });
 });
