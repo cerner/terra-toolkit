@@ -1,10 +1,7 @@
-import { parse as parsePlatform } from 'platform';
-
 import VisualRegressionLauncher from '../../../../src/services/wdio-visual-regression-service/VisualRegressionLauncher';
 import LocalCompare from '../../../../src/services/wdio-visual-regression-service/methods/LocalCompare';
 import getTerraFormFactor from '../../../../src/services/wdio-visual-regression-service/modules/getTerraFormFactor';
 
-jest.mock('platform');
 jest.mock('../../../../src/services/wdio-visual-regression-service/modules/getTerraFormFactor');
 
 describe('VisualRegressionLauncher', () => {
@@ -36,21 +33,19 @@ describe('VisualRegressionLauncher', () => {
         execute: jest.fn(),
         addCommand: jest.fn(),
       };
-      parsePlatform.mockReturnValue({ name: 'chrome', version: '64.05', ua: 'mac' });
     });
 
     afterAll(() => {
       global.browser = {};
     });
 
-    it('determines the browser information', async () => {
+    it('determines the capabilities', async () => {
       expect(service.context).toBeNull();
-      await service.before({}, []);
+      const capabilities = { browserName: 'chrome' };
+      await service.before(capabilities, []);
 
-      expect(service.context).toHaveProperty('browserInfo', {
-        name: 'chrome',
-        version: '64.05',
-        userAgent: 'mac',
+      expect(service.context).toHaveProperty('desiredCapabilities', {
+        browserName: 'chrome',
       });
     });
 
@@ -114,16 +109,19 @@ describe('VisualRegressionLauncher', () => {
       };
 
       // ensure binding behaves as expected
-      service.context = { browserInfo: { name: 'chrome' } };
+      service.context = { desiredCapabilities: { browserName: 'chrome' } };
       service.beforeSuite('test-suite');
       service.beforeTest('test');
 
       const expectedScreenshotContext = {
-        browserInfo: { name: 'chrome' },
+        desiredCapabilities: { browserName: 'chrome' },
         suite: 'test-suite',
         test: 'test',
         meta: {
           currentFormFactor: 'huge',
+        },
+        options: {
+          name: 'mock',
         },
       };
 
@@ -146,16 +144,19 @@ describe('VisualRegressionLauncher', () => {
       };
 
       // ensure binding behaves as expected
-      service.context = { browserInfo: { name: 'firefox' } };
+      service.context = { desiredCapabilities: { browserName: 'firefox' } };
       service.beforeSuite('test-suite2');
       service.beforeTest('test2');
 
       const expectedScreenshotContext = {
-        browserInfo: { name: 'firefox' },
+        desiredCapabilities: { browserName: 'firefox' },
         suite: 'test-suite2',
         test: 'test2',
         meta: {
           currentFormFactor: 'landscape',
+        },
+        options: {
+          name: 'mock',
         },
       };
 

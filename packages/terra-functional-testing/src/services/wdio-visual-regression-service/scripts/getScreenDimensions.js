@@ -1,4 +1,4 @@
-export default function getScreenDimension() {
+function getScreenDimension() {
   const { body } = document;
   const html = document.documentElement;
 
@@ -24,3 +24,5 @@ export default function getScreenDimension() {
     },
   };
 }
+
+module.exports = getScreenDimension;

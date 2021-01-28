@@ -1,17 +1,13 @@
 /* global browser */
-import _ from 'lodash';
-import { parse as parsePlatform } from 'platform';
-
-import { LocalCompare } from './compare';
-import makeElementScreenshot from './modules/makeElementScreenshot';
-
-import getUserAgent from './scripts/getUserAgent';
-import getTerraFormFactor from './modules/getTerraFormFactor';
+const lodashIdentity = require('lodash.identity');
+const lodashPickby = require('lodash.pickby');
+const { LocalCompare } = require('./compare');
+const makeElementScreenshot = require('./modules/makeElementScreenshot');
+const getTerraFormFactor = require('./modules/getTerraFormFactor');
 
 class VisualRegressionLauncher {
   /**
    * @param {Object} options - Service configuration options.
-   * @param {Object} options.baseScreenshotDir - The base screenshot directory path to save screenshot in.
    * @param {Object} options.locale - The locale being tested.
    * @param {Object} options.theme - The theme being tested.
    */
@@ -29,16 +25,9 @@ class VisualRegressionLauncher {
    * @param {[type]} specs
    * @return null
    */
-  async before() {
-    const userAgent = await browser.execute(getUserAgent);
-    const { name, version, ua } = parsePlatform(userAgent);
-
+  async before(capabilities) {
     this.context = {
-      browserInfo: {
-        name,
-        version,
-        userAgent: ua,
-      },
+      desiredCapabilities: capabilities,
     };
 
     browser.addCommand('checkElement', this.wrapCommand(browser, makeElementScreenshot));
@@ -91,7 +80,8 @@ class VisualRegressionLauncher {
      * @param {String[]} options.hide - The list of elements to set opacity 0 on to 'hide' from the dom when capturing the screenshot.
      * @param {String[]} options.remove - The list of elements to set display: none on to 'remove' from dom when capturing the screenshot.
      * @param {String} options.ignoreComparison - The image comparison algorithm to use when processing the screenshot comparison.
-     * @param {Number} options.misMatchTolerance - The acceptable mismatch tolerance the screenshot can have when processing the screenshot comparison.
+     * @param {Number} options.mismatchTolerance - The acceptable mismatch tolerance the screenshot can have when processing the screenshot comparison.
+     * @param {String} options.name - The name of the screenshot.
      * @returns {Object} - The screenshot comparison results returned as { misMatchPercentage: Number, isSameDimensions: Boolean, getImageDataUrl: function }.
      */
     return async function wrappedScreenshotCommand(elementSelector, options) {
@@ -103,15 +93,16 @@ class VisualRegressionLauncher {
       }
 
       const screenshotContext = {
-        browserInfo: this.context.browserInfo,
+        desiredCapabilities: this.context.desiredCapabilities,
         suite: this.currentSuite,
         test: this.currentTest,
         meta: {
           currentFormFactor,
         },
+        options,
       };
 
-      const screenshotContextCleaned = _.pickBy(screenshotContext, _.identity);
+      const screenshotContextCleaned = lodashPickby(screenshotContext, lodashIdentity);
       const base64Screenshot = await command(browser, elementSelector, options);
       const results = await this.compare.processScreenshot(screenshotContextCleaned, base64Screenshot);
       return results;

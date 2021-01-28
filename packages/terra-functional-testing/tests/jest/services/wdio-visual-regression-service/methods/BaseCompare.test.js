@@ -5,16 +5,17 @@ import BaseCompare from '../../../../../src/services/wdio-visual-regression-serv
 const dirTmp = path.resolve(__dirname, '..', '..', '..', '..', 'tmp');
 
 const context = {
-  browserInfo: {
-    name: 'chrome',
+  desiredCapabilities: {
+    browserName: 'chrome',
   },
   test: {
     file: path.join(dirTmp, 'test-spec.js'),
-    parent: 'Test Component',
-    title: 'displays a button',
   },
   meta: {
     currentFormFactor: 'large',
+  },
+  options: {
+    name: 'displays a button',
   },
 };
 
@@ -35,23 +36,21 @@ describe('BaseCompare', () => {
   });
 
   describe('BaseCompare.getScreenshotName', () => {
-    it('used parent + test name as screenshot name', () => {
+    it('used test name as screenshot name', () => {
       const baseCompare = new BaseCompare({});
       const createTestNameSpy = jest.spyOn(baseCompare, 'createTestName');
 
       const result = baseCompare.getScreenshotName(context);
-      expect(result).toEqual('Test_Component[displays_a_button].png');
-      expect(createTestNameSpy).toHaveBeenNthCalledWith(1, context.test.parent);
-      expect(createTestNameSpy).toHaveBeenNthCalledWith(2, context.test.title);
+      expect(result).toEqual('displays_a_button.png');
+      expect(createTestNameSpy).toHaveBeenNthCalledWith(1, context.options.name);
     });
 
-    it('uses parent + custom name screenshot name', () => {
+    it('uses custom name screenshot name', () => {
       const baseCompare = new BaseCompare({});
       const createTestNameSpy = jest.spyOn(baseCompare, 'createTestName');
       const result = baseCompare.getScreenshotName({ ...context, options: { name: 'custom' } });
-      expect(result).toEqual('Test_Component[custom].png');
-      expect(createTestNameSpy).toHaveBeenNthCalledWith(1, context.test.parent);
-      expect(createTestNameSpy).toHaveBeenNthCalledWith(2, 'custom');
+      expect(result).toEqual('custom.png');
+      expect(createTestNameSpy).toHaveBeenNthCalledWith(1, 'custom');
     });
   });
 
@@ -65,7 +64,6 @@ describe('BaseCompare', () => {
   describe('BaseCompare.getScreenshotPaths', () => {
     it('creates reference, latest, and diff paths with default values', () => {
       const baseCompare = new BaseCompare({
-        baseScreenshotDir: process.cwd(),
         locale: 'en',
         theme: 'cerner-default-theme',
       });
@@ -83,7 +81,6 @@ describe('BaseCompare', () => {
 
     it('creates reference, latest, and diff paths for tests pulled from node_modules', () => {
       const baseCompare = new BaseCompare({
-        baseScreenshotDir: process.cwd(),
         locale: 'en',
         theme: 'cerner-default-theme',
       });
@@ -102,23 +99,6 @@ describe('BaseCompare', () => {
       expect(result.referencePath).toEqual(path.join(process.cwd(), 'test', 'wdio', '__snapshots__', 'reference', 'screenshotDir', 'screenshotName.png'));
       expect(result.latestPath).toEqual(path.join(process.cwd(), 'test', 'wdio', '__snapshots__', 'latest', 'screenshotDir', 'screenshotName.png'));
       expect(result.diffPath).toEqual(path.join(process.cwd(), 'test', 'wdio', '__snapshots__', 'diff', 'screenshotDir', 'screenshotName.png'));
-    });
-
-    it('creates reference, latest, and diff paths with custom baseScreenshotDir', () => {
-      const baseCompare = new BaseCompare({
-        baseScreenshotDir: 'customBaseScreenshotDir',
-        locale: 'en',
-        theme: 'cerner-default-theme',
-      });
-      jest.spyOn(baseCompare, 'getScreenshotDir').mockReturnValue('screenshotDir');
-      jest.spyOn(baseCompare, 'getScreenshotName').mockReturnValue('screenshotName.png');
-
-      const result = baseCompare.getScreenshotPaths(context);
-      const tempDirPath = path.join('packages', 'terra-functional-testing', 'tests', 'tmp');
-
-      expect(result.referencePath).toEqual(path.join('customBaseScreenshotDir', tempDirPath, '__snapshots__', 'reference', 'screenshotDir', 'screenshotName.png'));
-      expect(result.latestPath).toEqual(path.join('customBaseScreenshotDir', tempDirPath, '__snapshots__', 'latest', 'screenshotDir', 'screenshotName.png'));
-      expect(result.diffPath).toEqual(path.join('customBaseScreenshotDir', tempDirPath, '__snapshots__', 'diff', 'screenshotDir', 'screenshotName.png'));
     });
   });
 
@@ -146,9 +126,8 @@ describe('BaseCompare', () => {
         const results = baseCompare.createResultReport(true, 0, true, true);
         expect(results).toEqual(expect.objectContaining({
           misMatchPercentage: 0,
-          isWithinMisMatchTolerance: true,
+          isWithinMismatchTolerance: true,
           isSameDimensions: true,
-          isExactSameImage: true,
         }));
       });
 
@@ -156,9 +135,8 @@ describe('BaseCompare', () => {
         const results = baseCompare.createResultReport(true, 0, true, false);
         expect(results).toEqual(expect.objectContaining({
           misMatchPercentage: 0,
-          isWithinMisMatchTolerance: true,
+          isWithinMismatchTolerance: true,
           isSameDimensions: false,
-          isExactSameImage: false,
         }));
       });
 
@@ -166,9 +144,8 @@ describe('BaseCompare', () => {
         const results = baseCompare.createResultReport(true, 30, true, false);
         expect(results).toEqual(expect.objectContaining({
           misMatchPercentage: 30,
-          isWithinMisMatchTolerance: true,
+          isWithinMismatchTolerance: true,
           isSameDimensions: false,
-          isExactSameImage: false,
         }));
       });
     });

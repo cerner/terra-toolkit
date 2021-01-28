@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-export default function groupBoundingRect(boundingRects) {
+function groupBoundingRect(boundingRects) {
   return boundingRects.reduce((groupedBoundingRect, boundingRect) => {
     if (typeof groupedBoundingRect.top === 'undefined' || groupedBoundingRect.top > boundingRect.top) {
       groupedBoundingRect.top = boundingRect.top;
@@ -21,3 +21,5 @@ export default function groupBoundingRect(boundingRects) {
   }, {});
 }
 /* eslint-enable no-param-reassign */
+
+module.exports = groupBoundingRect;

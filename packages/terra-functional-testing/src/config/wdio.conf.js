@@ -6,6 +6,7 @@ const getCapabilities = require('./utils/getCapabilities');
 const SeleniumDockerService = require('../services/wdio-selenium-docker-service');
 const TerraService = require('../services/wdio-terra-service');
 const AssetServerService = require('../services/wdio-asset-server-service');
+const VisualRegressionLauncher = require('../services/wdio-visual-regression-service');
 
 const { AccessibilityReporter } = require('../reporters/accessibility-reporter');
 const { SpecReporter, cleanResults, mergeResults } = require('../reporters/spec-reporter');
@@ -138,6 +139,10 @@ exports.config = {
       ...THEME && { theme: THEME },
       ...WDIO_INTERNAL_PORT && { port: WDIO_INTERNAL_PORT },
       ...fs.existsSync(defaultWebpackPath) && { webpackConfig: defaultWebpackPath },
+    }],
+    [VisualRegressionLauncher, {
+      ...LOCALE && { locale: LOCALE },
+      ...THEME && { theme: THEME },
     }],
     // Do not add the docker service if disabled.
     ...(WDIO_DISABLE_SELENIUM_SERVICE || SELENIUM_GRID_URL ? [] : [[SeleniumDockerService]]),
