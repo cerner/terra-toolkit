@@ -1,0 +1,4 @@
+{
+  "Terra.fixtures1.test": "Test...",
+  "Terra.matching.key": "Nested translation that shouldn't get pulled in"
+}
