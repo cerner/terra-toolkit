@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+* Fixed
+  * Update permissions on binary
+
+## 2.0.1 - (January 27, 2021)
+
+* Changed
+  * Added missing bin cli file.
+
 ## 2.0.0 - (January 27, 2021)
 
 * Breaking
