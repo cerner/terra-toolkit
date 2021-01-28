@@ -18,7 +18,7 @@ describe('package-json-lint', () => {
   it('declares the package-json-lint terra-cli command with proper command level help', async () => {
     const parser = yargs.command(PackageJsonLintCommand).scriptName('terra').help();
     const helpOutput = await new Promise((resolve) => {
-      parser.parse('prepare-for-release --help', (err, argv, output) => {
+      parser.parse('package-json-lint --help', (err, argv, output) => {
         resolve(output);
       });
     });

@@ -1,11 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`package-json-lint declares the package-json-lint terra-cli command with proper command level help 1`] = `
-"terra [command]
+"terra package-json-lint
 
-Commands:
-  terra package-json-lint  Lint the package.json file(s) in the current package
-  terra package-json-lint  Lint the package.json file(s) in the current package
+Lint the package.json file(s) in the current package
 
 Options:
   --version  Show version number                                       [boolean]
