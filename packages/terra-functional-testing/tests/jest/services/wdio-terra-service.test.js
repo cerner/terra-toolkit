@@ -107,7 +107,6 @@ describe('WDIO Terra Service', () => {
     const service = new WdioTerraService({ formFactor: 'huge' });
     const expectedServiceOptions = {
       formFactor: 'huge',
-      ignoreComparisonResults: false,
       selector: '[data-terra-test-content] *:first-child',
       theme: 'terra-default-theme',
     };
@@ -121,7 +120,6 @@ describe('WDIO Terra Service', () => {
   it('should define commands in beforeSession', () => {
     const service = new WdioTerraService({ formFactor: 'huge' });
     const config = {
-      ignoreComparisonResults: false,
       serviceOptions: {
         selector: 'mock-selector',
       },
@@ -129,7 +127,6 @@ describe('WDIO Terra Service', () => {
 
     const expectedServiceOptions = {
       formFactor: 'huge',
-      ignoreComparisonResults: false,
       selector: 'mock-selector',
       theme: 'terra-default-theme',
     };
@@ -142,18 +139,14 @@ describe('WDIO Terra Service', () => {
 
   it('should define all commands', () => {
     const service = new WdioTerraService({ formFactor: 'large' });
-    const config = {
-      ignoreComparisonResults: true,
-    };
 
     const expectedServiceOptions = {
       formFactor: 'large',
-      ignoreComparisonResults: true,
       selector: '[data-terra-test-content] *:first-child',
       theme: 'terra-default-theme',
     };
 
-    service.beforeSession(config);
+    service.beforeSession({});
     service.before({ browserName: 'chrome' });
 
     expect(setViewport).toBeCalled();

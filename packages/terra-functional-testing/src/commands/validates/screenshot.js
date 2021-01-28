@@ -4,7 +4,6 @@
  *
  * This should be used within an `it` block.
  *
- * @param {[name, options]} [args] - the list of test arguments to parse.
  * @param {string} [testName] - the required test case name.
  * @param {Object} [options] - the visual regression test options. Options include mismatchTolerance and selector
  * @param {Object} [options.mismatchTolerance] - the mismatch tolerance for the screenshot comparison.

@@ -7,19 +7,17 @@ const TEST_ID_REGEX = /\[([^)]+)\]/;
 class BaseCompare {
   /**
    * @param {Object} options - Service configuration options.
-   * @param {Object} options.baseScreenshotDir - The base screenshot directory path to save screenshot in.
    * @param {Object} options.locale - The locale being tested.
    * @param {Object} options.theme - The theme being tested.
    */
   constructor(options) {
     const {
-      baseScreenshotDir,
       locale,
       theme,
     } = options;
 
     // screenshot naming config
-    this.baseScreenshotDir = baseScreenshotDir || process.cwd();
+    this.baseScreenshotDir = process.cwd();
     this.locale = locale || 'en';
     this.theme = theme || 'terra-default-theme';
   }
@@ -134,7 +132,6 @@ class BaseCompare {
       misMatchPercentage,
       isWithinMismatchTolerance,
       isSameDimensions,
-      isExactSameImage: misMatchPercentage === 0 && isSameDimensions,
     };
   }
 }

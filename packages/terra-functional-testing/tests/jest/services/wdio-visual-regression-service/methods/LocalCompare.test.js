@@ -159,7 +159,6 @@ describe('LocalCompare', () => {
         misMatchPercentage: 0,
         isWithinMismatchTolerance: true,
         isSameDimensions: true,
-        isExactSameImage: true,
       });
 
       const screenshotPathsSecond = getScreenshotPathsSpy.mock.results[1].value;
@@ -211,7 +210,6 @@ describe('LocalCompare', () => {
 
       // check diff results
       expect(resultSecond.misMatchPercentage).toBeGreaterThan(0);
-      expect(resultSecond.isExactSameImage).toBeFalsy();
       expect(resultSecond.isWithinMismatchTolerance).toBeFalsy();
       expect(resultSecond.isSameDimensions).toBeTruthy();
 
@@ -267,7 +265,6 @@ describe('LocalCompare', () => {
 
       // check diff results
       expect(resultSecond.misMatchPercentage).toBe(0);
-      expect(resultSecond.isExactSameImage).toBeFalsy();
       expect(resultSecond.isWithinMismatchTolerance).toBeTruthy();
       expect(resultSecond.isSameDimensions).toBeFalsy();
 
@@ -352,7 +349,6 @@ describe('LocalCompare', () => {
 
         // check diff results
         expect(result.misMatchPercentage).toBeLessThanOrEqual(0.01);
-        expect(result.isExactSameImage).toBeFalsy();
         expect(result.isWithinMismatchTolerance).toBeTruthy();
 
         const screenshotPaths = getScreenshotPathsSpy.mock.results[0].value;
@@ -368,7 +364,6 @@ describe('LocalCompare', () => {
 
         // check diff results
         expect(result.misMatchPercentage).toBeGreaterThan(0.01);
-        expect(result.isExactSameImage).toBeFalsy();
         expect(result.isWithinMismatchTolerance).toBeFalsy();
 
         const screenshotPaths = getScreenshotPathsSpy.mock.results[0].value;
@@ -404,7 +399,6 @@ describe('LocalCompare', () => {
 
         // check diff results
         expect(result.misMatchPercentage).toBeLessThanOrEqual(0.25);
-        expect(result.isExactSameImage).toBeFalsy();
         expect(result.isWithinMismatchTolerance).toBeTruthy();
 
         const screenshotPaths = getScreenshotPathsSpy.mock.results[0].value;
@@ -427,7 +421,6 @@ describe('LocalCompare', () => {
 
         // check diff results
         expect(result.misMatchPercentage).toBeGreaterThan(0.25);
-        expect(result.isExactSameImage).toBeFalsy();
         expect(result.isWithinMismatchTolerance).toBeFalsy();
 
         const screenshotPaths = getScreenshotPathsSpy.mock.results[0].value;
@@ -465,7 +458,6 @@ describe('LocalCompare', () => {
 
         // check diff results
         expect(result.misMatchPercentage).toBeGreaterThan(0);
-        expect(result.isExactSameImage).toBeFalsy();
         expect(result.isWithinMismatchTolerance).toBeFalsy();
 
         // check if diff image was created
@@ -499,7 +491,6 @@ describe('LocalCompare', () => {
 
         // check diff results
         expect(result.misMatchPercentage).toBeLessThan(0.01);
-        expect(result.isExactSameImage).toBeTruthy();
         expect(result.isWithinMismatchTolerance).toBeTruthy();
 
         // check if diff image was not created

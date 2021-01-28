@@ -27,7 +27,6 @@ exports.config = {
     [
       'visual-regression',
       {
-        baseScreenshotDir: process.cwd(),
         locale: 'en',
         theme: 'terra-default-theme',
       }
@@ -39,9 +38,6 @@ exports.config = {
 
 ### Options
 Under the key `visualRegression` in your wdio.config.js you can pass a configuration object with the following structure:
-
-* **baseScreenshotDir** `String` ( default: process.cwd() ) <br />
-pass in a string with the custom base output directory screenshots should be saved to.
 
 * **locale** `String` ( default: 'en' ) <br />
 the locale the test runner is testing against. This is used to categorizes screenshots by locale.
@@ -58,13 +54,10 @@ The *LocalCompare* method captures screenshots on your computer and compares a r
 The screenshot naming pattern is as follows:
 
 ```js
-baseScreenshotDir/test_spec_directory/test_spec_name/__snapshots__/(reference|latest|diff)/theme/locale/browserName_terraViewportName/screenshot.png
+base_directory/test_spec_directory/test_spec_name/__snapshots__/(reference|latest|diff)/theme/locale/browserName_terraViewportName/screenshot.png
 ```
 
 You can pass the following options to it's constructor as object:
-
-* **baseScreenshotDir** `String` ( default: process.cwd() ) <br />
-pass in a string with the custom base output directory screenshots should be saved to.
 
 * **locale** `String` ( default: 'en' ) <br />
 the locale the test runner is testing against. This is used to categorize screenshots by locale.
@@ -83,7 +76,7 @@ You can pass the following options to it's constructor as object:
 pass in a function that returns the filename for the current screenshot. Function receives a *context* object as first parameter with all relevant information about the command.
 
 ## Usage
-wdio-visual-regression-service enhances an WebdriverIO instance with the following commands:
+wdio-visual-regression-service enhances a WebdriverIO instance with the following commands:
 * `browser.checkElement(elementSelector, {options});`
 
 All of these provide options that will help you to capture screenshots in different dimensions or to exclude irrelevant parts (e.g. content). The following options are

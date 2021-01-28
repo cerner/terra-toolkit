@@ -21,13 +21,12 @@ class TerraService {
    */
   beforeSession(config) {
     global.Terra = {};
-    const { serviceOptions, ignoreComparisonResults } = config;
+    const { serviceOptions } = config;
 
     this.serviceOptions = {
       theme: 'terra-default-theme',
       selector: '[data-terra-test-content] *:first-child',
       ...this.serviceOptions,
-      ignoreComparisonResults: ignoreComparisonResults === true,
       ...serviceOptions,
     };
 

@@ -1,11 +1,5 @@
 const toMatchReference = require('../../../../src/commands/expect/toMatchReference');
 
-global.Terra = {
-  serviceOptions: {
-    ignoreComparisonResults: false,
-  },
-};
-
 describe('toMatchReference', () => {
   it('should pass if matches reference screenshot', () => {
     const receivedScreenshot = {
@@ -64,8 +58,8 @@ describe('toMatchReference', () => {
 
     const result = toMatchReference(receivedScreenshot);
 
-    const comparisonResult = `${JSON.stringify(receivedScreenshot, null, 2)}`;
+    const expectedMessage = 'Expected the screenshot to match the reference screenshot, but received a screenshot with different dimensions.\nExpected the screenshot to be within the mismatch tolerance, but received a mismatch difference of 0.1%.';
 
-    expect(result.message()).toEqual(`expected to be within the mismatch tolerance, but received the following comparison results \n${comparisonResult}`);
+    expect(result.message()).toEqual(expectedMessage);
   });
 });

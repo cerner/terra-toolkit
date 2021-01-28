@@ -64,7 +64,6 @@ describe('BaseCompare', () => {
   describe('BaseCompare.getScreenshotPaths', () => {
     it('creates reference, latest, and diff paths with default values', () => {
       const baseCompare = new BaseCompare({
-        baseScreenshotDir: process.cwd(),
         locale: 'en',
         theme: 'cerner-default-theme',
       });
@@ -82,7 +81,6 @@ describe('BaseCompare', () => {
 
     it('creates reference, latest, and diff paths for tests pulled from node_modules', () => {
       const baseCompare = new BaseCompare({
-        baseScreenshotDir: process.cwd(),
         locale: 'en',
         theme: 'cerner-default-theme',
       });
@@ -101,23 +99,6 @@ describe('BaseCompare', () => {
       expect(result.referencePath).toEqual(path.join(process.cwd(), 'test', 'wdio', '__snapshots__', 'reference', 'screenshotDir', 'screenshotName.png'));
       expect(result.latestPath).toEqual(path.join(process.cwd(), 'test', 'wdio', '__snapshots__', 'latest', 'screenshotDir', 'screenshotName.png'));
       expect(result.diffPath).toEqual(path.join(process.cwd(), 'test', 'wdio', '__snapshots__', 'diff', 'screenshotDir', 'screenshotName.png'));
-    });
-
-    it('creates reference, latest, and diff paths with custom baseScreenshotDir', () => {
-      const baseCompare = new BaseCompare({
-        baseScreenshotDir: 'customBaseScreenshotDir',
-        locale: 'en',
-        theme: 'cerner-default-theme',
-      });
-      jest.spyOn(baseCompare, 'getScreenshotDir').mockReturnValue('screenshotDir');
-      jest.spyOn(baseCompare, 'getScreenshotName').mockReturnValue('screenshotName.png');
-
-      const result = baseCompare.getScreenshotPaths(context);
-      const tempDirPath = path.join('packages', 'terra-functional-testing', 'tests', 'tmp');
-
-      expect(result.referencePath).toEqual(path.join('customBaseScreenshotDir', tempDirPath, '__snapshots__', 'reference', 'screenshotDir', 'screenshotName.png'));
-      expect(result.latestPath).toEqual(path.join('customBaseScreenshotDir', tempDirPath, '__snapshots__', 'latest', 'screenshotDir', 'screenshotName.png'));
-      expect(result.diffPath).toEqual(path.join('customBaseScreenshotDir', tempDirPath, '__snapshots__', 'diff', 'screenshotDir', 'screenshotName.png'));
     });
   });
 
@@ -147,7 +128,6 @@ describe('BaseCompare', () => {
           misMatchPercentage: 0,
           isWithinMismatchTolerance: true,
           isSameDimensions: true,
-          isExactSameImage: true,
         }));
       });
 
@@ -157,7 +137,6 @@ describe('BaseCompare', () => {
           misMatchPercentage: 0,
           isWithinMismatchTolerance: true,
           isSameDimensions: false,
-          isExactSameImage: false,
         }));
       });
 
@@ -167,7 +146,6 @@ describe('BaseCompare', () => {
           misMatchPercentage: 30,
           isWithinMismatchTolerance: true,
           isSameDimensions: false,
-          isExactSameImage: false,
         }));
       });
     });

@@ -8,7 +8,6 @@ const getTerraFormFactor = require('./modules/getTerraFormFactor');
 class VisualRegressionLauncher {
   /**
    * @param {Object} options - Service configuration options.
-   * @param {Object} options.baseScreenshotDir - The base screenshot directory path to save screenshot in.
    * @param {Object} options.locale - The locale being tested.
    * @param {Object} options.theme - The theme being tested.
    */
@@ -82,6 +81,7 @@ class VisualRegressionLauncher {
      * @param {String[]} options.remove - The list of elements to set display: none on to 'remove' from dom when capturing the screenshot.
      * @param {String} options.ignoreComparison - The image comparison algorithm to use when processing the screenshot comparison.
      * @param {Number} options.mismatchTolerance - The acceptable mismatch tolerance the screenshot can have when processing the screenshot comparison.
+     * @param {String} options.name - The name of the screenshot.
      * @returns {Object} - The screenshot comparison results returned as { misMatchPercentage: Number, isSameDimensions: Boolean, getImageDataUrl: function }.
      */
     return async function wrappedScreenshotCommand(elementSelector, options) {

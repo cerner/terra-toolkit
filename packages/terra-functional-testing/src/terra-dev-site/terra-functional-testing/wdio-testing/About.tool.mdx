@@ -24,7 +24,6 @@ A test runner is provided for local development and should be invoked using the 
 | config                         | string  | false    |                         | A file path to the test runner configuration.                                                 |
 | formFactors                    | array   | false    |                         | A list of form factors for the test run. One of tiny, small, medium, large, huge, or enormous |
 | gridUrl                        | string  | false    |                         | The remote selenium grid address.                                                             |
-| ignoreComparisonResults        | boolean | false    | false                   | Whether or not to disable test assertions on the screenshot comparison result.                |
 | keepAliveSeleniumDockerService | boolean | false    | false                   | Determines to keep the selenium docker service running upon test completion.                  |
 | locales                        | array   | false    | ['en']                  | A list of language locales for the test run.                                                  |
 | themes                         | array   | false    | ['terra-default-theme'] | A list of themes for the test run.                                                            |
@@ -146,7 +145,7 @@ it('should validate the screenshot', () => {
 The screenshot naming pattern is as follows:
 
 ```js
-baseScreenshotDir/test_spec_directory/test_spec_name/__snapshots__/(reference|latest|diff)/theme/locale/browserName_terraViewportName/screenshot-name.png
+base_directory/test_spec_directory/test_spec_name/__snapshots__/(reference|latest|diff)/theme/locale/browserName_terraViewportName/screenshot-name.png
 ```
 
 The screenshot assertion accepts an optional second argument with the following keys.

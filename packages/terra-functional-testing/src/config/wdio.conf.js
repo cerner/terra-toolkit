@@ -139,7 +139,6 @@ exports.config = {
       ...fs.existsSync(defaultWebpackPath) && { webpackConfig: defaultWebpackPath },
     }],
     [VisualRegressionLauncher, {
-      baseScreenshotDir: process.cwd(),
       ...LOCALE && { locale: LOCALE },
       ...THEME && { theme: THEME },
     }],

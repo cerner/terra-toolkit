@@ -9,7 +9,6 @@ const logger = new Logger('[wdio-visual-regression-service:LocalCompare]');
 class LocalCompare extends BaseCompare {
   /**
    * @param {Object} options - Service configuration options.
-   * @param {Object} options.baseScreenshotDir - The base screenshot directory path to save screenshot in.
    * @param {Object} options.locale - The locale being tested.
    * @param {Object} options.theme - The theme being tested.
    */
