@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Fixed
+  * Update permissions on binary
+
 ## 2.0.1 - (January 27, 2021)
 
 * Changed
