@@ -26,6 +26,7 @@ module.exports = {
   ],
   modulePathIgnorePatterns: [
     'packages/terra-cli/tests/jest/fixtures',
+    'packages/duplicate-package-checker-webpack-plugin/tests/jest',
   ],
   snapshotSerializers: [
     './node_modules/enzyme-to-json/serializer',

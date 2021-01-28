@@ -6,7 +6,7 @@ const Logger = require('./lib/utils/Logger');
 
 const logger = new Logger({ prefix: '[terra-cli:terra]' });
 
-const DEPENDENCY_ALLOW_LIST = ['@cerner/terra-functional-testing', '@cerner/terra-open-source-scripts', 'orion-full-stack-testing'];
+const DEPENDENCY_ALLOW_LIST = ['@cerner/package-json-lint', '@cerner/terra-functional-testing', '@cerner/terra-open-source-scripts', 'orion-full-stack-testing'];
 
 /**
  * Does the initial set up of the CLI. This sets up things like help, version, etc.

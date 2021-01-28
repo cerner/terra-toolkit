@@ -30,6 +30,11 @@
     "lint": "eslint --ext .js,.jsx .",
     "test": "npm run jest"
   },
-  "dependencies": {
+  "peerDependencies": {
+    "@cerner/terra-cli": "^1.0.0"
+  },
+  "devDependencies": {
+    "@cerner/terra-cli": "^1.4.0",
+    "yargs": "^16.1.1"
   }
 }
