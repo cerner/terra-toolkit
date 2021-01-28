@@ -1,5 +1,7 @@
-import fsExtra from 'fs-extra';
+const fsExtra = require('fs-extra');
 
-export default async function saveBase64Image(filePath, base64Screenshot) {
+async function saveBase64Image(filePath, base64Screenshot) {
   return fsExtra.outputFile(filePath, base64Screenshot, 'base64');
 }
+
+module.exports = saveBase64Image;

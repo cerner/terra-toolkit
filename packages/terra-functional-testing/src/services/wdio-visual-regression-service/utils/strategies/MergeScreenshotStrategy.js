@@ -1,6 +1,6 @@
-import BaseStrategy from './BaseStrategy';
+const BaseStrategy = require('./BaseStrategy');
 
-export default class MergeScreenshotStrategy extends BaseStrategy {
+class MergeScreenshotStrategy extends BaseStrategy {
   hasNextHorizontalScrollPosition() {
     const width = this.area.endX - this.area.startX;
     return width > this.index.x * this.screenDimensions.getViewportWidth() + this.screenDimensions.getViewportWidth();
@@ -44,3 +44,5 @@ export default class MergeScreenshotStrategy extends BaseStrategy {
     return this.createCropDimensions(width, height, 0, 0, true, 0);
   }
 }
+
+module.exports = MergeScreenshotStrategy;

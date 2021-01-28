@@ -1,5 +1,5 @@
-import Jimp from 'jimp';
-import CropDimension from '../CropDimension';
+const Jimp = require('jimp');
+const CropDimension = require('../CropDimension');
 
 /**
  * Crops an image
@@ -7,7 +7,7 @@ import CropDimension from '../CropDimension';
  * @param  {CropDimension} cropDimensions   dimensions
  * @return {string}                  cropped image
  */
-export async function cropImage(base64Screenshot, cropDimensions) {
+async function cropImage(base64Screenshot, cropDimensions) {
   if (!(cropDimensions instanceof CropDimension)) {
     throw new Error('Please provide a valid instance of CropDimension!');
   }
@@ -48,7 +48,7 @@ export async function cropImage(base64Screenshot, cropDimensions) {
  * @param scaleFactor       scale factor, e.g. 0.5 for downscale or 1.5 for upscale
  * @returns {string}        screenshot
  */
-export async function scaleImage(base64Screenshot, scaleFactor) {
+async function scaleImage(base64Screenshot, scaleFactor) {
   const image = await Jimp.read(new Buffer.from(base64Screenshot, 'base64')); // eslint-disable-line new-cap
   image.scale(scaleFactor);
 
@@ -68,7 +68,7 @@ export async function scaleImage(base64Screenshot, scaleFactor) {
  * @param  {string[][]} images array of images
  * @return {string}        screenshot
  */
-export async function mergeImages(images) {
+async function mergeImages(images) {
   let imageWidth = 0;
   let imageHeight = 0;
 
@@ -127,3 +127,9 @@ export async function mergeImages(images) {
   });
   return base64Screenshot;
 }
+
+module.exports = {
+  cropImage,
+  mergeImages,
+  scaleImage,
+};

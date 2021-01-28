@@ -1,4 +1,4 @@
-export default function getBoundingRect(selector) {
+function getBoundingRect(selector) {
   const elements = document.querySelectorAll(selector);
 
   return Array.prototype.map.call(elements, (elem) => {
@@ -11,3 +11,5 @@ export default function getBoundingRect(selector) {
     };
   });
 }
+
+module.exports = getBoundingRect;

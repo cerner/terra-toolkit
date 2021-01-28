@@ -1,6 +1,6 @@
-import CropDimension from './CropDimension';
-import getBase64ImageSize from './getBase64ImageSize';
-import { cropImage, scaleImage } from './image';
+const CropDimension = require('./CropDimension');
+const getBase64ImageSize = require('./getBase64ImageSize');
+const { cropImage, scaleImage } = require('./image');
 
 async function normalizeRetinaScreenshot(browser, screenDimensions, base64Screenshot) {
   // check if image dimensions are different to viewport as browsers like firefox scales images automatically down
@@ -62,7 +62,7 @@ async function normalizeIOSScreenshot(browser, screenDimensions, base64Screensho
   return base64Screenshot;
 }
 
-export default async function normalizeSreenshot(browser, screenDimensions, base64Screenshot) {
+async function normalizeScreenshot(browser, screenDimensions, base64Screenshot) {
   let normalizedScreenshot = base64Screenshot;
 
   // check if we could have a retina image
@@ -76,3 +76,9 @@ export default async function normalizeSreenshot(browser, screenDimensions, base
   }
   return normalizedScreenshot;
 }
+
+module.exports = {
+  normalizeScreenshot,
+  normalizeIOSScreenshot,
+  normalizeRetinaScreenshot,
+};

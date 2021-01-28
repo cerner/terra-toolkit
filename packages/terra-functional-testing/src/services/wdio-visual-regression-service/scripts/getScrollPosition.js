@@ -1,5 +1,5 @@
 /* eslint-disable no-else-return */
-export default function getScrollPosition() {
+function getScrollPosition() {
   if (typeof window.pageYOffset !== 'undefined') {
     return [window.pageXOffset, window.pageYOffset];
   } else if (typeof document.documentElement.scrollTop !== 'undefined' && document.documentElement.scrollTop > 0) {
@@ -10,3 +10,5 @@ export default function getScrollPosition() {
   return [0, 0];
 }
 /* eslint-enable no-else-return */
+
+module.exports = getScrollPosition;

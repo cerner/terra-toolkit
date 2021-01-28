@@ -1,4 +1,4 @@
-export default function modifyElements(elements, style, value) {
+function modifyElements(elements, style, value) {
   function setProperty(element) {
     try {
       element.style.setProperty(style, value, 'important');
@@ -22,3 +22,5 @@ export default function modifyElements(elements, style, value) {
     }
   }
 }
+
+module.exports = modifyElements;
