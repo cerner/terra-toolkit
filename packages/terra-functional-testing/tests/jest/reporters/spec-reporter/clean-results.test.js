@@ -2,7 +2,9 @@ const fs = require('fs');
 const cleanResults = require('../../../../src/reporters/spec-reporter/clean-results.js');
 const getOutputDir = require('../../../../src/reporters/spec-reporter/get-output-dir');
 
-jest.mock('../../../../src/reporters/spec-reporter/get-output-dir');
+jest.mock('../../../../src/reporters/spec-reporter/get-output-dir', () => (
+  jest.fn().mockImplementation(() => ('/mock/'))
+));
 
 describe('cleanResults', () => {
   afterEach(() => {
@@ -20,13 +22,13 @@ describe('cleanResults', () => {
     jest.spyOn(fs, 'existsSync').mockImplementationOnce(() => false);
     jest.spyOn(fs, 'readdirSync').mockImplementationOnce(() => []);
 
-    cleanResults('/mock/');
+    cleanResults();
 
     expect(fs.existsSync).toHaveBeenCalledWith('/mock/');
     expect(fs.readdirSync).toHaveBeenCalledTimes(0);
   });
 
-  it('should unlink each spec result file in the provided directory', () => {
+  it('should unlink each spec result file in the output directory', () => {
     jest.spyOn(fs, 'existsSync').mockImplementationOnce(() => true);
     jest.spyOn(fs, 'readdirSync').mockImplementationOnce(() => ([
       'wdio-spec-results-0-0',
@@ -38,7 +40,7 @@ describe('cleanResults', () => {
     ]));
     jest.spyOn(fs, 'unlinkSync').mockImplementation(() => {});
 
-    cleanResults('/mock/');
+    cleanResults();
 
     expect(fs.existsSync).toHaveBeenCalledWith('/mock/');
     expect(fs.readdirSync).toHaveBeenCalledWith('/mock/');

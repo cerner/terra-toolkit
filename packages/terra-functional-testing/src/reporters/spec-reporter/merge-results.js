@@ -96,23 +96,22 @@ const writeResultsToFile = (outputDir, results, options) => {
 
 /**
  * Merges the spec reporter results into a single file (per browser).
- * @param {string} outputDir - The output directory to retrieve results.
- * @param {Object} options - Test run options. These are used to uniquely identify the output file. (locale, formFactor, theme)
+ * @param {Object} metadata - Additional metadata to include in the output file.
  */
-const mergeResults = (outputDir, options = {}) => {
-  const directory = outputDir || getOutputDir();
+const mergeResults = (options = {}) => {
+  const outputDir = getOutputDir();
 
-  if (!fs.existsSync(directory)) {
+  if (!fs.existsSync(outputDir)) {
     return;
   }
 
-  const specResults = getSpecResults(directory);
+  const specResults = getSpecResults(outputDir);
   const mergedResults = mergeSpecResults(specResults);
 
-  writeResultsToFile(directory, mergedResults, options);
+  writeResultsToFile(outputDir, mergedResults, options);
 
   // Delete the individual spec result files.
-  cleanResults(directory);
+  cleanResults();
 };
 
 module.exports = mergeResults;

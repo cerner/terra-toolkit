@@ -130,9 +130,8 @@ class SpecReporter extends WDIOReporter {
    * @param {Object} results - A formatted results object for a spec file.
    */
   static writeResults(runner, results) {
-    const { cid, config } = runner;
-    const { reporterOptions = {} } = config;
-    const { outputDir = getOutputDir() } = reporterOptions;
+    const { cid } = runner;
+    const outputDir = getOutputDir();
 
     // Create the output directory if it does not already exist.
     if (!fs.existsSync(outputDir)) {

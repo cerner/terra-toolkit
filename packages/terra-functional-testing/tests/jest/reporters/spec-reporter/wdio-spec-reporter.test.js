@@ -2,6 +2,10 @@ const fs = require('fs');
 const SpecReporter = require('../../../../src/reporters/spec-reporter/wdio-spec-reporter');
 const testData1 = require('../../../fixtures/reporters/test-data-1.json');
 
+jest.mock('../../../../src/reporters/spec-reporter/get-output-dir', () => (
+  jest.fn().mockImplementation(() => ('/mock/'))
+));
+
 describe('Spec Reporter', () => {
   afterEach(() => {
     // Restore all fs mocks.
@@ -68,14 +72,7 @@ describe('Spec Reporter', () => {
 
   describe('writeResults', () => {
     it('should write the test results to file', () => {
-      const runner = {
-        cid: '0-0',
-        config: {
-          reporterOptions: {
-            outputDir: 'mock-dir',
-          },
-        },
-      };
+      const runner = { cid: '0-0' };
 
       jest.spyOn(fs, 'existsSync').mockImplementationOnce(() => false);
       jest.spyOn(fs, 'mkdirSync').mockImplementationOnce(() => {});
@@ -83,9 +80,9 @@ describe('Spec Reporter', () => {
 
       SpecReporter.writeResults(runner, 'mock-results');
 
-      expect(fs.existsSync).toHaveBeenCalledWith('mock-dir');
-      expect(fs.mkdirSync).toHaveBeenCalledWith('mock-dir', { recursive: true });
-      expect(fs.writeFileSync).toHaveBeenCalledWith('mock-dir/wdio-spec-results-0-0.json', '"mock-results"');
+      expect(fs.existsSync).toHaveBeenCalledWith('/mock/');
+      expect(fs.mkdirSync).toHaveBeenCalledWith('/mock/', { recursive: true });
+      expect(fs.writeFileSync).toHaveBeenCalledWith('/mock/wdio-spec-results-0-0.json', '"mock-results"');
     });
   });
 });

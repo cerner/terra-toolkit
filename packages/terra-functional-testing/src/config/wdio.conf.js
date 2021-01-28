@@ -169,33 +169,17 @@ exports.config = {
   },
   /**
    * Gets executed once before all workers get launched.
-   * @param {Object} config - wdio configuration object.
-   * @param {Array.<Object>} capabilities - List of capabilities details.
    */
-  onPrepare(config) {
-    const { reporterOptions = {} } = config;
-    const { outputDir } = reporterOptions;
-
-    // Remove previous reporter results.
-    cleanResults(outputDir);
+  onPrepare() {
+    // Clean previous reporter results.
+    cleanResults();
   },
   /**
    * Gets executed after all workers have shut down and the process is about to exit.
    * An error thrown in the `onComplete` hook will result in the test run failing.
-   * @param {Object} exitCode - 0 - success, 1 - fail.
-   * @param {Object} config - wdio configuration object.
-   * @param {Array.<Object>} capabilities - List of capabilities details.
-   * @param {<Object>} results - Object containing test results.
    */
-  onComplete(_exitCode, config) {
-    const { reporterOptions = {} } = config;
-    const { outputDir } = reporterOptions;
-
+  onComplete() {
     // Merge reporter results.
-    mergeResults(outputDir, {
-      formFactor: FORM_FACTOR,
-      locale: LOCALE,
-      theme: THEME,
-    });
+    mergeResults({ formFactor: FORM_FACTOR, locale: LOCALE, theme: THEME });
   },
 };
