@@ -6,8 +6,10 @@ const getCapabilities = require('./utils/getCapabilities');
 const SeleniumDockerService = require('../services/wdio-selenium-docker-service');
 const TerraService = require('../services/wdio-terra-service');
 const AssetServerService = require('../services/wdio-asset-server-service');
-const AccessibilityReporter = require('../reporters/wdio-accessibility-reporter');
 const VisualRegressionLauncher = require('../services/wdio-visual-regression-service');
+
+const { AccessibilityReporter } = require('../reporters/accessibility-reporter');
+const { SpecReporter, cleanResults, mergeResults } = require('../reporters/spec-reporter');
 
 const {
   BROWSERS,
@@ -162,12 +164,27 @@ exports.config = {
   // Test reporter for stdout.
   // The only one supported by default is 'dot'
   // see also: https://webdriver.io/docs/dot-reporter.html
-  reporters: ['spec', AccessibilityReporter],
+  reporters: ['spec', AccessibilityReporter, SpecReporter],
   //
   // Options to be passed to Mocha.
   // See the full list at http://mochajs.org/
   mochaOpts: {
     ui: 'bdd',
     timeout: 60000,
+  },
+  /**
+   * Gets executed once before all workers get launched.
+   */
+  onPrepare() {
+    // Clean previous reporter results.
+    cleanResults();
+  },
+  /**
+   * Gets executed after all workers have shut down and the process is about to exit.
+   * An error thrown in the `onComplete` hook will result in the test run failing.
+   */
+  onComplete() {
+    // Merge reporter results.
+    mergeResults({ formFactor: FORM_FACTOR, locale: LOCALE, theme: THEME });
   },
 };
