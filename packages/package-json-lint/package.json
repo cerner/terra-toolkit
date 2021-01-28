@@ -13,7 +13,6 @@
   },
   "keywords": [
     "lint",
-    "package.json",
     "package-json-lint",
     "Cerner"
   ],
@@ -23,7 +22,7 @@
     "url": "https://github.com/cerner/terra-toolkit/issues"
   },
   "engines": {
-    "node": "^10.13.0"
+    "node": ">=10"
   },
   "homepage": "https://github.com/cerner/terra-toolkit",
   "scripts": {

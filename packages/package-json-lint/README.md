@@ -3,7 +3,7 @@
 [![NPM version](https://badgen.net/npm/v/@cerner/package-json-lint)](https://www.npmjs.org/package/@cerner/package-json-lint)
 [![Build Status](https://badgen.net/travis/cerner/terra-toolkit)](https://travis-ci.com/cerner/terra-toolkit)
 
-Linter for package.json files
+Linter for package.json files.
 
 ## Versioning
 
@@ -17,7 +17,7 @@ Consult the component CHANGELOGs, related issues, and PRs for more information.
 
 ## LICENSE
 
-Copyright 2020 Cerner Innovation, Inc.
+Copyright 2021-present Cerner Innovation, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 

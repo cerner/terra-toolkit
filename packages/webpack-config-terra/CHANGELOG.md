@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+## 1.3.1 - (January 27, 2021)
+
+* Changed
+  * Minor dependency version bump
+
+## 1.3.0 - (January 27, 2021)
+
+* Added
+  * Added `browser` to `resolve.mainFields` in webpack module list.
+  
+* Changed
+  * Passively consume @cerner/terra-aggregate-translations package.
+
 ## 1.2.0 - (January 5, 2021)
 
 * Changed

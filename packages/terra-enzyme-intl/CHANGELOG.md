@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 4.1.0 - (January 26, 2021)
+
 * Fixed
   * Fixed jest tests due to react-intl update
 
