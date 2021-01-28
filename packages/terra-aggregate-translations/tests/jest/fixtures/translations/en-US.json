@@ -1,0 +1,4 @@
+{
+  "Terra.fixtures.test": "Test...",
+  "Terra.matching.key": "Translation that should be honored over node_modules translation"
+}

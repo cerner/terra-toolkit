@@ -9,7 +9,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const webpack = require('webpack');
 const { mergeWithCustomize } = require('webpack-merge');
 const DuplicatePackageCheckerPlugin = require('@cerner/duplicate-package-checker-webpack-plugin');
-const aggregateTranslations = require('terra-aggregate-translations');
+const aggregateTranslations = require('@cerner/terra-aggregate-translations');
 const logging = require('webpack/lib/logging/runtime');
 
 const ThemePlugin = require('./postcss/ThemePlugin');
@@ -227,7 +227,7 @@ const defaultWebpackConfig = (env = {}, argv = {}, options = {}) => {
     resolve: {
       extensions: ['.js', '.jsx'],
       modules: getResolveModules(env),
-      mainFields: ['main'],
+      mainFields: ['browser', 'main'],
     },
     output: {
       filename: `${filename}.js`,
