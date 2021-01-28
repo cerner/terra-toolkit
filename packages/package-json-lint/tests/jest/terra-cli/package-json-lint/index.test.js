@@ -2,7 +2,7 @@ jest.mock('../../../../src/lint');
 
 const yargs = require('yargs');
 const lint = require('../../../../src/lint');
-const PrepareForReleaseCommand = require('../../../../src/terra-cli/package-json-lint');
+const PackageJsonLintCommand = require('../../../../src/terra-cli/package-json-lint');
 
 describe('package-json-lint', () => {
   it('declares the package-json-lint terra-cli command with proper top level help', async () => {
