@@ -78,7 +78,6 @@ describe('WDIO Terra Service', () => {
     service.before({ browserName: 'chrome' });
 
     expect(setViewport).toBeCalled();
-    expect(global.Terra.viewports).toBeDefined();
     expect(global.Terra.hideInputCaret).toBeDefined();
   });
 
@@ -104,23 +103,56 @@ describe('WDIO Terra Service', () => {
     expect(mockFindElement).toHaveBeenCalledWith('[data-terra-test-loading]');
   });
 
-  it('should define commands in beforeSession', () => {
+  it('should define commands in beforeSession with empty config', () => {
     const service = new WdioTerraService({ formFactor: 'huge' });
-    service.beforeSession();
+    const expectedServiceOptions = {
+      formFactor: 'huge',
+      selector: '[data-terra-test-content] *:first-child',
+      theme: 'terra-default-theme',
+    };
+
+    service.beforeSession({});
     expect(global.Terra.describeViewports).toBeDefined();
-    expect(global.Terra.serviceOptions.formFactor).toBe('huge');
+    expect(global.Terra.viewports).toBeDefined();
+    expect(global.Terra.serviceOptions).toEqual(expectedServiceOptions);
   });
 
-  it('should set define all commands', () => {
+  it('should define commands in beforeSession', () => {
     const service = new WdioTerraService({ formFactor: 'huge' });
+    const config = {
+      serviceOptions: {
+        selector: 'mock-selector',
+      },
+    };
 
-    service.beforeSession();
+    const expectedServiceOptions = {
+      formFactor: 'huge',
+      selector: 'mock-selector',
+      theme: 'terra-default-theme',
+    };
+
+    service.beforeSession(config);
+    expect(global.Terra.describeViewports).toBeDefined();
+    expect(global.Terra.viewports).toBeDefined();
+    expect(global.Terra.serviceOptions).toEqual(expectedServiceOptions);
+  });
+
+  it('should define all commands', () => {
+    const service = new WdioTerraService({ formFactor: 'large' });
+
+    const expectedServiceOptions = {
+      formFactor: 'large',
+      selector: '[data-terra-test-content] *:first-child',
+      theme: 'terra-default-theme',
+    };
+
+    service.beforeSession({});
     service.before({ browserName: 'chrome' });
 
     expect(setViewport).toBeCalled();
     expect(global.Terra.viewports).toBeDefined();
     expect(global.Terra.describeViewports).toBeDefined();
     expect(global.Terra.hideInputCaret).toBeDefined();
-    expect(global.Terra.serviceOptions.formFactor).toBe('huge');
+    expect(global.Terra.serviceOptions).toEqual(expectedServiceOptions);
   });
 });

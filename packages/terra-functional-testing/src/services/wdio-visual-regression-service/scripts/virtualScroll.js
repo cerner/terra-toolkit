@@ -7,7 +7,7 @@
  * @param {Boolean} enabled - Whether or not the transform style should be applied.
  * @returns {undefined}
  */
-export default function virtualScroll(x, y, enabled) {
+function virtualScroll(x, y, enabled) {
   const xLength = x === 0 ? 0 : -1 * x;
   const yLength = y === 0 ? 0 : -1 * y;
 
@@ -20,3 +20,5 @@ export default function virtualScroll(x, y, enabled) {
   html.style.oTransform = translate;
   html.style.transform = translate;
 }
+
+module.exports = virtualScroll;

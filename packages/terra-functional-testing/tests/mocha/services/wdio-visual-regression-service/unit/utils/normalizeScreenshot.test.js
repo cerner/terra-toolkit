@@ -1,16 +1,19 @@
-import { assert } from 'chai';
-import glob from 'glob';
-import path from 'path';
-import _ from 'lodash';
-import fsExtra from 'fs-extra';
+const { assert } = require('chai');
+const glob = require('glob');
+const path = require('path');
+const lodashGroupBy = require('lodash.groupby');
+const lodashMap = require('lodash.map');
+const lodashMapKeys = require('lodash.mapkeys');
+const lodashMapValues = require('lodash.mapvalues');
+const fsExtra = require('fs-extra');
 
-import normalizeScreenshot from '../../../../../../src/services/wdio-visual-regression-service/utils/normalizeScreenshot';
-import ScreenDimension from '../../../../../../src/services/wdio-visual-regression-service/utils/ScreenDimension';
-import saveBase64Image from '../../../../../../src/services/wdio-visual-regression-service/utils/saveBase64Image';
+const { normalizeScreenshot } = require('../../../../../../src/services/wdio-visual-regression-service/utils/normalizeScreenshot');
+const ScreenDimension = require('../../../../../../src/services/wdio-visual-regression-service/utils/ScreenDimension');
+const saveBase64Image = require('../../../../../../src/services/wdio-visual-regression-service/utils/saveBase64Image');
 
-import compareImages from '../../helper/compareImages';
+const compareImages = require('../../helper/compareImages');
 
-import dimensionDesktop from '../../../../../fixtures/dimension/desktop-scroll-both.json';
+const dimensionDesktop = require('../../../../../fixtures/dimension/desktop-scroll-both.json');
 
 const tmpPath = path.resolve(__dirname, '..', '..', '..', '..', '..', 'tmp');
 const screenshotDir = path.resolve(__dirname, '..', '..', '..', '..', '..', 'fixtures', 'screenshot');
@@ -56,7 +59,7 @@ describe('normalizeScreenshot', function() {
       };
     });
 
-    _.map(data, ({
+    lodashMap(data, ({
       browserName, screenshotFile, expectedScreenshotFile, dimensionsFile,
     }) => {
       context(browserName, function() {
@@ -88,7 +91,7 @@ describe('normalizeScreenshot', function() {
 
     const data = files.map(file => {
       const dir = path.dirname(file);
-      const [version, device, test] = _.times(2)
+      const [version, device, test] = [0, 1]
         .reduce((f) => f.concat(path.dirname(f[f.length - 1])), [dir])
         .reverse()
         .map(f => path.basename(f).replace(/_/g, ' '));
@@ -105,11 +108,11 @@ describe('normalizeScreenshot', function() {
       };
     });
 
-    const testData = _.mapValues(_.groupBy(data, 'version'), list => _.groupBy(list, 'device'));
+    const testData = lodashMapValues(lodashGroupBy(data, 'version'), list => lodashGroupBy(list, 'device'));
 
-    _.mapKeys(testData, (devices, version) => {
+    lodashMapKeys(testData, (devices, version) => {
       context(version, function() {
-        _.mapKeys(devices, (list, device) => {
+        lodashMapKeys(devices, (list, device) => {
           context(device, function() {
             list.forEach(({
               test, screenshotFile, expectedScreenshotFile, dimensionsFile, skipFile, dir,

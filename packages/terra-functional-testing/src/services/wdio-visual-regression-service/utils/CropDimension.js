@@ -1,4 +1,4 @@
-export default class CropDimension {
+class CropDimension {
   constructor(width, height, x, y, top = true, rotation = 0) {
     this.width = width;
     this.height = height;
@@ -32,3 +32,5 @@ export default class CropDimension {
     return this.rotation;
   }
 }
+
+module.exports = CropDimension;

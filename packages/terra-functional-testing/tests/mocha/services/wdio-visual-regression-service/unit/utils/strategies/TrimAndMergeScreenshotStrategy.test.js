@@ -1,4 +1,4 @@
-import TrimAndMergeScreenshotStrategy, { consts } from '../../../../../../../src/services/wdio-visual-regression-service/utils/strategies/TrimAndMergeScreenshotStrategy';
+import { TrimAndMergeScreenshotStrategy, consts } from '../../../../../../../src/services/wdio-visual-regression-service/utils/strategies/TrimAndMergeScreenshotStrategy';
 import ScreenDimension from '../../../../../../../src/services/wdio-visual-regression-service/utils/ScreenDimension';
 
 import testStrategy from '../../../helper/testStrategy';

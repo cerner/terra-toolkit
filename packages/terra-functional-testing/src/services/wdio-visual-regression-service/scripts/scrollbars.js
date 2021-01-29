@@ -4,10 +4,12 @@
  * @param {Boolean} enabled - Whether or not the scrollbars should be visible.
  * @returns {undefined}
  */
-export default function scrollbars(enabled) {
+function scrollbars(enabled) {
   if (enabled) {
     document.documentElement.style.overflow = '';
   } else {
     document.documentElement.style.overflow = 'hidden';
   }
 }
+
+module.exports = scrollbars;

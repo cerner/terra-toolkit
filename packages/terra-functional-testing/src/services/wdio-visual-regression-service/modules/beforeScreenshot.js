@@ -1,9 +1,9 @@
-import { Logger } from '@cerner/terra-cli';
+const { Logger } = require('@cerner/terra-cli');
 
-import scroll from '../scripts/scroll';
-import scrollbars from '../scripts/scrollbars';
-import modifyElements from '../scripts/modifyElements';
-import triggerResize from '../scripts/triggerResize';
+const scroll = require('../scripts/scroll');
+const scrollbars = require('../scripts/scrollbars');
+const modifyElements = require('../scripts/modifyElements');
+const triggerResize = require('../scripts/triggerResize');
 
 const logger = new Logger('[wdio-visual-regression-service:beforeScreenshot]');
 
@@ -17,7 +17,7 @@ const logger = new Logger('[wdio-visual-regression-service:beforeScreenshot]');
  * @param {String[]} options.remove - The list of elements to set display: none on to 'remove' from dom when capturing the screenshot.
  * @returns {undefined}
  */
-export default async function beforeScreenshot(browser, options = {}) {
+async function beforeScreenshot(browser, options = {}) {
   const { hide, remove } = options;
 
   // hide scrollbars
@@ -50,3 +50,5 @@ export default async function beforeScreenshot(browser, options = {}) {
   logger.verbose('wait %s ms for browser render', pause);
   await browser.pause(pause);
 }
+
+module.exports = beforeScreenshot;

@@ -1,4 +1,4 @@
-export default function modifyElements() {
+function modifyElements() {
   // eslint-disable-next-line func-names, space-before-function-paren, prefer-arrow-callback, prefer-rest-params
   const args = Array.prototype.slice.call(arguments).filter(function(n) {
     return !!n || n === '';
@@ -20,3 +20,5 @@ export default function modifyElements() {
     }
   }
 }
+
+module.exports = modifyElements;

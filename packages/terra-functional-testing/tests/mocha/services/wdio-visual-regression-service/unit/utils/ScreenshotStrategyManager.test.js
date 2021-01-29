@@ -1,13 +1,13 @@
-import { assert } from 'chai';
+const { assert } = require('chai');
 
-import ScreenshotStrategyManager from '../../../../../../src/services/wdio-visual-regression-service/utils/ScreenshotStrategyManager';
-import BaseStrategy from '../../../../../../src/services/wdio-visual-regression-service/utils/strategies/BaseStrategy';
-import MergeScreenshotStrategy from '../../../../../../src/services/wdio-visual-regression-service/utils/strategies/MergeScreenshotStrategy';
-import TrimAndMergeScreenshotStrategy from '../../../../../../src/services/wdio-visual-regression-service/utils/strategies/TrimAndMergeScreenshotStrategy';
-import ScreenDimension from '../../../../../../src/services/wdio-visual-regression-service/utils/ScreenDimension';
+const ScreenshotStrategyManager = require('../../../../../../src/services/wdio-visual-regression-service/utils/ScreenshotStrategyManager');
+const BaseStrategy = require('../../../../../../src/services/wdio-visual-regression-service/utils/strategies/BaseStrategy');
+const MergeScreenshotStrategy = require('../../../../../../src/services/wdio-visual-regression-service/utils/strategies/MergeScreenshotStrategy');
+const { TrimAndMergeScreenshotStrategy } = require('../../../../../../src/services/wdio-visual-regression-service/utils/strategies/TrimAndMergeScreenshotStrategy');
+const ScreenDimension = require('../../../../../../src/services/wdio-visual-regression-service/utils/ScreenDimension');
 
-import dimensionScrollBoth from '../../../../../fixtures/dimension/desktop-scroll-both.json';
-import dimensionIpad92PortraitZoomed from '../../../../../fixtures/dimension/iOS_iPad_Air_9_2_portrait_zoomed.json';
+const dimensionScrollBoth = require('../../../../../fixtures/dimension/desktop-scroll-both.json');
+const dimensionIpad92PortraitZoomed = require('../../../../../fixtures/dimension/iOS_iPad_Air_9_2_portrait_zoomed.json');
 
 describe('ScreenshotStrategyManager', function() {
   before(function() {

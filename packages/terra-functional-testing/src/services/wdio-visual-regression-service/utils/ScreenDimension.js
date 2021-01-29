@@ -1,4 +1,4 @@
-export default class ScreenDimensions {
+class ScreenDimensions {
   constructor(options, browser = {}) {
     const { html, body, window } = options;
     const { isIOS } = browser;
@@ -97,3 +97,5 @@ export default class ScreenDimensions {
     return Math.round(widthOrHeight * this.getScale());
   }
 }
+
+module.exports = ScreenDimensions;
