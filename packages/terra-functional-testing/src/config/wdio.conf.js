@@ -25,8 +25,6 @@ const {
   WDIO_HOSTNAME,
 } = process.env;
 
-// Convert BROWSERS into an array. When assigned to a process.env it is cast as a string.
-const browsers = BROWSERS ? BROWSERS.split(',') : undefined;
 const defaultWebpackPath = path.resolve(process.cwd(), 'webpack.config.js');
 
 exports.config = {
@@ -73,7 +71,7 @@ exports.config = {
   // Sauce Labs platform configurator - a great tool to configure your capabilities:
   // https://docs.saucelabs.com/reference/platforms-configurator
   //
-  capabilities: getCapabilities(browsers, !!SELENIUM_GRID_URL),
+  capabilities: getCapabilities(BROWSERS, !!SELENIUM_GRID_URL),
   //
   // ===================
   // Test Configurations
