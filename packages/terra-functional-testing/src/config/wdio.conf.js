@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
-const ip = require('ip');
 const getCapabilities = require('./utils/getCapabilities');
+const getIpAddress = require('./utils/getIpAddress');
 
 const SeleniumDockerService = require('../services/wdio-selenium-docker-service');
 const TerraService = require('../services/wdio-terra-service');
@@ -109,7 +109,7 @@ exports.config = {
   // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
   // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
   // gets prepended directly.
-  baseUrl: `http://${WDIO_EXTERNAL_HOST || ip.address()}:${WDIO_EXTERNAL_PORT || 8080}`,
+  baseUrl: `http://${WDIO_EXTERNAL_HOST || getIpAddress()}:${WDIO_EXTERNAL_PORT || 8080}`,
   //
   // Default timeout for all waitFor* commands.
   waitforTimeout: 10000,
