@@ -44,9 +44,9 @@ describe('Accessibility Reporter', () => {
       const reporter = new AccessibilityReporter({});
 
       reporter.onTestStart({ uid: 'mock' });
-      reporter.onReportAccessibility({ incomplete: [] });
+      reporter.onReportAccessibility({ warnings: [] });
 
-      expect(reporter.accessibilityResults.mock).toEqual({ incomplete: [] });
+      expect(reporter.accessibilityResults.mock).toEqual({ warnings: [] });
     });
   });
 
@@ -77,7 +77,7 @@ describe('Accessibility Reporter', () => {
     it('should print an accessibility report', () => {
       const reporter = new AccessibilityReporter({});
 
-      reporter.accessibilityResults = { 'test-id': { incomplete: [] } };
+      reporter.accessibilityResults = { 'test-id': { warnings: [] } };
 
       jest.spyOn(reporter, 'travelSuite').mockImplementationOnce(() => ('mock output'));
       jest.spyOn(reporter, 'write').mockImplementationOnce(() => {});
@@ -130,7 +130,7 @@ describe('Accessibility Reporter', () => {
 
       reporter.accessibilityResults = {
         'test-10-0': {
-          incomplete: ['mock warning'],
+          warnings: ['mock warning'],
         },
       };
 
