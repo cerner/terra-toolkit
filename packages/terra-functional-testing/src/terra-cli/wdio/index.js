@@ -57,6 +57,11 @@ const cli = {
         type: 'array',
         describe: 'A list of spec file paths.',
       },
+      updateScreenshots: {
+        type: 'boolean',
+        describe: 'Whether or not to automatically update all reference screenshots with the latest screenshots.',
+        default: false,
+      },
     })
   ),
   handler: TestRunner.start,

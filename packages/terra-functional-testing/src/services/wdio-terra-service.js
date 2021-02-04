@@ -21,11 +21,12 @@ class TerraService {
    */
   beforeSession(config) {
     global.Terra = {};
-    const { serviceOptions } = config;
+    const { serviceOptions, updateScreenshots } = config;
 
     this.serviceOptions = {
       theme: 'terra-default-theme',
       selector: '[data-terra-test-content] *:first-child',
+      updateScreenshots: updateScreenshots === true,
       ...this.serviceOptions,
       ...serviceOptions,
     };

@@ -121,9 +121,10 @@ class BaseCompare {
    * @param {Number} misMatchPercentage - The percent mismatched of the latest screenshot compared to the reference screenshot.
    * @param {Boolean} isWithinMismatchTolerance - Whether or not the latest screenshot is a close enough match the reference screenshot.
    * @param {Boolean} isSameDimensions - Whether or not the latest screenshot was the same dimensions as the reference screenshot.
+   * @param {Boolean} screenshotWasUpdated - Whether or not the reference screenshot was updated with the latest captured screenshot.
    * @returns {Object} - The relevant comparison results to report.
    */
-  createResultReport(referenceExists, misMatchPercentage, isWithinMismatchTolerance, isSameDimensions) {
+  createResultReport(referenceExists, misMatchPercentage, isWithinMismatchTolerance, isSameDimensions, screenshotWasUpdated) {
     if (!referenceExists) {
       return { isNewScreenshot: true };
     }
@@ -132,6 +133,7 @@ class BaseCompare {
       misMatchPercentage,
       isWithinMismatchTolerance,
       isSameDimensions,
+      screenshotWasUpdated,
     };
   }
 }

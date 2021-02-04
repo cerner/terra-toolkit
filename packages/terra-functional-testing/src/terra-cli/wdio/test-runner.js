@@ -39,6 +39,7 @@ class TestRunner {
    * @param {string} options.baseUrl - The base url.
    * @param {array} options.suite - Overrides specs and runs only the defined suites.
    * @param {array} options.spec - A list of spec file paths.
+   * @param {boolean} options.updateScreenshots - Updates all reference screenshots with the latest screenshots.
    * @returns {Promise} A promise that resolves with the test run exit code.
    */
   static async run(options) {
@@ -50,7 +51,7 @@ class TestRunner {
         formFactor,
         locale,
         theme,
-        ...launcherOptions // hostname, port, baseUrl, suite, spec, and keepAliveSeleniumDockerService
+        ...launcherOptions // hostname, port, baseUrl, suite, spec, updateScreenshots, and keepAliveSeleniumDockerService
       } = options;
 
       process.env.LOCALE = locale;
@@ -88,6 +89,7 @@ class TestRunner {
    * @param {string} options.baseUrl - The base url.
    * @param {array} options.suite - Overrides specs and runs only the defined suites.
    * @param {array} options.spec - A list of spec file paths.
+   * @param {boolean} options.updateScreenshots - Updates all reference screenshots with the latest screenshots.
    */
   static async start(options) {
     const {
@@ -97,7 +99,7 @@ class TestRunner {
       gridUrl,
       locales,
       themes,
-      ...launcherOptions // hostname, port, baseUrl, suite, spec, and keepAliveSeleniumDockerService
+      ...launcherOptions // hostname, port, baseUrl, suite, spec, updateScreenshots, and keepAliveSeleniumDockerService
     } = options;
 
     if (browsers) {

@@ -45,7 +45,7 @@ class LocalCompare extends BaseCompare {
     const referenceExists = fs.existsSync(referencePath);
 
     if (referenceExists) {
-      logger.verbose('reference screenshot exists, compare it with the taken screenshot now');
+      logger.verbose('reference screenshot exists, compare it with the screenshot taken now');
       const latestScreenshot = new Buffer.from(base64Screenshot, 'base64'); // eslint-disable-line new-cap
 
       const ignoreComparison = lodashGet(context, 'options.ignoreComparison', this.ignoreComparison);
@@ -54,19 +54,27 @@ class LocalCompare extends BaseCompare {
       const { isSameDimensions } = compareData;
       const misMatchPercentage = Number(compareData.misMatchPercentage);
       const mismatchTolerance = lodashGet(context, 'options.mismatchTolerance', this.mismatchTolerance);
+      const updateScreenshots = lodashGet(context, 'options.updateScreenshots', this.updateScreenshots);
+      let screenshotWasUpdated = false;
 
       const isWithinMismatchTolerance = misMatchPercentage <= mismatchTolerance;
       if (!isWithinMismatchTolerance || !isSameDimensions) {
-        logger.verbose(`Image is different! ${misMatchPercentage}%`);
-        const png = compareData.getDiffImage().pack();
-        await this.writeDiff(png, diffPath);
+        if (updateScreenshots) {
+          logger.verbose('update the reference screenshot with the latest captured screenshot.');
+          await fs.outputFile(referencePath, base64Screenshot, 'base64');
+          screenshotWasUpdated = true;
+        } else {
+          logger.verbose(`Image is different! ${misMatchPercentage}%`);
+          const png = compareData.getDiffImage().pack();
+          await this.writeDiff(png, diffPath);
+        }
       } else {
         logger.verbose('Image is within tolerance or the same');
         // remove diff screenshot if it existed from a previous run
         await fs.remove(diffPath);
       }
 
-      return this.createResultReport(referenceExists, misMatchPercentage, isWithinMismatchTolerance, isSameDimensions);
+      return this.createResultReport(referenceExists, misMatchPercentage, isWithinMismatchTolerance, isSameDimensions, screenshotWasUpdated);
     }
 
     logger.verbose('first run - create reference file');

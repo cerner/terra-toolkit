@@ -131,6 +131,7 @@ describe('Test Runner', () => {
         suite: 'test-suite',
         spec: '/spec/',
         keepAliveSeleniumDockerService: true,
+        updateScreenshots: true,
       });
 
       expect(TestRunner.run).toHaveBeenCalledWith({
@@ -143,6 +144,7 @@ describe('Test Runner', () => {
         suite: 'test-suite',
         spec: '/spec/',
         keepAliveSeleniumDockerService: true,
+        updateScreenshots: true,
       });
     });
   });

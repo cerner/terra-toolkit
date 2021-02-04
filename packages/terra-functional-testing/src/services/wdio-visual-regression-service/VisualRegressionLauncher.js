@@ -82,6 +82,7 @@ class VisualRegressionLauncher {
      * @param {String} options.ignoreComparison - The image comparison algorithm to use when processing the screenshot comparison.
      * @param {Number} options.mismatchTolerance - The acceptable mismatch tolerance the screenshot can have when processing the screenshot comparison.
      * @param {String} options.name - The name of the screenshot.
+     * @param {Boolean} options.updateScreenshots - Whether or not to automatically update all reference screenshots with the latest screenshots.
      * @returns {Object} - The screenshot comparison results returned as { misMatchPercentage: Number, isSameDimensions: Boolean, getImageDataUrl: function }.
      */
     return async function wrappedScreenshotCommand(elementSelector, options) {
