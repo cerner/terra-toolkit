@@ -28,6 +28,12 @@ module.exports = (env = {}) => {
         chunks: ['index'],
         filename: 'dispatch-custom-event.html',
       }),
+      new HtmlWebpackPlugin({
+        lang: defaultLocale,
+        template: path.join(__dirname, 'packages', 'terra-functional-testing', 'tests', 'fixtures', 'validates-element.html'),
+        chunks: ['index'],
+        filename: 'validates-element.html',
+      }),
     ],
     output: {
       path: path.join(process.cwd(), 'build'),

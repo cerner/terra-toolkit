@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+  * Added @cerner/package-json-lint as a package that can expose terra commands
+
 ## 1.4.0 - (January 5, 2021)
 
 * Changed

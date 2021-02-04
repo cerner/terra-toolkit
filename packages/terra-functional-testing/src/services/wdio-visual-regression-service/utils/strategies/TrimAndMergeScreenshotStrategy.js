@@ -1,4 +1,4 @@
-import BaseStrategy from './BaseStrategy';
+const BaseStrategy = require('./BaseStrategy');
 
 // 1px x 3 for retina
 const NAV_SHADOW_CONST = 5;
@@ -10,11 +10,7 @@ const consts = {
   NAV_SHADOW_CONST_COMBINED,
 };
 
-export {
-  consts,
-};
-
-export default class TrimAndMergeScreenshotStrategy extends BaseStrategy {
+class TrimAndMergeScreenshotStrategy extends BaseStrategy {
   hasNextHorizontalScrollPosition() {
     const width = this.area.endX - this.area.startX;
     return width > this.index.x * this.screenDimensions.getViewportWidth() + this.screenDimensions.getViewportWidth();
@@ -86,3 +82,8 @@ export default class TrimAndMergeScreenshotStrategy extends BaseStrategy {
     return this.createCropDimensions(width, finalHeight, 0, topTrim, true, 0);
   }
 }
+
+module.exports = {
+  TrimAndMergeScreenshotStrategy,
+  consts,
+};

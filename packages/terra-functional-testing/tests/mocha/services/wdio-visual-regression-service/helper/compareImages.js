@@ -1,7 +1,7 @@
-import { assert } from 'chai';
-import resemble from 'node-resemble-js';
+const { assert } = require('chai');
+const resemble = require('node-resemble-js');
 
-export default function compareImages(image1, image2, misMatchPercentage = 0.2) {
+function compareImages(image1, image2, misMatchPercentage = 0.2) {
   return new Promise(resolve => {
     const image = resemble(image1).compareTo(image2);
     image.onComplete(data => {
@@ -16,3 +16,5 @@ export default function compareImages(image1, image2, misMatchPercentage = 0.2) 
     });
   });
 }
+
+module.exports = compareImages;

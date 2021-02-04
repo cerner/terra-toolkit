@@ -1,10 +1,10 @@
-import fs from 'fs-extra';
-import { Logger } from '@cerner/terra-cli';
-import BaseCompare from './BaseCompare';
+const fs = require('fs-extra');
+const { Logger } = require('@cerner/terra-cli');
+const BaseCompare = require('./BaseCompare');
 
 const logger = new Logger('[wdio-visual-regression-service:SaveScreenshot]');
 
-export default class SaveScreenshot extends BaseCompare {
+class SaveScreenshot extends BaseCompare {
   constructor(options = {}) {
     super(options);
     this.getScreenshotPath = options.screenshotName;
@@ -18,3 +18,5 @@ export default class SaveScreenshot extends BaseCompare {
     return this.createResultReport(false);
   }
 }
+
+module.exports = SaveScreenshot;

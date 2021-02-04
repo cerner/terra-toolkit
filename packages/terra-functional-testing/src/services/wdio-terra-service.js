@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
 const expect = require('expect');
-const { accessibility, element } = require('../commands/validates');
-const { toBeAccessible } = require('../commands/expect');
+const { accessibility, element, screenshot } = require('../commands/validates');
+const { toBeAccessible, toMatchReference } = require('../commands/expect');
 const {
   describeViewports,
   getViewports,
@@ -16,10 +16,11 @@ class TerraService {
   }
 
   /**
-   * Service hook executed before worker processes are launched.
+   * Service hook executed prior to initializing the webdriver session.
    * @param {object} config - The WebdriverIO configuration object.
    */
-  onPrepare(config) {
+  beforeSession(config) {
+    global.Terra = {};
     const { serviceOptions } = config;
 
     this.serviceOptions = {
@@ -28,13 +29,9 @@ class TerraService {
       ...this.serviceOptions,
       ...serviceOptions,
     };
-  }
 
-  /**
-   * Service hook executed prior to initializing the webdriver session.
-   */
-  beforeSession() {
-    global.Terra = {};
+    // Add the service options to the global.
+    global.Terra.serviceOptions = this.serviceOptions;
 
     /**
      * This command must be defined in the beforeSession hook instead of together with the other Terra custom commands in the
@@ -44,9 +41,7 @@ class TerraService {
      * Reference: https://github.com/webdriverio/webdriverio/issues/6119
      */
     global.Terra.describeViewports = describeViewports;
-
-    // Add the service options to the global.
-    global.Terra.serviceOptions = this.serviceOptions;
+    global.Terra.viewports = getViewports;
   }
 
   /**
@@ -56,15 +51,14 @@ class TerraService {
   before(capabilities) {
     // Set Jest's expect module as the global assertion framework.
     global.expect = expect;
-    global.expect.extend({ toBeAccessible });
+    global.expect.extend({ toBeAccessible, toMatchReference });
 
     // Setup and expose global utility functions.
     global.Terra.setApplicationLocale = setApplicationLocale;
-    global.Terra.viewports = getViewports;
     global.Terra.hideInputCaret = hideInputCaret;
 
     // Setup and expose the validates utility functions.
-    global.Terra.validates = { accessibility, element };
+    global.Terra.validates = { accessibility, element, screenshot };
 
     /**
      * Global axe override options.

@@ -1,16 +1,14 @@
-import fs from 'fs-extra';
-import resemble from 'node-resemble-js';
-import _ from 'lodash';
-import { Logger } from '@cerner/terra-cli';
-
-import BaseCompare from './BaseCompare';
+const fs = require('fs-extra');
+const resemble = require('node-resemble-js');
+const lodashGet = require('lodash.get');
+const { Logger } = require('@cerner/terra-cli');
+const BaseCompare = require('./BaseCompare');
 
 const logger = new Logger('[wdio-visual-regression-service:LocalCompare]');
 
-export default class LocalCompare extends BaseCompare {
+class LocalCompare extends BaseCompare {
   /**
    * @param {Object} options - Service configuration options.
-   * @param {Object} options.baseScreenshotDir - The base screenshot directory path to save screenshot in.
    * @param {Object} options.locale - The locale being tested.
    * @param {Object} options.theme - The theme being tested.
    */
@@ -18,7 +16,7 @@ export default class LocalCompare extends BaseCompare {
     super(options);
 
     this.ignoreComparison = 'ignore';
-    this.misMatchTolerance = 0.01;
+    this.mismatchTolerance = 0.01;
   }
 
   /**
@@ -27,7 +25,7 @@ export default class LocalCompare extends BaseCompare {
    * differences will be created.
    *
    * @param {Object} context - Information provided to process the screenshot.
-   * @param {Object} context.browserInfo - Contains the browser's name, version, userAgent.
+   * @param {Object} context.desiredCapabilities - Contains the browser name and capabilities.
    * @param {Object} context.suite - The test suite that is running.
    * @param {Object} context.test - The test that is running.
    * @param {Object} context.meta - Contains the currentFormFactor as meta data to use.
@@ -50,15 +48,15 @@ export default class LocalCompare extends BaseCompare {
       logger.verbose('reference screenshot exists, compare it with the taken screenshot now');
       const latestScreenshot = new Buffer.from(base64Screenshot, 'base64'); // eslint-disable-line new-cap
 
-      const ignoreComparison = _.get(context, 'options.ignoreComparison', this.ignoreComparison);
+      const ignoreComparison = lodashGet(context, 'options.ignoreComparison', this.ignoreComparison);
       const compareData = await this.compareImages(referencePath, latestScreenshot, ignoreComparison);
 
       const { isSameDimensions } = compareData;
       const misMatchPercentage = Number(compareData.misMatchPercentage);
-      const misMatchTolerance = _.get(context, 'options.misMatchTolerance', this.misMatchTolerance);
+      const mismatchTolerance = lodashGet(context, 'options.mismatchTolerance', this.mismatchTolerance);
 
-      const isWithinMisMatchTolerance = misMatchPercentage <= misMatchTolerance;
-      if (!isWithinMisMatchTolerance || !isSameDimensions) {
+      const isWithinMismatchTolerance = misMatchPercentage <= mismatchTolerance;
+      if (!isWithinMismatchTolerance || !isSameDimensions) {
         logger.verbose(`Image is different! ${misMatchPercentage}%`);
         const png = compareData.getDiffImage().pack();
         await this.writeDiff(png, diffPath);
@@ -68,7 +66,7 @@ export default class LocalCompare extends BaseCompare {
         await fs.remove(diffPath);
       }
 
-      return this.createResultReport(referenceExists, misMatchPercentage, isWithinMisMatchTolerance, isSameDimensions);
+      return this.createResultReport(referenceExists, misMatchPercentage, isWithinMismatchTolerance, isSameDimensions);
     }
 
     logger.verbose('first run - create reference file');
@@ -132,3 +130,5 @@ export default class LocalCompare extends BaseCompare {
     });
   }
 }
+
+module.exports = LocalCompare;

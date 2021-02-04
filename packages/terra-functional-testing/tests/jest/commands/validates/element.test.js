@@ -1,54 +1,48 @@
-const { accessibility, element } = require('../../../../src/commands/validates');
+const { accessibility, element, screenshot } = require('../../../../src/commands/validates');
 
 jest.mock('../../../../src/commands/validates/accessibility');
+jest.mock('../../../../src/commands/validates/screenshot');
 
 describe('element', () => {
   it('should run element with default options', () => {
-    global.Terra = {
-      serviceOptions: {},
-    };
-
     element('test-name');
 
     expect(accessibility).toHaveBeenCalledWith({ rules: undefined });
+    expect(screenshot).toHaveBeenCalledWith('test-name', { mismatchTolerance: undefined, selector: undefined });
   });
 
-  it('should throw error when no test name provided', () => {
+  it('should throw error when no test name is provided', () => {
     try {
       element();
     } catch (error) {
-      expect(error.message).toEqual('[terra-functional-testing:wdio] Terra.validate.element requires a test name as the first argument.');
+      expect(error.message).toEqual('[terra-functional-testing:element] Terra.validate.element requires a unique test name as the first argument.');
+    }
+  });
+
+  it('should throw error when an empty test name is provided', () => {
+    try {
+      element('');
+    } catch (error) {
+      expect(error.message).toEqual('[terra-functional-testing:element] Terra.validate.element requires a unique test name as the first argument.');
+    }
+  });
+
+  it('should throw error when a non-empty test name is provided', () => {
+    try {
+      element({});
+    } catch (error) {
+      expect(error.message).toEqual('[terra-functional-testing:element] Terra.validate.element requires a unique test name as the first argument.');
     }
   });
 
   it('should run element with full options', () => {
-    global.Terra = {
-      serviceOptions: {
-        selector: 'mock-selector',
-      },
-    };
-
     element('test-name', {
       rules: { 'mock-rule': { enabled: false } },
       selector: 'mock-selector',
-      misMatchTolerance: 10,
+      mismatchTolerance: 10,
     });
 
     expect(accessibility).toHaveBeenCalledWith({ rules: { 'mock-rule': { enabled: false } } });
-  });
-
-  it('should run element with service selector options', () => {
-    global.Terra = {
-      serviceOptions: {
-        selector: 'mock-selector',
-      },
-    };
-
-    element('test-name', {
-      rules: { 'mock-rule': { enabled: true } },
-      misMatchTolerance: 10,
-    });
-
-    expect(accessibility).toHaveBeenCalledWith({ rules: { 'mock-rule': { enabled: true } } });
+    expect(screenshot).toHaveBeenCalledWith('test-name', { mismatchTolerance: 10, selector: 'mock-selector' });
   });
 });

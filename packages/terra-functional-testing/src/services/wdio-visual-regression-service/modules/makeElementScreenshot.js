@@ -1,11 +1,9 @@
-import { Logger } from '@cerner/terra-cli';
-
-import makeAreaScreenshot from './makeAreaScreenshot';
-import beforeScreenshot from './beforeScreenshot';
-import afterScreenshot from './afterScreenshot';
-
-import groupBoundingRect from '../utils/groupBoundingRect';
-import getBoundingRects from '../scripts/getBoundingRects';
+const { Logger } = require('@cerner/terra-cli');
+const makeAreaScreenshot = require('./makeAreaScreenshot');
+const beforeScreenshot = require('./beforeScreenshot');
+const afterScreenshot = require('./afterScreenshot');
+const groupBoundingRect = require('../utils/groupBoundingRect');
+const getBoundingRects = require('../scripts/getBoundingRects');
 
 const logger = new Logger('[wdio-visual-regression-service:makeDocumentScreenshot]');
 
@@ -22,7 +20,7 @@ const logger = new Logger('[wdio-visual-regression-service:makeDocumentScreensho
  * @param {String[]} options.remove - The list of elements to set display: none on to 'remove' from dom when capturing the screenshot.
  * @returns {String} - The base64 string of the screenshot image that was captured.
  */
-export default async function makeElementScreenshot(browser, elementSelector, options = {}) {
+async function makeElementScreenshot(browser, elementSelector, options = {}) {
   logger.verbose('start element screenshot');
 
   // hide scrollbars, scroll to start, hide & remove elements, wait for render
@@ -48,3 +46,5 @@ export default async function makeElementScreenshot(browser, elementSelector, op
 
   return base64Image;
 }
+
+module.exports = makeElementScreenshot;

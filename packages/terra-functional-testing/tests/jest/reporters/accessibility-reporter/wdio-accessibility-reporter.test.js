@@ -1,5 +1,5 @@
-const AccessibilityReporter = require('../../../src/reporters/wdio-accessibility-reporter');
-const testData1 = require('../../fixtures/reporters/test-data-1.json');
+const AccessibilityReporter = require('../../../../src/reporters/accessibility-reporter/wdio-accessibility-reporter');
+const testData1 = require('../../../fixtures/reporters/test-data-1.json');
 
 jest.mock('chalk', () => ({
   yellow: (string) => string,
@@ -44,9 +44,9 @@ describe('Accessibility Reporter', () => {
       const reporter = new AccessibilityReporter({});
 
       reporter.onTestStart({ uid: 'mock' });
-      reporter.onReportAccessibility({ incomplete: [] });
+      reporter.onReportAccessibility({ warnings: [] });
 
-      expect(reporter.accessibilityResults.mock).toEqual({ incomplete: [] });
+      expect(reporter.accessibilityResults.mock).toEqual({ warnings: [] });
     });
   });
 
@@ -77,7 +77,7 @@ describe('Accessibility Reporter', () => {
     it('should print an accessibility report', () => {
       const reporter = new AccessibilityReporter({});
 
-      reporter.accessibilityResults = { 'test-id': { incomplete: [] } };
+      reporter.accessibilityResults = { 'test-id': { warnings: [] } };
 
       jest.spyOn(reporter, 'travelSuite').mockImplementationOnce(() => ('mock output'));
       jest.spyOn(reporter, 'write').mockImplementationOnce(() => {});
@@ -130,7 +130,7 @@ describe('Accessibility Reporter', () => {
 
       reporter.accessibilityResults = {
         'test-10-0': {
-          incomplete: ['mock warning'],
+          warnings: ['mock warning'],
         },
       };
 

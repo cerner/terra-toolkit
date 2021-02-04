@@ -4,6 +4,8 @@
  * @param {String} height - The height to set the document to.
  * @returns {undefined}
  */
-export default function pageHeight(height) {
+function pageHeight(height) {
   document.body.style.height = height;
 }
+
+module.exports = pageHeight;

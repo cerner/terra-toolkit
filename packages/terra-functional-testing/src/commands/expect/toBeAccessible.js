@@ -1,3 +1,4 @@
+/* global Terra */
 const { runAxe } = require('../axe');
 
 /**
@@ -7,18 +8,31 @@ const { runAxe } = require('../axe');
  * @returns {Object} - An object that indicates if the assertion passed or failed with a message.
  */
 function toBeAccessible(_, options = {}) {
+  const { axe } = Terra;
+  const { rules } = axe;
   const { result } = runAxe(options);
-  const { incomplete, violations } = result;
+  const { violations } = result;
 
-  // Rules that fail but are marked for review are returned in the incomplete array.
-  // https://github.com/dequelabs/axe-core/blob/develop/doc/API.md#results-object
-  if (incomplete && incomplete.length > 0) {
-    process.emit('terra:report:accessibility', { incomplete });
+  const errors = [];
+  const warnings = [];
+
+  violations.forEach((violation) => {
+    const { id } = violation;
+
+    if (rules[id] && rules[id].warn === true) {
+      warnings.push(violation);
+    } else {
+      errors.push(violation);
+    }
+  });
+
+  if (warnings.length > 0) {
+    process.emit('terra:report:accessibility', { warnings });
   }
 
   return {
-    pass: violations.length === 0,
-    message: () => `expected no accessibility violations but received ${JSON.stringify(violations, null, 2)}`,
+    pass: errors.length === 0,
+    message: () => `expected no accessibility violations but received ${JSON.stringify(errors, null, 2)}`,
   };
 }
 
