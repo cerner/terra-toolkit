@@ -94,12 +94,7 @@ class TerraService {
   }
 
   afterCommand(commandName, _args, _result, error) {
-    /* Interim Fix until we update to latest hub and iedriverserver. */
-    if (this.serviceOptions && this.serviceOptions.disableTerraServiceAfterCommand) {
-      return;
-    }
-
-   if ((commandName === 'refresh' || commandName === 'url') && !error) {
+    if ((commandName === 'refresh' || commandName === 'url') && !error) {
       try {
         // This is only meant as a convenience so failure is not particularly concerning.
         global.Terra.hideInputCaret('body');
@@ -117,4 +112,4 @@ class TerraService {
   }
 }
 
-kodule.exports = TerraService;
+module.exports = TerraService;
