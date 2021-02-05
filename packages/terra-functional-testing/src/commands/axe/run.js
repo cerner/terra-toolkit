@@ -31,7 +31,8 @@ const runAxe = (options = {}) => {
   return browser.executeAsync(function (opts, done) {
     // eslint-disable-next-line prefer-arrow-callback, func-names
     axe.run(document, opts, function (error, result) {
-      done({ error, result });
+      // eslint-disable-next-line object-shorthand
+      done({ error: error, result: result }); // IE 10 does not support object short hand. This line must explicity define the key and value of the object.
     });
   }, { rules, runOnly: ['wcag2a', 'wcag2aa', 'wcag21aa', 'section508'] });
 };
