@@ -29,17 +29,14 @@ npm install @cerner/eslint-config-terra --save-dev
 
 ## Usage
 
-First, include the configuration defined by `@cerner/eslint-config-terra` via the  [extends](https://eslint.org/docs/user-guide/configuring#extending-configuration-files) property.
+Include the configuration defined by `@cerner/eslint-config-terra` via the  [extends](https://eslint.org/docs/user-guide/configuring#extending-configuration-files) property.
 
-Then, [define the browsers](https://github.com/amilajack/eslint-plugin-compat#targeting-browsers) for the `eslint-plugin-compat` plugin to target by add the browsers list configuration in your package.json through the `browserslist` key.
+To lint based on supported browsers, add browserlist config as specified in the [browserlist config upgrade guide](dev_tools/cerner/browserslist-config-terra/upgrade-guide).
 
 ### package.json
 
 ```json
 {
-  "browserslist": [
-    "extends @cerner/browserslist-config-terra"
-  ],
   "eslintConfig": {
     "extends": "@cerner/terra"
   },
