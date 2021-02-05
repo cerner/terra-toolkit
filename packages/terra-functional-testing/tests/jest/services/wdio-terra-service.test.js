@@ -109,6 +109,7 @@ describe('WDIO Terra Service', () => {
       formFactor: 'huge',
       selector: '[data-terra-test-content] *:first-child',
       theme: 'terra-default-theme',
+      updateScreenshots: false,
     };
 
     service.beforeSession({});
@@ -123,12 +124,14 @@ describe('WDIO Terra Service', () => {
       serviceOptions: {
         selector: 'mock-selector',
       },
+      updateScreenshots: true,
     };
 
     const expectedServiceOptions = {
       formFactor: 'huge',
       selector: 'mock-selector',
       theme: 'terra-default-theme',
+      updateScreenshots: true,
     };
 
     service.beforeSession(config);
@@ -144,6 +147,7 @@ describe('WDIO Terra Service', () => {
       formFactor: 'large',
       selector: '[data-terra-test-content] *:first-child',
       theme: 'terra-default-theme',
+      updateScreenshots: false,
     };
 
     service.beforeSession({});

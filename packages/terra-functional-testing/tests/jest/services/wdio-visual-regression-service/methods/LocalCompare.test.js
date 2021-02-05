@@ -33,6 +33,7 @@ const context = {
   },
   options: {
     name: 'displays a button',
+    updateScreenshots: false,
   },
 };
 
@@ -159,6 +160,7 @@ describe('LocalCompare', () => {
         misMatchPercentage: 0,
         isWithinMismatchTolerance: true,
         isSameDimensions: true,
+        screenshotWasUpdated: false,
       });
 
       const screenshotPathsSecond = getScreenshotPathsSpy.mock.results[1].value;
@@ -313,6 +315,75 @@ describe('LocalCompare', () => {
       const diffExistsSecond = fs.existsSync(screenshotPaths.diffPath);
       expect(diffExistsSecond).toBeFalsy();
     }, TIMEOUT * 3);
+
+    it('auto update the reference image when there is a mismatch', async () => {
+      const base64Screenshot = fs.readFileSync(path.join(dirFixture, 'image', '100x100-diff.png'), { encoding: 'base64' });
+      const base64ScreenshotNew = fs.readFileSync(path.join(dirFixture, 'image', '100x100.png'), { encoding: 'base64' });
+
+      const getScreenshotPathsSpy = jest.spyOn(localCompare, 'getScreenshotPaths');
+
+      // 1st run -> create reference
+      const resultFirst = await localCompare.processScreenshot(context, base64Screenshot);
+
+      // check screenshot getter
+      expect(getScreenshotPathsSpy).toHaveBeenCalledTimes(1);
+      expect(getScreenshotPathsSpy).toHaveBeenCalledWith(context);
+
+      // check image results
+      expect(resultFirst).toMatchObject({
+        isNewScreenshot: true,
+      });
+
+      const screenshotPathsFirst = getScreenshotPathsSpy.mock.results[0].value;
+
+      // check if reference image was created
+      const referenceExists = fs.existsSync(screenshotPathsFirst.referencePath);
+      expect(referenceExists).toBeTruthy();
+
+      // check if latest image was created
+      const latestExists = fs.existsSync(screenshotPathsFirst.latestPath);
+      expect(latestExists).toBeTruthy();
+
+      // check last modified
+      const referenceStatsFirst = fs.statSync(screenshotPathsFirst.referencePath);
+      expect(referenceStatsFirst.mtimeMs).toBeGreaterThan(0);
+
+      const latestStatsFirst = fs.statSync(screenshotPathsFirst.latestPath);
+      expect(latestStatsFirst.mtimeMs).toBeGreaterThan(0);
+
+      // create a second context with updateScreenshots set to true
+      const contextSecond = {
+        ...context,
+        options: {
+          name: 'displays a button',
+          updateScreenshots: true,
+        },
+      };
+
+      // 2nd run --> go against reference image
+      await pauseTest(); // pause to ensure time elapses between screenshot creation
+      const resultSecond = await localCompare.processScreenshot(contextSecond, base64ScreenshotNew);
+
+      // check reference getter
+      expect(getScreenshotPathsSpy).toHaveBeenCalledTimes(2);
+      expect(getScreenshotPathsSpy).toHaveBeenNthCalledWith(2, contextSecond);
+
+      // check if image is reported as different
+      expect(resultSecond.misMatchPercentage).toBeGreaterThan(0.01);
+      expect(resultSecond.isWithinMismatchTolerance).toBeFalsy();
+      expect(resultSecond.isSameDimensions).toBeTruthy();
+      expect(resultSecond.screenshotWasUpdated).toBeTruthy();
+
+      const screenshotPathsSecond = getScreenshotPathsSpy.mock.results[1].value;
+
+      // check that reference was updated
+      const referenceStatsSecond = fs.statSync(screenshotPathsSecond.referencePath);
+      expect(referenceStatsSecond.mtimeMs).toBeGreaterThan(referenceStatsFirst.mtimeMs);
+
+      // check that latest was updated
+      const latestStatsSecond = fs.statSync(screenshotPathsSecond.latestPath);
+      expect(latestStatsSecond.mtimeMs).toBeGreaterThan(latestStatsFirst.mtimeMs);
+    }, TIMEOUT);
   });
 
   describe('LocalCompare.processScreenshot-mismatchTolerance', () => {
