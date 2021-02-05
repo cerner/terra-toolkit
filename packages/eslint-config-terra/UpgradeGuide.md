@@ -1,5 +1,29 @@
 # Eslint Config Terra Upgrade Guide
 
+## Changes from version 4 to version 5
+
+### Support eslint version 7.19.0
+
+The new package now supports eslint version 7. Checkout the eslint [migration guide](https://eslint.org/docs/user-guide/migrating-to-7.0.0)
+
+### Updated eslint-plugin-react
+
+Several new and updated rules were added in this new version so any new errors will need to be fixed. eslint-plugin-react was updated from [7.19.0 to 7.22.0](https://github.com/yannickcr/eslint-plugin-react/compare/v7.19.0...v7.22.0). Those changes include:
+* https://github.com/yannickcr/eslint-plugin-react/releases/tag/v7.20.0
+* https://github.com/yannickcr/eslint-plugin-react/releases/tag/v7.20.1
+* https://github.com/yannickcr/eslint-plugin-react/releases/tag/v7.20.2
+* https://github.com/yannickcr/eslint-plugin-react/releases/tag/v7.20.3
+* https://github.com/yannickcr/eslint-plugin-react/releases/tag/v7.20.4
+* https://github.com/yannickcr/eslint-plugin-react/releases/tag/v7.20.5
+* https://github.com/yannickcr/eslint-plugin-react/releases/tag/v7.20.6
+* https://github.com/yannickcr/eslint-plugin-react/releases/tag/v7.21.0
+* https://github.com/yannickcr/eslint-plugin-react/releases/tag/v7.21.1
+* https://github.com/yannickcr/eslint-plugin-react/releases/tag/v7.21.2
+* https://github.com/yannickcr/eslint-plugin-react/releases/tag/v7.21.3
+* https://github.com/yannickcr/eslint-plugin-react/releases/tag/v7.21.4
+* https://github.com/yannickcr/eslint-plugin-react/releases/tag/v7.21.5
+* https://github.com/yannickcr/eslint-plugin-react/releases/tag/v7.22.0
+
 ## Changes from version 3 to version 4
 
 ### Project Name Updated with @cerner Scope

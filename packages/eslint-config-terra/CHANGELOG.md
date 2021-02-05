@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Breaking
+  * Update to eslint ^7.19.0.
+
 * Fixed
   * Resolved missing peer dependency warning by locking into a previous version of eslint-config-airbnb.
 
