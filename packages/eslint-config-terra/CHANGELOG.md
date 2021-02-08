@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 4.5.0 - (February 8, 2021)
+
 * Fixed
   * Resolved missing peer dependency warning by locking into a previous version of eslint-config-airbnb.
 
