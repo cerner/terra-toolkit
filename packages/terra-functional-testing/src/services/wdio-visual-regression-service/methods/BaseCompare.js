@@ -40,8 +40,8 @@ class BaseCompare {
   /**
    * Creates the sanitized test name for the screenshot.
    *
-   * @param {String} fullName - The test name.
-   * @returns {String} - The test name.
+   * @param {string} fullName - The test name.
+   * @returns {string} - The test name.
    */
   createTestName(fullName) {
     const matches = TEST_ID_REGEX.exec(fullName);
@@ -117,11 +117,11 @@ class BaseCompare {
   /**
    * Creates the screenshot comparison report object.
    *
-   * @param {Boolean} referenceExists - Whether or not the screenshot was just created.
-   * @param {Number} misMatchPercentage - The percent mismatched of the latest screenshot compared to the reference screenshot.
-   * @param {Boolean} isWithinMismatchTolerance - Whether or not the latest screenshot is a close enough match the reference screenshot.
-   * @param {Boolean} isSameDimensions - Whether or not the latest screenshot was the same dimensions as the reference screenshot.
-   * @param {Boolean} screenshotWasUpdated - Whether or not the reference screenshot was updated with the latest captured screenshot.
+   * @param {boolean} referenceExists - Whether or not the screenshot was just created.
+   * @param {number} misMatchPercentage - The percent mismatched of the latest screenshot compared to the reference screenshot.
+   * @param {boolean} isWithinMismatchTolerance - Whether or not the latest screenshot is a close enough match the reference screenshot.
+   * @param {boolean} isSameDimensions - Whether or not the latest screenshot was the same dimensions as the reference screenshot.
+   * @param {boolean} screenshotWasUpdated - Whether or not the reference screenshot was updated with the latest captured screenshot.
    * @returns {Object} - The relevant comparison results to report.
    */
   createResultReport(referenceExists, misMatchPercentage, isWithinMismatchTolerance, isSameDimensions, screenshotWasUpdated) {

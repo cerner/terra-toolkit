@@ -29,7 +29,7 @@ Options:
       --suite                           Overrides specs and runs only the
                                         defined suites.                  [array]
       --spec                            A list of spec file paths.       [array]
-      --updateScreenshots               Whether or not to automatically update
+  -u, --updateScreenshots               Whether or not to automatically update
                                         all reference screenshots with the
                                         latest screenshots.
                                                       [boolean] [default: false]"

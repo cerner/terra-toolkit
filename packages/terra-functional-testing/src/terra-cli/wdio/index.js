@@ -59,6 +59,7 @@ const cli = {
       },
       updateScreenshots: {
         type: 'boolean',
+        alias: 'u',
         describe: 'Whether or not to automatically update all reference screenshots with the latest screenshots.',
         default: false,
       },

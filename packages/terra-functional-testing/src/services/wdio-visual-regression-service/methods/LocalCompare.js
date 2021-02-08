@@ -85,9 +85,9 @@ class LocalCompare extends BaseCompare {
   /**
    * Compares the latest image to the latest image with resemble to determine if they are the same.
    *
-   * @param {String} referencePath - Path to reference image.
+   * @param {string} referencePath - Path to reference image.
    * @param {Buffer} latestScreenshot - Buffer of the latest image.
-   * @param {String} ignoreComparison - The image comparison algorithm to use.
+   * @param {string} ignoreComparison - The image comparison algorithm to use.
    * @returns {Object} - The screenshot comparison results returned as { misMatchPercentage: Number, isSameDimensions: Boolean, getImageDataUrl: function }.
    */
   // eslint-disable-next-line class-methods-use-this

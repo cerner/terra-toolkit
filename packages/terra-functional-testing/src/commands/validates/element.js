@@ -9,7 +9,7 @@ const screenshot = require('./screenshot');
  * @param {string} [testName] - the required test case name.
  * @param {Object} [options] - the test options
  * @param {Object} [options.rules] - the axe rules to use to assert accessibility.
- * @param {Number} [options.mismatchTolerance] - the mismatch tolerance for the screenshot comparison.
+ * @param {number} [options.mismatchTolerance] - the mismatch tolerance for the screenshot comparison.
  * @param {string} [options.selector] - the element selector to use for the screenshot comparison.
  */
 const element = (testName, options = {}) => {

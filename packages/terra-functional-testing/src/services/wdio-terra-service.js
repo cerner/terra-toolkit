@@ -17,7 +17,7 @@ class TerraService {
 
   /**
    * Service hook executed prior to initializing the webdriver session.
-   * @param {object} config - The WebdriverIO configuration object.
+   * @param {Object} config - The WebdriverIO configuration object.
    */
   beforeSession(config) {
     global.Terra = {};
