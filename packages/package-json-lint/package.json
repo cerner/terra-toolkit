@@ -34,7 +34,7 @@
     "@cerner/terra-cli": "^1.0.0"
   },
   "devDependencies": {
-    "@cerner/terra-cli": "^1.4.0",
+    "@cerner/terra-cli": "^1.5.0",
     "yargs": "^16.1.1"
   }
 }
