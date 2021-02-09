@@ -124,7 +124,9 @@ describe('WDIO Terra Service', () => {
       serviceOptions: {
         selector: 'mock-selector',
       },
-      updateScreenshots: true,
+      launcherOptions: {
+        updateScreenshots: true,
+      },
     };
 
     const expectedServiceOptions = {

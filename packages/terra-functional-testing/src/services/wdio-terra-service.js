@@ -21,7 +21,8 @@ class TerraService {
    */
   beforeSession(config) {
     global.Terra = {};
-    const { serviceOptions, updateScreenshots } = config;
+    const { serviceOptions, launcherOptions } = config;
+    const { updateScreenshots } = launcherOptions || {};
 
     this.serviceOptions = {
       theme: 'terra-default-theme',

@@ -75,10 +75,18 @@ describe('Test Runner', () => {
       await TestRunner.start({ config: '/path', locales: ['en', 'fr'], themes: ['terra-default-theme', 'terra-mock-theme'] });
 
       expect(TestRunner.run).toHaveBeenCalledTimes(4);
-      expect(TestRunner.run).toHaveBeenCalledWith({ config: '/path', theme: 'terra-default-theme', locale: 'en' });
-      expect(TestRunner.run).toHaveBeenCalledWith({ config: '/path', theme: 'terra-default-theme', locale: 'fr' });
-      expect(TestRunner.run).toHaveBeenCalledWith({ config: '/path', theme: 'terra-mock-theme', locale: 'en' });
-      expect(TestRunner.run).toHaveBeenCalledWith({ config: '/path', theme: 'terra-mock-theme', locale: 'fr' });
+      expect(TestRunner.run).toHaveBeenCalledWith({
+        config: '/path', theme: 'terra-default-theme', locale: 'en', launcherOptions: {},
+      });
+      expect(TestRunner.run).toHaveBeenCalledWith({
+        config: '/path', theme: 'terra-default-theme', locale: 'fr', launcherOptions: {},
+      });
+      expect(TestRunner.run).toHaveBeenCalledWith({
+        config: '/path', theme: 'terra-mock-theme', locale: 'en', launcherOptions: {},
+      });
+      expect(TestRunner.run).toHaveBeenCalledWith({
+        config: '/path', theme: 'terra-mock-theme', locale: 'fr', launcherOptions: {},
+      });
     });
 
     it('should initiate a test runner for each theme, locale, and form factor permutation', async () => {
@@ -93,28 +101,28 @@ describe('Test Runner', () => {
 
       expect(TestRunner.run).toHaveBeenCalledTimes(8);
       expect(TestRunner.run).toHaveBeenCalledWith({
-        config: '/path', theme: 'terra-default-theme', locale: 'en', formFactor: 'tiny',
+        config: '/path', theme: 'terra-default-theme', locale: 'en', formFactor: 'tiny', launcherOptions: {},
       });
       expect(TestRunner.run).toHaveBeenCalledWith({
-        config: '/path', theme: 'terra-default-theme', locale: 'en', formFactor: 'large',
+        config: '/path', theme: 'terra-default-theme', locale: 'en', formFactor: 'large', launcherOptions: {},
       });
       expect(TestRunner.run).toHaveBeenCalledWith({
-        config: '/path', theme: 'terra-default-theme', locale: 'fr', formFactor: 'tiny',
+        config: '/path', theme: 'terra-default-theme', locale: 'fr', formFactor: 'tiny', launcherOptions: {},
       });
       expect(TestRunner.run).toHaveBeenCalledWith({
-        config: '/path', theme: 'terra-default-theme', locale: 'fr', formFactor: 'large',
+        config: '/path', theme: 'terra-default-theme', locale: 'fr', formFactor: 'large', launcherOptions: {},
       });
       expect(TestRunner.run).toHaveBeenCalledWith({
-        config: '/path', theme: 'terra-mock-theme', locale: 'en', formFactor: 'tiny',
+        config: '/path', theme: 'terra-mock-theme', locale: 'en', formFactor: 'tiny', launcherOptions: {},
       });
       expect(TestRunner.run).toHaveBeenCalledWith({
-        config: '/path', theme: 'terra-mock-theme', locale: 'en', formFactor: 'large',
+        config: '/path', theme: 'terra-mock-theme', locale: 'en', formFactor: 'large', launcherOptions: {},
       });
       expect(TestRunner.run).toHaveBeenCalledWith({
-        config: '/path', theme: 'terra-mock-theme', locale: 'fr', formFactor: 'tiny',
+        config: '/path', theme: 'terra-mock-theme', locale: 'fr', formFactor: 'tiny', launcherOptions: {},
       });
       expect(TestRunner.run).toHaveBeenCalledWith({
-        config: '/path', theme: 'terra-mock-theme', locale: 'fr', formFactor: 'large',
+        config: '/path', theme: 'terra-mock-theme', locale: 'fr', formFactor: 'large', launcherOptions: {},
       });
     });
 
@@ -143,8 +151,10 @@ describe('Test Runner', () => {
         baseUrl: '/',
         suite: 'test-suite',
         spec: '/spec/',
-        keepAliveSeleniumDockerService: true,
-        updateScreenshots: true,
+        launcherOptions: {
+          keepAliveSeleniumDockerService: true,
+          updateScreenshots: true,
+        },
       });
     });
   });
