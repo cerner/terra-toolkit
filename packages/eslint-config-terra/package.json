@@ -1,6 +1,6 @@
 {
   "name": "@cerner/eslint-config-terra",
-  "version": "4.5.0",
+  "version": "4.5.1",
   "description": "Terra Eslint Config",
   "main": "eslint.config.js",
   "publishConfig": {
@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "babel-eslint": "^10.1.0",
-    "eslint-config-airbnb": "18.1.0",
+    "eslint-config-airbnb": "^18.0.0",
     "eslint-plugin-compat": "^3.3.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
