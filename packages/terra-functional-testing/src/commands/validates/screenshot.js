@@ -16,9 +16,9 @@ const screenshot = (testName, options = {}) => {
 
   const { selector } = options;
   const wrappedOptions = {
-    name: testName,
-    updateScreenshots: global.Terra.serviceOptions.updateScreenshots,
     ...options,
+    name: testName,
+    updateScreenshots: global.Terra.serviceOptions.updateScreenshots === true,
   };
 
   const screenshotResult = global.browser.checkElement(selector || global.Terra.serviceOptions.selector, wrappedOptions);
