@@ -23,9 +23,11 @@ class WebpackServer {
 
     // eslint-disable-next-line global-require, import/no-dynamic-require
     const config = require(webpackConfig);
+    const defaultLocale = process.env.LOCALE || locale;
+    const defaultTheme = process.env.THEME || theme;
 
     if (typeof config === 'function') {
-      return config({ ...locale && { defaultLocale: locale }, theme }, { p: true });
+      return config({ ...defaultLocale && { defaultLocale }, theme: defaultTheme }, { p: true });
     }
 
     return config;

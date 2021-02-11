@@ -38,6 +38,14 @@ describe('Webpack Server', () => {
   });
 
   describe('config', () => {
+    const OLD_ENV = process.env;
+    beforeEach(() => {
+      jest.resetModules();
+      process.env = { ...OLD_ENV };
+    });
+    afterEach(() => {
+      process.env = OLD_ENV;
+    });
     it('should return the webpack configuration', () => {
       jest.mock('./mock-webpack.config.js', () => 'mock-webpack');
 
@@ -70,6 +78,21 @@ describe('Webpack Server', () => {
       const config = WebpackServer.config(options);
 
       expect(config).toEqual({ defaultLocale: 'en', p: true, theme: 'lowlight' });
+    });
+
+    it('should run with env over options', () => {
+      jest.mock('./mock-webpack.config.js', () => (env, args) => ({ ...env, ...args }));
+      process.env.LOCALE = 'fr';
+      process.env.THEME = 'terra-default-theme';
+      const options = {
+        webpackConfig: path.resolve(__dirname, './mock-webpack.config.js'),
+        locale: 'en',
+        theme: 'lowlight',
+      };
+
+      const config = WebpackServer.config(options);
+
+      expect(config).toEqual({ defaultLocale: 'fr', p: true, theme: 'terra-default-theme' });
     });
   });
 
