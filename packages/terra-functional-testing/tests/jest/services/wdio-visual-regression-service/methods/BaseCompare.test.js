@@ -123,29 +123,42 @@ describe('BaseCompare', () => {
 
     describe('when referenceExists is true', () => {
       it('returns expected results when misMatchPercentage is 0 and isSameDimensions is true', () => {
-        const results = baseCompare.createResultReport(true, 0, true, true);
+        const results = baseCompare.createResultReport(true, 0, true, true, false);
         expect(results).toEqual(expect.objectContaining({
           misMatchPercentage: 0,
           isWithinMismatchTolerance: true,
           isSameDimensions: true,
+          screenshotWasUpdated: false,
         }));
       });
 
       it('returns expected results when misMatchPercentage is 0 and isSameDimensions is false', () => {
-        const results = baseCompare.createResultReport(true, 0, true, false);
+        const results = baseCompare.createResultReport(true, 0, true, false, false);
         expect(results).toEqual(expect.objectContaining({
           misMatchPercentage: 0,
           isWithinMismatchTolerance: true,
           isSameDimensions: false,
+          screenshotWasUpdated: false,
         }));
       });
 
       it('returns expected results when misMatchPercentage is greater than 0', () => {
-        const results = baseCompare.createResultReport(true, 30, true, false);
+        const results = baseCompare.createResultReport(true, 30, true, false, false);
         expect(results).toEqual(expect.objectContaining({
           misMatchPercentage: 30,
           isWithinMismatchTolerance: true,
           isSameDimensions: false,
+          screenshotWasUpdated: false,
+        }));
+      });
+
+      it('returns expected results when screenshotWasUpdated is true', () => {
+        const results = baseCompare.createResultReport(true, 30, true, false, true);
+        expect(results).toEqual(expect.objectContaining({
+          misMatchPercentage: 30,
+          isWithinMismatchTolerance: true,
+          isSameDimensions: false,
+          screenshotWasUpdated: true,
         }));
       });
     });

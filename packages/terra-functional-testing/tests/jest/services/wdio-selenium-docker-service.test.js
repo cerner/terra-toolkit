@@ -18,9 +18,20 @@ describe('WDIO Selenium Docker Service', () => {
       jest.spyOn(service, 'initializeSwarm').mockImplementationOnce(() => Promise.resolve());
       jest.spyOn(service, 'deployStack').mockImplementationOnce(() => Promise.resolve());
 
-      await service.onPrepare({});
+      const config = {
+        hostname: 'mock-hostname',
+        port: 'mock-port',
+        launcherOptions: {
+          keepAliveSeleniumDockerService: true,
+        },
+      };
+
+      await service.onPrepare(config);
 
       expect(service.initializeSwarm).toHaveBeenCalled();
+      expect(service.host).toBe('mock-hostname');
+      expect(service.port).toBe('mock-port');
+      expect(service.keepAliveSeleniumDockerService).toBeTruthy();
     });
 
     it('should deploy the docker stack', async () => {
