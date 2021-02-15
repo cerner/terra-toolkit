@@ -1,0 +1,44 @@
+import { Badge } from '@cerner/eslint-config-terra/package.json?dev-site-package';
+
+<Badge />
+
+# Eslint Config Terra
+
+This configuration reflects Terra's supported eslint policy for javascript.
+
+Features:
+
+- extends the  [eslint-config-airbnb](https://github.com/airbnb/javascript/tree/main/packages/eslint-config-airbnb), which exports ESLint rules, including rules for ECMAScript 6+ and React.
+- checks for proper ReactJS Hooks usage via the [eslint-plugin-react-hooks](https://reactjs.org/docs/hooks-rules.html).
+- checks syntax for targeted browsers support via the [eslint-plugin-compat](https://github.com/amilajack/eslint-plugin-compat). It is recommended to use Terra's targeted browsers which are specified by the [browserslist-config-terra](https://github.com/cerner/terra-toolkit/tree/main/packages/browserslist-config-terra) module.
+- defines the browser and jest environment
+- defines enzyme globals for `shallow`, `render` and `mount` for jest testing
+
+## What is Eslint
+
+[ESlint](https://eslint.org/) is a pluggable linting utility for JavaScript and JSX.
+
+## Installation
+
+Install the module
+
+```shell
+npm install eslint --save-dev
+npm install @cerner/eslint-config-terra --save-dev
+```
+
+## Usage
+
+Include the configuration defined by `@cerner/eslint-config-terra` via the  [extends](https://eslint.org/docs/user-guide/configuring#extending-configuration-files) property.
+
+To lint based on supported browsers, add browserlist config as specified in the [browserlist config upgrade guide](dev_tools/cerner/browserslist-config-terra/upgrade-guide).
+
+### package.json
+
+```json
+{
+  "eslintConfig": {
+    "extends": "@cerner/terra"
+  },
+}
+```

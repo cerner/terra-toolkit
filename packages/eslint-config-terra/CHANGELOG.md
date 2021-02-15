@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Breaking
+  * Update to eslint ^7.19.0.
+
 ## 4.5.1 - (February 9, 2021)
 
 * Fixed

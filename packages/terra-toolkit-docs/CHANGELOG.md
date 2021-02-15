@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Added
+  * Added documentation for eslint-config-terra
+
 ## 1.6.0 - (January 27, 2021)
 
 * Changed
