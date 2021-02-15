@@ -221,7 +221,7 @@ npm run terra wdio -u
 
 ### VPN Support
 
-We've added changes to automatically detect the VPN IP address. It is no longer necessary to manually specify the `WDIO_EXTERNAL_HOST` run wdio. We've tested these changes on our own machines and have seen promising results. It's not perfect and we'll make tweaks as necessary. If this is not working for you let us know. Be sure to specify the operating system and platform you're developing on.
+We've added support to automatically detect the VPN IP address. It is no longer necessary to manually specify the `WDIO_EXTERNAL_HOST` when running wdio. These changes were tested successfully on Mac OS Catalina. Results may vary when running on different platforms and operating systems. It's not perfect and we'll make tweaks as necessary. If this is not working for you let us know. Be sure to specify the operating system and platform you're developing on.
 
 ## How to Upgrade
 
