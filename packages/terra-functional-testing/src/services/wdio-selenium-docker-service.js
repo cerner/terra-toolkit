@@ -65,7 +65,7 @@ class SeleniumDockerService {
     const { stdout: stackInfo } = await exec('docker stack ls | grep wdio || true');
 
     if (!stackInfo) {
-      logger.info(`Deploying docker stack.`);
+      logger.info('Deploying docker stack.');
 
       const composeFilePath = path.resolve(__dirname, '../docker/docker-compose.yml');
       const envVars = this.version ? `TERRA_SELENIUM_DOCKER_VERSION=${this.version} ` : '';
