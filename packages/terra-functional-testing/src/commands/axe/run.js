@@ -4,7 +4,7 @@ const injectAxe = require('./inject');
 /**
  * Executes axe on the browser.
  * @param {Object} options - The axe options.
- * @param {Array} options.rules - The rule overrides.
+ * @param {array} options.rules - The rule overrides.
  */
 const runAxe = (options = {}) => {
   // eslint-disable-next-line prefer-arrow-callback

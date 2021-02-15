@@ -17,15 +17,17 @@ class TerraService {
 
   /**
    * Service hook executed prior to initializing the webdriver session.
-   * @param {object} config - The WebdriverIO configuration object.
+   * @param {Object} config - The WebdriverIO configuration object.
    */
   beforeSession(config) {
     global.Terra = {};
-    const { serviceOptions } = config;
+    const { serviceOptions, launcherOptions } = config;
+    const { updateScreenshots } = launcherOptions || {};
 
     this.serviceOptions = {
       theme: 'terra-default-theme',
       selector: '[data-terra-test-content] *:first-child',
+      updateScreenshots: updateScreenshots === true,
       ...this.serviceOptions,
       ...serviceOptions,
     };

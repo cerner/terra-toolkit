@@ -31,7 +31,6 @@ class TestRunner {
    * @param {Object} options - The test run options.
    * @param {string} options.config - A file path to the test runner configuration.
    * @param {string} options.formFactor - A form factor for the test run.
-   * @param {boolean} options.keepAliveSeleniumDockerService - Determines to keep the selenium docker service running upon test completion.
    * @param {string} options.locale - A language locale for the test run.
    * @param {string} options.theme - A theme for the test run.
    * @param {string} options.hostname - Automation driver host address.
@@ -39,6 +38,7 @@ class TestRunner {
    * @param {string} options.baseUrl - The base url.
    * @param {array} options.suite - Overrides specs and runs only the defined suites.
    * @param {array} options.spec - A list of spec file paths.
+   * @param {Object} options.launcherOptions - Custom configuration launcher options. i.e. keepAliveSeleniumDockerService; updateScreenshots.
    * @returns {Promise} A promise that resolves with the test run exit code.
    */
   static async run(options) {
@@ -50,7 +50,7 @@ class TestRunner {
         formFactor,
         locale,
         theme,
-        ...launcherOptions // hostname, port, baseUrl, suite, spec, and keepAliveSeleniumDockerService
+        ...additionalLauncherOptions // hostname, port, baseUrl, suite, spec, launcherOptions
       } = options;
 
       process.env.LOCALE = locale;
@@ -61,7 +61,7 @@ class TestRunner {
       }
 
       const configPath = TestRunner.configPath(config);
-      const testRunner = new Launcher(configPath, launcherOptions);
+      const testRunner = new Launcher(configPath, additionalLauncherOptions);
 
       exitCode = await testRunner.run();
     } catch (error) {
@@ -88,6 +88,7 @@ class TestRunner {
    * @param {string} options.baseUrl - The base url.
    * @param {array} options.suite - Overrides specs and runs only the defined suites.
    * @param {array} options.spec - A list of spec file paths.
+   * @param {boolean} options.updateScreenshots - Updates all reference screenshots with the latest screenshots.
    */
   static async start(options) {
     const {
@@ -95,9 +96,11 @@ class TestRunner {
       config,
       formFactors = [],
       gridUrl,
+      keepAliveSeleniumDockerService,
       locales,
       themes,
-      ...launcherOptions // hostname, port, baseUrl, suite, spec, and keepAliveSeleniumDockerService
+      updateScreenshots,
+      ...additionalLauncherOptions // hostname, port, baseUrl, suite, spec
     } = options;
 
     if (browsers) {
@@ -107,6 +110,11 @@ class TestRunner {
     if (gridUrl) {
       process.env.SELENIUM_GRID_URL = gridUrl;
     }
+
+    const launcherOptions = {
+      ...keepAliveSeleniumDockerService && { keepAliveSeleniumDockerService },
+      ...updateScreenshots && { updateScreenshots },
+    };
 
     /**
      * The following code loops through each permutation of theme, locale, and form factor.
@@ -128,7 +136,8 @@ class TestRunner {
             formFactor,
             locale,
             theme,
-            ...launcherOptions,
+            launcherOptions,
+            ...additionalLauncherOptions,
           });
 
           formFactorIndex += 1;

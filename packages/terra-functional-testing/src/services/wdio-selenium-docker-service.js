@@ -22,7 +22,11 @@ class SeleniumDockerService {
   async onPrepare(config) {
     this.host = config.hostname;
     this.port = config.port;
-    this.keepAliveSeleniumDockerService = config.keepAliveSeleniumDockerService;
+
+    const { launcherOptions } = config;
+    const { keepAliveSeleniumDockerService } = launcherOptions || {};
+
+    this.keepAliveSeleniumDockerService = keepAliveSeleniumDockerService === true;
 
     // Verify docker is installed before proceeding.
     try {

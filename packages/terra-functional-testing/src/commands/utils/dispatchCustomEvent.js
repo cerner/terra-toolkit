@@ -1,7 +1,7 @@
 /**
  * Utility to send a custom event containing metadata.
  * @param {string} options.name - name of event
- * @param {object} options.metaData - metadata pertaining to event
+ * @param {Object} options.metaData - metadata pertaining to event
  */
 const dispatchCustomEvent = (options) => {
   const { name, metaData } = options;

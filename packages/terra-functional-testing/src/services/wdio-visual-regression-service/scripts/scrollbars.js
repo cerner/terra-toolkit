@@ -1,7 +1,7 @@
 /**
  * Script to add or remove the scrollbars from the document.
  *
- * @param {Boolean} enabled - Whether or not the scrollbars should be visible.
+ * @param {boolean} enabled - Whether or not the scrollbars should be visible.
  * @returns {undefined}
  */
 function scrollbars(enabled) {
