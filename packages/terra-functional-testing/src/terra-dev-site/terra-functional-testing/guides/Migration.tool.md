@@ -500,3 +500,7 @@ it('should click and validate the element', () => {
   Terra.validates.element('screenshot name'); //  Will throw an error because a previous screenshot was generated with the same name.
 });
 ```
+
+## The Future - WebDriverIO v7 - Node 12
+
+WebDriverIO v7 was released on [February 9th, 2021](https://webdriver.io/blog/2021/02/09/webdriverio-v7-released) and is on our radar. We'll be focusing on getting teams upgraded onto WebDriverIO v6 and node >= 10 as a stepping stone before releasing an upgrade to WebDriverIO v7. The changes from WebDriverIO v6 to v7 drop support for node 10 and appear to largely only impact typescript declarations. We'll investigate the breaking changes and work necessary for upgrading. We plan to release an upgrade in the near future pending the investigation and transition strategy for node >= 12.
