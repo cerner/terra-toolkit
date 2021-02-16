@@ -10,7 +10,7 @@ Since terra-toolkit was originally released in 2017 many new features have been 
 
 The [terra-toolkit](https://github.com/cerner/terra-toolkit) repository has been converted into a [lerna monorepo](https://github.com/lerna/lerna) that contains independent packages for each of our development tools. The [terra-toolkit development package](https://www.npmjs.com/package/terra-toolkit) has been moved into the [terra-toolkit-boneyard](https://github.com/cerner/terra-toolkit-boneyard) repository and will receive minor updates and bug fixes as teams begin the transition to terra-functional-testing.
 
-Moving forward, development responsibilities have been separated out into individual packages that encapsulate specific functionality. As we transition packages into the terra-toolkit monorepo each package will be scoped under the [@cerner](https://www.npmjs.com/org/cerner) NPM organization. For example, automation testing has been moved into @cerner/terra-functional-testing and webpack concerns have been moved into [@cerner/webpack-config-terra](/dev_tools/cerner/webpack-config-terra/about).
+Moving forward, development responsibilities have been separated out into individual packages that encapsulate specific functionality. As we transition packages into the terra-toolkit monorepo each package will be scoped under the [@cerner](https://www.npmjs.com/org/cerner) NPM organization. For example, automation testing has been moved into @cerner/terra-functional-testing and webpack concerns have been moved into [@cerner/webpack-config-terra](https://engineering.cerner.com/terra-ui/dev_tools/cerner/webpack-config-terra/about).
 
 ## Breaking Changes
 
@@ -193,7 +193,7 @@ Check out the [release notes](https://github.com/dequelabs/axe-core/releases) fo
 
 ### Default Selector
 
-The default selector has been changed from `[data-terra-dev-site-content] *:first-child` to `[data-terra-test-content] *:first-child`. This selector is used as the default content region for capturing screenshots. This change should not affect most teams. For teams that are affected a custom selector can be provided using [service options](/dev_tools/terra-functional-testing/terra-functional-testing/wdio-services/terra-service#selector).
+The default selector has been changed from `[data-terra-dev-site-content] *:first-child` to `[data-terra-test-content] *:first-child`. This selector is used as the default content region for capturing screenshots. This change should not affect most teams. For teams that are affected a custom selector can be provided using [service options](dev_tools/terra-functional-testing/terra-functional-testing/wdio-services/terra-service#selector).
 
 ## New Features
 
@@ -370,10 +370,10 @@ npm run lint
 
 After upgrading webpack and eslint your project is ready to start the migration to @cerner/terra-functional-testing. Before getting started make sure you're prepared to work through the entire uplift. We'll be removing the dependency on terra-toolkit. The implications are that the entire test suite needs to be uplifted. Our recommendation will be to split up the work and go through each spec file one by one. Enabling only the tests you are currently uplifting and disabling the others.
 
-Install @cerner/terra-functional-testing:
+Install @cerner/terra-functional-testing and @cerner/terra-cli:
 
 ```sh
-npm install --save-dev @cerner/terra-functional-testing
+npm install --save-dev @cerner/terra-functional-testing @cerner/terra-cli
 ```
 
 Remove terra-toolkit from the package.json:
@@ -383,6 +383,7 @@ Remove terra-toolkit from the package.json:
 {
   "devDependencies": {
 -   "terra-toolkit": "^6.0.0",
++   "@cerner/terra-cli": "^1.0.0",
 +   "@cerner/terra-functional-testing": "^1.0.0"
   }
 }
@@ -415,7 +416,7 @@ Note: The terra cli array parameters have a different syntax.
 }
 ```
 
-A list of the test runner CLI options can be found [here](/dev_tools/terra-functional-testing/terra-functional-testing/wdio-testing/about).
+A list of the test runner CLI options can be found [here](dev_tools/terra-functional-testing/terra-functional-testing/wdio-testing/about).
 
 At this point it is recommended to do a clean install to remove stale installations of terra-toolkit. If you have the script go ahead and run `npm run clean:install`. Alternatively ensure that the old node_modules directory is deleted and reinstall all dependencies.
 
