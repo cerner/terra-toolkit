@@ -411,7 +411,7 @@ Note: The terra cli array parameters have a different syntax.
 -    "test:wdio": "wdio"
 +    "test:wdio": "terra wdio"
 -    "test:wdio:local": "tt-wdio --gridUrl='grid.test.example.com' --locales=['de','en-AU'] --browsers=['chrome','firefox','ie']"
-+    "test:wdio:local": "terra wdio --gridUrl='grid.test.example.com' --locales de en-AU --browsers chrome firefox ie"
++    "test:wdio:local": "terra wdio --gridUrl grid.test.example.com --locales de en-AU --browsers chrome firefox ie"
   }
 }
 ```
