@@ -18,7 +18,7 @@ There are quite a few breaking changes with this upgrade. Most notably are the b
 
 ### WebDriverIO v4 to v6
 
-The most notable breaking changes are the breaking changes from WebDriverIO v4 to WebDriverIO v6. We'll outline a few of the most common API changes we encountered ourself as we uplifted our own repositories. A complete list of the breaking changes can be found here:
+The most notable breaking changes are the breaking changes from WebDriverIO v4 to WebDriverIO v6. We'll outline a few of the most common API changes we encountered ourselves as we uplifted our own repositories. A complete list of the breaking changes can be found here:
 
 - [WebDriverIO v5 Breaking Changes](https://github.com/webdriverio/webdriverio/blob/v5.0.0/CHANGELOG.md#boom-breaking-change)
 - [WebDriverIO v6 Breaking Changes](https://github.com/webdriverio/webdriverio/blob/d1f3da652f287d297bd6b13f49194d58599dacd0/CHANGELOG.md#boom-breaking-change)
