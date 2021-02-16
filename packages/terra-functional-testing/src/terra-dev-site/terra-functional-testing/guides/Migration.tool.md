@@ -18,7 +18,7 @@ There are quite a few breaking changes with this upgrade. Most notably are the b
 
 ### WebDriverIO v4 to v6
 
-The most notable breaking changes are the breaking changes from WebDriverIO v4 to WebDriverIO v6. We'll outline a few of the most common API changes we encountered ourself as we uplifted our own repositories. A complete list of the breaking changes can be found here:
+The most notable breaking changes are the breaking changes from WebDriverIO v4 to WebDriverIO v6. We'll outline a few of the most common API changes we encountered ourselves as we uplifted our own repositories. A complete list of the breaking changes can be found here:
 
 - [WebDriverIO v5 Breaking Changes](https://github.com/webdriverio/webdriverio/blob/v5.0.0/CHANGELOG.md#boom-breaking-change)
 - [WebDriverIO v6 Breaking Changes](https://github.com/webdriverio/webdriverio/blob/d1f3da652f287d297bd6b13f49194d58599dacd0/CHANGELOG.md#boom-breaking-change)
@@ -216,7 +216,7 @@ Note: The terra cli array parameters have a different syntax. [Array](https://gi
 -    "test:wdio": "wdio"
 +    "test:wdio": "terra wdio"
 -    "test:wdio:local": "tt-wdio --gridUrl='grid.test.example.com' --locales=['de','en-AU'] --browsers=['chrome','firefox','ie']"
-+    "test:wdio:local": "terra wdio --gridUrl='grid.test.example.com' --locales de en-AU --browsers chrome firefox ie"
++    "test:wdio:local": "terra wdio --gridUrl grid.test.example.com --locales de en-AU --browsers chrome firefox ie"
   }
 }
 ```
@@ -255,7 +255,7 @@ npm install --save-dev @cerner/webpack-config-terra @cerner/terra-aggregate-tran
 If your project utilizes the `tt-serve-static` bin command go ahead and install [terra-cli](https://engineering.cerner.com/terra-ui/dev_tools/cerner/terra-cli/about) as you'll need it to upgrade the static asset utilities:
 
 ```sh
-npm install --save-dev "@cerner/terra-cli
+npm install --save-dev @cerner/terra-cli
 ```
 
 Update any references to the old webpack configuration:
@@ -298,7 +298,7 @@ Update any scripts in the package.json to use webpack-dev-server. Use terra-cli 
 }
 ```
 
-At this point it is recommend to do a clean install prior to testing each of the scripts. If you have the script go ahead and run `npm run clean:install`. Alternatively ensure that the old node_modules directory is deleted and reinstall all dependencies.
+At this point it is recommended to do a clean install prior to testing each of the scripts. If you have the script go ahead and run `npm run clean:install`. Alternatively ensure that the old node_modules directory is deleted and reinstall all dependencies.
 
 ```sh
 npm run clean:install

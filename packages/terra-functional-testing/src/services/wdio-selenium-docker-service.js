@@ -13,7 +13,7 @@ class SeleniumDockerService {
   constructor(options = {}) {
     const { version } = options;
 
-    this.version = version || '3.14.0-helium';
+    this.version = version;
   }
 
   /**
@@ -65,11 +65,12 @@ class SeleniumDockerService {
     const { stdout: stackInfo } = await exec('docker stack ls | grep wdio || true');
 
     if (!stackInfo) {
-      logger.info(`Deploying docker stack using selenium ${this.version}.`);
+      logger.info('Deploying docker stack.');
 
       const composeFilePath = path.resolve(__dirname, '../docker/docker-compose.yml');
+      const envVars = this.version ? `TERRA_SELENIUM_DOCKER_VERSION=${this.version} ` : '';
 
-      await exec(`TERRA_SELENIUM_DOCKER_VERSION=${this.version} docker stack deploy -c ${composeFilePath} wdio`);
+      await exec(`${envVars}docker stack deploy -c ${composeFilePath} wdio`);
 
       await this.waitForServiceCreation();
       await this.waitForNetworkCreation();
