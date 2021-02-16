@@ -127,7 +127,7 @@ We've forked and taken ownership of the visual regression service to give us bet
 For now though, there are a few breaking changes to the screenshot strategy that will require regenerating screenshots.
 
 - Screenshot names are no longer auto-generated using the describe blocks.
-- Screenshots now require a unique name be provided.
+- Screenshots now require a unique name be provided. No screenshots within the same spec file should be identical. Screenshots in other spec files are not affected.
 - Screenshots will be scoped under a theme when written to file under \__snapshots__.
 
 We've removed the string concatenation of describe blocks to form a screenshot filename. Previously, the following example would generate a screenshot name of `block_1_block_2_screenshot_name`.
@@ -225,11 +225,13 @@ Note: The terra cli array parameters have a different syntax. [Array](https://gi
 
 A CLI option has been added to auto-update reference screenshots during the test run. When enabled all screenshots generated during the test run will automatically overwrite the existing reference screenshot. Be sure to manually validate screenshot updates when using this feature.
 
+Via the Terra CLI:
+
 ```sh
-npm run terra wdio --updateScreenshots
+terra wdio --updateScreenshots
 
 # -u is a shortcut for the same command
-npm run terra wdio -u
+terra wdio -u
 ```
 
 ### VPN Support
@@ -352,7 +354,7 @@ Remove the old `eslint-config-terra` and extend `@cerner/terra` from the `eslint
 }
 ```
 
-At this point it is recommend to do a clean install prior to running lint. If you have the script go ahead and run `npm run clean:install`. Alternatively ensure that the old node_modules directory is deleted and reinstall all dependencies.
+At this point it is recommended to do a clean install prior to running lint. If you have the script go ahead and run `npm run clean:install`. Alternatively ensure that the old node_modules directory is deleted and reinstall all dependencies.
 
 ```sh
 npm run clean:install
@@ -415,7 +417,7 @@ Note: The terra cli array parameters have a different syntax.
 
 A list of the test runner CLI options can be found [here](/dev_tools/terra-functional-testing/terra-functional-testing/wdio-testing/about).
 
-At this point it is recommend to do a clean install to remove stale installations of terra-toolkit. If you have the script go ahead and run `npm run clean:install`. Alternatively ensure that the old node_modules directory is deleted and reinstall all dependencies.
+At this point it is recommended to do a clean install to remove stale installations of terra-toolkit. If you have the script go ahead and run `npm run clean:install`. Alternatively ensure that the old node_modules directory is deleted and reinstall all dependencies.
 
 ```sh
 npm run clean:install
