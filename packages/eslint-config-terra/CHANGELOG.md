@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 5.0.0 - (February 16, 2021)
+
 * Breaking
   * Update to eslint ^7.19.0.
 
