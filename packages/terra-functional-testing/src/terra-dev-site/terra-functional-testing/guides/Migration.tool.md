@@ -107,15 +107,15 @@ it('should click and validate the element', () => {
 });
 ```
 
-The `viewports` option has been removed from `Terra.validates.element`. The viewport option array created additional viewport permutations within other viewport permutations. To more consistently align viewport testing the option was removed. To specify an array of viewports use the `Terra.describeViewports` helper.
+The `viewports` option has been removed from `Terra.validates.screenshot`. The viewport option array created additional viewport permutations within other viewport permutations. To more consistently align viewport testing the option was removed. To specify an array of viewports use the `Terra.describeViewports` helper.
 
 ```diff
 + Terra.describeViewports('Terra.validates', ['tiny', 'small'], () => {
    it('should click and validate the element', () => {
      $('#element').click();
 
--     Terra.validates.element('screenshot name', { viewports: ['tiny', 'small'] });
-+     Terra.validates.element('screenshot name');
+-     Terra.validates.screenshot('screenshot name', { viewports: ['tiny', 'small'] });
++     Terra.validates.screenshot('screenshot name');
    });
 + });
 ```
