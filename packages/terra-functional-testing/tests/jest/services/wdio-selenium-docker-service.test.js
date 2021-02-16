@@ -149,7 +149,7 @@ describe('WDIO Selenium Docker Service', () => {
 
       const composeFilePath = path.resolve(__dirname, '../../../src/docker/docker-compose.yml');
 
-      expect(mockExec).toHaveBeenCalledWith(`TERRA_SELENIUM_DOCKER_VERSION=3.14.0-helium docker stack deploy -c ${composeFilePath} wdio`);
+      expect(mockExec).toHaveBeenCalledWith(`docker stack deploy -c ${composeFilePath} wdio`);
     });
 
     it('should deploy the stack with the specified selenium version', async () => {
