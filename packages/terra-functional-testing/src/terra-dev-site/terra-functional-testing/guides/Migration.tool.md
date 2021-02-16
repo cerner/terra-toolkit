@@ -242,7 +242,7 @@ npm install --save-dev @cerner/webpack-config-terra @cerner/terra-aggregate-tran
 If your project utilizes the `tt-serve-static` bin command go ahead and install [terra-cli](https://engineering.cerner.com/terra-ui/dev_tools/cerner/terra-cli/about) as you'll need it to upgrade the static asset utilities:
 
 ```sh
-npm install --save-dev "@cerner/terra-cli
+npm install --save-dev @cerner/terra-cli
 ```
 
 Update any references to the old webpack configuration:
