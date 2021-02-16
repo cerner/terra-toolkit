@@ -1,6 +1,6 @@
 {
   "name": "@cerner/eslint-config-terra",
-  "version": "4.5.1",
+  "version": "5.0.0",
   "description": "Terra Eslint Config",
   "main": "eslint.config.js",
   "publishConfig": {
