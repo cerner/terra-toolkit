@@ -285,7 +285,7 @@ Update any scripts in the package.json to use webpack-dev-server. Use terra-cli 
 }
 ```
 
-At this point it is recommend to do a clean install prior to testing each of the scripts. If you have the script go ahead and run `npm run clean:install`. Alternatively ensure that the old node_modules directory is deleted and reinstall all dependencies.
+At this point it is recommended to do a clean install prior to testing each of the scripts. If you have the script go ahead and run `npm run clean:install`. Alternatively ensure that the old node_modules directory is deleted and reinstall all dependencies.
 
 ```sh
 npm run clean:install
