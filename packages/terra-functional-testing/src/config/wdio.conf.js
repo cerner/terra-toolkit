@@ -116,7 +116,7 @@ exports.config = {
   //
   // Default timeout in milliseconds for request
   // if browser driver or grid doesn't send response
-  connectionRetryTimeout: 120000,
+  connectionRetryTimeout: 1200000,
   //
   // Default request retries count
   connectionRetryCount: 3,
@@ -168,7 +168,7 @@ exports.config = {
   // See the full list at http://mochajs.org/
   mochaOpts: {
     ui: 'bdd',
-    timeout: 60000,
+    timeout: 1200000,
   },
   /**
    * Gets executed once before all workers get launched.
