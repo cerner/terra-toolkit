@@ -5,7 +5,7 @@
 module.exports = {
   chrome: {
     browserName: 'chrome',
-    maxInstances: 1,
+    maxInstances: 5,
     'goog:chromeOptions': {
       /**
        * Run in headless mode because Chrome 69+ cannot be resized to the tiny viewport due to a omnibox size change
@@ -19,7 +19,7 @@ module.exports = {
   },
   firefox: {
     browserName: 'firefox',
-    maxInstances: 1,
+    maxInstances: 5,
     'moz:firefoxOptions': {
       prefs: {
         'dom.disable_beforeunload': false,
@@ -28,7 +28,7 @@ module.exports = {
   },
   ie: {
     browserName: 'internet explorer',
-    maxInstances: 1,
+    maxInstances: 5,
     'se:ieOptions': {
       javascriptEnabled: true,
       locationContextEnabled: true,
