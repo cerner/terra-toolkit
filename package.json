@@ -92,7 +92,7 @@
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.10.5",
-    "@cerner/terra-application": "cerner/terra-application#ae6fc4982fa591bb59fe777dfdf03aa73c8d7190",
+    "@cerner/terra-application": "cerner/terra-application#v2-stable",
     "@cerner/terra-dev-site": "cerner/terra-dev-site#v7-stable",
     "@octokit/core": "^3.1.2",
     "babel-jest": "^24.8.0",
