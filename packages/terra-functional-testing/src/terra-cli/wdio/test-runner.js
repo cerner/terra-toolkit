@@ -29,8 +29,10 @@ class TestRunner {
   /**
    * Runs the test runner.
    * @param {Object} options - The test run options.
+   * @param {string} options.browsers - A list of browsers for the test run.
    * @param {string} options.config - A file path to the test runner configuration.
    * @param {string} options.formFactor - A form factor for the test run.
+   * @param {string} options.gridUrl - The remote selenium grid address.
    * @param {string} options.locale - A language locale for the test run.
    * @param {string} options.theme - A theme for the test run.
    * @param {string} options.hostname - Automation driver host address.
@@ -47,18 +49,18 @@ class TestRunner {
     try {
       const {
         config,
-        formFactor,
-        locale,
-        theme,
-        ...additionalLauncherOptions // hostname, port, baseUrl, suite, spec, launcherOptions
+        ...additionalLauncherOptions
       } = options;
 
-      process.env.LOCALE = locale;
-      process.env.THEME = theme;
+      // process.env.LOCALE = locale;
+      // process.env.THEME = theme;
 
-      if (formFactor) {
-        process.env.FORM_FACTOR = formFactor;
-      }
+      // if (formFactor) {
+      //   process.env.FORM_FACTOR = formFactor;
+      // }
+
+      global.Terra = {};
+      global.Terra.launcherOptions = options;
 
       const configPath = TestRunner.configPath(config);
       const testRunner = new Launcher(configPath, additionalLauncherOptions);
@@ -92,24 +94,24 @@ class TestRunner {
    */
   static async start(options) {
     const {
-      browsers,
+      // browsers,
       config,
       formFactors = [],
-      gridUrl,
+      // gridUrl,
       keepAliveSeleniumDockerService,
       locales,
       themes,
       updateScreenshots,
-      ...additionalLauncherOptions // hostname, port, baseUrl, suite, spec
+      ...additionalLauncherOptions // browsers, gridUrl, hostname, port, baseUrl, suite, spec
     } = options;
 
-    if (browsers) {
-      process.env.BROWSERS = browsers;
-    }
+    // if (browsers) {
+    //   process.env.BROWSERS = browsers;
+    // }
 
-    if (gridUrl) {
-      process.env.SELENIUM_GRID_URL = gridUrl;
-    }
+    // if (gridUrl) {
+    //   process.env.SELENIUM_GRID_URL = gridUrl;
+    // }
 
     const launcherOptions = {
       ...keepAliveSeleniumDockerService && { keepAliveSeleniumDockerService },

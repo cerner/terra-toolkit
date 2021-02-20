@@ -25,6 +25,32 @@ const {
   WDIO_HOSTNAME,
 } = process.env;
 
+const {
+  assetServerPort,
+  baseUrl,
+  browsers,
+  disableSeleniumService,
+  formFactor,
+  gridUrl,
+  hostname,
+  locale,
+  site,
+  theme,
+} = global.Terra ? global.Terra.launcherOptions : {};
+
+const launcherOptions = {
+  assetServerPort: WDIO_INTERNAL_PORT || assetServerPort,
+  baseUrl,
+  browsers: BROWSERS || browsers,
+  disableSeleniumService: WDIO_DISABLE_SELENIUM_SERVICE || disableSeleniumService,
+  formFactor: FORM_FACTOR || formFactor,
+  gridUrl: SELENIUM_GRID_URL || gridUrl,
+  hostname: WDIO_HOSTNAME || hostname,
+  locale: LOCALE || locale,
+  site: SITE || site,
+  theme: THEME || theme,
+};
+
 const defaultWebpackPath = path.resolve(process.cwd(), 'webpack.config.js');
 
 exports.config = {
@@ -71,7 +97,7 @@ exports.config = {
   // Sauce Labs platform configurator - a great tool to configure your capabilities:
   // https://docs.saucelabs.com/reference/platforms-configurator
   //
-  capabilities: getCapabilities(BROWSERS, !!SELENIUM_GRID_URL),
+  capabilities: getCapabilities(launcherOptions.browsers, !!launcherOptions.gridUrl),
   //
   // ===================
   // Test Configurations
@@ -101,9 +127,9 @@ exports.config = {
   // Set the path to connect to the selenium container.
   path: '/wd/hub',
   // The hostname of the driver server.
-  hostname: SELENIUM_GRID_URL || WDIO_HOSTNAME || 'localhost',
+  hostname: launcherOptions.gridUrl || launcherOptions.hostname || 'localhost',
   // The port the driver server is on. The selenium grid uses port 80.
-  port: SELENIUM_GRID_URL ? 80 : 4444,
+  port: launcherOptions.gridUrl ? 80 : 4444,
   //
   // Set a base URL in order to shorten url command calls. If your `url` parameter starts
   // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
@@ -128,22 +154,22 @@ exports.config = {
   services: [
     [TerraService, {
       /* Use to change the form factor (test viewport) used in the wdio run. */
-      ...FORM_FACTOR && { formFactor: FORM_FACTOR },
-      ...THEME && { theme: THEME },
+      ...launcherOptions.formFactor && { formFactor: launcherOptions.formFactor },
+      ...launcherOptions.theme && { theme: launcherOptions.theme },
     }],
     [AssetServerService, {
-      ...SITE && { site: SITE },
-      ...LOCALE && { locale: LOCALE },
-      ...THEME && { theme: THEME },
-      ...WDIO_INTERNAL_PORT && { port: WDIO_INTERNAL_PORT },
+      ...launcherOptions.site && { site: launcherOptions.site },
+      ...launcherOptions.locale && { locale: launcherOptions.locale },
+      ...launcherOptions.theme && { theme: launcherOptions.theme },
+      ...launcherOptions.assetServerPort && { port: launcherOptions.assetServerPort },
       ...fs.existsSync(defaultWebpackPath) && { webpackConfig: defaultWebpackPath },
     }],
     [VisualRegressionLauncher, {
-      ...LOCALE && { locale: LOCALE },
-      ...THEME && { theme: THEME },
+      ...launcherOptions.locale && { locale: launcherOptions.locale },
+      ...launcherOptions.theme && { theme: launcherOptions.theme },
     }],
     // Do not add the docker service if disabled.
-    ...(WDIO_DISABLE_SELENIUM_SERVICE || SELENIUM_GRID_URL ? [] : [[SeleniumDockerService]]),
+    ...(launcherOptions.disableSeleniumService || launcherOptions.gridUrl ? [] : [[SeleniumDockerService]]),
   ],
   // Framework you want to run your specs with.
   // The following are supported: Mocha, Jasmine, and Cucumber
@@ -183,6 +209,6 @@ exports.config = {
    */
   onComplete() {
     // Merge reporter results.
-    mergeResults({ formFactor: FORM_FACTOR, locale: LOCALE, theme: THEME });
+    mergeResults({ formFactor: launcherOptions.formFactor, locale: launcherOptions.locale, theme: launcherOptions.theme });
   },
 };

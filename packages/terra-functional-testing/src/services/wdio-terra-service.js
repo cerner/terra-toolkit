@@ -20,7 +20,10 @@ class TerraService {
    * @param {Object} config - The WebdriverIO configuration object.
    */
   beforeSession(config) {
-    global.Terra = {};
+    if (!global.Terra) {
+      global.Terra = {};
+    }
+
     const { serviceOptions, launcherOptions } = config;
     const { updateScreenshots } = launcherOptions || {};
 
