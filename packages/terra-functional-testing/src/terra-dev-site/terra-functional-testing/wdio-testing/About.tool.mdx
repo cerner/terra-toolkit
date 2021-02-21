@@ -25,8 +25,10 @@ A test runner is provided for local development and should be invoked using the 
 | --config, -c                     | string  |                         | A file path to the test runner configuration.                                                 |
 | --formFactors                    | array   |                         | A list of form factors for the test run. One of tiny, small, medium, large, huge, or enormous |
 | --gridUrl                        | string  |                         | The remote selenium grid address.                                                             |
+| --hostname                       | string  | localhost               | Automation driver host address.                                                               |
 | --keepAliveSeleniumDockerService | boolean | false                   | Determines to keep the selenium docker service running upon test completion.                  |
 | --locales                        | array   | en                      | A list of language locales for the test run.                                                  |
+| --port                           | number  | 4444                    | Automation driver port.                                                                       |
 | --spec                           | array   |                         | A list of spec file paths.                                                                    |
 | --suite                          | array   |                         | Overrides specs and runs only the defined suites.                                             |
 | --themes                         | array   | terra-default-theme     | A list of themes for the test run.                                                            |

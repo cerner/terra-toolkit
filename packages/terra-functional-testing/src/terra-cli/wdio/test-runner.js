@@ -33,6 +33,8 @@ class TestRunner {
    * @param {string} options.formFactor - A form factor for the test run.
    * @param {string} options.locale - A language locale for the test run.
    * @param {string} options.theme - A theme for the test run.
+   * @param {string} options.hostname - Automation driver host address.
+   * @param {number} options.port - Automation driver port.
    * @param {string} options.baseUrl - The base url.
    * @param {array} options.suite - Overrides specs and runs only the defined suites.
    * @param {array} options.spec - A list of spec file paths.
@@ -48,7 +50,7 @@ class TestRunner {
         formFactor,
         locale,
         theme,
-        ...additionalLauncherOptions // baseUrl, suite, spec, launcherOptions
+        ...additionalLauncherOptions // hostname, port, baseUrl, suite, spec, launcherOptions
       } = options;
 
       process.env.LOCALE = locale;
@@ -81,6 +83,8 @@ class TestRunner {
    * @param {boolean} options.keepAliveSeleniumDockerService - Determines to keep the selenium docker service running upon test completion.
    * @param {string} options.locales - A list of language locales for the test run.
    * @param {string} options.themes - A list of themes for the test run.
+   * @param {string} options.hostname - Automation driver host address.
+   * @param {number} options.port - Automation driver port.
    * @param {string} options.baseUrl - The base url.
    * @param {array} options.suite - Overrides specs and runs only the defined suites.
    * @param {array} options.spec - A list of spec file paths.
@@ -96,7 +100,7 @@ class TestRunner {
       locales,
       themes,
       updateScreenshots,
-      ...additionalLauncherOptions // baseUrl, suite, spec
+      ...additionalLauncherOptions // hostname, port, baseUrl, suite, spec
     } = options;
 
     if (browsers) {
