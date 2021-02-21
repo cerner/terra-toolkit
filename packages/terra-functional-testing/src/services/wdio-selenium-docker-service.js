@@ -83,7 +83,9 @@ class SeleniumDockerService {
   async startSeleniumHub() {
     logger.info('Starting the docker selenium hub...');
 
-    await exec(`docker-compose -f ${this.getDockerComposeFilePath()} up -d`);
+    const envVars = this.version ? `TERRA_SELENIUM_DOCKER_VERSION=${this.version} ` : '';
+
+    await exec(`${envVars}docker-compose -f ${this.getDockerComposeFilePath()} up -d`);
     await this.waitForSeleniumHubReady();
   }
 

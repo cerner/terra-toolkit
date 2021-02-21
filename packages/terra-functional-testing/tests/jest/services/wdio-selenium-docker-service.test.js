@@ -108,6 +108,17 @@ describe('WDIO Selenium Docker Service', () => {
 
       expect(mockExec).toHaveBeenCalledWith('docker-compose -f mock-compose-path up -d');
     });
+
+    it('should start the selenium hub with the specified version', () => {
+      const service = new SeleniumDockerService({ version: '1234' });
+
+      jest.spyOn(service, 'getDockerComposeFilePath').mockImplementationOnce(() => ('mock-compose-path'));
+      jest.spyOn(service, 'waitForSeleniumHubReady').mockImplementationOnce(() => Promise.resolve());
+
+      service.startSeleniumHub();
+
+      expect(mockExec).toHaveBeenCalledWith('TERRA_SELENIUM_DOCKER_VERSION=1234 docker-compose -f mock-compose-path up -d');
+    });
   });
 
   describe('waitForSeleniumHubReady', () => {
