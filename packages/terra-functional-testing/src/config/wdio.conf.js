@@ -22,7 +22,6 @@ const {
   WDIO_EXTERNAL_HOST,
   WDIO_EXTERNAL_PORT,
   WDIO_INTERNAL_PORT,
-  WDIO_HOSTNAME,
 } = process.env;
 
 const defaultWebpackPath = path.resolve(process.cwd(), 'webpack.config.js');
@@ -101,7 +100,7 @@ exports.config = {
   // Set the path to connect to the selenium container.
   path: '/wd/hub',
   // The hostname of the driver server.
-  hostname: SELENIUM_GRID_URL || WDIO_HOSTNAME || 'localhost',
+  hostname: SELENIUM_GRID_URL || 'localhost',
   // The port the driver server is on. The selenium grid uses port 80.
   port: SELENIUM_GRID_URL ? 80 : 4444,
   //
