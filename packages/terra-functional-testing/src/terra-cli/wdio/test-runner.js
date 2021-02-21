@@ -76,39 +76,68 @@ class TestRunner {
 
   /**
    * Starts the test runner.
+   * @param {number} options.assetServerPort - The port to run the webpack and express asset services on.
+   * @param {string} options.baseUrl - The base url.
    * @param {string} options.browsers - A list of browsers for the test run.
    * @param {string} options.config - A file path to the test runner configuration.
+   * @param {boolean} options.disableSeleniumService - A flag to disable the selenium docker service.
+   * @param {number} options.externalPort - The port mapping from the host to the container.
    * @param {string} options.formFactors - A list of form factors for the test run.
    * @param {string} options.gridUrl - The remote selenium grid address.
+   * @param {string} options.hostname - Automation driver host address.
    * @param {boolean} options.keepAliveSeleniumDockerService - Determines to keep the selenium docker service running upon test completion.
    * @param {string} options.locales - A list of language locales for the test run.
-   * @param {string} options.themes - A list of themes for the test run.
-   * @param {string} options.hostname - Automation driver host address.
    * @param {number} options.port - Automation driver port.
-   * @param {string} options.baseUrl - The base url.
-   * @param {array} options.suite - Overrides specs and runs only the defined suites.
+   * @param {string} options.site - A file path to a static directory of assets. When defined, an express server will launch to serve the assets and disable running webpack..
    * @param {array} options.spec - A list of spec file paths.
+   * @param {array} options.suite - Overrides specs and runs only the defined suites.
+   * @param {string} options.themes - A list of themes for the test run.
    * @param {boolean} options.updateScreenshots - Updates all reference screenshots with the latest screenshots.
    */
   static async start(options) {
     const {
+      assetServerPort,
       browsers,
       config,
+      disableSeleniumService,
+      externalPort,
       formFactors = [],
       gridUrl,
+      hostname,
       keepAliveSeleniumDockerService,
       locales,
+      site,
       themes,
       updateScreenshots,
-      ...additionalLauncherOptions // hostname, port, baseUrl, suite, spec
+      ...additionalLauncherOptions // baseUrl, port, spec, suite
     } = options;
+
+    if (assetServerPort) {
+      process.env.WDIO_INTERNAL_PORT = assetServerPort;
+    }
 
     if (browsers) {
       process.env.BROWSERS = browsers;
     }
 
+    if (disableSeleniumService) {
+      process.env.WDIO_DISABLE_SELENIUM_SERVICE = disableSeleniumService;
+    }
+
+    if (externalPort) {
+      process.env.WDIO_EXTERNAL_PORT = externalPort;
+    }
+
     if (gridUrl) {
       process.env.SELENIUM_GRID_URL = gridUrl;
+    }
+
+    if (hostname) {
+      process.env.WDIO_HOSTNAME = hostname;
+    }
+
+    if (site) {
+      process.env.SITE = site;
     }
 
     const launcherOptions = {
@@ -134,6 +163,7 @@ class TestRunner {
           await TestRunner.run({
             config,
             formFactor,
+            hostname,
             locale,
             theme,
             launcherOptions,

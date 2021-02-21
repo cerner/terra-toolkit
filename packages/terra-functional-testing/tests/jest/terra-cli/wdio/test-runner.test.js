@@ -157,5 +157,52 @@ describe('Test Runner', () => {
         },
       });
     });
+
+    it('should set env variables', async () => {
+      jest.spyOn(TestRunner, 'run').mockImplementation(() => Promise.resolve());
+
+      await TestRunner.start({
+        assetServerPort: 8080,
+        baseUrl: 'http://localhost:8080',
+        browsers: ['ie', 'chrome'],
+        config: '/path',
+        disableSeleniumService: true,
+        externalPort: 8000,
+        formFactors: ['large'],
+        gridUrl: 'localhost',
+        hostname: 'hostname',
+        keepAliveSeleniumDockerService: true,
+        locales: ['en'],
+        port: 8080,
+        site: 'build',
+        spec: '/spec/',
+        suite: 'test-suite',
+        themes: ['terra-default-theme'],
+        updateScreenshots: true,
+      });
+
+      expect(process.env.WDIO_INTERNAL_PORT).toEqual('8080');
+      expect(process.env.BROWSERS).toEqual('ie,chrome');
+      expect(process.env.WDIO_DISABLE_SELENIUM_SERVICE).toEqual('true');
+      expect(process.env.WDIO_EXTERNAL_PORT).toEqual('8000');
+      expect(process.env.SELENIUM_GRID_URL).toEqual('localhost');
+      expect(process.env.WDIO_HOSTNAME).toEqual('hostname');
+      expect(process.env.SITE).toEqual('build');
+      expect(TestRunner.run).toHaveBeenCalledWith({
+        baseUrl: 'http://localhost:8080',
+        config: '/path',
+        formFactor: 'large',
+        hostname: 'hostname',
+        locale: 'en',
+        port: 8080,
+        spec: '/spec/',
+        suite: 'test-suite',
+        theme: 'terra-default-theme',
+        launcherOptions: {
+          keepAliveSeleniumDockerService: true,
+          updateScreenshots: true,
+        },
+      });
+    });
   });
 });
