@@ -1,4 +1,4 @@
-# Terra Functional Testing
+# Terra Functional Testing - Version 1 Upgrade Guide
 
 We're excited to announce the release of @cerner/terra-functional-testing which will be replacing the automation testing responsibilities of terra-toolkit. We've made some changes and gave our testing infrastructure a much needed upgrade. This document will outline the major changes and provide useful tips for upgrading from `terra-toolkit` to `@cerner/terra-functional-testing` v1.
 
