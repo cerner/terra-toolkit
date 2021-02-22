@@ -38,6 +38,8 @@ const {
   theme,
 } = global.Terra ? global.Terra.launcherOptions : {};
 
+console.log('********wdio.conf options', global.Terra ? global.Terra.launcherOptions : global);
+
 const launcherOptions = {
   assetServerPort: WDIO_INTERNAL_PORT || assetServerPort,
   baseUrl,
@@ -201,6 +203,7 @@ exports.config = {
    */
   onPrepare() {
     // Clean previous reporter results.
+    console.log('********wdio.conf onPrepare', global.Terra ? global.Terra.launcherOptions : global);
     cleanResults();
   },
   /**
@@ -209,6 +212,8 @@ exports.config = {
    */
   onComplete() {
     // Merge reporter results.
+
+    console.log('********wdio.conf onComplete', global.Terra ? global.Terra.launcherOptions : global);
     mergeResults({ formFactor: launcherOptions.formFactor, locale: launcherOptions.locale, theme: launcherOptions.theme });
   },
 };

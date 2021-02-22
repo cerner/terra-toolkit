@@ -62,6 +62,8 @@ class TestRunner {
       global.Terra = {};
       global.Terra.launcherOptions = options;
 
+      console.log('********Test Runner options', global.Terra.launcherOptions);
+
       const configPath = TestRunner.configPath(config);
       const testRunner = new Launcher(configPath, additionalLauncherOptions);
 
