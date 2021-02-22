@@ -68,6 +68,7 @@ class TestRunner {
           ...locale && { locale },
           ...keepAliveSeleniumDockerService && { keepAliveSeleniumDockerService },
           ...theme && { theme },
+          ...formFactor && { formFactor },
           ...updateScreenshots && { updateScreenshots },
         },
       });

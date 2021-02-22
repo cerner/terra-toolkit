@@ -13,7 +13,10 @@ const {
 class TerraService {
   constructor(options = {}, _capabilities, config) {
     const { launcherOptions } = config;
-    const { theme, formFactor } = launcherOptions || {};
+    const { theme, formFactor, locale } = launcherOptions || {};
+
+    console.log('DEBUG: LOCALE: ', locale);
+    console.log('DEBUG: FORM FACTOR: ', formFactor);
 
     this.serviceOptions = {
       theme: options.theme || theme,
