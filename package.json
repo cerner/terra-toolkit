@@ -77,9 +77,9 @@
     "start-heroku": "npm run terra -- express-server --port $PORT --site './build' ",
     "terra": "node ./packages/terra-cli/bin/terra",
     "test": "npm run lint && npm run jest && npm run mocha && npm run wdio",
-    "wdio-site": "npm run terra -- wdio --site build",
+    "wdio-site": "npm run terra -- wdio --browsers chrome firefox --site build",
     "wdio-webpack": "npm run terra -- wdio",
-    "wdio": "rm -rf build && npm run pack && npm run terra -- wdio --keepAliveSeleniumDockerService --site build && npm run terra -- wdio"
+    "wdio": "rm -rf build && npm run pack && npm run wdio-site && npm run wdio-webpack"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",

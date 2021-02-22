@@ -1,10 +1,16 @@
-version: '3.7'
+version: "3"
 
 services:
-  hub:
-   image: selenium/hub:${TERRA_SELENIUM_DOCKER_VERSION:-3.14.0-helium}
-   ports:
-     - "4444:4444"
+  selenium-hub:
+    image: selenium/hub:${TERRA_SELENIUM_DOCKER_VERSION:-3.14.0-helium}
+    container_name: selenium-hub
+    ports:
+      - "4444:4444"
+    healthcheck:
+      test: ["CMD", "/opt/bin/check-grid.sh"]
+      interval: 15s
+      timeout: 30s
+      retries: 5
 
   chrome:
     image: selenium/node-chrome:${TERRA_SELENIUM_DOCKER_VERSION:-3.14.0-helium}
@@ -15,12 +21,11 @@ services:
     #  https://bugzilla.mozilla.org/show_bug.cgi?id=1338771#c10
     volumes:
       - /dev/shm:/dev/shm
+    depends_on:
+      - selenium-hub
     environment:
-      HUB_HOST: hub
-      HUB_PORT: 4444
-    deploy:
-        replicas: 1
-    entrypoint: bash -c 'SE_OPTS="-host $$HOSTNAME" /opt/bin/entry_point.sh'
+      - HUB_HOST=selenium-hub
+      - HUB_PORT=4444
 
   firefox:
     image: selenium/node-firefox:${TERRA_SELENIUM_DOCKER_VERSION:-3.141.59-titanium}
@@ -31,9 +36,8 @@ services:
     #  https://bugzilla.mozilla.org/show_bug.cgi?id=1338771#c10
     volumes:
       - /dev/shm:/dev/shm
+    depends_on:
+      - selenium-hub
     environment:
-      HUB_HOST: hub
-      HUB_PORT: 4444
-    deploy:
-        replicas: 1
-    entrypoint: bash -c 'SE_OPTS="-host $$HOSTNAME" /opt/bin/entry_point.sh'
+      - HUB_HOST=selenium-hub
+      - HUB_PORT=4444
