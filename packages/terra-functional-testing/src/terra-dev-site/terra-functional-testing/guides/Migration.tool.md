@@ -1,6 +1,6 @@
 # Terra Functional Testing
 
-We're excited to announce the release of @cerner/terra-functional-testing which will be replacing the automation testing responsibilities of terra-toolkit. We've made some changes and gave our testing infrastructure a much needed upgrade. This document will outline the major changes and provide useful tips for upgrading.
+We're excited to announce the release of @cerner/terra-functional-testing which will be replacing the automation testing responsibilities of terra-toolkit. We've made some changes and gave our testing infrastructure a much needed upgrade. This document will outline the major changes and provide useful tips for upgrading from `terra-toolkit` to `@cerner/terra-functional-testing` v1.
 
 ## Introduction
 
@@ -320,11 +320,11 @@ Note: If you don't have some of these commands it is not necessary to add them. 
 
 ### Upgrading ESlint Config Terra
 
-If you are already using @cerner/eslint-config-terra ^4.0.0 you can skip this section.
+If you are already using @cerner/eslint-config-terra ^5.0.0 you can skip this section.
 
-Upgrading `eslint-config-terra` is optional, but recommended. WebDriverIO v6 syntax requires using the `$` global which has been [added](https://github.com/cerner/terra-toolkit/pull/548) to the eslint config. If you choose not to upgrade eslint-config-terra at this time you will need to add the global declaration manually in each spec file.
+Upgrading `@cerner/eslint-config-terra` is optional, but recommended. WebDriverIO v6 syntax requires using the `$` global which has been [added](https://github.com/cerner/terra-toolkit/pull/548) to the eslint config. If you choose not to upgrade eslint-config-terra at this time you will need to add the global declaration manually in each spec file.
 
-Adding the global manually to each spec file is only necessary if you are not upgrading to @cerner/eslint-config-terra ^4.0.0:
+Adding the global manually to each spec file is only necessary if you are not upgrading to @cerner/eslint-config-terra ^5.0.0:
 
 ```js
 /* global $ */
@@ -349,7 +349,8 @@ Remove the old `eslint-config-terra` and extend `@cerner/terra` from the `eslint
   },
   "devDependencies": {
 -    "eslint-config-terra": "^3.3.0",
-+    "@cerner/eslint-config-terra": "^4.0.0"
++    "@cerner/eslint-config-terra": "^5.0.0",
++    "eslint": "^7.0.0" // Upgrade ESlint to v7.
   }
 }
 ```
