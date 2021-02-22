@@ -181,8 +181,15 @@ exports.config = {
    * Gets executed after all workers have shut down and the process is about to exit.
    * An error thrown in the `onComplete` hook will result in the test run failing.
    */
-  onComplete() {
+  onComplete(_exitCode, config) {
+    const { launcherOptions } = config;
+    const { formFactor, locale, theme } = launcherOptions || {};
+
     // Merge reporter results.
-    mergeResults({ formFactor: FORM_FACTOR, locale: LOCALE, theme: THEME });
+    mergeResults({
+      formFactor: FORM_FACTOR || formFactor,
+      locale: LOCALE || locale,
+      theme: THEME || theme,
+    });
   },
 };

@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const Launcher = require('@wdio/cli').default;
 const { Logger } = require('@cerner/terra-cli');
+const getCapabilities = require('../../config/utils/getCapabilities');
 
 const logger = new Logger({ prefix: '[terra-functional-testing:wdio]' });
 
@@ -47,21 +48,29 @@ class TestRunner {
     try {
       const {
         config,
+        browsers,
         formFactor,
+        gridUrl,
         locale,
+        keepAliveSeleniumDockerService,
         theme,
-        ...additionalLauncherOptions // hostname, port, baseUrl, suite, spec, launcherOptions
+        updateScreenshots,
+        ...cliOptions // hostname, port, baseUrl, suite, spec, launcherOptions
       } = options;
 
-      process.env.LOCALE = locale;
-      process.env.THEME = theme;
-
-      if (formFactor) {
-        process.env.FORM_FACTOR = formFactor;
-      }
-
       const configPath = TestRunner.configPath(config);
-      const testRunner = new Launcher(configPath, additionalLauncherOptions);
+      const testRunner = new Launcher(configPath, {
+        ...cliOptions,
+        hostname: gridUrl || 'localhost',
+        port: gridUrl ? 80 : 4444,
+        capabilities: getCapabilities(browsers, gridUrl),
+        launcherOptions: {
+          ...locale && { locale },
+          ...keepAliveSeleniumDockerService && { keepAliveSeleniumDockerService },
+          ...theme && { theme },
+          ...updateScreenshots && { updateScreenshots },
+        },
+      });
 
       exitCode = await testRunner.run();
     } catch (error) {
@@ -91,30 +100,7 @@ class TestRunner {
    * @param {boolean} options.updateScreenshots - Updates all reference screenshots with the latest screenshots.
    */
   static async start(options) {
-    const {
-      browsers,
-      config,
-      formFactors = [],
-      gridUrl,
-      keepAliveSeleniumDockerService,
-      locales,
-      themes,
-      updateScreenshots,
-      ...additionalLauncherOptions // hostname, port, baseUrl, suite, spec
-    } = options;
-
-    if (browsers) {
-      process.env.BROWSERS = browsers;
-    }
-
-    if (gridUrl) {
-      process.env.SELENIUM_GRID_URL = gridUrl;
-    }
-
-    const launcherOptions = {
-      ...keepAliveSeleniumDockerService && { keepAliveSeleniumDockerService },
-      ...updateScreenshots && { updateScreenshots },
-    };
+    const { formFactors = [], locales, themes } = options;
 
     /**
      * The following code loops through each permutation of theme, locale, and form factor.
@@ -132,12 +118,10 @@ class TestRunner {
 
           // eslint-disable-next-line no-await-in-loop
           await TestRunner.run({
-            config,
             formFactor,
             locale,
             theme,
-            launcherOptions,
-            ...additionalLauncherOptions,
+            ...options,
           });
 
           formFactorIndex += 1;

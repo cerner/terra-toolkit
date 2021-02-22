@@ -11,8 +11,14 @@ const {
 } = require('../commands/utils');
 
 class TerraService {
-  constructor(options = {}) {
-    this.serviceOptions = options;
+  constructor(options = {}, _capabilities, config) {
+    const { launcherOptions } = config;
+    const { theme, formFactor } = launcherOptions || {};
+
+    this.serviceOptions = {
+      theme: options.theme || theme,
+      formFactor: options.formFactor || formFactor,
+    };
   }
 
   /**
