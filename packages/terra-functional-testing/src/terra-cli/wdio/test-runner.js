@@ -36,7 +36,6 @@ class TestRunner {
    * Runs the test runner.
    * @param {Object} options - The test run options.
    * @param {number} options.assetServerPort - The port to run the webpack and express asset services on.
-   * @param {string} options.baseUrl - The base url.
    * @param {string} options.browsers - A list of browsers for the test run.
    * @param {string} options.config - A file path to the test runner configuration.
    * @param {boolean} options.disableSeleniumService - A flag to disable the selenium docker service.
@@ -44,10 +43,8 @@ class TestRunner {
    * @param {number} options.externalPort - The port mapping from the host to the container.
    * @param {string} options.formFactor - A form factor for the test run.
    * @param {string} options.gridUrl - The remote selenium grid address.
-   * @param {string} options.hostname - Automation driver host address.
    * @param {boolean} options.keepAliveSeleniumDockerService - Determines to keep the selenium docker service running upon test completion.
    * @param {string} options.locale - A language locale for the test run.
-   * @param {number} options.port - Automation driver port.
    * @param {string} options.site - A file path to a static directory of assets. When defined, an express server will launch to serve the assets and disable running webpack..
    * @param {array} options.spec - A list of spec file paths.
    * @param {array} options.suite - Overrides specs and runs only the defined suites.
@@ -61,7 +58,6 @@ class TestRunner {
     try {
       const {
         assetServerPort,
-        baseUrl,
         browsers,
         config,
         disableSeleniumService,
@@ -69,7 +65,6 @@ class TestRunner {
         externalPort,
         formFactor,
         gridUrl,
-        hostname,
         keepAliveSeleniumDockerService,
         locale,
         site,
@@ -84,7 +79,7 @@ class TestRunner {
         ...cliOptions,
         baseUrl: `http://${externalHost || getIpAddress()}:${externalPort || 8080}`,
         capabilities: getCapabilities(browsers, !!gridUrl),
-        hostname: gridUrl || hostname || 'localhost',
+        hostname: gridUrl || 'localhost',
         port: gridUrl ? 80 : 4444,
         services: [
           [TerraService, {
@@ -136,7 +131,6 @@ class TestRunner {
    * Starts the test runner.
    * @param {Object} options - The test run options.
    * @param {number} options.assetServerPort - The port to run the webpack and express asset services on.
-   * @param {string} options.baseUrl - The base url.
    * @param {string} options.browsers - A list of browsers for the test run.
    * @param {string} options.config - A file path to the test runner configuration.
    * @param {boolean} options.disableSeleniumService - A flag to disable the selenium docker service.
@@ -144,10 +138,8 @@ class TestRunner {
    * @param {number} options.externalPort - The port mapping from the host to the container.
    * @param {string} options.formFactors - A list of form factors for the test run.
    * @param {string} options.gridUrl - The remote selenium grid address.
-   * @param {string} options.hostname - Automation driver host address.
    * @param {boolean} options.keepAliveSeleniumDockerService - Determines to keep the selenium docker service running upon test completion.
    * @param {string} options.locales - A list of language locales for the test run.
-   * @param {number} options.port - Automation driver port.
    * @param {string} options.site - A file path to a static directory of assets. When defined, an express server will launch to serve the assets and disable running webpack..
    * @param {array} options.spec - A list of spec file paths.
    * @param {array} options.suite - Overrides specs and runs only the defined suites.

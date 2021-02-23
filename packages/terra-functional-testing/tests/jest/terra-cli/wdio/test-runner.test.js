@@ -41,7 +41,6 @@ describe('Test Runner', () => {
 
       await TestRunner.run({
         assetServerPort: 8080,
-        baseUrl: '/',
         browsers: ['chrome'],
         config: '/path',
         disableSeleniumService: true,
@@ -49,10 +48,8 @@ describe('Test Runner', () => {
         externalPort: 3000,
         formFactor: 'small',
         gridUrl: 'http',
-        hostname: 'hostname',
         keepAliveSeleniumDockerService: true,
         locale: 'en',
-        port: 8080,
         site: 'build',
         spec: '/spec/',
         suite: 'test-suite',
@@ -232,7 +229,6 @@ describe('Test Runner', () => {
 
       await TestRunner.start({
         assetServerPort: 8080,
-        baseUrl: '/',
         browsers: ['chrome', 'firefox'],
         config: '/path',
         disableSeleniumService: true,
@@ -240,10 +236,8 @@ describe('Test Runner', () => {
         externalPort: 3000,
         formFactors: ['small'],
         gridUrl: 'http',
-        hostname: 'hostname',
         keepAliveSeleniumDockerService: true,
         locales: ['en'],
-        port: 8080,
         site: 'build',
         spec: '/spec/',
         suite: 'test-suite',
@@ -253,7 +247,6 @@ describe('Test Runner', () => {
 
       expect(TestRunner.run).toHaveBeenCalledWith({
         assetServerPort: 8080,
-        baseUrl: '/',
         browsers: ['chrome', 'firefox'],
         config: '/path',
         disableSeleniumService: true,
@@ -261,10 +254,8 @@ describe('Test Runner', () => {
         externalPort: 3000,
         formFactor: 'small',
         gridUrl: 'http',
-        hostname: 'hostname',
         keepAliveSeleniumDockerService: true,
         locale: 'en',
-        port: 8080,
         site: 'build',
         spec: '/spec/',
         suite: 'test-suite',

@@ -10,10 +10,6 @@ const cli = {
         describe: 'The port to run the webpack and express asset services on.',
         default: 8080,
       },
-      baseUrl: {
-        type: 'string',
-        describe: 'The base url.',
-      },
       browsers: {
         type: 'array',
         describe: 'A list of browsers for the test run.',
@@ -44,10 +40,6 @@ const cli = {
         type: 'string',
         describe: 'The remote selenium grid address.',
       },
-      hostname: {
-        type: 'string',
-        describe: 'Automation driver host address.',
-      },
       keepAliveSeleniumDockerService: {
         type: 'boolean',
         describe: 'Determines to keep the selenium docker service running upon test completion.',
@@ -57,10 +49,6 @@ const cli = {
         type: 'array',
         describe: 'A list of language locales for the test run.',
         default: ['en'],
-      },
-      port: {
-        type: 'number',
-        describe: 'Automation driver port.',
       },
       site: {
         type: 'string',

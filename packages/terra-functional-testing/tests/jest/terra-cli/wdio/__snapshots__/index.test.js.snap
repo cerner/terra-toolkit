@@ -11,7 +11,6 @@ Options:
       --assetServerPort                 The port to run the webpack and express
                                         asset services on.
                                                         [number] [default: 8080]
-      --baseUrl                         The base url.                   [string]
       --browsers                        A list of browsers for the test run.
                                                                          [array]
   -c, --config                          A file path to the test runner
@@ -26,13 +25,11 @@ Options:
                                                                          [array]
       --gridUrl                         The remote selenium grid address.
                                                                         [string]
-      --hostname                        Automation driver host address. [string]
       --keepAliveSeleniumDockerService  Determines to keep the selenium docker
                                         service running upon test completion.
                                                       [boolean] [default: false]
       --locales                         A list of language locales for the test
                                         run.           [array] [default: [\\"en\\"]]
-      --port                            Automation driver port.         [number]
       --site                            A file path to a static directory of
                                         assets. When defined, an express server
                                         will launch to serve the assets and
