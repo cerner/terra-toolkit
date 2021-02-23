@@ -10,9 +10,40 @@ jest.mock('../../../src/webpack-server/webpack-server');
 describe('WDIO Asset Server Service', () => {
   describe('constructor', () => {
     it('should initialize with the provided options', () => {
-      const service = new AssetService({ mock: 'options' });
+      const service = new AssetService({ locale: 'en' });
 
-      expect(service.options).toEqual({ mock: 'options' });
+      expect(service.options).toEqual({ locale: 'en' });
+    });
+
+    it('should initialize with the launcher options', () => {
+      const options = {
+        port: 8080,
+        locale: 'en',
+        site: 'build',
+        theme: 'default-theme',
+        webpackConfig: 'webpackConfig',
+      };
+
+      const launcherOptions = {
+        launcherOptions: {
+          assetServerPort: 8000,
+          locale: 'fr',
+          site: 'prod',
+          theme: 'lowlight-theme',
+        },
+      };
+
+      const expectedOptions = {
+        port: 8000,
+        locale: 'fr',
+        site: 'prod',
+        theme: 'lowlight-theme',
+        webpackConfig: 'webpackConfig',
+      };
+
+      const service = new AssetService(options, {}, launcherOptions);
+
+      expect(service.options).toEqual(expectedOptions);
     });
   });
 

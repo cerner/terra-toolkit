@@ -180,9 +180,18 @@ exports.config = {
   /**
    * Gets executed after all workers have shut down and the process is about to exit.
    * An error thrown in the `onComplete` hook will result in the test run failing.
+   * @param {Object} exitCode 0 - success, 1 - fail
+   * @param {Object} config wdio configuration object
    */
-  onComplete() {
+  onComplete(_exitCode, config = {}) {
+    const { launcherOptions } = config;
+    const { formFactor, locale, theme } = launcherOptions || {};
+
     // Merge reporter results.
-    mergeResults({ formFactor: FORM_FACTOR, locale: LOCALE, theme: THEME });
+    mergeResults({
+      ...(formFactor || FORM_FACTOR) && { formFactor: formFactor || FORM_FACTOR },
+      ...(locale || LOCALE) && { locale: locale || LOCALE },
+      ...(theme || THEME) && { theme: theme || THEME },
+    });
   },
 };

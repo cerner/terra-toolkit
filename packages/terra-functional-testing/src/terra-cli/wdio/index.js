@@ -28,6 +28,10 @@ const cli = {
         describe: 'A flag to disable the selenium docker service.',
         default: false,
       },
+      externalHost: {
+        type: 'string',
+        describe: 'The host address the testing environment is connected to.',
+      },
       externalPort: {
         type: 'number',
         describe: 'The port mapping from the host to the container.',

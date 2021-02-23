@@ -26,6 +26,35 @@ global.browser = {
 global.Terra = {};
 
 describe('WDIO Terra Service', () => {
+  it('should initialize with the provided options', () => {
+    const service = new WdioTerraService({ formFactor: 'small' });
+
+    expect(service.serviceOptions).toEqual({ formFactor: 'small' });
+  });
+
+  it('should initialize with the launcher options', () => {
+    const options = {
+      formFactor: 'small',
+      theme: 'default-theme',
+    };
+
+    const launcherOptions = {
+      launcherOptions: {
+        formFactor: 'large',
+        theme: 'lowlight-theme',
+      },
+    };
+
+    const expectedOptions = {
+      formFactor: 'large',
+      theme: 'lowlight-theme',
+    };
+
+    const service = new WdioTerraService(options, {}, launcherOptions);
+
+    expect(service.serviceOptions).toEqual(expectedOptions);
+  });
+
   it('should setup the global terra validates accessibility command', () => {
     const service = new WdioTerraService();
 

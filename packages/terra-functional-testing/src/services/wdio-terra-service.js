@@ -11,8 +11,22 @@ const {
 } = require('../commands/utils');
 
 class TerraService {
-  constructor(options = {}) {
-    this.serviceOptions = options;
+  constructor(options = {}, _capabilities, config = {}) {
+    const { launcherOptions } = config;
+    const { formFactor, theme } = launcherOptions || {};
+
+    /**
+     * Always use the launcher options from the test runner if available before using
+     * the options passed thru the service in wdio.conf.js. The reason is because the
+     * service options set using env is cached and are unreliable if these options
+     * are changed dynamically by the test runner.
+     *
+     * Reference: https://github.com/webdriverio/webdriverio/issues/6411
+     */
+    this.serviceOptions = {
+      ...(formFactor || options.formFactor) && { formFactor: formFactor || options.formFactor },
+      ...(theme || options.theme) && { theme: theme || options.theme },
+    };
   }
 
   /**

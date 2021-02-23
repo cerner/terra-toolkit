@@ -18,6 +18,8 @@ Options:
                                         configuration.                  [string]
       --disableSeleniumService          A flag to disable the selenium docker
                                         service.      [boolean] [default: false]
+      --externalHost                    The host address the testing environment
+                                        is connected to.                [string]
       --externalPort                    The port mapping from the host to the
                                         container.                      [number]
       --formFactors                     A list of form factors for the test run.

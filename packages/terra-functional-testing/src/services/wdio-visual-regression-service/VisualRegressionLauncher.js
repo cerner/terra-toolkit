@@ -11,8 +11,24 @@ class VisualRegressionLauncher {
    * @param {Object} options.locale - The locale being tested.
    * @param {Object} options.theme - The theme being tested.
    */
-  constructor(options) {
-    this.compare = new LocalCompare(options);
+  constructor(options = {}, _capabilities, config = {}) {
+    const { launcherOptions } = config;
+    const { locale, theme } = launcherOptions || {};
+
+    /**
+     * Always use the launcher options from the test runner if available before using
+     * the options passed thru the service in wdio.conf.js. The reason is because the
+     * service options set using env is cached and are unreliable if these options
+     * are changed dynamically by the test runner.
+     *
+     * Reference: https://github.com/webdriverio/webdriverio/issues/6411
+     */
+    const visualRegressionOptions = {
+      ...(locale || options.locale) && { locale: locale || options.locale },
+      ...(theme || options.theme) && { theme: theme || options.theme },
+    };
+
+    this.compare = new LocalCompare(visualRegressionOptions);
     this.context = null;
     this.currentSuite = null;
     this.currentTest = null;

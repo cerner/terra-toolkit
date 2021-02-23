@@ -2,7 +2,9 @@ jest.mock('@cerner/terra-cli/lib/utils/Logger');
 
 const fs = require('fs');
 const path = require('path');
+const Launcher = require('@wdio/cli').default;
 const TestRunner = require('../../../../src/terra-cli/wdio/test-runner');
+const getCapabilities = require('../../../../src/config/utils/getCapabilities');
 
 jest.mock('@wdio/cli', () => ({
   default: jest.fn().mockImplementation(() => ({ run: () => Promise.resolve(0) })),
@@ -27,6 +29,54 @@ describe('Test Runner', () => {
       await expect(TestRunner.run({ config: '/config/path' })).rejects.toThrow(mockError);
 
       expect(TestRunner.configPath).toHaveBeenCalledWith('/config/path');
+    });
+
+    it('should run the wdio cli launcher with options', async () => {
+      jest.spyOn(TestRunner, 'configPath').mockImplementationOnce(() => '/example/path');
+
+      await TestRunner.run({
+        assetServerPort: 8080,
+        baseUrl: '/',
+        browsers: ['chrome'],
+        config: '/path',
+        disableSeleniumService: true,
+        externalHost: 'externalHost',
+        externalPort: 3000,
+        formFactor: 'small',
+        gridUrl: 'http',
+        hostname: 'hostname',
+        keepAliveSeleniumDockerService: true,
+        locale: 'en',
+        port: 8080,
+        site: 'build',
+        spec: '/spec/',
+        suite: 'test-suite',
+        theme: 'terra-default-theme',
+        updateScreenshots: true,
+      });
+
+      const capabilities = getCapabilities(['chrome'], true);
+
+      const launcherOptions = {
+        baseUrl: 'http://externalHost:3000',
+        capabilities,
+        hostname: 'http',
+        port: 80,
+        spec: '/spec/',
+        suite: 'test-suite',
+        launcherOptions: {
+          disableSeleniumService: true,
+          assetServerPort: 8080,
+          formFactor: 'small',
+          keepAliveSeleniumDockerService: true,
+          locale: 'en',
+          site: 'build',
+          theme: 'terra-default-theme',
+          updateScreenshots: true,
+        },
+      };
+
+      expect(Launcher).toHaveBeenCalledWith('/example/path', launcherOptions);
     });
   });
 
@@ -76,16 +126,16 @@ describe('Test Runner', () => {
 
       expect(TestRunner.run).toHaveBeenCalledTimes(4);
       expect(TestRunner.run).toHaveBeenCalledWith({
-        config: '/path', theme: 'terra-default-theme', locale: 'en', launcherOptions: {},
+        config: '/path', theme: 'terra-default-theme', locale: 'en',
       });
       expect(TestRunner.run).toHaveBeenCalledWith({
-        config: '/path', theme: 'terra-default-theme', locale: 'fr', launcherOptions: {},
+        config: '/path', theme: 'terra-default-theme', locale: 'fr',
       });
       expect(TestRunner.run).toHaveBeenCalledWith({
-        config: '/path', theme: 'terra-mock-theme', locale: 'en', launcherOptions: {},
+        config: '/path', theme: 'terra-mock-theme', locale: 'en',
       });
       expect(TestRunner.run).toHaveBeenCalledWith({
-        config: '/path', theme: 'terra-mock-theme', locale: 'fr', launcherOptions: {},
+        config: '/path', theme: 'terra-mock-theme', locale: 'fr',
       });
     });
 
@@ -101,75 +151,44 @@ describe('Test Runner', () => {
 
       expect(TestRunner.run).toHaveBeenCalledTimes(8);
       expect(TestRunner.run).toHaveBeenCalledWith({
-        config: '/path', theme: 'terra-default-theme', locale: 'en', formFactor: 'tiny', launcherOptions: {},
+        config: '/path', theme: 'terra-default-theme', locale: 'en', formFactor: 'tiny',
       });
       expect(TestRunner.run).toHaveBeenCalledWith({
-        config: '/path', theme: 'terra-default-theme', locale: 'en', formFactor: 'large', launcherOptions: {},
+        config: '/path', theme: 'terra-default-theme', locale: 'en', formFactor: 'large',
       });
       expect(TestRunner.run).toHaveBeenCalledWith({
-        config: '/path', theme: 'terra-default-theme', locale: 'fr', formFactor: 'tiny', launcherOptions: {},
+        config: '/path', theme: 'terra-default-theme', locale: 'fr', formFactor: 'tiny',
       });
       expect(TestRunner.run).toHaveBeenCalledWith({
-        config: '/path', theme: 'terra-default-theme', locale: 'fr', formFactor: 'large', launcherOptions: {},
+        config: '/path', theme: 'terra-default-theme', locale: 'fr', formFactor: 'large',
       });
       expect(TestRunner.run).toHaveBeenCalledWith({
-        config: '/path', theme: 'terra-mock-theme', locale: 'en', formFactor: 'tiny', launcherOptions: {},
+        config: '/path', theme: 'terra-mock-theme', locale: 'en', formFactor: 'tiny',
       });
       expect(TestRunner.run).toHaveBeenCalledWith({
-        config: '/path', theme: 'terra-mock-theme', locale: 'en', formFactor: 'large', launcherOptions: {},
+        config: '/path', theme: 'terra-mock-theme', locale: 'en', formFactor: 'large',
       });
       expect(TestRunner.run).toHaveBeenCalledWith({
-        config: '/path', theme: 'terra-mock-theme', locale: 'fr', formFactor: 'tiny', launcherOptions: {},
+        config: '/path', theme: 'terra-mock-theme', locale: 'fr', formFactor: 'tiny',
       });
       expect(TestRunner.run).toHaveBeenCalledWith({
-        config: '/path', theme: 'terra-mock-theme', locale: 'fr', formFactor: 'large', launcherOptions: {},
+        config: '/path', theme: 'terra-mock-theme', locale: 'fr', formFactor: 'large',
       });
     });
 
-    it('should initiate a test runner with custom hostname and port options', async () => {
-      jest.spyOn(TestRunner, 'run').mockImplementation(() => Promise.resolve());
-
-      await TestRunner.start({
-        config: '/path',
-        locales: ['en'],
-        themes: ['terra-default-theme'],
-        hostname: 'hostname',
-        port: 8080,
-        baseUrl: '/',
-        suite: 'test-suite',
-        spec: '/spec/',
-        keepAliveSeleniumDockerService: true,
-        updateScreenshots: true,
-      });
-
-      expect(TestRunner.run).toHaveBeenCalledWith({
-        config: '/path',
-        theme: 'terra-default-theme',
-        locale: 'en',
-        hostname: 'hostname',
-        port: 8080,
-        baseUrl: '/',
-        suite: 'test-suite',
-        spec: '/spec/',
-        launcherOptions: {
-          keepAliveSeleniumDockerService: true,
-          updateScreenshots: true,
-        },
-      });
-    });
-
-    it('should set env variables', async () => {
+    it('should initiate a test runner with custom options', async () => {
       jest.spyOn(TestRunner, 'run').mockImplementation(() => Promise.resolve());
 
       await TestRunner.start({
         assetServerPort: 8080,
-        baseUrl: 'http://localhost:8080',
-        browsers: ['ie', 'chrome'],
+        baseUrl: '/',
+        browsers: ['chrome', 'firefox'],
         config: '/path',
         disableSeleniumService: true,
-        externalPort: 8000,
-        formFactors: ['large'],
-        gridUrl: 'localhost',
+        externalHost: 'externalHost',
+        externalPort: 3000,
+        formFactors: ['small'],
+        gridUrl: 'http',
         hostname: 'hostname',
         keepAliveSeleniumDockerService: true,
         locales: ['en'],
@@ -181,27 +200,25 @@ describe('Test Runner', () => {
         updateScreenshots: true,
       });
 
-      expect(process.env.WDIO_INTERNAL_PORT).toEqual('8080');
-      expect(process.env.BROWSERS).toEqual('ie,chrome');
-      expect(process.env.WDIO_DISABLE_SELENIUM_SERVICE).toEqual('true');
-      expect(process.env.WDIO_EXTERNAL_PORT).toEqual('8000');
-      expect(process.env.SELENIUM_GRID_URL).toEqual('localhost');
-      expect(process.env.WDIO_HOSTNAME).toEqual('hostname');
-      expect(process.env.SITE).toEqual('build');
       expect(TestRunner.run).toHaveBeenCalledWith({
-        baseUrl: 'http://localhost:8080',
+        assetServerPort: 8080,
+        baseUrl: '/',
+        browsers: ['chrome', 'firefox'],
         config: '/path',
-        formFactor: 'large',
+        disableSeleniumService: true,
+        externalHost: 'externalHost',
+        externalPort: 3000,
+        formFactor: 'small',
+        gridUrl: 'http',
         hostname: 'hostname',
+        keepAliveSeleniumDockerService: true,
         locale: 'en',
         port: 8080,
+        site: 'build',
         spec: '/spec/',
         suite: 'test-suite',
         theme: 'terra-default-theme',
-        launcherOptions: {
-          keepAliveSeleniumDockerService: true,
-          updateScreenshots: true,
-        },
+        updateScreenshots: true,
       });
     });
   });
