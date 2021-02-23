@@ -13,7 +13,7 @@ class VisualRegressionLauncher {
    */
   constructor(options = {}, _capabilities, config = {}) {
     const { launcherOptions } = config;
-    const { locale, theme } = launcherOptions || {};
+    const { locale, theme, updateScreenshots } = launcherOptions || {};
 
     /**
      * Always use the launcher options from the test runner if available before using
@@ -26,6 +26,7 @@ class VisualRegressionLauncher {
     const visualRegressionOptions = {
       ...(locale || options.locale) && { locale: locale || options.locale },
       ...(theme || options.theme) && { theme: theme || options.theme },
+      updateScreenshots,
     };
 
     this.compare = new LocalCompare(visualRegressionOptions);

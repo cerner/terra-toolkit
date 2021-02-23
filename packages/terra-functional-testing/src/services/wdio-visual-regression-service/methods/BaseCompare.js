@@ -14,12 +14,14 @@ class BaseCompare {
     const {
       locale,
       theme,
+      updateScreenshots,
     } = options;
 
     // screenshot naming config
     this.baseScreenshotDir = process.cwd();
     this.locale = locale || 'en';
     this.theme = theme || 'terra-default-theme';
+    this.updateScreenshots = updateScreenshots === true;
   }
 
   /**
