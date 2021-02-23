@@ -4,6 +4,10 @@ const Launcher = require('@wdio/cli').default;
 const { Logger } = require('@cerner/terra-cli');
 const getCapabilities = require('../../config/utils/getCapabilities');
 const getIpAddress = require('../../config/utils/getIpAddress');
+const SeleniumDockerService = require('../../services/wdio-selenium-docker-service');
+const TerraService = require('../../services/wdio-terra-service');
+const AssetServerService = require('../../services/wdio-asset-server-service');
+const VisualRegressionLauncher = require('../../services/wdio-visual-regression-service');
 
 const logger = new Logger({ prefix: '[terra-functional-testing:wdio]' });
 
@@ -74,12 +78,34 @@ class TestRunner {
         ...cliOptions // spec, suite,
       } = options;
 
+      const defaultWebpackPath = path.resolve(process.cwd(), 'webpack.config.js');
+
       const launcherOptions = {
         ...cliOptions,
         baseUrl: `http://${externalHost || getIpAddress()}:${externalPort || 8080}`,
         capabilities: getCapabilities(browsers, !!gridUrl),
         hostname: gridUrl || hostname || 'localhost',
         port: gridUrl ? 80 : 4444,
+        services: [
+          [TerraService, {
+            ...formFactor && { formFactor },
+            ...theme && { theme },
+          }],
+          [AssetServerService, {
+            ...locale && { locale },
+            ...assetServerPort && { port: assetServerPort },
+            ...site && { site },
+            ...theme && { theme },
+            ...fs.existsSync(defaultWebpackPath) && { webpackConfig: defaultWebpackPath },
+          }],
+          [VisualRegressionLauncher, {
+            ...locale && { locale },
+            ...theme && { theme },
+            ...updateScreenshots && { updateScreenshots },
+          }],
+          // Do not add the docker service if disabled.
+          ...(disableSeleniumService || gridUrl ? [] : [[SeleniumDockerService]]),
+        ],
         launcherOptions: {
           disableSeleniumService: disableSeleniumService || !!gridUrl,
           ...assetServerPort && { assetServerPort },

@@ -35,6 +35,28 @@ describe('BaseCompare', () => {
     expect(result).toEqual('hello-world-default_08_name_yes');
   });
 
+  it('should call constructor with no options', () => {
+    const baseCompare = new BaseCompare({});
+
+    expect(baseCompare.baseScreenshotDir).toBe(process.cwd());
+    expect(baseCompare.locale).toBe('en');
+    expect(baseCompare.theme).toBe('terra-default-theme');
+    expect(baseCompare.updateScreenshots).toBe(false);
+  });
+
+  it('should call constructor with options', () => {
+    const baseCompare = new BaseCompare({
+      locale: 'fr',
+      theme: 'terra-lowlight-theme',
+      updateScreenshots: true,
+    });
+
+    expect(baseCompare.baseScreenshotDir).toBe(process.cwd());
+    expect(baseCompare.locale).toBe('fr');
+    expect(baseCompare.theme).toBe('terra-lowlight-theme');
+    expect(baseCompare.updateScreenshots).toBe(true);
+  });
+
   describe('BaseCompare.getScreenshotName', () => {
     it('used test name as screenshot name', () => {
       const baseCompare = new BaseCompare({});
@@ -66,6 +88,7 @@ describe('BaseCompare', () => {
       const baseCompare = new BaseCompare({
         locale: 'en',
         theme: 'cerner-default-theme',
+        updateScreenshots: true,
       });
 
       const getScreenshotDirSpy = jest.spyOn(baseCompare, 'getScreenshotDir').mockReturnValue('screenshotDir');

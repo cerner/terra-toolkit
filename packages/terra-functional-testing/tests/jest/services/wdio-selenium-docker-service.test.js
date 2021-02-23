@@ -21,8 +21,6 @@ describe('WDIO Selenium Docker Service', () => {
 
       await service.onPrepare({});
 
-      expect(service.disableSeleniumService).toEqual(false);
-      expect(service.keepAliveSeleniumDockerService).toEqual(false);
       expect(mockExec).toHaveBeenCalledWith('docker -v');
     });
 
@@ -56,19 +54,6 @@ describe('WDIO Selenium Docker Service', () => {
       }
 
       expect.assertions(1);
-    });
-
-    it('should not start selenium hub if the service should be disabled', async () => {
-      const service = new SeleniumDockerService();
-
-      mockExec.mockImplementation(() => Promise.resolve());
-
-      await service.onPrepare({ launcherOptions: { disableSeleniumService: true, keepAliveSeleniumDockerService: true } });
-
-      expect(service.disableSeleniumService).toEqual(true);
-      expect(service.keepAliveSeleniumDockerService).toEqual(true);
-
-      expect(mockExec).not.toHaveBeenCalled();
     });
   });
 
@@ -181,15 +166,6 @@ describe('WDIO Selenium Docker Service', () => {
     it('should keep the docker hub active if the keep alive option has been set to true', async () => {
       const service = new SeleniumDockerService();
       service.keepAliveSeleniumDockerService = true;
-
-      await service.onComplete();
-
-      expect(mockExec).not.toHaveBeenCalled();
-    });
-
-    it('should not compose down the selenium hub if the service was disabled', async () => {
-      const service = new SeleniumDockerService();
-      service.disableSeleniumService = true;
 
       await service.onComplete();
 

@@ -23,32 +23,6 @@ describe('VisualRegressionLauncher', () => {
       expect(service.currentSuite).toBeNull();
       expect(service.currentTest).toBeNull();
     });
-
-    it('should initialize with the provided options', () => {
-      const service = new VisualRegressionLauncher({ locale: 'en', theme: 'default-theme' });
-
-      expect(service.compare.locale).toBe('en');
-      expect(service.compare.theme).toBe('default-theme');
-    });
-
-    it('should initialize with the launcher options', () => {
-      const options = {
-        locale: 'en',
-        theme: 'default-theme',
-      };
-
-      const launcherOptions = {
-        launcherOptions: {
-          locale: 'fr',
-          theme: 'lowlight-theme',
-        },
-      };
-
-      const service = new VisualRegressionLauncher(options, {}, launcherOptions);
-
-      expect(service.compare.locale).toBe('fr');
-      expect(service.compare.theme).toBe('lowlight-theme');
-    });
   });
 
   describe('VisualRegressionLauncher.before', () => {

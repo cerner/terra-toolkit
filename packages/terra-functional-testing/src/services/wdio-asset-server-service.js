@@ -6,30 +6,8 @@ const WebpackServer = require('../webpack-server');
 const logger = new Logger({ prefix: '[terra-functional-testing:wdio-asset-server-service]' });
 
 class AssetServerService {
-  constructor(options = {}, _capabilities, config = {}) {
-    const { launcherOptions } = config;
-    const {
-      assetServerPort,
-      locale,
-      site,
-      theme,
-    } = launcherOptions || {};
-
-    /**
-     * Always use the launcher options from the test runner if available before using
-     * the options passed thru the service in wdio.conf.js. The reason is because the
-     * service options set using env is cached and are unreliable if these options
-     * are changed dynamically by the test runner.
-     *
-     * Reference: https://github.com/webdriverio/webdriverio/issues/6411
-     */
-    this.options = {
-      ...(assetServerPort || options.port) && { port: assetServerPort || options.port },
-      ...(locale || options.locale) && { locale: locale || options.locale },
-      ...(site || options.site) && { site: site || options.site },
-      ...(theme || options.theme) && { theme: theme || options.theme },
-      ...options.webpackConfig && { webpackConfig: options.webpackConfig },
-    };
+  constructor(options = {}) {
+    this.options = options;
   }
 
   /**
