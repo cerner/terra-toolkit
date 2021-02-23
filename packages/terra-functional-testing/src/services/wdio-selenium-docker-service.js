@@ -126,3 +126,4 @@ class SeleniumDockerService {
 }
 
 module.exports = SeleniumDockerService;
+
