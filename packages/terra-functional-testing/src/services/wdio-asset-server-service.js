@@ -6,8 +6,10 @@ const WebpackServer = require('../webpack-server');
 const logger = new Logger({ prefix: '[terra-functional-testing:wdio-asset-server-service]' });
 
 class AssetServerService {
-  constructor(options = {}) {
-    this.options = options;
+  constructor(_options, _capabilities, config) {
+    const { launcherOptions } = config;
+
+    this.options = launcherOptions;
   }
 
   /**

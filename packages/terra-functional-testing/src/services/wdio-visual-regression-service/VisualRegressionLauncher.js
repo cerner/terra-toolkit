@@ -11,8 +11,10 @@ class VisualRegressionLauncher {
    * @param {Object} options.locale - The locale being tested.
    * @param {Object} options.theme - The theme being tested.
    */
-  constructor(options = {}) {
-    this.compare = new LocalCompare(options);
+  constructor(_options, _capabilities, config) {
+    const { launcherOptions } = config;
+
+    this.compare = new LocalCompare(launcherOptions);
     this.context = null;
     this.currentSuite = null;
     this.currentTest = null;

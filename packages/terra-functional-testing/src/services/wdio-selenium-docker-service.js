@@ -10,9 +10,12 @@ const logger = new Logger({ prefix: '[terra-functional-testing:wdio-selenium-doc
 const exec = util.promisify(childProcess.exec);
 
 class SeleniumDockerService {
-  constructor(options = {}) {
-    const { version } = options;
+  constructor(_options, _capabilities, config) {
+    const { launcherOptions } = config;
+    const { disableSeleniumService, keepAliveSeleniumDockerService, version } = launcherOptions || {};
 
+    this.disableSeleniumService = disableSeleniumService;
+    this.keepAliveSeleniumDockerService = keepAliveSeleniumDockerService === true;
     this.version = version;
   }
 
@@ -20,18 +23,15 @@ class SeleniumDockerService {
    * Gets executed once before all workers get launched.
    * @param {Object} config - The wdio configuration object.
    */
-  async onPrepare(config) {
-    const { launcherOptions } = config;
-    const { keepAliveSeleniumDockerService } = launcherOptions || {};
-
-    this.keepAliveSeleniumDockerService = keepAliveSeleniumDockerService === true;
-
-    try {
-      // Verify docker is installed.
-      await exec('docker -v');
-      await this.startSeleniumHub();
-    } catch (error) {
-      throw new SevereServiceError(error);
+  async onPrepare() {
+    if (!this.disableSeleniumService) {
+      try {
+        // Verify docker is installed.
+        await exec('docker -v');
+        await this.startSeleniumHub();
+      } catch (error) {
+        throw new SevereServiceError(error);
+      }
     }
   }
 
@@ -117,7 +117,7 @@ class SeleniumDockerService {
     // When multiple test sessions are executed sequentially as specified in the WDIO script in the package.json file, the keepAliveSeleniumDockerService cli option
     // is used to indicate not to remove the currently deployed docker stack upon test completion as it will be used again for the next test session.
     // The docker stack is expected to be removed by the last test session when no keepAliveSeleniumDockerService cli option is specified.
-    if (!this.keepAliveSeleniumDockerService) {
+    if (!this.keepAliveSeleniumDockerService && !this.disableSeleniumService) {
       logger.info('Shutting down the docker selenium hub...');
 
       await exec(`docker-compose -f ${this.getDockerComposeFilePath()} down`);
