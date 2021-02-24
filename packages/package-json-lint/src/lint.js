@@ -61,8 +61,11 @@ module.exports = async () => {
     return new PackageIssues({ packageJsonPath, results });
   }));
   const aggregateIssues = new AggregateIssues({ packagesIssues });
-  console.log(aggregateIssues.toString());
-  if (aggregateIssues.errorCount > 0) {
-    process.exitCode = 1;
+  if (aggregateIssues.errorCount || aggregateIssues.warningCount) {
+    // eslint-disable-next-line no-console
+    console.log(aggregateIssues.toString());
+    if (aggregateIssues.errorCount) {
+      process.exitCode = 1;
+    }
   }
 };

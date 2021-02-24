@@ -70,7 +70,7 @@
     "jest": "jest",
     "lint:js": "eslint --ext .js,.jsx .",
     "lint:package-json": "npm run terra -- package-json-lint",
-    "lint": "npm run lint:js",
+    "lint": "npm run lint:js && npm run lint:package-json",
     "mocha": "cd packages/terra-functional-testing && npm run mocha",
     "pack": "webpack -p",
     "postinstall": "link-parent-bin && npm run compile && npm run bootstrap:hoist",

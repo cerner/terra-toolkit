@@ -30,8 +30,6 @@
     "lint": "eslint --ext .js,.jsx ."
   },
   "dependencies": {
-    "terra-action-header": "^1.0.0",
-    "terra-abstract-modal": "^1.0.0",
     "babel-eslint": "^10.1.0",
     "eslint-config-airbnb": "^18.0.0",
     "eslint-plugin-compat": "^3.3.0",
