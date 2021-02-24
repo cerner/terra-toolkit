@@ -9,8 +9,9 @@ class BaseCompare {
    * @param {Object} options - Service configuration options.
    * @param {Object} options.locale - The locale being tested.
    * @param {Object} options.theme - The theme being tested.
+   * @param {boolean} options.updateScreenshots - Whether or not all reference screenshots should be updated even when there are mistmach with latest.
    */
-  constructor(options) {
+  constructor(options = {}) {
     const {
       locale,
       theme,

@@ -11,17 +11,33 @@ describe('VisualRegressionLauncher', () => {
 
   describe('VisualRegressionLauncher constructor', () => {
     it('initializes with the compare method', () => {
-      const service = new VisualRegressionLauncher({});
+      const service = new VisualRegressionLauncher();
 
       expect(service.compare).toBeInstanceOf(LocalCompare);
     });
 
     it('initializes internal vars', () => {
-      const service = new VisualRegressionLauncher({});
+      const service = new VisualRegressionLauncher();
 
       expect(service.context).toBeNull();
       expect(service.currentSuite).toBeNull();
       expect(service.currentTest).toBeNull();
+    });
+
+    it('should initialize with populated config', () => {
+      const launcherOptions = {
+        launcherOptions: {
+          locale: 'fr',
+          theme: 'lowlight-theme',
+          updateScreenshots: true,
+        },
+      };
+
+      const service = new VisualRegressionLauncher({}, {}, launcherOptions);
+
+      expect(service.compare.locale).toBe('fr');
+      expect(service.compare.theme).toBe('lowlight-theme');
+      expect(service.compare.updateScreenshots).toBe(true);
     });
   });
 

@@ -7,12 +7,15 @@ const getTerraFormFactor = require('./modules/getTerraFormFactor');
 
 class VisualRegressionLauncher {
   /**
-   * @param {Object} options - Service configuration options.
-   * @param {Object} options.locale - The locale being tested.
-   * @param {Object} options.theme - The theme being tested.
+   * Service constructor.
+   * @param {Object} _options - The options specific to this service.
+   * @param {Object} _capabilities - The list of capabilities details.
+   * @param {Object} config - The object containing the wdio configuration and options defined in the terra-cli test runner.
    */
-  constructor(options = {}) {
-    this.compare = new LocalCompare(options);
+  constructor(_options, _capabilities, config = {}) {
+    const { launcherOptions } = config;
+
+    this.compare = new LocalCompare(launcherOptions);
     this.context = null;
     this.currentSuite = null;
     this.currentTest = null;
