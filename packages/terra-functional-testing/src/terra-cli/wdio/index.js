@@ -128,9 +128,7 @@ const cli = {
       },
     })
   ),
-  handler: (config) => {
-    console.log(config);
-  }, // TestRunner.start,
+  handler: TestRunner.start,
 };
 
 module.exports = cli;
