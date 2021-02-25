@@ -17,7 +17,6 @@ const setupCLI = () => {
   return cli.usage('Usage: $0 <command> [options]')
     .demandCommand(1, 'A command is required. Pass --help to see all available commands and options.')
     .recommendCommands()
-    .strict()
     .fail((msg, err) => {
       // certain yargs validations throw strings
       const actualError = err || new Error(msg);

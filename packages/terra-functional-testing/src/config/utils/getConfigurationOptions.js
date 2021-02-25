@@ -42,7 +42,7 @@ const getConfigurationOptions = (options) => {
     hostname: SELENIUM_GRID_URL || gridUrl || 'localhost',
     port: (SELENIUM_GRID_URL || gridUrl) ? 80 : 4444,
     launcherOptions: {
-      disableSeleniumService: !!WDIO_DISABLE_SELENIUM_SERVICE || disableSeleniumService || !!gridUrl,
+      disableSeleniumService: !!WDIO_DISABLE_SELENIUM_SERVICE || !!SELENIUM_GRID_URL || disableSeleniumService || !!gridUrl,
       formFactor: FORM_FACTOR || formFactor,
       gridUrl: SELENIUM_GRID_URL || gridUrl,
       keepAliveSeleniumDockerService,
