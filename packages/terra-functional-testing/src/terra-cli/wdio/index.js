@@ -8,11 +8,24 @@ const cli = {
       assetServerPort: {
         type: 'number',
         describe: 'The port to run the webpack and express asset services on.',
-        default: 8080,
+        default: () => {
+          if (process.env.WDIO_INTERNAL_PORT) {
+            return process.env.WDIO_INTERNAL_PORT;
+          }
+
+          return 8080;
+        },
       },
       browsers: {
         type: 'array',
         describe: 'A list of browsers for the test run.',
+        default: () => {
+          if (process.env.BROWSERS) {
+            return [process.env.BROWSERS];
+          }
+
+          return undefined;
+        },
       },
       c: {
         type: 'string',
@@ -35,6 +48,13 @@ const cli = {
       formFactors: {
         type: 'array',
         describe: 'A list of form factors for the test run.',
+        default: () => {
+          if (process.env.FORM_FACTOR) {
+            return [process.env.FORM_FACTOR];
+          }
+
+          return [];
+        },
       },
       gridUrl: {
         type: 'string',
@@ -53,6 +73,13 @@ const cli = {
       site: {
         type: 'string',
         describe: 'A file path to a static directory of assets. When defined, an express server will launch to serve the assets and disable running webpack.',
+        default: () => {
+          if (process.env.THEME) {
+            return [process.env.THEME];
+          }
+
+          return ['terra-default-theme'];
+        },
       },
       spec: {
         type: 'array',
@@ -65,7 +92,13 @@ const cli = {
       themes: {
         type: 'array',
         describe: 'A list of themes for the test run.',
-        default: ['terra-default-theme'],
+        default: () => {
+          if (process.env.THEME) {
+            return [process.env.THEME];
+          }
+
+          return ['terra-default-theme'];
+        },
       },
       u: {
         type: 'boolean',
@@ -75,7 +108,15 @@ const cli = {
       },
     })
   ),
-  handler: TestRunner.start,
+  handler: (config) => {
+    console.log(config);
+  }, // TestRunner.start,
+  config: () => {
+    console.log('config');
+  },
+  defaults: () => {
+    console.log('default');
+  },
 };
 
 module.exports = cli;
