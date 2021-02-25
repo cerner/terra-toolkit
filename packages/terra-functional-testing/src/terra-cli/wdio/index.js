@@ -40,6 +40,13 @@ const cli = {
       externalHost: {
         type: 'string',
         describe: 'The host address the testing environment is connected to.',
+        default: () => {
+          if (process.env.WDIO_EXTERNAL_HOST) {
+            return process.env.WDIO_EXTERNAL_HOST;
+          }
+
+          return undefined;
+        },
       },
       externalPort: {
         type: 'number',
@@ -94,11 +101,11 @@ const cli = {
         type: 'string',
         describe: 'A file path to a static directory of assets. When defined, an express server will launch to serve the assets and disable running webpack.',
         default: () => {
-          if (process.env.THEME) {
-            return [process.env.THEME];
+          if (process.env.SITE) {
+            return [process.env.SITE];
           }
 
-          return ['terra-default-theme'];
+          return undefined;
         },
       },
       spec: {
@@ -128,7 +135,9 @@ const cli = {
       },
     })
   ),
-  handler: TestRunner.start,
+  handler: (config) => {
+    console.log(config);
+  }, // TestRunner.start,
 };
 
 module.exports = cli;
