@@ -44,6 +44,13 @@ const cli = {
       externalPort: {
         type: 'number',
         describe: 'The port mapping from the host to the container.',
+        default: () => {
+          if (process.env.WDIO_EXTERNAL_PORT) {
+            return process.env.WDIO_EXTERNAL_PORT;
+          }
+
+          return undefined;
+        },
       },
       formFactors: {
         type: 'array',
@@ -59,6 +66,13 @@ const cli = {
       gridUrl: {
         type: 'string',
         describe: 'The remote selenium grid address.',
+        default: () => {
+          if (process.env.SELENIUM_GRID_URL) {
+            return process.env.SELENIUM_GRID_URL;
+          }
+
+          return undefined;
+        },
       },
       keepAliveSeleniumDockerService: {
         type: 'boolean',
@@ -68,7 +82,13 @@ const cli = {
       locales: {
         type: 'array',
         describe: 'A list of language locales for the test run.',
-        default: ['en'],
+        default: () => {
+          if (process.env.LOCALE) {
+            return [process.env.LOCALE];
+          }
+
+          return ['en'];
+        },
       },
       site: {
         type: 'string',
