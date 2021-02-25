@@ -29,7 +29,7 @@ const getConfigurationOptions = (options) => {
     hostname: gridUrl || 'localhost',
     port: gridUrl ? 80 : 4444,
     launcherOptions: {
-      disableSeleniumService,
+      disableSeleniumService: disableSeleniumService || !!gridUrl,
       formFactor,
       gridUrl,
       keepAliveSeleniumDockerService,

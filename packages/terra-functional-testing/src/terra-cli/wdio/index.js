@@ -111,12 +111,6 @@ const cli = {
   handler: (config) => {
     console.log(config);
   }, // TestRunner.start,
-  config: () => {
-    console.log('config');
-  },
-  defaults: () => {
-    console.log('default');
-  },
 };
 
 module.exports = cli;
