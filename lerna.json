@@ -3,8 +3,7 @@
   "command": {
     "publish": {
       "ignoreChanges": [
-        "packages/package-json-lint/**",
-        "packages/terra-functional-testing/**"
+        "packages/package-json-lint/**"
       ]
     }
   },
