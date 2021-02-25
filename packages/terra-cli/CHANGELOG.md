@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+  * Remove "strict" api to allow any CLI option.
+
 ## 1.5.0 - (February 8, 2021)
 
 * Changed

@@ -33,7 +33,6 @@ const context = {
   },
   options: {
     name: 'displays a button',
-    updateScreenshots: false,
   },
 };
 
@@ -351,22 +350,14 @@ describe('LocalCompare', () => {
       const latestStatsFirst = fs.statSync(screenshotPathsFirst.latestPath);
       expect(latestStatsFirst.mtimeMs).toBeGreaterThan(0);
 
-      // create a second context with updateScreenshots set to true
-      const contextSecond = {
-        ...context,
-        options: {
-          name: 'displays a button',
-          updateScreenshots: true,
-        },
-      };
-
       // 2nd run --> go against reference image
       await pauseTest(); // pause to ensure time elapses between screenshot creation
-      const resultSecond = await localCompare.processScreenshot(contextSecond, base64ScreenshotNew);
+      localCompare.updateScreenshots = true;
+      const resultSecond = await localCompare.processScreenshot(context, base64ScreenshotNew);
 
       // check reference getter
       expect(getScreenshotPathsSpy).toHaveBeenCalledTimes(2);
-      expect(getScreenshotPathsSpy).toHaveBeenNthCalledWith(2, contextSecond);
+      expect(getScreenshotPathsSpy).toHaveBeenNthCalledWith(2, context);
 
       // check if image is reported as different
       expect(resultSecond.misMatchPercentage).toBeGreaterThan(0.01);

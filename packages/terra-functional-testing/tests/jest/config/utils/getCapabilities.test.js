@@ -8,6 +8,13 @@ describe('getCapabilities', () => {
     expect(capabilities[0].browserName).toEqual('chrome');
   });
 
+  it('should return chrome if browsers is an empty array', () => {
+    const capabilities = getCapabilities([]);
+
+    expect(capabilities.length).toEqual(1);
+    expect(capabilities[0].browserName).toEqual('chrome');
+  });
+
   it('should return all browsers if none are provided and the selenium grid is enabled', () => {
     const capabilities = getCapabilities(undefined, true);
 

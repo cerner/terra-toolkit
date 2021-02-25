@@ -7,12 +7,28 @@ const WebpackServer = require('../../../src/webpack-server/webpack-server');
 jest.mock('../../../src/express-server/express-server');
 jest.mock('../../../src/webpack-server/webpack-server');
 
+const config = {
+  launcherOptions: {
+    port: 8080,
+    locale: 'en',
+    site: './build',
+    theme: 'default-theme',
+    webpackConfig: 'webpack.config.js',
+  },
+};
+
 describe('WDIO Asset Server Service', () => {
   describe('constructor', () => {
-    it('should initialize with the provided options', () => {
-      const service = new AssetService({ mock: 'options' });
+    it('should initialize with empty config', async () => {
+      const service = new AssetService();
 
-      expect(service.options).toEqual({ mock: 'options' });
+      expect(service.options).toEqual({});
+    });
+
+    it('should initialize with populated config', async () => {
+      const service = new AssetService({}, {}, config);
+
+      expect(service.options).toEqual(config.launcherOptions);
     });
   });
 
@@ -26,7 +42,7 @@ describe('WDIO Asset Server Service', () => {
     });
 
     it('should start an express server if provided a site configuration option', async () => {
-      const service = new AssetService({ site: './build' });
+      const service = new AssetService({}, {}, config);
 
       await service.onPrepare();
 
@@ -34,7 +50,7 @@ describe('WDIO Asset Server Service', () => {
     });
 
     it('should start a webpack server if provided a config configuration option', async () => {
-      const service = new AssetService({ webpackConfig: 'webpack.config.js' });
+      const service = new AssetService({}, {}, { launcherOptions: { webpackConfig: 'webpack.config.js' } });
 
       await service.onPrepare();
 
@@ -42,7 +58,7 @@ describe('WDIO Asset Server Service', () => {
     });
 
     it('should throw a SevereServiceError if the server fails to start', async () => {
-      const service = new AssetService({ webpackConfig: 'webpack.config.js' });
+      const service = new AssetService({}, {}, { launcherOptions: { webpackConfig: 'webpack.config.js' } });
 
       WebpackServer.mockImplementationOnce(() => ({
         start: () => Promise.reject(),

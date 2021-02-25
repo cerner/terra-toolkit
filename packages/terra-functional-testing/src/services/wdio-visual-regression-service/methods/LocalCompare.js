@@ -54,12 +54,11 @@ class LocalCompare extends BaseCompare {
       const { isSameDimensions } = compareData;
       const misMatchPercentage = Number(compareData.misMatchPercentage);
       const mismatchTolerance = lodashGet(context, 'options.mismatchTolerance', this.mismatchTolerance);
-      const updateScreenshots = lodashGet(context, 'options.updateScreenshots', this.updateScreenshots);
       let screenshotWasUpdated = false;
 
       const isWithinMismatchTolerance = misMatchPercentage <= mismatchTolerance;
       if (!isWithinMismatchTolerance || !isSameDimensions) {
-        if (updateScreenshots) {
+        if (this.updateScreenshots) {
           logger.verbose('update the reference screenshot with the latest captured screenshot.');
           await fs.outputFile(referencePath, base64Screenshot, 'base64');
           screenshotWasUpdated = true;

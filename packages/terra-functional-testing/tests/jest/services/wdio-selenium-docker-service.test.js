@@ -8,9 +8,33 @@ const path = require('path');
 const mockExec = jest.fn();
 util.promisify.mockImplementation(() => mockExec);
 
+const config = {
+  launcherOptions: {
+    disableSeleniumService: true,
+    keepAliveSeleniumDockerService: true,
+    version: '1234',
+  },
+};
+
 const SeleniumDockerService = require('../../../src/services/wdio-selenium-docker-service');
 
 describe('WDIO Selenium Docker Service', () => {
+  describe('constructor', () => {
+    it('should initialize with empty config', async () => {
+      const service = new SeleniumDockerService();
+
+      expect(service.disableSeleniumService).toBe(false);
+      expect(service.keepAliveSeleniumDockerService).toBe(false);
+    });
+
+    it('should initialize with populated config', async () => {
+      const service = new SeleniumDockerService({}, {}, config);
+
+      expect(service.disableSeleniumService).toBe(true);
+      expect(service.keepAliveSeleniumDockerService).toBe(true);
+    });
+  });
+
   describe('onPrepare', () => {
     it('should verify docker is installed before proceeding', async () => {
       const service = new SeleniumDockerService();
@@ -54,6 +78,16 @@ describe('WDIO Selenium Docker Service', () => {
       }
 
       expect.assertions(1);
+    });
+
+    it('should not start selenium hub if the service should be disabled', async () => {
+      const service = new SeleniumDockerService({}, {}, config);
+
+      mockExec.mockImplementation(() => Promise.resolve());
+
+      await service.onPrepare();
+
+      expect(mockExec).not.toHaveBeenCalled();
     });
   });
 
@@ -110,7 +144,7 @@ describe('WDIO Selenium Docker Service', () => {
     });
 
     it('should start the selenium hub with the specified version', () => {
-      const service = new SeleniumDockerService({ version: '1234' });
+      const service = new SeleniumDockerService({}, {}, config);
 
       jest.spyOn(service, 'getDockerComposeFilePath').mockImplementationOnce(() => ('mock-compose-path'));
       jest.spyOn(service, 'waitForSeleniumHubReady').mockImplementationOnce(() => Promise.resolve());
@@ -164,8 +198,17 @@ describe('WDIO Selenium Docker Service', () => {
 
   describe('onComplete', () => {
     it('should keep the docker hub active if the keep alive option has been set to true', async () => {
-      const service = new SeleniumDockerService({ keepDockerStack: true });
+      const service = new SeleniumDockerService();
       service.keepAliveSeleniumDockerService = true;
+
+      await service.onComplete();
+
+      expect(mockExec).not.toHaveBeenCalled();
+    });
+
+    it('should not compose down the selenium hub if the service was disabled', async () => {
+      const service = new SeleniumDockerService();
+      service.disableSeleniumService = true;
 
       await service.onComplete();
 

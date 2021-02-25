@@ -77,7 +77,7 @@
     "start-heroku": "npm run terra -- express-server --port $PORT --site './build' ",
     "terra": "node ./packages/terra-cli/bin/terra",
     "test": "npm run lint && npm run jest && npm run mocha && npm run wdio",
-    "wdio-site": "SITE=build npm run terra -- wdio --browsers chrome firefox",
+    "wdio-site": "npm run terra -- wdio --site build --browsers chrome firefox --locales en fr --formFactors small large",
     "wdio-webpack": "npm run terra -- wdio",
     "wdio": "rm -rf build && npm run pack && npm run wdio-site && npm run wdio-webpack"
   },
