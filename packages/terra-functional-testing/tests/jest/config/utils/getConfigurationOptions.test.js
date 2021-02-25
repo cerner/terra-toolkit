@@ -79,43 +79,4 @@ describe('getCapabilities', () => {
 
     expect(config).toEqual(expectedConfig);
   });
-
-  it('should get configuration from ENVs', async () => {
-    process.env.BROWSERS = ['firefox'];
-    process.env.FORM_FACTOR = 'large';
-    process.env.LOCALE = 'fr';
-    process.env.SELENIUM_GRID_URL = 'url';
-    process.env.SITE = 'site';
-    process.env.THEME = 'terra-lowlight-theme';
-    process.env.WDIO_DISABLE_SELENIUM_SERVICE = true;
-    process.env.WDIO_EXTERNAL_HOST = 'external-host';
-    process.env.WDIO_EXTERNAL_PORT = 'external-port';
-    process.env.WDIO_INTERNAL_PORT = 'internal-port';
-
-    const defaultWebpackPath = path.resolve(process.cwd(), 'webpack.config.js');
-    const capabilities = getCapabilities(['firefox'], !!process.env.SELENIUM_GRID_URL);
-
-    const expectedConfig = {
-      baseUrl: 'http://external-host:external-port',
-      capabilities,
-      hostname: 'url',
-      port: 80,
-      launcherOptions: {
-        disableSeleniumService: true,
-        formFactor: 'large',
-        gridUrl: 'url',
-        keepAliveSeleniumDockerService: undefined,
-        locale: 'fr',
-        port: 'internal-port',
-        site: 'site',
-        theme: 'terra-lowlight-theme',
-        updateScreenshots: undefined,
-        webpackConfig: defaultWebpackPath,
-      },
-    };
-
-    const config = getConfigurationOptions({});
-
-    expect(config).toEqual(expectedConfig);
-  });
 });

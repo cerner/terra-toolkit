@@ -10,35 +10,37 @@ Options:
       --help                            Show help                      [boolean]
       --assetServerPort                 The port to run the webpack and express
                                         asset services on.
-                                                        [number] [default: 8080]
+                                                  [number] [default: (_default)]
       --browsers                        A list of browsers for the test run.
-                                                                         [array]
+                                                   [array] [default: (_default)]
   -c, --config                          A file path to the test runner
                                         configuration.                  [string]
       --disableSeleniumService          A flag to disable the selenium docker
                                         service.      [boolean] [default: false]
       --externalHost                    The host address the testing environment
-                                        is connected to.                [string]
+                                        is connected to.
+                                                  [string] [default: (_default)]
       --externalPort                    The port mapping from the host to the
-                                        container.                      [number]
+                                        container.[number] [default: (_default)]
       --formFactors                     A list of form factors for the test run.
-                                                                         [array]
+                                                   [array] [default: (_default)]
       --gridUrl                         The remote selenium grid address.
-                                                                        [string]
+                                                  [string] [default: (_default)]
       --keepAliveSeleniumDockerService  Determines to keep the selenium docker
                                         service running upon test completion.
                                                       [boolean] [default: false]
       --locales                         A list of language locales for the test
-                                        run.           [array] [default: [\\"en\\"]]
+                                        run.       [array] [default: (_default)]
       --site                            A file path to a static directory of
                                         assets. When defined, an express server
                                         will launch to serve the assets and
-                                        disable running webpack.        [string]
+                                        disable running webpack.
+                                                  [string] [default: (_default)]
       --spec                            A list of spec file paths.       [array]
       --suite                           Overrides specs and runs only the
                                         defined suites.                  [array]
       --themes                          A list of themes for the test run.
-                                      [array] [default: [\\"terra-default-theme\\"]]
+                                                   [array] [default: (_default)]
   -u, --updateScreenshots               Whether or not to automatically update
                                         all reference screenshots with the
                                         latest screenshots.
