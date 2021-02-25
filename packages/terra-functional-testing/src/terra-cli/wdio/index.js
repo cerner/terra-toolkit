@@ -20,11 +20,18 @@ const cli = {
         type: 'array',
         describe: 'A list of browsers for the test run.',
         default: () => {
-          if (process.env.BROWSERS) {
-            if (process.env.BROWSERS.includes(',')) {
-              return process.env.BROWSERS.split(',');
+          let browsers = process.env.BROWSERS;
+          if (browsers) {
+            // Remove the brackets if BROWSERS is set as an array like ['chrome, firefox, ie'] or ['chrome','firefox','ie'] in Jenkinsfile.
+            browsers = browsers.replace('[', '');
+            browsers = browsers.replace(']', '');
+
+            // Split the list of BROWSERS into an array if it is set in the string form like 'chrome,firefox,ie'.
+            if (browsers.includes(',')) {
+              return browsers.split(',');
             }
-            return [process.env.BROWSERS];
+
+            return [browsers];
           }
 
           return [];
