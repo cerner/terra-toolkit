@@ -112,7 +112,7 @@ const cli = {
         describe: 'A file path to a static directory of assets. When defined, an express server will launch to serve the assets and disable running webpack.',
         default: () => {
           if (process.env.SITE) {
-            return [process.env.SITE];
+            return process.env.SITE;
           }
 
           return undefined;
