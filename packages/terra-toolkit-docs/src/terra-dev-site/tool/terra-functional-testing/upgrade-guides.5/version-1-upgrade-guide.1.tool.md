@@ -193,7 +193,7 @@ Check out the [release notes](https://github.com/dequelabs/axe-core/releases) fo
 
 ### Default Selector
 
-The default selector has been changed from `[data-terra-dev-site-content] *:first-child` to `[data-terra-test-content] *:first-child`. This selector is used as the default content region for capturing screenshots. This change should not affect most teams. For teams that are affected a custom selector can be provided using [service options](/dev_tools/terra-functional-testing/terra-functional-testing/wdio-services/terra-service#selector).
+The default selector has been changed from `[data-terra-dev-site-content] *:first-child` to `[data-terra-test-content] *:first-child`. This selector is used as the default content region for capturing screenshots. This change should not affect most teams. For teams that are affected a custom selector can be provided using [service options](https://engineering.cerner.com/terra-ui/dev_tools/cerner/terra-functional-testing/wdio-services/terra-service#selector).
 
 ## New Features
 
@@ -417,7 +417,7 @@ Note: The terra cli array parameters have a different syntax.
 }
 ```
 
-A list of the test runner CLI options can be found [here](/dev_tools/terra-functional-testing/terra-functional-testing/wdio-testing/about).
+A list of the test runner CLI options can be found [here](https://engineering.cerner.com/terra-ui/dev_tools/cerner/terra-functional-testing/about#test-runner).
 
 At this point it is recommended to do a clean install to remove stale installations of terra-toolkit. If you have the script go ahead and run `npm run clean:install`. Alternatively ensure that the old node_modules directory is deleted and reinstall all dependencies.
 
