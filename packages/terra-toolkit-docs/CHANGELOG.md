@@ -4,6 +4,8 @@
 
 * Changed
   * Add @cerner/terra-functional-testing to dependencies
+  * Update doc from `getCssProperty` to `getCSSProperty`
+  
 
 ## 1.8.0 - (February 25, 2021)
 
