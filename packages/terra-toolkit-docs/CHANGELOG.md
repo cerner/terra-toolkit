@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+  * Add @cerner/terra-functional-testing to dependencies
+
 ## 1.8.0 - (February 25, 2021)
 
 * Changed
