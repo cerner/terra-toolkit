@@ -25,7 +25,7 @@ class WebpackServer {
     const config = require(webpackConfig);
 
     if (typeof config === 'function') {
-      return config({ ...locale && { defaultLocale: locale }, theme }, { p: true });
+      return config({ ...locale && { defaultLocale: locale }, defaultTheme: theme }, { p: true });
     }
 
     return config;
