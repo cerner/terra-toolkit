@@ -1,7 +1,13 @@
-const fs = require('fs');
-const path = require('path');
-const getCapabilities = require('./utils/getCapabilities');
-const getIpAddress = require('./utils/getIpAddress');
+/**
+ * Note: The terra-cli test runner is required to use this wdio configuration.
+ *
+ * The following configurations options are initialized by the cli test runner:
+ *
+ *      - baseUrl
+ *      - capabilities
+ *      - hostname
+ *      - port
+ */
 
 const SeleniumDockerService = require('../services/wdio-selenium-docker-service');
 const TerraService = require('../services/wdio-terra-service');
@@ -10,22 +16,6 @@ const VisualRegressionLauncher = require('../services/wdio-visual-regression-ser
 
 const { AccessibilityReporter } = require('../reporters/accessibility-reporter');
 const { SpecReporter, cleanResults, mergeResults } = require('../reporters/spec-reporter');
-
-const {
-  BROWSERS,
-  FORM_FACTOR,
-  LOCALE,
-  SELENIUM_GRID_URL,
-  SITE,
-  THEME,
-  WDIO_DISABLE_SELENIUM_SERVICE,
-  WDIO_EXTERNAL_HOST,
-  WDIO_EXTERNAL_PORT,
-  WDIO_INTERNAL_PORT,
-  WDIO_HOSTNAME,
-} = process.env;
-
-const defaultWebpackPath = path.resolve(process.cwd(), 'webpack.config.js');
 
 exports.config = {
   //
@@ -46,17 +36,21 @@ exports.config = {
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
   specs: [
-    './test*/wdio/**/*-spec.js',
-    './packages/*/test*/wdio/**/*-spec.js',
+    './tests/wdio/**/*-spec.js',
+    './packages/*/tests/wdio/**/*-spec.js',
   ],
   //
   // ============
   // Capabilities
   // ============
-  // Define your capabilities here. WebdriverIO can run multiple capabilities at the same
+  // Capabilities are initialized by the cli test runner. WebdriverIO can run multiple capabilities at the same
   // time. Depending on the number of capabilities, WebdriverIO launches several test
   // sessions. Within your capabilities you can overwrite the spec and exclude options in
   // order to group specific specs to a specific capability.
+  //
+  // If you have trouble getting all important capabilities together, check out the
+  // Sauce Labs platform configurator - a great tool to configure your capabilities:
+  // https://docs.saucelabs.com/reference/platforms-configurator
   //
   // First, you can define how many instances should be started at the same time. Let's
   // say you have 3 different capabilities (Chrome, Firefox, and Safari) and you have
@@ -66,12 +60,6 @@ exports.config = {
   // from the same test should run tests.
   //
   maxInstances: 10,
-  //
-  // If you have trouble getting all important capabilities together, check out the
-  // Sauce Labs platform configurator - a great tool to configure your capabilities:
-  // https://docs.saucelabs.com/reference/platforms-configurator
-  //
-  capabilities: getCapabilities(BROWSERS, !!SELENIUM_GRID_URL),
   //
   // ===================
   // Test Configurations
@@ -100,23 +88,13 @@ exports.config = {
   bail: 0,
   // Set the path to connect to the selenium container.
   path: '/wd/hub',
-  // The hostname of the driver server.
-  hostname: SELENIUM_GRID_URL || WDIO_HOSTNAME || 'localhost',
-  // The port the driver server is on. The selenium grid uses port 80.
-  port: SELENIUM_GRID_URL ? 80 : 4444,
-  //
-  // Set a base URL in order to shorten url command calls. If your `url` parameter starts
-  // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
-  // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
-  // gets prepended directly.
-  baseUrl: `http://${WDIO_EXTERNAL_HOST || getIpAddress()}:${WDIO_EXTERNAL_PORT || 8080}`,
   //
   // Default timeout for all waitFor* commands.
   waitforTimeout: 10000,
   //
   // Default timeout in milliseconds for request
   // if browser driver or grid doesn't send response
-  connectionRetryTimeout: 120000,
+  connectionRetryTimeout: 1200000,
   //
   // Default request retries count
   connectionRetryCount: 3,
@@ -126,24 +104,10 @@ exports.config = {
   // your test setup with almost no effort. Unlike plugins, they don't add new
   // commands. Instead, they hook themselves up into the test process.
   services: [
-    [TerraService, {
-      /* Use to change the form factor (test viewport) used in the wdio run. */
-      ...FORM_FACTOR && { formFactor: FORM_FACTOR },
-      ...THEME && { theme: THEME },
-    }],
-    [AssetServerService, {
-      ...SITE && { site: SITE },
-      ...LOCALE && { locale: LOCALE },
-      ...THEME && { theme: THEME },
-      ...WDIO_INTERNAL_PORT && { port: WDIO_INTERNAL_PORT },
-      ...fs.existsSync(defaultWebpackPath) && { webpackConfig: defaultWebpackPath },
-    }],
-    [VisualRegressionLauncher, {
-      ...LOCALE && { locale: LOCALE },
-      ...THEME && { theme: THEME },
-    }],
-    // Do not add the docker service if disabled.
-    ...(WDIO_DISABLE_SELENIUM_SERVICE || SELENIUM_GRID_URL ? [] : [[SeleniumDockerService]]),
+    [TerraService],
+    [AssetServerService],
+    [VisualRegressionLauncher],
+    [SeleniumDockerService],
   ],
   // Framework you want to run your specs with.
   // The following are supported: Mocha, Jasmine, and Cucumber
@@ -168,7 +132,7 @@ exports.config = {
   // See the full list at http://mochajs.org/
   mochaOpts: {
     ui: 'bdd',
-    timeout: 60000,
+    timeout: 1200000,
   },
   /**
    * Gets executed once before all workers get launched.
@@ -180,9 +144,18 @@ exports.config = {
   /**
    * Gets executed after all workers have shut down and the process is about to exit.
    * An error thrown in the `onComplete` hook will result in the test run failing.
+   * @param {Object} exitCode 0 - success, 1 - fail
+   * @param {Object} config wdio configuration object
    */
-  onComplete() {
+  onComplete(_exitCode, config = {}) {
+    const { launcherOptions } = config;
+    const { formFactor, locale, theme } = launcherOptions || {};
+
     // Merge reporter results.
-    mergeResults({ formFactor: FORM_FACTOR, locale: LOCALE, theme: THEME });
+    mergeResults({
+      ...formFactor && { formFactor },
+      ...locale && { locale },
+      ...theme && { theme },
+    });
   },
 };

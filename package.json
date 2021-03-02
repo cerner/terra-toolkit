@@ -4,8 +4,7 @@
   "version": "5.25.0",
   "description": "Utilities to help when developing terra modules.",
   "engines": {
-    "node": ">=10 <13",
-    "npm": ">=6.9.0"
+    "node": ">=10 <13"
   },
   "repository": {
     "type": "git",
@@ -78,9 +77,9 @@
     "start-heroku": "npm run terra -- express-server --port $PORT --site './build' ",
     "terra": "node ./packages/terra-cli/bin/terra",
     "test": "npm run lint && npm run jest && npm run mocha && npm run wdio",
-    "wdio-site": "SITE=build npm run terra -- wdio",
+    "wdio-site": "npm run terra -- wdio --site build --browsers chrome firefox --locales en fr --formFactors small large",
     "wdio-webpack": "npm run terra -- wdio",
-    "wdio": "rm -rf build && npm run pack && SITE=build npm run terra -- wdio --keepAliveSeleniumDockerService true && npm run terra -- wdio"
+    "wdio": "rm -rf build && npm run pack && npm run wdio-site && npm run wdio-webpack"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
@@ -93,6 +92,8 @@
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.10.5",
+    "@cerner/terra-application": "cerner/terra-application#v2-stable",
+    "@cerner/terra-dev-site": "cerner/terra-dev-site#v7-stable",
     "@octokit/core": "^3.1.2",
     "babel-jest": "^24.8.0",
     "bufferutil": "^4.0.1",
@@ -102,7 +103,7 @@
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.10.0",
     "enzyme-to-json": "^3.3.5",
-    "eslint": "^6.1.0",
+    "eslint": "^7.19.0",
     "html-webpack-plugin": "^4.3.0",
     "jest": "^26.0.1",
     "lerna": "^3.20.2",
@@ -111,10 +112,9 @@
     "postcss": "^8.2.1",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
-    "react-intl-2": "npm:react-intl@^2.9.0",
+    "react-intl": "^5.10.6",
     "regenerator-runtime": "^0.13.2",
     "stylelint": "^13.0.0",
-    "terra-dev-site": "^6.5.0",
     "utf-8-validate": "^5.0.2",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12",

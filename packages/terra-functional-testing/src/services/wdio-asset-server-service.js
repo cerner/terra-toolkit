@@ -6,8 +6,15 @@ const WebpackServer = require('../webpack-server');
 const logger = new Logger({ prefix: '[terra-functional-testing:wdio-asset-server-service]' });
 
 class AssetServerService {
-  constructor(options = {}) {
-    this.options = options;
+  /**
+   * Service constructor.
+   * @param {Object} _options - The options specific to this service.
+   * @param {Object} _capabilities - The list of capabilities details.
+   * @param {Object} config - The object containing the wdio configuration and options defined in the terra-cli test runner.
+   */
+  constructor(_options, _capabilities, config = {}) {
+    const { launcherOptions } = config;
+    this.options = launcherOptions || {};
   }
 
   /**

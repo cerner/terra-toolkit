@@ -9,7 +9,7 @@ const { chrome, firefox, ie } = require('../capabilities');
 const getCapabilities = (browsers, isGridEnabled) => {
   const capabilities = [];
 
-  if (!browsers) {
+  if (!browsers || browsers.length === 0) {
     // Enable chrome as the default browser.
     capabilities.push(chrome);
 

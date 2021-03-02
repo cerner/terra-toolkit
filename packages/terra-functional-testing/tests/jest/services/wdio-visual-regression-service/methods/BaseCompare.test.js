@@ -35,6 +35,28 @@ describe('BaseCompare', () => {
     expect(result).toEqual('hello-world-default_08_name_yes');
   });
 
+  it('should call constructor with no options', () => {
+    const baseCompare = new BaseCompare({});
+
+    expect(baseCompare.baseScreenshotDir).toBe(process.cwd());
+    expect(baseCompare.locale).toBe('en');
+    expect(baseCompare.theme).toBe('terra-default-theme');
+    expect(baseCompare.updateScreenshots).toBe(false);
+  });
+
+  it('should call constructor with options', () => {
+    const baseCompare = new BaseCompare({
+      locale: 'fr',
+      theme: 'terra-lowlight-theme',
+      updateScreenshots: true,
+    });
+
+    expect(baseCompare.baseScreenshotDir).toBe(process.cwd());
+    expect(baseCompare.locale).toBe('fr');
+    expect(baseCompare.theme).toBe('terra-lowlight-theme');
+    expect(baseCompare.updateScreenshots).toBe(true);
+  });
+
   describe('BaseCompare.getScreenshotName', () => {
     it('used test name as screenshot name', () => {
       const baseCompare = new BaseCompare({});
@@ -66,6 +88,7 @@ describe('BaseCompare', () => {
       const baseCompare = new BaseCompare({
         locale: 'en',
         theme: 'cerner-default-theme',
+        updateScreenshots: true,
       });
 
       const getScreenshotDirSpy = jest.spyOn(baseCompare, 'getScreenshotDir').mockReturnValue('screenshotDir');
@@ -123,29 +146,42 @@ describe('BaseCompare', () => {
 
     describe('when referenceExists is true', () => {
       it('returns expected results when misMatchPercentage is 0 and isSameDimensions is true', () => {
-        const results = baseCompare.createResultReport(true, 0, true, true);
+        const results = baseCompare.createResultReport(true, 0, true, true, false);
         expect(results).toEqual(expect.objectContaining({
           misMatchPercentage: 0,
           isWithinMismatchTolerance: true,
           isSameDimensions: true,
+          screenshotWasUpdated: false,
         }));
       });
 
       it('returns expected results when misMatchPercentage is 0 and isSameDimensions is false', () => {
-        const results = baseCompare.createResultReport(true, 0, true, false);
+        const results = baseCompare.createResultReport(true, 0, true, false, false);
         expect(results).toEqual(expect.objectContaining({
           misMatchPercentage: 0,
           isWithinMismatchTolerance: true,
           isSameDimensions: false,
+          screenshotWasUpdated: false,
         }));
       });
 
       it('returns expected results when misMatchPercentage is greater than 0', () => {
-        const results = baseCompare.createResultReport(true, 30, true, false);
+        const results = baseCompare.createResultReport(true, 30, true, false, false);
         expect(results).toEqual(expect.objectContaining({
           misMatchPercentage: 30,
           isWithinMismatchTolerance: true,
           isSameDimensions: false,
+          screenshotWasUpdated: false,
+        }));
+      });
+
+      it('returns expected results when screenshotWasUpdated is true', () => {
+        const results = baseCompare.createResultReport(true, 30, true, false, true);
+        expect(results).toEqual(expect.objectContaining({
+          misMatchPercentage: 30,
+          isWithinMismatchTolerance: true,
+          isSameDimensions: false,
+          screenshotWasUpdated: true,
         }));
       });
     });

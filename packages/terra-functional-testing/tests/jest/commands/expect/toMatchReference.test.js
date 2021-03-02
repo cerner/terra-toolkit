@@ -7,6 +7,7 @@ describe('toMatchReference', () => {
       isSameDimensions: true,
       isWithinMismatchTolerance: true,
       misMatchPercentage: 0.10,
+      screenshotWasUpdated: false,
     };
 
     const result = toMatchReference(receivedScreenshot);
@@ -24,12 +25,27 @@ describe('toMatchReference', () => {
     expect(result.pass).toBe(true);
   });
 
+  it('should pass if screenshot was auto updated even when mismatch and not same dimension', () => {
+    const receivedScreenshot = {
+      isNewScreenshot: false,
+      isSameDimensions: false,
+      isWithinMismatchTolerance: false,
+      misMatchPercentage: 0.50,
+      screenshotWasUpdated: true,
+    };
+
+    const result = toMatchReference(receivedScreenshot);
+
+    expect(result.pass).toBe(true);
+  });
+
   it('should not pass if not within mismatch tolerance', () => {
     const receivedScreenshot = {
       isNewScreenshot: false,
       isSameDimensions: true,
       isWithinMismatchTolerance: false,
       misMatchPercentage: 0.10,
+      screenshotWasUpdated: false,
     };
 
     const result = toMatchReference(receivedScreenshot);
@@ -43,6 +59,7 @@ describe('toMatchReference', () => {
       isSameDimensions: false,
       isWithinMismatchTolerance: true,
       misMatchPercentage: 0.10,
+      screenshotWasUpdated: false,
     };
 
     const result = toMatchReference(receivedScreenshot);

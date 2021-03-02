@@ -69,7 +69,7 @@ describe('Webpack Server', () => {
 
       const config = WebpackServer.config(options);
 
-      expect(config).toEqual({ defaultLocale: 'en', p: true, theme: 'lowlight' });
+      expect(config).toEqual({ defaultLocale: 'en', p: true, defaultTheme: 'lowlight' });
     });
   });
 

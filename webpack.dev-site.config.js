@@ -1,49 +1,21 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const { merge } = require('webpack-merge');
-const path = require('path');
 const {
   TerraDevSite,
-  TerraDevSiteEntrypoints,
-  DirectorySwitcherPlugin,
-  LocalPackageAliasPlugin,
-} = require('terra-dev-site');
+} = require('@cerner/terra-dev-site');
 
 const WebpackConfigTerra = require('./packages/webpack-config-terra/lib/webpack.config');
-/**
-* Generates the file representing app name configuration.
-*/
-const devSiteConfig = (env = {}, argv = {}) => {
-  const production = argv.p;
-  const processPath = process.cwd();
 
-  return {
-    entry: TerraDevSiteEntrypoints,
-    plugins: [
-      new TerraDevSite({ env }),
-    ],
-    resolve: {
-      alias: {
-        'react-intl': 'react-intl-2',
-      },
-      plugins: [
-        new DirectorySwitcherPlugin({
-          shouldSwitch: !production,
-          rootDirectories: [
-            processPath,
-            path.resolve(processPath, 'packages', '*'),
-          ],
-        }),
-        new LocalPackageAliasPlugin({
-          rootDirectories: [
-            processPath,
-            path.resolve(processPath, 'packages', '*'),
-          ],
-        }),
-      ],
-    },
-  };
-};
-const webpackConfig = (env, argv) => (
-  merge(WebpackConfigTerra(env, argv), devSiteConfig(env, argv))
+const coreConfig = (env = {}) => ({
+  plugins: [
+    new TerraDevSite({
+      defaultLocale: env.defaultLocale,
+    }),
+  ],
+});
+
+const mergedConfig = (env, argv) => (
+  merge(WebpackConfigTerra(env, argv), coreConfig())
 );
-module.exports = webpackConfig;
+
+module.exports = mergedConfig;

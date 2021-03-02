@@ -8,39 +8,40 @@ const path = require('path');
 const mockExec = jest.fn();
 util.promisify.mockImplementation(() => mockExec);
 
+const config = {
+  launcherOptions: {
+    disableSeleniumService: true,
+    keepAliveSeleniumDockerService: true,
+    version: '1234',
+  },
+};
+
 const SeleniumDockerService = require('../../../src/services/wdio-selenium-docker-service');
 
 describe('WDIO Selenium Docker Service', () => {
+  describe('constructor', () => {
+    it('should initialize with empty config', async () => {
+      const service = new SeleniumDockerService();
+
+      expect(service.disableSeleniumService).toBe(false);
+      expect(service.keepAliveSeleniumDockerService).toBe(false);
+    });
+
+    it('should initialize with populated config', async () => {
+      const service = new SeleniumDockerService({}, {}, config);
+
+      expect(service.disableSeleniumService).toBe(true);
+      expect(service.keepAliveSeleniumDockerService).toBe(true);
+    });
+  });
+
   describe('onPrepare', () => {
-    it('should initialize the docker swarm', async () => {
-      const service = new SeleniumDockerService();
-
-      jest.spyOn(service, 'initializeSwarm').mockImplementationOnce(() => Promise.resolve());
-      jest.spyOn(service, 'deployStack').mockImplementationOnce(() => Promise.resolve());
-
-      await service.onPrepare({});
-
-      expect(service.initializeSwarm).toHaveBeenCalled();
-    });
-
-    it('should deploy the docker stack', async () => {
-      const service = new SeleniumDockerService();
-
-      jest.spyOn(service, 'initializeSwarm').mockImplementationOnce(() => Promise.resolve());
-      jest.spyOn(service, 'deployStack').mockImplementationOnce(() => Promise.resolve());
-
-      await service.onPrepare({});
-
-      expect(service.deployStack).toHaveBeenCalled();
-    });
-
     it('should verify docker is installed before proceeding', async () => {
       const service = new SeleniumDockerService();
 
       mockExec.mockImplementation(() => Promise.resolve());
 
-      jest.spyOn(service, 'initializeSwarm').mockImplementationOnce(() => Promise.resolve());
-      jest.spyOn(service, 'deployStack').mockImplementationOnce(() => Promise.resolve());
+      jest.spyOn(service, 'startSeleniumHub').mockImplementationOnce(() => Promise.resolve());
 
       await service.onPrepare({});
 
@@ -56,20 +57,19 @@ describe('WDIO Selenium Docker Service', () => {
       try {
         await service.onPrepare({});
       } catch (error) {
-        expect(error).toEqual(mockError);
+        expect(error.message).toEqual('Error: Docker is not installed.');
       }
 
       expect.assertions(1);
     });
 
-    it('should throw a SevereServiceError if initialize swarm fails', async () => {
+    it('should throw a SevereServiceError if the selenium hub fails to start', async () => {
       const service = new SeleniumDockerService();
 
       const mockError = Error('Mock Error.');
       mockExec.mockImplementation(() => Promise.resolve());
 
-      jest.spyOn(service, 'initializeSwarm').mockImplementationOnce(() => Promise.reject(mockError));
-      jest.spyOn(service, 'deployStack').mockImplementationOnce(() => Promise.resolve());
+      jest.spyOn(service, 'startSeleniumHub').mockImplementationOnce(() => Promise.reject(mockError));
 
       try {
         await service.onPrepare({});
@@ -80,156 +80,14 @@ describe('WDIO Selenium Docker Service', () => {
       expect.assertions(1);
     });
 
-    it('should throw a SevereServiceError if deploy stack fails', async () => {
-      const service = new SeleniumDockerService();
+    it('should not start selenium hub if the service should be disabled', async () => {
+      const service = new SeleniumDockerService({}, {}, config);
 
-      const mockError = Error('Mock Error.');
       mockExec.mockImplementation(() => Promise.resolve());
 
-      jest.spyOn(service, 'initializeSwarm').mockImplementationOnce(() => Promise.resolve());
-      jest.spyOn(service, 'deployStack').mockImplementationOnce(() => Promise.reject(mockError));
+      await service.onPrepare();
 
-      try {
-        await service.onPrepare({});
-      } catch (error) {
-        expect(error.name).toEqual('SevereServiceError');
-      }
-
-      expect.assertions(1);
-    });
-  });
-
-  describe('initializeSwarm', () => {
-    it('should initialize the docker swarm if not already active', async () => {
-      const service = new SeleniumDockerService();
-
-      mockExec.mockImplementation(() => Promise.resolve({ stdout: JSON.stringify({ Swarm: { LocalNodeState: 'inactive' } }) }));
-
-      await service.initializeSwarm();
-
-      expect(mockExec).toHaveBeenCalledWith('docker info --format "{{json .}}"');
-      expect(mockExec).toHaveBeenCalledWith('docker swarm init');
-    });
-
-    it('should not initialize the docker swarm if already active', async () => {
-      const service = new SeleniumDockerService();
-
-      mockExec.mockImplementation(() => Promise.resolve({ stdout: JSON.stringify({ Swarm: { LocalNodeState: 'active' } }) }));
-
-      await service.initializeSwarm();
-
-      expect(mockExec).toHaveBeenCalledTimes(1);
-      expect(mockExec).toHaveBeenCalledWith('docker info --format "{{json .}}"');
-      expect(mockExec).not.toHaveBeenCalledWith('docker swarm init');
-    });
-  });
-
-  describe('deployStack', () => {
-    it('should deploy the stack', async () => {
-      const service = new SeleniumDockerService();
-
-      mockExec.mockImplementation(() => Promise.resolve({ stdout: '' }));
-
-      jest.spyOn(service, 'waitForServiceCreation').mockImplementationOnce(() => Promise.resolve());
-      jest.spyOn(service, 'waitForNetworkCreation').mockImplementationOnce(() => Promise.resolve());
-      jest.spyOn(service, 'waitForNetworkReady').mockImplementationOnce(() => Promise.resolve());
-
-      await service.deployStack();
-
-      const composeFilePath = path.resolve(__dirname, '../../../src/docker/docker-compose.yml');
-
-      expect(mockExec).toHaveBeenCalledWith(`TERRA_SELENIUM_DOCKER_VERSION=3.14.0-helium docker stack deploy -c ${composeFilePath} wdio`);
-    });
-
-    it('should deploy the stack with the specified selenium version', async () => {
-      const service = new SeleniumDockerService({ version: 'custom-version' });
-
-      mockExec.mockImplementation(() => Promise.resolve({ stdout: '' }));
-
-      jest.spyOn(service, 'waitForServiceCreation').mockImplementationOnce(() => Promise.resolve());
-      jest.spyOn(service, 'waitForNetworkCreation').mockImplementationOnce(() => Promise.resolve());
-      jest.spyOn(service, 'waitForNetworkReady').mockImplementationOnce(() => Promise.resolve());
-
-      await service.deployStack();
-
-      const composeFilePath = path.resolve(__dirname, '../../../src/docker/docker-compose.yml');
-
-      expect(mockExec).toHaveBeenCalledWith(`TERRA_SELENIUM_DOCKER_VERSION=custom-version docker stack deploy -c ${composeFilePath} wdio`);
-    });
-
-    it('should wait for the network to become ready', async () => {
-      const service = new SeleniumDockerService();
-
-      mockExec.mockImplementation(() => Promise.resolve({ stdout: '' }));
-
-      jest.spyOn(service, 'waitForServiceCreation').mockImplementationOnce(() => Promise.resolve());
-      jest.spyOn(service, 'waitForNetworkCreation').mockImplementationOnce(() => Promise.resolve());
-      jest.spyOn(service, 'waitForNetworkReady').mockImplementationOnce(() => Promise.resolve());
-
-      await service.deployStack();
-
-      expect(service.waitForServiceCreation).toHaveBeenCalled();
-      expect(service.waitForNetworkCreation).toHaveBeenCalled();
-      expect(service.waitForNetworkReady).toHaveBeenCalled();
-    });
-
-    it('should not deploy the stack if already deployed', async () => {
-      const service = new SeleniumDockerService();
-
-      mockExec.mockImplementation(() => Promise.resolve({ stdout: 'Active' }));
-
-      jest.spyOn(service, 'waitForServiceCreation').mockImplementationOnce(() => Promise.resolve());
-      jest.spyOn(service, 'waitForNetworkCreation').mockImplementationOnce(() => Promise.resolve());
-      jest.spyOn(service, 'waitForNetworkReady').mockImplementationOnce(() => Promise.resolve());
-
-      await service.deployStack();
-
-      expect(mockExec).toHaveBeenCalled();
-      expect(service.waitForServiceCreation).not.toHaveBeenCalled();
-      expect(service.waitForNetworkCreation).not.toHaveBeenCalled();
-      expect(service.waitForNetworkReady).not.toHaveBeenCalled();
-    });
-  });
-
-  describe('removeStack', () => {
-    it('should not execute the docker stack removal if it is already removed', async () => {
-      const service = new SeleniumDockerService();
-
-      mockExec.mockImplementation(() => Promise.resolve({ stdout: '' }));
-
-      await service.removeStack();
-
-      expect(mockExec).toHaveBeenCalledTimes(1);
-      expect(mockExec).not.toHaveBeenCalledWith('docker stack rm wdio');
-      expect(mockExec).toHaveBeenCalledWith('docker stack ls | grep wdio || true');
-    });
-
-    it('should remove the docker stack', async () => {
-      const service = new SeleniumDockerService();
-
-      mockExec.mockImplementation(() => Promise.resolve({ stdout: 'Active' }));
-
-      jest.spyOn(service, 'waitForServiceRemoval').mockImplementationOnce(() => Promise.resolve());
-      jest.spyOn(service, 'waitForNetworkRemoval').mockImplementationOnce(() => Promise.resolve());
-
-      await service.removeStack();
-
-      expect(mockExec).toHaveBeenCalledTimes(2);
-      expect(mockExec).toHaveBeenCalledWith('docker stack rm wdio');
-    });
-
-    it('should wait for the network and service to be removed', async () => {
-      const service = new SeleniumDockerService();
-
-      mockExec.mockImplementation(() => Promise.resolve({ stdout: 'Active' }));
-
-      jest.spyOn(service, 'waitForServiceRemoval').mockImplementationOnce(() => Promise.resolve());
-      jest.spyOn(service, 'waitForNetworkRemoval').mockImplementationOnce(() => Promise.resolve());
-
-      await service.removeStack();
-
-      expect(service.waitForServiceRemoval).toHaveBeenCalled();
-      expect(service.waitForNetworkRemoval).toHaveBeenCalled();
+      expect(mockExec).not.toHaveBeenCalled();
     });
   });
 
@@ -263,227 +121,108 @@ describe('WDIO Selenium Docker Service', () => {
     });
   });
 
-  describe('waitForNetworkCreation', () => {
-    it('should wait until the service has been created', async () => {
+  describe('getDockerComposeFilePath', () => {
+    it('should return the docker compose file path', () => {
+      const composeFilePath = path.resolve(__dirname, '../../../src/docker/docker-compose.yml');
+
       const service = new SeleniumDockerService();
 
-      jest.spyOn(service, 'pollCommand').mockImplementationOnce(() => Promise.resolve());
-
-      await service.waitForNetworkCreation();
-
-      expect(service.pollCommand).toHaveBeenCalledWith('docker network ls | grep wdio', expect.any(Function));
-    });
-
-    it('should resolve the command if the service has been created', async () => {
-      const service = new SeleniumDockerService();
-
-      jest.spyOn(service, 'pollCommand').mockImplementationOnce(async (_command, callback) => {
-        await expect(callback({ stdout: 'Active Service' })).resolves.toBeUndefined();
-
-        return Promise.resolve();
-      });
-
-      await service.waitForNetworkCreation();
-
-      expect.assertions(1);
-    });
-
-    it('should reject the command if the network not created', async () => {
-      const service = new SeleniumDockerService();
-
-      jest.spyOn(service, 'pollCommand').mockImplementationOnce(async (_command, callback) => {
-        await expect(callback({ stdout: '' })).rejects.toBeUndefined();
-
-        return Promise.resolve();
-      });
-
-      await service.waitForNetworkCreation();
-
-      expect.assertions(1);
+      expect(service.getDockerComposeFilePath()).toEqual(composeFilePath);
     });
   });
 
-  describe('waitForServiceCreation', () => {
-    it('should wait until the service has been created', async () => {
+  describe('startSeleniumHub', () => {
+    it('should start the selenium hub', () => {
       const service = new SeleniumDockerService();
 
-      jest.spyOn(service, 'pollCommand').mockImplementationOnce(() => Promise.resolve());
+      jest.spyOn(service, 'getDockerComposeFilePath').mockImplementationOnce(() => ('mock-compose-path'));
+      jest.spyOn(service, 'waitForSeleniumHubReady').mockImplementationOnce(() => Promise.resolve());
 
-      await service.waitForServiceCreation();
+      service.startSeleniumHub();
 
-      expect(service.pollCommand).toHaveBeenCalledWith('docker service ls | grep wdio', expect.any(Function));
+      expect(mockExec).toHaveBeenCalledWith('docker-compose -f mock-compose-path up -d');
     });
 
-    it('should resolve the command if the service has been created', async () => {
-      const service = new SeleniumDockerService();
+    it('should start the selenium hub with the specified version', () => {
+      const service = new SeleniumDockerService({}, {}, config);
 
-      jest.spyOn(service, 'pollCommand').mockImplementationOnce(async (_command, callback) => {
-        await expect(callback({ stdout: 'Active Network' })).resolves.toBeUndefined();
+      jest.spyOn(service, 'getDockerComposeFilePath').mockImplementationOnce(() => ('mock-compose-path'));
+      jest.spyOn(service, 'waitForSeleniumHubReady').mockImplementationOnce(() => Promise.resolve());
 
-        return Promise.resolve();
-      });
+      service.startSeleniumHub();
 
-      await service.waitForServiceCreation();
-
-      expect.assertions(1);
-    });
-
-    it('should reject the command if the service is active', async () => {
-      const service = new SeleniumDockerService();
-
-      jest.spyOn(service, 'pollCommand').mockImplementationOnce(async (_command, callback) => {
-        await expect(callback({ stdout: '' })).rejects.toBeUndefined();
-
-        return Promise.resolve();
-      });
-
-      await service.waitForServiceCreation();
-
-      expect.assertions(1);
+      expect(mockExec).toHaveBeenCalledWith('TERRA_SELENIUM_DOCKER_VERSION=1234 docker-compose -f mock-compose-path up -d');
     });
   });
 
-  describe('waitForNetworkRemoval', () => {
-    it('should wait until the network has been removed', async () => {
+  describe('waitForSeleniumHubReady', () => {
+    it('should wait until the selenium hub is ready', async () => {
       const service = new SeleniumDockerService();
 
       jest.spyOn(service, 'pollCommand').mockImplementationOnce(() => Promise.resolve());
 
-      await service.waitForNetworkRemoval();
-
-      expect(service.pollCommand).toHaveBeenCalledWith('docker network ls | grep wdio || true', expect.any(Function));
-    });
-
-    it('should reject the command if the network status is present', async () => {
-      const service = new SeleniumDockerService();
-
-      jest.spyOn(service, 'pollCommand').mockImplementationOnce(async (_command, callback) => {
-        await expect(callback({ stdout: 'Active Network' })).rejects.toBeUndefined();
-
-        return Promise.resolve();
-      });
-
-      await service.waitForNetworkRemoval();
-
-      expect.assertions(1);
-    });
-
-    it('should resolve the command if the network has been removed', async () => {
-      const service = new SeleniumDockerService();
-
-      jest.spyOn(service, 'pollCommand').mockImplementationOnce(async (_command, callback) => {
-        await expect(callback({ stdout: '' })).resolves.toBeUndefined();
-
-        return Promise.resolve();
-      });
-
-      await service.waitForNetworkRemoval();
-
-      expect.assertions(1);
-    });
-  });
-
-  describe('waitForServiceRemoval', () => {
-    it('should wait until the service has been removed', async () => {
-      const service = new SeleniumDockerService();
-
-      jest.spyOn(service, 'pollCommand').mockImplementationOnce(() => Promise.resolve());
-
-      await service.waitForServiceRemoval();
-
-      expect(service.pollCommand).toHaveBeenCalledWith('docker service ls | grep wdio || true', expect.any(Function));
-    });
-
-    it('should reject the command if the service is active', async () => {
-      const service = new SeleniumDockerService();
-
-      jest.spyOn(service, 'pollCommand').mockImplementationOnce(async (_command, callback) => {
-        await expect(callback({ stdout: 'Active Service' })).rejects.toBeUndefined();
-
-        return Promise.resolve();
-      });
-
-      await service.waitForServiceRemoval();
-
-      expect.assertions(1);
-    });
-
-    it('should resolve the command if the service has been removed', async () => {
-      const service = new SeleniumDockerService();
-
-      jest.spyOn(service, 'pollCommand').mockImplementationOnce(async (_command, callback) => {
-        await expect(callback({ stdout: '' })).resolves.toBeUndefined();
-
-        return Promise.resolve();
-      });
-
-      await service.waitForServiceRemoval();
-
-      expect.assertions(1);
-    });
-  });
-
-  describe('waitForNetworkReady', () => {
-    it('should wait until the service is ready', async () => {
-      const service = new SeleniumDockerService();
-
-      jest.spyOn(service, 'pollCommand').mockImplementationOnce(() => Promise.resolve());
-
-      await service.waitForNetworkReady();
+      await service.waitForSeleniumHubReady();
 
       // The host and port are undefined for this test.
-      expect(service.pollCommand).toHaveBeenCalledWith('curl -sSL http://undefined:undefined/wd/hub/status', expect.any(Function), 60, 2000);
+      expect(service.pollCommand).toHaveBeenCalledWith("docker inspect --format='{{json .State.Health.Status}}' selenium-hub", expect.any(Function), 60, 2000);
     });
 
-    it('should reject the command if the network is not ready', async () => {
+    it('should reject the command if the selenium hub is not ready', async () => {
       const service = new SeleniumDockerService();
 
       jest.spyOn(service, 'pollCommand').mockImplementationOnce(async (_command, callback) => {
-        await expect(callback({ stdout: JSON.stringify({ value: { ready: false } }) })).rejects.toBeUndefined();
+        await expect(callback({ stdout: 'unhealthy' })).rejects.toBeUndefined();
 
         return Promise.resolve();
       });
 
-      await service.waitForNetworkReady();
+      await service.waitForSeleniumHubReady();
 
       expect.assertions(1);
     });
 
-    it('should resolve the command if the network is ready', async () => {
+    it('should resolve the command if the selenium hub is ready', async () => {
       const service = new SeleniumDockerService();
 
       jest.spyOn(service, 'pollCommand').mockImplementationOnce(async (_command, callback) => {
-        await expect(callback({ stdout: JSON.stringify({ value: { ready: true } }) })).resolves.toBeUndefined();
+        await expect(callback({ stdout: '"healthy"' })).resolves.toBeUndefined();
 
         return Promise.resolve();
       });
 
-      await service.waitForNetworkReady();
+      await service.waitForSeleniumHubReady();
 
       expect.assertions(1);
     });
   });
 
   describe('onComplete', () => {
-    it('should keep the docker stack', async () => {
-      const service = new SeleniumDockerService({ keepDockerStack: true });
+    it('should keep the docker hub active if the keep alive option has been set to true', async () => {
+      const service = new SeleniumDockerService();
       service.keepAliveSeleniumDockerService = true;
 
-      jest.spyOn(service, 'removeStack').mockImplementationOnce(() => Promise.resolve());
-
       await service.onComplete();
 
-      expect(service.removeStack).not.toHaveBeenCalled();
+      expect(mockExec).not.toHaveBeenCalled();
     });
 
-    it('should remove the docker stack', async () => {
+    it('should not compose down the selenium hub if the service was disabled', async () => {
       const service = new SeleniumDockerService();
-
-      jest.spyOn(service, 'removeStack').mockImplementationOnce(() => Promise.resolve());
+      service.disableSeleniumService = true;
 
       await service.onComplete();
 
-      expect(service.removeStack).toHaveBeenCalled();
+      expect(mockExec).not.toHaveBeenCalled();
+    });
+
+    it('should compose down the selenium hub', async () => {
+      const service = new SeleniumDockerService();
+
+      jest.spyOn(service, 'getDockerComposeFilePath').mockImplementationOnce(() => ('mock-compose-path'));
+
+      await service.onComplete();
+
+      expect(mockExec).toHaveBeenCalledWith('docker-compose -f mock-compose-path down');
     });
   });
 });
