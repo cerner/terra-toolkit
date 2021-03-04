@@ -2,12 +2,14 @@
 
 ## Unreleased
 
+* Fixed
+  * Add missing link to webpack-config-terra docs.
+
 ## 1.8.1 - (March 1, 2021)
 
 * Changed
   * Add @cerner/terra-functional-testing to dependencies
   * Update doc from `getCssProperty` to `getCSSProperty`
-  
 
 ## 1.8.0 - (February 25, 2021)
 
