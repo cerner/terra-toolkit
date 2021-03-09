@@ -19,11 +19,11 @@ class SeleniumDockerService {
   constructor(_options, _capabilities, config = {}) {
     const { launcherOptions, serviceOptions } = config;
     const { disableSeleniumService, keepAliveSeleniumDockerService } = launcherOptions || {};
-    const { version } = serviceOptions || {};
+    const { seleniumVersion } = serviceOptions || {};
 
     this.disableSeleniumService = disableSeleniumService === true;
     this.keepAliveSeleniumDockerService = keepAliveSeleniumDockerService === true;
-    this.version = version;
+    this.seleniumVersion = seleniumVersion;
   }
 
   /**
@@ -89,7 +89,7 @@ class SeleniumDockerService {
   async startSeleniumHub() {
     logger.info('Starting the docker selenium hub...');
 
-    const envVars = this.version ? `TERRA_SELENIUM_DOCKER_VERSION=${this.version} ` : '';
+    const envVars = this.seleniumVersion ? `TERRA_SELENIUM_DOCKER_VERSION=${this.seleniumVersion} ` : '';
 
     await exec(`${envVars}docker-compose -f ${this.getDockerComposeFilePath()} up -d`);
     await this.waitForSeleniumHubReady();

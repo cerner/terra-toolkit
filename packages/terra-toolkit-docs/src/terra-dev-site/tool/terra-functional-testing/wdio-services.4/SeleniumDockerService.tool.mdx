@@ -23,10 +23,7 @@ const SeleniumDockerService = require('@cerner/terra-functional-testing/lib/serv
 export.config = {
     // ...
     services: [
-        [SeleniumDockerService, {
-            // Selenium service options here
-            // ...
-        }]
+        [SeleniumDockerService]
     ],
     // ...
 };
@@ -34,7 +31,7 @@ export.config = {
 
 ## Options
 
-### version
+### seleniumVersion
 
 The docker selenium image version to run tests against.
 
@@ -52,11 +49,10 @@ const SeleniumDockerService = require('@cerner/terra-functional-testing/lib/serv
 
 export.config = {
     // ...
-    services: [
-        [SeleniumDockerService, {
-          version: '3.14.0-helium'
-        }]
-    ],
+    services: [[SeleniumDockerService]],
+    serviceOptions: {
+        seleniumVersion: '3.14.0-helium',
+    }
     // ...
 };
 ```

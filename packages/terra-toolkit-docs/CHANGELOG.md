@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+  * Update terra-functional-testing docker service documentation to rename version to seleniumVersion
+
 * Fixed
   * Add missing link to webpack-config-terra docs.
 
