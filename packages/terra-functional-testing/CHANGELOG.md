@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.0.2 - (March 9, 2021)
+
 * Fixed
   * Fix seleniumVersion service option to be read from serviceOptions instead of launcherOptions
 

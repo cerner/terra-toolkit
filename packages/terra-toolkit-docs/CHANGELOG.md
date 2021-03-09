@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.8.2 - (March 9, 2021)
+
 * Changed
   * Update terra-functional-testing docker service documentation to rename version to seleniumVersion
 
