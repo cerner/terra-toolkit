@@ -63,8 +63,9 @@ describe('describeTests', () => {
     const options = {
       formFactors: ['tiny', 'small'],
       locales: ['en', 'fr'],
-      themes: ['terra-default-theme', 'clinical-lowlight-theme']
-    }
+      themes: ['terra-default-theme', 'clinical-lowlight-theme'],
+    };
+
     describeTests('describeTests', options, test);
 
     expect(describeViewports).toHaveBeenCalledWith('describeTests', ['tiny', 'small'], test);
@@ -74,8 +75,9 @@ describe('describeTests', () => {
     const options = {
       formFactors: ['small'],
       locales: ['en'],
-      themes: ['terra-default-theme']
-    }
+      themes: ['terra-default-theme'],
+    };
+
     describeTests('describeTests', options, () => {});
 
     expect(describeViewports).not.toHaveBeenCalled();

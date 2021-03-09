@@ -1,4 +1,3 @@
-const setViewport = require('./setViewport');
 const describeViewports = require('./describeViewports');
 
 /**
@@ -14,11 +13,11 @@ const describeViewports = require('./describeViewports');
  */
 const describeTests = (title, options = {}, fn) => {
   let { formFactor, locale, theme } = global.Terra.serviceOptions;
-  let { formFactors, locales, themes } = options;
+  const { formFactors, locales, themes } = options;
 
-  formFactor = formFactor ? formFactor : 'huge';
-  locale = locale ? locale : 'en';
-  theme = theme ? theme : 'terra-default-theme';
+  formFactor = formFactor || 'huge';
+  locale = locale || 'en';
+  theme = theme || 'terra-default-theme';
 
   if (formFactors && !formFactors.includes(formFactor)) {
     return;
