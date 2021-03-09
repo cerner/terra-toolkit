@@ -14,7 +14,7 @@ const config = {
     keepAliveSeleniumDockerService: true,
   },
   serviceOptions: {
-    version: '1234',
+    seleniumVersion: '1234',
   },
 };
 
@@ -34,7 +34,7 @@ describe('WDIO Selenium Docker Service', () => {
 
       expect(service.disableSeleniumService).toBe(true);
       expect(service.keepAliveSeleniumDockerService).toBe(true);
-      expect(service.version).toEqual('1234');
+      expect(service.seleniumVersion).toEqual('1234');
     });
   });
 
