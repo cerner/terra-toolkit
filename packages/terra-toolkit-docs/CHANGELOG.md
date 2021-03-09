@@ -5,6 +5,9 @@
 * Fixed
   * Add missing link to webpack-config-terra docs.
 
+* Added
+  * Added documentation for describeTests helper in terra-functional-testing
+
 ## 1.8.1 - (March 1, 2021)
 
 * Changed
