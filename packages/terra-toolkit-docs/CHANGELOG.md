@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.8.2 - (March 9, 2021)
+
 * Fixed
   * Add missing link to webpack-config-terra docs.
 
