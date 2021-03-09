@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Fixed
+  * Fix docker version service option to be read from serviceOptions instead of launcherOptions
+
 ## 1.0.1 - (March 1, 2021)
 
 * Fixed
