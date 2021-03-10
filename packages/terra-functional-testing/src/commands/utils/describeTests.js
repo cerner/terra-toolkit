@@ -5,11 +5,11 @@ const describeViewports = require('./describeViewports');
  * The block of tests will only execute if the form factor, locale, and theme in the current configuration match what is defined in the options.
  * If any option is not defined, then the block of tests will not be filtered based on that particular option.
  * @param {string} title - The describe block title.
- * @param {Object} options - An object containing arraies of formFactors, locales, and themes that the block of tests will only qualify to execute in.
+ * @param {Object} options - An object containing arrays of formFactors, locales, and themes that the block of tests will only qualify to execute in.
  * @param {string} options.formFactors - The form factors that the block of tests only execute in.
  * @param {string} options.locales -  The language locales that the block of tests only execute in.
  * @param {string} options.themes - The themes that the block of tests only execute in.
- * @param {function} - The block of tests to execute against each viewport.
+ * @param {function} - The block of tests to execute based on the defined form factor, locale, and theme.
  */
 const describeTests = (title, options = {}, fn) => {
   let { formFactor, locale, theme } = global.Terra.serviceOptions;
