@@ -70,7 +70,7 @@ These helpers are used as the top level `describe` block for the spec file. Thes
 
 ### Terra.describeViewports
 
-All tests within this helper will be executed for each given viewport(s). Only the above defined viewports are supported. The default viewport is 'huge'. If a form factor is passed as a CLI optiom to the `test wdio` test runner, this form factor will supersede the viewports defined in this helper. This helper accepts these arguments in the following order:
+All tests within this helper will be executed for each given viewport(s). Only the above defined viewports are supported. The default viewport is 'huge'. If a form factor is passed as a CLI option to the `test wdio` test runner, this form factor will supersede the viewports defined in this helper. This helper accepts these arguments in the following order:
 - {string} title - The `describe` block title.
 - {string[]} viewports - The list of Terra viewports to test.
 - {function} - the test function to execute for each viewport.
@@ -79,7 +79,7 @@ All tests within this helper will be executed for each given viewport(s). Only t
 Terra.describeViewports('Describe viewports', ['tiny', 'huge'], () => {
   it('test tiny and huge screens', () => {
     browser.url('/testing/route/');
-    Terra.validates.screenshot();
+    Terra.validates.screenshot('describe viewports');
   });
 });
 ```
@@ -88,11 +88,11 @@ Terra.describeViewports('Describe viewports', ['tiny', 'huge'], () => {
 
 The `Terra.describeTests` helper extends the `Terra.describeViewports` helper by additionally filtering tests by locales and themes. All tests within this helper will be executed only if each of the form factors, locales, and themes listed in the options match those defined in the configurations for the current test run. If no form factors, locales, or themes are provided as options, then all tests under this helper will qualify to run in any form factor, locale, or theme. It is recommended to use `Terra.describeTests` over `Terra.describeViewports` because the same features in `Terra.describeViewports` can be achieved with `Terra.describeTests` by eliminating locales and themes and only specify the form factors. This helper accepts these arguments in the following order:
 - {string} title - The describe block title.
-- {Object} options - An object containing arraies of formFactors, locales, and themes that the block of tests will only qualify to execute in.
+- {Object} options - An object containing arrays of formFactors, locales, and themes that the block of tests will only qualify to execute in.
 - {function} - The block of tests to execute against each viewport.
 
 
-The below describe block qualifies to run because each of the form factors, locales, and themes provided to `describeTests` match the CLI options speicified in the test runner.
+The below describe block qualifies to run because each of the form factors, locales, and themes provided to `describeTests` match the CLI options specified in the test runner.
 ```sh
 terra wdio --formFactors tiny --locales en --themes terra-default-theme
 ```
@@ -107,12 +107,12 @@ const testOptions = {
 Terra.describeTests('Describe tests', testOptions, () => {
   it('should execute only if form factor is tiny or huge, locale is en or fr, and theme is terra-default-theme or orion-fusion-theme', () => {
     browser.url('/testing/route/');
-    Terra.validates.element();
+    Terra.validates.element('describe tests');
   });
 });
 ```
 
-The below describe block is not qualified to run because at least one of the form factors, locales, or themes provided to `describeTests` does not match the CLI options speicified in the test runner.
+The below describe block is not qualified to run because at least one of the form factors, locales, or themes provided to `describeTests` does not match the CLI options specified in the test runner.
 ```sh
 terra wdio --formFactors small --locales en --themes terra-default-theme
 ```
@@ -127,7 +127,7 @@ const testOptions = {
 Terra.describeTests('Describe tests', testOptions, () => {
   it('should execute only if form factor is tiny or huge, locale is en or fr, and theme is terra-default-theme or orion-fusion-theme', () => {
     browser.url('/testing/route/');
-    Terra.validates.element();
+    Terra.validates.element('describe tests');
   });
 });
 ```
