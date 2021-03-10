@@ -86,7 +86,7 @@ Terra.describeViewports('Describe viewports', ['tiny', 'huge'], () => {
 
 ### Terra.describeTests
 
-All tests within this helper will be executed only if each of the form factors, locales, and themes listed in the options match those defined in the configurations for the current test run. If no form factors, locales, or themes are provided as options, then all test under this helper will qualify to run in any form factor, locale, or theme. This helper accepts these arguments in the following order:
+The `Terra.describeTests` helper extends the `Terra.describeViewports` helper by additionally filtering tests by locales and themes. That is, all tests within this helper will be executed only if each of the form factors, locales, and themes listed in the options match those defined in the configurations for the current test run. If no form factors, locales, or themes are provided as options, then all tests under this helper will qualify to run in any form factor, locale, or theme. It is recommended to use `Terra.describeTests` over `Terra.describeViewports` because the same features in `Terra.describeViewports` can be achieved with `Terra.describeTests` by eliminating locales and thems and only include the form factors. This helper accepts these arguments in the following order:
 - {string} title - The describe block title.
 - {Object} options - An object containing arraies of formFactors, locales, and themes that the block of tests will only qualify to execute in.
 - {function} - The block of tests to execute against each viewport.
