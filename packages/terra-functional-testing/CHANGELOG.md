@@ -5,6 +5,11 @@
 * Added
   * Added describeTests helper to filter tests by form factors, locales, or themes
 
+## 1.0.2 - (March 9, 2021)
+
+* Fixed
+  * Fix seleniumVersion service option to be read from serviceOptions instead of launcherOptions
+
 ## 1.0.1 - (March 1, 2021)
 
 * Fixed
