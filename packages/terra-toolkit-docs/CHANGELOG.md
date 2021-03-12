@@ -2,6 +2,30 @@
 
 ## Unreleased
 
+## 1.8.2 - (March 9, 2021)
+
+* Changed
+  * Update terra-functional-testing docker service documentation to rename version to seleniumVersion
+
+* Fixed
+  * Add missing link to webpack-config-terra docs.
+
+## 1.8.1 - (March 1, 2021)
+
+* Changed
+  * Add @cerner/terra-functional-testing to dependencies
+  * Update doc from `getCssProperty` to `getCSSProperty`
+
+## 1.8.0 - (February 25, 2021)
+
+* Changed
+  * Minor dependency version bump
+
+## 1.7.0 - (February 16, 2021)
+
+* Added
+  * Added documentation for eslint-config-terra
+
 ## 1.6.0 - (January 27, 2021)
 
 * Changed

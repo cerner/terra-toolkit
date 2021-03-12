@@ -1,7 +1,6 @@
 {
-  "private": true,
   "name": "@cerner/terra-functional-testing",
-  "version": "0.0.0",
+  "version": "1.0.2",
   "description": "A functional testing utility for applications built using Terra.",
   "publishConfig": {
     "access": "public"
@@ -54,7 +53,6 @@
     "@wdio/sync": "^6.1.14",
     "axe-core": "4.0.2",
     "chalk": "^4.1.0",
-    "commander": "^5.1.0",
     "expect": "^26.4.2",
     "express": "^4.17.1",
     "fs-extra": "^9.0.1",
@@ -81,7 +79,7 @@
     "webpack-cli": "^3.3.12 || ^4.0.0"
   },
   "devDependencies": {
-    "@cerner/terra-cli": "^1.4.0",
+    "@cerner/terra-cli": "^1.6.0",
     "chai": "^4.2.0",
     "glob": "^7.1.6",
     "lodash.groupby": "^4.6.0",

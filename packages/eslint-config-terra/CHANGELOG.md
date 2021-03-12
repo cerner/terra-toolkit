@@ -2,6 +2,21 @@
 
 ## Unreleased
 
+## 5.0.0 - (February 16, 2021)
+
+* Breaking
+  * Update to eslint ^7.19.0.
+
+## 4.5.1 - (February 9, 2021)
+
+* Fixed
+  * Locking into a previous version of eslint-config-airbnb is non passive, rolling back the fix for the missing peer.
+
+## 4.5.0 - (February 8, 2021)
+
+* Fixed
+  * Resolved missing peer dependency warning by locking into a previous version of eslint-config-airbnb.
+
 ## 4.4.0 - (January 27, 2021)
 
 * Changed

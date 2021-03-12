@@ -1,4 +1,8 @@
-# WebDriverIO Testing
+import { Badge } from '@cerner/terra-functional-testing/package.json?dev-site-package';
+
+<Badge />
+
+# Terra Functional Testing
 
 The terra-functional-testing library is a utility for developing automation tests. The library extends the [WebdriverIO Framework](https://webdriver.io/) to facilitate automating accessibility and functional testing for Terra projects.
 
@@ -14,24 +18,27 @@ npm install --save-dev @cerner/terra-functional-testing
 
 ## Test Runner
 
-A test runner is provided for local development and should be invoked using the [terra-cli](dev_tools/terra-cli/terra-cli).
+A test runner is provided for local development and should be invoked using the [terra-cli](https://engineering.cerner.com/terra-ui/dev_tools/cerner/terra-cli/about).
 
 ### Options
 
-| Option Name                    | Type    | Required | Default                 | Description                                                                                   |
-|--------------------------------|---------|----------|-------------------------|-----------------------------------------------------------------------------------------------|
-| browsers                       | array   | false    |                         | A list of browsers for the test run.                                                          |
-| config                         | string  | false    |                         | A file path to the test runner configuration.                                                 |
-| formFactors                    | array   | false    |                         | A list of form factors for the test run. One of tiny, small, medium, large, huge, or enormous |
-| gridUrl                        | string  | false    |                         | The remote selenium grid address.                                                             |
-| keepAliveSeleniumDockerService | boolean | false    | false                   | Determines to keep the selenium docker service running upon test completion.                  |
-| locales                        | array   | false    | ['en']                  | A list of language locales for the test run.                                                  |
-| themes                         | array   | false    | ['terra-default-theme'] | A list of themes for the test run.                                                            |
-| hostname                       | string  | false    | localhost               | Automation driver host address.                                                               |
-| port                           | number  | false    | 4444                    | Automation driver port.                                                                       |
-| baseUrl                        | string  | false    |                         | The base url.                                                                                 |
-| suite                          | array   | false    |                         | Overrides specs and runs only the defined suites.                                             |
-| spec                           | array   | false    |                         | A list of spec file paths.                                                                    |
+| Option                           | Type    | Default                 | Description                                                                                                                               |
+|----------------------------------|---------|-------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| --assetServerPort                | number  | 8080                    | The port to run the webpack and express asset services on.                                                                                |
+| --browsers                       | array   |                         | A list of browsers for the test run.                                                                                                      |
+| --config, -c                     | string  |                         | A file path to the test runner configuration.                                                                                             |
+| --disableSeleniumService         | boolean | false                   | A flag to disable the selenium docker service.                                                                                            |
+| --externalHost                   | string  |                         | The host address the testing environment is connected to.                                                                                 |
+| --externalPort                   | number  |                         | The port mapping from the host to the container.                                                                                          |
+| --formFactors                    | array   |                         | A list of form factors for the test run. One of tiny, small, medium, large, huge, or enormous                                             |
+| --gridUrl                        | string  |                         | The remote selenium grid address.                                                                                                         |
+| --keepAliveSeleniumDockerService | boolean | false                   | Determines to keep the selenium docker service running upon test completion.                                                              |
+| --locales                        | array   | en                      | A list of language locales for the test run.                                                                                              |
+| --site                           | string  |                         | A file path to a static directory of assets. When defined, an express server will launch to serve the assets and disable running webpack. |
+| --spec                           | array   |                         | A list of spec file paths.                                                                                                                |
+| --suite                          | array   |                         | Overrides specs and runs only the defined suites.                                                                                         |
+| --themes                         | array   | terra-default-theme     | A list of themes for the test run.                                                                                                        |
+| --updateScreenshots, -u          | boolean | false                   | Updates all reference screenshots with the latest screenshots.                                                                            |
 
 The following example will run the test suite a total of four times. Once for each permutation of the specified locales and form factors.
 
@@ -56,24 +63,6 @@ Tests can be executed in any of the following supported form factors:
 | large    | 1000  | 768    |
 | huge     | 1300  | 768    |
 | enormous | 1500  | 768    |
-
-## Environment Variables
-
-The following environment variables are configurable for the test run. Variables marked as reserved will be overwritten by the test runner. To configure reserved variables use the test runner configuration options. If the test runner is not being used the variables are configurable by the user.
-
-| Variable Name                 | Type    | Reserved | Default             | Description                                                                                                                               |
-|-------------------------------|---------|----------|---------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
-| BROWSERS                      | string  | true     | chrome              | A list of browsers for the test run. Browsers are delimited by a comma. Example: chrome,firefox,ie                                        |
-| FORM_FACTOR                   | string  | true     | huge                | A form factor assigned to the test run.                                                                                                   |
-| LOCALE                        | string  | true     | en                  | A locale assigned to the test run.                                                                                                        |
-| SELENIUM_GRID_URL             | string  | true     |                     | The remote selenium grid address.                                                                                                         |
-| SITE                          | string  |          |                     | A file path to a static directory of assets. When defined, an express server will launch to serve the assets and disable running webpack. |
-| THEME                         | string  | true     | terra-default-theme | A theme name assigned to the test run.                                                                                                    |
-| WDIO_DISABLE_SELENIUM_SERVICE | boolean |          | false               | A flag to disable the selenium docker service.                                                                                            |
-| WDIO_EXTERNAL_HOST            | string  |          | localhost           | The host address the testing environment is connected to.                                                                                 |
-| WDIO_EXTERNAL_PORT            | number  |          | 8080                | The port mapping from the host to the container.                                                                                          |
-| WDIO_INTERNAL_PORT            | number  |          | 8080                | The port to run the webpack and express asset services on.                                                                                |
-| WDIO_HOSTNAME                 | string  |          | localhost           | The hostname of the driver server.                                                                                                        |
 
 ### Terra.describeViewports
 
@@ -207,7 +196,7 @@ it('should hide the caret', () => {
   Terra.hideInputCaret('#inputID');
   const element = browser.element('#inputID');
 
-  expect(element.getCssProperty('caretColor').value).to.equal('rgba(0,0,0,0)');
+  expect(element.getCSSProperty('caretColor').value).toEqual('rgba(0,0,0,0)');
 });
 ```
 

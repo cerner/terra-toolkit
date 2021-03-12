@@ -35,7 +35,7 @@ class AccessibilityReporter extends WDIOReporter {
   /**
    * Hook invoked when accessibility results are reported.
    * @param {Object} results - Accessibility results.
-   * @param {array} results.incomplete - Incomplete accessibility results.
+   * @param {array} results.warnings - Accessibility warning results.
    */
   onReportAccessibility(results) {
     this.accessibilityResults[this.currentTest] = results;
@@ -112,9 +112,9 @@ class AccessibilityReporter extends WDIOReporter {
    */
   formatTestWarning(uid, indent) {
     const { title } = this.tests[uid];
-    const { incomplete } = this.accessibilityResults[uid];
+    const { warnings } = this.accessibilityResults[uid];
 
-    const string = `${chalk.yellow('warning')} ${title}\n\n ${chalk.yellow(`${JSON.stringify(incomplete, null, 2)}`)}`;
+    const string = `${chalk.yellow('warning')} ${title}\n\n ${chalk.yellow(`${JSON.stringify(warnings, null, 2)}`)}`;
 
     return AccessibilityReporter.indent(string, indent);
   }

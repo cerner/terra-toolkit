@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 4.1.0 - (February 25, 2021)
+
+* Changed
+  * declaration-property-unit-whitelist is deprecated, converting to declaration-property-unit-allowed-list.
+
 ## 4.0.0 - (January 5, 2021)
 
 * Breaking

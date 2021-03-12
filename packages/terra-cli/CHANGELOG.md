@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+## 1.6.0 - (February 25, 2021)
+
+* Changed
+  * Remove "strict" api to allow any CLI option.
+
+## 1.5.0 - (February 8, 2021)
+
 * Changed
   * Added @cerner/package-json-lint as a package that can expose terra commands
 

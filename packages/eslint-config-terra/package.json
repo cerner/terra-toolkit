@@ -1,6 +1,6 @@
 {
   "name": "@cerner/eslint-config-terra",
-  "version": "4.4.0",
+  "version": "5.0.0",
   "description": "Terra Eslint Config",
   "main": "eslint.config.js",
   "publishConfig": {
@@ -30,15 +30,15 @@
     "lint": "eslint --ext .js,.jsx ."
   },
   "dependencies": {
-    "babel-eslint": "^10.1.0",
-    "eslint-config-airbnb": "^18.0.0",
-    "eslint-plugin-compat": "^3.3.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.1",
-    "eslint-plugin-react": "7.19.0",
-    "eslint-plugin-react-hooks": "^2.0.1"
+    "@babel/eslint-parser": "^7.12.13",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-compat": "^3.9.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0"
   },
   "peerDependencies": {
-    "eslint": "^6.1.0"
+    "eslint": "^7.19.0"
   }
 }

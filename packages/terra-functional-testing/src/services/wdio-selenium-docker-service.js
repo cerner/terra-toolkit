@@ -10,83 +10,34 @@ const logger = new Logger({ prefix: '[terra-functional-testing:wdio-selenium-doc
 const exec = util.promisify(childProcess.exec);
 
 class SeleniumDockerService {
-  constructor(options = {}) {
-    const { version } = options;
+  /**
+   * Service constructor.
+   * @param {Object} _options - The options specific to this service.
+   * @param {Object} _capabilities - The list of capabilities details.
+   * @param {Object} config - The object containing the wdio configuration and options defined in the terra-cli test runner.
+   */
+  constructor(_options, _capabilities, config = {}) {
+    const { launcherOptions, serviceOptions } = config;
+    const { disableSeleniumService, keepAliveSeleniumDockerService } = launcherOptions || {};
+    const { seleniumVersion } = serviceOptions || {};
 
-    this.version = version || '3.14.0-helium';
+    this.disableSeleniumService = disableSeleniumService === true;
+    this.keepAliveSeleniumDockerService = keepAliveSeleniumDockerService === true;
+    this.seleniumVersion = seleniumVersion;
   }
 
   /**
-   * Prepares the docker testing environment.
+   * Gets executed once before all workers get launched.
    */
-  async onPrepare(config) {
-    this.host = config.hostname;
-    this.port = config.port;
-    this.keepAliveSeleniumDockerService = config.keepAliveSeleniumDockerService;
-
-    // Verify docker is installed before proceeding.
-    try {
-      await exec('docker -v');
-    } catch (error) {
-      logger.error('Docker is not installed. Install docker to continue.');
-      throw new SevereServiceError('Docker is not installed.');
-    }
-
-    try {
-      await this.initializeSwarm();
-      await this.deployStack();
-    } catch (error) {
-      throw new SevereServiceError(error);
-    }
-  }
-
-  /**
-   * Initializes a docker swarm instance.
-   */
-  async initializeSwarm() {
-    const { stdout: dockerInfo } = await exec('docker info --format "{{json .}}"');
-    const { Swarm } = JSON.parse(dockerInfo);
-
-    if (Swarm.LocalNodeState !== 'active') {
-      logger.info('Initializing docker swarm.');
-
-      await exec('docker swarm init');
-    }
-  }
-
-  /**
-   * Deploys the docker stack. The previous stack will be removed if it exists.
-   */
-  async deployStack() {
-    const { stdout: stackInfo } = await exec('docker stack ls | grep wdio || true');
-
-    if (!stackInfo) {
-      logger.info(`Deploying docker stack using selenium ${this.version}.`);
-
-      const composeFilePath = path.resolve(__dirname, '../docker/docker-compose.yml');
-
-      await exec(`TERRA_SELENIUM_DOCKER_VERSION=${this.version} docker stack deploy -c ${composeFilePath} wdio`);
-
-      await this.waitForServiceCreation();
-      await this.waitForNetworkCreation();
-      await this.waitForNetworkReady();
-    }
-  }
-
-  /**
-   * Removes the docker stack.
-   */
-  async removeStack() {
-    const { stdout: stackInfo } = await exec('docker stack ls | grep wdio || true');
-
-    if (stackInfo) {
-      logger.info('Removing docker stack.');
-
-      await exec('docker stack rm wdio');
-
-      // Ensure the services and network have been removed.
-      await this.waitForServiceRemoval();
-      await this.waitForNetworkRemoval();
+  async onPrepare() {
+    if (!this.disableSeleniumService) {
+      try {
+        // Verify docker is installed.
+        await exec('docker -v');
+        await this.startSeleniumHub();
+      } catch (error) {
+        throw new SevereServiceError(error);
+      }
     }
   }
 
@@ -107,7 +58,7 @@ class SeleniumDockerService {
         if (retryCount >= retries) {
           clearTimeout(pollTimeout);
           pollTimeout = null;
-          reject(Error('Timeout. Exceeded retry count.'));
+          reject(Error(`Timeout. Exceeded retry count for ${command}.`));
         }
 
         try {
@@ -125,85 +76,36 @@ class SeleniumDockerService {
   }
 
   /**
-   * Ensures the docker network has been created.
+   * Retrieves the docker compose filepath.
+   * @returns {string} - The docker compose file path.
    */
-  async waitForNetworkCreation() {
-    await this.pollCommand('docker network ls | grep wdio', (result) => (
-      new Promise((resolve, reject) => {
-        const { stdout: networkStatus } = result;
-
-        // Resolve if the wdio services are created.
-        if (networkStatus) {
-          resolve();
-        } else {
-          reject();
-        }
-      })));
+  getDockerComposeFilePath() {
+    return path.resolve(__dirname, '../docker/docker-compose.yml');
   }
 
   /**
-   * Ensures the docker services have been created.
+   * Starts the docker selenium hub and waits for the grid to become ready.
    */
-  async waitForServiceCreation() {
-    await this.pollCommand('docker service ls | grep wdio', (result) => (
-      new Promise((resolve, reject) => {
-        const { stdout: serviceStatus } = result;
+  async startSeleniumHub() {
+    logger.info('Starting the docker selenium hub...');
 
-        // Resolve if the wdio network is created.
-        if (serviceStatus) {
-          resolve();
-        } else {
-          reject();
-        }
-      })));
+    const envVars = this.seleniumVersion ? `TERRA_SELENIUM_DOCKER_VERSION=${this.seleniumVersion} ` : '';
+
+    await exec(`${envVars}docker-compose -f ${this.getDockerComposeFilePath()} up -d`);
+    await this.waitForSeleniumHubReady();
+
+    logger.info('Successfully started the docker selenium hub.');
   }
 
   /**
-   * Ensures the docker network has been shut down.
+   * Waits for the docker selenium hub to become healthy.
    */
-  async waitForNetworkRemoval() {
-    await this.pollCommand('docker network ls | grep wdio || true', (result) => (
-      new Promise((resolve, reject) => {
-        const { stdout: networkStatus } = result;
-
-        // Reject if there is an active network returned.
-        if (networkStatus) {
-          reject();
-        } else {
-          resolve();
-        }
-      })));
-  }
-
-  /**
-   * Ensures the docker services have been shut down.
-   */
-  async waitForServiceRemoval() {
-    await this.pollCommand('docker service ls | grep wdio || true', (result) => (
-      new Promise((resolve, reject) => {
-        const { stdout: serviceStatus } = result;
-
-        // Reject if there is an active service returned.
-        if (serviceStatus) {
-          reject();
-        } else {
-          resolve();
-        }
-      })));
-  }
-
-  /**
-   * Ensures the docker network is ready.
-   */
-  async waitForNetworkReady() {
-    logger.info('Waiting for the selenium grid to become ready.');
-
-    await this.pollCommand(`curl -sSL http://${this.host}:${this.port}/wd/hub/status`, (result) => (
+  async waitForSeleniumHubReady() {
+    await this.pollCommand("docker inspect --format='{{json .State.Health.Status}}' selenium-hub", (result) => (
       new Promise((resolve, reject) => {
         const { stdout } = result;
-        const { value } = JSON.parse(stdout);
 
-        if (value.ready) {
+        if (stdout && stdout.trim() === '"healthy"') {
           resolve();
         } else {
           reject();
@@ -214,16 +116,20 @@ class SeleniumDockerService {
   }
 
   /**
-   * Removes the docker stack and network.
+   * Gets executed after all workers have shut down and the process is about to exit.
+   * An error thrown in the `onComplete` hook will result in the test run failing.
    */
   async onComplete() {
     // When multiple test sessions are executed sequentially as specified in the WDIO script in the package.json file, the keepAliveSeleniumDockerService cli option
     // is used to indicate not to remove the currently deployed docker stack upon test completion as it will be used again for the next test session.
     // The docker stack is expected to be removed by the last test session when no keepAliveSeleniumDockerService cli option is specified.
-    if (!this.keepAliveSeleniumDockerService) {
-      await this.removeStack();
+    if (!this.keepAliveSeleniumDockerService && !this.disableSeleniumService) {
+      logger.info('Shutting down the docker selenium hub...');
+
+      await exec(`docker-compose -f ${this.getDockerComposeFilePath()} down`);
     }
   }
 }
 
 module.exports = SeleniumDockerService;
+

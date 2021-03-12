@@ -11,24 +11,28 @@ const {
 } = require('../commands/utils');
 
 class TerraService {
-  constructor(options = {}) {
-    this.serviceOptions = options;
+  /**
+   * Service constructor.
+   * @param {Object} _options - The options specific to this service.
+   * @param {Object} _capabilities - The list of capabilities details.
+   * @param {Object} config - The object containing the wdio configuration and options defined in the terra-cli test runner.
+   */
+  constructor(_options, _capabilities, config = {}) {
+    const { serviceOptions, launcherOptions } = config;
+
+    this.serviceOptions = {
+      selector: '[data-terra-test-content] *:first-child',
+      theme: 'terra-default-theme',
+      ...launcherOptions,
+      ...serviceOptions,
+    };
   }
 
   /**
    * Service hook executed prior to initializing the webdriver session.
-   * @param {object} config - The WebdriverIO configuration object.
    */
-  beforeSession(config) {
+  beforeSession() {
     global.Terra = {};
-    const { serviceOptions } = config;
-
-    this.serviceOptions = {
-      theme: 'terra-default-theme',
-      selector: '[data-terra-test-content] *:first-child',
-      ...this.serviceOptions,
-      ...serviceOptions,
-    };
 
     // Add the service options to the global.
     global.Terra.serviceOptions = this.serviceOptions;

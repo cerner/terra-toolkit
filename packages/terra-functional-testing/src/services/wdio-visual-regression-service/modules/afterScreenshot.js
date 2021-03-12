@@ -10,8 +10,8 @@ const logger = new Logger('[wdio-visual-regression-service:afterScreenshot]');
  *
  * @param {Object} browser - The global webdriver.io WebDriver instance.
  * @param {Object=} options - The screenshot capturing and comparison options.
- * @param {String[]} options.hide - The list of elements to set opacity 0 on to 'hide' from the dom when capturing the screenshot.
- * @param {String[]} options.remove - The list of elements to set display: none on to 'remove' from dom when capturing the screenshot.
+ * @param {string[]} options.hide - The list of elements to set opacity 0 on to 'hide' from the dom when capturing the screenshot.
+ * @param {string[]} options.remove - The list of elements to set display: none on to 'remove' from dom when capturing the screenshot.
  * @returns {undefined}
  */
 async function beforeScreenshot(browser, options = {}) {

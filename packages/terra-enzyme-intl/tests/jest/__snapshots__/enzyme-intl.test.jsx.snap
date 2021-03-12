@@ -5,12 +5,12 @@ exports[`mountWithIntl using FormattedMessage should match the snapshot 1`] = `
   foo="bar"
 >
   <div>
-    <FormattedMessage
+    <Component
       id="TerraEnzymeIntl.helloWorld"
     >
       TerraEnzymeIntl.helloWorld
-    </FormattedMessage>
-    <FormattedMessage
+    </Component>
+    <Component
       id="TerraEnzymeIntl.buttonText"
     >
       <button
@@ -18,7 +18,7 @@ exports[`mountWithIntl using FormattedMessage should match the snapshot 1`] = `
       >
         TerraEnzymeIntl.buttonText
       </button>
-    </FormattedMessage>
+    </Component>
     {
   "foo": "bar"
 }
@@ -34,7 +34,6 @@ exports[`mountWithIntl using injectIntl should match the snapshot 1`] = `
     foo="bar"
     intl={
       Object {
-        "__addMessages": [Function],
         "defaultFormats": Object {},
         "defaultLocale": "en",
         "defaultRichTextElements": undefined,
@@ -89,12 +88,12 @@ exports[`mountWithIntl with a wrapping component should match the snapshot 1`] =
   foo="bar"
 >
   <div>
-    <FormattedMessage
+    <Component
       id="TerraEnzymeIntl.helloWorld"
     >
       TerraEnzymeIntl.helloWorld
-    </FormattedMessage>
-    <FormattedMessage
+    </Component>
+    <Component
       id="TerraEnzymeIntl.buttonText"
     >
       <button
@@ -102,7 +101,7 @@ exports[`mountWithIntl with a wrapping component should match the snapshot 1`] =
       >
         TerraEnzymeIntl.buttonText
       </button>
-    </FormattedMessage>
+    </Component>
     {
   "foo": "bar"
 }
@@ -175,7 +174,6 @@ exports[`shallowWithIntl using injectIntl should match the snapshot 1`] = `
   foo="bar"
   intl={
     Object {
-      "__addMessages": [Function],
       "defaultFormats": Object {},
       "defaultLocale": "en",
       "defaultRichTextElements": undefined,

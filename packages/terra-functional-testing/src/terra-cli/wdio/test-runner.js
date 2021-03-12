@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const Launcher = require('@wdio/cli').default;
 const { Logger } = require('@cerner/terra-cli');
+const getConfigurationOptions = require('../../config/utils/getConfigurationOptions');
 
 const logger = new Logger({ prefix: '[terra-functional-testing:wdio]' });
 
@@ -29,39 +30,31 @@ class TestRunner {
   /**
    * Runs the test runner.
    * @param {Object} options - The test run options.
+   * @param {number} options.assetServerPort - The port to run the webpack and express asset services on.
+   * @param {string} options.browsers - A list of browsers for the test run.
    * @param {string} options.config - A file path to the test runner configuration.
+   * @param {boolean} options.disableSeleniumService - A flag to disable the selenium docker service.
+   * @param {string} options.externalHost - The host address the testing environment is connected to.
+   * @param {number} options.externalPort - The port mapping from the host to the container.
    * @param {string} options.formFactor - A form factor for the test run.
+   * @param {string} options.gridUrl - The remote selenium grid address.
    * @param {boolean} options.keepAliveSeleniumDockerService - Determines to keep the selenium docker service running upon test completion.
    * @param {string} options.locale - A language locale for the test run.
-   * @param {string} options.theme - A theme for the test run.
-   * @param {string} options.hostname - Automation driver host address.
-   * @param {number} options.port - Automation driver port.
-   * @param {string} options.baseUrl - The base url.
-   * @param {array} options.suite - Overrides specs and runs only the defined suites.
+   * @param {string} options.site - A file path to a static directory of assets. When defined, an express server will launch to serve the assets and disable running webpack..
    * @param {array} options.spec - A list of spec file paths.
+   * @param {array} options.suite - Overrides specs and runs only the defined suites.
+   * @param {string} options.theme - A theme for the test run.
+   * @param {boolean} options.updateScreenshots - Updates all reference screenshots with the latest screenshots.
    * @returns {Promise} A promise that resolves with the test run exit code.
    */
   static async run(options) {
     let exitCode;
 
     try {
-      const {
-        config,
-        formFactor,
-        locale,
-        theme,
-        ...launcherOptions // hostname, port, baseUrl, suite, spec, and keepAliveSeleniumDockerService
-      } = options;
-
-      process.env.LOCALE = locale;
-      process.env.THEME = theme;
-
-      if (formFactor) {
-        process.env.FORM_FACTOR = formFactor;
-      }
+      const { config } = options;
 
       const configPath = TestRunner.configPath(config);
-      const testRunner = new Launcher(configPath, launcherOptions);
+      const testRunner = new Launcher(configPath, getConfigurationOptions(options));
 
       exitCode = await testRunner.run();
     } catch (error) {
@@ -76,37 +69,30 @@ class TestRunner {
 
   /**
    * Starts the test runner.
+   * @param {Object} options - The test run options.
+   * @param {number} options.assetServerPort - The port to run the webpack and express asset services on.
    * @param {string} options.browsers - A list of browsers for the test run.
    * @param {string} options.config - A file path to the test runner configuration.
+   * @param {boolean} options.disableSeleniumService - A flag to disable the selenium docker service.
+   * @param {string} options.externalHost - The host address the testing environment is connected to.
+   * @param {number} options.externalPort - The port mapping from the host to the container.
    * @param {string} options.formFactors - A list of form factors for the test run.
    * @param {string} options.gridUrl - The remote selenium grid address.
    * @param {boolean} options.keepAliveSeleniumDockerService - Determines to keep the selenium docker service running upon test completion.
    * @param {string} options.locales - A list of language locales for the test run.
-   * @param {string} options.themes - A list of themes for the test run.
-   * @param {string} options.hostname - Automation driver host address.
-   * @param {number} options.port - Automation driver port.
-   * @param {string} options.baseUrl - The base url.
-   * @param {array} options.suite - Overrides specs and runs only the defined suites.
+   * @param {string} options.site - A file path to a static directory of assets. When defined, an express server will launch to serve the assets and disable running webpack..
    * @param {array} options.spec - A list of spec file paths.
+   * @param {array} options.suite - Overrides specs and runs only the defined suites.
+   * @param {string} options.themes - A list of themes for the test run.
+   * @param {boolean} options.updateScreenshots - Updates all reference screenshots with the latest screenshots.
    */
   static async start(options) {
     const {
-      browsers,
-      config,
       formFactors = [],
-      gridUrl,
       locales,
       themes,
-      ...launcherOptions // hostname, port, baseUrl, suite, spec, and keepAliveSeleniumDockerService
+      ...cliOptions
     } = options;
-
-    if (browsers) {
-      process.env.BROWSERS = browsers;
-    }
-
-    if (gridUrl) {
-      process.env.SELENIUM_GRID_URL = gridUrl;
-    }
 
     /**
      * The following code loops through each permutation of theme, locale, and form factor.
@@ -124,11 +110,10 @@ class TestRunner {
 
           // eslint-disable-next-line no-await-in-loop
           await TestRunner.run({
-            config,
+            ...cliOptions,
             formFactor,
             locale,
             theme,
-            ...launcherOptions,
           });
 
           formFactorIndex += 1;
