@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Added
+  * Added describeTests helper to filter tests by form factors, locales, or themes
+
 ## 1.0.2 - (March 9, 2021)
 
 * Fixed
