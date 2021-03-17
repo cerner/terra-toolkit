@@ -1,41 +1,30 @@
-// For a detailed explanation regarding each configuration property, visit:
-// https://jestjs.io/docs/en/configuration.html
+const jestConfig = require('./packages/jest-config-terra');
 
 module.exports = {
-  clearMocks: true,
-  collectCoverage: true,
-  collectCoverageFrom: [
-    'packages/**/src/**/*.js',
-    '!packages/terra-cli/tests/**/*.js',
-    '!packages/terra-functional-testing/src/services/wdio-visual-regression-service/commands/*.js',
-    '!packages/terra-functional-testing/src/services/wdio-visual-regression-service/methods/(S)*.js',
-    '!packages/terra-functional-testing/src/services/wdio-visual-regression-service/modules/(a|b|m)*.js',
-    '!packages/terra-functional-testing/src/services/wdio-visual-regression-service/scripts/*.js',
-    '!packages/terra-functional-testing/src/services/wdio-visual-regression-service/utils/**/*.js',
-  ],
+  ...jestConfig,
+  testEnvironment: './packages/jest-config-terra/lib/jest-environment-jsdom-terra.js',
   setupFiles: [
-    './jestSetup.js',
+    './jest.enzymeSetup.js',
   ],
-  coverageDirectory: 'tests/jest/reports/coverage',
-  coverageReporters: [
-    'html',
-    'text',
-    'lcov',
-    'cobertura',
-    'text-summary',
-  ],
-  modulePathIgnorePatterns: [
-    'packages/terra-cli/tests/jest/fixtures',
-    'packages/duplicate-package-checker-webpack-plugin/tests/jest',
-  ],
+  transform: {
+    '^.+\\.(js|jsx)$': './packages/jest-config-terra/lib/jestBabelTransform',
+  },
   snapshotSerializers: [
     './node_modules/enzyme-to-json/serializer',
   ],
-  roots: [process.cwd()],
-  testMatch: [
-    '**/jest/**/*.test.js?(x)',
-  ],
-  transform: {
-    '^.+\\.(js|jsx)$': './jestBabelTransform',
-  },
 };
+
+// module.exports = {
+//   collectCoverageFrom: [
+//     '!packages/terra-cli/tests/**/*.js',
+//     '!packages/terra-functional-testing/src/services/wdio-visual-regression-service/commands/*.js',
+//     '!packages/terra-functional-testing/src/services/wdio-visual-regression-service/methods/(S)*.js',
+//     '!packages/terra-functional-testing/src/services/wdio-visual-regression-service/modules/(a|b|m)*.js',
+//     '!packages/terra-functional-testing/src/services/wdio-visual-regression-service/scripts/*.js',
+//     '!packages/terra-functional-testing/src/services/wdio-visual-regression-service/utils/**/*.js',
+//   ],
+//   modulePathIgnorePatterns: [
+//     'packages/terra-cli/tests/jest/fixtures',
+//     'packages/duplicate-package-checker-webpack-plugin/tests/jest',
+//   ],
+// };

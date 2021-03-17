@@ -95,7 +95,6 @@
     "@cerner/terra-application": "cerner/terra-application#v2-stable",
     "@cerner/terra-dev-site": "cerner/terra-dev-site#v7-stable",
     "@octokit/core": "^3.1.2",
-    "babel-jest": "^24.8.0",
     "bufferutil": "^4.0.1",
     "commander": "^5.1.0",
     "core-js": "^3.1.3",
