@@ -3,6 +3,7 @@ const expect = require('expect');
 const { accessibility, element, screenshot } = require('../commands/validates');
 const { toBeAccessible, toMatchReference } = require('../commands/expect');
 const {
+  describeTests,
   describeViewports,
   getViewports,
   hideInputCaret,
@@ -44,6 +45,7 @@ class TerraService {
      *
      * Reference: https://github.com/webdriverio/webdriverio/issues/6119
      */
+    global.Terra.describeTests = describeTests;
     global.Terra.describeViewports = describeViewports;
     global.Terra.viewports = getViewports;
   }
