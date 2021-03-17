@@ -48,6 +48,18 @@ Terra.describeViewports('Terra.validates', ['small', 'large'], () => {
 
       expect(caughtError.message).toEqual('[terra-functional-testing:screenshot] Terra.validate.screenshot requires a unique test name as the first argument.');
     });
+
+    it('should fail with invalid selector', () => {
+      let caughtError;
+
+      try {
+        Terra.validates.screenshot('invalid selector', { selector: 'invalid-selector' });
+      } catch (error) {
+        caughtError = error;
+      }
+
+      expect(caughtError.message).toEqual('[wdio-visual-regression-service:makeDocumentScreenshot] Failed to capture the element using the "invalid-selector" selector. Either update the test document to include this selector or use a different selector that exists on the document.');
+    });
   });
 
   describe('element', () => {
@@ -77,6 +89,18 @@ Terra.describeViewports('Terra.validates', ['small', 'large'], () => {
       }
 
       expect(caughtError.message).toEqual('[terra-functional-testing:element] Terra.validate.element requires a unique test name as the first argument.');
+    });
+
+    it('should fail with invalid selector', () => {
+      let caughtError;
+
+      try {
+        Terra.validates.element('invalid selector', { selector: 'invalid-selector' });
+      } catch (error) {
+        caughtError = error;
+      }
+
+      expect(caughtError.message).toEqual('[wdio-visual-regression-service:makeDocumentScreenshot] Failed to capture the element using the "invalid-selector" selector. Either update the test document to include this selector or use a different selector that exists on the document.');
     });
   });
 });

@@ -28,6 +28,11 @@ async function makeElementScreenshot(browser, elementSelector, options = {}) {
 
   // get bounding rect of elements
   const boundingRects = await browser.execute(getBoundingRects, elementSelector);
+
+  if (boundingRects.length === 0) {
+    throw new Error(`[wdio-visual-regression-service:makeDocumentScreenshot] Failed to capture the element using the "${elementSelector}" selector. Either update the test document to include this selector or use a different selector that exists on the document.`);
+  }
+
   const boundingRect = groupBoundingRect(boundingRects);
 
   // make screenshot of area
