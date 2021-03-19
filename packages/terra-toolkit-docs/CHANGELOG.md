@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Added
+  * Added documentation for jest-config-terra.
+
 ## 1.8.2 - (March 9, 2021)
 
 * Changed

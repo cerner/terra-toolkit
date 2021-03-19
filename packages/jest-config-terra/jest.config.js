@@ -1,6 +1,6 @@
 module.exports = {
   // Set a custom testEnvironment to allow us to compartmentalize setup.
-  testEnvironment: '@cerner/jest-config-terra/lib/jest-environment-jsdom-terra.js',
+  testEnvironment: '@cerner/jest-config-terra/lib/JestEnvironmentJsdomTerra.js',
   clearMocks: true,
   collectCoverage: true,
   coverageDirectory: 'tests/jest/reports/coverage',
@@ -20,12 +20,12 @@ module.exports = {
   testMatch: [
     '**/jest/**/(*.)(spec|test).js?(x)',
   ],
-  // moduleDirectories: [ // Do we need this?
-  //   'packages',
-  //   'node_modules',
-  // ],
+  moduleDirectories: [
+    'packages',
+    'node_modules',
+  ],
   moduleNameMapper: {
-    '\\.(css|scss|svg)$': 'identity-obj-proxy', // TODO do we need to add more file extensions here?
+    '\\.(css|scss|svg)$': 'identity-obj-proxy',
     // These replace the various translations imports with mocked versions.
     '^de\\.js$': '@cerner/jest-config-terra/lib/translationsMock.js',
     '^en(-AU|-CA|-GB|-US)?\\.js$': '@cerner/jest-config-terra/lib/translationsMock.js',
