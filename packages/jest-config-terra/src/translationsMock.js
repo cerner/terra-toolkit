@@ -6,6 +6,7 @@ Object.defineProperty(exports, '__esModule', {
 // Proxy to reflect the requested translation id back as a translated string.
 const messageProxy = new Proxy({}, {
   get: (_, property) => property,
+  getOwnPropertyDescriptor: () => ({ configurable: true, enumerable: true }),
 });
 
 // export to both messages and default to allow backwards compatibility with react-intl.
