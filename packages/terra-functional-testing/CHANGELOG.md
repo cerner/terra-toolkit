@@ -5,6 +5,9 @@
 * Added
   * Added describeTests helper to filter tests by form factors, locales, or themes
 
+* Changed
+  * Throw error with a more meaningful message when an invalid selector is used to capture screenshot.
+
 ## 1.0.2 - (March 9, 2021)
 
 * Fixed
