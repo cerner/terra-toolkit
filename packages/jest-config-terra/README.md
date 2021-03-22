@@ -7,7 +7,7 @@ A base jest config for the terra application framework.
 
 ## Versioning
 
-eslint-config-terra is considered to be stable and will follow [SemVer](http://semver.org/) for versioning.
+jest-config-terra is considered to be stable and will follow [SemVer](http://semver.org/) for versioning.
 
 1. MAJOR versions represent breaking changes
 2. MINOR versions represent added functionality in a backwards-compatible manner
