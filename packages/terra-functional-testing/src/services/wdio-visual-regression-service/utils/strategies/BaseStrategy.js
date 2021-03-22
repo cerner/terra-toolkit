@@ -15,10 +15,13 @@ class BaseStrategy {
   setScrollArea(startX, startY, endX, endY) {
     const documentWidth = this.screenDimensions.getDocumentWidth();
     const documentHeight = this.screenDimensions.getDocumentHeight();
-    const adjustedStartX = startX > documentWidth ? documentWidth : startX;
-    const adjustedStartY = startY > documentHeight ? documentHeight : startY;
-    const adjustedEndX = endX > documentWidth ? documentWidth : endX;
-    const adjustedEndY = endY > documentHeight ? documentHeight : endY;
+
+    // Capture what is visible if the element is rendered partially off the screen.
+    // Capture the entire viewable screen dimension if it is rendered completely off the screen.
+    const adjustedStartX = startX > documentWidth || startX < 0 ? 0 : startX;
+    const adjustedStartY = startY > documentHeight || startY < 0 ? 0 : startY;
+    const adjustedEndX = endX > documentWidth || endX < 0 ? documentWidth : endX;
+    const adjustedEndY = endY > documentHeight || endY < 0 ? documentHeight : endY;
 
     this.area = {
       startX: adjustedStartX,

@@ -84,7 +84,8 @@ Terra.describeViewports('Terra.validates', ['small', 'large'], () => {
     it('should capture screenshot at document size', () => {
       browser.url('/element-out-of-bound.html');
 
-      Terra.validates.element('element-out-of-bound');
+      Terra.validates.screenshot('out of bound left content', { selector: '#out-of-bound-left-content' });
+      Terra.validates.screenshot('out of bound right content', { selector: '#out-of-bound-right-content' });
     });
   });
 });
