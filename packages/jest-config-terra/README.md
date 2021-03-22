@@ -1,6 +1,6 @@
 # Jest Config Terra
 
-[![NPM version](https://badgen.net/npm/v/@cerner/eslint-config-terra)](https://www.npmjs.org/package/@cerner/jest-config-terra)
+[![NPM version](https://badgen.net/npm/v/@cerner/jest-config-terra)](https://www.npmjs.org/package/@cerner/jest-config-terra)
 [![Build Status](https://badgen.net/travis/cerner/terra-toolkit)](https://travis-ci.com/cerner/terra-toolkit)
 
 A base jest config for the terra application framework.
