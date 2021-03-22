@@ -1,0 +1,48 @@
+{
+  "private":"true",
+  "name": "@cerner/jest-config-terra",
+  "version": "0.0.0",
+  "description": "A base jest config for the terra application framework.",
+  "main": "jest.config.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cerner/terra-toolkit.git",
+    "directory": "packages/jest-config-terra"
+  },
+  "keywords": [
+    "jest",
+    "jest-config",
+    "Cerner",
+    "Terra"
+  ],
+  "author": "Cerner Corporation",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/cerner/terra-toolkit/issues"
+  },
+  "engines": {
+    "node": ">=10.13.0"
+  },
+  "homepage": "https://github.com/cerner/terra-toolkit",
+  "files": [
+    "lib",
+    "jest.config.js"
+  ],
+  "scripts": {
+    "compile": "babel src --out-dir lib --copy-files --ignore src",
+    "lint": "eslint --ext .js,.jsx .",
+    "jest": "jest --config ../../jest.config.js"
+  },
+  "dependencies": {
+    "babel-jest": "^26.6.3",
+    "identity-obj-proxy": "^3.0.0",
+    "jest-environment-jsdom": "26.6.2",
+    "jest-mock":"^26.6.2"
+  },
+  "peerDependencies": {
+    "jest": "^26.6.3"
+  }
+}
