@@ -3,7 +3,7 @@ const which = require('which');
 const { ...jimp } = require('./jimp');
 const { ...gm } = require('./gm');
 
-const logger = new Logger('[wdio-visual-regression-service:image]');
+const logger = new Logger({ prefix: '[wdio-visual-regression-service:image]' });
 
 let gmInstalled = false;
 

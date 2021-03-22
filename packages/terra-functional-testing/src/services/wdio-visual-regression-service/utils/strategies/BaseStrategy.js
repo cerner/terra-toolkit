@@ -13,25 +13,18 @@ class BaseStrategy {
   }
 
   setScrollArea(startX, startY, endX, endY) {
-    // TODO: bug https://github.com/zinserjan/wdio-screenshot/issues/87
-    // const documentWidth = this.screenDimensions.getDocumentWidth();
-    // const documentHeight = this.screenDimensions.getDocumentHeight();
-
-    // if (startX >= documentWidth) {
-    //   throw new Error('startX is out of range');
-    // } else if (startY >= documentHeight) {
-    //   throw new Error('startY is out of range');
-    // } else if (endX > documentWidth) {
-    //   throw new Error('endX is out of range');
-    // } else if (endY > documentHeight) {
-    //   throw new Error('endY is out of range');
-    // }
+    const documentWidth = this.screenDimensions.getDocumentWidth();
+    const documentHeight = this.screenDimensions.getDocumentHeight();
+    const adjustedStartX = startX > documentWidth ? documentWidth : startX;
+    const adjustedStartY = startY > documentHeight ? documentHeight : startY;
+    const adjustedEndX = endX > documentWidth ? documentWidth : endX;
+    const adjustedEndY = endY > documentHeight ? documentHeight : endY;
 
     this.area = {
-      startX,
-      startY,
-      endX,
-      endY,
+      startX: adjustedStartX,
+      startY: adjustedStartY,
+      endX: adjustedEndX,
+      endY: adjustedEndY,
     };
   }
 

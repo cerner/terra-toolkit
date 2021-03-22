@@ -2,7 +2,7 @@ const fs = require('fs-extra');
 const { Logger } = require('@cerner/terra-cli');
 const BaseCompare = require('./BaseCompare');
 
-const logger = new Logger('[wdio-visual-regression-service:SaveScreenshot]');
+const logger = new Logger({ prefix: '[wdio-visual-regression-service:SaveScreenshot]' });
 
 class SaveScreenshot extends BaseCompare {
   constructor(options = {}) {

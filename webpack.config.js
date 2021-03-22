@@ -33,6 +33,12 @@ module.exports = (env = {}) => {
         chunks: ['index'],
         filename: 'validates-element.html',
       }),
+      new HtmlWebpackPlugin({
+        lang: defaultLocale,
+        template: path.join(__dirname, 'packages', 'terra-functional-testing', 'tests', 'fixtures', 'element-out-of-bound.html'),
+        chunks: ['index'],
+        filename: 'element-out-of-bound.html',
+      }),
     ],
     output: {
       path: path.join(process.cwd(), 'build'),

@@ -12,7 +12,7 @@ const { cropImage, mergeImages } = require('../utils/image');
 const ScreenDimension = require('../utils/ScreenDimension');
 const { normalizeScreenshot } = require('../utils/normalizeScreenshot');
 
-const logger = new Logger('[wdio-visual-regression-service:makeAreaScreenshot]');
+const logger = new Logger({ prefix: '[wdio-visual-regression-service:makeAreaScreenshot]' });
 const tmpDir = path.resolve(__dirname, '..', '..', 'tmp');
 
 async function storeScreenshot(browser, screenDimensions, cropDimensions, base64Screenshot, filePath) {
