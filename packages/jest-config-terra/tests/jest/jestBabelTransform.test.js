@@ -1,7 +1,7 @@
 const babelJest = require('babel-jest');
 
 describe('babel transformer', () => {
-  it('check if the ', () => {
+  it('ensures the transformer is created with the correct configuration', () => {
     const customTransformer = 'customTransformer';
     jest.spyOn(babelJest, 'createTransformer').mockImplementation(() => customTransformer);
     // eslint-disable-next-line global-require
