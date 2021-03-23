@@ -1,65 +1,10 @@
 # Asset Server Service
 
-The asset server service initializes a server to serve compiled assets to the testing environment.
-
-## Installation
-
-The asset server service should be installed as a development dependency.
-
-```bash
-npm install --save-dev @cerner/terra-functional-testing
-```
-
-## Configuration
-
-To use the service it must be added to the services array in the `wdio.conf.js` file.
-
-```js
-// wdio.conf.js
-const AssetServerService = require('@cerner/terra-functional-testing/lib/services/wdio-asset-server-service');
-
-export.config = {
-    // ...
-    services: [
-        [AssetServerService, {
-            // Asset server service options here.
-            // ...
-        }]
-    ],
-    // ...
-};
-```
+The asset server service initializes an asset server to serve compiled assets to the testing environment. An express server will be launched for static sites. For all non-static sites a webpack-dev-server will be launched.
 
 ## Options
 
-### webpackConfig
-
-A path to a webpack configuration file.
-
-Note: The `site` configuration option will take precedence over `webpackConfig` if both are provided.
-
-Type: `string`
-
-Required: `false`
-
-Default: The asset server service will check the current working directory for a `webpack.config.js` file.
-
-Example:
-
-```js
-// wdio.conf.js
-const AssetServerService = require('@cerner/terra-functional-testing/lib/services/wdio-asset-server-service');
-
-export.config = {
-    // ...
-    services: [
-        [AssetServerService, {
-          webpackConfig: './path/webpack.config.js'
-        }]
-    ],
-    // ...
-};
-```
+The assert server options are configured via the [test runner CLI options](../about#options).
 
 ### locale
 
@@ -71,26 +16,17 @@ Type: `string`
 
 Required: `false`
 
-Default: `undefined`
+Default: `en`
 
 Example:
 
 ```js
-// wdio.conf.js
-const AssetServerService = require('@cerner/terra-functional-testing/lib/services/wdio-asset-server-service');
-
-export.config = {
-    // ...
-    services: [
-        [AssetServerService, {
-          locale: 'en-US',
-        }]
-    ],
-    // ...
-};
+"scripts": {
+  "test:wdio": "terra wdio --locales en-US"
+}
 ```
 
-### port
+### assetServerPort
 
 The port the service will be hosted on.
 
@@ -103,18 +39,9 @@ Default: `8080`
 Example:
 
 ```js
-// wdio.conf.js
-const AssetServerService = require('@cerner/terra-functional-testing/lib/services/wdio-asset-server-service');
-
-export.config = {
-    // ...
-    services: [
-        [AssetServerService, {
-          port: 8080,
-        }]
-    ],
-    // ...
-};
+"scripts": {
+  "test:wdio": "terra wdio --assetServerPort 8081"
+}
 ```
 
 ### site
@@ -132,18 +59,9 @@ Default: `undefined`
 Example:
 
 ```js
-// wdio.conf.js
-const AssetServerService = require('@cerner/terra-functional-testing/lib/services/wdio-asset-server-service');
-
-export.config = {
-    // ...
-    services: [
-        [AssetServerService, {
-          site: './build',
-        }]
-    ],
-    // ...
-};
+"scripts": {
+  "test:wdio": "terra wdio --site ./build"
+}
 ```
 
 ### theme
@@ -161,16 +79,7 @@ Default: `terra-default-theme`
 Example:
 
 ```js
-// wdio.conf.js
-const AssetServerService = require('@cerner/terra-functional-testing/lib/services/wdio-asset-server-service');
-
-export.config = {
-    // ...
-    services: [
-        [AssetServerService, {
-          theme: 'terra-theme-name',
-        }]
-    ],
-    // ...
-};
+"scripts": {
+  "test:wdio": "terra wdio --themes terra-default-theme terra-lowlight-theme"
+}
 ```
