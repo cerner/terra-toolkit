@@ -3,8 +3,7 @@
   "command": {
     "publish": {
       "ignoreChanges": [
-        "packages/package-json-lint/**",
-        "packages/react-config-terra/**"
+        "packages/package-json-lint/**"
       ]
     }
   },
