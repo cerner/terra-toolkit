@@ -8,6 +8,9 @@
 * Changed
   * Throw error with a more meaningful message when an invalid selector is used to capture screenshot.
 
+* Fixed
+  * Fix endY/endX out of range error when selector element is larger than document size.
+
 ## 1.0.2 - (March 9, 2021)
 
 * Fixed
