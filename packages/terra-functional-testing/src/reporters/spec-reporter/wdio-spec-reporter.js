@@ -40,6 +40,7 @@ class SpecReporter extends WDIOReporter {
       packageName: SpecReporter.getPackageName(specs[0]),
       suites: SpecReporter.formatSuites(suites),
       tests: SpecReporter.formatTests(tests),
+      processcwd: process.cwd(),
     };
   }
 
@@ -116,8 +117,6 @@ class SpecReporter extends WDIOReporter {
    * @returns {string} - The package name of the spec file.
    */
   static getPackageName(spec) {
-    console.log("process.cwd");
-    console.log(process.cwd());
     // Check if the spec file is nested within a monorepo package.
     if (spec.indexOf(`${path.sep}packages${path.sep}`) > -1) {
       return spec.split(`${path.sep}packages${path.sep}`).pop().split(path.sep)[0];
