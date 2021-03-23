@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.8.3 - (March 23, 2021)
+
 * Added
   * Added documentation for jest-config-terra.
 
