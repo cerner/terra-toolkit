@@ -1,5 +1,92 @@
 # Visual Regression Service
 
-Visual regression testing for WebdriverIO
+Visual regression testing for WebdriverIO.
 
-Based on the work of Jan-André Zinser on [wdio-visual-regression-service](https://github.com/zinserjan/wdio-visual-regression-service) and [wdio-screenshot](https://github.com/zinserjan/wdio-screenshot)
+Based on the work of Jan-André Zinser on [wdio-visual-regression-service](https://github.com/zinserjan/wdio-visual-regression-service) and [wdio-screenshot](https://github.com/zinserjan/wdio-screenshot). The visual regression service performs image comparison evaluations to determine mismatch tolerances. Screenshots exceeding the mismatch tolerance will fail the test run.
+
+Screenshots are saved to a `__snapshot__` directory at the same level as the spec file. Screenshots are organized by theme, locale, browser, and form factor.
+
+To generate screenshots use the [Terra.validates.screenshot](../about#terravalidatesscreenshot) and [Terra.validates.element](../about#terravalidateselement) utility commands.
+
+## Reference Screenshots
+
+Reference screenshots are stable screenshots that will be used to compare future screenshots. If a reference screenshot doesn't exist a new one will be generated on the next test run.
+
+## Latest Screenshots
+
+Latest screenshots are the screenshots generated on the most recent test run. Latest screenshots are not checked into source control, but can be used to troubleshoot differences between latest and reference.
+
+## Diff Screenshots
+
+Diff screenshots are generated when the latest screenshot is different than the reference screenshot. The diff screenshots overlay the reference and latest screenshots to provide visual indication of the differences. Differences will be shaded with a pink color.
+
+## Example Structure
+
+```
+├── __snapshots__
+│   ├── diff
+│   │   └── terra-default-theme
+│   │       └── en
+│   │           ├── chrome_small
+│   │           │   └── terra-example-spec
+│   │           │       └── example-screenshot.png
+│   │           └── firefox_small
+│   │               └── terra-example-spec
+│   │                   └── example-screenshot.png
+│   ├── latest
+│   │   └── terra-default-theme
+│   │       ├── en
+│   │       │   ├── chrome_large
+│   │       │   │   └── terra-example-spec
+│   │       │   │       └── example-screenshot.png
+│   │       │   ├── chrome_small
+│   │       │   │   └── terra-example-spec
+│   │       │   │       └── example-screenshot.png
+│   │       │   ├── firefox_large
+│   │       │   │   └── terra-example-spec
+│   │       │   │       └── example-screenshot.png
+│   │       │   └── firefox_small
+│   │       │       └── terra-example-spec
+│   │       │           └── example-screenshot.png
+│   │       └── fr
+│   │           ├── chrome_large
+│   │           │   └── terra-example-spec
+│   │           │       └── example-screenshot.png
+│   │           ├── chrome_small
+│   │           │   └── terra-example-spec
+│   │           │       └── example-screenshot.png
+│   │           ├── firefox_large
+│   │           │   └── terra-example-spec
+│   │           │       └── example-screenshot.png
+│   │           └── firefox_small
+│   │               └── terra-example-spec
+│   │                   └── example-screenshot.png
+│   └── reference
+│       └── terra-default-theme
+│           ├── en
+│           │   ├── chrome_large
+│           │   │   └── terra-example-spec
+│           │   │       └── example-screenshot.png
+│           │   ├── chrome_small
+│           │   │   └── terra-example-spec
+│           │   │       └── example-screenshot.png
+│           │   ├── firefox_large
+│           │   │   └── terra-example-spec
+│           │   │       └── example-screenshot.png
+│           │   └── firefox_small
+│           │       └── terra-example-spec
+│           │           └── example-screenshot.png
+│           └── fr
+│               ├── chrome_large
+│               │   └── terra-example-spec
+│               │       └── example-screenshot.png
+│               ├── chrome_small
+│               │   └── terra-example-spec
+│               │       └── example-screenshot.png
+│               ├── firefox_large
+│               │   └── terra-example-spec
+│               │       └── example-screenshot.png
+│               └── firefox_small
+│                   └── terra-example-spec
+│                       └── example-screenshot.png
+```
