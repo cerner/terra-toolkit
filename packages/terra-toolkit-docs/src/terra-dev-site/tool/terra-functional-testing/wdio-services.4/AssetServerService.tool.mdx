@@ -4,27 +4,7 @@ The asset server service initializes an asset server to serve compiled assets to
 
 ## Options
 
-The assert server options are configured via the [test runner CLI options](../about#options).
-
-### locale
-
-Note: The locale will only be applied when providing a webpack configuration. The locale will not be used for `site` configuration.
-
-An optional locale that will be passed into the webpack configuration as an environment variable.
-
-Type: `string`
-
-Required: `false`
-
-Default: `en`
-
-Example:
-
-```js
-"scripts": {
-  "test:wdio": "terra wdio --locales en-US"
-}
-```
+The assert server options are configured via the [test runner CLI options](../about#options). The webpack-dev-server will be provided the locale and theme options via the test runner and will pass those through to webpack.
 
 ### assetServerPort
 
@@ -61,25 +41,5 @@ Example:
 ```js
 "scripts": {
   "test:wdio": "terra wdio --site ./build"
-}
-```
-
-### theme
-
-Note: The theme will only be applied when providing a webpack configuration. The theme will not be used for `site` configuration.
-
-An optional theme that will be passed into the webpack configuration as an environment variable.
-
-Type: `string`
-
-Required: `false`
-
-Default: `terra-default-theme`
-
-Example:
-
-```js
-"scripts": {
-  "test:wdio": "terra wdio --themes terra-default-theme terra-lowlight-theme"
 }
 ```
