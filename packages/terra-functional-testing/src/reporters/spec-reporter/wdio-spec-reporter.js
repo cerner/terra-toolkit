@@ -40,7 +40,6 @@ class SpecReporter extends WDIOReporter {
       packageName: SpecReporter.getPackageName(specs[0]),
       suites: SpecReporter.formatSuites(suites),
       tests: SpecReporter.formatTests(tests),
-      processcwd: process.cwd(),
     };
   }
 
@@ -121,7 +120,12 @@ class SpecReporter extends WDIOReporter {
     if (spec.indexOf(`${path.sep}packages${path.sep}`) > -1) {
       return spec.split(`${path.sep}packages${path.sep}`).pop().split(path.sep)[0];
     }
-
+    const filepath = `${process.cwd()}${path.sep}package.json`;
+    if (fs.existsSync(filepath)) {
+        const jsonString = fs.readFileSync(filepath)
+        const packagejson = JSON.parse(jsonString)
+        return packagejson.name;
+    }
     return process.cwd().split(path.sep).pop();
   }
 
