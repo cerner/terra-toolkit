@@ -114,7 +114,7 @@ To specify a list of form factors use the cli option:
 
 ## Configuration
 
-The test runner ships with a default [wdio.conf.js](https://github.com/cerner/terra-toolkit/blob/main/packages/terra-functional-testing/src/config/wdio.conf.js). Webdriver and service options can be configured by extending the default configuration file.
+The test runner ships with a default [wdio.conf.js](https://github.com/cerner/terra-toolkit/blob/main/packages/terra-functional-testing/src/config/wdio.conf.js). Options can be configured by extending the default configuration file.
 
 To extend the default configuration create a `wdio.conf.js` file at the root of your project and apply the desired options.
 
@@ -130,7 +130,7 @@ exports.config = config;
 
 ## Service Options
 
-A few service options are configurable by extending the wdio.conf.js file. These options are applied for every test run.
+Service options are configurable by extending the wdio.conf.js file. These options are applied for every test run.
 
 ### selector
 
@@ -186,11 +186,7 @@ Test utilities are available to help write tests. These utilities are accessed u
 
 ## Describe Helpers
 
-The describe helpers are an alias for the top level `describe` block used within spec files. The describe helpers provide useful features for limit a set of tests to specific form factors, locales, and themes.
-
-<Notice variant="caution" ariaLevel="3">
-  The describe helpers should not be nested. Multiple describe helpers can be used sequentially in the same spec file.
-</Notice>
+The describe helpers are an alias for the top level `describe` block used within spec files. The describe helpers provide useful features for limiting a set of tests to specific form factors, locales, and themes.
 
 ### Terra.describeViewports
 
@@ -208,10 +204,24 @@ Terra.describeViewports(title, [viewports], fn);
 
 The following example will scope the tests to run only for the `tiny` and `huge` form factors. The tests will not run for any other form factor.
 
+<Notice variant="caution" ariaLevel="3">
+  Do not nest describe helpers.
+</Notice>
+
 ```js
 Terra.describeViewports('Describe viewports title', ['tiny', 'huge'], () => {
   it('should test tiny and huge screens', () => {
     browser.url('/testing/route/');
+
+    Terra.validates.screenshot('describe viewports');
+  });
+});
+
+// Multiple describe helpers can be used sequentially in the same spec file as long as they are not nested.
+
+Terra.describeViewports('Describe viewports title', ['small'], () => {
+  it('should test small screens', () => {
+    browser.url('/testing/route/small/');
 
     Terra.validates.screenshot('describe viewports');
   });
@@ -287,7 +297,11 @@ Axe will analyze the entire document when run and report accessibility violation
 
 ### Terra.validates.accessibility
 
-The accessibility assertion should only be invoked inside an `it` block. Invoking the assertion will run accessibility checks on the entire document. If accessibility violations are found the test step will fail. It is recommended to run accessibility checks at various steps in a functional workflow to check for violations at different stages of the application.
+The validates accessibility command will run accessibility checks on the entire document. If accessibility violations are found the test step will fail. It is recommended to run accessibility checks at various steps in a functional workflow to check for violations at different stages of the application.
+
+<Notice variant="caution" ariaLevel="3">
+  The accessibility assertion must be used within an `it` block.
+</Notice>
 
 ```js
 it('should report no accessibility violations', () => {
@@ -316,9 +330,11 @@ A screenshot can be captured at any given point inside an `it` block in a test. 
 
 ### Terra.validates.screenshot
 
-The screenshot assertion should only be invoked inside an `it` block. Invoking the assertion will capture a screenshot at the time it is invoked. If no reference screenshot exists, one will be created in the `reference` folder with the given screenshot name. If such reference screenshot already exists, the new screenshot will be compared with the reference screenshot to validate visually that they are within the mismatch tolerance. If the mismatch exceeds the tolerance, the test step will fail and a screenshot showing the difference will be generated.
+Invoking the assertion will capture a screenshot at the time it is invoked. If no reference screenshot exists, one will be created in the `reference` folder with the given screenshot name. If such reference screenshot already exists, the new screenshot will be compared with the reference screenshot to validate visually that they are within the mismatch tolerance. If the mismatch exceeds the tolerance, the test step will fail and a screenshot showing the difference will be generated.
 
-A name must be provided to be used as the screenshot name.
+<Notice variant="caution" ariaLevel="3">
+  The screenshot assertion must be used within an `it` block and a screenshot name must be provided.
+</Notice>
 
 ```js
 it('should validate the screenshot', () => {
@@ -354,6 +370,10 @@ it('should validate the screenshot with options', () => {
 ### Terra.validates.element
 
 The validates element assertion performs both accessibility and screenshot assertions.
+
+<Notice variant="caution" ariaLevel="3">
+  The validates element assertion must be used within an `it` block.
+</Notice>
 
 ```js
 it('should validate the element', () => {
