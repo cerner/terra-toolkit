@@ -1,12 +1,14 @@
 # Terra Service
 
-The Terra service integrates [axe accessibility](https://github.com/dequelabs/axe-core) and screenshot comparison testing into the test environment. Invoking the axe engine will perform a static analysis of the entire document and dom structure. The axe analysis runs accessibility checks against `wcag2a`, `wcag2aa`, `wcag21aa`, and `section508` standards.
+The Terra service integrates [axe accessibility](https://github.com/dequelabs/axe-core) and screenshot comparison testing commands into the test environment. Invoking the axe engine will perform a static analysis of the entire document and dom structure.
+
+A list of available commands can be viewed [here](../about#test-utilities).
 
 ## Options
 
 ### selector
 
-An optional selector can be configured in the `serviceOptions` to specify the element to be captured when taking a screenshot. Accessibility testing ignores this option and always tests the entire document.
+An optional selector can be configured in the `serviceOptions` to specify the default element to be captured when taking a screenshot. Accessibility testing ignores this option and always tests the entire document.
 
 Type: `string`
 

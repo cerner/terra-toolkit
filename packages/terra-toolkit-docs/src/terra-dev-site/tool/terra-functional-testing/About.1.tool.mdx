@@ -63,19 +63,19 @@ The following example will run the test suite a total of four times. Once for ea
 
 ## Browser Capabilities
 
-<Notice variant="important" ariaLevel="3">
-  Internet Explorer can only be enabled when running against a remote selenium grid. Internet Explorer is not available locally within docker.
-</Notice>
-
 The following browsers are supported:
 
 - Chrome
 - Firefox
 - Internet Explorer
 
-By default, Chrome is the only browser enabled when running locally against a containerized docker environment. If a selenium grid is specified all three browsers will be enabled by default.
+Chrome is enabled by default when running locally against the docker container.
 
 To target a list of browsers that are different than the default use the `browsers` cli option:
+
+<Notice variant="important" ariaLevel="3">
+  Internet Explorer can only be enabled when running against a remote selenium grid. Internet Explorer is not available within the docker container.
+</Notice>
 
 ```json
 "scripts": {
@@ -85,6 +85,10 @@ To target a list of browsers that are different than the default use the `browse
 
 To run against a remote selenium grid:
 
+<Notice variant="important" ariaLevel="3">
+  Chrome, Firefox, and Internet Explorer are all enabled by default when running against a remove selenium grid.
+</Notice>
+
 ```json
 "scripts": {
   "test:wdio": "terra wdio --gridUrl grid.test.example.com"
@@ -93,7 +97,7 @@ To run against a remote selenium grid:
 
 ## Form Factors
 
-By default, all tests will be run against the `huge` form factor. Tests can be executed in the following form factors:
+Tests can be executed in the following form factors:
 
 | Size     | Width | Height |
 |----------|-------|--------|
@@ -105,6 +109,10 @@ By default, all tests will be run against the `huge` form factor. Tests can be e
 | enormous | 1500  | 768    |
 
 To specify a list of form factors use the cli option:
+
+<Notice variant="important" ariaLevel="3">
+  If no form factor is specified all tests will be run against the `huge` form factor. 
+</Notice>
 
 ```json
 "scripts": {
@@ -134,10 +142,6 @@ Service options are configurable by extending the wdio.conf.js file. These optio
 
 ### selector
 
-<Notice variant="important" ariaLevel="3">
-  This selector is used as the default screenshot selector for Terra.validates.element and Terra.validates.screenshot.
-</Notice>
-
 Specifies the default element to be captured when taking a screenshot.
 
 Type: `string`
@@ -145,6 +149,10 @@ Type: `string`
 Required: `false`
 
 Default: `[data-terra-test-content] *:first-child`
+
+<Notice variant="important" ariaLevel="3">
+  This selector is used as the default screenshot selector for Terra.validates.element and Terra.validates.screenshot.
+</Notice>
 
 ```js
 const { config } = require('@cerner/terra-functional-testing');
@@ -158,10 +166,6 @@ exports.config = config;
 
 ### seleniumVersion
 
-<Notice variant="caution" ariaLevel="3">
-  The selenium version is only applied when running tests against a docker container. This option does not change the version on a remote selenium grid. Keep this in mind if your tests run against a remote selenium grid on a CI system.
-</Notice>
-
 Specifies the [docker selenium](https://github.com/SeleniumHQ/docker-selenium/tree/selenium-3) version used within the docker container.
 
 Type: `string`
@@ -169,6 +173,10 @@ Type: `string`
 Required: `false`
 
 Default: `3.14.0-helium`
+
+<Notice variant="caution" ariaLevel="3">
+  The selenium version is only applied when running tests against a docker container. This option does not change the version on a remote selenium grid. Keep this in mind if your tests run against a remote selenium grid on a CI system.
+</Notice>
 
 ```js
 const { config } = require('@cerner/terra-functional-testing');
