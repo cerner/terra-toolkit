@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Added
+  * Added documentation in terra-functional-testing to describe how visual regression determines screenshot dimensions.
+
 ## 1.8.3 - (March 23, 2021)
 
 * Added

@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Removed
+  * Removed log message for out of range elements in screenshot because there are valid cases to have out of range elements.
+
 ## 1.0.3 - (March 23, 2021)
 
 * Added
