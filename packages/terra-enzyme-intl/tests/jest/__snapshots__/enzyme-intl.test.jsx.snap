@@ -5,12 +5,12 @@ exports[`mountWithIntl using FormattedMessage should match the snapshot 1`] = `
   foo="bar"
 >
   <div>
-    <Component
+    <FormattedMessage
       id="TerraEnzymeIntl.helloWorld"
     >
       TerraEnzymeIntl.helloWorld
-    </Component>
-    <Component
+    </FormattedMessage>
+    <FormattedMessage
       id="TerraEnzymeIntl.buttonText"
     >
       <button
@@ -18,7 +18,7 @@ exports[`mountWithIntl using FormattedMessage should match the snapshot 1`] = `
       >
         TerraEnzymeIntl.buttonText
       </button>
-    </Component>
+    </FormattedMessage>
     {
   "foo": "bar"
 }
@@ -88,12 +88,12 @@ exports[`mountWithIntl with a wrapping component should match the snapshot 1`] =
   foo="bar"
 >
   <div>
-    <Component
+    <FormattedMessage
       id="TerraEnzymeIntl.helloWorld"
     >
       TerraEnzymeIntl.helloWorld
-    </Component>
-    <Component
+    </FormattedMessage>
+    <FormattedMessage
       id="TerraEnzymeIntl.buttonText"
     >
       <button
@@ -101,7 +101,7 @@ exports[`mountWithIntl with a wrapping component should match the snapshot 1`] =
       >
         TerraEnzymeIntl.buttonText
       </button>
-    </Component>
+    </FormattedMessage>
     {
   "foo": "bar"
 }
@@ -139,14 +139,14 @@ exports[`renderWithIntl using injectIntl should match the snapshot 1`] = `
 
 exports[`renderWithIntl with a wrapping component should match the snapshot 1`] = `
 <div>
-  <FormattedMessage
+  <MemoizedFormattedMessage
     id="TerraEnzymeIntl.helloWorld"
   />
-  <FormattedMessage
+  <MemoizedFormattedMessage
     id="TerraEnzymeIntl.buttonText"
   >
     <Component />
-  </FormattedMessage>
+  </MemoizedFormattedMessage>
   {
   "foo": "bar"
 }
@@ -155,14 +155,14 @@ exports[`renderWithIntl with a wrapping component should match the snapshot 1`] 
 
 exports[`shallowWithIntl using FormattedMessage should match the snapshot 1`] = `
 <div>
-  <FormattedMessage
+  <MemoizedFormattedMessage
     id="TerraEnzymeIntl.helloWorld"
   />
-  <FormattedMessage
+  <MemoizedFormattedMessage
     id="TerraEnzymeIntl.buttonText"
   >
     <Component />
-  </FormattedMessage>
+  </MemoizedFormattedMessage>
   {
   "foo": "bar"
 }

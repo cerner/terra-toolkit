@@ -5,6 +5,9 @@
 * Fixed
   * Fixed packageName in terra-functional-testing for output files
 
+* Added
+  * Added a main index file to export the wdio.conf.js configuration file
+
 * Removed
   * Removed log message for out of range elements in screenshot because there are valid cases to have out of range elements.
 
