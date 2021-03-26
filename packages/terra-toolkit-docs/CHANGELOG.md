@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+  * Updated terra-functional-testing documentation to add additional information to the about page and individual services
+
 * Added
   * Added documentation in terra-functional-testing to describe how visual regression determines screenshot dimensions.
 

@@ -395,7 +395,7 @@ Update any references to the previous `wdio.conf.js`:
 ```diff
 // wdio.conf.js
 - const wdioConfig = require('terra-toolkit/config/wdio/wdio.conf');
-+ const { config } = require('@cerner/terra-functional-testing/lib/config/wdio.conf');
++ const { config } = require('@cerner/terra-functional-testing');
 
 - module.exports = wdioConfig;
 + exports.config = config;
@@ -433,7 +433,7 @@ Choose a spec file to uplift and limit the test run to only that file.
 
 ```js
 // wdio.conf.js
-const { config } = require('@cerner/terra-functional-testing/lib/config/wdio.conf');
+const { config } = require('@cerner/terra-functional-testing');
 
 config.specs = [
   '/tests/wdio/path/example-spec',

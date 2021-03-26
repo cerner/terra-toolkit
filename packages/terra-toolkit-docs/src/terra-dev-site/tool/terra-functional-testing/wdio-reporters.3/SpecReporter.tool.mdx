@@ -1,3 +1,47 @@
 # Spec Reporter
 
-The Spec Reporter writes test results to file in JSON format and is enabled by default in the `terra-functional-testing` wdio configuration.
+The spec reporter is a custom reporter plugin that aggregates test data and writes the results to file. The generated results file will contain all relevant metadata for the test run in JSON format.
+
+Example Output:
+
+```json
+{
+  "packageName": "terra-example-project",
+  "theme": "terra-default-theme",
+  "locale": "en",
+  "formFactor": "large",
+  "capabilities": {
+    "browserName": "chrome",
+    "platform": "Linux",
+    "version": "69.0.3497.100"
+  },
+  "specs": [
+    {
+      "spec": "terra-example-project/tests/wdio/terra-example-spec.js",
+      "start": "2021-03-25T15:35:27.650Z",
+      "end": "2021-03-25T15:35:27.723Z",
+      "suites": [
+        {
+          "title": "Example Describe",
+          "fullTitle": "Example Describe",
+          "duration": 3,
+          "start": "2021-03-25T15:35:27.653Z",
+          "end": "2021-03-25T15:35:27.656Z",
+          "tests": [
+            {
+              "title": "should pass the assertion",
+              "fullTitle": "Example Describe should pass the assertion",
+              "duration": 3,
+              "start": "2021-03-25T15:35:27.653Z",
+              "end": "2021-03-25T15:35:27.656Z",
+              "state": "passed"
+            }
+          ],
+          "suites": []
+        }
+      ],
+      "tests": []
+    }
+  ]
+}
+```
