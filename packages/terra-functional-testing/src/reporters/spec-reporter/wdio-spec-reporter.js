@@ -122,9 +122,9 @@ class SpecReporter extends WDIOReporter {
     }
     const filepath = `${process.cwd()}${path.sep}package.json`;
     if (fs.existsSync(filepath)) {
-        const jsonString = fs.readFileSync(filepath)
-        const packagejson = JSON.parse(jsonString)
-        return packagejson.name;
+      const jsonString = fs.readFileSync(filepath);
+      const packagejson = JSON.parse(jsonString);
+      return packagejson.name;
     }
     return process.cwd().split(path.sep).pop();
   }
