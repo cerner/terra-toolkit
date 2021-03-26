@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Fixed
+  * Fixed packageName in terra-functional-testing for output files
+
 * Removed
   * Removed log message for out of range elements in screenshot because there are valid cases to have out of range elements.
 
