@@ -79,4 +79,13 @@ Terra.describeViewports('Terra.validates', ['small', 'large'], () => {
       expect(() => Terra.validates.element('invalid selector', { selector: 'invalid-selector' })).toThrow(errorMessage);
     });
   });
+
+  describe('element out of bound', () => {
+    it('should capture screenshot at document size', () => {
+      browser.url('/element-out-of-bound.html');
+
+      Terra.validates.screenshot('out of bound left content', { selector: '#out-of-bound-left-content' });
+      Terra.validates.screenshot('out of bound right content', { selector: '#out-of-bound-right-content' });
+    });
+  });
 });

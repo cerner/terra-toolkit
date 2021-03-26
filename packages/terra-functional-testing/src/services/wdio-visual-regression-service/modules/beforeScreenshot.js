@@ -5,7 +5,7 @@ const scrollbars = require('../scripts/scrollbars');
 const modifyElements = require('../scripts/modifyElements');
 const triggerResize = require('../scripts/triggerResize');
 
-const logger = new Logger('[wdio-visual-regression-service:beforeScreenshot]');
+const logger = new Logger({ prefix: '[wdio-visual-regression-service:beforeScreenshot]' });
 
 /**
  * Helper method to prepare the dom for a screenshot by removing scroll bars, hiding and/or removing any elements

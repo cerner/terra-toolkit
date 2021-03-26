@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+* Added
+  * Added documentation in terra-functional-testing to describe how visual regression determines screenshot dimensions.
+
+## 1.8.3 - (March 23, 2021)
+
+* Added
+  * Added documentation for jest-config-terra.
+
 ## 1.8.2 - (March 9, 2021)
 
 * Changed

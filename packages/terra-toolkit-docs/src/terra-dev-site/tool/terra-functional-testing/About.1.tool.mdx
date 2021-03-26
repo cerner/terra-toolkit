@@ -167,7 +167,7 @@ it('should override a rule configuration', () => {
 
 ## Validating element
 
-A screenshot can be captured at any given point inside an `it` block in a test. The captured screenshot will be used as a reference artifact. Element validation is done by comparing the reference screenshot against the screenshot captured in future test runs at the same point in the test.
+A screenshot can be captured at any given point inside an `it` block in a test. The element(s) being captured in the screenshot is determined by the provided selector option or the default `[data-terra-test-content]` selector if one is not provided. If part or all of the selector or any of its children are rendered outside the bounds of the current viewport, only what is within the viewport will be captured and what is outside the viewport will be clipped. The captured screenshot will be used as a reference artifact. Element validation is done by comparing the reference screenshot against the screenshot captured in future test runs at the same point in the test.
 
 ### Terra.validates.screenshot
 

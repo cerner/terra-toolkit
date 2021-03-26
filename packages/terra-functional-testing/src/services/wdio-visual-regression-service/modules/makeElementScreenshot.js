@@ -5,7 +5,7 @@ const afterScreenshot = require('./afterScreenshot');
 const groupBoundingRect = require('../utils/groupBoundingRect');
 const getBoundingRects = require('../scripts/getBoundingRects');
 
-const logger = new Logger('[wdio-visual-regression-service:makeDocumentScreenshot]');
+const logger = new Logger({ prefix: '[wdio-visual-regression-service:makeDocumentScreenshot]' });
 
 /**
  * Captures a screenshot of a given element if the element is within the viewport dimensions.
