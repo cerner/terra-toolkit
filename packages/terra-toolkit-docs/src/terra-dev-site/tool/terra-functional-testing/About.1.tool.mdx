@@ -111,7 +111,7 @@ Tests can be executed in the following form factors:
 To specify a list of form factors use the cli option:
 
 <Notice variant="important" ariaLevel="3">
-  If no form factor is specified all tests will be run against the `huge` form factor. 
+  If no form factor is specified all tests will be run against the huge form factor.
 </Notice>
 
 ```json
@@ -192,11 +192,11 @@ exports.config = config;
 
 Test utilities are available to help write tests. These utilities are accessed using the `Terra` global object.
 
-## Describe Helpers
+### Describe Helpers
 
 The describe helpers are an alias for the top level `describe` block used within spec files. The describe helpers provide useful features for limiting a set of tests to specific form factors, locales, and themes.
 
-### Terra.describeViewports
+#### Terra.describeViewports
 
 <Notice variant="important" ariaLevel="3">
   We recommended using Terra.describeTests instead of Terra.describeViewports. The same features in Terra.describeViewports can be achieved with Terra.describeTests.
@@ -215,7 +215,7 @@ Terra.describeViewports(title, [viewports], fn);
 ```
 
 <Notice variant="caution" ariaLevel="3">
-  Describe helpers should not be nested.
+  Describe helpers should not be nested within other describe helpers.
 </Notice>
 
 ```js
@@ -240,7 +240,7 @@ Terra.describeViewports('Describe viewports title', ['small'], () => {
 });
 ```
 
-### Terra.describeTests
+#### Terra.describeTests
 
 The `Terra.describeTests` helper extends the `Terra.describeViewports` helper by additionally filtering tests by locale and theme. Tests within this helper will only be executed if each of the form factors, locales, and themes listed in the options match those defined in the configurations for the current test run. If no form factors, locales, or themes are provided as options, then all tests under this helper will qualify to run in any form factor, locale, or theme.
 
@@ -259,6 +259,10 @@ Terra.describeTests(title, options, fn);
 
 The following tests will only be ran for the locales, themes, and form factors provided:
 
+<Notice variant="caution" ariaLevel="3">
+  The describe helper should not be nested inside of another describe helper.
+</Notice>
+
 ```js
 const testOptions = {
   formFactors: ['tiny', 'huge'],
@@ -274,7 +278,7 @@ Terra.describeTests('Describe tests', testOptions, () => {
 });
 ```
 
-## Accessibility Testing
+### Accessibility Testing
 
 The testing library integrates [axe-core](https://github.com/dequelabs/axe-core) into the testing framework to help automate accessibility testing along side functional testing.
 
@@ -284,12 +288,14 @@ Axe will analyze the entire document when run and report accessibility violation
   Please note that not all accessibility testing can be automated. Axe provides a lightweight static analysis of the entire document to catch common accessibility violations, but it is the responsibility of each team and application to do thorough accessibility and functional testing manually when necessary.
 </Notice>
 
-### Terra.validates.accessibility
+#### Terra.validates.accessibility
 
 The validates accessibility command will run accessibility checks on the entire document. If accessibility violations are found the test step will fail. It is recommended to run accessibility checks at various steps in a functional workflow to check for violations at different stages of the application.
 
 <Notice variant="caution" ariaLevel="3">
+
   The accessibility assertion must be used within an `it` block.
+
 </Notice>
 
 ```js
@@ -313,16 +319,18 @@ it('should override a rule configuration', () => {
 });
 ```
 
-## Screenshot Testing
+### Screenshot Testing
 
 A screenshot can be captured at any given point inside an `it` block in a test. The element(s) being captured in the screenshot is determined by the provided selector option or the default `[data-terra-test-content]` selector if one is not provided. If part or all of the selector or any of its children are rendered outside the bounds of the current viewport, only what is within the viewport will be captured and what is outside the viewport will be clipped. The captured screenshot will be used as a reference artifact. Element validation is done by comparing the reference screenshot against the screenshot captured in future test runs at the same point in the test.
 
-### Terra.validates.screenshot
+#### Terra.validates.screenshot
 
 Invoking the assertion will capture a screenshot at the time it is invoked. If no reference screenshot exists, one will be created in the `reference` folder with the given screenshot name. If such reference screenshot already exists, the new screenshot will be compared with the reference screenshot to validate visually that they are within the mismatch tolerance. If the mismatch exceeds the tolerance, the test step will fail and a screenshot showing the difference will be generated.
 
 <Notice variant="caution" ariaLevel="3">
+
   The screenshot assertion must be used within an `it` block and a screenshot name must be provided.
+
 </Notice>
 
 ```js
@@ -340,8 +348,8 @@ base_directory/test_spec_directory/test_spec_name/__snapshots__/(reference|lates
 ```
 
 The screenshot assertion accepts an optional second argument with the following keys.
-  * `selector` - the element selector to use to capture the element for screenshot comparison. The default selector is `data-terra-test-content`.
-  * `mismatchTolerance` - the number between 0 and 100 that defines the degree of mismatch to consider two images as identical. Increasing this value will decrease level of test coverage.
+  * `selector` - The element selector to use to capture the element for screenshot comparison. The default selector is `data-terra-test-content`.
+  * `mismatchTolerance` - The number between 0 and 100 that defines the degree of mismatch to consider two images as identical. Increasing this value will decrease level of test coverage. The default mismatch tolerance is 0.01.
 
 ```js
 it('should validate the screenshot with options', () => {
@@ -356,12 +364,14 @@ it('should validate the screenshot with options', () => {
 });
 ```
 
-### Terra.validates.element
+#### Terra.validates.element
 
 The validates element assertion performs both accessibility and screenshot assertions.
 
 <Notice variant="caution" ariaLevel="3">
-  The validates element assertion must be used within an `it` block.
+
+  The validates element assertion must be used within an `it` block and a screenshot name must be provided.
+
 </Notice>
 
 ```js
@@ -373,9 +383,9 @@ it('should validate the element', () => {
 ```
 
 The element assertion accepts an optional second argument with the following keys.
-  * `rules` - the accessibility [rules](https://github.com/dequelabs/axe-core/blob/master/doc/rule-descriptions.md) to use as overrides if necessary.
-  * `selector` - the element selector to use to capture the element for screenshot comparison. The default selector is `data-terra-test-content`.
-  * `mismatchTolerance` - the number between 0 and 100 that defines the degree of mismatch to consider two images as identical. Increasing this value will decrease level of test coverage.
+  * `rules` - The accessibility [rules](https://github.com/dequelabs/axe-core/blob/master/doc/rule-descriptions.md) to use as overrides if necessary.
+  * `selector` - The element selector to use to capture the element for screenshot comparison. The default selector is `data-terra-test-content`.
+  * `mismatchTolerance` - The number between 0 and 100 that defines the degree of mismatch to consider two images as identical. Increasing this value will decrease level of test coverage. The default mismatch tolerance is 0.01.
 
 ```js
 it('should validate the element with options', () => {
@@ -391,9 +401,9 @@ it('should validate the element with options', () => {
 });
 ```
 
-## Additional Utilities
+### Additional Utilities
 
-### Terra.hideInputCaret
+#### Terra.hideInputCaret
 
 An editable text field in focus will have a blinking caret. Often times this blinking caret causes inconsistent test failures due to the blinking of the caret during screenshot capture. This situation can be avoided by using `Terra.hideInputCaret` to set the CSS caret color to of the element to be transparent. This method must be placed in a `before`, `beforeEach`, or `it` block or it will not be ran. This method accepts a selector string as an argument and will only apply to the first selector if multiple are found. The caret will automatically be hidden for body every time the page loads or refreshes.
 
@@ -406,7 +416,7 @@ it('should hide the caret', () => {
 });
 ```
 
-### Terra.setApplicationLocale
+#### Terra.setApplicationLocale
 
 Use `Terra.setApplicationLocale` to update a terra application's locale on a case by case basis; particularly useful for testing locale changes on a deployed application. This method accepts a string containing the `locale` to update to.
 

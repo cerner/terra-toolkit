@@ -2,7 +2,7 @@ import { Notice } from '@cerner/terra-docs';
 
 # Selenium Docker Service
 
-The selenium docker service initializes a docker-compose for running functional [WebDriverIO](https://webdriver.io/) tests against a containerized [selenium docker](https://github.com/SeleniumHQ/docker-selenium) environment.
+The selenium docker service initializes a containerized [selenium docker](https://github.com/SeleniumHQ/docker-selenium) environment for running functional [WebDriverIO](https://webdriver.io/) tests.
 
 By default, the selenium grid will be deployed locally on the host machine running on port 4444. Google Chrome and Firefox are available on the docker container. Internet Explorer can be enable when using a remote selenium grid that has it available.
 
@@ -29,24 +29,6 @@ Example:
 ```js
 "scripts": {
   "test:wdio": "terra wdio --disableSeleniumService"
-}
-```
-
-### keepAliveSeleniumDockerService
-
-A flag to keep the selenium docker service running upon test completion.
-
-Type: `bool`
-
-Required: `false`
-
-Default: `false`
-
-Example:
-
-```js
-"scripts": {
-  "test:wdio": "terra wdio --keepAliveSeleniumDockerService"
 }
 ```
 
