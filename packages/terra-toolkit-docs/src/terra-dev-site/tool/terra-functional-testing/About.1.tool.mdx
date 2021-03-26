@@ -45,7 +45,6 @@ package.json
 | --externalPort                   | number  |                         | The port mapping from the host to the container.                                                                                          |
 | --formFactors                    | array   |                         | A list of form factors for the test run. One of tiny, small, medium, large, huge, or enormous                                             |
 | --gridUrl                        | string  |                         | The remote selenium grid address.                                                                                                         |
-| --keepAliveSeleniumDockerService | boolean | false                   | Determines to keep the selenium docker service running upon test completion.                                                              |
 | --locales                        | array   | en                      | A list of language locales for the test run.                                                                                              |
 | --site                           | string  |                         | A file path to a static directory of assets. When defined, an express server will launch to serve the assets and disable running webpack. |
 | --spec                           | array   |                         | A list of spec file paths.                                                                                                                |
@@ -150,7 +149,7 @@ Required: `false`
 
 Default: `[data-terra-test-content] *:first-child`
 
-<Notice variant="important" ariaLevel="3">
+<Notice variant="important" ariaLevel="4">
   This selector is used as the default screenshot selector for Terra.validates.element and Terra.validates.screenshot.
 </Notice>
 
@@ -174,7 +173,7 @@ Required: `false`
 
 Default: `3.14.0-helium`
 
-<Notice variant="caution" ariaLevel="3">
+<Notice variant="caution" ariaLevel="4">
   The selenium version is only applied when running tests against a docker container. This option does not change the version on a remote selenium grid. Keep this in mind if your tests run against a remote selenium grid on a CI system.
 </Notice>
 
@@ -198,7 +197,7 @@ The describe helpers are an alias for the top level `describe` block used within
 
 #### Terra.describeViewports
 
-<Notice variant="important" ariaLevel="3">
+<Notice variant="important" ariaLevel="5">
   We recommended using Terra.describeTests instead of Terra.describeViewports. The same features in Terra.describeViewports can be achieved with Terra.describeTests.
 </Notice>
 
@@ -214,7 +213,7 @@ The `Terra.describeViewports` utility defines a list of form factors the tests a
 Terra.describeViewports(title, [viewports], fn);
 ```
 
-<Notice variant="caution" ariaLevel="3">
+<Notice variant="caution" ariaLevel="5">
   Describe helpers should not be nested within other describe helpers.
 </Notice>
 
@@ -259,7 +258,7 @@ Terra.describeTests(title, options, fn);
 
 The following tests will only be ran for the locales, themes, and form factors provided:
 
-<Notice variant="caution" ariaLevel="3">
+<Notice variant="caution" ariaLevel="5">
   The describe helper should not be nested inside of another describe helper.
 </Notice>
 
@@ -284,7 +283,7 @@ The testing library integrates [axe-core](https://github.com/dequelabs/axe-core)
 
 Axe will analyze the entire document when run and report accessibility violations. The following [tags](https://github.com/dequelabs/axe-core/blob/develop/doc/API.md#axe-core-tags) are enabled: `wcag2a`, `wcag2aa`, `wcag21aa`, and `section508`. Each tag has an associated list of [rules](https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md) that will be checked against the document when axe is run.
 
-<Notice variant="important" ariaLevel="3">
+<Notice variant="important" ariaLevel="4">
   Please note that not all accessibility testing can be automated. Axe provides a lightweight static analysis of the entire document to catch common accessibility violations, but it is the responsibility of each team and application to do thorough accessibility and functional testing manually when necessary.
 </Notice>
 
@@ -292,7 +291,7 @@ Axe will analyze the entire document when run and report accessibility violation
 
 The validates accessibility command will run accessibility checks on the entire document. If accessibility violations are found the test step will fail. It is recommended to run accessibility checks at various steps in a functional workflow to check for violations at different stages of the application.
 
-<Notice variant="caution" ariaLevel="3">
+<Notice variant="caution" ariaLevel="4">
 
   The accessibility assertion must be used within an `it` block.
 
@@ -327,7 +326,7 @@ A screenshot can be captured at any given point inside an `it` block in a test. 
 
 Invoking the assertion will capture a screenshot at the time it is invoked. If no reference screenshot exists, one will be created in the `reference` folder with the given screenshot name. If such reference screenshot already exists, the new screenshot will be compared with the reference screenshot to validate visually that they are within the mismatch tolerance. If the mismatch exceeds the tolerance, the test step will fail and a screenshot showing the difference will be generated.
 
-<Notice variant="caution" ariaLevel="3">
+<Notice variant="caution" ariaLevel="5">
 
   The screenshot assertion must be used within an `it` block and a screenshot name must be provided.
 
@@ -368,7 +367,7 @@ it('should validate the screenshot with options', () => {
 
 The validates element assertion performs both accessibility and screenshot assertions.
 
-<Notice variant="caution" ariaLevel="3">
+<Notice variant="caution" ariaLevel="5">
 
   The validates element assertion must be used within an `it` block and a screenshot name must be provided.
 
