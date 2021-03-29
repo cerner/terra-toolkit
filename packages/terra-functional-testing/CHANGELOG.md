@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.0.4 - (March 29, 2021)
+
 * Fixed
   * Fixed packageName in terra-functional-testing for output files
 
