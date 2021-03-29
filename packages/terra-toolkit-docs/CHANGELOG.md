@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.8.4 - (March 29, 2021)
+
 * Changed
   * Updated terra-functional-testing documentation to add additional information to the about page and individual services
 
