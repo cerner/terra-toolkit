@@ -1,4 +1,5 @@
-const fs = require('fs');
+const fs = require('fs-extra');
+const path = require('path');
 const SpecReporter = require('../../../../src/reporters/spec-reporter/wdio-spec-reporter');
 const testData1 = require('../../../fixtures/reporters/test-data-1.json');
 
@@ -64,8 +65,25 @@ describe('Spec Reporter', () => {
     });
 
     it('should return the correct package name for a spec file', () => {
+      jest.spyOn(fs, 'existsSync').mockImplementationOnce(() => true);
+      const jsonreturn = {
+        name: 'terra-test',
+      };
+      jest.spyOn(fs, 'readJsonSync').mockImplementationOnce(() => jsonreturn);
+
       const packageName = SpecReporter.getPackageName('/terra-toolkit/tests/wdio/specs.js');
 
+      expect(fs.existsSync).toHaveBeenCalled();
+      expect(fs.readJsonSync).toHaveBeenCalledWith(path.join(process.cwd(), 'package.json'));
+      expect(packageName).toEqual('terra-test');
+    });
+
+    it('should return the running directories name if it can not find package.json', () => {
+      jest.spyOn(fs, 'existsSync').mockImplementationOnce(() => false);
+
+      const packageName = SpecReporter.getPackageName('/terra-toolkit/tests/wdio/specs.js');
+
+      expect(fs.existsSync).toHaveBeenCalled();
       expect(packageName).toEqual('terra-toolkit');
     });
   });

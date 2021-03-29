@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('fs-extra');
 const path = require('path');
 const WDIOReporter = require('@wdio/reporter').default;
 const getOutputDir = require('./get-output-dir');
@@ -120,7 +120,11 @@ class SpecReporter extends WDIOReporter {
     if (spec.indexOf(`${path.sep}packages${path.sep}`) > -1) {
       return spec.split(`${path.sep}packages${path.sep}`).pop().split(path.sep)[0];
     }
-
+    const packageJsonPath = path.join(process.cwd(), 'package.json');
+    if (fs.existsSync(packageJsonPath)) {
+      const packagejson = fs.readJsonSync(packageJsonPath);
+      return packagejson.name;
+    }
     return process.cwd().split(path.sep).pop();
   }
 

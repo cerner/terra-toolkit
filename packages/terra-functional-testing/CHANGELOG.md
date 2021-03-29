@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Fixed
+  * Fixed packageName in terra-functional-testing for output files
+
 * Added
   * Added a main index file to export the wdio.conf.js configuration file
 
