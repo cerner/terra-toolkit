@@ -34,7 +34,7 @@ const getResultsFileName = (options) => {
     theme,
   } = options;
 
-  const keys = [locale, theme, formFactor, browser, packageName].filter(key => !!key);
+  const keys = [locale, theme, formFactor, browser, packageName.split('/').pop()].filter(key => !!key);
 
   return `results-${keys.join('-')}.json`;
 };
