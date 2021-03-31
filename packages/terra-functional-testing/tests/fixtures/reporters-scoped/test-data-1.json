@@ -1,0 +1,75 @@
+{
+  "title": "(root)",
+  "suites": [
+    {
+      "type": "suite:start",
+      "start": "2020-10-27T01:14:33.430Z",
+      "_duration": 214,
+      "uid": "suite-0-0",
+      "cid": "0-0",
+      "title": "Example Describe 1",
+      "fullTitle": "Example Describe 1",
+      "tests": [],
+      "hooks": [],
+      "suites": [
+        {
+          "type": "suite:start",
+          "start": "2020-10-27T01:14:33.430Z",
+          "_duration": 213,
+          "uid": "suite-1-0",
+          "cid": "0-0",
+          "title": "Example Describe 2",
+          "fullTitle": "Example Describe 1 Example Describe 2",
+          "tests": [
+            {
+              "type": "test",
+              "start": "2020-10-27T01:14:33.431Z",
+              "_duration": 101,
+              "uid": "test-10-0",
+              "cid": "0-0",
+              "title": "example it 1",
+              "fullTitle": "Example Describe 1 Example Describe 2 example it 1",
+              "output": [],
+              "retries": 0,
+              "state": "passed",
+              "end": "2020-10-27T01:14:33.532Z"
+            },
+            {
+              "type": "test",
+              "start": "2020-10-27T01:14:33.532Z",
+              "_duration": 53,
+              "uid": "test-10-1",
+              "cid": "0-0",
+              "title": "example it 2",
+              "fullTitle": "Example Describe 1 Example Describe 2 example it 2",
+              "output": [],
+              "retries": 0,
+              "state": "passed",
+              "end": "2020-10-27T01:14:33.585Z"
+            },
+            {
+              "type": "test",
+              "start": "2020-10-27T01:14:33.586Z",
+              "_duration": 57,
+              "uid": "test-10-2",
+              "cid": "0-0",
+              "title": "example it 3",
+              "fullTitle": "Example Describe 1 Example Describe 2 example it 3",
+              "output": [],
+              "retries": 0,
+              "state": "passed",
+              "end": "2020-10-27T01:14:33.643Z"
+            }
+          ],
+          "hooks": [],
+          "suites": [],
+          "hooksAndTests": [],
+          "end": "2020-10-27T01:14:33.643Z"
+        }
+      ],
+      "hooksAndTests": [],
+      "end": "2020-10-27T01:14:33.644Z"
+    }
+  ],
+  "tests": []
+}
