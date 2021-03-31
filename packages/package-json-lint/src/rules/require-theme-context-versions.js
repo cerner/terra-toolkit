@@ -82,7 +82,7 @@ module.exports = {
     const currentProblems = [];
     versionSet.forEach(({ name, versionRange }) => {
       const dependencyVersion = dependencies[name];
-      if (dependencyVersion && !semver.satisfies(dependencyVersion, versionRange)) {
+      if (dependencyVersion && !semver.satisfies(semver.minVersion(dependencyVersion), versionRange)) {
         currentProblems.push(`${name}@${dependencyVersion} does not satisfy the theme context range requirement: ${name}@${versionRange}`);
       }
     });

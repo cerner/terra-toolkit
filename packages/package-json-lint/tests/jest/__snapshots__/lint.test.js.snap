@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`lint loops through all of the packages and lints them with all of the rules in the config 1`] = `
+"[4mpath2[24m
+[33m⚠[39m [90m[2mrequire-no-terra-base-peer-dependency-versions[22m[39m - node: [90m[1mdependencies[22m[39m - [33mmessage1[39m
+[31m✖[39m [90m[2mrequire-theme-context-versions[22m[39m - node: [90m[1mdependencies[22m[39m - [1m[31mmessage3[39m[22m
+
+[4mTotals[24m
+[31m[1m1 error[22m[39m
+[33m[1m1 warning[22m[39m
+"
+`;

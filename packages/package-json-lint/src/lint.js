@@ -1,37 +1,9 @@
 const fs = require('fs-extra');
-const callbackGlob = require('glob');
-const util = require('util');
-const path = require('path');
-const ignore = require('ignore');
 const rules = require('./rules');
 const PackageIssues = require('./issues/PackageIssues');
 const AggregateIssues = require('./issues/AggregateIssues');
-
-const IGNORE_FILE_PATH = path.join(process.cwd(), '.packagejsonlintignore');
-
-const glob = util.promisify(callbackGlob);
-
-const getIgnorer = async () => {
-  const ignoreFileContents = await fs.readFile(IGNORE_FILE_PATH, 'utf8');
-  return ignore().add(ignoreFileContents);
-};
-
-const getPathsForPackages = async () => {
-  const paths = await glob(path.join(process.cwd(), '**', 'package.json'), { ignore: [path.join('**', 'node_modules', '**')] });
-  const ignorer = await getIgnorer();
-  return paths.filter(currentPath => !ignorer.ignores(path.relative(process.cwd(), currentPath)));
-};
-
-const getConfig = async () => ({
-  rules: {
-    'require-no-terra-base-peer-dependency-versions': 'error',
-    'require-theme-context-versions': 'error',
-  },
-});
-
-const getRuleConfig = ({ ruleInformation }) => (
-  { severity: ruleInformation }
-);
+const { getRuleConfig, getConfig } = require('./config');
+const { getPathsForPackages } = require('./utilities');
 
 const lint = ({ packageJsonData, config }) => {
   const issues = [];
