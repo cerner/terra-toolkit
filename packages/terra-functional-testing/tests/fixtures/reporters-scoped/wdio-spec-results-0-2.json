@@ -1,0 +1,102 @@
+{
+  "spec": "/terra-toolkit/packages/terra-functional-testing/tests/wdio/viewport-helpers-spec.js",
+  "start": "2021-01-22T00:15:30.392Z",
+  "end": "2021-01-22T00:15:31.559Z",
+  "capabilities": {
+    "browserName": "chrome",
+    "platform": "Linux",
+    "version": "69.0.3497.100"
+  },
+  "packageName": "@cerner/terra-functional-testing",
+  "suites": [
+    {
+      "title": "[small]",
+      "fullTitle": "[small]",
+      "duration": 587,
+      "start": "2021-01-22T00:15:30.396Z",
+      "end": "2021-01-22T00:15:30.983Z",
+      "tests": [],
+      "suites": [
+        {
+          "title": "Viewport Helpers",
+          "fullTitle": "[small] Viewport Helpers",
+          "duration": 345,
+          "start": "2021-01-22T00:15:30.527Z",
+          "end": "2021-01-22T00:15:30.872Z",
+          "tests": [
+            {
+              "title": "creates tiny and huge screens",
+              "fullTitle": "[small] Viewport Helpers creates tiny and huge screens",
+              "duration": 202,
+              "start": "2021-01-22T00:15:30.527Z",
+              "end": "2021-01-22T00:15:30.729Z",
+              "state": "passed"
+            },
+            {
+              "title": "shrink the height",
+              "fullTitle": "[small] Viewport Helpers shrink the height",
+              "duration": 131,
+              "start": "2021-01-22T00:15:30.729Z",
+              "end": "2021-01-22T00:15:30.860Z",
+              "state": "passed"
+            },
+            {
+              "title": "viewport check",
+              "fullTitle": "[small] Viewport Helpers viewport check",
+              "duration": 11,
+              "start": "2021-01-22T00:15:30.861Z",
+              "end": "2021-01-22T00:15:30.872Z",
+              "state": "passed"
+            }
+          ],
+          "suites": []
+        }
+      ]
+    },
+    {
+      "title": "[large]",
+      "fullTitle": "[large]",
+      "duration": 513,
+      "start": "2021-01-22T00:15:30.983Z",
+      "end": "2021-01-22T00:15:31.496Z",
+      "tests": [],
+      "suites": [
+        {
+          "title": "Viewport Helpers",
+          "fullTitle": "[large] Viewport Helpers",
+          "duration": 283,
+          "start": "2021-01-22T00:15:31.100Z",
+          "end": "2021-01-22T00:15:31.383Z",
+          "tests": [
+            {
+              "title": "creates tiny and huge screens",
+              "fullTitle": "[large] Viewport Helpers creates tiny and huge screens",
+              "duration": 141,
+              "start": "2021-01-22T00:15:31.100Z",
+              "end": "2021-01-22T00:15:31.241Z",
+              "state": "passed"
+            },
+            {
+              "title": "shrink the height",
+              "fullTitle": "[large] Viewport Helpers shrink the height",
+              "duration": 128,
+              "start": "2021-01-22T00:15:31.242Z",
+              "end": "2021-01-22T00:15:31.370Z",
+              "state": "passed"
+            },
+            {
+              "title": "viewport check",
+              "fullTitle": "[large] Viewport Helpers viewport check",
+              "duration": 13,
+              "start": "2021-01-22T00:15:31.370Z",
+              "end": "2021-01-22T00:15:31.383Z",
+              "state": "passed"
+            }
+          ],
+          "suites": []
+        }
+      ]
+    }
+  ],
+  "tests": []
+}
