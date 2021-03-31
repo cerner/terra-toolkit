@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+## 1.8.4 - (March 29, 2021)
+
+* Changed
+  * Updated terra-functional-testing documentation to add additional information to the about page and individual services
+
+* Added
+  * Added documentation in terra-functional-testing to describe how visual regression determines screenshot dimensions.
+
+## 1.8.3 - (March 23, 2021)
+
+* Added
+  * Added documentation for jest-config-terra.
+
 ## 1.8.2 - (March 9, 2021)
 
 * Changed
@@ -9,6 +22,9 @@
 
 * Fixed
   * Add missing link to webpack-config-terra docs.
+
+* Added
+  * Added documentation for describeTests helper in terra-functional-testing
 
 ## 1.8.1 - (March 1, 2021)
 

@@ -4,7 +4,7 @@ const lodashGet = require('lodash.get');
 const { Logger } = require('@cerner/terra-cli');
 const BaseCompare = require('./BaseCompare');
 
-const logger = new Logger('[wdio-visual-regression-service:LocalCompare]');
+const logger = new Logger({ prefix: '[wdio-visual-regression-service:LocalCompare]' });
 
 class LocalCompare extends BaseCompare {
   /**

@@ -1,39 +1,40 @@
+import { Notice } from '@cerner/terra-docs';
+
 # Selenium Docker Service
 
-The selenium docker service initializes a docker swarm for running functional [WebDriverIO](https://webdriver.io/) tests against a containerized [selenium docker](https://github.com/SeleniumHQ/docker-selenium) environment.
+The selenium docker service initializes a containerized [selenium docker](https://github.com/SeleniumHQ/docker-selenium) environment for running functional [WebDriverIO](https://webdriver.io/) tests.
 
-By default, the selenium grid will be deployed locally on the host machine running on port 4444. Google Chrome and Firefox browsers are available on the grid.
-
-## Installation
-
-The selenium docker service should be installed as a development dependency.
-
-```bash
-npm install --save-dev @cerner/terra-functional-testing
-```
-
-## Configuration
-
-To use the service it must be added to the services array in the `wdio.conf.js` file.
-
-```js
-// wdio.conf.js
-const SeleniumDockerService = require('@cerner/terra-functional-testing/lib/services/wdio-selenium-docker-service');
-
-export.config = {
-    // ...
-    services: [
-        [SeleniumDockerService]
-    ],
-    // ...
-};
-```
+By default, the selenium grid will be deployed locally on the host machine running on port 4444. Google Chrome and Firefox are available on the docker container. Internet Explorer can be enable when using a remote selenium grid that has it available.
 
 ## Options
 
+The selenium docker service options are configured via the [test runner CLI options](../about#options).
+
+### disableSeleniumService
+
+A flag to disable the selenium docker service for the test run.
+
+Type: `bool`
+
+Required: `false`
+
+Default: `false`
+
+Example:
+
+<Notice variant="important" ariaLevel="3">
+  The selenium docker service is disabled automatically by the test runner if a remote selenium grid is specified.
+</Notice>
+
+```js
+"scripts": {
+  "test:wdio": "terra wdio --disableSeleniumService"
+}
+```
+
 ### seleniumVersion
 
-The docker selenium image version to run tests against.
+The docker selenium image version to run tests against. This option is configured via the `wdio.conf.js`.
 
 Type: `string`
 
@@ -45,14 +46,11 @@ Example:
 
 ```js
 // wdio.conf.js
-const SeleniumDockerService = require('@cerner/terra-functional-testing/lib/services/wdio-selenium-docker-service');
+const { config } = require('@cerner/terra-functional-testing');
 
-export.config = {
-    // ...
-    services: [[SeleniumDockerService]],
-    serviceOptions: {
-        seleniumVersion: '3.14.0-helium',
-    }
-    // ...
+config.serviceOptions = {
+  seleniumVersion: '3.141.59-20210311',
 };
+
+exports.config = config;
 ```

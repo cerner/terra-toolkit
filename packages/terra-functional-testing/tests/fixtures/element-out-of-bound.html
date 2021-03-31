@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="<%= htmlWebpackPlugin.options.lang %>" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Element Out Of Bound Test </title>
+    <style>
+      div#main-content {
+        overflow-x: hidden;
+      }
+      div#out-of-bound-left-content {
+        border: 1px solid black;
+        transform: translate3d(-50%, 0, 0);
+      }
+      div#out-of-bound-right-content {
+        border: 1px solid black;
+        transform: translate3d(50%, 0, 0);
+      }
+    </style>
+  </head>
+  <body>
+    <div data-terra-test-content id="main-content">
+      <h1>Main content</h1>
+      <div id="out-of-bound-left-content">
+        <h1>This element is out of bound to the left of the document</h1>
+      </div>
+      <div id="out-of-bound-right-content">
+        <h1>This element is out of bound to the right of the document</h1>
+      </div>
+    </div>
+  </body>
+</html>

@@ -38,15 +38,15 @@ Terra.describeViewports('Terra.validates', ['small', 'large'], () => {
     });
 
     it('should require a screenshot name', () => {
-      let caughtError;
+      const errorMessage = '[terra-functional-testing:screenshot] Terra.validate.screenshot requires a unique test name as the first argument.';
 
-      try {
-        Terra.validates.screenshot();
-      } catch (error) {
-        caughtError = error;
-      }
+      expect(() => Terra.validates.screenshot()).toThrow(errorMessage);
+    });
 
-      expect(caughtError.message).toEqual('[terra-functional-testing:screenshot] Terra.validate.screenshot requires a unique test name as the first argument.');
+    it('should fail with invalid selector', () => {
+      const errorMessage = '[wdio-visual-regression-service:makeDocumentScreenshot] Failed to capture the element using the "invalid-selector" selector. Either update the test document to include this selector or use a different selector that exists on the document.';
+
+      expect(() => Terra.validates.screenshot('invalid selector', { selector: 'invalid-selector' })).toThrow(errorMessage);
     });
   });
 
@@ -68,15 +68,24 @@ Terra.describeViewports('Terra.validates', ['small', 'large'], () => {
     });
 
     it('should require a screenshot name', () => {
-      let caughtError;
+      const errorMessage = '[terra-functional-testing:element] Terra.validate.element requires a unique test name as the first argument.';
 
-      try {
-        Terra.validates.element();
-      } catch (error) {
-        caughtError = error;
-      }
+      expect(() => Terra.validates.element()).toThrow(errorMessage);
+    });
 
-      expect(caughtError.message).toEqual('[terra-functional-testing:element] Terra.validate.element requires a unique test name as the first argument.');
+    it('should fail with invalid selector', () => {
+      const errorMessage = '[wdio-visual-regression-service:makeDocumentScreenshot] Failed to capture the element using the "invalid-selector" selector. Either update the test document to include this selector or use a different selector that exists on the document.';
+
+      expect(() => Terra.validates.element('invalid selector', { selector: 'invalid-selector' })).toThrow(errorMessage);
+    });
+  });
+
+  describe('element out of bound', () => {
+    it('should capture screenshot at document size', () => {
+      browser.url('/element-out-of-bound.html');
+
+      Terra.validates.screenshot('out of bound left content', { selector: '#out-of-bound-left-content' });
+      Terra.validates.screenshot('out of bound right content', { selector: '#out-of-bound-right-content' });
     });
   });
 });

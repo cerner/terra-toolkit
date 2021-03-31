@@ -1,24 +1,37 @@
+import { Notice } from '@cerner/terra-docs';
 import { Badge } from '@cerner/terra-functional-testing/package.json?dev-site-package';
 
 <Badge />
 
 # Terra Functional Testing
 
-The terra-functional-testing library is a utility for developing automation tests. The library extends the [WebdriverIO Framework](https://webdriver.io/) to facilitate automating accessibility and functional testing for Terra projects.
+The terra-functional-testing library is a utility for developing automation tests. The library extends [WebdriverIO](https://v6.webdriver.io/) to facilitate automating accessibility and functional testing for Terra projects.
 
-## Getting Started
+## System Requirements
 
-To get started ensure [docker](https://www.docker.com/) has been installed. The terra-functional-testing library uses docker to setup and run tests in a containerized environment.
+- [Node.js](http://nodejs.org/) Install at least v10.24.0. Due to requirements of fibers used within the project install no greater than lts/erbium (v12).
+- [Docker](https://www.docker.com/) Install docker. Docker is used to setup and run tests in a containerized environment.
 
-Install with npm:
+We strongly recommend using [nvm](https://github.com/nvm-sh/nvm) for installing node versions.
+
+## Installation
+
+Install @cerner/terra-functional-testing and @cerner/terra-cli as development dependencies with npm:
 
 ```
-npm install --save-dev @cerner/terra-functional-testing
+npm install --save-dev @cerner/terra-functional-testing @cerner/terra-cli
 ```
 
-## Test Runner
+## Usage
 
-A test runner is provided for local development and should be invoked using the [terra-cli](https://engineering.cerner.com/terra-ui/dev_tools/cerner/terra-cli/about).
+A test runner is provided for local development. The test runner is invoked via the [terra-cli](https://engineering.cerner.com/terra-ui/dev_tools/cerner/terra-cli/about).
+
+package.json
+```json
+"scripts": {
+  "test:wdio": "terra wdio"
+}
+```
 
 ### Options
 
@@ -32,7 +45,6 @@ A test runner is provided for local development and should be invoked using the 
 | --externalPort                   | number  |                         | The port mapping from the host to the container.                                                                                          |
 | --formFactors                    | array   |                         | A list of form factors for the test run. One of tiny, small, medium, large, huge, or enormous                                             |
 | --gridUrl                        | string  |                         | The remote selenium grid address.                                                                                                         |
-| --keepAliveSeleniumDockerService | boolean | false                   | Determines to keep the selenium docker service running upon test completion.                                                              |
 | --locales                        | array   | en                      | A list of language locales for the test run.                                                                                              |
 | --site                           | string  |                         | A file path to a static directory of assets. When defined, an express server will launch to serve the assets and disable running webpack. |
 | --spec                           | array   |                         | A list of spec file paths.                                                                                                                |
@@ -42,18 +54,49 @@ A test runner is provided for local development and should be invoked using the 
 
 The following example will run the test suite a total of four times. Once for each permutation of the specified locales and form factors.
 
-package.json
 ```json
-{
-  "scripts": {
-    "wdio": "npm run terra wdio --locales en fr --formFactors tiny huge"
-  }
+"scripts": {
+  "test:wdio": "terra wdio --locales en fr --formFactors tiny huge"
+}
+```
+
+## Browser Capabilities
+
+The following browsers are supported:
+
+- Chrome
+- Firefox
+- Internet Explorer
+
+Chrome is enabled by default when running locally against the docker container.
+
+To target a list of browsers that are different than the default use the `browsers` cli option:
+
+<Notice variant="important" ariaLevel="3">
+  Internet Explorer can only be enabled when running against a remote selenium grid. Internet Explorer is not available within the docker container.
+</Notice>
+
+```json
+"scripts": {
+  "test:wdio": "terra wdio --browsers firefox"
+}
+```
+
+To run against a remote selenium grid:
+
+<Notice variant="important" ariaLevel="3">
+  Chrome, Firefox, and Internet Explorer are all enabled by default when running against a remote selenium grid.
+</Notice>
+
+```json
+"scripts": {
+  "test:wdio": "terra wdio --gridUrl grid.test.example.com"
 }
 ```
 
 ## Form Factors
 
-Tests can be executed in any of the following supported form factors:
+Tests can be executed in the following form factors:
 
 | Size     | Width | Height |
 |----------|-------|--------|
@@ -64,33 +107,195 @@ Tests can be executed in any of the following supported form factors:
 | huge     | 1300  | 768    |
 | enormous | 1500  | 768    |
 
-### Terra.describeViewports
+To specify a list of form factors use the cli option:
 
-`Terra.describeViewports` is a top level `describe` block for the spec file. All tests within this block will be executed for each given viewport(s). This block should not be nested within itself. If tests need to run against different viewports, then they should be created under a separate top level `Terra.describeViewports` block. Only the above Terra defined viewports are supported. 'huge' is the default viewport. If a form factor is defined in the wdio configuration or environment variable, that form factor will supersede the viewports defined in this block. This block accepts these arguments in the following order:
-- {string} title - The `describe` block title.
-- {string[]} viewports - The list of Terra viewports to test.
-- {function} - the test function to execute for each viewport.
+<Notice variant="important" ariaLevel="3">
+  If no form factor is specified all tests will be run against the huge form factor.
+</Notice>
+
+```json
+"scripts": {
+  "test:wdio": "terra wdio --formFactors tiny small enormous"
+}
+```
+
+## Configuration
+
+The test runner ships with a default [wdio.conf.js](https://github.com/cerner/terra-toolkit/blob/main/packages/terra-functional-testing/src/config/wdio.conf.js). Options can be configured by extending the default configuration file.
+
+To extend the default configuration create a `wdio.conf.js` file at the root of your project and apply the desired options.
+
+wdio.conf.js
+```js
+const { config } = require('@cerner/terra-functional-testing');
+
+// Stop the test run if there is a test failure.
+config.bail = 1;
+
+exports.config = config;
+```
+
+## Service Options
+
+Service options are configurable by extending the wdio.conf.js file. These options are applied for every test run.
+
+### selector
+
+Specifies the default element to be captured when taking a screenshot.
+
+Type: `string`
+
+Required: `false`
+
+Default: `[data-terra-test-content] *:first-child`
+
+<Notice variant="important" ariaLevel="4">
+  This selector is used as the default screenshot selector for Terra.validates.element and Terra.validates.screenshot.
+</Notice>
 
 ```js
-Terra.describeViewports('Test viewports', ['tiny', 'huge'], () => {
-  it('test tiny and huge screens', () => {
+const { config } = require('@cerner/terra-functional-testing');
+
+config.serviceOptions = {
+  selector: '#root',
+};
+
+exports.config = config;
+```
+
+### seleniumVersion
+
+Specifies the [docker selenium](https://github.com/SeleniumHQ/docker-selenium/tree/selenium-3) version used within the docker container.
+
+Type: `string`
+
+Required: `false`
+
+Default: `3.14.0-helium`
+
+<Notice variant="caution" ariaLevel="4">
+  The selenium version is only applied when running tests against a docker container. This option does not change the version on a remote selenium grid. Keep this in mind if your tests run against a remote selenium grid on a CI system.
+</Notice>
+
+```js
+const { config } = require('@cerner/terra-functional-testing');
+
+config.serviceOptions = {
+  seleniumVersion: '3.141.59-20210311',
+};
+
+exports.config = config;
+```
+
+## Test Utilities
+
+Test utilities are available to help write tests. These utilities are accessed using the `Terra` global object.
+
+### Describe Helpers
+
+The describe helpers are an alias for the top level `describe` block used within spec files. The describe helpers provide useful features for limiting a set of tests to specific form factors, locales, and themes.
+
+#### Terra.describeViewports
+
+<Notice variant="important" ariaLevel="5">
+  We recommended using Terra.describeTests instead of Terra.describeViewports. The same features in Terra.describeViewports can be achieved with Terra.describeTests.
+</Notice>
+
+The `Terra.describeViewports` utility defines a list of form factors the tests are enabled for. By default, all tests will be run against each provided viewport. If a form factor is specified via the cli the describe viewpoint helper works as a filter and only allows the tests to execute if they match the current form factor.
+
+```js
+/**
+ * Executes all tests for each defined viewport.
+ * @param {string} title - The describe block title.
+ * @param {string[]} viewports - A list of viewports. [tiny, small, medium, large, huge, enormous]
+ * @param {function} fn - The block of tests to execute against each viewport.
+ */
+Terra.describeViewports(title, [viewports], fn);
+```
+
+<Notice variant="caution" ariaLevel="5">
+  Describe helpers should not be nested within other describe helpers.
+</Notice>
+
+```js
+// The following example will scope the tests to run only for the `tiny` and `huge` form factors. The tests will not run for any other form factor.
+
+Terra.describeViewports('Describe viewports title', ['tiny', 'huge'], () => {
+  it('should test tiny and huge screens', () => {
     browser.url('/testing/route/');
-    Terra.validates.screenshot();
+
+    Terra.validates.screenshot('describe viewports');
+  });
+});
+
+// Multiple describe helpers can be used sequentially in the same spec file as long as they are not nested.
+
+Terra.describeViewports('Describe viewports title', ['small'], () => {
+  it('should test small screens', () => {
+    browser.url('/testing/route/small/');
+
+    Terra.validates.screenshot('describe viewports');
   });
 });
 ```
 
-## Accessibility Testing
+#### Terra.describeTests
+
+The `Terra.describeTests` helper extends the `Terra.describeViewports` helper by additionally filtering tests by locale and theme. Tests within this helper will only be executed if each of the form factors, locales, and themes listed in the options match those defined in the configurations for the current test run. If no form factors, locales, or themes are provided as options, then all tests under this helper will qualify to run in any form factor, locale, or theme.
+
+```js
+/**
+ * Executes all tests for each defined set of form factors, locales, and themes.
+ * @param {string} title - The describe block title.
+ * @param {Object} options - An object containing arrays of formFactors, locales, and themes that the block of tests will only qualify to execute in.
+ * @param {string} options.formFactors - The form factors that the block of tests only execute in.
+ * @param {string} options.locales -  The language locales that the block of tests only execute in.
+ * @param {string} options.themes - The themes that the block of tests only execute in.
+ * @param {function} fn - The block of tests to execute based on the defined form factor, locale, and theme.
+ */
+Terra.describeTests(title, options, fn);
+```
+
+The following tests will only be ran for the locales, themes, and form factors provided:
+
+<Notice variant="caution" ariaLevel="5">
+  The describe helper should not be nested inside of another describe helper.
+</Notice>
+
+```js
+const testOptions = {
+  formFactors: ['tiny', 'huge'],
+  locales: ['en', 'fr'],
+  themes: ['terra-default-theme', 'orion-fusion-theme']
+}
+
+Terra.describeTests('Describe tests', testOptions, () => {
+  it('should execute only if form factor is tiny or huge, locale is en or fr, and theme is terra-default-theme or orion-fusion-theme', () => {
+    browser.url('/testing/route/');
+    Terra.validates.element('describe tests');
+  });
+});
+```
+
+### Accessibility Testing
 
 The testing library integrates [axe-core](https://github.com/dequelabs/axe-core) into the testing framework to help automate accessibility testing along side functional testing.
 
-Axe will analyze the entire document when run and report accessibility violations. The following [tags](https://github.com/dequelabs/axe-core/blob/develop/doc/API.md#axe-core-tags) are enabled `wcag2a`, `wcag2aa`, `wcag21aa`, and `section508`. Each tag has an associated list of [rules](https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md) that will be checked against the document when axe is run.
+Axe will analyze the entire document when run and report accessibility violations. The following [tags](https://github.com/dequelabs/axe-core/blob/develop/doc/API.md#axe-core-tags) are enabled: `wcag2a`, `wcag2aa`, `wcag21aa`, and `section508`. Each tag has an associated list of [rules](https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md) that will be checked against the document when axe is run.
 
-Please note that not all accessibility testing can be automated. Axe provides a lightweight static analysis of the entire document to catch common accessibility violations, but it is the responsibility of each team and application to do thorough accessibility and functional testing manually when necessary.
+<Notice variant="important" ariaLevel="4">
+  Please note that not all accessibility testing can be automated. Axe provides a lightweight static analysis of the entire document to catch common accessibility violations, but it is the responsibility of each team and application to do thorough accessibility and functional testing manually when necessary.
+</Notice>
 
-### Terra.validates.accessibility
+#### Terra.validates.accessibility
 
-The accessibility assertion should only be invoked inside an `it` block. Invoking the assertion will run accessibility checks on the entire document. If accessibility violations are found the test step will fail. It is recommended to run accessibility checks at various steps in a functional workflow to check for violations at different stages of the application.
+The validates accessibility command will run accessibility checks on the entire document. If accessibility violations are found the test step will fail. It is recommended to run accessibility checks at various steps in a functional workflow to check for violations at different stages of the application.
+
+<Notice variant="caution" ariaLevel="4">
+
+  The accessibility assertion must be used within an `it` block.
+
+</Notice>
 
 ```js
 it('should report no accessibility violations', () => {
@@ -113,15 +318,19 @@ it('should override a rule configuration', () => {
 });
 ```
 
-## Validating element
+### Screenshot Testing
 
-A screenshot can be captured at any given point inside an `it` block in a test. The captured screenshot will be used as a reference artifact. Element validation is done by comparing the reference screenshot against the screenshot captured in future test runs at the same point in the test.
+A screenshot can be captured at any given point inside an `it` block in a test. The element(s) being captured in the screenshot is determined by the provided selector option or the default `[data-terra-test-content]` selector if one is not provided. If part or all of the selector or any of its children are rendered outside the bounds of the current viewport, only what is within the viewport will be captured and what is outside the viewport will be clipped. The captured screenshot will be used as a reference artifact. Element validation is done by comparing the reference screenshot against the screenshot captured in future test runs at the same point in the test.
 
-### Terra.validates.screenshot
+#### Terra.validates.screenshot
 
-The screenshot assertion should only be invoked inside an `it` block. Invoking the assertion will capture a screenshot at the time it is invoked. If no reference screenshot exists, one will be created in the `reference` folder with the given screenshot name. If such reference screenshot already exists, the new screenshot will be compared with the reference screenshot to validate visually that they are within the mismatch tolerance. If the mismatch exceeds the tolerance, the test step will fail and a screenshot showing the difference will be generated.
+Invoking the assertion will capture a screenshot at the time it is invoked. If no reference screenshot exists, one will be created in the `reference` folder with the given screenshot name. If such reference screenshot already exists, the new screenshot will be compared with the reference screenshot to validate visually that they are within the mismatch tolerance. If the mismatch exceeds the tolerance, the test step will fail and a screenshot showing the difference will be generated.
 
-A name must be provided to be used as the screenshot name.
+<Notice variant="caution" ariaLevel="5">
+
+  The screenshot assertion must be used within an `it` block and a screenshot name must be provided.
+
+</Notice>
 
 ```js
 it('should validate the screenshot', () => {
@@ -138,8 +347,8 @@ base_directory/test_spec_directory/test_spec_name/__snapshots__/(reference|lates
 ```
 
 The screenshot assertion accepts an optional second argument with the following keys.
-  * `selector` - the element selector to use to capture the element for screenshot comparison. The default selector is `data-terra-test-content`.
-  * `mismatchTolerance` - the number between 0 and 100 that defines the degree of mismatch to consider two images as identical. Increasing this value will decrease level of test coverage.
+  * `selector` - The element selector to use to capture the element for screenshot comparison. The default selector is `data-terra-test-content`.
+  * `mismatchTolerance` - The number between 0 and 100 that defines the degree of mismatch to consider two images as identical. Increasing this value will decrease level of test coverage. The default mismatch tolerance is 0.01.
 
 ```js
 it('should validate the screenshot with options', () => {
@@ -154,9 +363,15 @@ it('should validate the screenshot with options', () => {
 });
 ```
 
-### Terra.validates.element
+#### Terra.validates.element
 
-The element assertion basically performs both `Terra.validates.accessibility` and `Terra.validates.screenshot` assertions. Like these two assertions the element assertion should also only be invoked inside an `it` block.
+The validates element assertion performs both accessibility and screenshot assertions.
+
+<Notice variant="caution" ariaLevel="5">
+
+  The validates element assertion must be used within an `it` block and a screenshot name must be provided.
+
+</Notice>
 
 ```js
 it('should validate the element', () => {
@@ -167,9 +382,9 @@ it('should validate the element', () => {
 ```
 
 The element assertion accepts an optional second argument with the following keys.
-  * `rules` - the accessibility [rules](https://github.com/dequelabs/axe-core/blob/master/doc/rule-descriptions.md) to use as overrides if necessary.
-  * `selector` - the element selector to use to capture the element for screenshot comparison. The default selector is `data-terra-test-content`.
-  * `mismatchTolerance` - the number between 0 and 100 that defines the degree of mismatch to consider two images as identical. Increasing this value will decrease level of test coverage.
+  * `rules` - The accessibility [rules](https://github.com/dequelabs/axe-core/blob/master/doc/rule-descriptions.md) to use as overrides if necessary.
+  * `selector` - The element selector to use to capture the element for screenshot comparison. The default selector is `data-terra-test-content`.
+  * `mismatchTolerance` - The number between 0 and 100 that defines the degree of mismatch to consider two images as identical. Increasing this value will decrease level of test coverage. The default mismatch tolerance is 0.01.
 
 ```js
 it('should validate the element with options', () => {
@@ -185,9 +400,9 @@ it('should validate the element with options', () => {
 });
 ```
 
-## Input Caret
+### Additional Utilities
 
-### Terra.hideInputCaret
+#### Terra.hideInputCaret
 
 An editable text field in focus will have a blinking caret. Often times this blinking caret causes inconsistent test failures due to the blinking of the caret during screenshot capture. This situation can be avoided by using `Terra.hideInputCaret` to set the CSS caret color to of the element to be transparent. This method must be placed in a `before`, `beforeEach`, or `it` block or it will not be ran. This method accepts a selector string as an argument and will only apply to the first selector if multiple are found. The caret will automatically be hidden for body every time the page loads or refreshes.
 
@@ -200,9 +415,8 @@ it('should hide the caret', () => {
 });
 ```
 
-## Locale Update (Case by Case)
+#### Terra.setApplicationLocale
 
-### Terra.setApplicationLocale
 Use `Terra.setApplicationLocale` to update a terra application's locale on a case by case basis; particularly useful for testing locale changes on a deployed application. This method accepts a string containing the `locale` to update to.
 
 ```js
