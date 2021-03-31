@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Added
+  * Error screenshot functionality.
+
 ## 1.0.4 - (March 29, 2021)
 
 * Fixed
@@ -9,7 +12,6 @@
 
 * Added
   * Added a main index file to export the wdio.conf.js configuration file
-  * Error screenshot functionality.
 
 * Removed
   * Removed log message for out of range elements in screenshot because there are valid cases to have out of range elements.

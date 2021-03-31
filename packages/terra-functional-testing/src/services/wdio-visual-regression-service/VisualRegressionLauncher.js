@@ -63,25 +63,29 @@ class VisualRegressionLauncher {
   /**
    * Function to be executed after a test in Mocha.
    * @param {Object} test - test details
+   * @param {Object} context - test context
+   * @param {Object} results - results object
+   * @param {boolean} results.passed - indicates if the test passed.
    */
   afterTest(test, _, { passed }) {
-    const { config } = browser;
-    const { formFactor } = config.launcherOptions;
-    const screenshotContext = {
-      desiredCapabilities: this.context.desiredCapabilities,
-      suite: this.currentSuite,
-      test: this.currentTest,
-      meta: {
-        currentFormFactor: formFactor,
-      },
-      options: {
-        name: test.title,
-      },
-    };
-
-    const screenshotContextCleaned = lodashPickby(screenshotContext, lodashIdentity);
-    const { errorPath } = this.compare.getScreenshotPaths(screenshotContextCleaned);
     if (!passed) {
+      const { config } = browser;
+      const { formFactor } = config.launcherOptions;
+      const screenshotContext = {
+        desiredCapabilities: this.context.desiredCapabilities,
+        suite: this.currentSuite,
+        test: this.currentTest,
+        meta: {
+          currentFormFactor: formFactor,
+        },
+        options: {
+          name: test.title,
+        },
+      };
+
+      const screenshotContextCleaned = lodashPickby(screenshotContext, lodashIdentity);
+      const { errorPath } = this.compare.getScreenshotPaths(screenshotContextCleaned);
+
       fse.ensureFileSync(errorPath);
       browser.saveScreenshot(errorPath);
     }
