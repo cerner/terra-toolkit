@@ -81,9 +81,7 @@ class VisualRegressionLauncher {
 
     const screenshotContextCleaned = lodashPickby(screenshotContext, lodashIdentity);
     const { errorPath } = this.compare.getScreenshotPaths(screenshotContextCleaned);
-    if (passed) {
-      fse.removeSync(errorPath);
-    } else {
+    if (!passed) {
       fse.ensureFileSync(errorPath);
       browser.saveScreenshot(errorPath);
     }

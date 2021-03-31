@@ -119,9 +119,9 @@ describe('VisualRegressionLauncher', () => {
       service.compare = {
         getScreenshotPaths: jest.fn().mockReturnValue({ errorPath: '/fake/path' }),
       };
-      fse.removeSync = jest.fn();
       service.afterTest({ test: { name: 'name' } }, {}, { passed: true });
-      expect(fse.removeSync).toHaveBeenCalled();
+      expect(fse.ensureFileSync).not.toHaveBeenCalled();
+      expect(global.browser.saveScreenshot).not.toHaveBeenCalled();
       expect(service.currentTest).toBeNull();
     });
 
@@ -131,7 +131,6 @@ describe('VisualRegressionLauncher', () => {
       service.compare = {
         getScreenshotPaths: jest.fn().mockReturnValue({ errorPath }),
       };
-      fse.removeSync = jest.fn();
       service.afterTest({ test: { name: 'name' } }, {}, { passed: false });
       expect(fse.ensureFileSync).toHaveBeenCalledWith(errorPath);
       expect(global.browser.saveScreenshot).toHaveBeenCalledWith(errorPath);
