@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.0.5 - (March 31, 2021)
+
 * Fixed
   * Fixed an issue in the spec reporter where the package name from scoped mono repos could result in an improper file path.
 
