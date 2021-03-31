@@ -4,6 +4,7 @@ const getOutputDir = require('../../../../src/reporters/spec-reporter/get-output
 const mergeResults = require('../../../../src/reporters/spec-reporter/merge-results');
 const cleanResults = require('../../../../src/reporters/spec-reporter/clean-results');
 const mergedResults = require('../../../fixtures/reporters/results-chrome-terra-functional-testing.json');
+const mergedResultsScoped = require('../../../fixtures/reporters-scoped/results-chrome-terra-functional-testing.json');
 
 jest.mock('../../../../src/reporters/spec-reporter/clean-results');
 jest.mock('../../../../src/reporters/spec-reporter/get-output-dir', () => (
@@ -41,5 +42,17 @@ describe('mergeResults', () => {
 
     expect(cleanResults).toHaveBeenCalled();
     expect(fs.writeFileSync).toHaveBeenCalledWith(expect.stringContaining('results-chrome-terra-functional-testing'), JSON.stringify(mergedResults, null, 2));
+  });
+
+  it('should write the merged results to file with scoped packaged name', () => {
+    jest.spyOn(fs, 'existsSync').mockImplementationOnce(() => true);
+    jest.spyOn(fs, 'writeFileSync').mockImplementationOnce(() => {});
+
+    getOutputDir.mockImplementationOnce(() => (path.resolve(__dirname, '../../../fixtures/reporters-scoped')));
+
+    mergeResults();
+
+    expect(cleanResults).toHaveBeenCalled();
+    expect(fs.writeFileSync).toHaveBeenCalledWith(expect.stringContaining('results-chrome-terra-functional-testing'), JSON.stringify(mergedResultsScoped, null, 2));
   });
 });
