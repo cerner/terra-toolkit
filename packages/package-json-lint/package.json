@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "@cerner/terra-cli": "^1.6.0",
+    "strip-ansi": "^6.0.0",
     "yargs": "^16.1.1"
   }
 }

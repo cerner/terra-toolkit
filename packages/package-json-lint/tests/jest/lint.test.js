@@ -4,6 +4,7 @@ jest.mock('../../src/config');
 jest.mock('../../src/utilities');
 
 const fs = require('fs-extra');
+const stripAnsi = require('strip-ansi');
 const rules = require('../../src/rules');
 const { getRuleConfig, getConfig } = require('../../src/config');
 const { getPathsForPackages } = require('../../src/utilities');
@@ -69,7 +70,7 @@ describe('lint', () => {
     rules['require-theme-context-versions'].lint.mockReturnValueOnce(new LintIssue({
       lintId: 'require-theme-context-versions', severity: 'error', node: 'dependencies', lintMessage: 'message3',
     }));
-    global.console.log.mockImplementation((message) => expect(message).toMatchSnapshot());
+    global.console.log.mockImplementation((message) => expect(stripAnsi(message)).toMatchSnapshot());
 
     await lint();
 
