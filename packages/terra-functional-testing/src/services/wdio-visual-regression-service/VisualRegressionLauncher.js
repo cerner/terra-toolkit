@@ -63,7 +63,6 @@ class VisualRegressionLauncher {
   /**
    * Function to be executed after a test in Mocha.
    * @param {Object} test - test details
-   * @param {Object} context - test context
    * @param {Object} results - results object
    * @param {boolean} results.passed - indicates if the test passed.
    */
