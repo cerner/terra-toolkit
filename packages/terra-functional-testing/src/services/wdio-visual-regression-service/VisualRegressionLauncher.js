@@ -63,6 +63,8 @@ class VisualRegressionLauncher {
   /**
    * Function to be executed after a test in Mocha.
    * @param {Object} test - test details
+   * @param {String} test.parent - test parent title
+   * @param {String} test.title - test title
    * @param {Object} results - results object
    * @param {boolean} results.passed - indicates if the test passed.
    */
@@ -78,7 +80,7 @@ class VisualRegressionLauncher {
           currentFormFactor: formFactor,
         },
         options: {
-          name: `${test.parent}_${test.title}`,
+          name: `${parent}_${title}`,
         },
       };
 
