@@ -79,7 +79,7 @@ class VisualRegressionLauncher {
           currentFormFactor: formFactor,
         },
         options: {
-          name: test.title,
+          name: `${test.parent}_${test.title}`,
         },
       };
 
