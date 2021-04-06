@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Added
+  * Error screenshot functionality.
+
 ## 1.0.5 - (March 31, 2021)
 
 * Fixed
