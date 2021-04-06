@@ -66,7 +66,7 @@ class VisualRegressionLauncher {
    * @param {Object} results - results object
    * @param {boolean} results.passed - indicates if the test passed.
    */
-  afterTest(test, _, { passed }) {
+  afterTest({ parent, title }, _, { passed }) {
     if (!passed) {
       const { config } = browser;
       const { formFactor } = config.launcherOptions;
