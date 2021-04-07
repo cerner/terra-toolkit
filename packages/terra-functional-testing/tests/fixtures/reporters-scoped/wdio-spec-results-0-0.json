@@ -1,0 +1,32 @@
+{
+  "spec": "/terra-toolkit/packages/terra-functional-testing/tests/wdio/dispatch-custom-event-spec.js",
+  "start": "2021-01-22T00:15:24.205Z",
+  "end": "2021-01-22T00:15:24.541Z",
+  "capabilities": {
+    "browserName": "chrome",
+    "platform": "Linux",
+    "version": "69.0.3497.100"
+  },
+  "packageName": "@cerner/terra-functional-testing",
+  "suites": [
+    {
+      "title": "dispatchCustomEvent",
+      "fullTitle": "dispatchCustomEvent",
+      "duration": 269,
+      "start": "2021-01-22T00:15:24.209Z",
+      "end": "2021-01-22T00:15:24.478Z",
+      "tests": [
+        {
+          "title": "sends a custom event that injects a string into a paragraph",
+          "fullTitle": "dispatchCustomEvent sends a custom event that injects a string into a paragraph",
+          "duration": 268,
+          "start": "2021-01-22T00:15:24.209Z",
+          "end": "2021-01-22T00:15:24.477Z",
+          "state": "passed"
+        }
+      ],
+      "suites": []
+    }
+  ],
+  "tests": []
+}

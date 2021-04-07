@@ -1,0 +1,95 @@
+import { Badge } from '@cerner/jest-config-terra/package.json?dev-site-package';
+
+<Badge />
+
+# Jest Config Terra
+
+This package provides Terra's recommended jest configuration.
+
+Features:
+* An extended Jsdom test environment that:
+  * provides a mock implementation for `matchMedia`.
+  * provides a mock implementation for `scrollIntoView`.
+  * Sets the dir tag on the html element.
+* Clears mocks after every test by default.
+* Sets up code coverage.
+* Specifies test matchers to not match on terra-dev-site files.
+* Supports mono repos using a 'packages' directory.
+* Maps css, scss, and svg files to the [identity-obj-proxy](https://github.com/keyz/identity-obj-proxy).
+* Maps terra-aggregate-translations locale files to a mock implementation. This removes the need to run terra-aggregate-translations prior to jest testing.
+
+
+## What is Jest
+
+"Jest is a delightful JavaScript Testing Framework with a focus on simplicity" - [Jest](https://jestjs.io/)
+
+## Installation
+
+To install the module:
+
+```shell
+npm install jest --save-dev
+npm install @cerner/jest-config-terra --save-dev
+```
+
+## Usage
+To extend `jest-config-terra` add a `jest.config.js` file to the root of your project, require `@cerner/jest-config-terra` and export the config. `jest-config-terra` does not support extending configuration in the package.json file.
+
+### jest.config.js
+
+```js
+const jestConfig = require('@cerner/jest-config-terra');
+
+module.exports = jestConfig;
+
+```
+## Adding configuration
+
+Sometimes it is necessary to add additional configuration. In those instances we've found the cleanest option is to spread the config on a new object and subsequently add overrides where appropriate. For instance this example will import regenerator runtime when setting up test files.
+
+```js
+const jestConfig = require('@cerner/jest-config-terra');
+
+module.exports = {
+  ...jestConfig,
+  setupFiles: [
+    'regenerator-runtime',
+  ],
+};
+
+```
+
+## Enzyme and Testing Library: React
+
+[Enzyme](https://enzymejs.github.io/enzyme/) and [Testing Library: React](https://testing-library.com/docs/react-testing-library/intro) are two popular packages intended to help test react components. `jest-config-terra` can support either and the choice of which package to use is left up to consumers. Testing Library: React requires no additional setup. An example of how to setup Enzyme can be seen below.
+
+### jest.config.js
+
+```js
+const jestConfig = require('@cerner/jest-config-terra');
+
+module.exports = {
+  ...jestConfig,
+  setupFiles: [
+    './jest.enzymeSetup.js',
+  ],
+  snapshotSerializers: [
+    'enzyme-to-json/serializer',
+  ],
+};
+```
+
+### jest.enzymeSetup.js
+
+```js
+// Make Enzyme functions available in all test files without importing
+/* eslint-disable import/no-extraneous-dependencies */
+import Enzyme, { mount, render, shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
+
+global.shallow = shallow;
+global.render = render;
+global.mount = mount;
+```

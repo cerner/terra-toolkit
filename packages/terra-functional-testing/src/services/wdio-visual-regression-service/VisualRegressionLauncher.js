@@ -1,6 +1,7 @@
 /* global browser */
 const lodashIdentity = require('lodash.identity');
 const lodashPickby = require('lodash.pickby');
+const fse = require('fs-extra');
 const { LocalCompare } = require('./compare');
 const makeElementScreenshot = require('./modules/makeElementScreenshot');
 const getTerraFormFactor = require('./modules/getTerraFormFactor');
@@ -62,8 +63,34 @@ class VisualRegressionLauncher {
   /**
    * Function to be executed after a test in Mocha.
    * @param {Object} test - test details
+   * @param {String} test.parent - test parent title
+   * @param {String} test.title - test title
+   * @param {Object} results - results object
+   * @param {boolean} results.passed - indicates if the test passed.
    */
-  afterTest() {
+  afterTest({ parent, title }, _, { passed }) {
+    if (!passed) {
+      const { config } = browser;
+      const { formFactor } = config.launcherOptions;
+      const screenshotContext = {
+        desiredCapabilities: this.context.desiredCapabilities,
+        suite: this.currentSuite,
+        test: this.currentTest,
+        meta: {
+          currentFormFactor: formFactor,
+        },
+        options: {
+          name: `${parent}_${title}`,
+        },
+      };
+
+      const screenshotContextCleaned = lodashPickby(screenshotContext, lodashIdentity);
+      const { errorPath } = this.compare.getScreenshotPaths(screenshotContextCleaned);
+
+      fse.ensureFileSync(errorPath);
+      browser.saveScreenshot(errorPath);
+    }
+
     this.currentTest = null;
   }
 

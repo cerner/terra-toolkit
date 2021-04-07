@@ -1,8 +1,10 @@
+import fse from 'fs-extra';
 import VisualRegressionLauncher from '../../../../src/services/wdio-visual-regression-service/VisualRegressionLauncher';
 import LocalCompare from '../../../../src/services/wdio-visual-regression-service/methods/LocalCompare';
 import getTerraFormFactor from '../../../../src/services/wdio-visual-regression-service/modules/getTerraFormFactor';
 
 jest.mock('../../../../src/services/wdio-visual-regression-service/modules/getTerraFormFactor');
+jest.mock('fs-extra');
 
 describe('VisualRegressionLauncher', () => {
   afterEach(() => {
@@ -89,6 +91,22 @@ describe('VisualRegressionLauncher', () => {
 
   describe('VisualRegressionLauncher Test hooks', () => {
     const service = new VisualRegressionLauncher({});
+    beforeAll(() => {
+      global.browser = {
+        execute: jest.fn(),
+        addCommand: jest.fn(),
+        saveScreenshot: jest.fn(),
+        config: {
+          launcherOptions: {
+            formFactor: 'small',
+          },
+        },
+      };
+    });
+
+    afterAll(() => {
+      global.browser = {};
+    });
 
     it('VisualRegressionLauncher.beforeTest hook', () => {
       expect(service.currentTest).toBeNull();
@@ -96,8 +114,26 @@ describe('VisualRegressionLauncher', () => {
       expect(service.currentTest).toEqual('test');
     });
 
-    it('VisualRegressionLauncher.afterTest hook', () => {
-      service.afterTest();
+    it('VisualRegressionLauncher.afterTest hook passed test', () => {
+      service.context = { desiredCapabilities: { browserName: 'chrome' } };
+      service.compare = {
+        getScreenshotPaths: jest.fn().mockReturnValue({ errorPath: '/fake/path' }),
+      };
+      service.afterTest({ test: { name: 'name' } }, {}, { passed: true });
+      expect(fse.ensureFileSync).not.toHaveBeenCalled();
+      expect(global.browser.saveScreenshot).not.toHaveBeenCalled();
+      expect(service.currentTest).toBeNull();
+    });
+
+    it('VisualRegressionLauncher.afterTest hook failed test', () => {
+      const errorPath = '/fake/path';
+      service.context = { desiredCapabilities: { browserName: 'chrome' } };
+      service.compare = {
+        getScreenshotPaths: jest.fn().mockReturnValue({ errorPath }),
+      };
+      service.afterTest({ test: { name: 'name' } }, {}, { passed: false });
+      expect(fse.ensureFileSync).toHaveBeenCalledWith(errorPath);
+      expect(global.browser.saveScreenshot).toHaveBeenCalledWith(errorPath);
       expect(service.currentTest).toBeNull();
     });
   });

@@ -2,7 +2,7 @@ const { Logger } = require('@cerner/terra-cli');
 const scrollbars = require('../scripts/scrollbars');
 const modifyElements = require('../scripts/modifyElements');
 
-const logger = new Logger('[wdio-visual-regression-service:afterScreenshot]');
+const logger = new Logger({ prefix: '[wdio-visual-regression-service:afterScreenshot]' });
 
 /**
  * Helper method to prepare the dom for a screenshot by removing scroll bars, hiding and/or removing any elements

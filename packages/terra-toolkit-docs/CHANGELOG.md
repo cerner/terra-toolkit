@@ -2,12 +2,40 @@
 
 ## Unreleased
 
+## 1.8.5 - (March 31, 2021)
+
+* Changed
+  * Minor dependency version bump
+
+## 1.8.4 - (March 29, 2021)
+
+* Changed
+  * Updated terra-functional-testing documentation to add additional information to the about page and individual services
+
+* Added
+  * Added documentation in terra-functional-testing to describe how visual regression determines screenshot dimensions.
+
+## 1.8.3 - (March 23, 2021)
+
+* Added
+  * Added documentation for jest-config-terra.
+
+## 1.8.2 - (March 9, 2021)
+
+* Changed
+  * Update terra-functional-testing docker service documentation to rename version to seleniumVersion
+
+* Fixed
+  * Add missing link to webpack-config-terra docs.
+
+* Added
+  * Added documentation for describeTests helper in terra-functional-testing
+
 ## 1.8.1 - (March 1, 2021)
 
 * Changed
   * Add @cerner/terra-functional-testing to dependencies
   * Update doc from `getCssProperty` to `getCSSProperty`
-  
 
 ## 1.8.0 - (February 25, 2021)
 

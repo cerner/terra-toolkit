@@ -1,6 +1,7 @@
 {
   "name": "@cerner/terra-functional-testing",
-  "version": "1.0.1",
+  "version": "1.0.5",
+  "main": "lib/index.js",
   "description": "A functional testing utility for applications built using Terra.",
   "publishConfig": {
     "access": "public"

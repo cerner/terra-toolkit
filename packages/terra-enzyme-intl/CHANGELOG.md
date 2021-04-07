@@ -2,8 +2,10 @@
 
 ## Unreleased
 
+## 4.2.1 - (March 29, 2021)
+
 * Changed
-  * Updated enzyme-intl jest snapshots again?
+  * Updated enzyme-intl jest snapshots again? And Again?
 
 ## 4.2.0 - (February 25, 2021)
 
