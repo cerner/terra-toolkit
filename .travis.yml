@@ -23,7 +23,7 @@ jobs:
         - npm run danger
         - npm run lint
         - npm run jest
-                # Prime the docker cache
+        # Prime the docker cache
         - docker-compose --file ./packages/terra-functional-testing/lib/docker/docker-compose.yml pull
         # Save docker cache
         - docker save -o docker_images/images.tar $(docker images -a -q)
@@ -64,4 +64,3 @@ stages:
   - mocha
   - name: publish & deploy
     if: type != pull_request
-
