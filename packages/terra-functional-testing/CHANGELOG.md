@@ -5,6 +5,9 @@
 * Added
   * Error screenshot functionality.
 
+* Changed
+  * Honor terra-theme.config.js file when no theme is specified in the test runner.
+
 ## 1.0.5 - (March 31, 2021)
 
 * Fixed

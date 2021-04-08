@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+  * Updated terra-functional-testing doc for the default theme.
+
 ## 1.8.5 - (March 31, 2021)
 
 * Changed
