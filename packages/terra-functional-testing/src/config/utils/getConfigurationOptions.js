@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const getCapabilities = require('./getCapabilities');
 const getIpAddress = require('./getIpAddress');
+const getDefaultThemeName = require('./getDefaultThemeName');
 
 const defaultWebpackPath = path.resolve(process.cwd(), 'webpack.config.js');
 
@@ -36,7 +37,8 @@ const getConfigurationOptions = (options) => {
       locale,
       port: assetServerPort,
       site,
-      theme,
+      ...(theme ? { theme } : { theme: getDefaultThemeName() }),
+      overrideTheme: theme,
       updateScreenshots,
       ...fs.existsSync(defaultWebpackPath) && { webpackConfig: defaultWebpackPath },
     },

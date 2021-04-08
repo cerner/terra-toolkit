@@ -23,7 +23,6 @@ class TerraService {
 
     this.serviceOptions = {
       selector: '[data-terra-test-content] *:first-child',
-      theme: 'terra-default-theme',
       ...launcherOptions,
       ...serviceOptions,
     };

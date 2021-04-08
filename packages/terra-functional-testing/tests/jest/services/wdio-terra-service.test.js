@@ -99,7 +99,6 @@ describe('WDIO Terra Service', () => {
     const service = new WdioTerraService();
     const expectedServiceOptions = {
       selector: '[data-terra-test-content] *:first-child',
-      theme: 'terra-default-theme',
     };
 
     service.beforeSession();
@@ -112,7 +111,6 @@ describe('WDIO Terra Service', () => {
     const service = new WdioTerraService();
     const expectedServiceOptions = {
       selector: '[data-terra-test-content] *:first-child',
-      theme: 'terra-default-theme',
     };
 
     expect(service.serviceOptions).toEqual(expectedServiceOptions);
