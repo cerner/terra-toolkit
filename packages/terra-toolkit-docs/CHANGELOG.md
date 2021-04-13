@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.9.0 - (April 13, 2021)
+
 * Changed
   * Updated terra-functional-testing doc for the default theme.
 
