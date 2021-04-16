@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+  * Updated terra-functional-testing doc for cleaning snapshots
+
 ## 1.9.0 - (April 13, 2021)
 
 * Changed

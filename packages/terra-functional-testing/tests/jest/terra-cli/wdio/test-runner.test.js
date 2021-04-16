@@ -1,10 +1,12 @@
 jest.mock('@cerner/terra-cli/lib/utils/Logger');
+jest.mock('../../../../src/commands/utils/cleanScreenshots');
 
 const fs = require('fs');
 const path = require('path');
 const Launcher = require('@wdio/cli').default;
 const TestRunner = require('../../../../src/terra-cli/wdio/test-runner');
 const getConfigurationOptions = require('../../../../src/config/utils/getConfigurationOptions');
+const cleanScreenshots = require('../../../../src/commands/utils/cleanScreenshots');
 
 jest.mock('@wdio/cli', () => ({
   default: jest.fn().mockImplementation(() => ({ run: () => Promise.resolve(0) })),
@@ -115,6 +117,7 @@ describe('Test Runner', () => {
       expect(TestRunner.run).toHaveBeenCalledWith({
         config: '/path', theme: 'terra-mock-theme', locale: 'fr',
       });
+      expect(cleanScreenshots).toHaveBeenCalled();
     });
 
     it('should initiate a test runner for each theme, locale, and form factor permutation', async () => {
