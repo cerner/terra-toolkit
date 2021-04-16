@@ -13,6 +13,7 @@ async function cleanScreenshots() {
   const isMonoRepo = fs.existsSync(monoRepoPath);
   let patterns = [];
 
+  // Check whether or not it a monorepo and then get the paths to the snapshot directories.
   if (isMonoRepo) {
     const packageNames = fs.readdirSync(monoRepoPath);
 
@@ -29,11 +30,12 @@ async function cleanScreenshots() {
     ];
   }
 
-  let screenshotDirectories = [];
-  patterns.forEach((pattern) => {
-    screenshotDirectories = screenshotDirectories.concat(glob.sync(pattern));
-  });
+  // Determine the existing snapshot directories.
+  const screenshotDirectories = patterns.filter((pattern) => (
+    glob.sync(pattern).length > 0
+  ));
 
+  // Delete the existing snapshot directories.
   screenshotDirectories.forEach((dir) => {
     if (isDirectory(dir)) {
       fs.removeSync(dir);
