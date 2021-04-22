@@ -1,3 +1,5 @@
+import { Notice } from '@cerner/terra-docs';
+
 # Visual Regression Service
 
 Visual regression testing for WebdriverIO.
@@ -20,6 +22,16 @@ Latest screenshots are the screenshots generated on the most recent test run. La
 
 Diff screenshots are generated when the latest screenshot is different than the reference screenshot. The diff screenshots overlay the reference and latest screenshots to provide visual indication of the differences. Differences will be shaded with a pink color.
 
+## Error Screenshots
+
+Error screenshots are generated when an error occurs that results in a test failure. The error screenshot is captured immediately after the test step when the error occurred. The error screenshot is named using the title of the `describe` block concatenated with the title of the `it` block.
+
+<Notice variant="important" ariaLevel="3">
+
+  All screenshots in the `diff`, `error`, `latest` screenshot folders, if they exist, will be deleted before each test run. The `reference` screenshot folder will not be deleted.
+
+</Notice>
+
 ## Example Structure
 
 ```
@@ -33,6 +45,12 @@ Diff screenshots are generated when the latest screenshot is different than the 
 │   │           └── firefox_small
 │   │               └── terra-example-spec
 │   │                   └── example-screenshot.png
+│   ├── error
+│   │   └── terra-default-theme
+│   │       └── en
+│   │           └── chrome_small
+│   │               └── terra-example-spec
+│   │                   └── test-title.png
 │   ├── latest
 │   │   └── terra-default-theme
 │   │       ├── en

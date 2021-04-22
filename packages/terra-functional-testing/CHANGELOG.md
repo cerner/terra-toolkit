@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Added
+  * The `diff`, `error`, and `latest` folders in the `__snapshots__` directory will be deleted before each test run.  
+
 ## 1.1.0 - (April 13, 2021)
 
 * Added

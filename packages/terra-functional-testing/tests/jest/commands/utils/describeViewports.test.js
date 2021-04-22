@@ -1,4 +1,4 @@
-const describeViewports = require('../../../../src/commands/utils/describeViewports');
+const { describeViewports } = require('../../../../src/commands/utils');
 
 describe('describeViewports', () => {
   it('should describe viewport', () => {

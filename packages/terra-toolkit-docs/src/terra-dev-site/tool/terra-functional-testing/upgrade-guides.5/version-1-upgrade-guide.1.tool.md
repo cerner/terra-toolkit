@@ -277,12 +277,13 @@ Update any references to the old terra-aggregate-translations:
 + const aggregateTranslations = require('@cerner/terra-aggregate-translations');
 ```
 
-Update any scripts in the package.json to use webpack-dev-server. Use terra-cli for any static sites. Remove `terra-aggregate-translations` if installed:
+Update any scripts in the package.json to use webpack-dev-server. Use terra-cli for any static sites. Remove any reference to `tt-clean-screenshots` since cleaning the `diff`, `latest`, and `error` screenshot directories is now executed automaticatically for each test run. Remove `terra-aggregate-translations` if installed:
 
 ```diff
 // package.json
 {
   "scripts": {
+-    "clean:obsolete-wdio-snapshots": "tt-clean-screenshots",
 -    "start": "tt-serve",
 -    "start-prod": "tt-serve --env.disableHotReloading -p",
 -    "start-static": "npm run pack && tt-serve-static",
