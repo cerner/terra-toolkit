@@ -114,6 +114,7 @@ class BaseCompare {
       referencePath: path.join(baseScreenshotPath, 'reference', screenshotPath),
       latestPath: path.join(baseScreenshotPath, 'latest', screenshotPath),
       diffPath: path.join(baseScreenshotPath, 'diff', screenshotPath),
+      errorPath: path.join(baseScreenshotPath, 'error', screenshotPath),
     };
   }
 

@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+## 1.10.0 - (April 23, 2021)
+
+* Changed
+  * Updated terra-functional-testing doc for cleaning snapshots
+
+## 1.9.0 - (April 13, 2021)
+
+* Changed
+  * Updated terra-functional-testing doc for the default theme.
+
 ## 1.8.5 - (March 31, 2021)
 
 * Changed

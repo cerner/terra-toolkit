@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+## 1.2.0 - (April 23, 2021)
+
+* Added
+  * The `diff`, `error`, and `latest` folders in the `__snapshots__` directory will be deleted before each test run.  
+
+## 1.1.0 - (April 13, 2021)
+
+* Added
+  * Error screenshot functionality.
+
+* Changed
+  * Honor terra-theme.config.js file when no theme is specified in the test runner.
+
 ## 1.0.5 - (March 31, 2021)
 
 * Fixed

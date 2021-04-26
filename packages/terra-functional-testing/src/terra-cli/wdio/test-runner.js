@@ -3,6 +3,7 @@ const path = require('path');
 const Launcher = require('@wdio/cli').default;
 const { Logger } = require('@cerner/terra-cli');
 const getConfigurationOptions = require('../../config/utils/getConfigurationOptions');
+const { cleanScreenshots } = require('../../commands/utils');
 
 const logger = new Logger({ prefix: '[terra-functional-testing:wdio]' });
 
@@ -93,6 +94,9 @@ class TestRunner {
       themes,
       ...cliOptions
     } = options;
+
+    // Clean only the non reference screenshots.
+    cleanScreenshots();
 
     /**
      * The following code loops through each permutation of theme, locale, and form factor.

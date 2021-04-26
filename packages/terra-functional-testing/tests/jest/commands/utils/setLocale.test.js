@@ -1,5 +1,4 @@
-const setApplicationLocale = require('../../../../src/commands/utils/setApplicationLocale');
-const dispatchCustomEvent = require('../../../../src/commands/utils/dispatchCustomEvent');
+const { setApplicationLocale, dispatchCustomEvent } = require('../../../../src/commands/utils');
 
 jest.mock('../../../../src/commands/utils/dispatchCustomEvent');
 

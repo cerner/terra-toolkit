@@ -1,4 +1,4 @@
-const dispatchCustomEvent = require('../../src/commands/utils/dispatchCustomEvent');
+const { dispatchCustomEvent } = require('../../src/commands/utils');
 
 describe('dispatchCustomEvent', () => {
   it('sends a custom event that injects a string into a paragraph', () => {

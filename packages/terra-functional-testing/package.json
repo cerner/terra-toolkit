@@ -1,6 +1,6 @@
 {
   "name": "@cerner/terra-functional-testing",
-  "version": "1.0.5",
+  "version": "1.2.0",
   "main": "lib/index.js",
   "description": "A functional testing utility for applications built using Terra.",
   "publishConfig": {
@@ -57,6 +57,7 @@
     "expect": "^26.4.2",
     "express": "^4.17.1",
     "fs-extra": "^9.0.1",
+    "glob": "^7.1.6",
     "gm": "^1.23.1",
     "image-size": "^0.8.3",
     "ip": "^1.1.5",
@@ -80,9 +81,8 @@
     "webpack-cli": "^3.3.12 || ^4.0.0"
   },
   "devDependencies": {
-    "@cerner/terra-cli": "^1.6.0",
+    "@cerner/terra-cli": "^1.7.0",
     "chai": "^4.2.0",
-    "glob": "^7.1.6",
     "lodash.groupby": "^4.6.0",
     "lodash.map": "^4.6.0",
     "lodash.mapkeys": "^4.6.0",

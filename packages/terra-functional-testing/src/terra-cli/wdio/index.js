@@ -134,7 +134,7 @@ const cli = {
             return [process.env.THEME];
           }
 
-          return ['terra-default-theme'];
+          return [undefined];
         },
       },
       u: {
