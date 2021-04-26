@@ -67,7 +67,7 @@ module.exports = {
       },
     },
     {
-      files: ['**/wdio/**/*-spec.*'],
+      files: ['**/wdio/**/*-spec.*', '**/full-stack/**/*-spec.*'],
       rules: {
         'no-unused-expressions': 'off',
       },

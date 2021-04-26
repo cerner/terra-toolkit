@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.7.0 - (April 23, 2021)
+
 * Fixed
   * Add back "strict" to the CLI API but only for commands. Options aren't validated, but commands are.
 
