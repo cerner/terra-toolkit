@@ -1,3 +1,4 @@
+const path = require('path');
 module.exports = {
   // Set a custom testEnvironment to allow us to compartmentalize setup.
   testEnvironment: '@cerner/jest-config-terra/lib/JestEnvironmentJsdomTerra.js',
@@ -41,6 +42,6 @@ module.exports = {
   },
   reporters: [
     'default',
-    '<rootDir>/reporters/jest/TerraVerboseReporter.js',
+    path.join(process.cwd(), 'src', 'reporters', 'verbose-reporter', 'TerraVerboseReporter')
   ],
 };
