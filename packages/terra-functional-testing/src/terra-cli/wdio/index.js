@@ -20,7 +20,7 @@ const cli = {
       baseScreenshotDir: {
         type: 'string',
         describe: 'Where snapshots are stored. By default, this will be the test-spec directory.',
-        default: path.join(process.cwd(), process.env.baseScreenShotDir);
+        default: path.join(process.cwd(), process.env.baseScreenShotDir),
       },
       browsers: {
         type: 'array',
