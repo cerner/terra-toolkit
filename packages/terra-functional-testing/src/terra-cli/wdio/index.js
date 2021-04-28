@@ -1,3 +1,4 @@
+const path = require('path');
 const TestRunner = require('./test-runner');
 
 const cli = {
@@ -16,16 +17,10 @@ const cli = {
           return 8080;
         },
       },
-      baseScreenShotDir: {
+      baseScreenshotDir: {
         type: 'string',
         describe: 'Where snapshots are stored. By default, this will be the test-spec directory.',
-        default: () => {
-          if (process.env.baseScreenShotDir) {
-            return process.env.baseScreenShotDir;
-          }
-
-          return process.cwd();
-        },
+        default: path.join(process.cwd(), process.env.baseScreenShotDir);
       },
       browsers: {
         type: 'array',

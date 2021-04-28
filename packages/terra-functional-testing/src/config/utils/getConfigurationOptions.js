@@ -26,12 +26,12 @@ const getConfigurationOptions = (options) => {
   } = options;
 
   return {
-    baseScreenshotDir,
     baseUrl: `http://${externalHost || getIpAddress()}:${externalPort || 8080}`,
     capabilities: getCapabilities(browsers, !!gridUrl),
     hostname: gridUrl || 'localhost',
     port: gridUrl ? 80 : 4444,
     launcherOptions: {
+      baseScreenshotDir,
       disableSeleniumService: disableSeleniumService || !!gridUrl,
       formFactor,
       gridUrl,
