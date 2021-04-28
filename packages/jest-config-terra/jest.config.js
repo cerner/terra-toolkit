@@ -6,6 +6,7 @@ module.exports = {
   coverageDirectory: 'tests/jest/reports/coverage',
   collectCoverageFrom: [
     '**/src/**/*.js(x)?',
+    '**/reporters/**/*.js',
   ],
   coveragePathIgnorePatterns: [
     '/src/terra-dev-site',
@@ -38,4 +39,8 @@ module.exports = {
   transform: {
     '^.+\\.(js|jsx)$': '@cerner/jest-config-terra/lib/jestBabelTransform',
   },
+  reporters: [
+    'default',
+    '<rootDir>/reporters/jest/TerraVerboseReporter.js',
+  ],
 };
