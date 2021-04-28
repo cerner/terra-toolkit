@@ -16,6 +16,17 @@ const cli = {
           return 8080;
         },
       },
+      baseScreenShotDir: {
+        type: 'string',
+        describe: 'Where snapshots are stored. By default, this will be the test-spec directory.',
+        default: () => {
+          if (process.env.baseScreenShotDir) {
+            return process.env.baseScreenShotDir;
+          }
+
+          return process.cwd();
+        },
+      },
       browsers: {
         type: 'array',
         describe: 'A list of browsers for the test run.',

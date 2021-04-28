@@ -13,13 +13,15 @@ class BaseCompare {
    */
   constructor(options = {}) {
     const {
+      baseScreenshotDir,
       locale,
       theme,
       updateScreenshots,
     } = options;
 
     // screenshot naming config
-    this.baseScreenshotDir = process.cwd();
+    console.log(baseScreenshotDir)
+    this.baseScreenshotDir = baseScreenshotDir;
     this.locale = locale || 'en';
     this.theme = theme || 'terra-default-theme';
     this.updateScreenshots = updateScreenshots === true;
