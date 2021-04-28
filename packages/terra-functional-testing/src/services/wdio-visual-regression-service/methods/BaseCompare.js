@@ -20,8 +20,7 @@ class BaseCompare {
     } = options;
 
     // screenshot naming config
-    console.log("Base Screenshot Dir: ", baseScreenshotDir)
-    this.baseScreenshotDir = baseScreenshotDir;
+    this.baseScreenshotDir = baseScreenshotDir ? path.join(process.cwd(), baseScreenshotDir) : process.cwd();
     this.locale = locale || 'en';
     this.theme = theme || 'terra-default-theme';
     this.updateScreenshots = updateScreenshots === true;

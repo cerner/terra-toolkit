@@ -1,4 +1,3 @@
-const path = require('path');
 const TestRunner = require('./test-runner');
 
 const cli = {
@@ -20,7 +19,7 @@ const cli = {
       baseScreenshotDir: {
         type: 'string',
         describe: 'Where snapshots are stored. By default, this will be the test-spec directory.',
-        default: path.join(process.cwd(), process.env.baseScreenShotDir),
+        default: process.env.baseScreenshotDir,
       },
       browsers: {
         type: 'array',
