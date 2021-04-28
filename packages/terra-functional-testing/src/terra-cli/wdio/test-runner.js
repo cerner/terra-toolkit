@@ -32,7 +32,6 @@ class TestRunner {
    * Runs the test runner.
    * @param {Object} options - The test run options.
    * @param {number} options.assetServerPort - The port to run the webpack and express asset services on.
-   * @param {string} options.baseScreenshotDir - Where snapshots are stored. By default, this will be the test-spec directory.
    * @param {string} options.browsers - A list of browsers for the test run.
    * @param {string} options.config - A file path to the test runner configuration.
    * @param {boolean} options.disableSeleniumService - A flag to disable the selenium docker service.
@@ -73,7 +72,6 @@ class TestRunner {
    * Starts the test runner.
    * @param {Object} options - The test run options.
    * @param {number} options.assetServerPort - The port to run the webpack and express asset services on.
-   * @param {string} options.baseScreenshotDir - Where snapshots are stored. By default, this will be the test-spec directory.
    * @param {string} options.browsers - A list of browsers for the test run.
    * @param {string} options.config - A file path to the test runner configuration.
    * @param {boolean} options.disableSeleniumService - A flag to disable the selenium docker service.

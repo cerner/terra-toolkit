@@ -13,14 +13,13 @@ class BaseCompare {
    */
   constructor(options = {}) {
     const {
-      baseScreenshotDir,
       locale,
       theme,
       updateScreenshots,
     } = options;
 
     // screenshot naming config
-    this.baseScreenshotDir = baseScreenshotDir ? path.join(process.cwd(), baseScreenshotDir) : process.cwd();
+    this.baseScreenshotDir = process.cwd();
     this.locale = locale || 'en';
     this.theme = theme || 'terra-default-theme';
     this.updateScreenshots = updateScreenshots === true;
@@ -106,7 +105,7 @@ class BaseCompare {
 
     // Added to allow for test reusability from terra repositories
     if (specPath.includes('node_modules')) {
-      [, specPath] = specPath.split('node_modules');
+      specPath = specPath.replace('node_modules', 'test/wdio/__snapshots__');
     }
 
     const baseScreenshotPath = path.join(this.baseScreenshotDir, specPath, '__snapshots__');
