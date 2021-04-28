@@ -9,6 +9,7 @@ const defaultWebpackPath = path.resolve(process.cwd(), 'webpack.config.js');
 const getConfigurationOptions = (options) => {
   const {
     assetServerPort,
+    baseScreenshotDir,
     browsers,
     disableSeleniumService,
     externalHost,
@@ -25,6 +26,7 @@ const getConfigurationOptions = (options) => {
   } = options;
 
   return {
+    baseScreenshotDir,
     baseUrl: `http://${externalHost || getIpAddress()}:${externalPort || 8080}`,
     capabilities: getCapabilities(browsers, !!gridUrl),
     hostname: gridUrl || 'localhost',

@@ -20,7 +20,7 @@ class BaseCompare {
     } = options;
 
     // screenshot naming config
-    console.log(baseScreenshotDir)
+    console.log("cdvevrcver", baseScreenshotDir)
     this.baseScreenshotDir = baseScreenshotDir;
     this.locale = locale || 'en';
     this.theme = theme || 'terra-default-theme';
