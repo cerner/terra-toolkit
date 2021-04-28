@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-* Updated
+* Fixed
   * Update specPath in BaseCompare to replace `node_modules` with `tests/wdio/__snapshot__`
 
 ## 1.2.0 - (April 23, 2021)

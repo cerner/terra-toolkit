@@ -105,7 +105,7 @@ class BaseCompare {
 
     // Added to allow for test reusability from terra repositories
     if (specPath.includes('node_modules')) {
-      specPath = specPath.replace('node_modules', 'tests/wdio/__snapshots__');
+      specPath = specPath.replace('node_modules', path.join('tests', 'wdio', '__snapshots__'));
     }
 
     const baseScreenshotPath = path.join(this.baseScreenshotDir, specPath, '__snapshots__');
