@@ -119,9 +119,9 @@ describe('BaseCompare', () => {
         },
       };
       const result = baseCompare.getScreenshotPaths(updatedContext);
-      expect(result.referencePath).toEqual(path.join(process.cwd(), 'tests', 'wdio', '__snapshots__', 'packageName', 'test', 'wdio', '__snapshots__', 'reference', 'screenshotDir', 'screenshotName.png'));
-      expect(result.latestPath).toEqual(path.join(process.cwd(), 'tests', 'wdio', '__snapshots__', 'packageName', 'test', 'wdio', '__snapshots__', 'latest', 'screenshotDir', 'screenshotName.png'));
-      expect(result.diffPath).toEqual(path.join(process.cwd(), 'tests', 'wdio', '__snapshots__', 'packageName', 'test', 'wdio', '__snapshots__', 'diff', 'screenshotDir', 'screenshotName.png'));
+      expect(result.referencePath).toEqual(path.join(process.cwd(), 'tests', 'wdio', 'packageName', 'test', 'wdio', '__snapshots__', 'reference', 'screenshotDir', 'screenshotName.png'));
+      expect(result.latestPath).toEqual(path.join(process.cwd(), 'tests', 'wdio', 'packageName', 'test', 'wdio', '__snapshots__', 'latest', 'screenshotDir', 'screenshotName.png'));
+      expect(result.diffPath).toEqual(path.join(process.cwd(), 'tests', 'wdio', 'packageName', 'test', 'wdio', '__snapshots__', 'diff', 'screenshotDir', 'screenshotName.png'));
     });
   });
 
