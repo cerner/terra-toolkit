@@ -22,15 +22,16 @@ const getConfigurationOptions = (options) => {
     suite,
     theme,
     updateScreenshots,
+    useSeleniumStandalonService,
   } = options;
 
   return {
     baseUrl: `http://${externalHost || getIpAddress()}:${externalPort || 8080}`,
     capabilities: getCapabilities(browsers, !!gridUrl),
-    hostname: gridUrl || 'localhost',
+    hostname: gridUrl || (useSeleniumStandalonService ? 'standalone-chrome' : 'localhost'),
     port: gridUrl ? 80 : 4444,
     launcherOptions: {
-      disableSeleniumService: disableSeleniumService || !!gridUrl,
+      disableSeleniumService: disableSeleniumService || useSeleniumStandalonService || !!gridUrl,
       formFactor,
       gridUrl,
       keepAliveSeleniumDockerService,

@@ -21,6 +21,7 @@ describe('getCapabilities', () => {
       suite: 'test-suite',
       theme: 'terra-default-theme',
       updateScreenshots: true,
+      useSeleniumStandalonService: false,
     };
 
     const defaultWebpackPath = path.resolve(process.cwd(), 'webpack.config.js');
@@ -37,6 +38,55 @@ describe('getCapabilities', () => {
         disableSeleniumService: true,
         formFactor: options.formFactor,
         gridUrl: options.gridUrl,
+        keepAliveSeleniumDockerService: true,
+        locale: options.locale,
+        port: options.assetServerPort,
+        site: options.site,
+        theme: options.theme,
+        overrideTheme: options.theme,
+        updateScreenshots: true,
+        webpackConfig: defaultWebpackPath,
+      },
+    };
+
+    const config = getConfigurationOptions(options);
+
+    expect(config).toEqual(expectedConfig);
+  });
+
+  it('should get configuration with useSeleniumStandalonService', async () => {
+    const options = {
+      assetServerPort: 8080,
+      browsers: ['chrome'],
+      config: '/path',
+      disableSeleniumService: false,
+      externalHost: 'externalHost',
+      externalPort: 3000,
+      formFactor: 'small',
+      keepAliveSeleniumDockerService: true,
+      locale: 'en',
+      site: 'build',
+      spec: '/spec/',
+      suite: 'test-suite',
+      theme: 'terra-default-theme',
+      updateScreenshots: true,
+      useSeleniumStandalonService: true,
+    };
+
+    const defaultWebpackPath = path.resolve(process.cwd(), 'webpack.config.js');
+    const capabilities = getCapabilities(options.browsers, !!options.gridUrl);
+
+    const expectedConfig = {
+      baseUrl: `http://${options.externalHost}:${options.externalPort}`,
+      capabilities,
+      hostname: 'standalone-chrome',
+      port: 4444,
+      spec: options.spec,
+      suite: options.suite,
+      launcherOptions: {
+        disableSeleniumService: true,
+        formFactor: options.formFactor,
+        gridUrl: undefined,
         keepAliveSeleniumDockerService: true,
         locale: options.locale,
         port: options.assetServerPort,
