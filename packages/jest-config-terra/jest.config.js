@@ -42,6 +42,6 @@ module.exports = {
   },
   reporters: [
     'default',
-    path.join(process.cwd(), 'packages', 'jest-config-terra', 'src', 'reporters', 'verbose-reporter', 'TerraVerboseReporter')
+    path.join(__dirname, 'lib', 'reporters', 'verbose-reporter', 'TerraVerboseReporter')
   ],
 };
