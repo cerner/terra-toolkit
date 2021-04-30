@@ -104,7 +104,7 @@ class TerraVerboseReporter extends VerboseReporter {
           endDate,
         };
         filePathLocation = `${this.resultDir}/${key}.json`;
-        fs.appendFileSync(filePathLocation, `${JSON.stringify(fileData, null, 2)}`, { flag: 'w+' }, (err) => {
+        fs.writeFileSync(filePathLocation, `${JSON.stringify(fileData, null, 2)}`, { flag: 'w+' }, (err) => {
           if (err) {
             Logger.error(err.message, { context: LOG_CONTEXT });
           }
