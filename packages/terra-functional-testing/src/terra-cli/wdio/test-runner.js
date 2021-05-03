@@ -46,7 +46,7 @@ class TestRunner {
    * @param {array} options.suite - Overrides specs and runs only the defined suites.
    * @param {string} options.theme - A theme for the test run.
    * @param {boolean} options.updateScreenshots - Updates all reference screenshots with the latest screenshots.
-   * @param {boolean} options.useSeleniumStandalonService - A flag to use the selenium standalone service instead of the selenium docker service.
+   * @param {boolean} options.useSeleniumStandaloneService - A flag to use the selenium standalone service instead of the selenium docker service.
    * @returns {Promise} A promise that resolves with the test run exit code.
    */
   static async run(options) {
@@ -87,7 +87,7 @@ class TestRunner {
    * @param {array} options.suite - Overrides specs and runs only the defined suites.
    * @param {string} options.themes - A list of themes for the test run.
    * @param {boolean} options.updateScreenshots - Updates all reference screenshots with the latest screenshots.
-   * @param {boolean} options.useSeleniumStandalonService - A flag to use the selenium standalone service instead of the selenium docker service.
+   * @param {boolean} options.useSeleniumStandaloneService - A flag to use the selenium standalone service instead of the selenium docker service.
    */
   static async start(options) {
     const {

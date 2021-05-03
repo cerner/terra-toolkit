@@ -45,7 +45,7 @@ Options:
                                         all reference screenshots with the
                                         latest screenshots.
                                                       [boolean] [default: false]
-      --useSeleniumStandalonService     A flag to use the selenium standalone
+      --useSeleniumStandaloneService    A flag to use the selenium standalone
                                         service instead of the selenium docker
                                         service. [boolean] [default: (_default)]"
 `;

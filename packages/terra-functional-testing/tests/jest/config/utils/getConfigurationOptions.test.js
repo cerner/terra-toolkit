@@ -21,7 +21,7 @@ describe('getCapabilities', () => {
       suite: 'test-suite',
       theme: 'terra-default-theme',
       updateScreenshots: true,
-      useSeleniumStandalonService: false,
+      useSeleniumStandaloneService: false,
     };
 
     const defaultWebpackPath = path.resolve(process.cwd(), 'webpack.config.js');
@@ -54,7 +54,7 @@ describe('getCapabilities', () => {
     expect(config).toEqual(expectedConfig);
   });
 
-  it('should get configuration with useSeleniumStandalonService', async () => {
+  it('should get configuration with useSeleniumStandaloneService', async () => {
     const options = {
       assetServerPort: 8080,
       browsers: ['chrome'],
@@ -70,7 +70,7 @@ describe('getCapabilities', () => {
       suite: 'test-suite',
       theme: 'terra-default-theme',
       updateScreenshots: true,
-      useSeleniumStandalonService: true,
+      useSeleniumStandaloneService: true,
     };
 
     const defaultWebpackPath = path.resolve(process.cwd(), 'webpack.config.js');

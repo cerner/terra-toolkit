@@ -143,7 +143,7 @@ const cli = {
         describe: 'Whether or not to automatically update all reference screenshots with the latest screenshots.',
         default: false,
       },
-      useSeleniumStandalonService: {
+      useSeleniumStandaloneService: {
         type: 'boolean',
         describe: 'A flag to use the selenium standalone service instead of the selenium docker service.',
         default: () => process.env.USE_SELENIUM_STANDALONE_SERVICE === 'true',
