@@ -146,7 +146,7 @@ const cli = {
       useSeleniumStandaloneService: {
         type: 'boolean',
         describe: 'A flag to use the selenium standalone service instead of the selenium docker service.',
-        default: () => process.env.USE_SELENIUM_STANDALONE_SERVICE === 'true',
+        default: process.env.USE_SELENIUM_STANDALONE_SERVICE === 'true',
       },
     })
   ),
