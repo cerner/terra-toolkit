@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.3.0 - (May 4, 2021)
+
 * Fixed
   * Update specPath in BaseCompare to replace `node_modules` with `tests/wdio`.
 
