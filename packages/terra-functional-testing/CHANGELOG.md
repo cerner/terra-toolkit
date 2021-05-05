@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Fixed
+  * Update node-resemble-js version to fix `Stream not writable` error.
+
 ## 1.3.0 - (May 4, 2021)
 
 * Fixed
