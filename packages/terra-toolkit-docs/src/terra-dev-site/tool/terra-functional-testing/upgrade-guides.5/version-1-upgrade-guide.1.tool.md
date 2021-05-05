@@ -195,6 +195,14 @@ Check out the [release notes](https://github.com/dequelabs/axe-core/releases) fo
 
 The default selector has been changed from `[data-terra-dev-site-content] *:first-child` to `[data-terra-test-content] *:first-child`. This selector is used as the default content region for capturing screenshots. This change should not affect most teams. For teams that are affected a custom selector can be provided using [service options](https://engineering.cerner.com/terra-ui/dev_tools/cerner/terra-functional-testing/wdio-services/terra-service#selector).
 
+### Accessing the `formFactor`, `locale`, or `theme` options
+
+The `formFactor`, `locale`, and `theme` options that used to be available in the `browser.options` global object no longer reside in this object. These options along with other data are now available in the `Terra.serviceOptions` global object.
+
+### Accessing the `browser` object
+
+Any usage of the `browser` global object should be moved inside the `it` block because `browser` will be `undefined` when accessed outside the scope of the `it` block. This reason for this behavior is due to how the WebDriverIO testing lifecycle hooks are implemented in v6.
+
 ## New Features
 
 ### Accessibility Reporter
@@ -317,7 +325,13 @@ npm run start-prod
 npm run start-static
 ```
 
-Note: If you don't have some of these commands it is not necessary to add them. Just ensure the commands you do have are working as expected. All of the `tt-serve` commands should be updated to use webpack-dev-server or the terra express server
+Note: If you don't have some of these commands it is not necessary to add them. If you changed from `tt-serve-static` to use the `express-server` command, be sure to also install the `@cerner/terra-open-source-scripts` package that provides this command. Just ensure the commands you do have are working as expected. All of the `tt-serve` commands should be updated to use webpack-dev-server or the terra express server.
+
+Install `@cerner/terra-open-source-scripts` only as needed based on the above note:
+
+```sh
+npm install --save-dev @cerner/terra-open-source-scripts
+```
 
 ### Upgrading ESlint Config Terra
 

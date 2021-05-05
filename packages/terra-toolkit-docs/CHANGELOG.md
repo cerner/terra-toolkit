@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Added
+  * Added additional notes to the terra-functional-testing upgrade guide.
+
 ## 1.11.0 - (May 4, 2021)
 
 * Changed
