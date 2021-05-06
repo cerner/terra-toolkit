@@ -7,6 +7,9 @@
 * Fixed
   * Update specPath in BaseCompare to replace `node_modules` with `tests/wdio`.
 
+* Added
+  * Added useSeleniumStandaloneService option for using the standalone-chrome host instead of the selenium docker service when building in Jenkins.
+
 ## 1.2.0 - (April 23, 2021)
 
 * Added

@@ -44,7 +44,10 @@ Options:
   -u, --updateScreenshots               Whether or not to automatically update
                                         all reference screenshots with the
                                         latest screenshots.
-                                                      [boolean] [default: false]"
+                                                      [boolean] [default: false]
+      --useSeleniumStandaloneService    A flag to use the selenium standalone
+                                        service instead of the selenium docker
+                                        service.      [boolean] [default: false]"
 `;
 
 exports[`index declares the wdio terra-cli command with proper top level help 1`] = `
