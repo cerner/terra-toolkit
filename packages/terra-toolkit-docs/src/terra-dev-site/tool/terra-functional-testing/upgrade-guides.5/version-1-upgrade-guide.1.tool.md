@@ -327,12 +327,6 @@ npm run start-static
 
 Note: If you don't have some of these commands it is not necessary to add them. Just ensure the commands you do have are working as expected. All of the `tt-serve` commands should be updated to use webpack-dev-server or the terra express server.
 
-Install `@cerner/terra-open-source-scripts` only as needed based on the above note:
-
-```sh
-npm install --save-dev @cerner/terra-open-source-scripts
-```
-
 ### Upgrading ESlint Config Terra
 
 If you are already using @cerner/eslint-config-terra ^5.0.0 you can skip this section.
