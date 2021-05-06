@@ -325,7 +325,7 @@ npm run start-prod
 npm run start-static
 ```
 
-Note: If you don't have some of these commands it is not necessary to add them. If you changed from `tt-serve-static` to use the `express-server` command, be sure to also install the `@cerner/terra-open-source-scripts` package that provides this command. Just ensure the commands you do have are working as expected. All of the `tt-serve` commands should be updated to use webpack-dev-server or the terra express server.
+Note: If you don't have some of these commands it is not necessary to add them. Just ensure the commands you do have are working as expected. All of the `tt-serve` commands should be updated to use webpack-dev-server or the terra express server.
 
 Install `@cerner/terra-open-source-scripts` only as needed based on the above note:
 
