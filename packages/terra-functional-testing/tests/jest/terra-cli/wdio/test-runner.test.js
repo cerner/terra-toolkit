@@ -52,6 +52,7 @@ describe('Test Runner', () => {
         suite: 'test-suite',
         theme: 'terra-default-theme',
         updateScreenshots: true,
+        useSeleniumStandaloneService: true,
       };
 
       await TestRunner.run(options);
@@ -176,6 +177,7 @@ describe('Test Runner', () => {
         suite: 'test-suite',
         themes: ['terra-default-theme'],
         updateScreenshots: true,
+        useSeleniumStandaloneService: true,
       });
 
       expect(TestRunner.run).toHaveBeenCalledWith({
@@ -194,6 +196,7 @@ describe('Test Runner', () => {
         suite: 'test-suite',
         theme: 'terra-default-theme',
         updateScreenshots: true,
+        useSeleniumStandaloneService: true,
       });
     });
   });

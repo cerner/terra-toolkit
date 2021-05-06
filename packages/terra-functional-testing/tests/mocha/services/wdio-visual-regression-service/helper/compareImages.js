@@ -1,5 +1,5 @@
 const { assert } = require('chai');
-const resemble = require('node-resemble-js');
+const resemble = require('@mirzazeyrek/node-resemble-js');
 
 function compareImages(image1, image2, misMatchPercentage = 0.2) {
   return new Promise(resolve => {
