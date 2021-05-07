@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.4.0 - (May 7, 2021)
+
 * Added
   * Added useSeleniumStandaloneService option for using the standalone-chrome host instead of the selenium docker service when building in Jenkins.
 
