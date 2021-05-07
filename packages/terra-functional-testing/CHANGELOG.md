@@ -6,6 +6,7 @@
 
 * Added
   * Added useSeleniumStandaloneService option for using the standalone-chrome host instead of the selenium docker service when building in Jenkins.
+  * Added express-server CLI command. This is moved from @cerner/terra-open-source-scripts.
 
 * Fixed
   * Update node-resemble-js version to fix `Stream not writable` error.

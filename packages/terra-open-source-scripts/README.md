@@ -5,7 +5,6 @@
 
 Terra's common open source scripts provided as [terra-cli](https://www.npmjs.org/package/@cerner/terra-cli) commands. These are intended to be used by terra projects and not for use outside of that ecosystem. Currently, this package provides:
 
-* express-server - launches a very simple express server to host static content
 * prepare-for-release - prepares a given project for release by updating versions and changelogs. Supports both single and mono repos
 * release - releases a given project to npm and tags it in git. Supports both single and mono repos
 
