@@ -5,7 +5,7 @@ const path = require('path');
 const endOfLine = require('os').EOL;
 const { Logger } = require('@cerner/terra-cli');
 
-const LOG_CONTEXT = '[Terra-Toolkit:terra-verbose-reporter]';
+const logger = new Logger({ prefix: '[jest-config-terra:TerraVerboseReporter]' });
 
 class TerraVerboseReporter extends VerboseReporter {
   constructor(globalConfig) {
@@ -51,7 +51,7 @@ class TerraVerboseReporter extends VerboseReporter {
     if (!fs.existsSync(this.resultDir)) {
       fs.mkdirSync(this.resultDir, { recursive: true }, (err) => {
         if (err) {
-          Logger.error(err.message, { context: LOG_CONTEXT });
+          logger.error(err.message);
         }
       });
     }
@@ -106,7 +106,7 @@ class TerraVerboseReporter extends VerboseReporter {
         filePathLocation = `${this.resultDir}/${key}.json`;
         fs.writeFileSync(filePathLocation, `${JSON.stringify(fileData, null, 2)}`, { flag: 'w+' }, (err) => {
           if (err) {
-            Logger.error(err.message, { context: LOG_CONTEXT });
+            logger.error(err.message);
           }
         });
       });
