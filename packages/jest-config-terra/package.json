@@ -1,6 +1,6 @@
 {
   "name": "@cerner/jest-config-terra",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A base jest config for the terra application framework.",
   "main": "jest.config.js",
   "publishConfig": {

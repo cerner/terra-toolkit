@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.9.0 - (May 7, 2021)
+
 * Removed
   * Removed express-server CLI command. This is moved to @cerner/terra-functional-testing to eliminate the need to depend on this package to use express-server.
 
