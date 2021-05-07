@@ -25,7 +25,7 @@ module.exports = {
     'node_modules',
   ],
   moduleNameMapper: {
-    '\\.(css|scss|svg)$': 'identity-obj-proxy',
+    '\\.(css|scss|svg|png)$': 'identity-obj-proxy',
     // These replace the various translations imports with mocked versions.
     '^de\\.js$': '@cerner/jest-config-terra/lib/translationsMock.js',
     '^en(-AU|-CA|-GB|-US)?\\.js$': '@cerner/jest-config-terra/lib/translationsMock.js',
