@@ -1,9 +1,11 @@
 # Changelog
 
 ## Unreleased
-## Added
 
-- Copied the jest reporter from boneyard and utilize that as a reporter
+## 1.2.0 - (May 11, 2021)
+
+* Added
+  * Copied the jest reporter from boneyard and utilize that as a reporter
 
 ## 1.1.0 - (May 7, 2021)
 
