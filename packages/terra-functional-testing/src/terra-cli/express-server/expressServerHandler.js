@@ -1,4 +1,4 @@
-const ExpressServer = require('./ExpressServer');
+const ExpressServer = require('../../express-server');
 
 module.exports = async (options) => {
   const server = new ExpressServer({
@@ -7,6 +7,5 @@ module.exports = async (options) => {
     site: options.site,
   });
 
-  await server.createApp();
   await server.start();
 };
