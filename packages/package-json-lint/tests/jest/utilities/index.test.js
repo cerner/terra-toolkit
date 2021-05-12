@@ -30,19 +30,19 @@ describe('getPathsForPackages', () => {
     fs.pathExists.mockResolvedValueOnce(false);
     fs.pathExists.mockResolvedValueOnce(true);
     spawn.mockResolvedValueOnce({
-      stdout: `/Users/rm012685/ecosystem/terra-toolkit/packages/browserslist-config-terra
-/Users/rm012685/ecosystem/terra-toolkit/packages/duplicate-package-checker-webpack-plugin
-/Users/rm012685/ecosystem/terra-toolkit/packages/eslint-config-terra
-/Users/rm012685/ecosystem/terra-toolkit/packages/jest-config-terra
-/Users/rm012685/ecosystem/terra-toolkit/packages/package-json-lint
-/Users/rm012685/ecosystem/terra-toolkit/packages/stylelint-config-terra
-/Users/rm012685/ecosystem/terra-toolkit/packages/terra-aggregate-translations
-/Users/rm012685/ecosystem/terra-toolkit/packages/terra-cli
-/Users/rm012685/ecosystem/terra-toolkit/packages/terra-enzyme-intl
-/Users/rm012685/ecosystem/terra-toolkit/packages/terra-functional-testing
-/Users/rm012685/ecosystem/terra-toolkit/packages/terra-open-source-scripts
-/Users/rm012685/ecosystem/terra-toolkit/packages/terra-toolkit-docs
-/Users/rm012685/ecosystem/terra-toolkit/packages/webpack-config-terra`,
+      stdout: `${process.cwd()}/packages/browserslist-config-terra
+${process.cwd()}/packages/duplicate-package-checker-webpack-plugin
+${process.cwd()}/packages/eslint-config-terra
+${process.cwd()}/packages/jest-config-terra
+${process.cwd()}/packages/package-json-lint
+${process.cwd()}/packages/stylelint-config-terra
+${process.cwd()}/packages/terra-aggregate-translations
+${process.cwd()}/packages/terra-cli
+${process.cwd()}/packages/terra-enzyme-intl
+${process.cwd()}/packages/terra-functional-testing
+${process.cwd()}/packages/terra-open-source-scripts
+${process.cwd()}/packages/terra-toolkit-docs
+${process.cwd()}/packages/webpack-config-terra`,
     });
     fs.readFile.mockResolvedValueOnce('packages/jest-config-terra\npackages/terra-cli');
 
