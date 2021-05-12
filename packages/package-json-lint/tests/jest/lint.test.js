@@ -10,7 +10,6 @@ const { getRuleConfig, getConfig } = require('../../src/config');
 const { getPathsForPackages } = require('../../src/utilities');
 
 const lint = require('../../src/lint');
-const LintIssue = require('../../src/issues/LintIssue');
 
 let oldConsole;
 
@@ -36,41 +35,53 @@ describe('lint', () => {
       'path2',
     ]);
     const package1Data = {
-      name: 'package1',
+      dependencies: { a: '1.0.0' },
     };
     fs.readJson.mockResolvedValueOnce(package1Data);
     const package2Data = {
-      name: 'package2',
+      dependencies: { b: '1.1.1' },
     };
     fs.readJson.mockResolvedValueOnce(package2Data);
     const package1RuleConfig1 = {
       severity: 'off',
-      lint: jest.fn(),
     };
     getRuleConfig.mockReturnValueOnce(package1RuleConfig1);
     const package1RuleConfig2 = {
       severity: 'warning',
-      lint: jest.fn(),
     };
     getRuleConfig.mockReturnValueOnce(package1RuleConfig2);
     const package2RuleConfig1 = {
       severity: 'warning',
-      lint: jest.fn(),
     };
     getRuleConfig.mockReturnValueOnce(package2RuleConfig1);
     const package2RuleConfig2 = {
       severity: 'error',
-      lint: jest.fn(),
     };
     getRuleConfig.mockReturnValueOnce(package2RuleConfig2);
-    rules['require-no-terra-base-peer-dependency-versions'].lint.mockReturnValueOnce(new LintIssue({
-      lintId: 'require-no-terra-base-peer-dependency-versions', severity: 'warning', node: 'dependencies', lintMessage: 'message1',
+
+    const mockRule1 = { dependencies: jest.fn() };
+    let mockReport1;
+    rules['require-no-terra-base-peer-dependency-versions'].create.mockImplementationOnce(({ report }) => {
+      mockReport1 = report;
+      return mockRule1;
+    });
+    mockRule1.dependencies.mockImplementationOnce(() => mockReport1({
+      lintId: 'require-no-terra-base-peer-dependency-versions', severity: 'warning', lintMessage: 'message1',
     }));
-    rules['require-theme-context-versions'].lint.mockReturnValueOnce(undefined);
-    rules['require-theme-context-versions'].lint.mockReturnValueOnce(new LintIssue({
-      lintId: 'require-theme-context-versions', severity: 'error', node: 'dependencies', lintMessage: 'message3',
+    const mockRule2 = { dependencies: jest.fn() };
+    rules['require-theme-context-versions'].create.mockImplementationOnce(() => mockRule2);
+    mockRule2.dependencies.mockImplementationOnce(() => {});
+    const mockRule3 = { dependencies: jest.fn() };
+    let mockReport3;
+    rules['require-theme-context-versions'].create.mockImplementationOnce(({ report }) => {
+      mockReport3 = report;
+      return mockRule3;
+    });
+    mockRule3.dependencies.mockImplementationOnce(() => mockReport3({
+      lintId: 'require-theme-context-versions', severity: 'error', lintMessage: 'message3',
     }));
-    global.console.log.mockImplementation((message) => expect(stripAnsi(message)).toMatchSnapshot());
+
+    global.console.log.mockImplementationOnce((message) => expect(stripAnsi(message)).toMatchSnapshot());
 
     await lint();
 
@@ -84,11 +95,17 @@ describe('lint', () => {
     expect(getRuleConfig).toHaveBeenNthCalledWith(2, { rule: rules['require-theme-context-versions'], ruleInformation: 'error' });
     expect(getRuleConfig).toHaveBeenNthCalledWith(3, { rule: rules['require-no-terra-base-peer-dependency-versions'], ruleInformation: 'error' });
     expect(getRuleConfig).toHaveBeenNthCalledWith(4, { rule: rules['require-theme-context-versions'], ruleInformation: 'error' });
-    expect(rules['require-no-terra-base-peer-dependency-versions'].lint).toHaveBeenCalledTimes(1);
-    expect(rules['require-no-terra-base-peer-dependency-versions'].lint).toHaveBeenCalledWith({ packageJsonData: package2Data, ruleConfig: package2RuleConfig1 });
-    expect(rules['require-theme-context-versions'].lint).toHaveBeenCalledTimes(2);
-    expect(rules['require-theme-context-versions'].lint).toHaveBeenCalledWith({ packageJsonData: package1Data, ruleConfig: package1RuleConfig2 });
-    expect(rules['require-theme-context-versions'].lint).toHaveBeenCalledWith({ packageJsonData: package2Data, ruleConfig: package2RuleConfig2 });
+    expect(rules['require-no-terra-base-peer-dependency-versions'].create).toHaveBeenCalledTimes(1);
+    expect(rules['require-no-terra-base-peer-dependency-versions'].create).toHaveBeenCalledWith({ ruleConfig: package2RuleConfig1, report: expect.anything() });
+    expect(rules['require-theme-context-versions'].create).toHaveBeenCalledTimes(2);
+    expect(rules['require-theme-context-versions'].create).toHaveBeenCalledWith({ ruleConfig: package1RuleConfig2, report: expect.anything() });
+    expect(rules['require-theme-context-versions'].create).toHaveBeenCalledWith({ ruleConfig: package2RuleConfig2, report: expect.anything() });
+    expect(mockRule1.dependencies).toHaveBeenCalledTimes(1);
+    expect(mockRule1.dependencies).toHaveBeenCalledWith({ b: '1.1.1' });
+    expect(mockRule2.dependencies).toHaveBeenCalledTimes(1);
+    expect(mockRule2.dependencies).toHaveBeenCalledWith({ a: '1.0.0' });
+    expect(mockRule3.dependencies).toHaveBeenCalledTimes(1);
+    expect(mockRule3.dependencies).toHaveBeenCalledWith({ b: '1.1.1' });
     expect(global.console.log).toHaveBeenCalled();
 
     jest.resetAllMocks();

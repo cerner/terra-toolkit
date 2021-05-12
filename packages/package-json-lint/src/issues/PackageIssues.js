@@ -1,4 +1,5 @@
 const chalk = require('chalk');
+const logSymbols = require('log-symbols');
 
 class PackageIssues {
   constructor({ packageJsonPath, results }) {
@@ -27,7 +28,13 @@ class PackageIssues {
   toString() {
     if (this.errorCount || this.warningCount) {
       const packageJsonPath = chalk.underline(this.packageJsonPath);
-      const results = this.results.map((result) => result.toString()).join('\n');
+      const results = this.results.map((result) => {
+        const logSymbol = result.severity === 'error' ? logSymbols.error : logSymbols.warning;
+        const formattedLintId = chalk.gray.dim(result.lintId);
+        const formattedMessage = result.severity === 'error' ? chalk.bold.red(result.lintMessage) : chalk.yellow(result.lintMessage);
+
+        return `${logSymbol} ${formattedLintId} - ${formattedMessage}`;
+      }).join('\n');
       return `${packageJsonPath}\n${results}\n`;
     }
     return undefined;

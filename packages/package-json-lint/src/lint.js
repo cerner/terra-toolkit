@@ -7,15 +7,22 @@ const { getPathsForPackages } = require('./utilities');
 
 const lint = ({ packageJsonData, config }) => {
   const issues = [];
-  Object.entries(config.rules).forEach(([ruleId, ruleInformation]) => {
+  const rulesToRun = Object.entries(config.rules).map(([ruleId, ruleInformation]) => {
     const rule = rules[ruleId];
     const ruleConfig = getRuleConfig({ rule, ruleInformation });
     if (ruleConfig.severity !== 'off') {
-      const issue = rule.lint({ packageJsonData, ruleConfig });
-      if (issue) {
-        issues.push(issue);
-      }
+      return rule.create({ ruleConfig, report: issue => issues.push(issue) });
     }
+    return undefined;
+  }).filter(rule => !!rule);
+
+  Object.entries(packageJsonData).forEach(([node, value]) => {
+    rulesToRun.forEach((rule) => {
+      const nodeFunction = rule[node];
+      if (nodeFunction) {
+        nodeFunction(value);
+      }
+    });
   });
   return issues;
 };

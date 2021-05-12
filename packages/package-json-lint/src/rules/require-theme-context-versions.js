@@ -1,5 +1,4 @@
 const semver = require('semver');
-const LintIssue = require('../issues/LintIssue');
 
 const versionSet = [
   { name: '@cerner/terra-docs', versionRange: '>=1.0.0' },
@@ -77,22 +76,22 @@ const versionSet = [
 ];
 
 module.exports = {
-  lint: ({ packageJsonData, ruleConfig }) => {
-    const { dependencies = {} } = packageJsonData;
-    const currentProblems = [];
-    versionSet.forEach(({ name, versionRange }) => {
-      const dependencyVersion = dependencies[name];
-      if (dependencyVersion && !semver.satisfies(semver.minVersion(dependencyVersion), versionRange)) {
-        currentProblems.push(`${name}@${dependencyVersion} does not satisfy the theme context range requirement: ${name}@${versionRange}`);
-      }
-    });
+  create: ({ ruleConfig, report }) => ({
+    dependencies: (dependencies) => {
+      const currentProblems = versionSet.map(({ name, versionRange }) => {
+        const dependencyVersion = dependencies[name];
+        if (dependencyVersion && !semver.satisfies(semver.minVersion(dependencyVersion), versionRange)) {
+          return `${name}@${dependencyVersion} does not satisfy range requirement for no terra base peer dependencies: ${name}@${versionRange}`;
+        }
+        return undefined;
+      }).filter(problem => !!problem);
 
-    if (currentProblems.length) {
-      const lintMessage = `The dependencies for this project do not have the minimum versions required for theming context:\n  ${currentProblems.join('\n  ')}`;
-      return new LintIssue({
-        lintId: 'require-theme-context-versions', severity: ruleConfig.severity, node: 'dependencies', lintMessage,
-      });
-    }
-    return undefined;
-  },
+      if (currentProblems.length) {
+        const lintMessage = `The dependencies for this project do not have the minimum versions required for theming context:\n  ${currentProblems.join('\n  ')}`;
+        report({
+          lintId: 'require-theme-context-versions', severity: ruleConfig.severity, lintMessage,
+        });
+      }
+    },
+  }),
 };

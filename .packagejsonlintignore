@@ -1,2 +1,2 @@
-packages/terra-cli/tests
+packages/terra-cli
 packages/duplicate-package-checker-webpack-plugin/tests

@@ -39,7 +39,8 @@
     "semver": "^7.3.4"
   },
   "peerDependencies": {
-    "@cerner/terra-cli": "^1.0.0"
+    "@cerner/terra-cli": "^1.0.0",
+    "@npmcli/promise-spawn": "^1.2.0"
   },
   "devDependencies": {
     "@cerner/terra-cli": "^1.7.0",

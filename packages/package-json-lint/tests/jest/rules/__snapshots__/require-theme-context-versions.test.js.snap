@@ -1,92 +1,90 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`require-theme-context-versions fails as a warning when versions do not meet the required version 1`] = `
-LintIssue {
+Object {
   "lintId": "require-theme-context-versions",
   "lintMessage": "The dependencies for this project do not have the minimum versions required for theming context:
-  terra-action-footer@^1.0.0 does not satisfy the theme context range requirement: terra-action-footer@>=2.42.0",
-  "node": "dependencies",
+  terra-action-footer@^1.0.0 does not satisfy range requirement for no terra base peer dependencies: terra-action-footer@>=2.42.0",
   "severity": "warning",
 }
 `;
 
 exports[`require-theme-context-versions fails when versions do not meet the required version 1`] = `
-LintIssue {
+Object {
   "lintId": "require-theme-context-versions",
   "lintMessage": "The dependencies for this project do not have the minimum versions required for theming context:
-  @cerner/terra-docs@<1.0.0 does not satisfy the theme context range requirement: @cerner/terra-docs@>=1.0.0
-  terra-abstract-modal@<3.25.0 does not satisfy the theme context range requirement: terra-abstract-modal@>=3.25.0
-  terra-action-footer@<2.42.0 does not satisfy the theme context range requirement: terra-action-footer@>=2.42.0
-  terra-action-header@<2.43.0 does not satisfy the theme context range requirement: terra-action-header@>=2.43.0
-  terra-alert@<4.29.0 does not satisfy the theme context range requirement: terra-alert@>=4.29.0
-  terra-application-header-layout@<3.28.0 does not satisfy the theme context range requirement: terra-application-header-layout@>=3.28.0
-  terra-application-links@<6.34.0 does not satisfy the theme context range requirement: terra-application-links@>=6.34.0
-  terra-application-name@<3.30.0 does not satisfy the theme context range requirement: terra-application-name@>=3.30.0
-  terra-application-navigation@<1.37.0 does not satisfy the theme context range requirement: terra-application-navigation@>=1.37.0
-  terra-application-utility@<2.35.0 does not satisfy the theme context range requirement: terra-application-utility@>=2.35.0
-  terra-application@<1.19.0 does not satisfy the theme context range requirement: terra-application@>=1.19.0
-  terra-avatar@<3.3.0 does not satisfy the theme context range requirement: terra-avatar@>=3.3.0
-  terra-badge@<3.35.0 does not satisfy the theme context range requirement: terra-badge@>=3.35.0
-  terra-brand-footer@<2.24.0 does not satisfy the theme context range requirement: terra-brand-footer@>=2.24.0
-  terra-button-group@<3.39.0 does not satisfy the theme context range requirement: terra-button-group@>=3.39.0
-  terra-button@<3.36.0 does not satisfy the theme context range requirement: terra-button@>=3.36.0
-  terra-card@<3.27.0 does not satisfy the theme context range requirement: terra-card@>=3.27.0
-  terra-cell-grid@<1.5.0 does not satisfy the theme context range requirement: terra-cell-grid@>=1.5.0
-  terra-clinical-data-grid@<2.25.0 does not satisfy the theme context range requirement: terra-clinical-data-grid@>=2.25.0
-  terra-clinical-detail-view@<3.20.0 does not satisfy the theme context range requirement: terra-clinical-detail-view@>=3.20.0
-  terra-clinical-header@<3.16.0 does not satisfy the theme context range requirement: terra-clinical-header@>=3.16.0
-  terra-clinical-item-display@<3.18.0 does not satisfy the theme context range requirement: terra-clinical-item-display@>=3.18.0
-  terra-clinical-item-view@<3.19.0 does not satisfy the theme context range requirement: terra-clinical-item-view@>=3.19.0
-  terra-clinical-label-value-view@<3.20.0 does not satisfy the theme context range requirement: terra-clinical-label-value-view@>=3.20.0
-  terra-clinical-onset-picker@<4.21.0 does not satisfy the theme context range requirement: terra-clinical-onset-picker@>=4.21.0
-  terra-collapsible-menu-view@<6.34.0 does not satisfy the theme context range requirement: terra-collapsible-menu-view@>=6.34.0
-  terra-date-input@<1.14.0 does not satisfy the theme context range requirement: terra-date-input@>=1.14.0
-  terra-date-picker@<4.38.0 does not satisfy the theme context range requirement: terra-date-picker@>=4.38.0
-  terra-date-time-picker@<4.38.0 does not satisfy the theme context range requirement: terra-date-time-picker@>=4.38.0
-  terra-demographics-banner@<3.37.0 does not satisfy the theme context range requirement: terra-demographics-banner@>=3.37.0
-  terra-dialog-modal@<3.38.0 does not satisfy the theme context range requirement: terra-dialog-modal@>=3.38.0
-  terra-dialog@<2.42.0 does not satisfy the theme context range requirement: terra-dialog@>=2.42.0
-  terra-divider@<3.27.0 does not satisfy the theme context range requirement: terra-divider@>=3.27.0
-  terra-dropdown-button@<1.14.0 does not satisfy the theme context range requirement: terra-dropdown-button@>=1.14.0
-  terra-form-checkbox@<4.3.0 does not satisfy the theme context range requirement: terra-form-checkbox@>=4.3.0
-  terra-form-field@<4.3.0 does not satisfy the theme context range requirement: terra-form-field@>=4.3.0
-  terra-form-fieldset@<2.42.0 does not satisfy the theme context range requirement: terra-form-fieldset@>=2.42.0
-  terra-form-input@<3.5.0 does not satisfy the theme context range requirement: terra-form-input@>=3.5.0
-  terra-form-radio@<4.5.0 does not satisfy the theme context range requirement: terra-form-radio@>=4.5.0
-  terra-form-select@<6.6.0 does not satisfy the theme context range requirement: terra-form-select@>=6.6.0
-  terra-form-textarea@<4.5.0 does not satisfy the theme context range requirement: terra-form-textarea@>=4.5.0
-  terra-grid@<6.21.0 does not satisfy the theme context range requirement: terra-grid@>=6.21.0
-  terra-html-table@<1.6.0 does not satisfy the theme context range requirement: terra-html-table@>=1.6.0
-  terra-hyperlink@<2.34.0 does not satisfy the theme context range requirement: terra-hyperlink@>=2.34.0
-  terra-icon@<3.32.0 does not satisfy the theme context range requirement: terra-icon@>=3.32.0
-  terra-image@<3.28.0 does not satisfy the theme context range requirement: terra-image@>=3.28.0
-  terra-layout@<4.24.0 does not satisfy the theme context range requirement: terra-layout@>=4.24.0
-  terra-list@<4.31.0 does not satisfy the theme context range requirement: terra-list@>=4.31.0
-  terra-menu@<6.34.0 does not satisfy the theme context range requirement: terra-menu@>=6.34.0
-  terra-modal-manager@<6.34.0 does not satisfy the theme context range requirement: terra-modal-manager@>=6.34.0
-  terra-navigation-side-menu@<2.31.0 does not satisfy the theme context range requirement: terra-navigation-side-menu@>=2.31.0
-  terra-notification-dialog@<3.35.0 does not satisfy the theme context range requirement: terra-notification-dialog@>=3.35.0
-  terra-overlay@<3.49.0 does not satisfy the theme context range requirement: terra-overlay@>=3.49.0
-  terra-paginator@<2.51.0 does not satisfy the theme context range requirement: terra-paginator@>=2.51.0
-  terra-popup@<6.35.0 does not satisfy the theme context range requirement: terra-popup@>=6.35.0
-  terra-profile-image@<3.30.0 does not satisfy the theme context range requirement: terra-profile-image@>=3.30.0
-  terra-progress-bar@<4.23.0 does not satisfy the theme context range requirement: terra-progress-bar@>=4.23.0
-  terra-search-field@<3.51.0 does not satisfy the theme context range requirement: terra-search-field@>=3.51.0
-  terra-section-header@<2.37.0 does not satisfy the theme context range requirement: terra-section-header@>=2.37.0
-  terra-show-hide@<2.35.0 does not satisfy the theme context range requirement: terra-show-hide@>=2.35.0
-  terra-signature@<2.30.0 does not satisfy the theme context range requirement: terra-signature@>=2.30.0
-  terra-slide-group@<4.21.0 does not satisfy the theme context range requirement: terra-slide-group@>=4.21.0
-  terra-slide-panel@<3.27.0 does not satisfy the theme context range requirement: terra-slide-panel@>=3.27.0
-  terra-spacer@<3.40.0 does not satisfy the theme context range requirement: terra-spacer@>=3.40.0
-  terra-status-view@<4.27.0 does not satisfy the theme context range requirement: terra-status-view@>=4.27.0
-  terra-switch@<1.0.0 does not satisfy the theme context range requirement: terra-switch@>=1.0.0
-  terra-table@<4.8.0 does not satisfy the theme context range requirement: terra-table@>=4.8.0
-  terra-tabs@<6.35.0 does not satisfy the theme context range requirement: terra-tabs@>=6.35.0
-  terra-tag@<2.35.0 does not satisfy the theme context range requirement: terra-tag@>=2.35.0
-  terra-text@<4.31.0 does not satisfy the theme context range requirement: terra-text@>=4.31.0
-  terra-time-input@<4.29.0 does not satisfy the theme context range requirement: terra-time-input@>=4.29.0
-  terra-toolbar@<1.8.0 does not satisfy the theme context range requirement: terra-toolbar@>=1.8.0",
-  "node": "dependencies",
+  @cerner/terra-docs@<1.0.0 does not satisfy range requirement for no terra base peer dependencies: @cerner/terra-docs@>=1.0.0
+  terra-abstract-modal@<3.25.0 does not satisfy range requirement for no terra base peer dependencies: terra-abstract-modal@>=3.25.0
+  terra-action-footer@<2.42.0 does not satisfy range requirement for no terra base peer dependencies: terra-action-footer@>=2.42.0
+  terra-action-header@<2.43.0 does not satisfy range requirement for no terra base peer dependencies: terra-action-header@>=2.43.0
+  terra-alert@<4.29.0 does not satisfy range requirement for no terra base peer dependencies: terra-alert@>=4.29.0
+  terra-application-header-layout@<3.28.0 does not satisfy range requirement for no terra base peer dependencies: terra-application-header-layout@>=3.28.0
+  terra-application-links@<6.34.0 does not satisfy range requirement for no terra base peer dependencies: terra-application-links@>=6.34.0
+  terra-application-name@<3.30.0 does not satisfy range requirement for no terra base peer dependencies: terra-application-name@>=3.30.0
+  terra-application-navigation@<1.37.0 does not satisfy range requirement for no terra base peer dependencies: terra-application-navigation@>=1.37.0
+  terra-application-utility@<2.35.0 does not satisfy range requirement for no terra base peer dependencies: terra-application-utility@>=2.35.0
+  terra-application@<1.19.0 does not satisfy range requirement for no terra base peer dependencies: terra-application@>=1.19.0
+  terra-avatar@<3.3.0 does not satisfy range requirement for no terra base peer dependencies: terra-avatar@>=3.3.0
+  terra-badge@<3.35.0 does not satisfy range requirement for no terra base peer dependencies: terra-badge@>=3.35.0
+  terra-brand-footer@<2.24.0 does not satisfy range requirement for no terra base peer dependencies: terra-brand-footer@>=2.24.0
+  terra-button-group@<3.39.0 does not satisfy range requirement for no terra base peer dependencies: terra-button-group@>=3.39.0
+  terra-button@<3.36.0 does not satisfy range requirement for no terra base peer dependencies: terra-button@>=3.36.0
+  terra-card@<3.27.0 does not satisfy range requirement for no terra base peer dependencies: terra-card@>=3.27.0
+  terra-cell-grid@<1.5.0 does not satisfy range requirement for no terra base peer dependencies: terra-cell-grid@>=1.5.0
+  terra-clinical-data-grid@<2.25.0 does not satisfy range requirement for no terra base peer dependencies: terra-clinical-data-grid@>=2.25.0
+  terra-clinical-detail-view@<3.20.0 does not satisfy range requirement for no terra base peer dependencies: terra-clinical-detail-view@>=3.20.0
+  terra-clinical-header@<3.16.0 does not satisfy range requirement for no terra base peer dependencies: terra-clinical-header@>=3.16.0
+  terra-clinical-item-display@<3.18.0 does not satisfy range requirement for no terra base peer dependencies: terra-clinical-item-display@>=3.18.0
+  terra-clinical-item-view@<3.19.0 does not satisfy range requirement for no terra base peer dependencies: terra-clinical-item-view@>=3.19.0
+  terra-clinical-label-value-view@<3.20.0 does not satisfy range requirement for no terra base peer dependencies: terra-clinical-label-value-view@>=3.20.0
+  terra-clinical-onset-picker@<4.21.0 does not satisfy range requirement for no terra base peer dependencies: terra-clinical-onset-picker@>=4.21.0
+  terra-collapsible-menu-view@<6.34.0 does not satisfy range requirement for no terra base peer dependencies: terra-collapsible-menu-view@>=6.34.0
+  terra-date-input@<1.14.0 does not satisfy range requirement for no terra base peer dependencies: terra-date-input@>=1.14.0
+  terra-date-picker@<4.38.0 does not satisfy range requirement for no terra base peer dependencies: terra-date-picker@>=4.38.0
+  terra-date-time-picker@<4.38.0 does not satisfy range requirement for no terra base peer dependencies: terra-date-time-picker@>=4.38.0
+  terra-demographics-banner@<3.37.0 does not satisfy range requirement for no terra base peer dependencies: terra-demographics-banner@>=3.37.0
+  terra-dialog-modal@<3.38.0 does not satisfy range requirement for no terra base peer dependencies: terra-dialog-modal@>=3.38.0
+  terra-dialog@<2.42.0 does not satisfy range requirement for no terra base peer dependencies: terra-dialog@>=2.42.0
+  terra-divider@<3.27.0 does not satisfy range requirement for no terra base peer dependencies: terra-divider@>=3.27.0
+  terra-dropdown-button@<1.14.0 does not satisfy range requirement for no terra base peer dependencies: terra-dropdown-button@>=1.14.0
+  terra-form-checkbox@<4.3.0 does not satisfy range requirement for no terra base peer dependencies: terra-form-checkbox@>=4.3.0
+  terra-form-field@<4.3.0 does not satisfy range requirement for no terra base peer dependencies: terra-form-field@>=4.3.0
+  terra-form-fieldset@<2.42.0 does not satisfy range requirement for no terra base peer dependencies: terra-form-fieldset@>=2.42.0
+  terra-form-input@<3.5.0 does not satisfy range requirement for no terra base peer dependencies: terra-form-input@>=3.5.0
+  terra-form-radio@<4.5.0 does not satisfy range requirement for no terra base peer dependencies: terra-form-radio@>=4.5.0
+  terra-form-select@<6.6.0 does not satisfy range requirement for no terra base peer dependencies: terra-form-select@>=6.6.0
+  terra-form-textarea@<4.5.0 does not satisfy range requirement for no terra base peer dependencies: terra-form-textarea@>=4.5.0
+  terra-grid@<6.21.0 does not satisfy range requirement for no terra base peer dependencies: terra-grid@>=6.21.0
+  terra-html-table@<1.6.0 does not satisfy range requirement for no terra base peer dependencies: terra-html-table@>=1.6.0
+  terra-hyperlink@<2.34.0 does not satisfy range requirement for no terra base peer dependencies: terra-hyperlink@>=2.34.0
+  terra-icon@<3.32.0 does not satisfy range requirement for no terra base peer dependencies: terra-icon@>=3.32.0
+  terra-image@<3.28.0 does not satisfy range requirement for no terra base peer dependencies: terra-image@>=3.28.0
+  terra-layout@<4.24.0 does not satisfy range requirement for no terra base peer dependencies: terra-layout@>=4.24.0
+  terra-list@<4.31.0 does not satisfy range requirement for no terra base peer dependencies: terra-list@>=4.31.0
+  terra-menu@<6.34.0 does not satisfy range requirement for no terra base peer dependencies: terra-menu@>=6.34.0
+  terra-modal-manager@<6.34.0 does not satisfy range requirement for no terra base peer dependencies: terra-modal-manager@>=6.34.0
+  terra-navigation-side-menu@<2.31.0 does not satisfy range requirement for no terra base peer dependencies: terra-navigation-side-menu@>=2.31.0
+  terra-notification-dialog@<3.35.0 does not satisfy range requirement for no terra base peer dependencies: terra-notification-dialog@>=3.35.0
+  terra-overlay@<3.49.0 does not satisfy range requirement for no terra base peer dependencies: terra-overlay@>=3.49.0
+  terra-paginator@<2.51.0 does not satisfy range requirement for no terra base peer dependencies: terra-paginator@>=2.51.0
+  terra-popup@<6.35.0 does not satisfy range requirement for no terra base peer dependencies: terra-popup@>=6.35.0
+  terra-profile-image@<3.30.0 does not satisfy range requirement for no terra base peer dependencies: terra-profile-image@>=3.30.0
+  terra-progress-bar@<4.23.0 does not satisfy range requirement for no terra base peer dependencies: terra-progress-bar@>=4.23.0
+  terra-search-field@<3.51.0 does not satisfy range requirement for no terra base peer dependencies: terra-search-field@>=3.51.0
+  terra-section-header@<2.37.0 does not satisfy range requirement for no terra base peer dependencies: terra-section-header@>=2.37.0
+  terra-show-hide@<2.35.0 does not satisfy range requirement for no terra base peer dependencies: terra-show-hide@>=2.35.0
+  terra-signature@<2.30.0 does not satisfy range requirement for no terra base peer dependencies: terra-signature@>=2.30.0
+  terra-slide-group@<4.21.0 does not satisfy range requirement for no terra base peer dependencies: terra-slide-group@>=4.21.0
+  terra-slide-panel@<3.27.0 does not satisfy range requirement for no terra base peer dependencies: terra-slide-panel@>=3.27.0
+  terra-spacer@<3.40.0 does not satisfy range requirement for no terra base peer dependencies: terra-spacer@>=3.40.0
+  terra-status-view@<4.27.0 does not satisfy range requirement for no terra base peer dependencies: terra-status-view@>=4.27.0
+  terra-switch@<1.0.0 does not satisfy range requirement for no terra base peer dependencies: terra-switch@>=1.0.0
+  terra-table@<4.8.0 does not satisfy range requirement for no terra base peer dependencies: terra-table@>=4.8.0
+  terra-tabs@<6.35.0 does not satisfy range requirement for no terra base peer dependencies: terra-tabs@>=6.35.0
+  terra-tag@<2.35.0 does not satisfy range requirement for no terra base peer dependencies: terra-tag@>=2.35.0
+  terra-text@<4.31.0 does not satisfy range requirement for no terra base peer dependencies: terra-text@>=4.31.0
+  terra-time-input@<4.29.0 does not satisfy range requirement for no terra base peer dependencies: terra-time-input@>=4.29.0
+  terra-toolbar@<1.8.0 does not satisfy range requirement for no terra base peer dependencies: terra-toolbar@>=1.8.0",
   "severity": "error",
 }
 `;
