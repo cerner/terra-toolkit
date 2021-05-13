@@ -27,22 +27,25 @@ describe('getPathsForPackages', () => {
   });
 
   it('returns a list of paths for packages that are not ignored for a monorepo', async () => {
+    const oldCwd = process.cwd;
+    process.cwd = () => '/Users/x/ecosystem/terra-toolkit/';
+
     fs.pathExists.mockResolvedValueOnce(false);
     fs.pathExists.mockResolvedValueOnce(true);
     spawn.mockResolvedValueOnce({
-      stdout: `${process.cwd()}/packages/browserslist-config-terra
-${process.cwd()}/packages/duplicate-package-checker-webpack-plugin
-${process.cwd()}/packages/eslint-config-terra
-${process.cwd()}/packages/jest-config-terra
-${process.cwd()}/packages/package-json-lint
-${process.cwd()}/packages/stylelint-config-terra
-${process.cwd()}/packages/terra-aggregate-translations
-${process.cwd()}/packages/terra-cli
-${process.cwd()}/packages/terra-enzyme-intl
-${process.cwd()}/packages/terra-functional-testing
-${process.cwd()}/packages/terra-open-source-scripts
-${process.cwd()}/packages/terra-toolkit-docs
-${process.cwd()}/packages/webpack-config-terra`,
+      stdout: `/Users/x/ecosystem/terra-toolkit/packages/browserslist-config-terra
+/Users/x/ecosystem/terra-toolkit/packages/duplicate-package-checker-webpack-plugin
+/Users/x/ecosystem/terra-toolkit/packages/eslint-config-terra
+/Users/x/ecosystem/terra-toolkit/packages/jest-config-terra
+/Users/x/ecosystem/terra-toolkit/packages/package-json-lint
+/Users/x/ecosystem/terra-toolkit/packages/stylelint-config-terra
+/Users/x/ecosystem/terra-toolkit/packages/terra-aggregate-translations
+/Users/x/ecosystem/terra-toolkit/packages/terra-cli
+/Users/x/ecosystem/terra-toolkit/packages/terra-enzyme-intl
+/Users/x/ecosystem/terra-toolkit/packages/terra-functional-testing
+/Users/x/ecosystem/terra-toolkit/packages/terra-open-source-scripts
+/Users/x/ecosystem/terra-toolkit/packages/terra-toolkit-docs
+/Users/x/ecosystem/terra-toolkit/packages/webpack-config-terra`,
     });
     fs.readFile.mockResolvedValueOnce('packages/jest-config-terra\npackages/terra-cli');
 
@@ -53,6 +56,9 @@ ${process.cwd()}/packages/webpack-config-terra`,
     expect(fs.pathExists).toHaveBeenCalledTimes(2);
     expect(fs.pathExists).toHaveBeenCalledWith(path.join(process.cwd(), 'Gemfile'));
     expect(fs.pathExists).toHaveBeenCalledWith(path.join(process.cwd(), 'lerna.json'));
+
+    process.cwd = oldCwd;
+
     expect(fs.readFile).toHaveBeenCalledWith(path.join(process.cwd(), '.packagejsonlintignore'), 'utf8');
 
     jest.resetAllMocks();
