@@ -19,8 +19,8 @@ const screenshot = (testName, options = {}) => {
     ...options,
     name: testName,
   };
-
   const screenshotResult = global.browser.checkElement(selector || global.Terra.serviceOptions.selector, wrappedOptions);
+  screenshotResult.disableSnapshotMismatch = global.Terra.serviceOptions.disableSnapshotMismatch;
 
   global.expect(screenshotResult).toMatchReference();
 };

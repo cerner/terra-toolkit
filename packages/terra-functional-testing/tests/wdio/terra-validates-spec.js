@@ -37,6 +37,15 @@ Terra.describeViewports('Terra.validates', ['small', 'large'], () => {
       Terra.validates.screenshot('validates-screenshot');
     });
 
+    it('should pass if disableSnapshotMismatch is true even when mismatched', () => {
+      const oldDisableSnapshotMismatch = Terra.serviceOptions.disableSnapshotMismatch;
+      Terra.serviceOptions.disableSnapshotMismatch = true;
+      browser.url('/insufficient-color-contrast.html');
+
+      Terra.validates.screenshot('validates-mismatch');
+      Terra.serviceOptions.disableSnapshotMismatch = oldDisableSnapshotMismatch
+    });
+
     it('should require a screenshot name', () => {
       const errorMessage = '[terra-functional-testing:screenshot] Terra.validate.screenshot requires a unique test name as the first argument.';
 

@@ -12,6 +12,7 @@
  */
 function toMatchReference(screenshot) {
   const {
+    disableSnapshotMismatch,
     isNewScreenshot,
     isSameDimensions,
     isWithinMismatchTolerance,
@@ -36,7 +37,7 @@ function toMatchReference(screenshot) {
   }
 
   return {
-    pass: imagesMatch === true,
+    pass: disableSnapshotMismatch ? true : imagesMatch === true,
     message: () => message,
   };
 }
