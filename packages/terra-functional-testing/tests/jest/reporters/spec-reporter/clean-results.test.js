@@ -1,5 +1,5 @@
 const fs = require('fs');
-const cleanResults = require('../../../../src/reporters/spec-reporter/clean-results.js');
+const cleanResults = require('../../../../src/reporters/spec-reporter/clean-results');
 const getOutputDir = require('../../../../src/reporters/spec-reporter/get-output-dir');
 
 jest.mock('../../../../src/reporters/spec-reporter/get-output-dir', () => (
