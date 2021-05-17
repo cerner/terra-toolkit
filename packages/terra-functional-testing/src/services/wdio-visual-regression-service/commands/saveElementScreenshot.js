@@ -1,4 +1,3 @@
-const lodashIsArray = require('lodash.isarray');
 const lodashIsPlainObject = require('lodash.isplainobject');
 const lodashIsString = require('lodash.isstring');
 const lodashIsUndefined = require('lodash.isundefined');
@@ -21,17 +20,17 @@ const saveBase64Image = require('../utils/saveBase64Image');
 // Note: function name must be async to signalize WebdriverIO that this function returns a promise
 async function async(fileName, elementSelector, options) {
   /* eslint-disable no-param-reassign */
-  if ((lodashIsString(fileName) || lodashIsArray(fileName)) && lodashIsPlainObject(elementSelector) && lodashIsUndefined(options)) {
+  if ((lodashIsString(fileName) || Array.isArray(fileName)) && lodashIsPlainObject(elementSelector) && lodashIsUndefined(options)) {
     options = elementSelector;
     elementSelector = fileName;
     fileName = undefined;
-  } else if ((lodashIsString(fileName) || lodashIsArray(fileName)) && lodashIsUndefined(elementSelector)) {
+  } else if ((lodashIsString(fileName) || Array.isArray(fileName)) && lodashIsUndefined(elementSelector)) {
     elementSelector = fileName;
     fileName = undefined;
   }
   /* eslint-enable no-param-reassign */
 
-  if (!(lodashIsString(elementSelector) || lodashIsArray(elementSelector))) {
+  if (!(lodashIsString(elementSelector) || Array.isArray(elementSelector))) {
     throw new Error('Please pass a valid selector value to parameter elementSelector');
   }
 
