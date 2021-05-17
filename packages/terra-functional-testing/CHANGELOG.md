@@ -5,6 +5,9 @@
 * Added
   * Added `disableSnapshotMismatch` flag to disable test failure on snapshot mismatch.
 
+* Removed
+  * Removed lodash is array dependency in favor of Array.isArray.
+
 ## 1.4.0 - (May 7, 2021)
 
 * Added
@@ -22,7 +25,7 @@
 ## 1.2.0 - (April 23, 2021)
 
 * Added
-  * The `diff`, `error`, and `latest` folders in the `__snapshots__` directory will be deleted before each test run.  
+  * The `diff`, `error`, and `latest` folders in the `__snapshots__` directory will be deleted before each test run.
 
 ## 1.1.0 - (April 13, 2021)
 
