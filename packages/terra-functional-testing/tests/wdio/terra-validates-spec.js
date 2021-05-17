@@ -43,7 +43,7 @@ Terra.describeViewports('Terra.validates', ['small', 'large'], () => {
       browser.url('/insufficient-color-contrast.html');
 
       Terra.validates.screenshot('validates-mismatch');
-      Terra.serviceOptions.disableSnapshotMismatch = oldDisableSnapshotMismatch
+      Terra.serviceOptions.disableSnapshotMismatch = oldDisableSnapshotMismatch;
     });
 
     it('should require a screenshot name', () => {
