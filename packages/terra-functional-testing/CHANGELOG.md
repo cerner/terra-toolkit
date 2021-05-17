@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Added
+  * Added `disableSnapshotMismatch` flag to disable test failure on snapshot mismatch.
+
 ## 1.4.0 - (May 7, 2021)
 
 * Added
