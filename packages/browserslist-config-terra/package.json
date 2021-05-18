@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/cerner/terra-toolkit",
   "scripts": {
+    "compile": "",
     "lint": "eslint --ext .js,.jsx ."
   }
 }

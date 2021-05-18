@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/cerner/terra-toolkit",
   "scripts": {
+    "compile": "",
     "jest": "jest --config ../../jest.config.js",
     "lint": "eslint --ext .js,.jsx .",
     "test": "npm run jest"

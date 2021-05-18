@@ -10,6 +10,9 @@
     "type": "git",
     "url": "git+https://github.com/cerner/terra-toolkit"
   },
+  "workspaces": [
+    "./packages/*"
+  ],
   "keywords": [
     "Cerner",
     "Terra",
@@ -58,20 +61,18 @@
     ]
   },
   "scripts": {
-    "bootstrap:hoist": "lerna bootstrap --hoist --force-local",
     "clean:install": "rm package-lock.json; npm run clean && npm install",
-    "clean": "lerna clean --yes && rm -rf node_modules || true",
+    "clean": "rm -rf node_modules || true",
     "compile:prod": "rm -rf ./build; NODE_ENV=production webpack -p --config webpack.dev-site.config.js",
-    "compile": "lerna run compile --parallel",
+    "compile": "npm run compile --workspaces",
     "danger": "danger ci",
     "heroku-postbuild": "npm install --only=dev && npm run compile:prod",
-    "heroku-prebuild": "npx lerna init",
     "jest": "jest",
     "lint:js": "eslint --ext .js,.jsx .",
     "lint": "npm run lint:js",
     "mocha": "cd packages/terra-functional-testing && npm run mocha",
     "pack": "webpack -p",
-    "postinstall": "link-parent-bin && npm run compile && npm run bootstrap:hoist",
+    "postinstall": "link-parent-bin && npm run compile",
     "prepare-for-release": "npm run terra -- prepare-for-release",
     "start": "webpack-dev-server --config webpack.dev-site.config.js",
     "start-heroku": "npm run terra -- express-server --port $PORT --site './build' ",
@@ -105,7 +106,6 @@
     "eslint": "^7.19.0",
     "html-webpack-plugin": "^4.3.0",
     "jest": "^26.0.1",
-    "lerna": "^3.20.2",
     "link-parent-bin": "^1.0.0",
     "memory-fs": "^0.5.0",
     "postcss": "^8.2.1",
