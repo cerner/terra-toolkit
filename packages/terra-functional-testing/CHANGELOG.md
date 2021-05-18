@@ -3,7 +3,7 @@
 ## Unreleased
 
 * Added
-  * Added `ignoreScreenshotMistmatch` flag to disable test failure on snapshot mismatch.
+  * Added `ignoreScreenshotMismatch` flag to disable test failure on snapshot mismatch.
 
 * Removed
   * Removed lodash is array dependency in favor of Array.isArray.

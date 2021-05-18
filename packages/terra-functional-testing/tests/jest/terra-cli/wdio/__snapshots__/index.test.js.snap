@@ -17,7 +17,7 @@ Options:
                                         configuration.                  [string]
       --disableSeleniumService          A flag to disable the selenium docker
                                         service.      [boolean] [default: false]
-      --ignoreScreenshotMistmatch       A flag to disable failing on screenshot
+      --ignoreScreenshotMismatch        A flag to disable failing on screenshot
                                         mismatch.     [boolean] [default: false]
       --externalHost                    The host address the testing environment
                                         is connected to.

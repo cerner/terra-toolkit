@@ -11,7 +11,7 @@ const getConfigurationOptions = (options) => {
     assetServerPort,
     browsers,
     disableSeleniumService,
-    ignoreScreenshotMistmatch,
+    ignoreScreenshotMismatch,
     externalHost,
     externalPort,
     formFactor,
@@ -33,7 +33,7 @@ const getConfigurationOptions = (options) => {
     port: gridUrl ? 80 : 4444,
     launcherOptions: {
       disableSeleniumService: disableSeleniumService || useSeleniumStandaloneService || !!gridUrl,
-      ignoreScreenshotMistmatch,
+      ignoreScreenshotMismatch,
       formFactor,
       gridUrl,
       keepAliveSeleniumDockerService,

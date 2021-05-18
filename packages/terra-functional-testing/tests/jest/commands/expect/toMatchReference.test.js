@@ -4,7 +4,7 @@ describe('toMatchReference', () => {
   beforeEach(() => {
     global.Terra = {
       serviceOptions: {
-        ignoreScreenshotMistmatch: false,
+        ignoreScreenshotMismatch: false,
       },
     };
   });
@@ -58,7 +58,7 @@ describe('toMatchReference', () => {
 
     global.Terra = {
       serviceOptions: {
-        ignoreScreenshotMistmatch: true,
+        ignoreScreenshotMismatch: true,
       },
     };
 
