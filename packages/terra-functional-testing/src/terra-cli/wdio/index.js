@@ -49,7 +49,7 @@ const cli = {
       },
       ignoreScreenshotMistmatch: {
         type: 'boolean',
-        describe: 'A flag to disable failing on screenshot mismatch.',
+        describe: 'A flag to ignore screenshot mismatch.',
         default: false,
       },
       externalHost: {
