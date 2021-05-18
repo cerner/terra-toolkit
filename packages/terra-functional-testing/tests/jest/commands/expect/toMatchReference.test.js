@@ -1,6 +1,14 @@
 const toMatchReference = require('../../../../src/commands/expect/toMatchReference');
 
 describe('toMatchReference', () => {
+  beforeEach(() => {
+    global.Terra = {
+      serviceOptions: {
+        ignoreScreenshotMistmatch: false,
+      },
+    };
+  });
+
   it('should pass if matches reference screenshot', () => {
     const receivedScreenshot = {
       isNewScreenshot: false,
@@ -32,6 +40,26 @@ describe('toMatchReference', () => {
       isWithinMismatchTolerance: false,
       misMatchPercentage: 0.50,
       screenshotWasUpdated: true,
+    };
+
+    const result = toMatchReference(receivedScreenshot);
+
+    expect(result.pass).toBe(true);
+  });
+
+  it('should pass if not within mismatch tolerance but ignoreScreenshotMistmatch is true', () => {
+    const receivedScreenshot = {
+      isNewScreenshot: false,
+      isSameDimensions: true,
+      isWithinMismatchTolerance: false,
+      misMatchPercentage: 0.10,
+      screenshotWasUpdated: false,
+    };
+
+    global.Terra = {
+      serviceOptions: {
+        ignoreScreenshotMistmatch: true,
+      },
     };
 
     const result = toMatchReference(receivedScreenshot);

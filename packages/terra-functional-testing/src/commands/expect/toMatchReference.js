@@ -12,7 +12,6 @@
  */
 function toMatchReference(screenshot) {
   const {
-    disableSnapshotMismatch,
     isNewScreenshot,
     isSameDimensions,
     isWithinMismatchTolerance,
@@ -37,7 +36,7 @@ function toMatchReference(screenshot) {
   }
 
   return {
-    pass: disableSnapshotMismatch ? true : imagesMatch === true,
+    pass: global.Terra.serviceOptions.ignoreScreenshotMistmatch || imagesMatch,
     message: () => message,
   };
 }
