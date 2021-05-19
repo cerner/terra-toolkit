@@ -1,4 +1,4 @@
-const semver = require('semver');
+const requireVersionSet = require('./utils/require-version-set');
 
 const versionSet = [
   { name: '@cerner/terra-docs', versionRange: '>=1.0.0' },
@@ -77,21 +77,8 @@ const versionSet = [
 
 module.exports = {
   create: ({ ruleConfig, report }) => ({
-    dependencies: (dependencies) => {
-      const currentProblems = versionSet.map(({ name, versionRange }) => {
-        const dependencyVersion = dependencies[name];
-        if (dependencyVersion && !semver.satisfies(semver.minVersion(dependencyVersion), versionRange)) {
-          return `${name}@${dependencyVersion} does not satisfy range requirement for no terra base peer dependencies: ${name}@${versionRange}`;
-        }
-        return undefined;
-      }).filter(problem => !!problem);
-
-      if (currentProblems.length) {
-        const lintMessage = `The dependencies for this project do not have the minimum versions required for theming context:\n  ${currentProblems.join('\n  ')}`;
-        report({
-          lintId: 'require-theme-context-versions', severity: ruleConfig.severity, lintMessage,
-        });
-      }
-    },
+    dependencies: (dependencies) => requireVersionSet({
+      versionSet, dependencies, ruleConfig, report, lintId: 'require-theme-context-versions', messageString: 'theming context',
+    }),
   }),
 };
