@@ -1,7 +1,7 @@
 const toMatchReference = require('../../../../src/commands/expect/toMatchReference');
 
 describe('toMatchReference', () => {
-  beforeEach(() => {
+  beforeAll(() => {
     global.Terra = {
       serviceOptions: {
         ignoreScreenshotMismatch: false,
@@ -65,6 +65,12 @@ describe('toMatchReference', () => {
     const result = toMatchReference(receivedScreenshot);
 
     expect(result.pass).toBe(true);
+
+    global.Terra = {
+      serviceOptions: {
+        ignoreScreenshotMismatch: false,
+      },
+    };
   });
 
   it('should not pass if not within mismatch tolerance', () => {
