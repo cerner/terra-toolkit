@@ -2,11 +2,13 @@
 
 ## Unreleased
 
-* Removed
-  * Removed lodash is array dependency in favor of Array.isArray.
-
 * Added
   * Added configuration to retrieve and unzip screenshots from registry.
+
+## 1.5.0 - (May 19, 2021)
+
+* Removed
+  * Removed lodash is array dependency in favor of Array.isArray.
 
 ## 1.4.0 - (May 7, 2021)
 
