@@ -68,7 +68,7 @@
     "heroku-prebuild": "npx lerna init",
     "jest": "jest",
     "lint:js": "eslint --ext .js,.jsx .",
-    "lint": "npm run lint:js",
+    "lint": "npm run lint:js -- --fix",
     "mocha": "cd packages/terra-functional-testing && npm run mocha",
     "pack": "webpack -p",
     "postinstall": "link-parent-bin && npm run compile && npm run bootstrap:hoist",
@@ -118,5 +118,8 @@
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {
+    "strip-ansi": "^7.0.0"
   }
 }

@@ -6,7 +6,7 @@
  */
 const injectAxe = (options) => {
   // eslint-disable-next-line global-require
-  const { source } = require('axe-core/axe.min.js');
+  const { source } = require('axe-core/axe.min');
 
   browser.execute(`${source}\n ${options ? `axe.configure(${JSON.stringify(options)})` : ''}`);
 };

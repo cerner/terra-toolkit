@@ -1,17 +1,9 @@
 const fs = require('fs-extra');
 const path = require('path');
 const WDIOReporter = require('@wdio/reporter').default;
-// const getOutputDir = require('./get-output-dir');
+const getOutputDir = require('./get-output-dir');
 
 class SpecReporter extends WDIOReporter {
-  constructor() {
-    super();
-    this.contentArray = [];
-  }
-  write(content) {
-    console.log("content ::: ", content);
-    this.contentArray.push(content);
-  }
   /**
    * Hook invoked when the runner ends.
    * @param {RunnerStats} runner - The test runner stats object.
@@ -20,7 +12,7 @@ class SpecReporter extends WDIOReporter {
     // The root suite is always at index 0 and is guaranteed to exist.
     const rootSuite = this.currentSuites[0];
     const results = SpecReporter.formatResults(rootSuite, runner);
-    results.specs = this.contentArray;
+
     SpecReporter.writeResults(runner, results);
   }
 
@@ -143,7 +135,7 @@ class SpecReporter extends WDIOReporter {
    */
   static writeResults(runner, results) {
     const { cid } = runner;
-    const outputDir = path.resolve(process.cwd(), 'tests', 'wdio', 'reports');
+    const outputDir = getOutputDir();
 
     // Create the output directory if it does not already exist.
     if (!fs.existsSync(outputDir)) {
