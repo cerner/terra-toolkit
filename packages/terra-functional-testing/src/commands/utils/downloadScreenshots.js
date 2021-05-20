@@ -12,7 +12,7 @@ const logger = new Logger({ prefix: '[terra-functional-testing:downloadScreensho
  */
 async function downloadScreenshots(screenshotUrl) {
   if (!screenshotUrl) {
-    logger.warn('A url to the screenshot registry is required to download screenshots.');
+    logger.error('A url to the screenshot registry is required to download screenshots.');
     return;
   }
 
