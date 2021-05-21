@@ -5,6 +5,8 @@
 * Added
   * Added `ignoreScreenshotMismatch` flag to disable test failure on snapshot mismatch.
 
+## 1.5.0 - (May 19, 2021)
+
 * Removed
   * Removed lodash is array dependency in favor of Array.isArray.
 

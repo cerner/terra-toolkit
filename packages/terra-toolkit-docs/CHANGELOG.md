@@ -5,6 +5,11 @@
 * Added
   * Added notes about new `ignoreScreenshotMismatch` flag for terra-functional-testing.
 
+## 1.14.0 - (May 19, 2021)
+
+* Changed
+  * Minor dependency version bump
+
 ## 1.13.0 - (May 11, 2021)
 
 * Changed
