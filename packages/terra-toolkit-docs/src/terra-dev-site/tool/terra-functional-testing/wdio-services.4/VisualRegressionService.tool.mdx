@@ -4,7 +4,7 @@ import { Notice } from '@cerner/terra-docs';
 
 Visual regression testing for WebdriverIO.
 
-Based on the work of Jan-André Zinser on [wdio-visual-regression-service](https://github.com/zinserjan/wdio-visual-regression-service) and [wdio-screenshot](https://github.com/zinserjan/wdio-screenshot). The visual regression service performs image comparison evaluations to determine mismatch tolerances. Screenshots exceeding the mismatch tolerance will fail the test run.
+Based on the work of Jan-André Zinser on [wdio-visual-regression-service](https://github.com/zinserjan/wdio-visual-regression-service) and [wdio-screenshot](https://github.com/zinserjan/wdio-screenshot). The visual regression service performs image comparison evaluations to determine mismatch tolerances. Screenshots exceeding the mismatch tolerance will fail the test run. Screenshot failure due to mismatch tolerance can be disabled with the `--ignoreScreenshotMismatch` option.
 
 Screenshots are saved to a `__snapshot__` directory at the same level as the spec file. Screenshots are organized by theme, locale, browser, and form factor.
 
