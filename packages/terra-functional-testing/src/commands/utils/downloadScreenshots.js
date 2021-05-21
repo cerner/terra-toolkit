@@ -1,7 +1,7 @@
-const axios = require('axios').default;
 const extract = require('extract-zip');
 const fs = require('fs-extra');
 const path = require('path');
+const https = require('https');
 const { Logger } = require('@cerner/terra-cli');
 
 const logger = new Logger({ prefix: '[terra-functional-testing:downloadScreenshots]' });
@@ -17,28 +17,33 @@ async function downloadScreenshots(screenshotUrl) {
   }
 
   await new Promise((resolve, reject) => {
-    axios({
-      method: 'get',
-      url: screenshotUrl,
-      responseType: 'stream',
-    })
-      .then(async (response) => {
-        response.data.pipe(fs.createWriteStream('terra-wdio-screenshots.zip'));
+    https.get(screenshotUrl)
+      .on('response', async (response) => {
+        const { statusCode } = response;
+
+        if (statusCode !== 200) {
+          logger.error(`Request to retrieve screenshots failed. Status Code: ${statusCode}`);
+          // Consume response data to free up memory
+          response.resume();
+          reject();
+          return;
+        }
 
         try {
-          await extract('terra-wdio-screenshots.zip', { dir: path.join(process.cwd(), 'terra-wdio-screenshots') });
-          fs.removeSync(path.join(process.cwd(), 'terra-wdio-screenshots.zip'));
-          logger.info('Screenshot download and extraction complete.');
-          resolve();
+          const writeStream = fs.createWriteStrea('terra-wdio-screenshots.zip');
+          response.pipe(writeStream);
+
+          writeStream.on('finish', async () => {
+            await extract('terra-wdio-screenshots.zip', { dir: path.join(process.cwd(), 'terra-wdio-screenshots') });
+            fs.removeSync(path.join(process.cwd(), 'terra-wdio-screenshots.zip'));
+            logger.info('Screenshot download and extraction complete.');
+            resolve();
+          });
         } catch (error) {
           fs.removeSync(path.join(process.cwd(), 'terra-wdio-screenshots.zip'));
           logger.error(`Error occurred while extracting screenshots. ${error}`);
           reject();
         }
-      })
-      .catch((error) => {
-        logger.error(`Error occurred while downloading screenshots. ${error}`);
-        reject();
       });
   });
 }

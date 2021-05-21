@@ -54,7 +54,6 @@
     "@wdio/spec-reporter": "^6.0.16",
     "@wdio/sync": "^6.1.14",
     "axe-core": "4.0.2",
-    "axios": "^0.18.1",
     "chalk": "^4.1.0",
     "expect": "^26.4.2",
     "express": "^4.17.1",
