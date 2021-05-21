@@ -30,7 +30,7 @@ async function downloadScreenshots(screenshotUrl) {
         }
 
         try {
-          const writeStream = fs.createWriteStrea('terra-wdio-screenshots.zip');
+          const writeStream = fs.createWriteStream('terra-wdio-screenshots.zip');
           response.pipe(writeStream);
 
           writeStream.on('finish', async () => {
