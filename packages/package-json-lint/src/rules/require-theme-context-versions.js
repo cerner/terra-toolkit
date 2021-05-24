@@ -1,4 +1,4 @@
-const requireVersionSet = require('./utils/require-version-set');
+const requireVersionSet = require('./requireVersionSet');
 
 const versionSet = [
   { name: '@cerner/terra-docs', versionRange: '>=1.0.0' },

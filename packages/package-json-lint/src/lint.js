@@ -3,7 +3,7 @@ const rules = require('./rules');
 const PackageIssues = require('./issues/PackageIssues');
 const AggregateIssues = require('./issues/AggregateIssues');
 const { getRuleConfig, getConfig } = require('./config');
-const { getPathsForPackages } = require('./utilities');
+const { getPathsForPackages } = require('./project-structure');
 
 const lint = ({ packageJsonData, config }) => {
   const issues = [];

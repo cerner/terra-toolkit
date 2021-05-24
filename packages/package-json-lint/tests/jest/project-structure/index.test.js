@@ -5,7 +5,7 @@ const fs = require('fs-extra');
 const spawn = require('@npmcli/promise-spawn');
 const path = require('path');
 
-const { getPathsForPackages } = require('../../../src/utilities');
+const { getPathsForPackages } = require('../../../src/project-structure');
 
 describe('getPathsForPackages', () => {
   it('returns a list of paths for packages that are not ignored for a server', async () => {

@@ -1,13 +1,13 @@
 jest.mock('fs-extra');
 jest.mock('../../src/rules');
 jest.mock('../../src/config');
-jest.mock('../../src/utilities');
+jest.mock('../../src/project-structure');
 
 const fs = require('fs-extra');
 const stripAnsi = require('strip-ansi');
 const rules = require('../../src/rules');
 const { getRuleConfig, getConfig } = require('../../src/config');
-const { getPathsForPackages } = require('../../src/utilities');
+const { getPathsForPackages } = require('../../src/project-structure');
 
 const lint = require('../../src/lint');
 

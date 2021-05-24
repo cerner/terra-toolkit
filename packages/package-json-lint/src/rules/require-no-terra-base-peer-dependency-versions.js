@@ -1,4 +1,4 @@
-const requireVersionSet = require('./utils/require-version-set');
+const requireVersionSet = require('./requireVersionSet');
 
 const versionSet = [
   { name: 'terra-action-footer', versionRange: '>2.5.0' },
