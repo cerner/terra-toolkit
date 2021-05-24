@@ -112,6 +112,17 @@ const cli = {
           return ['en'];
         },
       },
+      screenshotUrl: {
+        type: 'string',
+        describe: 'The url to the registry that stores the screenshots',
+        default: () => {
+          if (process.env.SCREENSHOT_URL) {
+            return process.env.SCREENSHOT_URL;
+          }
+
+          return undefined;
+        },
+      },
       site: {
         type: 'string',
         describe: 'A file path to a static directory of assets. When defined, an express server will launch to serve the assets and disable running webpack.',

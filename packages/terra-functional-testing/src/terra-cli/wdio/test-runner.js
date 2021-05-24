@@ -3,7 +3,7 @@ const path = require('path');
 const Launcher = require('@wdio/cli').default;
 const { Logger } = require('@cerner/terra-cli');
 const getConfigurationOptions = require('../../config/utils/getConfigurationOptions');
-const { cleanScreenshots } = require('../../commands/utils');
+const { cleanScreenshots, downloadScreenshots } = require('../../commands/utils');
 
 const logger = new Logger({ prefix: '[terra-functional-testing:wdio]' });
 
@@ -100,6 +100,8 @@ class TestRunner {
     // Clean only the non reference screenshots.
     cleanScreenshots();
 
+    await TestRunner.configureScreenshots(options);
+
     /**
      * The following code loops through each permutation of theme, locale, and form factor.
      * Each permutation sequentially invokes a new test runner. A new test runner will not start
@@ -125,6 +127,31 @@ class TestRunner {
           formFactorIndex += 1;
         } while (formFactorIndex < formFactors.length);
       }
+    }
+  }
+
+  static async configureScreenshots(options) {
+    const {
+      config,
+      screenshotUrl,
+    } = options;
+
+    let url = screenshotUrl;
+
+    if (!url) {
+      const configPath = TestRunner.configPath(config);
+      // eslint-disable-next-line global-require, import/no-dynamic-require
+      const wdioConfig = require(configPath);
+      const { screenshots } = wdioConfig.config;
+
+      if (screenshots) {
+        url = screenshots.url;
+      }
+    }
+
+    if (url) {
+      logger.info(`Starting to download screenshots from ${url}.`);
+      await downloadScreenshots(url);
     }
   }
 }
