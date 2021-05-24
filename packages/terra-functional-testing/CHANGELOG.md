@@ -3,6 +3,7 @@
 ## Unreleased
 
 * Added
+  * Added `ignoreScreenshotMismatch` flag to disable test failure on snapshot mismatch.
   * Added configuration to retrieve and unzip screenshots from registry.
 
 ## 1.5.0 - (May 19, 2021)
