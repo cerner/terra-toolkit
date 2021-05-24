@@ -3,7 +3,7 @@ const glob = require('glob');
 const path = require('path');
 const { Logger } = require('@cerner/terra-cli');
 
-const logger = new Logger({ prefix: '[terra-functional-testing:clean-snapshots]' });
+const logger = new Logger({ prefix: '[terra-functional-testing:cleanScreenshots]' });
 
 // eslint-disable-next-line global-require, import/no-dynamic-require
 const isDirectory = filePath => (fs.existsSync(filePath) && fs.lstatSync(filePath).isDirectory());
