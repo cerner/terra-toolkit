@@ -18,11 +18,10 @@ class BaseCompare {
       theme,
       updateScreenshots,
     } = options;
-    console.log("cloudRegion = ", cloudRegion);
 
     // screenshot naming config
     this.baseScreenshotDir = process.cwd();
-    this.cloudRegion = cloudRegion || undefined;
+    this.cloudRegion = cloudRegion || '';
     this.locale = locale || 'en';
     this.theme = theme || 'terra-default-theme';
     this.updateScreenshots = updateScreenshots === true;
