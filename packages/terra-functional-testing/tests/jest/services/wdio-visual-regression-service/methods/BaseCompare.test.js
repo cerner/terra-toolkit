@@ -83,7 +83,6 @@ describe('BaseCompare', () => {
     it('returns a screenshot dir with the theme, locale, formfactor, and spec name.', () => {
       const baseCompare = new BaseCompare({});
       const result = baseCompare.getScreenshotDir(context);
-
       expect(result).toEqual(path.join('terra-default-theme', 'en', 'chrome_large', 'test-spec'));
     });
 
@@ -91,7 +90,6 @@ describe('BaseCompare', () => {
       const options = { cloudRegion: 'dev' };
       const baseCompare = new BaseCompare(options);
       const result = baseCompare.getScreenshotDir(context);
-
       expect(result).toEqual(path.join('dev', 'terra-default-theme', 'en', 'chrome_large', 'test-spec'));
     });
   });
