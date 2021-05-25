@@ -15,6 +15,7 @@ const setupCLI = () => {
   const cli = yargs();
 
   return cli.usage('Usage: $0 <command> [options]')
+    .strictCommands()
     .demandCommand(1, 'A command is required. Pass --help to see all available commands and options.')
     .recommendCommands()
     .fail((msg, err) => {

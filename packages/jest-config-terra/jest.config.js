@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
   // Set a custom testEnvironment to allow us to compartmentalize setup.
   testEnvironment: '@cerner/jest-config-terra/lib/JestEnvironmentJsdomTerra.js',
@@ -6,6 +8,7 @@ module.exports = {
   coverageDirectory: 'tests/jest/reports/coverage',
   collectCoverageFrom: [
     '**/src/**/*.js(x)?',
+    '**/reporters/**/*.js',
   ],
   coveragePathIgnorePatterns: [
     '/src/terra-dev-site',
@@ -25,7 +28,7 @@ module.exports = {
     'node_modules',
   ],
   moduleNameMapper: {
-    '\\.(css|scss|svg)$': 'identity-obj-proxy',
+    '\\.(css|scss|svg|png)$': 'identity-obj-proxy',
     // These replace the various translations imports with mocked versions.
     '^de\\.js$': '@cerner/jest-config-terra/lib/translationsMock.js',
     '^en(-AU|-CA|-GB|-US)?\\.js$': '@cerner/jest-config-terra/lib/translationsMock.js',
@@ -38,4 +41,8 @@ module.exports = {
   transform: {
     '^.+\\.(js|jsx)$': '@cerner/jest-config-terra/lib/jestBabelTransform',
   },
+  reporters: [
+    'default',
+    path.join(__dirname, 'lib', 'reporters', 'verbose-reporter', 'TerraVerboseReporter'),
+  ],
 };

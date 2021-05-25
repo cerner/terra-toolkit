@@ -36,7 +36,7 @@ function toMatchReference(screenshot) {
   }
 
   return {
-    pass: imagesMatch === true,
+    pass: global.Terra.serviceOptions.ignoreScreenshotMismatch || imagesMatch,
     message: () => message,
   };
 }

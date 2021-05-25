@@ -1,4 +1,4 @@
-const getViewports = require('../../../../src/commands/utils/getViewports');
+const { getViewports } = require('../../../../src/commands/utils');
 const { TERRA_VIEWPORTS } = require('../../../../src/constants');
 
 const {

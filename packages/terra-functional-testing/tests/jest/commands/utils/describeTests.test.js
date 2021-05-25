@@ -1,5 +1,4 @@
-const describeViewports = require('../../../../src/commands/utils/describeViewports');
-const describeTests = require('../../../../src/commands/utils/describeTests');
+const { describeViewports, describeTests } = require('../../../../src/commands/utils');
 
 jest.mock('../../../../src/commands/utils/describeViewports');
 

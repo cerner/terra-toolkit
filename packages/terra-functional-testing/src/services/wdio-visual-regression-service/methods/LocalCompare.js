@@ -1,5 +1,5 @@
 const fs = require('fs-extra');
-const resemble = require('node-resemble-js');
+const resemble = require('@mirzazeyrek/node-resemble-js');
 const lodashGet = require('lodash.get');
 const { Logger } = require('@cerner/terra-cli');
 const BaseCompare = require('./BaseCompare');

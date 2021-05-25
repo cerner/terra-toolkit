@@ -17,6 +17,8 @@ Options:
                                         configuration.                  [string]
       --disableSeleniumService          A flag to disable the selenium docker
                                         service.      [boolean] [default: false]
+      --ignoreScreenshotMismatch        A flag to ignore screenshot mismatch.
+                                                      [boolean] [default: false]
       --externalHost                    The host address the testing environment
                                         is connected to.
                                                   [string] [default: (_default)]
@@ -31,6 +33,9 @@ Options:
                                                       [boolean] [default: false]
       --locales                         A list of language locales for the test
                                         run.       [array] [default: (_default)]
+      --screenshotUrl                   The url to the registry that stores the
+                                        screenshots
+                                                  [string] [default: (_default)]
       --site                            A file path to a static directory of
                                         assets. When defined, an express server
                                         will launch to serve the assets and
@@ -44,7 +49,10 @@ Options:
   -u, --updateScreenshots               Whether or not to automatically update
                                         all reference screenshots with the
                                         latest screenshots.
-                                                      [boolean] [default: false]"
+                                                      [boolean] [default: false]
+      --useSeleniumStandaloneService    A flag to use the selenium standalone
+                                        service instead of the selenium docker
+                                        service.      [boolean] [default: false]"
 `;
 
 exports[`index declares the wdio terra-cli command with proper top level help 1`] = `

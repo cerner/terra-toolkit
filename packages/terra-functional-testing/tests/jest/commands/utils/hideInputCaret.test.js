@@ -1,6 +1,6 @@
 jest.mock('@cerner/terra-cli/lib/utils/Logger');
 
-const hideInputCaret = require('../../../../src/commands/utils/hideInputCaret');
+const { hideInputCaret } = require('../../../../src/commands/utils');
 
 describe('hideInputCaret', () => {
   it('should hide caret on selector', () => {

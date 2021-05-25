@@ -2,6 +2,39 @@
 
 ## Unreleased
 
+* Added
+  * Added notes about new `ignoreScreenshotMismatch` flag for terra-functional-testing.
+
+## 1.14.0 - (May 19, 2021)
+
+* Changed
+  * Minor dependency version bump
+
+## 1.13.0 - (May 11, 2021)
+
+* Changed
+  * Minor dependency version bump
+
+## 1.12.0 - (May 7, 2021)
+
+* Added
+  * Added additional notes to the terra-functional-testing upgrade guide.
+
+## 1.11.0 - (May 4, 2021)
+
+* Changed
+  * Minor dependency version bump
+
+## 1.10.0 - (April 23, 2021)
+
+* Changed
+  * Updated terra-functional-testing doc for cleaning snapshots
+
+## 1.9.0 - (April 13, 2021)
+
+* Changed
+  * Updated terra-functional-testing doc for the default theme.
+
 ## 1.8.5 - (March 31, 2021)
 
 * Changed

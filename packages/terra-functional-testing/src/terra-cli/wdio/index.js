@@ -47,6 +47,11 @@ const cli = {
         describe: 'A flag to disable the selenium docker service.',
         default: false,
       },
+      ignoreScreenshotMismatch: {
+        type: 'boolean',
+        describe: 'A flag to ignore screenshot mismatch.',
+        default: false,
+      },
       externalHost: {
         type: 'string',
         describe: 'The host address the testing environment is connected to.',
@@ -107,6 +112,17 @@ const cli = {
           return ['en'];
         },
       },
+      screenshotUrl: {
+        type: 'string',
+        describe: 'The url to the registry that stores the screenshots',
+        default: () => {
+          if (process.env.SCREENSHOT_URL) {
+            return process.env.SCREENSHOT_URL;
+          }
+
+          return undefined;
+        },
+      },
       site: {
         type: 'string',
         describe: 'A file path to a static directory of assets. When defined, an express server will launch to serve the assets and disable running webpack.',
@@ -134,7 +150,7 @@ const cli = {
             return [process.env.THEME];
           }
 
-          return ['terra-default-theme'];
+          return [undefined];
         },
       },
       u: {
@@ -142,6 +158,11 @@ const cli = {
         alias: 'updateScreenshots',
         describe: 'Whether or not to automatically update all reference screenshots with the latest screenshots.',
         default: false,
+      },
+      useSeleniumStandaloneService: {
+        type: 'boolean',
+        describe: 'A flag to use the selenium standalone service instead of the selenium docker service.',
+        default: process.env.USE_SELENIUM_STANDALONE_SERVICE === 'true',
       },
     })
   ),

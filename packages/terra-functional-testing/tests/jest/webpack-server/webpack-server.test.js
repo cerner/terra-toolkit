@@ -64,7 +64,7 @@ describe('Webpack Server', () => {
       const options = {
         webpackConfig: path.resolve(__dirname, './mock-webpack.config.js'),
         locale: 'en',
-        theme: 'lowlight',
+        overrideTheme: 'lowlight',
       };
 
       const config = WebpackServer.config(options);

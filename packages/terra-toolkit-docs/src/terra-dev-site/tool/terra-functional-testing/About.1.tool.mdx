@@ -35,22 +35,23 @@ package.json
 
 ### Options
 
-| Option                           | Type    | Default                 | Description                                                                                                                               |
-|----------------------------------|---------|-------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
-| --assetServerPort                | number  | 8080                    | The port to run the webpack and express asset services on.                                                                                |
-| --browsers                       | array   |                         | A list of browsers for the test run.                                                                                                      |
-| --config, -c                     | string  |                         | A file path to the test runner configuration.                                                                                             |
-| --disableSeleniumService         | boolean | false                   | A flag to disable the selenium docker service.                                                                                            |
-| --externalHost                   | string  |                         | The host address the testing environment is connected to.                                                                                 |
-| --externalPort                   | number  |                         | The port mapping from the host to the container.                                                                                          |
-| --formFactors                    | array   |                         | A list of form factors for the test run. One of tiny, small, medium, large, huge, or enormous                                             |
-| --gridUrl                        | string  |                         | The remote selenium grid address.                                                                                                         |
-| --locales                        | array   | en                      | A list of language locales for the test run.                                                                                              |
-| --site                           | string  |                         | A file path to a static directory of assets. When defined, an express server will launch to serve the assets and disable running webpack. |
-| --spec                           | array   |                         | A list of spec file paths.                                                                                                                |
-| --suite                          | array   |                         | Overrides specs and runs only the defined suites.                                                                                         |
-| --themes                         | array   | terra-default-theme     | A list of themes for the test run.                                                                                                        |
-| --updateScreenshots, -u          | boolean | false                   | Updates all reference screenshots with the latest screenshots.                                                                            |
+| Option                           | Type    | Default                                          | Description                                                                                                                               |
+|----------------------------------|---------|--------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| --assetServerPort                | number  | 8080                                             | The port to run the webpack and express asset services on.                                                                                |
+| --browsers                       | array   |                                                  | A list of browsers for the test run.                                                                                                      |
+| --config, -c                     | string  |                                                  | A file path to the test runner configuration.                                                                                             |
+| --disableSeleniumService         | boolean | false                                            | A flag to disable the selenium docker service.                                                                                            |
+| --ignoreScreenshotMismatch       | boolean | false                                            | A flag to ignore screenshot mismatch.                                                                                                     |
+| --externalHost                   | string  |                                                  | The host address the testing environment is connected to.                                                                                 |
+| --externalPort                   | number  |                                                  | The port mapping from the host to the container.                                                                                          |
+| --formFactors                    | array   |                                                  | A list of form factors for the test run. One of tiny, small, medium, large, huge, or enormous                                             |
+| --gridUrl                        | string  |                                                  | The remote selenium grid address.                                                                                                         |
+| --locales                        | array   | en                                               | A list of language locales for the test run.                                                                                              |
+| --site                           | string  |                                                  | A file path to a static directory of assets. When defined, an express server will launch to serve the assets and disable running webpack. |
+| --spec                           | array   |                                                  | A list of spec file paths.                                                                                                                |
+| --suite                          | array   |                                                  | Overrides specs and runs only the defined suites.                                                                                         |
+| --themes                         | array   | theme specified in terra-theme.config.js file    | A list of themes for the test run.                                                                                                        |
+| --updateScreenshots, -u          | boolean | false                                            | Updates all reference screenshots with the latest screenshots.                                                                            |
 
 The following example will run the test suite a total of four times. Once for each permutation of the specified locales and form factors.
 
@@ -73,7 +74,9 @@ Chrome is enabled by default when running locally against the docker container.
 To target a list of browsers that are different than the default use the `browsers` cli option:
 
 <Notice variant="important" ariaLevel="3">
+
   Internet Explorer can only be enabled when running against a remote selenium grid. Internet Explorer is not available within the docker container.
+
 </Notice>
 
 ```json
@@ -85,7 +88,9 @@ To target a list of browsers that are different than the default use the `browse
 To run against a remote selenium grid:
 
 <Notice variant="important" ariaLevel="3">
+
   Chrome, Firefox, and Internet Explorer are all enabled by default when running against a remote selenium grid.
+
 </Notice>
 
 ```json
@@ -110,7 +115,9 @@ Tests can be executed in the following form factors:
 To specify a list of form factors use the cli option:
 
 <Notice variant="important" ariaLevel="3">
+
   If no form factor is specified all tests will be run against the huge form factor.
+
 </Notice>
 
 ```json
@@ -150,7 +157,9 @@ Required: `false`
 Default: `[data-terra-test-content] *:first-child`
 
 <Notice variant="important" ariaLevel="4">
+
   This selector is used as the default screenshot selector for Terra.validates.element and Terra.validates.screenshot.
+
 </Notice>
 
 ```js
@@ -174,7 +183,9 @@ Required: `false`
 Default: `3.14.0-helium`
 
 <Notice variant="caution" ariaLevel="4">
+
   The selenium version is only applied when running tests against a docker container. This option does not change the version on a remote selenium grid. Keep this in mind if your tests run against a remote selenium grid on a CI system.
+
 </Notice>
 
 ```js
@@ -198,7 +209,9 @@ The describe helpers are an alias for the top level `describe` block used within
 #### Terra.describeViewports
 
 <Notice variant="important" ariaLevel="5">
+
   We recommended using Terra.describeTests instead of Terra.describeViewports. The same features in Terra.describeViewports can be achieved with Terra.describeTests.
+
 </Notice>
 
 The `Terra.describeViewports` utility defines a list of form factors the tests are enabled for. By default, all tests will be run against each provided viewport. If a form factor is specified via the cli the describe viewpoint helper works as a filter and only allows the tests to execute if they match the current form factor.
@@ -214,7 +227,9 @@ Terra.describeViewports(title, [viewports], fn);
 ```
 
 <Notice variant="caution" ariaLevel="5">
+
   Describe helpers should not be nested within other describe helpers.
+
 </Notice>
 
 ```js
@@ -259,7 +274,9 @@ Terra.describeTests(title, options, fn);
 The following tests will only be ran for the locales, themes, and form factors provided:
 
 <Notice variant="caution" ariaLevel="5">
+
   The describe helper should not be nested inside of another describe helper.
+
 </Notice>
 
 ```js
@@ -284,7 +301,9 @@ The testing library integrates [axe-core](https://github.com/dequelabs/axe-core)
 Axe will analyze the entire document when run and report accessibility violations. The following [tags](https://github.com/dequelabs/axe-core/blob/develop/doc/API.md#axe-core-tags) are enabled: `wcag2a`, `wcag2aa`, `wcag21aa`, and `section508`. Each tag has an associated list of [rules](https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md) that will be checked against the document when axe is run.
 
 <Notice variant="important" ariaLevel="4">
+
   Please note that not all accessibility testing can be automated. Axe provides a lightweight static analysis of the entire document to catch common accessibility violations, but it is the responsibility of each team and application to do thorough accessibility and functional testing manually when necessary.
+
 </Notice>
 
 #### Terra.validates.accessibility

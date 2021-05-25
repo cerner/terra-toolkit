@@ -1,4 +1,4 @@
-const dispatchCustomEvent = require('../../../../src/commands/utils/dispatchCustomEvent');
+const { dispatchCustomEvent } = require('../../../../src/commands/utils');
 
 describe('dispatchCustomEvent', () => {
   it('executes a specified function via browser.execute', () => {

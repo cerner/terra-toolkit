@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getPathsForPackages returns a list of paths for packages that are not ignored for a monorepo 1`] = `
+Array [
+  "/Users/x/ecosystem/terra-toolkit/package.json",
+  "/Users/x/ecosystem/terra-toolkit/packages/browserslist-config-terra/package.json",
+  "/Users/x/ecosystem/terra-toolkit/packages/duplicate-package-checker-webpack-plugin/package.json",
+  "/Users/x/ecosystem/terra-toolkit/packages/eslint-config-terra/package.json",
+  "/Users/x/ecosystem/terra-toolkit/packages/package-json-lint/package.json",
+  "/Users/x/ecosystem/terra-toolkit/packages/stylelint-config-terra/package.json",
+  "/Users/x/ecosystem/terra-toolkit/packages/terra-aggregate-translations/package.json",
+  "/Users/x/ecosystem/terra-toolkit/packages/terra-enzyme-intl/package.json",
+  "/Users/x/ecosystem/terra-toolkit/packages/terra-functional-testing/package.json",
+  "/Users/x/ecosystem/terra-toolkit/packages/terra-open-source-scripts/package.json",
+  "/Users/x/ecosystem/terra-toolkit/packages/terra-toolkit-docs/package.json",
+  "/Users/x/ecosystem/terra-toolkit/packages/webpack-config-terra/package.json",
+]
+`;

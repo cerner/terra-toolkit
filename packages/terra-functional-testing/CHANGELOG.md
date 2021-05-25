@@ -3,7 +3,40 @@
 ## Unreleased
 
 * Added
+  * Added `ignoreScreenshotMismatch` flag to disable test failure on snapshot mismatch.
+  * Added configuration to retrieve and unzip screenshots from registry.
+
+## 1.5.0 - (May 19, 2021)
+
+* Removed
+  * Removed lodash is array dependency in favor of Array.isArray.
+
+## 1.4.0 - (May 7, 2021)
+
+* Added
+  * Added useSeleniumStandaloneService option for using the standalone-chrome host instead of the selenium docker service when building in Jenkins.
+  * Added express-server CLI command. This is moved from @cerner/terra-open-source-scripts.
+
+* Fixed
+  * Update node-resemble-js version to fix `Stream not writable` error.
+
+## 1.3.0 - (May 4, 2021)
+
+* Fixed
+  * Update specPath in BaseCompare to replace `node_modules` with `tests/wdio`.
+
+## 1.2.0 - (April 23, 2021)
+
+* Added
+  * The `diff`, `error`, and `latest` folders in the `__snapshots__` directory will be deleted before each test run.
+
+## 1.1.0 - (April 13, 2021)
+
+* Added
   * Error screenshot functionality.
+
+* Changed
+  * Honor terra-theme.config.js file when no theme is specified in the test runner.
 
 ## 1.0.5 - (March 31, 2021)
 

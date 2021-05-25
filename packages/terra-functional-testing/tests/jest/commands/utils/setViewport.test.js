@@ -1,4 +1,4 @@
-const setViewport = require('../../../../src/commands/utils/setViewport');
+const { setViewport } = require('../../../../src/commands/utils');
 const { TERRA_VIEWPORTS } = require('../../../../src/constants');
 
 const mockSetWindowSize = jest.fn();

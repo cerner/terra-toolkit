@@ -115,13 +115,13 @@ describe('BaseCompare', () => {
         ...context,
         test: {
           ...context.test,
-          file: path.join(process.cwd(), 'node_modules', 'test', 'wdio', 'test-spec.js'),
+          file: path.join(process.cwd(), 'node_modules', 'packageName', 'test', 'wdio', 'test-spec.js'),
         },
       };
       const result = baseCompare.getScreenshotPaths(updatedContext);
-      expect(result.referencePath).toEqual(path.join(process.cwd(), 'test', 'wdio', '__snapshots__', 'reference', 'screenshotDir', 'screenshotName.png'));
-      expect(result.latestPath).toEqual(path.join(process.cwd(), 'test', 'wdio', '__snapshots__', 'latest', 'screenshotDir', 'screenshotName.png'));
-      expect(result.diffPath).toEqual(path.join(process.cwd(), 'test', 'wdio', '__snapshots__', 'diff', 'screenshotDir', 'screenshotName.png'));
+      expect(result.referencePath).toEqual(path.join(process.cwd(), 'tests', 'wdio', 'packageName', 'test', 'wdio', '__snapshots__', 'reference', 'screenshotDir', 'screenshotName.png'));
+      expect(result.latestPath).toEqual(path.join(process.cwd(), 'tests', 'wdio', 'packageName', 'test', 'wdio', '__snapshots__', 'latest', 'screenshotDir', 'screenshotName.png'));
+      expect(result.diffPath).toEqual(path.join(process.cwd(), 'tests', 'wdio', 'packageName', 'test', 'wdio', '__snapshots__', 'diff', 'screenshotDir', 'screenshotName.png'));
     });
   });
 

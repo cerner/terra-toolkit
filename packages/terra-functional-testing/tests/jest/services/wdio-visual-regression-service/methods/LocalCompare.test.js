@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs-extra';
-import resemble from 'node-resemble-js';
+import resemble from '@mirzazeyrek/node-resemble-js';
 
 import BaseCompare from '../../../../../src/services/wdio-visual-regression-service/methods/BaseCompare';
 import LocalCompare from '../../../../../src/services/wdio-visual-regression-service/methods/LocalCompare';

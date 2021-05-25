@@ -5,9 +5,15 @@ services:
 branches:
   only:
     - main
+cache:
+  directories:
+    - docker_images
 before_install:
   # Clean install on any new build
   - npm run clean
+before_script:
+  # Load Docker Cache
+  - docker load -i docker_images/images.tar || true
 jobs:
   include:
     - stage: danger lint and jest
@@ -17,6 +23,10 @@ jobs:
         - npm run danger
         - npm run lint
         - npm run jest
+        # Prime the docker cache
+        - docker-compose --file ./packages/terra-functional-testing/lib/docker/docker-compose.yml pull
+        # Save docker cache
+        - docker save -o docker_images/images.tar $(docker images -a -q)
 
     - stage: wdio
       name: wdio
@@ -54,4 +64,3 @@ stages:
   - mocha
   - name: publish & deploy
     if: type != pull_request
-

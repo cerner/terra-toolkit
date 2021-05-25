@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 5.1.0 - (April 23, 2021)
+
+* Changed
+  * Added `FullStack` to globals for usage in full stack testing
+
 ## 5.0.0 - (February 16, 2021)
 
 * Breaking
