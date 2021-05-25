@@ -1,8 +1,8 @@
 const fs = require('fs-extra');
 const path = require('path');
-// const stripAnsi = require('strip-ansi');
+const stripAnsi = require('strip-ansi');
 const SpecReporter = require('@wdio/spec-reporter').default;
-// const endOfLine = require('os').EOL;
+const endOfLine = require('os').EOL;
 const { Logger } = require('@cerner/terra-cli');
 
 const LOG_CONTEXT = '[Terra-Toolkit:fileOutput-reporter]';
@@ -129,7 +129,7 @@ class FileOutputReporter extends SpecReporter {
     const divider = '------------------------------------------------------------------';
     const results = this.getResultDisplay();
     if (results.length === 0) {
-      return;
+      return null;
     }
     const testLinks = runner.isMultiremote
       ? Object.entries(runner.capabilities).map(
@@ -145,23 +145,15 @@ class FileOutputReporter extends SpecReporter {
       ...this.getHeaderDisplay(runner),
       '',
       ...results,
-      // ...this.getCountDisplay(duration),
       ...this.getFailureDisplay(),
       ...(testLinks.length ? ['', ...testLinks] : []),
     ];
     const prefacedOutput = output.map((value) => (value ? `${preface} ${value}` : preface));
-    // eslint-disable-next-line consistent-return
-    return `${divider}\n${prefacedOutput.join('\n')}\n`;
+    return `${divider}\n${prefacedOutput}`;
   }
 
   printReport(globRunners) {
-    fs.appendFileSync(
-      './runner_printReport.json',
-      JSON.stringify(globRunners, null, 2),
-      (err) => console.log(err),
-    );
     const { runners } = this;
-    fs.appendFile('./runner.json', JSON.stringify(runners, null, 2), err => console.log(err));
     if (runners && runners.length) {
       runners.forEach((runner, index) => {
         // determine correct file name given configuration for run
@@ -176,7 +168,12 @@ class FileOutputReporter extends SpecReporter {
         if (!this.resultJsonObject.output[this.moduleName]) {
           this.resultJsonObject.output[this.moduleName] = [];
         }
-        const readableMessage = this.getMessage(runner);
+        let readableMessage = this.getMessage(runner);
+        const readableArrayMessage = readableMessage.toString().split(',');
+        for (let i = 0; i < readableArrayMessage.length; i++) {
+          readableArrayMessage[i] = stripAnsi(`${readableArrayMessage[i]}${endOfLine}`)
+        }
+        readableMessage = readableArrayMessage.join('');
         console.log('*************** ', readableMessage);
         this.resultJsonObject.output[this.moduleName].push(readableMessage);
         console.log('array disp :::::::: ', this.resultJsonObject.output[this.moduleName]);
@@ -218,8 +215,6 @@ class FileOutputReporter extends SpecReporter {
         );
       });
     }
-
-    // const duration = `(${pretty_ms_1.default(runner._duration)})`;
   }
 }
 
