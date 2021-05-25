@@ -1,0 +1,20 @@
+const semver = require('semver');
+
+module.exports = ({
+  versionSet, dependencies, ruleConfig, report, lintId, messageString,
+}) => {
+  const currentProblems = versionSet.map(({ name, versionRange }) => {
+    const dependencyVersion = dependencies[name];
+    if (dependencyVersion && !semver.satisfies(semver.minVersion(dependencyVersion), versionRange)) {
+      return `${name}@${dependencyVersion} does not satisfy range requirement for ${messageString}: ${name}@${versionRange}`;
+    }
+    return undefined;
+  }).filter(problem => !!problem);
+
+  if (currentProblems.length) {
+    const lintMessage = `The dependencies for this project do not have the minimum versions required for ${messageString}:\n  ${currentProblems.join('\n  ')}`;
+    report({
+      lintId, severity: ruleConfig.severity, lintMessage,
+    });
+  }
+};
