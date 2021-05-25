@@ -1,6 +1,8 @@
 # Changelog
 
 ## Unreleased
+* Added
+  * `cloudRegion` namespace to screenshot directories - this is useful for full stack testing contexts that define a cloudRegion per test run.
 
 * Added
   * Added `ignoreScreenshotMismatch` flag to disable test failure on snapshot mismatch.
