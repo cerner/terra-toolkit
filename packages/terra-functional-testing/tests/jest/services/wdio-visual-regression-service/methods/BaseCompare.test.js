@@ -39,6 +39,7 @@ describe('BaseCompare', () => {
     const baseCompare = new BaseCompare({});
 
     expect(baseCompare.baseScreenshotDir).toBe(process.cwd());
+    expect(baseCompare.cloudRegion).toBeUndefined();
     expect(baseCompare.locale).toBe('en');
     expect(baseCompare.theme).toBe('terra-default-theme');
     expect(baseCompare.updateScreenshots).toBe(false);
@@ -46,12 +47,14 @@ describe('BaseCompare', () => {
 
   it('should call constructor with options', () => {
     const baseCompare = new BaseCompare({
+      cloudRegion: 'dev',
       locale: 'fr',
       theme: 'terra-lowlight-theme',
       updateScreenshots: true,
     });
 
     expect(baseCompare.baseScreenshotDir).toBe(process.cwd());
+    expect(baseCompare.cloudRegion).toBe('dev');
     expect(baseCompare.locale).toBe('fr');
     expect(baseCompare.theme).toBe('terra-lowlight-theme');
     expect(baseCompare.updateScreenshots).toBe(true);
@@ -76,11 +79,43 @@ describe('BaseCompare', () => {
     });
   });
 
-  it('BaseCompare.getScreenshotDir', () => {
-    const baseCompare = new BaseCompare({});
+  describe('BaseCompare.getScreenshotDir', () => {
+    it('BaseCompare.getScreenshotDir', () => {
+      const baseCompare = new BaseCompare({});
+      const options = {
+        desiredCapabilities: {
+          browserName: 'chrome',
+        },
+        test: {
+          file: path.join(dirTmp, 'test-spec.js'),
+        },
+        meta: {
+          currentFormFactor: 'large',
+        },
+      };
 
-    const result = baseCompare.getScreenshotDir(context);
-    expect(result).toEqual(path.join('terra-default-theme', 'en', 'chrome_large', 'test-spec'));
+      const result = baseCompare.getScreenshotDir(options);
+      expect(result).toEqual(path.join('terra-default-theme', 'en', 'chrome_large', 'test-spec'));
+    });
+
+    it('returns a screenshot dir with the cloudRegion, theme, locale, formfactor, and specname', () => {
+      const baseCompare = new BaseCompare({});
+      const options = {
+        cloudRegion: 'dev',
+        desiredCapabilities: {
+          browserName: 'chrome',
+        },
+        test: {
+          file: path.join(dirTmp, 'test-spec.js'),
+        },
+        meta: {
+          currentFormFactor: 'large',
+        },
+      };
+
+      const result = baseCompare.getScreenshotDir(options);
+      expect(result).toEqual(path.join('dev', 'terra-default-theme', 'en', 'chrome_large', 'test-spec'));
+    });
   });
 
   describe('BaseCompare.getScreenshotPaths', () => {
