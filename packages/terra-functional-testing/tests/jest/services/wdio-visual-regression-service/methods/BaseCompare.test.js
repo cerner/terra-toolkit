@@ -81,39 +81,17 @@ describe('BaseCompare', () => {
 
   describe('BaseCompare.getScreenshotDir', () => {
     it('returns a screenshot dir with the theme, locale, formfactor, and spec name.', () => {
-      const options = {
-        desiredCapabilities: {
-          browserName: 'chrome',
-        },
-        test: {
-          file: path.join(dirTmp, 'test-spec.js'),
-        },
-        meta: {
-          currentFormFactor: 'large',
-        },
-      };
-      const baseCompare = new BaseCompare(options);
+      const baseCompare = new BaseCompare({});
+      const result = baseCompare.getScreenshotDir(context);
 
-      const result = baseCompare.getScreenshotDir(options);
       expect(result).toEqual(path.join('terra-default-theme', 'en', 'chrome_large', 'test-spec'));
     });
 
     it('returns a screenshot dir with the cloudRegion, theme, locale, formfactor, and spec name.', () => {
-      const options = {
-        cloudRegion: 'dev',
-        desiredCapabilities: {
-          browserName: 'chrome',
-        },
-        test: {
-          file: path.join(dirTmp, 'test-spec.js'),
-        },
-        meta: {
-          currentFormFactor: 'large',
-        },
-      };
+      const options = { cloudRegion: 'dev' };
       const baseCompare = new BaseCompare(options);
+      const result = baseCompare.getScreenshotDir(context);
 
-      const result = baseCompare.getScreenshotDir(options);
       expect(result).toEqual(path.join('dev', 'terra-default-theme', 'en', 'chrome_large', 'test-spec'));
     });
   });
