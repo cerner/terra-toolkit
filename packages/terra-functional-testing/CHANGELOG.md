@@ -1,5 +1,8 @@
 # Changelog
 
+* Fixed
+  * Updated waitForSeleniumHubReady to accommodate Windows users.
+
 ## Unreleased
 
 * Added
