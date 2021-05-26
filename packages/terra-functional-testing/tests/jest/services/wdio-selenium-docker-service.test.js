@@ -167,7 +167,7 @@ describe('WDIO Selenium Docker Service', () => {
       await service.waitForSeleniumHubReady();
 
       // The host and port are undefined for this test.
-      expect(service.pollCommand).toHaveBeenCalledWith("docker inspect --format=\"{{json .State.Health.Status}}\" selenium-hub", expect.any(Function), 60, 2000);
+      expect(service.pollCommand).toHaveBeenCalledWith('docker inspect --format="{{json .State.Health.Status}}" selenium-hub', expect.any(Function), 60, 2000);
     });
 
     it('should reject the command if the selenium hub is not ready', async () => {
