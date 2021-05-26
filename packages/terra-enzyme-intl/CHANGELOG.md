@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 4.3.0 - (May 25, 2021)
+
 * Changed
   * Updated enzyme-intl jest snapshots
 

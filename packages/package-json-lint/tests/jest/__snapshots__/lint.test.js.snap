@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`lint loops through all of the packages and lints them with all of the rules in the config 1`] = `
+"path2
+⚠ require-no-terra-base-peer-dependency-versions - message1
+✖ require-theme-context-versions - message3
+
+Totals
+1 error
+1 warning
+"
+`;
