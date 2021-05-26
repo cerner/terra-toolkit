@@ -152,7 +152,7 @@ class FileOutputReporter extends SpecReporter {
     return `${divider}\n${prefacedOutput}`;
   }
 
-  printReport(globRunners) {
+  printReport() {
     const { runners } = this;
     if (runners && runners.length) {
       runners.forEach((runner, index) => {
@@ -170,13 +170,11 @@ class FileOutputReporter extends SpecReporter {
         }
         let readableMessage = this.getMessage(runner);
         const readableArrayMessage = readableMessage.toString().split(',');
-        for (let i = 0; i < readableArrayMessage.length; i++) {
-          readableArrayMessage[i] = stripAnsi(`${readableArrayMessage[i]}${endOfLine}`)
+        for (let i = 0; i < readableArrayMessage.length; i + 1) {
+          readableArrayMessage[i] = stripAnsi(`${readableArrayMessage[i]}${endOfLine}`);
         }
         readableMessage = readableArrayMessage.join('');
-        console.log('*************** ', readableMessage);
         this.resultJsonObject.output[this.moduleName].push(readableMessage);
-        console.log('array disp :::::::: ', this.resultJsonObject.output[this.moduleName]);
         this.resultJsonObject.startDate = new Date(
           runner.start,
         ).toLocaleString();
