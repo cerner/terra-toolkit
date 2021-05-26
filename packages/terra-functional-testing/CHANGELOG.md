@@ -1,5 +1,8 @@
 # Changelog
 
+* Fixed
+  * Updated waitForSeleniumHubReady to accommodate Windows users.
+
 ## Unreleased
 
 ## 1.6.0 - (May 25, 2021)

@@ -101,7 +101,7 @@ class SeleniumDockerService {
    * Waits for the docker selenium hub to become healthy.
    */
   async waitForSeleniumHubReady() {
-    await this.pollCommand("docker inspect --format='{{json .State.Health.Status}}' selenium-hub", (result) => (
+    await this.pollCommand('docker inspect --format="{{json .State.Health.Status}}" selenium-hub', (result) => (
       new Promise((resolve, reject) => {
         const { stdout } = result;
 
