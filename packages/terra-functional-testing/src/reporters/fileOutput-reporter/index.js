@@ -39,16 +39,11 @@ class FileOutputReporter extends SpecReporter {
    * @return null;
    */
   setResultsDir() {
-    const { reporterOptions } = this.options;
-    if (reporterOptions && reporterOptions.outputDir) {
-      this.resultsDir = reporterOptions.outputDir;
-    } else {
-      let testDir = 'tests';
-      if (fs.existsSync(path.join(process.cwd(), 'test'))) {
-        testDir = 'test';
-      }
-      this.resultsDir = path.join(process.cwd(), testDir, 'wdio', 'reports');
+    let testDir = 'tests';
+    if (fs.existsSync(path.join(process.cwd(), 'test'))) {
+      testDir = 'test';
     }
+    this.resultsDir = path.join(process.cwd(), testDir, 'wdio', 'reports');
   }
 
   /**
@@ -121,12 +116,6 @@ class FileOutputReporter extends SpecReporter {
   }
 
   getMessage(runner) {
-    const preface = `[${this.getEnviromentCombo(
-      runner.capabilities,
-      false,
-      runner.isMultiremote,
-    ).trim()} #${runner.cid}]`;
-    const divider = '------------------------------------------------------------------';
     const results = this.getResultDisplay();
     if (results.length === 0) {
       return null;
@@ -148,6 +137,12 @@ class FileOutputReporter extends SpecReporter {
       ...this.getFailureDisplay(),
       ...(testLinks.length ? ['', ...testLinks] : []),
     ];
+    const preface = `[${this.getEnviromentCombo(
+      runner.capabilities,
+      false,
+      runner.isMultiremote,
+    ).trim()} #${runner.cid}]`;
+    const divider = '------------------------------------------------------------------';
     const prefacedOutput = output.map((value) => (value ? `${preface} ${value}` : preface));
     return `${divider}\n${prefacedOutput}`;
   }
@@ -170,11 +165,8 @@ class FileOutputReporter extends SpecReporter {
         }
         let readableMessage = this.getMessage(runner);
         const readableArrayMessage = readableMessage.toString().split(',');
-        for (let i = 0; i < readableArrayMessage.length; i + 1) {
-          readableArrayMessage[i] = stripAnsi(`${readableArrayMessage[i]}${endOfLine}`);
-        }
-        readableMessage = readableArrayMessage.join('');
-        this.resultJsonObject.output[this.moduleName].push(readableMessage);
+        const messages = readableArrayMessage.map((message) => stripAnsi(`${message}${endOfLine}`));
+        this.resultJsonObject.output[this.moduleName].push(messages.join(''));
         this.resultJsonObject.startDate = new Date(
           runner.start,
         ).toLocaleString();
