@@ -73,7 +73,8 @@
     "uuid": "^3.0.0",
     "webdriverio": "^6.5.0",
     "webpack-dev-server": "^3.11.0",
-    "which": "^2.0.2"
+    "which": "^2.0.2",
+    "strip-ansi": "^6.0.0"
   },
   "peerDependencies": {
     "@cerner/terra-cli": "^1.0.0",
