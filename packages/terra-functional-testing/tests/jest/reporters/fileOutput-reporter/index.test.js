@@ -169,8 +169,10 @@ describe('FileOutputReporter', () => {
       const reporter = new FileOutputReporter({}, {});
       reporter.runners = [runner];
       reporter.getSuiteResult = jest.fn().mockReturnValue('wdio test results');
+      const getMessage = jest.fn();
+      reporter.getMessage = getMessage;
+      reporter.getMessage.mockReturnValue('[chrome 69.0.3497.100 Linux #0-2] Spec: /Users/sn081183/Desktop/terra/terra-toolkit/packages/terra-functional-testing/tests/wdio/terra-validates-spec.js,[chrome 69.0.3497.100 Linux #0-2] Running: chrome (v69.0.3497.100) on Linux,[chrome 69.0.3497.100 Linux #0-2] Session ID: 8bc8d5b1a51f746454ff9714b57c9fd8,[chrome 69.0.3497.100 Linux #0-2],[chrome 69.0.3497.100 Linux #0-2] [small],[chrome 69.0.3497.100 Linux #0-2]  ');
       reporter.printReport();
-
       expect(reporter.resultJsonObject).toHaveProperty('output');
       expect(reporter.resultJsonObject.output).toHaveProperty('terra-functional-testing');
       expect(reporter.resultJsonObject.output['terra-functional-testing']).toHaveLength(1);
@@ -182,8 +184,10 @@ describe('FileOutputReporter', () => {
       const reporter = new FileOutputReporter({}, {});
       reporter.runners = [runner, { ...runner, cid: '0-1' }];
       reporter.getSuiteResult = jest.fn().mockReturnValue('wdio test results\n');
+      const getMessage = jest.fn();
+      reporter.getMessage = getMessage;
+      reporter.getMessage.mockReturnValue('[chrome 69.0.3497.100 Linux #0-2] Spec: /Users/sn081183/Desktop/terra/terra-toolkit/packages/terra-functional-testing/tests/wdio/terra-validates-spec.js,[chrome 69.0.3497.100 Linux #0-2] Running: chrome (v69.0.3497.100) on Linux,[chrome 69.0.3497.100 Linux #0-2] Session ID: 8bc8d5b1a51f746454ff9714b57c9fd8,[chrome 69.0.3497.100 Linux #0-2],[chrome 69.0.3497.100 Linux #0-2] [small],[chrome 69.0.3497.100 Linux #0-2]  ');
       reporter.printReport();
-
       expect(reporter.resultJsonObject).toHaveProperty('output');
       expect(reporter.resultJsonObject.output).toHaveProperty('terra-functional-testing');
 

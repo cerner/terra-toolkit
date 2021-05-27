@@ -163,7 +163,7 @@ class FileOutputReporter extends SpecReporter {
         if (!this.resultJsonObject.output[this.moduleName]) {
           this.resultJsonObject.output[this.moduleName] = [];
         }
-        let readableMessage = this.getMessage(runner);
+        const readableMessage = this.getMessage(runner);
         const readableArrayMessage = readableMessage.toString().split(',');
         const messages = readableArrayMessage.map((message) => stripAnsi(`${message}${endOfLine}`));
         this.resultJsonObject.output[this.moduleName].push(messages.join(''));
