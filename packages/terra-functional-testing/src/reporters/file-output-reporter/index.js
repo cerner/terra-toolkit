@@ -35,15 +35,11 @@ class FileOutputReporter extends SpecReporter {
 
   /**
    * Sets results directory for the test run. Uses the wdio reporterOptions.outputDir if set, otherwise
-   * it outputs to tests?/wdio/reports.
+   * it outputs to tests/wdio/reports.
    * @return null;
    */
   setResultsDir() {
-    let testDir = 'tests';
-    if (fs.existsSync(path.join(process.cwd(), 'test'))) {
-      testDir = 'test';
-    }
-    this.resultsDir = path.join(process.cwd(), testDir, 'wdio', 'reports');
+    this.resultsDir = path.join(process.cwd(), 'tests', 'wdio', 'reports');
   }
 
   /**

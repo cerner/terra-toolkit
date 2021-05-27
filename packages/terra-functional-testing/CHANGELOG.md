@@ -5,12 +5,14 @@
 
 ## Unreleased
 
+* Added
+  * Added FileOutputReporter reporter that logs wdio test output to separate files based on locale, theme, and form-factor
+  
 ## 1.6.0 - (May 25, 2021)
 
 * Added
   * Added `ignoreScreenshotMismatch` flag to disable test failure on snapshot mismatch.
   * Added configuration to retrieve and unzip screenshots from registry.
-  * Added FileOutputReporter reporter that logs wdio test output to separate files based on locale, theme, and form-factor
 
 ## 1.5.0 - (May 19, 2021)
 

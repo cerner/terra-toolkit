@@ -16,7 +16,7 @@ const VisualRegressionLauncher = require('../services/wdio-visual-regression-ser
 
 const { AccessibilityReporter } = require('../reporters/accessibility-reporter');
 const { SpecReporter, cleanResults, mergeResults } = require('../reporters/spec-reporter');
-const FileOutputReporter = require('../reporters/fileOutput-reporter');
+const FileOutputReporter = require('../reporters/file-output-reporter');
 
 exports.config = {
   //

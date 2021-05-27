@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import FileOutputReporter from '../../../../src/reporters/fileOutput-reporter';
+import FileOutputReporter from '../../../../src/reporters/file-output-reporter';
 
 jest.mock('fs');
 
@@ -40,12 +40,8 @@ describe('FileOutputReporter', () => {
 
     describe('determines results dir', () => {
       it('set outputDir ', () => {
-        fs.existsSync.mockReturnValue(true);
-        let reporter = new FileOutputReporter({}, {});
-        expect(reporter.resultsDir).toEqual(expect.stringContaining('test/wdio/reports'));
-
         fs.existsSync.mockReturnValue(false);
-        reporter = new FileOutputReporter({}, {});
+        const reporter = new FileOutputReporter({}, {});
         expect(reporter.resultsDir).toEqual(expect.stringContaining('tests/wdio/reports'));
       });
     });
