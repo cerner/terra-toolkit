@@ -5,7 +5,7 @@ const SpecReporter = require('@wdio/spec-reporter').default;
 const endOfLine = require('os').EOL;
 const { Logger } = require('@cerner/terra-cli');
 
-const LOG_CONTEXT = '[Terra-Toolkit:fileOutput-reporter]';
+const LOG_CONTEXT = '[terra-functional-testing:file-output-reporter]';
 
 class FileOutputReporter extends SpecReporter {
   constructor() {

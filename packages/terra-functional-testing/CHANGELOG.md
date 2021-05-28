@@ -6,8 +6,8 @@
 ## Unreleased
 
 * Added
-  * Added FileOutputReporter reporter that logs wdio test output to separate files based on locale, theme, and form-factor
-  
+  * Added FileOutputReporter reporter that logs wdio test output to separate files based on locale, theme, and form-factor 
+
 ## 1.6.0 - (May 25, 2021)
 
 * Added
