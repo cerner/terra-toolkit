@@ -114,8 +114,8 @@ describe('FileOutputReporter', () => {
     it('updates moduleName if mono-repo test file', () => {
       const reporter = new FileOutputReporter({}, {});
       expect(reporter.moduleName).toEqual('terra-toolkit');
-      reporter.setTestModule('terra-toolkit/packages/my-package/tests/wdio/test-spec.js');
-      expect(reporter.moduleName).toEqual('my-package');
+      const packageName = reporter.setTestModule('terra-toolkit/packages/my-package/tests/wdio/test-spec.js');
+      expect(packageName).toEqual('my-package');
     });
 
     it('updates moduleName if mono-repo test file if windows path', () => {
@@ -124,8 +124,8 @@ describe('FileOutputReporter', () => {
       path.sep = '\\';
 
       expect(reporter.moduleName).toEqual('terra-toolkit');
-      reporter.setTestModule('C:\\project\\packages\\my-package\\tests\\wdio\\test-spec.js');
-      expect(reporter.moduleName).toEqual('my-package');
+      const packageName = reporter.setTestModule('C:\\project\\packages\\my-package\\tests\\wdio\\test-spec.js');
+      expect(packageName).toEqual('my-package');
 
       path.sep = separator;
     });

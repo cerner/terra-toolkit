@@ -93,17 +93,16 @@ class FileOutputReporter extends SpecReporter {
    * @param {string} specsValue - File path of current spec file from runners
    * @return null
    */
-  setTestModule(specsValue) {
-    const index = specsValue.lastIndexOf(`packages${path.sep}`);
-    if (index > -1) {
-      const testFilePath = specsValue.substring(index).split(path.sep);
-      const moduleName = testFilePath && testFilePath[1]
-        ? testFilePath[1]
-        : process.cwd().split(path.sep).pop();
-      if (moduleName && moduleName !== this.moduleName) {
-        this.moduleName = moduleName;
-      }
+  setTestModule(spec) {
+    if (spec.indexOf(`${path.sep}packages${path.sep}`) > -1) {
+      return spec.split(`${path.sep}packages${path.sep}`).pop().split(path.sep)[0];
     }
+    const packageJsonPath = path.join(process.cwd(), 'package.json');
+    if (fs.existsSync(packageJsonPath)) {
+      const packagejson = fs.readJsonSync(packageJsonPath);
+      return packagejson.name;
+    }
+    return process.cwd().split(path.sep).pop();
   }
 
   onRunnerEnd(runner) {
@@ -154,7 +153,7 @@ class FileOutputReporter extends SpecReporter {
           this.fileNameCheck(config.launcherOptions, browserName, cid);
         }
 
-        this.setTestModule(runner.specs[0]);
+        this.moduleName = this.setTestModule(runner.specs[0]);
 
         if (!this.resultJsonObject.output[this.moduleName]) {
           this.resultJsonObject.output[this.moduleName] = [];
