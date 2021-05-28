@@ -3,6 +3,8 @@ const resemble = require('@mirzazeyrek/node-resemble-js');
 const lodashGet = require('lodash.get');
 const { Logger } = require('@cerner/terra-cli');
 const BaseCompare = require('./BaseCompare');
+const EventEmitter = require('events');
+const eventEmitter = new EventEmitter();
 
 const logger = new Logger({ prefix: '[wdio-visual-regression-service:LocalCompare]' });
 
@@ -38,7 +40,11 @@ class LocalCompare extends BaseCompare {
       latestPath,
       diffPath,
     } = this.getScreenshotPaths(context);
-
+    console.log("referencePath :::: 99 ", latestPath);
+    eventEmitter.emit('terra-wdio:latest-screenshot', (data) => {
+      console.log("emitting the event");
+      latestPath
+    });
     // create latest screenshot
     await fs.outputFile(latestPath, base64Screenshot, 'base64');
 

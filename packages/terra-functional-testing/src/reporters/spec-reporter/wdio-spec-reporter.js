@@ -2,7 +2,11 @@ const fs = require('fs-extra');
 const path = require('path');
 const WDIOReporter = require('@wdio/reporter').default;
 const getOutputDir = require('./get-output-dir');
-
+const EventEmitter = require('events');
+const eventEmitter = new EventEmitter();
+eventEmitter.on('terra-wdio:latest-screenshot', (data) => {
+  console.log("data from event emitter:  **************", data);
+});
 class SpecReporter extends WDIOReporter {
   /**
    * Hook invoked when the runner ends.
