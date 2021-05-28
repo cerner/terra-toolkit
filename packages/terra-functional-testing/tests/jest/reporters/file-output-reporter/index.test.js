@@ -35,7 +35,7 @@ describe('FileOutputReporter', () => {
 
     it('defines moduleName', () => {
       const reporter = new FileOutputReporter({}, {});
-      const moduleName = reporter.setTestModule("terra-toolkit/tests/wdio/test-spec.js")
+      const moduleName = reporter.setTestModule('terra-toolkit/tests/wdio/test-spec.js');
       expect(moduleName).toBe('terra-toolkit');
     });
 
