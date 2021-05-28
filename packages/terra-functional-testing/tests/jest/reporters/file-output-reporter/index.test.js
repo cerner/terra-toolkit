@@ -35,7 +35,8 @@ describe('FileOutputReporter', () => {
 
     it('defines moduleName', () => {
       const reporter = new FileOutputReporter({}, {});
-      expect(reporter.moduleName).toBe('terra-toolkit');
+      const moduleName = reporter.setTestModule("terra-toolkit/tests/wdio/test-spec.js")
+      expect(moduleName).toBe('terra-toolkit');
     });
 
     describe('determines results dir', () => {
@@ -113,7 +114,6 @@ describe('FileOutputReporter', () => {
   describe('setTestModule', () => {
     it('updates moduleName if mono-repo test file', () => {
       const reporter = new FileOutputReporter({}, {});
-      expect(reporter.moduleName).toEqual('terra-toolkit');
       const packageName = reporter.setTestModule('terra-toolkit/packages/my-package/tests/wdio/test-spec.js');
       expect(packageName).toEqual('my-package');
     });
@@ -122,8 +122,6 @@ describe('FileOutputReporter', () => {
       const reporter = new FileOutputReporter({}, {});
       const separator = path.sep;
       path.sep = '\\';
-
-      expect(reporter.moduleName).toEqual('terra-toolkit');
       const packageName = reporter.setTestModule('C:\\project\\packages\\my-package\\tests\\wdio\\test-spec.js');
       expect(packageName).toEqual('my-package');
 
@@ -132,9 +130,8 @@ describe('FileOutputReporter', () => {
 
     it('does not updates moduleName if non mono-repo test file', () => {
       const reporter = new FileOutputReporter({}, {});
-      expect(reporter.moduleName).toEqual('terra-toolkit');
-      reporter.setTestModule('terra-functional-testing/tests/wdio/test-spec.js');
-      expect(reporter.moduleName).toEqual('terra-toolkit');
+      const moduleName = reporter.setTestModule('terra-functional-testing/tests/wdio/test-spec.js');
+      expect(moduleName).toEqual('terra-toolkit');
     });
   });
 
@@ -170,7 +167,6 @@ describe('FileOutputReporter', () => {
       reporter.getMessage.mockReturnValue('[chrome 69.0.3497.100 Linux #0-2] Spec: /Users/sn081183/Desktop/terra/terra-toolkit/packages/terra-functional-testing/tests/wdio/terra-validates-spec.js,[chrome 69.0.3497.100 Linux #0-2] Running: chrome (v69.0.3497.100) on Linux,[chrome 69.0.3497.100 Linux #0-2] Session ID: 8bc8d5b1a51f746454ff9714b57c9fd8,[chrome 69.0.3497.100 Linux #0-2],[chrome 69.0.3497.100 Linux #0-2] [small],[chrome 69.0.3497.100 Linux #0-2]  ');
       reporter.printReport();
       expect(reporter.resultJsonObject).toHaveProperty('output');
-      expect(reporter.resultJsonObject.output).toHaveProperty('terra-functional-testing');
       expect(reporter.resultJsonObject.output['terra-functional-testing']).toHaveLength(1);
       expect(fs.writeFileSync).toHaveBeenCalled();
     });
@@ -185,8 +181,6 @@ describe('FileOutputReporter', () => {
       reporter.getMessage.mockReturnValue('[chrome 69.0.3497.100 Linux #0-2] Spec: /Users/sn081183/Desktop/terra/terra-toolkit/packages/terra-functional-testing/tests/wdio/terra-validates-spec.js,[chrome 69.0.3497.100 Linux #0-2] Running: chrome (v69.0.3497.100) on Linux,[chrome 69.0.3497.100 Linux #0-2] Session ID: 8bc8d5b1a51f746454ff9714b57c9fd8,[chrome 69.0.3497.100 Linux #0-2],[chrome 69.0.3497.100 Linux #0-2] [small],[chrome 69.0.3497.100 Linux #0-2]  ');
       reporter.printReport();
       expect(reporter.resultJsonObject).toHaveProperty('output');
-      expect(reporter.resultJsonObject.output).toHaveProperty('terra-functional-testing');
-
       expect(reporter.resultJsonObject.output['terra-functional-testing']).toHaveLength(2);
       expect(fs.writeFileSync).toHaveBeenCalled();
     });

@@ -21,8 +21,6 @@ class FileOutputReporter extends SpecReporter {
       endDate: '',
     };
     this.fileName = '';
-    this.moduleName = process.cwd().split(path.sep).pop();
-
     this.setResultsDir = this.setResultsDir.bind(this);
     this.hasResultsDir = this.hasResultsDir.bind(this);
     this.setTestModule = this.setTestModule.bind(this);
@@ -154,15 +152,15 @@ class FileOutputReporter extends SpecReporter {
           this.fileNameCheck(config.launcherOptions, browserName, cid);
         }
 
-        this.moduleName = this.setTestModule(runner.specs[0]);
+        const moduleName = this.setTestModule(runner.specs[0]);
 
-        if (!this.resultJsonObject.output[this.moduleName]) {
-          this.resultJsonObject.output[this.moduleName] = [];
+        if (!this.resultJsonObject.output[moduleName]) {
+          this.resultJsonObject.output[moduleName] = [];
         }
         const readableMessage = this.getMessage(runner);
         const readableArrayMessage = readableMessage.toString().split(',');
         const messages = readableArrayMessage.map((message) => stripAnsi(`${message}${endOfLine}`));
-        this.resultJsonObject.output[this.moduleName].push(messages.join(''));
+        this.resultJsonObject.output[moduleName].push(messages.join(''));
         this.resultJsonObject.startDate = new Date(
           runner.start,
         ).toLocaleString();
