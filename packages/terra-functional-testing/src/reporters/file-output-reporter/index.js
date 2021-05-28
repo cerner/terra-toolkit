@@ -93,6 +93,7 @@ class FileOutputReporter extends SpecReporter {
    * @param {string} specsValue - File path of current spec file from runners
    * @return null
    */
+  // eslint-disable-next-line class-methods-use-this
   setTestModule(spec) {
     if (spec.indexOf(`${path.sep}packages${path.sep}`) > -1) {
       return spec.split(`${path.sep}packages${path.sep}`).pop().split(path.sep)[0];
