@@ -13,6 +13,7 @@ class BaseCompare {
    */
   constructor(options = {}) {
     const {
+      cloudRegion,
       locale,
       theme,
       updateScreenshots,
@@ -20,6 +21,7 @@ class BaseCompare {
 
     // screenshot naming config
     this.baseScreenshotDir = process.cwd();
+    this.cloudRegion = cloudRegion || '';
     this.locale = locale || 'en';
     this.theme = theme || 'terra-default-theme';
     this.updateScreenshots = updateScreenshots === true;
@@ -91,7 +93,7 @@ class BaseCompare {
     const testForm = `${browserName}_${formFactor}`;
     const testSpec = path.parse(context.test.file).name;
 
-    return path.join(this.theme, this.locale, testForm, testSpec);
+    return path.join(this.cloudRegion, this.theme, this.locale, testForm, testSpec);
   }
 
   /**
