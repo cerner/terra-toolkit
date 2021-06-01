@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.5.0 - (June 1, 2021)
+
 * Removed
   * Removed lodash is array dependency in favor of Array.isArray.
 
