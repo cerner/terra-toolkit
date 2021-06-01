@@ -4,6 +4,9 @@
   * Updated waitForSeleniumHubReady to accommodate Windows users.
 
 ## Unreleased
+
+## 1.7.0 - (June 1, 2021)
+
 * Added
   * `cloudRegion` namespace to screenshot directories - this is useful for full stack testing contexts that define a cloudRegion per test run.
 
