@@ -23,7 +23,6 @@ class FileOutputReporter extends SpecReporter {
     this.fileName = '';
     this.setResultsDir = this.setResultsDir.bind(this);
     this.hasResultsDir = this.hasResultsDir.bind(this);
-    this.setTestModule = this.setTestModule.bind(this);
     this.printReport = this.printReport.bind(this);
     this.getMessage = this.getMessage.bind(this);
 
@@ -58,21 +57,26 @@ class FileOutputReporter extends SpecReporter {
    * Formatting the filename based on locale, theme, and formFactor
    * @return null
    */
-  fileNameCheck({ formFactor, locale, theme }, browserName, cid) {
+  buildFileName(options) {
+    const {
+      browserName,
+      cid,
+      formFactor,
+      locale,
+      theme,
+    } = options;
+
     const fileNameConf = ['fileOutput'];
     if (locale) {
       fileNameConf.push(locale);
-      this.resultJsonObject.locale = locale;
     }
 
     if (theme) {
       fileNameConf.push(theme);
-      this.resultJsonObject.theme = theme;
     }
 
     if (formFactor) {
       fileNameConf.push(formFactor);
-      this.resultJsonObject.formFactor = formFactor;
     }
 
     if (browserName) {
@@ -87,12 +91,36 @@ class FileOutputReporter extends SpecReporter {
   }
 
   /**
-   * Set the package name to moduleName property if specsValue contains /package string
-   * @param {string} specsValue - File path of current spec file from runners
+   * Updates resultJsonObject based on locale, theme, and formFactor
    * @return null
    */
-  // eslint-disable-next-line class-methods-use-this
-  setTestModule(spec) {
+  updateResultObject(options) {
+    const {
+      formFactor,
+      locale,
+      theme,
+    } = options;
+
+    if (locale) {
+      this.resultJsonObject.locale = locale;
+    }
+
+    if (theme) {
+      this.resultJsonObject.theme = theme;
+    }
+
+    if (formFactor) {
+      this.resultJsonObject.formFactor = formFactor;
+    }
+  }
+
+  /**
+   * Returns the package name of the spec file.
+   * @param {string} spec - The spec filepath.
+   * @returns {string} - The package name of the spec file.
+   */
+  static getPackageName(spec) {
+    // Check if the spec file is nested within a monorepo package.
     if (spec.indexOf(`${path.sep}packages${path.sep}`) > -1) {
       return spec.split(`${path.sep}packages${path.sep}`).pop().split(path.sep)[0];
     }
@@ -111,19 +139,26 @@ class FileOutputReporter extends SpecReporter {
 
   getMessage(runner) {
     const results = this.getResultDisplay();
+
     if (results.length === 0) {
       return null;
     }
-    const testLinks = runner.isMultiremote
-      ? Object.entries(runner.capabilities).map(
+
+    let testLinks;
+
+    if (runner.isMultiremote) {
+      testLinks = Object.entries(runner.capabilities).map(
         ([instanceName, capabilities]) => this.getTestLink({
           config: { ...runner.config, ...{ capabilities } },
           sessionId: capabilities.sessionId,
           isMultiremote: runner.isMultiremote,
           instanceName,
         }),
-      )
-      : this.getTestLink(runner);
+      );
+    } else {
+      testLinks = this.getTestLink(runner);
+    }
+
     const output = [
       ...this.getHeaderDisplay(runner),
       '',
@@ -131,13 +166,16 @@ class FileOutputReporter extends SpecReporter {
       ...this.getFailureDisplay(),
       ...(testLinks.length ? ['', ...testLinks] : []),
     ];
+
     const preface = `[${this.getEnviromentCombo(
       runner.capabilities,
       false,
       runner.isMultiremote,
     ).trim()} #${runner.cid}]`;
+
     const divider = '------------------------------------------------------------------';
     const prefacedOutput = output.map((value) => (value ? `${preface} ${value}` : preface));
+
     return `${divider}\n${prefacedOutput}`;
   }
 
@@ -149,18 +187,28 @@ class FileOutputReporter extends SpecReporter {
         if (index === 0) {
           const { cid, capabilities, config } = runner;
           const { browserName } = capabilities;
-          this.fileNameCheck(config.launcherOptions, browserName, cid);
+          const { formFactor, locale, theme } = config.launcherOptions;
+          const options = {
+            browserName,
+            cid,
+            formFactor,
+            locale,
+            theme,
+          };
+
+          this.buildFileName(options);
+          this.updateResultObject(options);
         }
 
-        const moduleName = this.setTestModule(runner.specs[0]);
+        const packageName = FileOutputReporter.getPackageName(runner.specs[0]);
 
-        if (!this.resultJsonObject.output[moduleName]) {
-          this.resultJsonObject.output[moduleName] = [];
+        if (!this.resultJsonObject.output[packageName]) {
+          this.resultJsonObject.output[packageName] = [];
         }
         const readableMessage = this.getMessage(runner);
         const readableArrayMessage = readableMessage.toString().split(',');
         const messages = readableArrayMessage.map((message) => stripAnsi(`${message}${endOfLine}`));
-        this.resultJsonObject.output[moduleName].push(messages.join(''));
+        this.resultJsonObject.output[packageName].push(messages.join(''));
         this.resultJsonObject.startDate = new Date(
           runner.start,
         ).toLocaleString();

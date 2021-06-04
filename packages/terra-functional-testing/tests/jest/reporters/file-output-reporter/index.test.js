@@ -33,9 +33,8 @@ describe('FileOutputReporter', () => {
       expect(reporter.fileName).toBe('');
     });
 
-    it('defines moduleName', () => {
-      const reporter = new FileOutputReporter({}, {});
-      const moduleName = reporter.setTestModule('terra-toolkit/tests/wdio/test-spec.js');
+    it('defines packageName', () => {
+      const moduleName = FileOutputReporter.getPackageName('terra-toolkit/tests/wdio/test-spec.js');
       expect(moduleName).toBe('terra-toolkit');
     });
 
@@ -64,73 +63,117 @@ describe('FileOutputReporter', () => {
     });
   });
 
-  describe('fileNameCheck', () => {
+  describe('buildFileName', () => {
     it('sets default file name', () => {
       const reporter = new FileOutputReporter({}, {});
-      reporter.fileNameCheck({ }, undefined, '0-1');
+      const options = {
+        cid: '0-1',
+      };
+
+      reporter.buildFileName(options);
+
       expect(reporter.fileName).toEqual('fileOutput-0-1');
-      expect(reporter.resultJsonObject).toHaveProperty('locale', '');
-      expect(reporter.resultJsonObject).toHaveProperty('theme', '');
-      expect(reporter.resultJsonObject).toHaveProperty('formFactor', '');
     });
 
     it('sets file name with locale', () => {
       const reporter = new FileOutputReporter({}, {});
-      reporter.fileNameCheck({ locale: 'en' }, undefined, '0-1');
+      const options = {
+        cid: '0-1',
+        locale: 'en',
+      };
+
+      reporter.buildFileName(options);
+
       expect(reporter.fileName).toEqual('fileOutput-en-0-1');
-      expect(reporter.resultJsonObject).toHaveProperty('locale', 'en');
-      expect(reporter.resultJsonObject).toHaveProperty('theme', '');
-      expect(reporter.resultJsonObject).toHaveProperty('formFactor', '');
     });
 
     it('sets file name with locale and theme', () => {
       const reporter = new FileOutputReporter({}, {});
-      reporter.fileNameCheck({ locale: 'en', theme: 'default' }, undefined, '0-1');
+      const options = {
+        cid: '0-1',
+        locale: 'en',
+        theme: 'default',
+      };
+
+      reporter.buildFileName(options);
+
       expect(reporter.fileName).toEqual('fileOutput-en-default-0-1');
-      expect(reporter.resultJsonObject).toHaveProperty('locale', 'en');
-      expect(reporter.resultJsonObject).toHaveProperty('theme', 'default');
-      expect(reporter.resultJsonObject).toHaveProperty('formFactor', '');
     });
 
     it('sets file name with locale, theme and formFactor', () => {
       const reporter = new FileOutputReporter({}, {});
-      reporter.fileNameCheck({ locale: 'en', theme: 'default', formFactor: 'tiny' }, undefined, '0-1');
+      const options = {
+        cid: '0-1',
+        formFactor: 'tiny',
+        locale: 'en',
+        theme: 'default',
+      };
+
+      reporter.buildFileName(options);
+
       expect(reporter.fileName).toEqual('fileOutput-en-default-tiny-0-1');
-      expect(reporter.resultJsonObject).toHaveProperty('locale', 'en');
-      expect(reporter.resultJsonObject).toHaveProperty('theme', 'default');
-      expect(reporter.resultJsonObject).toHaveProperty('formFactor', 'tiny');
     });
 
     it('sets file name with locale, theme, formFactor, browser and cid', () => {
       const reporter = new FileOutputReporter({}, {});
-      reporter.fileNameCheck({ locale: 'en', theme: 'default', formFactor: 'tiny' }, 'chrome', '0-1');
+      const options = {
+        browserName: 'chrome',
+        cid: '0-1',
+        formFactor: 'tiny',
+        locale: 'en',
+        theme: 'default',
+      };
+
+      reporter.buildFileName(options);
+
       expect(reporter.fileName).toEqual('fileOutput-en-default-tiny-chrome-0-1');
+    });
+  });
+
+  describe('updateResultObject', () => {
+    it('sets resultJsonObject with locale, theme and formFactor', () => {
+      const reporter = new FileOutputReporter({}, {});
+      const options = {
+        formFactor: 'tiny',
+        locale: 'en',
+        theme: 'default',
+      };
+
+      reporter.updateResultObject(options);
+
       expect(reporter.resultJsonObject).toHaveProperty('locale', 'en');
       expect(reporter.resultJsonObject).toHaveProperty('theme', 'default');
       expect(reporter.resultJsonObject).toHaveProperty('formFactor', 'tiny');
     });
+
+    it('sets resultJsonObject with empty option', () => {
+      const reporter = new FileOutputReporter({}, {});
+
+      reporter.updateResultObject({});
+
+      expect(reporter.resultJsonObject).toHaveProperty('locale', '');
+      expect(reporter.resultJsonObject).toHaveProperty('theme', '');
+      expect(reporter.resultJsonObject).toHaveProperty('formFactor', '');
+    });
   });
 
-  describe('setTestModule', () => {
+  describe('getPackageName', () => {
     it('updates moduleName if mono-repo test file', () => {
-      const reporter = new FileOutputReporter({}, {});
-      const packageName = reporter.setTestModule('terra-toolkit/packages/my-package/tests/wdio/test-spec.js');
+      const packageName = FileOutputReporter.getPackageName('terra-toolkit/packages/my-package/tests/wdio/test-spec.js');
       expect(packageName).toEqual('my-package');
     });
 
     it('updates moduleName if mono-repo test file if windows path', () => {
-      const reporter = new FileOutputReporter({}, {});
       const separator = path.sep;
       path.sep = '\\';
-      const packageName = reporter.setTestModule('C:\\project\\packages\\my-package\\tests\\wdio\\test-spec.js');
+      const packageName = FileOutputReporter.getPackageName('C:\\project\\packages\\my-package\\tests\\wdio\\test-spec.js');
       expect(packageName).toEqual('my-package');
 
       path.sep = separator;
     });
 
     it('does not updates moduleName if non mono-repo test file', () => {
-      const reporter = new FileOutputReporter({}, {});
-      const moduleName = reporter.setTestModule('terra-functional-testing/tests/wdio/test-spec.js');
+      const moduleName = FileOutputReporter.getPackageName('terra-functional-testing/tests/wdio/test-spec.js');
       expect(moduleName).toEqual('terra-toolkit');
     });
   });
