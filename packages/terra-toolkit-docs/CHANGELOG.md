@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Added
+  * Added notes about FileOutputReporter for terra-functional-testing.
+
 ## 1.16.0 - (June 1, 2021)
 
 * Changed
