@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+  * Updated snapshot cleaning
+
 * Added
   * Added FileOutputReporter reporter that logs wdio test output to separate files based on locale, theme, and form-factor 
 
