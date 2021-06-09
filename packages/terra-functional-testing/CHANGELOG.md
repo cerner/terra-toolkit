@@ -2,8 +2,8 @@
 
 ## Unreleased
 
-* Changed
-  * Updated snapshot cleaning
+* Fixed
+  * Updated screenshot cleaning to match nested snapshot directories
 
 * Added
   * Added FileOutputReporter reporter that logs wdio test output to separate files based on locale, theme, and form-factor 

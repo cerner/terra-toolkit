@@ -18,9 +18,9 @@ async function cleanScreenshots() {
     const packageNames = fs.readdirSync(monoRepoPath);
 
     packageNames.forEach((packageName) => {
-      patterns.push(path.resolve(monoRepoPath, packageName, 'tests', 'wdio', '/**/', '__snapshots__', 'diff'));
-      patterns.push(path.resolve(monoRepoPath, packageName, 'tests', 'wdio', '/**/', '__snapshots__', 'error'));
-      patterns.push(path.resolve(monoRepoPath, packageName, 'tests', 'wdio', '/**/', '__snapshots__', 'latest'));
+      patterns.push(path.resolve(monoRepoPath, packageName, 'tests', 'wdio', '**', '__snapshots__', 'diff'));
+      patterns.push(path.resolve(monoRepoPath, packageName, 'tests', 'wdio', '**', '__snapshots__', 'error'));
+      patterns.push(path.resolve(monoRepoPath, packageName, 'tests', 'wdio', '**', '__snapshots__', 'latest'));
     });
   } else {
     patterns = [
