@@ -54,14 +54,14 @@ describe('cleanScreenshots', () => {
 
     expect(path.resolve).toHaveBeenCalledWith(cwd, 'packages');
     expect(fs.existsSync).toHaveBeenCalledWith(mockPath);
-    expect(glob.sync).toHaveBeenNthCalledWith(1, `${cwd}/tests/wdio/__snapshots__/diff`);
-    expect(glob.sync).toHaveBeenNthCalledWith(2, `${cwd}/tests/wdio/__snapshots__/error`);
-    expect(glob.sync).toHaveBeenNthCalledWith(3, `${cwd}/tests/wdio/__snapshots__/latest`);
-    expect(fs.lstatSync).toHaveBeenNthCalledWith(1, `${cwd}/tests/wdio/__snapshots__/diff`);
-    expect(fs.lstatSync).toHaveBeenNthCalledWith(2, `${cwd}/tests/wdio/__snapshots__/error`);
-    expect(fs.lstatSync).toHaveBeenNthCalledWith(3, `${cwd}/tests/wdio/__snapshots__/latest`);
-    expect(fs.removeSync).toHaveBeenNthCalledWith(1, `${cwd}/tests/wdio/__snapshots__/diff`);
-    expect(fs.removeSync).toHaveBeenNthCalledWith(2, `${cwd}/tests/wdio/__snapshots__/error`);
-    expect(fs.removeSync).toHaveBeenNthCalledWith(3, `${cwd}/tests/wdio/__snapshots__/latest`);
+    expect(glob.sync).toHaveBeenNthCalledWith(1, `${cwd}/tests/wdio/**/__snapshots__/diff`);
+    expect(glob.sync).toHaveBeenNthCalledWith(2, `${cwd}/tests/wdio/**/__snapshots__/error`);
+    expect(glob.sync).toHaveBeenNthCalledWith(3, `${cwd}/tests/wdio/**/__snapshots__/latest`);
+    expect(fs.lstatSync).toHaveBeenNthCalledWith(1, `${cwd}/tests/wdio/**/__snapshots__/diff`);
+    expect(fs.lstatSync).toHaveBeenNthCalledWith(2, `${cwd}/tests/wdio/**/__snapshots__/error`);
+    expect(fs.lstatSync).toHaveBeenNthCalledWith(3, `${cwd}/tests/wdio/**/__snapshots__/latest`);
+    expect(fs.removeSync).toHaveBeenNthCalledWith(1, `${cwd}/tests/wdio/**/__snapshots__/diff`);
+    expect(fs.removeSync).toHaveBeenNthCalledWith(2, `${cwd}/tests/wdio/**/__snapshots__/error`);
+    expect(fs.removeSync).toHaveBeenNthCalledWith(3, `${cwd}/tests/wdio/**/__snapshots__/latest`);
   });
 });
