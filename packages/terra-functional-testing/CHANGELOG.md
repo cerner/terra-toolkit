@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Breaking
+  * Upgraded to wdio v7
+
 ## 1.8.0 - (June 8, 2021)
 
 * Added
