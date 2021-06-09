@@ -5,6 +5,8 @@
 * Fixed
   * Updated screenshot cleaning to match nested snapshot directories
 
+## 1.8.0 - (June 8, 2021)
+
 * Added
   * Added FileOutputReporter reporter that logs wdio test output to separate files based on locale, theme, and form-factor 
 
