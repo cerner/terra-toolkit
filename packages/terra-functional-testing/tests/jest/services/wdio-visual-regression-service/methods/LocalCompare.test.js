@@ -4,6 +4,7 @@ import resemble from '@mirzazeyrek/node-resemble-js';
 
 import BaseCompare from '../../../../../src/services/wdio-visual-regression-service/methods/BaseCompare';
 import LocalCompare from '../../../../../src/services/wdio-visual-regression-service/methods/LocalCompare';
+import eventEmitter from '../../../../../src/commands/utils/eventEmitter';
 
 const dirTmp = path.resolve(__dirname, '..', '..', '..', '..', 'tmp');
 const dirFixture = path.resolve(__dirname, '..', '..', '..', '..', 'fixtures');
@@ -67,6 +68,7 @@ describe('LocalCompare', () => {
       const base64Screenshot = fs.readFileSync(path.join(dirFixture, 'image', '100x100.png'), { encoding: 'base64' });
 
       const getScreenshotPathsSpy = jest.spyOn(localCompare, 'getScreenshotPaths');
+      const emitSpy = jest.spyOn(eventEmitter, 'emit');
 
       await localCompare.processScreenshot(context, base64Screenshot);
 
@@ -83,6 +85,8 @@ describe('LocalCompare', () => {
       // check if latest image was created
       const latestExists = fs.existsSync(screenshotPaths.latestPath);
       expect(latestExists).toBeTruthy();
+
+      expect(emitSpy).toHaveBeenCalledWith('terra-functional-testing:capture-screenshot', screenshotPaths.latestPath);
     });
 
     it('creates a reference file for the first run', async () => {

@@ -7,6 +7,7 @@ const getViewports = require('./getViewports');
 const hideInputCaret = require('./hideInputCaret');
 const setApplicationLocale = require('./setApplicationLocale');
 const setViewport = require('./setViewport');
+const eventEmitter = require('./eventEmitter');
 
 module.exports = {
   cleanScreenshots,
@@ -14,6 +15,7 @@ module.exports = {
   describeViewports,
   dispatchCustomEvent,
   downloadScreenshots,
+  eventEmitter,
   getViewports,
   hideInputCaret,
   setApplicationLocale,

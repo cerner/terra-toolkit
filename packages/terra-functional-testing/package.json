@@ -55,6 +55,7 @@
     "@wdio/sync": "^6.1.14",
     "axe-core": "4.0.2",
     "chalk": "^4.1.0",
+    "eventemitter3": "^4.0.4",
     "expect": "^26.4.2",
     "express": "^4.17.1",
     "extract-zip": "^2.0.1",
