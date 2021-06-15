@@ -5,10 +5,13 @@
 * Fixed
   * Updated screenshot cleaning to match nested snapshot directories
 
+* Added
+  * Added screenshot paths for each test result to the spec reporter
+
 ## 1.8.0 - (June 8, 2021)
 
 * Added
-  * Added FileOutputReporter reporter that logs wdio test output to separate files based on locale, theme, and form-factor 
+  * Added FileOutputReporter reporter that logs wdio test output to separate files based on locale, theme, and form-factor
 
 ## 1.7.0 - (June 1, 2021)
 
