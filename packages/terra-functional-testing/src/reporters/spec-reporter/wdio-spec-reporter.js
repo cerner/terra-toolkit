@@ -4,6 +4,10 @@ const WDIOReporter = require('@wdio/reporter').default;
 const getOutputDir = require('./get-output-dir');
 
 class SpecReporter extends WDIOReporter {
+  constructor(options) {
+    super({ stdout: true, ...options });
+  }
+
   /**
    * Hook invoked when the runner ends.
    * @param {RunnerStats} runner - The test runner stats object.

@@ -8,8 +8,8 @@ const { Logger } = require('@cerner/terra-cli');
 const LOG_CONTEXT = '[terra-functional-testing:file-output-reporter]';
 
 class FileOutputReporter extends SpecReporter {
-  constructor() {
-    super();
+  constructor(options) {
+    super({ stdout: true, ...options });
     this.runners = [];
     this.resultJsonObject = {
       startDate: '',
