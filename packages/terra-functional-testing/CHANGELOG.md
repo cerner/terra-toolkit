@@ -4,6 +4,7 @@
 
 * Fixed
   * Updated screenshot cleaning to match nested snapshot directories
+  * Run tests using viewport size instead of window size
 
 ## 1.8.0 - (June 8, 2021)
 
