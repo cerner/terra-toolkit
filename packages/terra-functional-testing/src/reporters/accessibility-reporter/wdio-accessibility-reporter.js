@@ -16,7 +16,7 @@ class AccessibilityReporter extends WDIOReporter {
   }
 
   constructor(options) {
-    super({ stdout: true, ...options });
+    super({ stdout: true, writeStream: {}, ...options });
 
     this.currentTest = null;
     this.accessibilityResults = {};

@@ -9,7 +9,7 @@ const LOG_CONTEXT = '[terra-functional-testing:file-output-reporter]';
 
 class FileOutputReporter extends SpecReporter {
   constructor(options) {
-    super({ stdout: true, ...options });
+    super({ stdout: true, writeStream: {}, ...options });
     this.runners = [];
     this.resultJsonObject = {
       startDate: '',
