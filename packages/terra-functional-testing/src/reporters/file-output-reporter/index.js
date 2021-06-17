@@ -9,7 +9,7 @@ const LOG_CONTEXT = '[terra-functional-testing:file-output-reporter]';
 
 class FileOutputReporter extends SpecReporter {
   constructor(options) {
-    super({ stdout: true, writeStream: {}, ...options });
+    super({ stdout: true, ...options });
     this.runners = [];
     this.resultJsonObject = {
       startDate: '',
@@ -149,7 +149,7 @@ class FileOutputReporter extends SpecReporter {
     if (runner.isMultiremote) {
       testLinks = Object.entries(runner.capabilities).map(
         ([instanceName, capabilities]) => this.getTestLink({
-          config: { ...runner.config, ...{ capabilities } },
+          config: { ...global.browser.config, ...{ capabilities } },
           sessionId: capabilities.sessionId,
           isMultiremote: runner.isMultiremote,
           instanceName,
@@ -185,8 +185,9 @@ class FileOutputReporter extends SpecReporter {
       runners.forEach((runner, index) => {
         // determine correct file name given configuration for run
         if (index === 0) {
-          const { cid, capabilities, config } = runner;
+          const { cid, capabilities } = runner;
           const { browserName } = capabilities;
+          const { config } = global.browser;
           const { formFactor, locale, theme } = config.launcherOptions;
           const options = {
             browserName,

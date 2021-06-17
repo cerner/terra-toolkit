@@ -5,7 +5,7 @@ const getOutputDir = require('./get-output-dir');
 
 class SpecReporter extends WDIOReporter {
   constructor(options) {
-    super({ stdout: true, writeStream: {}, ...options });
+    super({ stdout: true, ...options });
   }
 
   /**

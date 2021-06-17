@@ -18,7 +18,7 @@ describe('Spec Reporter', () => {
       jest.spyOn(SpecReporter, 'formatResults').mockImplementationOnce(() => 'mock-results');
       jest.spyOn(SpecReporter, 'writeResults').mockImplementationOnce(() => {});
 
-      const reporter = new SpecReporter({});
+      const reporter = new SpecReporter({ writeStream: {} });
 
       reporter.onRunnerEnd({});
 
