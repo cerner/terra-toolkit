@@ -4,7 +4,7 @@
 
 * Fixed
   * Updated screenshot cleaning to match nested snapshot directories
-  * Run tests using viewport size instead of window size
+  * Updated to size the test page to the viewport size instead of the browser's window size to correctly match the corresponding breakpoint. This change may affect the size of existing screenshots, particularly in IE and firefox. The affected screenshots may need to be regenerated.
 
 ## 1.8.0 - (June 8, 2021)
 
