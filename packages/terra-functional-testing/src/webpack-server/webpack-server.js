@@ -13,7 +13,7 @@ class WebpackServer {
     this.config = WebpackServer.config(options);
     this.host = host || '0.0.0.0';
     this.port = port || '8080';
-    this.port = baseUrl;
+    this.baseUrl = baseUrl;
   }
 
   /**
@@ -82,12 +82,12 @@ class WebpackServer {
             if (statusCode >= 200 || statusCode <= 299) {
               resolve();
             } else {
-              throw new SevereServiceError('Url $(this.baseUrl) returns status code of $(statusCode). Check to ensure the selenium grid is stable');
+              throw new SevereServiceError(`Url ${this.baseUrl} returns status code of $(statusCode). Check to ensure the selenium grid is stable`);
               // res.resume();
               // reject();
             }
           }).on('error', () => {
-            throw new SevereServiceError('Failed to connect to url $(this.baseUrl). Check to ensure the selenium grid is stable');
+            throw new SevereServiceError(`Failed to connect to url ${this.baseUrl}. Check to ensure the selenium grid is stable`);
             // reject();
           });
           // resolve();
