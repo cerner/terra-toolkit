@@ -3,6 +3,7 @@ const describeTests = require('./describeTests');
 const describeViewports = require('./describeViewports');
 const dispatchCustomEvent = require('./dispatchCustomEvent');
 const downloadScreenshots = require('./downloadScreenshots');
+const eventEmitter = require('./eventEmitter');
 const getViewports = require('./getViewports');
 const getViewportSize = require('./getViewportSize');
 const hideInputCaret = require('./hideInputCaret');
@@ -16,6 +17,7 @@ module.exports = {
   describeViewports,
   dispatchCustomEvent,
   downloadScreenshots,
+  eventEmitter,
   getViewports,
   getViewportSize,
   hideInputCaret,
