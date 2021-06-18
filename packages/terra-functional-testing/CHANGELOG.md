@@ -4,6 +4,8 @@
 
 * Breaking
   * Upgraded to wdio v7
+* Fixed
+  * Updated screenshot cleaning to match nested snapshot directories
 
 ## 1.8.0 - (June 8, 2021)
 
