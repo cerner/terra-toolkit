@@ -1,16 +1,19 @@
 const WebpackDevServer = require('webpack-dev-server');
 const webpack = require('webpack');
 const { Logger } = require('@cerner/terra-cli');
+const { SevereServiceError } = require('webdriverio');
+const http = require('http');
 
 const logger = new Logger({ prefix: '[terra-functional-testing:webpack-server]' });
 
 class WebpackServer {
   constructor(options = {}) {
-    const { host, port } = options;
+    const { host, port, baseUrl } = options;
 
     this.config = WebpackServer.config(options);
     this.host = host || '0.0.0.0';
     this.port = port || '8080';
+    this.port = baseUrl;
   }
 
   /**
@@ -74,7 +77,20 @@ class WebpackServer {
           logger.error('Webpack compiled with errors.');
           reject();
         } else {
-          resolve();
+          http.get(this.baseUrl, (res) => {
+            const { statusCode } = res;
+            if (statusCode >= 200 || statusCode <= 299) {
+              resolve();
+            } else {
+              throw new SevereServiceError('Url $(this.baseUrl) returns status code of $(statusCode). Check to ensure the selenium grid is stable');
+              // res.resume();
+              // reject();
+            }
+          }).on('error', () => {
+            throw new SevereServiceError('Failed to connect to url $(this.baseUrl). Check to ensure the selenium grid is stable');
+            // reject();
+          });
+          // resolve();
         }
       });
 
