@@ -2,10 +2,34 @@ const fs = require('fs-extra');
 const path = require('path');
 const WDIOReporter = require('@wdio/reporter').default;
 const getOutputDir = require('./get-output-dir');
+const { eventEmitter } = require('../../commands/utils');
 
 class SpecReporter extends WDIOReporter {
   constructor(options) {
     super({ stdout: true, ...options });
+    this.screenshotPaths = [];
+    this.screenshotMap = {};
+
+    // Listen to this event when a screenshot is being captured.
+    eventEmitter.on('terra-functional-testing:capture-screenshot', (latestPath) => {
+      if (!this.screenshotPaths.includes(latestPath)) {
+        this.screenshotPaths.push(latestPath);
+      }
+    });
+
+    this.formatResults = this.formatResults.bind(this);
+    this.formatSuites = this.formatSuites.bind(this);
+    this.formatTests = this.formatTests.bind(this);
+  }
+
+  /**
+   * Hook invoked when a test ends.
+   * @param {Object} test - The test result.
+   */
+  onTestEnd(test) {
+    const { uid } = test;
+    this.screenshotMap[uid] = this.screenshotPaths;
+    this.screenshotPaths = [];
   }
 
   /**
@@ -15,7 +39,7 @@ class SpecReporter extends WDIOReporter {
   onRunnerEnd(runner) {
     // The root suite is always at index 0 and is guaranteed to exist.
     const rootSuite = this.currentSuites[0];
-    const results = SpecReporter.formatResults(rootSuite, runner);
+    const results = this.formatResults(rootSuite, runner);
 
     SpecReporter.writeResults(runner, results);
   }
@@ -26,7 +50,7 @@ class SpecReporter extends WDIOReporter {
    * @param {RunnerStats} runner - The test runner stats object.
    * @returns {Object} - A formatted results object for a single spec file.
    */
-  static formatResults(rootSuite, runner) {
+  formatResults(rootSuite, runner) {
     const {
       start,
       end,
@@ -42,8 +66,8 @@ class SpecReporter extends WDIOReporter {
       end,
       capabilities: SpecReporter.formatCapabilities(capabilities),
       packageName: SpecReporter.getPackageName(specs[0]),
-      suites: SpecReporter.formatSuites(suites),
-      tests: SpecReporter.formatTests(tests),
+      suites: this.formatSuites(suites),
+      tests: this.formatTests(tests),
     };
   }
 
@@ -62,7 +86,7 @@ class SpecReporter extends WDIOReporter {
    * @param {array} suites - The collection of suites.
    * @returns {Object} - A formatted suite results object.
    */
-  static formatSuites(suites) {
+  formatSuites(suites) {
     return suites.map((suite) => {
       const {
         title,
@@ -79,8 +103,8 @@ class SpecReporter extends WDIOReporter {
         duration,
         start,
         end,
-        tests: SpecReporter.formatTests(tests),
-        suites: SpecReporter.formatSuites(suite.suites),
+        tests: this.formatTests(tests),
+        suites: this.formatSuites(suite.suites),
       };
     });
   }
@@ -90,7 +114,7 @@ class SpecReporter extends WDIOReporter {
    * @param {array} tests - An array of test results.
    * @returns {Object} - A formatted test results object.
    */
-  static formatTests(tests) {
+  formatTests(tests) {
     return tests.map((test) => {
       const {
         title,
@@ -100,6 +124,7 @@ class SpecReporter extends WDIOReporter {
         end,
         state,
         error,
+        uid,
       } = test;
 
       return {
@@ -109,6 +134,7 @@ class SpecReporter extends WDIOReporter {
         start,
         end,
         state,
+        screenshots: this.screenshotMap[uid],
         error,
       };
     });

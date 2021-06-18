@@ -4,6 +4,7 @@ const {
   describeViewports,
   dispatchCustomEvent,
   downloadScreenshots,
+  eventEmitter,
   getViewports,
   getViewportSize,
   hideInputCaret,
@@ -19,6 +20,7 @@ describe('index', () => {
     expect(describeViewports).toBeDefined();
     expect(dispatchCustomEvent).toBeDefined();
     expect(downloadScreenshots).toBeDefined();
+    expect(eventEmitter).toBeDefined();
     expect(getViewports).toBeDefined();
     expect(getViewportSize).toBeDefined();
     expect(hideInputCaret).toBeDefined();

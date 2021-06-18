@@ -2,6 +2,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const SpecReporter = require('../../../../src/reporters/spec-reporter/wdio-spec-reporter');
 const testData1 = require('../../../fixtures/reporters/test-data-1.json');
+const { eventEmitter } = require('../../../../src/commands/utils');
 
 jest.mock('../../../../src/reporters/spec-reporter/get-output-dir', () => (
   jest.fn().mockImplementation(() => ('/mock/'))
@@ -13,16 +14,57 @@ describe('Spec Reporter', () => {
     jest.restoreAllMocks();
   });
 
+  describe('constructor', () => {
+    it('should initialize', () => {
+      const reporter = new SpecReporter({});
+
+      expect(reporter.screenshotPaths).toEqual([]);
+      expect(reporter.screenshotMap).toEqual({});
+    });
+
+    it('should listen to latest-screenshot event', () => {
+      const reporter = new SpecReporter({});
+
+      eventEmitter.emit('terra-functional-testing:capture-screenshot', 'path/screenshot.png');
+
+      expect(reporter.screenshotPaths).toEqual(['path/screenshot.png']);
+    });
+
+    it('should not save duplicate screenshot paths', () => {
+      const reporter = new SpecReporter({});
+
+      eventEmitter.emit('terra-functional-testing:capture-screenshot', 'path/screenshot.png');
+      eventEmitter.emit('terra-functional-testing:capture-screenshott', 'path/screenshot.png');
+
+      expect(reporter.screenshotPaths).toEqual(['path/screenshot.png']);
+    });
+  });
+
+  describe('onTestEnd', () => {
+    it('should save screenshot paths', () => {
+      const reporter = new SpecReporter({});
+
+      eventEmitter.emit('terra-functional-testing:capture-screenshot', 'path/screenshot.png');
+
+      const testOption = { uid: 'test-10-0' };
+
+      reporter.onTestEnd(testOption);
+
+      expect(reporter.screenshotMap).toEqual({ 'test-10-0': ['path/screenshot.png'] });
+      expect(reporter.screenshotPaths).toEqual([]);
+    });
+  });
+
   describe('onRunnerEnd', () => {
     it('should format and write test results to file when the runner ends', () => {
-      jest.spyOn(SpecReporter, 'formatResults').mockImplementationOnce(() => 'mock-results');
-      jest.spyOn(SpecReporter, 'writeResults').mockImplementationOnce(() => {});
-
       const reporter = new SpecReporter({ writeStream: {} });
+
+      jest.spyOn(reporter, 'formatResults').mockImplementationOnce(() => 'mock-results');
+      jest.spyOn(SpecReporter, 'writeResults').mockImplementationOnce(() => {});
 
       reporter.onRunnerEnd({});
 
-      expect(SpecReporter.formatResults).toHaveBeenCalled();
+      expect(reporter.formatResults).toHaveBeenCalled();
       expect(SpecReporter.writeResults).toHaveBeenCalledWith({}, 'mock-results');
     });
   });
@@ -31,7 +73,9 @@ describe('Spec Reporter', () => {
     it('should format the suite results', () => {
       const mockRunner = { capabilities: {}, specs: ['/mock/spec'] };
 
-      const results = SpecReporter.formatResults(testData1, mockRunner);
+      const reporter = new SpecReporter({});
+
+      const results = reporter.formatResults(testData1, mockRunner);
 
       expect(results).toMatchSnapshot();
     });
@@ -50,8 +94,16 @@ describe('Spec Reporter', () => {
   describe('formatTests', () => {
     it('should format the test results', () => {
       const { tests } = testData1.suites[0].suites[0];
+      const reporter = new SpecReporter({});
 
-      const results = SpecReporter.formatTests(tests);
+      eventEmitter.emit('terra-functional-testing:capture-screenshot', 'path/screenshot1.png');
+      reporter.onTestEnd(tests[0]);
+      eventEmitter.emit('terra-functional-testing:capture-screenshot', 'path/screenshot2.png');
+      reporter.onTestEnd(tests[1]);
+      eventEmitter.emit('terra-functional-testing:capture-screenshot', 'path/screenshot3.png');
+      reporter.onTestEnd(tests[2]);
+
+      const results = reporter.formatTests(tests);
 
       expect(results).toMatchSnapshot();
     });

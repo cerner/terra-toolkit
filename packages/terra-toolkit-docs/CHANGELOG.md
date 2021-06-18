@@ -5,6 +5,11 @@
 * Added
   * terra-functional-testing v2 upgrade guide
 
+## 1.18.0 - (June 18, 2021)
+
+* Changed
+  * Minor dependency version bump
+
 ## 1.17.0 - (June 8, 2021)
 
 * Added
