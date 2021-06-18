@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Added
+  * terra-functional-testing v2 upgrade guide
+
 ## 1.17.0 - (June 8, 2021)
 
 * Added
