@@ -1,6 +1,6 @@
 # Terra Functional Testing - Version 2 Upgrade Guide
 
-The only change in this version is the upgrade from wdio v7. This should cause very little disruption to consuming projects.
+The only change in this version is the upgrade to WebDriverIO v7. This should cause very little disruption to consuming projects.
 
 ## Breaking Changes
 
