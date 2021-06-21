@@ -1,6 +1,5 @@
 const { Logger } = require('@cerner/terra-cli');
 const { TERRA_VIEWPORTS } = require('../../constants');
-const setViewportSize = require('./setViewportSize');
 
 const logger = new Logger({ prefix: '[terra-functional-testing:setViewport]' });
 
@@ -14,9 +13,9 @@ const setViewport = (viewport) => {
     return;
   }
 
-  const terraViewport = TERRA_VIEWPORTS[viewport];
+  const { height, width } = TERRA_VIEWPORTS[viewport];
 
-  setViewportSize(terraViewport);
+  global.browser.setWindowSize(width, height);
 };
 
 module.exports = setViewport;
