@@ -79,18 +79,14 @@ class WebpackServer {
         } else {
           http.get(this.baseUrl, (res) => {
             const { statusCode } = res;
-            if (statusCode >= 200 || statusCode <= 299) {
+            if (statusCode >= 200 && statusCode <= 299) {
               resolve();
             } else {
-              throw new SevereServiceError(`Url ${this.baseUrl} returns status code of $(statusCode). Check to ensure the selenium grid is stable`);
-              // res.resume();
-              // reject();
+              throw new SevereServiceError(`Url ${this.baseUrl} returns status code of ${statusCode}. Check to ensure the selenium grid is stable`);
             }
           }).on('error', () => {
             throw new SevereServiceError(`Failed to connect to url ${this.baseUrl}. Check to ensure the selenium grid is stable`);
-            // reject();
           });
-          // resolve();
         }
       });
 
