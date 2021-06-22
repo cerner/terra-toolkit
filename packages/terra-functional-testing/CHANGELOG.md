@@ -10,6 +10,7 @@
 
 * Fixed
   * Updated screenshot cleaning to match nested snapshot directories
+  * Updated to size the test page to the viewport size instead of the browser's window size to correctly match the corresponding breakpoint. This change may affect the size of existing screenshots, particularly in IE and firefox. The affected screenshots may need to be regenerated.
 
 * Added
   * Added screenshot paths for each test result to the spec reporter
