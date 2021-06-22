@@ -9,7 +9,7 @@ const { TERRA_VIEWPORTS } = require('../../../constants');
  */
 function getViewportSize() {
   // eslint-disable-next-line prefer-arrow-callback
-  return global.browser.getWindowSize();
+  return browser.getWindowSize();
 }
 
 /**
