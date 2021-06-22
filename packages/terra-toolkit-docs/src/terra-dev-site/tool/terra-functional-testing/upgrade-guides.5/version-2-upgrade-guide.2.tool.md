@@ -12,7 +12,14 @@ A complete list of breaking changes can be found here:
 - [WebdriverIO v6 to v7 Upgrade Guide](https://webdriver.io/docs/v7-migration)
 
 If you are using `@cerner/terra-functional-testing` along with it's `wdio.config.js` most of these changes should not apply.
-The primary change you will need to make is updating the `@cerner/terra-functional-testing` version in your `package.json`:
+
+### Large viewport testing size increased
+
+The large viewport testing size was increased from `1000` to `1020` to account for IE scrollbar.
+
+#### Update package.json
+
+You will need to update the `@cerner/terra-functional-testing` version in your `package.json`:
 
 ```diff
 // package.json
@@ -23,3 +30,7 @@ The primary change you will need to make is updating the `@cerner/terra-function
   }
 }
 ```
+
+#### Regenerate screenshots
+
+Screenshots for the `large ` viewport tests will need to be regenerated due to the screen size increase.
