@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.19.0 - (June 23, 2021)
+
 * Fixed
   * Updated links to documentation in scoped packages to be correct.
 
