@@ -1,6 +1,6 @@
 {
   "name": "@cerner/terra-toolkit-docs",
-  "version": "1.18.0",
+  "version": "1.19.0",
   "description": "Contains documentation for packages in the terra-toolkit monorepo",
   "main": "index.js",
   "publishConfig": {
