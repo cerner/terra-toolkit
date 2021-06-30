@@ -28,7 +28,7 @@ describe('Webpack Server', () => {
       expect(server.config).toEqual('config');
       expect(server.host).toEqual('0.0.0.0');
       expect(server.port).toEqual('8080');
-      expect(server.baseUrl).toBeUndefined();
+      expect(server.gridUrl).toBeUndefined();
     });
 
     it('should initialize provided options', () => {
@@ -38,13 +38,13 @@ describe('Webpack Server', () => {
         locale: 'mock',
         port: 'mock',
         theme: 'mock',
-        baseUrl: '0.0.0.0:8080',
+        gridUrl: '1.1.1.1',
       });
 
       expect(server.config).toEqual('config');
       expect(server.host).toEqual('0.0.0.0');
       expect(server.port).toEqual('mock');
-      expect(server.baseUrl).toEqual('0.0.0.0:8080');
+      expect(server.gridUrl).toEqual('http://1.1.1.1:80/status');
     });
   });
 
@@ -102,10 +102,52 @@ describe('Webpack Server', () => {
 
   describe('start', () => {
     it('resolves', async () => {
+      const chunk = {
+        value: {
+          ready: true,
+        },
+      };
+      const onfn = jest.fn()
+        .mockImplementationOnce((event, cb) => cb(JSON.stringify(chunk)))
+        .mockImplementationOnce((event, cb) => cb());
+      const response = {
+        statusCode: 200,
+        on: onfn,
+        complete: true,
+      };
       jest.spyOn(WebpackServer, 'config').mockImplementation(() => 'config');
       jest.spyOn(http, 'get').mockImplementation((arg1, callback) => {
-        callback({ statusCode: 200 });
+        callback(response);
       });
+      const mockStats = {
+        hasErrors: jest.fn().mockImplementationOnce(() => false),
+      };
+      const compiler = {
+        watch: jest.fn(),
+        hooks: {
+          done: {
+            tap: jest.fn((arg1, callback) => {
+              callback(mockStats);
+            }),
+          },
+          failed: {
+            tap: () => {},
+          },
+        },
+        options: {
+          devServer: {},
+        },
+      };
+      webpack.mockReturnValue(compiler);
+
+      const server = new WebpackServer();
+      server.gridUrl = '1.1.1.1:8080';
+
+      return expect(server.start()).resolves.toBeUndefined();
+    });
+
+    it('skips gridUrl check and resolves', async () => {
+      jest.spyOn(WebpackServer, 'config').mockImplementation(() => 'config');
       const mockStats = {
         hasErrors: jest.fn().mockImplementationOnce(() => false),
       };
@@ -155,55 +197,28 @@ describe('Webpack Server', () => {
       WebpackDevServer.mockImplementation(() => ({ listen: mockMethod }));
 
       const server = new WebpackServer();
-      server.baseUrl = '0.0.0.0:8080';
+      server.gridUrl = '0.0.0.0:8080';
 
       return expect(server.start()).rejects.toBe(true);
     });
 
-    it('throws if http.get throws', () => {
-      jest.spyOn(WebpackServer, 'config').mockImplementation(() => 'config');
-      jest.spyOn(http, 'get').mockImplementation(() => {
-        throw new Error();
-      });
-      const mockStats = {
-        hasErrors: jest.fn().mockImplementationOnce(() => false),
-      };
-      const compiler = {
-        watch: jest.fn(),
-        hooks: {
-          done: {
-            tap: jest.fn((arg1, callback) => {
-              try {
-                callback(mockStats);
-              } catch (e) {
-                expect(e.message).toEqual('Failed to connect to url 0.0.0.0:8080. Check to ensure the selenium grid is stable');
-              }
-            }),
-          },
-          failed: {
-            tap: () => {},
-          },
-        },
-        options: {
-          devServer: {},
+    it('throws if grid is not ready', async () => {
+      const chunk = {
+        value: {
+          ready: false,
         },
       };
-      webpack.mockReturnValue(compiler);
-
-      const server = new WebpackServer();
-      server.baseUrl = '0.0.0.0:8080';
-
-      server.start();
-    });
-
-    it('throws when it cannot contact server', () => {
+      const onfn = jest.fn()
+        .mockImplementationOnce((event, cb) => cb(JSON.stringify(chunk)))
+        .mockImplementationOnce((event, cb) => cb());
+      const response = {
+        statusCode: 200,
+        on: onfn,
+        complete: true,
+      };
       jest.spyOn(WebpackServer, 'config').mockImplementation(() => 'config');
       jest.spyOn(http, 'get').mockImplementation((arg1, callback) => {
-        try {
-          callback({ statusCode: 300 });
-        } catch (e) {
-          expect(e.message).toEqual('Url 0.0.0.0:8080 returns status code of 300. Check to ensure the selenium grid is stable');
-        }
+        callback(response);
       });
       const mockStats = {
         hasErrors: jest.fn().mockImplementationOnce(() => false),
@@ -227,9 +242,114 @@ describe('Webpack Server', () => {
       webpack.mockReturnValue(compiler);
 
       const server = new WebpackServer();
-      server.baseUrl = '0.0.0.0:8080';
+      server.gridUrl = '1.1.1.1:8080';
 
-      server.start();
+      expect.assertions(1);
+      return server.start().catch(e => expect(e.message).toEqual(`${server.gridUrl} failed to return a ready response. Check to ensure the selenium grid is stable`));
+    });
+
+    it('throws if grid connection was terminated', async () => {
+      const onfn = jest.fn()
+        .mockImplementationOnce((event, cb) => cb())
+        .mockImplementationOnce((event, cb) => cb());
+      const response = {
+        statusCode: 200,
+        on: onfn,
+        complete: false,
+      };
+      jest.spyOn(WebpackServer, 'config').mockImplementation(() => 'config');
+      jest.spyOn(http, 'get').mockImplementation((arg1, callback) => {
+        callback(response);
+      });
+      const mockStats = {
+        hasErrors: jest.fn().mockImplementationOnce(() => false),
+      };
+      const compiler = {
+        watch: jest.fn(),
+        hooks: {
+          done: {
+            tap: jest.fn((arg1, callback) => {
+              callback(mockStats);
+            }),
+          },
+          failed: {
+            tap: () => {},
+          },
+        },
+        options: {
+          devServer: {},
+        },
+      };
+      webpack.mockReturnValue(compiler);
+
+      const server = new WebpackServer();
+      server.gridUrl = '1.1.1.1:8080';
+
+      expect.assertions(1);
+      return server.start().catch(e => expect(e.message).toEqual(`${server.gridUrl} connection was terminated while the message was still being sent`));
+    });
+
+    it('throws if http.get throws', () => {
+      const message = 'No internet';
+      jest.spyOn(WebpackServer, 'config').mockImplementation(() => 'config');
+      jest.spyOn(http, 'get').mockImplementation(() => {
+        throw new Error(message);
+      });
+      const mockStats = {
+        hasErrors: jest.fn().mockImplementationOnce(() => false),
+      };
+      const compiler = {
+        watch: jest.fn(),
+        hooks: {
+          done: {
+            tap: jest.fn((arg1, callback) => callback(mockStats)),
+          },
+          failed: {
+            tap: () => {},
+          },
+        },
+        options: {
+          devServer: {},
+        },
+      };
+      webpack.mockReturnValue(compiler);
+
+      const server = new WebpackServer();
+      server.gridUrl = '0.0.0.0:8080';
+
+      expect.assertions(1);
+      return server.start().catch(e => expect(e.message).toEqual(`Failed to connect to url ${server.gridUrl}. Error thrown: ${message}`));
+    });
+
+    it('throws when it cannot contact server', () => {
+      jest.spyOn(WebpackServer, 'config').mockImplementation(() => 'config');
+      jest.spyOn(http, 'get').mockImplementation((arg1, callback) => callback({ statusCode: 300 }));
+      const mockStats = {
+        hasErrors: jest.fn().mockImplementationOnce(() => false),
+      };
+      const compiler = {
+        watch: jest.fn(),
+        hooks: {
+          done: {
+            tap: jest.fn((arg1, callback) => {
+              callback(mockStats);
+            }),
+          },
+          failed: {
+            tap: () => {},
+          },
+        },
+        options: {
+          devServer: {},
+        },
+      };
+      webpack.mockReturnValue(compiler);
+
+      const server = new WebpackServer();
+      server.gridUrl = '0.0.0.0:8080';
+
+      expect.assertions(1);
+      return server.start().catch(e => expect(e.message).toEqual(`Url ${server.gridUrl} returns status code of 300.`));
     });
   });
 

@@ -35,7 +35,6 @@ describe('getCapabilities', () => {
       spec: options.spec,
       suite: options.suite,
       launcherOptions: {
-        baseUrl: `http://${options.externalHost}:${options.externalPort}`,
         disableSeleniumService: true,
         formFactor: options.formFactor,
         gridUrl: options.gridUrl,
@@ -86,7 +85,6 @@ describe('getCapabilities', () => {
       spec: options.spec,
       suite: options.suite,
       launcherOptions: {
-        baseUrl: `http://${options.externalHost}:${options.externalPort}`,
         disableSeleniumService: true,
         formFactor: options.formFactor,
         gridUrl: undefined,
@@ -117,7 +115,6 @@ describe('getCapabilities', () => {
       hostname: 'localhost',
       port: 4444,
       launcherOptions: {
-        baseUrl: `http://${getIpAddress()}:8080`,
         disableSeleniumService: false,
         formFactor: undefined,
         gridUrl: undefined,

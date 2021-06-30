@@ -8,12 +8,12 @@ const logger = new Logger({ prefix: '[terra-functional-testing:webpack-server]' 
 
 class WebpackServer {
   constructor(options = {}) {
-    const { host, port, baseUrl } = options;
+    const { host, port } = options;
 
     this.config = WebpackServer.config(options);
     this.host = host || '0.0.0.0';
     this.port = port || '8080';
-    this.baseUrl = baseUrl;
+    this.gridUrl = options.gridUrl ? `http://${options.gridUrl}:80/status` : undefined;
   }
 
   /**
@@ -76,16 +76,29 @@ class WebpackServer {
         if (stats.hasErrors()) {
           logger.error('Webpack compiled with errors.');
           reject();
+        } else if (!this.gridUrl) {
+          resolve();
         } else {
-          http.get(this.baseUrl, (res) => {
+          let response = '';
+          http.get(this.gridUrl, (res) => {
             const { statusCode } = res;
             if (statusCode >= 200 && statusCode <= 299) {
-              resolve();
+              res.on('data', (chunk) => {
+                response += chunk;
+              });
+              res.on('end', () => {
+                if (!res.complete) throw new SevereServiceError(`${this.gridUrl} connection was terminated while the message was still being sent`);
+                if (JSON.parse(response).value.ready) {
+                  resolve();
+                } else {
+                  throw new SevereServiceError(`${this.gridUrl} failed to return a ready response. Check to ensure the selenium grid is stable`);
+                }
+              });
             } else {
-              throw new SevereServiceError(`Url ${this.baseUrl} returns status code of ${statusCode}. Check to ensure the selenium grid is stable`);
+              throw new SevereServiceError(`Url ${this.gridUrl} returns status code of ${statusCode}.`);
             }
-          }).on('error', () => {
-            throw new SevereServiceError(`Failed to connect to url ${this.baseUrl}. Check to ensure the selenium grid is stable`);
+          }).on('error', (e) => {
+            throw new SevereServiceError(`Failed to connect to url ${this.gridUrl}. Error thrown: ${e.message}`);
           });
         }
       });

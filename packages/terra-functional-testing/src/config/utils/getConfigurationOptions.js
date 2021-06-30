@@ -32,7 +32,6 @@ const getConfigurationOptions = (options) => {
     hostname: gridUrl || (useSeleniumStandaloneService ? 'standalone-chrome' : 'localhost'),
     port: gridUrl ? 80 : 4444,
     launcherOptions: {
-      baseUrl: `http://${externalHost || getIpAddress()}:${externalPort || 8080}`,
       disableSeleniumService: disableSeleniumService || useSeleniumStandaloneService || !!gridUrl,
       ignoreScreenshotMismatch,
       formFactor,
