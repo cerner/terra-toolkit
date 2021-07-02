@@ -2,10 +2,14 @@ const fs = require('fs-extra');
 const rules = require('./rules');
 const PackageIssues = require('./issues/PackageIssues');
 const AggregateIssues = require('./issues/AggregateIssues');
-const { getRuleConfig, getConfig } = require('./config');
+const { getRuleConfig, getConfigForFile } = require('./config');
 const { getPathsForPackages } = require('./project-structure');
 
 const lint = ({ packageJsonData, config }) => {
+  if (!config.rules) {
+    return [];
+  }
+
   const issues = [];
   const rulesToRun = Object.entries(config.rules).map(([ruleId, ruleInformation]) => {
     const rule = rules[ruleId];
@@ -33,10 +37,10 @@ const lintPackageJsonFile = async ({ packageJsonPath, config }) => {
 };
 
 module.exports = async () => {
-  const config = await getConfig();
   const paths = await getPathsForPackages();
   const packagesIssues = await Promise.all(paths.map(async (packageJsonPath) => {
-    const results = await lintPackageJsonFile({ packageJsonPath, config });
+    const configForFile = await getConfigForFile({ packageJsonPath });
+    const results = await lintPackageJsonFile({ packageJsonPath, config: configForFile });
     return new PackageIssues({ packageJsonPath, results });
   }));
   const aggregateIssues = new AggregateIssues({ packagesIssues });

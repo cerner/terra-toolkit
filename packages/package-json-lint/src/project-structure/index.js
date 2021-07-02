@@ -6,7 +6,7 @@ const spawn = require('@npmcli/promise-spawn');
 const IGNORE_FILE_PATH = path.join(process.cwd(), '.packagejsonlintignore');
 
 const getIgnorer = async () => {
-  const ignoreFileContents = await fs.readFile(IGNORE_FILE_PATH, 'utf8');
+  const ignoreFileContents = await fs.pathExists(IGNORE_FILE_PATH) ? await fs.readFile(IGNORE_FILE_PATH, 'utf8') : '';
   return ignore().add(ignoreFileContents);
 };
 
