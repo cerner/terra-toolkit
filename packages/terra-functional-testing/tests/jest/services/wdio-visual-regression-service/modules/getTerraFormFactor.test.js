@@ -3,12 +3,12 @@ import getTerraFormFactor from '../../../../../src/services/wdio-visual-regressi
 describe('getTerraFormFactor', () => {
   it('should return the small viewport', () => {
     const size = {
-      screenWidth: 622,
-      screenHeight: 768,
+      width: 622,
+      height: 768,
     };
 
     global.browser = {
-      execute: () => size,
+      getWindowSize: jest.fn().mockReturnValue(size),
     };
 
     const result = getTerraFormFactor();
@@ -18,12 +18,12 @@ describe('getTerraFormFactor', () => {
 
   it('should return huge as the default viewport size', () => {
     const size = {
-      screenWidth: 3000,
-      screenHeight: 768,
+      width: 3000,
+      height: 768,
     };
 
     global.browser = {
-      execute: () => size,
+      getWindowSize: jest.fn().mockReturnValue(size),
     };
 
     const result = getTerraFormFactor();
