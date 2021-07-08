@@ -10,7 +10,7 @@ Since terra-toolkit was originally released in 2017 many new features have been 
 
 The [terra-toolkit](https://github.com/cerner/terra-toolkit) repository has been converted into a [lerna monorepo](https://github.com/lerna/lerna) that contains independent packages for each of our development tools. The [terra-toolkit development package](https://www.npmjs.com/package/terra-toolkit) has been moved into the [terra-toolkit-boneyard](https://github.com/cerner/terra-toolkit-boneyard) repository and will receive minor updates and bug fixes as teams begin the transition to terra-functional-testing.
 
-Moving forward, development responsibilities have been separated out into individual packages that encapsulate specific functionality. As we transition packages into the terra-toolkit monorepo each package will be scoped under the [@cerner](https://www.npmjs.com/org/cerner) NPM organization. For example, automation testing has been moved into @cerner/terra-functional-testing and webpack concerns have been moved into [@cerner/webpack-config-terra](https://engineering.cerner.com/terra-ui/dev_tools/cerner/webpack-config-terra/about).
+Moving forward, development responsibilities have been separated out into individual packages that encapsulate specific functionality. As we transition packages into the terra-toolkit monorepo each package will be scoped under the [@cerner](https://www.npmjs.com/org/cerner) NPM organization. For example, automation testing has been moved into @cerner/terra-functional-testing and webpack concerns have been moved into [@cerner/webpack-config-terra](/dev_tools/cerner-terra-toolkit-docs/webpack-config-terra/about).
 
 ## Breaking Changes
 
@@ -193,7 +193,7 @@ Check out the [release notes](https://github.com/dequelabs/axe-core/releases) fo
 
 ### Default Selector
 
-The default selector has been changed from `[data-terra-dev-site-content] *:first-child` to `[data-terra-test-content] *:first-child`. This selector is used as the default content region for capturing screenshots. This change should not affect most teams. For teams that are affected a custom selector can be provided using [service options](https://engineering.cerner.com/terra-ui/dev_tools/cerner/terra-functional-testing/wdio-services/terra-service#selector).
+The default selector has been changed from `[data-terra-dev-site-content] *:first-child` to `[data-terra-test-content] *:first-child`. This selector is used as the default content region for capturing screenshots. This change should not affect most teams. For teams that are affected a custom selector can be provided using [service options](/dev_tools/cerner-terra-toolkit-docs/terra-functional-testing/wdio-services/terra-service#selector).
 
 ### Accessing the `formFactor`, `locale`, or `theme` options
 
@@ -211,7 +211,7 @@ A custom WebDriverIO reporter has been created to facilitate monitoring accessib
 
 ### Terra CLI
 
-Our command line interface has been transitioned to [Terra CLI](https://engineering.cerner.com/terra-ui/dev_tools/cerner/terra-cli/about) to create a uniform experience across our scripts. All new commands are integrated plugins for the terra-cli. Command options are constructed using [yargs](https://github.com/yargs/yargs);
+Our command line interface has been transitioned to [Terra CLI](/dev_tools/cerner-terra-toolkit-docs/terra-cli/about) to create a uniform experience across our scripts. All new commands are integrated plugins for the terra-cli. Command options are constructed using [yargs](https://github.com/yargs/yargs);
 
 As part of this upgrade teams will be updating the scripts used to invoke wdio to use the terra-cli commands. The `terra wdio` script will invoke the test runner.
 
@@ -248,13 +248,13 @@ We've added support to automatically detect the VPN IP address. It is no longer 
 
 ## How to Upgrade
 
-There are a few prerequisites to get started. We'll be removing `terra-toolkit` as a dependency later in this guide. Removing `terra-toolkit` is going to impact starting the local development site and webpack configurations. The first step of this transition will be to upgrade to [@cerner/webpack-config-terra](https://engineering.cerner.com/terra-ui/dev_tools/cerner/webpack-config-terra/about).
+There are a few prerequisites to get started. We'll be removing `terra-toolkit` as a dependency later in this guide. Removing `terra-toolkit` is going to impact starting the local development site and webpack configurations. The first step of this transition will be to upgrade to [@cerner/webpack-config-terra](/dev_tools/cerner-terra-toolkit-docs/webpack-config-terra/about).
 
 ### Upgrading Webpack
 
 If you are already using @cerner/webpack-config-terra ^1.0.0 you can skip this section.
 
-A complete upgrade guide can be found [here](https://engineering.cerner.com/terra-ui/dev_tools/cerner/webpack-config-terra/upgrade-guide). Webpack can be upgraded separately from terra-functional-testing. This change does not need to be bundled with test updates, but it does need to happen before the test updates.
+A complete upgrade guide can be found [here](/dev_tools/cerner-terra-toolkit-docs/webpack-config-terra/upgrade-guide). Webpack can be upgraded separately from terra-functional-testing. This change does not need to be bundled with test updates, but it does need to happen before the test updates.
 
 Install @cerner/webpack-config-terra, @cerner/terra-aggregate-translations, and postcss ^8.2.1 (a required peer dependency of webpack-config-terra):
 
@@ -262,7 +262,7 @@ Install @cerner/webpack-config-terra, @cerner/terra-aggregate-translations, and 
 npm install --save-dev @cerner/webpack-config-terra @cerner/terra-aggregate-translations postcss@8.2.1
 ```
 
-If your project utilizes the `tt-serve-static` bin command go ahead and install [terra-cli](https://engineering.cerner.com/terra-ui/dev_tools/cerner/terra-cli/about) as you'll need it to upgrade the static asset utilities:
+If your project utilizes the `tt-serve-static` bin command go ahead and install [terra-cli](/dev_tools/cerner-terra-toolkit-docs/terra-cli/about) as you'll need it to upgrade the static asset utilities:
 
 ```sh
 npm install --save-dev @cerner/terra-cli
@@ -426,7 +426,7 @@ Note: The terra cli array parameters have a different syntax.
 }
 ```
 
-A list of the test runner CLI options can be found [here](https://engineering.cerner.com/terra-ui/dev_tools/cerner/terra-functional-testing/about#test-runner).
+A list of the test runner CLI options can be found [here](/dev_tools/cerner-terra-toolkit-docs/terra-functional-testing/about#test-runner).
 
 At this point it is recommended to do a clean install to remove stale installations of terra-toolkit. If you have the script go ahead and run `npm run clean:install`. Alternatively ensure that the old node_modules directory is deleted and reinstall all dependencies.
 

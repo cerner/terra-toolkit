@@ -2,13 +2,19 @@
 
 ## Unreleased
 
+## 1.9.0 - (June 18, 2021)
+
 * Fixed
   * Updated screenshot cleaning to match nested snapshot directories
+  * Updated to size the test page to the viewport size instead of the browser's window size to correctly match the corresponding breakpoint. This change may affect the size of existing screenshots, particularly in IE and firefox. The affected screenshots may need to be regenerated.
+
+* Added
+  * Added screenshot paths for each test result to the spec reporter
 
 ## 1.8.0 - (June 8, 2021)
 
 * Added
-  * Added FileOutputReporter reporter that logs wdio test output to separate files based on locale, theme, and form-factor 
+  * Added FileOutputReporter reporter that logs wdio test output to separate files based on locale, theme, and form-factor
 
 ## 1.7.0 - (June 1, 2021)
 
