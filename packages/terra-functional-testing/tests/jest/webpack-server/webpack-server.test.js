@@ -292,9 +292,7 @@ describe('Webpack Server', () => {
     it('throws if http.get throws', () => {
       const message = 'No internet';
       jest.spyOn(WebpackServer, 'config').mockImplementation(() => 'config');
-      jest.spyOn(http, 'get').mockImplementation(() => {
-        throw new Error(message);
-      });
+      jest.spyOn(http, 'get').mockImplementation(() => ({ on: jest.fn((arg1, callback) => callback({ message })) }));
       const mockStats = {
         hasErrors: jest.fn().mockImplementationOnce(() => false),
       };
@@ -315,7 +313,7 @@ describe('Webpack Server', () => {
       webpack.mockReturnValue(compiler);
 
       const server = new WebpackServer();
-      server.gridUrl = '0.0.0.0:8080';
+      server.gridUrl = 'http://0.0.0.0:80/status';
 
       expect.assertions(1);
       return server.start().catch(e => expect(e.message).toEqual(`Failed to connect to url ${server.gridUrl}. Error thrown: ${message}`));
