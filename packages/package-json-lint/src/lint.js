@@ -5,6 +5,12 @@ const AggregateIssues = require('./issues/AggregateIssues');
 const { getRuleConfig, getConfigForFile } = require('./config');
 const { getPathsForPackages } = require('./project-structure');
 
+/**
+ * Lints a package json file with the given package json data with the config provided by the config parameter
+ * @param {Object} options - options for linting the package json
+ * @param {string} options.packageJsonData - the package json data
+ * @param {Object} options.config - the config to use when running the linter
+ */
 const lint = ({ packageJsonData, config }) => {
   if (!config.rules) {
     return [];
@@ -31,6 +37,12 @@ const lint = ({ packageJsonData, config }) => {
   return issues;
 };
 
+/**
+ * Lints a package json file at the given package json path with the config provided by the config parameter
+ * @param {Object} options - options for linting the package json
+ * @param {string} options.packageJsonPath - the path to the package json file
+ * @param {Object} options.config - the config to use when running the linter
+ */
 const lintPackageJsonFile = async ({ packageJsonPath, config }) => {
   const packageJsonData = await fs.readJson(packageJsonPath);
   return lint({ packageJsonData, config });
