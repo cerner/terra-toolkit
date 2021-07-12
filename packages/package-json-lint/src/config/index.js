@@ -17,7 +17,7 @@ const applyExtends = ({ config, relativeDirectory }) => {
   return arrayOfExtends.reduceRight((previousConfig, extendsModuleName) => {
     let extendedConfig = loadFromModule({ moduleName: extendsModuleName, relativeDirectory });
     if (extendedConfig.extends) {
-      extendedConfig = applyExtends({ extendedConfig, relativeDirectory });
+      extendedConfig = applyExtends({ config: extendedConfig, relativeDirectory });
     }
 
     const mergedConfig = { ...extendedConfig, ...previousConfig };
