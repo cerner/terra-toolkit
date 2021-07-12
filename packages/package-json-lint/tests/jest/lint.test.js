@@ -6,7 +6,7 @@ jest.mock('../../src/project-structure');
 const fs = require('fs-extra');
 const stripAnsi = require('strip-ansi');
 const rules = require('../../src/rules');
-const { getRuleConfig, getConfig } = require('../../src/config');
+const { getRuleConfig, getConfigForFile } = require('../../src/config');
 const { getPathsForPackages } = require('../../src/project-structure');
 
 const lint = require('../../src/lint');
@@ -24,10 +24,16 @@ describe('lint', () => {
   });
 
   it('loops through all of the packages and lints them with all of the rules in the config', async () => {
-    getConfig.mockResolvedValueOnce({
+    getConfigForFile.mockResolvedValueOnce({
       rules: {
         'require-no-terra-base-peer-dependency-versions': 'error',
         'require-theme-context-versions': 'error',
+      },
+    });
+    getConfigForFile.mockResolvedValueOnce({
+      rules: {
+        'require-no-terra-base-peer-dependency-versions': 'warn',
+        'require-theme-context-versions': 'warn',
       },
     });
     getPathsForPackages.mockResolvedValueOnce([
@@ -85,7 +91,9 @@ describe('lint', () => {
 
     await lint();
 
-    expect(getConfig).toHaveBeenCalled();
+    expect(getConfigForFile).toHaveBeenCalledTimes(2);
+    expect(getConfigForFile).toHaveBeenNthCalledWith(1, { packageJsonPath: 'path1' });
+    expect(getConfigForFile).toHaveBeenNthCalledWith(2, { packageJsonPath: 'path2' });
     expect(getPathsForPackages).toHaveBeenCalled();
     expect(fs.readJson).toHaveBeenCalledTimes(2);
     expect(fs.readJson).toHaveBeenNthCalledWith(1, 'path1');
@@ -93,8 +101,8 @@ describe('lint', () => {
     expect(getRuleConfig).toHaveBeenCalledTimes(4);
     expect(getRuleConfig).toHaveBeenNthCalledWith(1, { rule: rules['require-no-terra-base-peer-dependency-versions'], ruleInformation: 'error' });
     expect(getRuleConfig).toHaveBeenNthCalledWith(2, { rule: rules['require-theme-context-versions'], ruleInformation: 'error' });
-    expect(getRuleConfig).toHaveBeenNthCalledWith(3, { rule: rules['require-no-terra-base-peer-dependency-versions'], ruleInformation: 'error' });
-    expect(getRuleConfig).toHaveBeenNthCalledWith(4, { rule: rules['require-theme-context-versions'], ruleInformation: 'error' });
+    expect(getRuleConfig).toHaveBeenNthCalledWith(3, { rule: rules['require-no-terra-base-peer-dependency-versions'], ruleInformation: 'warn' });
+    expect(getRuleConfig).toHaveBeenNthCalledWith(4, { rule: rules['require-theme-context-versions'], ruleInformation: 'warn' });
     expect(rules['require-no-terra-base-peer-dependency-versions'].create).toHaveBeenCalledTimes(1);
     expect(rules['require-no-terra-base-peer-dependency-versions'].create).toHaveBeenCalledWith({ ruleConfig: package2RuleConfig1, report: expect.anything() });
     expect(rules['require-theme-context-versions'].create).toHaveBeenCalledTimes(2);

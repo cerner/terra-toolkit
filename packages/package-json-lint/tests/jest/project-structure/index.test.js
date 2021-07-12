@@ -10,6 +10,7 @@ const { getPathsForPackages } = require('../../../src/project-structure');
 describe('getPathsForPackages', () => {
   it('returns a list of paths for packages that are not ignored for a server', async () => {
     fs.pathExists.mockResolvedValueOnce(true);
+    fs.pathExists.mockResolvedValueOnce(false);
     fs.readFile.mockResolvedValueOnce('packages/jest-config-terra');
 
     const paths = await getPathsForPackages();
@@ -19,9 +20,10 @@ describe('getPathsForPackages', () => {
       path.join(process.cwd(), 'client', 'package.json'),
     ]);
 
-    expect(fs.pathExists).toHaveBeenCalledTimes(1);
+    expect(fs.pathExists).toHaveBeenCalledTimes(2);
     expect(fs.pathExists).toHaveBeenCalledWith(path.join(process.cwd(), 'Gemfile'));
-    expect(fs.readFile).toHaveBeenCalledWith(path.join(process.cwd(), '.packagejsonlintignore'), 'utf8');
+    expect(fs.pathExists).toHaveBeenCalledWith(path.join(process.cwd(), '.packagejsonlintignore'));
+    expect(fs.readFile).not.toHaveBeenCalledWith(path.join(process.cwd(), '.packagejsonlintignore'), 'utf8');
 
     jest.resetAllMocks();
   });
@@ -47,18 +49,20 @@ describe('getPathsForPackages', () => {
 /Users/x/ecosystem/terra-toolkit/packages/terra-toolkit-docs
 /Users/x/ecosystem/terra-toolkit/packages/webpack-config-terra`,
     });
+    fs.pathExists.mockResolvedValueOnce(true);
     fs.readFile.mockResolvedValueOnce('packages/jest-config-terra\npackages/terra-cli');
 
     const paths = await getPathsForPackages();
 
     expect(paths).toMatchSnapshot();
 
-    expect(fs.pathExists).toHaveBeenCalledTimes(2);
+    expect(fs.pathExists).toHaveBeenCalledTimes(3);
     expect(fs.pathExists).toHaveBeenCalledWith(path.join(process.cwd(), 'Gemfile'));
     expect(fs.pathExists).toHaveBeenCalledWith(path.join(process.cwd(), 'lerna.json'));
 
     process.cwd = oldCwd;
 
+    expect(fs.pathExists).toHaveBeenCalledWith(path.join(process.cwd(), '.packagejsonlintignore'));
     expect(fs.readFile).toHaveBeenCalledWith(path.join(process.cwd(), '.packagejsonlintignore'), 'utf8');
 
     jest.resetAllMocks();
@@ -67,15 +71,17 @@ describe('getPathsForPackages', () => {
   it('returns a list of paths for the current package', async () => {
     fs.pathExists.mockResolvedValueOnce(false);
     fs.pathExists.mockResolvedValueOnce(false);
+    fs.pathExists.mockResolvedValueOnce(true);
     fs.readFile.mockResolvedValueOnce('packages/jest-config-terra');
 
     const paths = await getPathsForPackages();
 
     expect(paths).toEqual([path.join(process.cwd(), 'package.json')]);
 
-    expect(fs.pathExists).toHaveBeenCalledTimes(2);
+    expect(fs.pathExists).toHaveBeenCalledTimes(3);
     expect(fs.pathExists).toHaveBeenCalledWith(path.join(process.cwd(), 'Gemfile'));
     expect(fs.pathExists).toHaveBeenCalledWith(path.join(process.cwd(), 'lerna.json'));
+    expect(fs.pathExists).toHaveBeenCalledWith(path.join(process.cwd(), '.packagejsonlintignore'));
     expect(fs.readFile).toHaveBeenCalledWith(path.join(process.cwd(), '.packagejsonlintignore'), 'utf8');
 
     jest.resetAllMocks();
