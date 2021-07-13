@@ -1,3 +1,5 @@
+const { Logger } = require('@cerner/terra-cli');
+
 jest.mock('webpack');
 jest.mock('@cerner/terra-cli');
 jest.mock('webpack-dev-server');
@@ -8,6 +10,7 @@ const webpack = require('webpack');
 const path = require('path');
 const WebpackServer = require('../../../src/webpack-server/webpack-server');
 
+const mockLoggerInstance = Logger.mock.instances[0];
 const mockWebpackSpy = jest.fn();
 
 jest.mock('./mock-webpack.config.js', () => mockWebpackSpy);
@@ -28,7 +31,7 @@ describe('Webpack Server', () => {
       expect(server.config).toEqual('config');
       expect(server.host).toEqual('0.0.0.0');
       expect(server.port).toEqual('8080');
-      expect(server.gridUrl).toBeUndefined();
+      expect(server.gridStatusUrl).toBeUndefined();
     });
 
     it('should initialize provided options', () => {
@@ -44,7 +47,7 @@ describe('Webpack Server', () => {
       expect(server.config).toEqual('config');
       expect(server.host).toEqual('0.0.0.0');
       expect(server.port).toEqual('mock');
-      expect(server.gridUrl).toEqual('http://1.1.1.1:80/status');
+      expect(server.gridStatusUrl).toEqual('http://1.1.1.1:80/status');
     });
   });
 
@@ -141,7 +144,7 @@ describe('Webpack Server', () => {
       webpack.mockReturnValue(compiler);
 
       const server = new WebpackServer();
-      server.gridUrl = '1.1.1.1:8080';
+      server.gridStatusUrl = '1.1.1.1:8080';
 
       return expect(server.start()).resolves.toBeUndefined();
     });
@@ -197,7 +200,7 @@ describe('Webpack Server', () => {
       WebpackDevServer.mockImplementation(() => ({ listen: mockMethod }));
 
       const server = new WebpackServer();
-      server.gridUrl = '0.0.0.0:8080';
+      server.gridStatusUrl = '0.0.0.0:8080';
 
       return expect(server.start()).rejects.toBe(true);
     });
@@ -242,13 +245,15 @@ describe('Webpack Server', () => {
       webpack.mockReturnValue(compiler);
 
       const server = new WebpackServer();
-      server.gridUrl = '1.1.1.1:8080';
-
-      expect.assertions(1);
-      return server.start().catch(e => expect(e.message).toEqual(`${server.gridUrl} failed to return a ready response. Check to ensure the selenium grid is stable`));
+      server.gridStatusUrl = '1.1.1.1:8080';
+      await expect(server.start()).rejects.toBeUndefined();
+      expect(mockLoggerInstance.error.mock.calls[0][0]).toEqual(`${server.gridStatusUrl} failed to return a ready response. Check to ensure the selenium grid is stable`);
+      // expect.assertions(2);
+      // return expect(server.start()).rejects.toBe(false);
+      // return server.start().catch(e => expect(e.message).toEqual(`${server.gridStatusUrl} failed to return a ready response. Check to ensure the selenium grid is stable`));
     });
 
-    it('throws if grid connection was terminated', async () => {
+    it('rejects if grid connection was terminated', async () => {
       const onfn = jest.fn()
         .mockImplementationOnce((event, cb) => cb())
         .mockImplementationOnce((event, cb) => cb());
@@ -283,13 +288,16 @@ describe('Webpack Server', () => {
       webpack.mockReturnValue(compiler);
 
       const server = new WebpackServer();
-      server.gridUrl = '1.1.1.1:8080';
+      server.gridStatusUrl = '1.1.1.1:8080';
 
-      expect.assertions(1);
-      return server.start().catch(e => expect(e.message).toEqual(`${server.gridUrl} connection was terminated while the message was still being sent`));
+      await expect(server.start()).rejects.toBeUndefined();
+      expect(mockLoggerInstance.error.mock.calls[0][0]).toEqual(`${server.gridStatusUrl} connection was terminated while the message was still being sent`);
+      // expect.assertions(1);
+      // return expect(server.start()).rejects.toBeUndefined();
+      // return server.start().catch(e => expect(e.message).toEqual(`${server.gridStatusUrl} connection was terminated while the message was still being sent`));
     });
 
-    it('throws if http.get throws', () => {
+    it('throws if http.get throws', async () => {
       const message = 'No internet';
       jest.spyOn(WebpackServer, 'config').mockImplementation(() => 'config');
       jest.spyOn(http, 'get').mockImplementation(() => ({ on: jest.fn((arg1, callback) => callback({ message })) }));
@@ -313,15 +321,19 @@ describe('Webpack Server', () => {
       webpack.mockReturnValue(compiler);
 
       const server = new WebpackServer();
-      server.gridUrl = 'http://0.0.0.0:80/status';
+      server.gridStatusUrl = 'http://0.0.0.0:80/status';
 
-      expect.assertions(1);
-      return server.start().catch(e => expect(e.message).toEqual(`Failed to connect to url ${server.gridUrl}. Error thrown: ${message}`));
+      await expect(server.start()).rejects.toBeUndefined();
+      expect(mockLoggerInstance.error.mock.calls[0][0]).toEqual(`Failed to connect to url ${server.gridStatusUrl}. Error thrown: ${message}`);
+      // expect.assertions(1);
+      // return expect(server.start()).rejects.toBeUndefined();
+      // return server.start().catch(e => expect(e.message).toEqual(`Failed to connect to url ${server.gridStatusUrl}. Error thrown: ${message}`));
     });
 
-    it('throws when it cannot contact server', () => {
+    it('throws when it cannot contact server', async () => {
+      const resumeMock = jest.fn();
       jest.spyOn(WebpackServer, 'config').mockImplementation(() => 'config');
-      jest.spyOn(http, 'get').mockImplementation((arg1, callback) => callback({ statusCode: 300 }));
+      jest.spyOn(http, 'get').mockImplementation((arg1, callback) => callback({ statusCode: 300, resume: resumeMock }));
       const mockStats = {
         hasErrors: jest.fn().mockImplementationOnce(() => false),
       };
@@ -344,10 +356,14 @@ describe('Webpack Server', () => {
       webpack.mockReturnValue(compiler);
 
       const server = new WebpackServer();
-      server.gridUrl = '0.0.0.0:8080';
+      server.gridStatusUrl = '0.0.0.0:8080';
 
-      expect.assertions(1);
-      return server.start().catch(e => expect(e.message).toEqual(`Url ${server.gridUrl} returns status code of 300.`));
+      await expect(server.start()).rejects.toBeUndefined();
+      expect(mockLoggerInstance.error.mock.calls[0][0]).toEqual(`Url ${server.gridStatusUrl} returns status code of 300.`);
+      expect(resumeMock).toHaveBeenCalled();
+      // expect.assertions(1);
+      // return expect(server.start()).rejects.toBe(false);
+      // return server.start().catch(e => expect(e.message).toEqual(`Url ${server.gridStatusUrl} returns status code of 300.`));
     });
   });
 
