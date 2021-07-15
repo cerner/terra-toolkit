@@ -247,10 +247,7 @@ describe('Webpack Server', () => {
       const server = new WebpackServer();
       server.gridStatusUrl = '1.1.1.1:8080';
       await expect(server.start()).rejects.toBeUndefined();
-      expect(mockLoggerInstance.error.mock.calls[0][0]).toEqual(`${server.gridStatusUrl} failed to return a ready response. Check to ensure the selenium grid is stable`);
-      // expect.assertions(2);
-      // return expect(server.start()).rejects.toBe(false);
-      // return server.start().catch(e => expect(e.message).toEqual(`${server.gridStatusUrl} failed to return a ready response. Check to ensure the selenium grid is stable`));
+      expect(mockLoggerInstance.error.mock.calls[0][0]).toEqual(`${server.gridStatusUrl} failed to return a ready response. Check to ensure the selenium grid is stable.`);
     });
 
     it('rejects if grid connection was terminated', async () => {
@@ -291,10 +288,7 @@ describe('Webpack Server', () => {
       server.gridStatusUrl = '1.1.1.1:8080';
 
       await expect(server.start()).rejects.toBeUndefined();
-      expect(mockLoggerInstance.error.mock.calls[0][0]).toEqual(`${server.gridStatusUrl} connection was terminated while the message was still being sent`);
-      // expect.assertions(1);
-      // return expect(server.start()).rejects.toBeUndefined();
-      // return server.start().catch(e => expect(e.message).toEqual(`${server.gridStatusUrl} connection was terminated while the message was still being sent`));
+      expect(mockLoggerInstance.error.mock.calls[0][0]).toEqual(`${server.gridStatusUrl} connection was terminated while the message was still being sent.`);
     });
 
     it('throws if http.get throws', async () => {
@@ -325,9 +319,6 @@ describe('Webpack Server', () => {
 
       await expect(server.start()).rejects.toBeUndefined();
       expect(mockLoggerInstance.error.mock.calls[0][0]).toEqual(`Failed to connect to url ${server.gridStatusUrl}. Error thrown: ${message}`);
-      // expect.assertions(1);
-      // return expect(server.start()).rejects.toBeUndefined();
-      // return server.start().catch(e => expect(e.message).toEqual(`Failed to connect to url ${server.gridStatusUrl}. Error thrown: ${message}`));
     });
 
     it('throws when it cannot contact server', async () => {
@@ -360,10 +351,6 @@ describe('Webpack Server', () => {
 
       await expect(server.start()).rejects.toBeUndefined();
       expect(mockLoggerInstance.error.mock.calls[0][0]).toEqual(`Url ${server.gridStatusUrl} returns status code of 300.`);
-      expect(resumeMock).toHaveBeenCalled();
-      // expect.assertions(1);
-      // return expect(server.start()).rejects.toBe(false);
-      // return server.start().catch(e => expect(e.message).toEqual(`Url ${server.gridStatusUrl} returns status code of 300.`));
     });
   });
 

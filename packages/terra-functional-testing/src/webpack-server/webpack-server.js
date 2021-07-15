@@ -87,13 +87,13 @@ class WebpackServer {
               });
               res.on('end', () => {
                 if (!res.complete) {
-                  logger.error(`${this.gridStatusUrl} connection was terminated while the message was still being sent`);
+                  logger.error(`${this.gridStatusUrl} connection was terminated while the message was still being sent.`);
                   reject();
                 }
                 if (JSON.parse(response).value.ready) {
                   resolve();
                 } else {
-                  logger.error(`${this.gridStatusUrl} failed to return a ready response. Check to ensure the selenium grid is stable`);
+                  logger.error(`${this.gridStatusUrl} failed to return a ready response. Check to ensure the selenium grid is stable.`);
                   reject();
                 }
               });
