@@ -1,6 +1,7 @@
 const WebpackDevServer = require('webpack-dev-server');
 const webpack = require('webpack');
 const { Logger } = require('@cerner/terra-cli');
+const http = require('http');
 
 const logger = new Logger({ prefix: '[terra-functional-testing:webpack-server]' });
 
@@ -11,6 +12,7 @@ class WebpackServer {
     this.config = WebpackServer.config(options);
     this.host = host || '0.0.0.0';
     this.port = port || '8080';
+    this.gridStatusUrl = options.gridUrl ? `http://${options.gridUrl}:80/status` : undefined;
   }
 
   /**
@@ -73,8 +75,37 @@ class WebpackServer {
         if (stats.hasErrors()) {
           logger.error('Webpack compiled with errors.');
           reject();
-        } else {
+        } else if (!this.gridStatusUrl) {
           resolve();
+        } else {
+          let response = '';
+          http.get(this.gridStatusUrl, (res) => {
+            const { statusCode } = res;
+            if (statusCode >= 200 && statusCode <= 299) {
+              res.on('data', (chunk) => {
+                response += chunk;
+              });
+              res.on('end', () => {
+                if (!res.complete) {
+                  logger.error(`${this.gridStatusUrl} connection was terminated while the message was still being sent.`);
+                  reject();
+                }
+                if (JSON.parse(response).value.ready) {
+                  resolve();
+                } else {
+                  logger.error(`${this.gridStatusUrl} failed to return a ready response. Check to ensure the selenium grid is stable.`);
+                  reject();
+                }
+              });
+            } else {
+              res.resume(); // Consume response data to free up memory
+              logger.error(`Url ${this.gridStatusUrl} returns status code of ${statusCode}.`);
+              reject();
+            }
+          }).on('error', (e) => {
+            logger.error(`Failed to connect to url ${this.gridStatusUrl}. Error thrown: ${e.message}`);
+            reject();
+          });
         }
       });
 
