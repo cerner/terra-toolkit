@@ -1,6 +1,9 @@
 # Changelog
 
 ## Unreleased
+
+## 1.10.0 - (July 16, 2021)
+
 * Added
   * Added a status check to provided `gridUrl`s, allowing for better logging when a grid fails.
 
