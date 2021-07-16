@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.0 - (July 16, 2021)
+
 * Breaking
   * Upgraded to wdio v7
   * Increased large viewport size to `1020`
