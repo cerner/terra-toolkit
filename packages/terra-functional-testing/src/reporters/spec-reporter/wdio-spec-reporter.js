@@ -6,7 +6,7 @@ const { eventEmitter } = require('../../commands/utils');
 
 class SpecReporter extends WDIOReporter {
   constructor(options) {
-    super(options);
+    super({ stdout: true, ...options });
     this.screenshotPaths = [];
     this.screenshotMap = {};
 

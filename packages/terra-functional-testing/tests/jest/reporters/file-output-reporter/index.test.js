@@ -8,6 +8,15 @@ describe('FileOutputReporter', () => {
   const originalProcessCwd = process.cwd;
   beforeAll(() => {
     process.cwd = jest.fn().mockImplementation(() => './terra-toolkit');
+    global.browser = {
+      config: {
+        launcherOptions: {
+          formFactor: 'tiny',
+          locale: 'en',
+          theme: 'default',
+        },
+      },
+    };
   });
 
   afterEach(() => {
@@ -16,11 +25,12 @@ describe('FileOutputReporter', () => {
 
   afterAll(() => {
     process.cwd = originalProcessCwd;
+    global.browser = {};
   });
 
   describe('initialization', () => {
     it('defines resultJsonObject', () => {
-      const reporter = new FileOutputReporter({}, {});
+      const reporter = new FileOutputReporter({ writeStream: {} });
       expect(reporter.resultJsonObject).toHaveProperty('output');
       expect(reporter.resultJsonObject).toHaveProperty('startDate');
       expect(reporter.resultJsonObject).toHaveProperty('endDate');
@@ -29,7 +39,7 @@ describe('FileOutputReporter', () => {
     });
 
     it('defines fileName', () => {
-      const reporter = new FileOutputReporter({}, {});
+      const reporter = new FileOutputReporter({ writeStream: {} });
       expect(reporter.fileName).toBe('');
     });
 
@@ -41,7 +51,7 @@ describe('FileOutputReporter', () => {
     describe('determines results dir', () => {
       it('set outputDir ', () => {
         fs.existsSync.mockReturnValue(false);
-        const reporter = new FileOutputReporter({}, {});
+        const reporter = new FileOutputReporter({ writeStream: {} });
         expect(reporter.resultsDir).toEqual(expect.stringContaining('tests/wdio/reports'));
       });
     });
@@ -49,14 +59,14 @@ describe('FileOutputReporter', () => {
     describe('ensures results dir exists', () => {
       it('when dir exists', () => {
         fs.existsSync.mockReturnValue(true);
-        const reporter = new FileOutputReporter({}, {});
+        const reporter = new FileOutputReporter({ writeStream: {} });
         reporter.hasResultsDir();
         expect(fs.mkdirSync).not.toHaveBeenCalled();
       });
 
       it('when dir does not exists', () => {
         fs.existsSync.mockReturnValue(false);
-        const reporter = new FileOutputReporter({}, {});
+        const reporter = new FileOutputReporter({ writeStream: {} });
         reporter.hasResultsDir();
         expect(fs.mkdirSync).toHaveBeenCalled();
       });
@@ -65,7 +75,7 @@ describe('FileOutputReporter', () => {
 
   describe('buildFileName', () => {
     it('sets default file name', () => {
-      const reporter = new FileOutputReporter({}, {});
+      const reporter = new FileOutputReporter({ writeStream: {} });
       const options = {
         cid: '0-1',
       };
@@ -76,7 +86,7 @@ describe('FileOutputReporter', () => {
     });
 
     it('sets file name with locale', () => {
-      const reporter = new FileOutputReporter({}, {});
+      const reporter = new FileOutputReporter({ writeStream: {} });
       const options = {
         cid: '0-1',
         locale: 'en',
@@ -88,7 +98,7 @@ describe('FileOutputReporter', () => {
     });
 
     it('sets file name with locale and theme', () => {
-      const reporter = new FileOutputReporter({}, {});
+      const reporter = new FileOutputReporter({ writeStream: {} });
       const options = {
         cid: '0-1',
         locale: 'en',
@@ -101,7 +111,7 @@ describe('FileOutputReporter', () => {
     });
 
     it('sets file name with locale, theme and formFactor', () => {
-      const reporter = new FileOutputReporter({}, {});
+      const reporter = new FileOutputReporter({ writeStream: {} });
       const options = {
         cid: '0-1',
         formFactor: 'tiny',
@@ -115,7 +125,7 @@ describe('FileOutputReporter', () => {
     });
 
     it('sets file name with locale, theme, formFactor, browser and cid', () => {
-      const reporter = new FileOutputReporter({}, {});
+      const reporter = new FileOutputReporter({ writeStream: {} });
       const options = {
         browserName: 'chrome',
         cid: '0-1',
@@ -132,7 +142,7 @@ describe('FileOutputReporter', () => {
 
   describe('updateResultObject', () => {
     it('sets resultJsonObject with locale, theme and formFactor', () => {
-      const reporter = new FileOutputReporter({}, {});
+      const reporter = new FileOutputReporter({ writeStream: {} });
       const options = {
         formFactor: 'tiny',
         locale: 'en',
@@ -147,7 +157,7 @@ describe('FileOutputReporter', () => {
     });
 
     it('sets resultJsonObject with empty option', () => {
-      const reporter = new FileOutputReporter({}, {});
+      const reporter = new FileOutputReporter({ writeStream: {} });
 
       reporter.updateResultObject({});
 
@@ -195,14 +205,14 @@ describe('FileOutputReporter', () => {
     };
     describe('when no specs run - does not write results file', () => {
       fs.writeFileSync.mockImplementation(() => {});
-      const reporter = new FileOutputReporter({}, {});
+      const reporter = new FileOutputReporter({ writeStream: {} });
       reporter.runners = {};
       expect(fs.writeFileSync).not.toHaveBeenCalled();
     });
 
     it('when one spec runs - write results file', () => {
       fs.writeFileSync.mockImplementation(() => {});
-      const reporter = new FileOutputReporter({}, {});
+      const reporter = new FileOutputReporter({ writeStream: {} });
       reporter.runners = [runner];
       reporter.getSuiteResult = jest.fn().mockReturnValue('wdio test results');
       const getMessage = jest.fn();
@@ -216,7 +226,7 @@ describe('FileOutputReporter', () => {
 
     it('when many specs run - write results file', () => {
       fs.writeFileSync.mockImplementation(() => {});
-      const reporter = new FileOutputReporter({}, {});
+      const reporter = new FileOutputReporter({ writeStream: {} });
       reporter.runners = [runner, { ...runner, cid: '0-1' }];
       reporter.getSuiteResult = jest.fn().mockReturnValue('wdio test results\n');
       const getMessage = jest.fn();
@@ -236,7 +246,7 @@ describe('FileOutputReporter', () => {
     };
 
     it('adds start and end dates to resultJsonObject', () => {
-      const reporter = new FileOutputReporter({}, {});
+      const reporter = new FileOutputReporter({ writeStream: {} });
       reporter.baseReporter = { stats };
       reporter.printReport = jest.fn();
       reporter.printReport();

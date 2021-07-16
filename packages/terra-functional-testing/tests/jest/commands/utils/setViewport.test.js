@@ -1,20 +1,24 @@
-const { setViewport, setViewportSize } = require('../../../../src/commands/utils');
+const { setViewport } = require('../../../../src/commands/utils');
 const { TERRA_VIEWPORTS } = require('../../../../src/constants');
 
-jest.mock('../../../../src/commands/utils/setViewportSize');
+const mockSetWindowSize = jest.fn();
+
+global.browser = {
+  setWindowSize: mockSetWindowSize,
+};
 
 describe('setViewport', () => {
   it('should set specified viewport', () => {
-    const tinyViewport = TERRA_VIEWPORTS.tiny;
+    const { width, height } = TERRA_VIEWPORTS.tiny;
 
     setViewport('tiny');
 
-    expect(setViewportSize).toHaveBeenCalledWith(tinyViewport);
+    expect(global.browser.setWindowSize).toHaveBeenCalledWith(width, height);
   });
 
   it('should not set the window size for unsupported viewport', () => {
     setViewport('unsupported-viewport');
 
-    expect(setViewportSize).not.toHaveBeenCalled();
+    expect(global.browser.setWindowSize).not.toHaveBeenCalled();
   });
 });

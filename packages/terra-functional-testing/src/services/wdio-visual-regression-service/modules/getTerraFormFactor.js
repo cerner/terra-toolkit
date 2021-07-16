@@ -1,5 +1,16 @@
+/* global browser */
+
 const { TERRA_VIEWPORTS } = require('../../../constants');
-const { getViewportSize } = require('../../../commands/utils');
+
+/**
+ * Determines the current viewport size.
+ *
+ * @returns {Object} - the current viewport size.
+ */
+function getViewportSize() {
+  // eslint-disable-next-line prefer-arrow-callback
+  return browser.getWindowSize();
+}
 
 /**
  * Determines the Terra form factor for the current viewport size.

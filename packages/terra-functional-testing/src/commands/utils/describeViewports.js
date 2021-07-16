@@ -1,6 +1,4 @@
 const setViewport = require('./setViewport');
-const setViewportSize = require('./setViewportSize');
-const getViewportSize = require('./getViewportSize');
 
 /**
  * Mocha `describe` block to run tests through a defined list of viewports.
@@ -24,7 +22,7 @@ const describeViewports = (title, viewports, fn) => {
     global.describe(`[${viewport}]`, () => {
       global.before(() => {
         // Store the original browser window size so it can be restored after the test has run.
-        previousViewportSize = getViewportSize();
+        previousViewportSize = global.browser.getWindowSize();
 
         setViewport(viewport);
       });
@@ -33,7 +31,7 @@ const describeViewports = (title, viewports, fn) => {
 
       global.after(() => {
         // Restore the browser window to the original size.
-        setViewportSize(previousViewportSize);
+        global.browser.setWindowSize(previousViewportSize.width, previousViewportSize.height);
       });
     });
   });

@@ -16,14 +16,14 @@ describe('Spec Reporter', () => {
 
   describe('constructor', () => {
     it('should initialize', () => {
-      const reporter = new SpecReporter({});
+      const reporter = new SpecReporter({ writeStream: {} });
 
       expect(reporter.screenshotPaths).toEqual([]);
       expect(reporter.screenshotMap).toEqual({});
     });
 
     it('should listen to latest-screenshot event', () => {
-      const reporter = new SpecReporter({});
+      const reporter = new SpecReporter({ writeStream: {} });
 
       eventEmitter.emit('terra-functional-testing:capture-screenshot', 'path/screenshot.png');
 
@@ -31,7 +31,7 @@ describe('Spec Reporter', () => {
     });
 
     it('should not save duplicate screenshot paths', () => {
-      const reporter = new SpecReporter({});
+      const reporter = new SpecReporter({ writeStream: {} });
 
       eventEmitter.emit('terra-functional-testing:capture-screenshot', 'path/screenshot.png');
       eventEmitter.emit('terra-functional-testing:capture-screenshott', 'path/screenshot.png');
@@ -42,7 +42,7 @@ describe('Spec Reporter', () => {
 
   describe('onTestEnd', () => {
     it('should save screenshot paths', () => {
-      const reporter = new SpecReporter({});
+      const reporter = new SpecReporter({ writeStream: {} });
 
       eventEmitter.emit('terra-functional-testing:capture-screenshot', 'path/screenshot.png');
 
@@ -57,7 +57,7 @@ describe('Spec Reporter', () => {
 
   describe('onRunnerEnd', () => {
     it('should format and write test results to file when the runner ends', () => {
-      const reporter = new SpecReporter({});
+      const reporter = new SpecReporter({ writeStream: {} });
 
       jest.spyOn(reporter, 'formatResults').mockImplementationOnce(() => 'mock-results');
       jest.spyOn(SpecReporter, 'writeResults').mockImplementationOnce(() => {});
@@ -73,7 +73,7 @@ describe('Spec Reporter', () => {
     it('should format the suite results', () => {
       const mockRunner = { capabilities: {}, specs: ['/mock/spec'] };
 
-      const reporter = new SpecReporter({});
+      const reporter = new SpecReporter({ writeStream: {} });
 
       const results = reporter.formatResults(testData1, mockRunner);
 
@@ -94,7 +94,7 @@ describe('Spec Reporter', () => {
   describe('formatTests', () => {
     it('should format the test results', () => {
       const { tests } = testData1.suites[0].suites[0];
-      const reporter = new SpecReporter({});
+      const reporter = new SpecReporter({ writeStream: {} });
 
       eventEmitter.emit('terra-functional-testing:capture-screenshot', 'path/screenshot1.png');
       reporter.onTestEnd(tests[0]);
