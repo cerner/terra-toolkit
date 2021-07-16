@@ -6,6 +6,11 @@
   * Upgraded to wdio v7
   * Increased large viewport size to `1020`
 
+## 1.10.0 - (July 16, 2021)
+
+* Added
+  * Added a status check to provided `gridUrl`s, allowing for better logging when a grid fails.
+
 ## 1.9.0 - (June 18, 2021)
 
 * Fixed
