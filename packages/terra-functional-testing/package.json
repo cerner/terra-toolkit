@@ -1,13 +1,13 @@
 {
   "name": "@cerner/terra-functional-testing",
-  "version": "1.6.0",
+  "version": "2.0.0",
   "main": "lib/index.js",
   "description": "A functional testing utility for applications built using Terra.",
   "publishConfig": {
     "access": "public"
   },
   "engines": {
-    "node": ">=10 <13"
+    "node": ">=12 <15"
   },
   "files": [
     "bin",
@@ -47,12 +47,12 @@
   "dependencies": {
     "@babel/runtime": "^7.11.2",
     "@mirzazeyrek/node-resemble-js": "^1.2.1",
-    "@wdio/cli": "^6.1.4",
-    "@wdio/local-runner": "^6.1.4",
-    "@wdio/mocha-framework": "^6.1.0",
-    "@wdio/reporter": "^6.6.6",
-    "@wdio/spec-reporter": "^6.0.16",
-    "@wdio/sync": "^6.1.14",
+    "@wdio/cli": "^7.7.3",
+    "@wdio/local-runner": "^7.7.3",
+    "@wdio/mocha-framework": "^7.7.3",
+    "@wdio/reporter": "^7.7.3",
+    "@wdio/spec-reporter": "^7.7.3",
+    "@wdio/sync": "^7.7.3",
     "axe-core": "4.0.2",
     "chalk": "^4.1.0",
     "expect": "^26.4.2",
@@ -70,8 +70,9 @@
     "lodash.isstring": "^4.0.1",
     "lodash.isundefined": "^3.0.1",
     "lodash.pickby": "^4.6.0",
+    "strip-ansi": "^6.0.0",
     "uuid": "^3.0.0",
-    "webdriverio": "^6.5.0",
+    "webdriverio": "^7.7.3",
     "webpack-dev-server": "^3.11.0",
     "which": "^2.0.2"
   },

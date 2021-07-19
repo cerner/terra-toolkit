@@ -39,6 +39,7 @@ describe('BaseCompare', () => {
     const baseCompare = new BaseCompare({});
 
     expect(baseCompare.baseScreenshotDir).toBe(process.cwd());
+    expect(baseCompare.cloudRegion).toBe('');
     expect(baseCompare.locale).toBe('en');
     expect(baseCompare.theme).toBe('terra-default-theme');
     expect(baseCompare.updateScreenshots).toBe(false);
@@ -46,12 +47,14 @@ describe('BaseCompare', () => {
 
   it('should call constructor with options', () => {
     const baseCompare = new BaseCompare({
+      cloudRegion: 'dev',
       locale: 'fr',
       theme: 'terra-lowlight-theme',
       updateScreenshots: true,
     });
 
     expect(baseCompare.baseScreenshotDir).toBe(process.cwd());
+    expect(baseCompare.cloudRegion).toBe('dev');
     expect(baseCompare.locale).toBe('fr');
     expect(baseCompare.theme).toBe('terra-lowlight-theme');
     expect(baseCompare.updateScreenshots).toBe(true);
@@ -76,11 +79,19 @@ describe('BaseCompare', () => {
     });
   });
 
-  it('BaseCompare.getScreenshotDir', () => {
-    const baseCompare = new BaseCompare({});
+  describe('BaseCompare.getScreenshotDir', () => {
+    it('returns a screenshot dir with the theme, locale, formfactor, and spec name.', () => {
+      const baseCompare = new BaseCompare({});
+      const result = baseCompare.getScreenshotDir(context);
+      expect(result).toEqual(path.join('terra-default-theme', 'en', 'chrome_large', 'test-spec'));
+    });
 
-    const result = baseCompare.getScreenshotDir(context);
-    expect(result).toEqual(path.join('terra-default-theme', 'en', 'chrome_large', 'test-spec'));
+    it('returns a screenshot dir with the cloudRegion, theme, locale, formfactor, and spec name.', () => {
+      const options = { cloudRegion: 'dev' };
+      const baseCompare = new BaseCompare(options);
+      const result = baseCompare.getScreenshotDir(context);
+      expect(result).toEqual(path.join('dev', 'terra-default-theme', 'en', 'chrome_large', 'test-spec'));
+    });
   });
 
   describe('BaseCompare.getScreenshotPaths', () => {

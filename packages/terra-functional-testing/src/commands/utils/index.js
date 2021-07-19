@@ -3,6 +3,7 @@ const describeTests = require('./describeTests');
 const describeViewports = require('./describeViewports');
 const dispatchCustomEvent = require('./dispatchCustomEvent');
 const downloadScreenshots = require('./downloadScreenshots');
+const eventEmitter = require('./eventEmitter');
 const getViewports = require('./getViewports');
 const hideInputCaret = require('./hideInputCaret');
 const setApplicationLocale = require('./setApplicationLocale');
@@ -14,6 +15,7 @@ module.exports = {
   describeViewports,
   dispatchCustomEvent,
   downloadScreenshots,
+  eventEmitter,
   getViewports,
   hideInputCaret,
   setApplicationLocale,

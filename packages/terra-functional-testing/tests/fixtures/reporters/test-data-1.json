@@ -32,6 +32,7 @@
               "output": [],
               "retries": 0,
               "state": "passed",
+              "screenshots": ["path/screenshot1.png"],
               "end": "2020-10-27T01:14:33.532Z"
             },
             {
@@ -45,6 +46,7 @@
               "output": [],
               "retries": 0,
               "state": "passed",
+              "screenshots": ["path/screenshot2.png"],
               "end": "2020-10-27T01:14:33.585Z"
             },
             {
@@ -58,6 +60,7 @@
               "output": [],
               "retries": 0,
               "state": "passed",
+              "screenshots": ["path/screenshot3.png"],
               "end": "2020-10-27T01:14:33.643Z"
             }
           ],

@@ -29,6 +29,7 @@ Cerner Corporation
 - Dianna McGinn [@DMcginn]
 - Alex Brisimitzakis [@AlexB98]
 - Saket Bajaj [@saket2403]
+- Kayla Barnett [@kaylabarnett]
 
 [@emilyrohrbough]: https://github.com/emilyrohrbough
 [@brettjankord]: https://github.com/bjankord
@@ -59,3 +60,4 @@ Cerner Corporation
 [@DMcginn]: https://github.com/DMcginn
 [@AlexB98]: https://github.com/AlexB98
 [@saket2403]: https://github.com/saket2403
+[@kaylabarnett]: https://github.com/kaylabarnett

@@ -22,7 +22,7 @@ describe('Accessibility Reporter', () => {
     it('should initialize an accessibility reporter', () => {
       jest.spyOn(process, 'on');
 
-      const reporter = new AccessibilityReporter({});
+      const reporter = new AccessibilityReporter({ writeStream: {} });
 
       expect(reporter).toBeDefined();
       expect(process.on).toHaveBeenCalledWith('terra:report:accessibility', expect.any(Function));
@@ -31,7 +31,7 @@ describe('Accessibility Reporter', () => {
 
   describe('onTestStart', () => {
     it('should track the current test id', () => {
-      const reporter = new AccessibilityReporter({});
+      const reporter = new AccessibilityReporter({ writeStream: {} });
 
       reporter.onTestStart({ uid: 'mock' });
 
@@ -41,7 +41,7 @@ describe('Accessibility Reporter', () => {
 
   describe('onReportAccessibility', () => {
     it('should track the accessibility results', () => {
-      const reporter = new AccessibilityReporter({});
+      const reporter = new AccessibilityReporter({ writeStream: {} });
 
       reporter.onTestStart({ uid: 'mock' });
       reporter.onReportAccessibility({ warnings: [] });
@@ -53,7 +53,7 @@ describe('Accessibility Reporter', () => {
   describe('onRunnerEnd', () => {
     it('should print the test results', () => {
       const mockRunner = jest.fn();
-      const reporter = new AccessibilityReporter({});
+      const reporter = new AccessibilityReporter({ writeStream: {} });
 
       jest.spyOn(reporter, 'printReport').mockImplementationOnce(() => {});
 
@@ -65,7 +65,7 @@ describe('Accessibility Reporter', () => {
 
   describe('printReport', () => {
     it('should not print an accessibility report if there are no violations', () => {
-      const reporter = new AccessibilityReporter({});
+      const reporter = new AccessibilityReporter({ writeStream: {} });
 
       jest.spyOn(reporter, 'write').mockImplementationOnce(() => {});
 
@@ -75,7 +75,7 @@ describe('Accessibility Reporter', () => {
     });
 
     it('should print an accessibility report', () => {
-      const reporter = new AccessibilityReporter({});
+      const reporter = new AccessibilityReporter({ writeStream: {} });
 
       reporter.accessibilityResults = { 'test-id': { warnings: [] } };
 
@@ -92,7 +92,7 @@ describe('Accessibility Reporter', () => {
 
   describe('travelSuite', () => {
     it('should travel a nested suite tree and generate an accessibility report', () => {
-      const reporter = new AccessibilityReporter({});
+      const reporter = new AccessibilityReporter({ writeStream: {} });
 
       reporter.accessibilityResults = {
         'test-10-0': {},
@@ -110,7 +110,7 @@ describe('Accessibility Reporter', () => {
     });
 
     it('should return an empty string if there are no accessibility warnings', () => {
-      const reporter = new AccessibilityReporter({});
+      const reporter = new AccessibilityReporter({ writeStream: {} });
 
       const report = reporter.travelSuite(testData1);
 
@@ -120,7 +120,7 @@ describe('Accessibility Reporter', () => {
 
   describe('formatTestWarning', () => {
     it('should format the test warning', () => {
-      const reporter = new AccessibilityReporter({});
+      const reporter = new AccessibilityReporter({ writeStream: {} });
 
       reporter.tests = {
         'test-10-0': {

@@ -2,6 +2,39 @@
 
 ## Unreleased
 
+## 2.0.0 - (July 16, 2021)
+
+* Breaking
+  * Upgraded to wdio v7
+  * Increased large viewport size to `1020`
+
+## 1.10.0 - (July 16, 2021)
+
+* Added
+  * Added a status check to provided `gridUrl`s, allowing for better logging when a grid fails.
+
+## 1.9.0 - (June 18, 2021)
+
+* Fixed
+  * Updated screenshot cleaning to match nested snapshot directories
+  * Updated to size the test page to the viewport size instead of the browser's window size to correctly match the corresponding breakpoint. This change may affect the size of existing screenshots, particularly in IE and firefox. The affected screenshots may need to be regenerated.
+
+* Added
+  * Added screenshot paths for each test result to the spec reporter
+
+## 1.8.0 - (June 8, 2021)
+
+* Added
+  * Added FileOutputReporter reporter that logs wdio test output to separate files based on locale, theme, and form-factor
+
+## 1.7.0 - (June 1, 2021)
+
+* Added
+  * `cloudRegion` namespace to screenshot directories - this is useful for full stack testing contexts that define a cloudRegion per test run.
+
+* Fixed
+  * Updated waitForSeleniumHubReady to accommodate Windows users.
+
 ## 1.6.0 - (May 25, 2021)
 
 * Added

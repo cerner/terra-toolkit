@@ -2,6 +2,36 @@
 
 ## Unreleased
 
+## 1.21.0 - (July 16, 2021)
+
+* Added
+  * terra-functional-testing v2 upgrade guide
+
+## 1.20.0 - (July 16, 2021)
+
+* Changed
+  * Minor dependency version bump
+
+## 1.19.0 - (June 23, 2021)
+
+* Fixed
+  * Updated links to documentation in scoped packages to be correct.
+
+## 1.18.0 - (June 18, 2021)
+
+* Changed
+  * Minor dependency version bump
+
+## 1.17.0 - (June 8, 2021)
+
+* Added
+  * Added notes about FileOutputReporter for terra-functional-testing.
+
+## 1.16.0 - (June 1, 2021)
+
+* Changed
+  * Minor dependency version bump
+
 ## 1.15.0 - (May 25, 2021)
 
 * Added
