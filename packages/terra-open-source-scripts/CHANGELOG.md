@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+  * Ignored more than just the cli directory in terra-open-source-scripts to prevent transpiling
+
 ## 1.9.0 - (May 7, 2021)
 
 * Removed
