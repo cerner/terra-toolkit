@@ -15,7 +15,7 @@ If you are using `@cerner/terra-functional-testing` along with it's `wdio.config
 
 ### Node 10 support dropped
 
-WDIO v7 updates to fibers v5 which drops support for Node 10. Node 12 and above are recommend.
+WDIO v7 updates to fibers v5 which drops support for Node 10. Node 12 and above are recommended.
 
 ### Large viewport testing size increased
 
