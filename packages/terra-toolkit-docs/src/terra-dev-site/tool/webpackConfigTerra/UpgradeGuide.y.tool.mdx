@@ -6,11 +6,11 @@ import { Badge } from '@cerner/webpack-config-terra/package.json?dev-site-packag
 
 ## Changes from @cerner/webpack-config-terra 1.0.0 to @cerner/webpack-config-terra 2.0.0
 
-### Removed node-sass
+#### Removed node-sass
 
 We have removed `node-sass` from dependencies and switched to `sass (dart-sass)`.
 
-### Update WDIO snapshots
+#### Update WDIO snapshots
 
 The previously used `node-sass` had a precision of 5, whereas `sass` has an unadjustable precision of 10. Hence it is required for all the users upgrading to @cerner/webpack-config-terra 2.0.0 to update their WDIO snapshots.
 
