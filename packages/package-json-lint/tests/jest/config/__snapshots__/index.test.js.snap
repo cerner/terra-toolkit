@@ -31,7 +31,7 @@ Object {
     "a": 1,
     "b": 2,
     "c": 3,
-    "override": 1,
+    "override": 3,
     "x": 4,
     "y": 5,
     "z": 6,
