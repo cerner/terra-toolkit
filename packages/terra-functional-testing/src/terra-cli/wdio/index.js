@@ -28,8 +28,8 @@ const cli = {
 
             // Split the list of BROWSERS into an array if it is set in the string form like 'chrome,firefox,ie'.
             if (browsers.includes(',')) {
-              // There could be empty spaces between each browser name. For example: 'chrome, firefox,     ie').
-              // Remove all empty spaces in each browser name to avoid adding them with the empty space. For example: ' firefox'.
+              // There could be empty spaces between each browser name. For example: 'chrome, firefox,     ie'.
+              // Remove all empty spaces in each browser name to avoid adding them with the empty space. For example: [' firefox', '     ie'].
               browsers = browsers.replace(/ /g, '');
               return browsers.split(',');
             }
