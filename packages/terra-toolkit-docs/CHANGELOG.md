@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.22.0 - (July 20, 2021)
+
 * Added
   * Updated terra-functional-testing upgrade guide to discuss removing support for node 10.
 
