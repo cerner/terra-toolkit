@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Fixed
+  * Run tests in all browsers provided by the `BROWSERS` env variable.
+
 ## 2.0.0 - (July 16, 2021)
 
 * Breaking

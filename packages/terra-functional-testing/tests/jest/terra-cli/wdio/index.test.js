@@ -26,6 +26,30 @@ describe('index', () => {
     expect(helpOutput).toMatchSnapshot();
   });
 
+  it('should correctly parse BROWSERS env variable when there are empty spaces', async () => {
+    process.env.BROWSERS = '[chrome, firefox,      ie]';
+    const parser = yargs.command(command).scriptName('terra');
+    const options = await new Promise((resolve) => {
+      parser.parse('wdio', (_err, _argv) => {
+        resolve(_argv);
+      });
+    });
+
+    expect(options.browsers).toEqual(['chrome', 'firefox', 'ie']);
+  });
+
+  it('should correctly parse BROWSERS env variable when there are no empty spaces', async () => {
+    process.env.BROWSERS = '[chrome,firefox,ie]';
+    const parser = yargs.command(command).scriptName('terra');
+    const options = await new Promise((resolve) => {
+      parser.parse('wdio', (_err, _argv) => {
+        resolve(_argv);
+      });
+    });
+
+    expect(options.browsers).toEqual(['chrome', 'firefox', 'ie']);
+  });
+
   it('should invoke the test runner with the default command line arguments', async () => {
     const { handler } = command;
 
