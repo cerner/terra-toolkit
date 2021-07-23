@@ -12,4 +12,4 @@ We have removed `node-sass` from dependencies and switched to `sass (dart-sass)`
 
 #### Update WDIO snapshots
 
-The previously used `node-sass` had a precision of 5, whereas `sass` has an unadjustable precision of 10. Hence it is required for all the users upgrading to @cerner/webpack-config-terra 2.0.0 to update their WDIO snapshots.
+The previously used `node-sass` had a precision of 5, whereas `sass` has an unadjustable precision of 10. Hence consumers may need to regenerate screenshots to account for slightly larger css values.
