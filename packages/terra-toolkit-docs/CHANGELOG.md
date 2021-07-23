@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.22.0 - (July 20, 2021)
+
 * Added
   * webpack-config-terra v2 upgrade guide
 
