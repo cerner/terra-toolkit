@@ -48,7 +48,7 @@ Consult the component CHANGELOGs, related issues, and PRs for more information.
 
 ## LICENSE
 
-Copyright 2018 - present Cerner Innovation, Inc.
+Copyright 2021 - present Cerner Innovation, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 

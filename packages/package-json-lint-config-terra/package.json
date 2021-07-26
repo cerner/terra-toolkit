@@ -7,6 +7,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "files": [
+    "package-json-lint.config.js"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cerner/terra-toolkit.git",
