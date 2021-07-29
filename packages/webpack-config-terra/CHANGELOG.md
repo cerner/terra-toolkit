@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+  * Upgraded from `node-sass` to `sass (dart-sass)`
+
 ## 1.3.1 - (January 27, 2021)
 
 * Changed
