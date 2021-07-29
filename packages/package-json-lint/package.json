@@ -1,6 +1,7 @@
 {
   "name": "@cerner/package-json-lint",
   "version": "0.0.0",
+  "private": true,
   "description": "Package JSON linter",
   "publishConfig": {
     "access": "public"
