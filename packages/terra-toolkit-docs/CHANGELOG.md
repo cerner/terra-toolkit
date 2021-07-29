@@ -3,6 +3,16 @@
 ## Unreleased
 
 * Added
+  * webpack-config-terra v2 upgrade guide.
+
+## 1.23.0 - (July 26, 2021)
+
+* Changed
+  * Minor dependency version bump
+
+## 1.22.0 - (July 20, 2021)
+
+* Added
   * Updated terra-functional-testing upgrade guide to discuss removing support for node 10.
 
 ## 1.21.0 - (July 16, 2021)

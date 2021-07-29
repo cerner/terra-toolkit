@@ -32,6 +32,9 @@
   "bugs": {
     "url": "https://github.com/cerner/terra-toolkit/issues"
   },
+  "package-json-lint": {
+    "extends": "./packages/package-json-lint-config-terra/package-json-lint.config.js"
+  },
   "eslintConfig": {
     "extends": "./packages/eslint-config-terra/eslint.config.js",
     "overrides": [
