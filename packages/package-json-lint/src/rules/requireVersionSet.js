@@ -5,7 +5,7 @@ module.exports = ({
 }) => {
   const currentProblems = versionSet.map(({ name, versionRange }) => {
     const dependencyVersion = dependencies[name];
-    if (dependencyVersion && !semver.satisfies(semver.minVersion(dependencyVersion), versionRange)) {
+    if (dependencyVersion && !semver.intersects(dependencyVersion, versionRange)) {
       return `${name}@${dependencyVersion} does not satisfy range requirement for ${messageString}: ${name}@${versionRange}`;
     }
     return undefined;
