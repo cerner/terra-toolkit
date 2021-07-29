@@ -1,11 +1,13 @@
 {
   "name": "@cerner/package-json-lint",
   "version": "0.0.0",
-  "private": true,
   "description": "Package JSON linter",
   "publishConfig": {
     "access": "public"
   },
+  "files": [
+    "lib"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cerner/terra-toolkit.git",
