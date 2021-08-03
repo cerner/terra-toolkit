@@ -4,6 +4,7 @@
 
 * Added
   * webpack-config-terra v2 upgrade guide.
+  * Removed polyfill doc.
 
 ## 1.23.0 - (July 26, 2021)
 
