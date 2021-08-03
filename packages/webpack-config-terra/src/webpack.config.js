@@ -124,7 +124,7 @@ const defaultWebpackConfig = (env = {}, argv = {}, options = {}) => {
           test: /\.(jsx|js)$/,
           exclude: (modulePath) => (
             /node_modules/.test(modulePath)
-            && !/@cerner\/terra--polyfill\/lib\/polyfills/.test(modulePath)
+            && !/@cerner\/terra-polyfill\/lib\/polyfills/.test(modulePath)
           ), // exclude everything in node modules except our core-js entry point to allow consumers the ability to customize what polyfills get pulled in.
           use: {
             loader: 'babel-loader',
