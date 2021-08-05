@@ -7,7 +7,7 @@ const {
 const WebpackConfigTerra = require('./packages/webpack-config-terra/lib/webpack.config');
 
 const coreConfig = (env = {}) => ({
-  // Temporary until we get on webpack 5 and a newer version of terra-dev-site.
+  // Temporary until we get on webpack 5 and a released version of terra-dev-site.
   entry: {
     blankEntry: './blankEntry.js',
   },
