@@ -16,6 +16,8 @@ const getConfigurationOptions = (options) => {
     externalPort,
     formFactor,
     gridUrl,
+    dockerUrl,
+    dockerPort,
     keepAliveSeleniumDockerService,
     locale,
     site,
@@ -29,8 +31,8 @@ const getConfigurationOptions = (options) => {
   return {
     baseUrl: `http://${externalHost || getIpAddress()}:${externalPort || 8080}`,
     capabilities: getCapabilities(browsers, !!gridUrl),
-    hostname: gridUrl || (useSeleniumStandaloneService ? 'standalone-chrome' : 'localhost'),
-    port: gridUrl ? 80 : 4444,
+    hostname: dockerUrl || gridUrl || (useSeleniumStandaloneService ? 'standalone-chrome' : 'localhost'),
+    port: dockerPort || (gridUrl ? 80 : 4444),
     launcherOptions: {
       disableSeleniumService: disableSeleniumService || useSeleniumStandaloneService || !!gridUrl,
       ignoreScreenshotMismatch,

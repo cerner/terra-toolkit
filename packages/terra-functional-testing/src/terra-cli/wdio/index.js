@@ -99,6 +99,28 @@ const cli = {
           return undefined;
         },
       },
+      dockerUrl: {
+        type: 'string',
+        describe: 'The address for docker selenium hub.',
+        default: () => {
+          if (process.env.WDIO_DOCKER_URL) {
+            return process.env.WDIO_DOCKER_URL;
+          }
+
+          return undefined;
+        },
+      },
+      dockerPort: {
+        type: 'number',
+        describe: 'The port mapping for docker selenium hub.',
+        default: () => {
+          if (process.env.WDIO_DOCKER_PORT) {
+            return process.env.WDIO_DOCKER_PORT;
+          }
+
+          return undefined;
+        },
+      },
       keepAliveSeleniumDockerService: {
         type: 'boolean',
         describe: 'Determines to keep the selenium docker service running upon test completion.',

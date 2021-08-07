@@ -39,6 +39,8 @@ class TestRunner {
    * @param {number} options.externalPort - The port mapping from the host to the container.
    * @param {string} options.formFactor - A form factor for the test run.
    * @param {string} options.gridUrl - The remote selenium grid address.
+   * @param {string} options.dockerUrl - The address for docker selenium hub.
+   * @param {number} options.dockerPort - The port mapping for docker selenium hub.
    * @param {boolean} options.keepAliveSeleniumDockerService - Determines to keep the selenium docker service running upon test completion.
    * @param {string} options.locale - A language locale for the test run.
    * @param {string} options.site - A file path to a static directory of assets. When defined, an express server will launch to serve the assets and disable running webpack..
@@ -80,6 +82,8 @@ class TestRunner {
    * @param {number} options.externalPort - The port mapping from the host to the container.
    * @param {string} options.formFactors - A list of form factors for the test run.
    * @param {string} options.gridUrl - The remote selenium grid address.
+   * @param {string} options.dockerUrl - The address for docker selenium hub.
+   * @param {number} options.dockerPort - The port mapping for docker selenium hub.
    * @param {boolean} options.keepAliveSeleniumDockerService - Determines to keep the selenium docker service running upon test completion.
    * @param {string} options.locales - A list of language locales for the test run.
    * @param {string} options.site - A file path to a static directory of assets. When defined, an express server will launch to serve the assets and disable running webpack..
