@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Added
+  * Added dockerUrl and dockerPort parameters for locating docker selenium hub.
+
 ## 2.1.0 - (July 26, 2021)
 
 * Fixed
