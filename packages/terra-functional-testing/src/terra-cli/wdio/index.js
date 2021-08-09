@@ -99,23 +99,23 @@ const cli = {
           return undefined;
         },
       },
-      dockerUrl: {
+      seleniumServiceUrl: {
         type: 'string',
-        describe: 'The address for docker selenium hub.',
+        describe: 'The address for selenium service.',
         default: () => {
-          if (process.env.WDIO_DOCKER_URL) {
-            return process.env.WDIO_DOCKER_URL;
+          if (process.env.SELENIUM_SERVICE_URL) {
+            return process.env.SELENIUM_SERVICE_URL;
           }
 
           return undefined;
         },
       },
-      dockerPort: {
+      port: {
         type: 'number',
-        describe: 'The port mapping for docker selenium hub.',
+        describe: 'The port mapping for selenium service.',
         default: () => {
-          if (process.env.WDIO_DOCKER_PORT) {
-            return process.env.WDIO_DOCKER_PORT;
+          if (process.env.SELENIUM_SERVICE_PORT) {
+            return process.env.SELENIUM_SERVICE_PORT;
           }
 
           return undefined;
