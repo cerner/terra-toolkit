@@ -4,6 +4,7 @@
 
 * Added
   * webpack-config-terra v2 upgrade guide.
+  * Added seleniumServiceUrl and port to listed parameters for terra-functional-testing.
 
 ## 1.23.0 - (July 26, 2021)
 
