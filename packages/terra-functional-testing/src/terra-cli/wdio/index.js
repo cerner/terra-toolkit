@@ -101,7 +101,7 @@ const cli = {
       },
       seleniumServiceUrl: {
         type: 'string',
-        describe: 'The address for selenium service.',
+        describe: 'The address for the selenium service.',
         default: () => {
           if (process.env.SELENIUM_SERVICE_URL) {
             return process.env.SELENIUM_SERVICE_URL;
@@ -112,7 +112,7 @@ const cli = {
       },
       port: {
         type: 'number',
-        describe: 'The port mapping for selenium service.',
+        describe: 'The port mapping for the selenium service or the external selenium grid.',
         default: () => {
           if (process.env.SELENIUM_SERVICE_PORT) {
             return process.env.SELENIUM_SERVICE_PORT;
