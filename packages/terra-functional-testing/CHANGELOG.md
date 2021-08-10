@@ -3,7 +3,8 @@
 ## Unreleased
 
 * Added
-  * Added dockerUrl and dockerPort parameters for locating docker selenium hub.
+  * Added seleniumServiceUrl parameter for locating selenium service.
+  * Added port parameter for specifying port mapping for the selenium service or the external selenium grid.
 
 ## 2.1.0 - (July 26, 2021)
 
