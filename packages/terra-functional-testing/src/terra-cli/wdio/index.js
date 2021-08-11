@@ -103,8 +103,8 @@ const cli = {
         type: 'string',
         describe: 'The address for the selenium service.',
         default: () => {
-          if (process.env.SELENIUM_SERVICE_URL) {
-            return process.env.SELENIUM_SERVICE_URL;
+          if (process.env.WDIO_SELENIUM_SERVICE_URL) {
+            return process.env.WDIO_SELENIUM_SERVICE_URL;
           }
 
           return undefined;
@@ -114,8 +114,8 @@ const cli = {
         type: 'number',
         describe: 'The port mapping for the selenium service or the external selenium grid.',
         default: () => {
-          if (process.env.SELENIUM_SERVICE_PORT) {
-            return process.env.SELENIUM_SERVICE_PORT;
+          if (process.env.WDIO_SELENIUM_SERVICE_PORT) {
+            return process.env.WDIO_SELENIUM_SERVICE_PORT;
           }
 
           return undefined;
