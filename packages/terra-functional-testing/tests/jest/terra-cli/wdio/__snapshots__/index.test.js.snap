@@ -28,6 +28,11 @@ Options:
                                                    [array] [default: (_default)]
       --gridUrl                         The remote selenium grid address.
                                                   [string] [default: (_default)]
+      --seleniumServiceUrl              The address for the selenium service.
+                                                  [string] [default: (_default)]
+      --port                            The port mapping for the selenium
+                                        service or the external selenium grid.
+                                                  [number] [default: (_default)]
       --keepAliveSeleniumDockerService  Determines to keep the selenium docker
                                         service running upon test completion.
                                                       [boolean] [default: false]
