@@ -39,10 +39,10 @@ class TestRunner {
    * @param {number} options.externalPort - The port mapping from the host to the container.
    * @param {string} options.formFactor - A form factor for the test run.
    * @param {string} options.gridUrl - The remote selenium grid address.
-   * @param {string} options.seleniumServiceUrl - The address for the selenium service.
-   * @param {number} options.port - The port mapping for the selenium service or the external selenium grid.
    * @param {boolean} options.keepAliveSeleniumDockerService - Determines to keep the selenium docker service running upon test completion.
    * @param {string} options.locale - A language locale for the test run.
+   * @param {number} options.seleniumServicePort - The port mapping for the selenium service or the external selenium grid.
+   * @param {string} options.seleniumServiceUrl - The address for the selenium service.
    * @param {string} options.site - A file path to a static directory of assets. When defined, an express server will launch to serve the assets and disable running webpack..
    * @param {array} options.spec - A list of spec file paths.
    * @param {array} options.suite - Overrides specs and runs only the defined suites.
@@ -82,10 +82,10 @@ class TestRunner {
    * @param {number} options.externalPort - The port mapping from the host to the container.
    * @param {string} options.formFactors - A list of form factors for the test run.
    * @param {string} options.gridUrl - The remote selenium grid address.
-   * @param {string} options.seleniumServiceUrl - The address for the selenium service.
-   * @param {number} options.port - The port mapping for the selenium service or the external selenium grid.
    * @param {boolean} options.keepAliveSeleniumDockerService - Determines to keep the selenium docker service running upon test completion.
    * @param {string} options.locales - A list of language locales for the test run.
+   * @param {number} options.seleniumServicePort - The port mapping for the selenium service or the external selenium grid.
+   * @param {string} options.seleniumServiceUrl - The address for the selenium service.
    * @param {string} options.site - A file path to a static directory of assets. When defined, an express server will launch to serve the assets and disable running webpack..
    * @param {array} options.spec - A list of spec file paths.
    * @param {array} options.suite - Overrides specs and runs only the defined suites.
