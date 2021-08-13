@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.0 - (August 13, 2021)
+
 * Breaking
   * Upgraded from `node-sass` to `sass (dart-sass)`.
   * Removed polyfill entries.

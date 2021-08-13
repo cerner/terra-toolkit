@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 2.0.0 - (August 13, 2021)
+
+* Breaking
+  * Pulling in next mvb of webpack-config-terra.
+
 * Added
   * webpack-config-terra v2 upgrade guide.
   * Removed polyfill doc.
