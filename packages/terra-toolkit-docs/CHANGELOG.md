@@ -19,7 +19,7 @@
 ## 1.23.0 - (July 26, 2021)
 
 * Changed
-  * Minor dependency version bump
+  * Minor dependency version bump.
 
 ## 1.22.0 - (July 20, 2021)
 
