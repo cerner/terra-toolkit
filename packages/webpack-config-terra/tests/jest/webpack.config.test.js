@@ -40,10 +40,7 @@ describe('webpack config', () => {
 
     // add the polyfills as default entries
     expect(config).toHaveProperty('entry');
-    expect(config.entry).toMatchObject({
-      'core-js': '@cerner/webpack-config-terra/lib/entry/core-js',
-      'regenerator-runtime': 'regenerator-runtime/runtime',
-    });
+    expect(config.entry).toMatchObject({});
 
     // add the module rules
     expect(config).toHaveProperty('module');
@@ -270,8 +267,6 @@ describe('webpack config', () => {
     const config = webpackConfig({ enableAggregateThemes }, {});
 
     const expectedOuput = {
-      'core-js': '@cerner/webpack-config-terra/lib/entry/core-js',
-      'regenerator-runtime': 'regenerator-runtime/runtime',
       theme: './aggregate-themes/fixtures/generatedThemes/scoped-terra-mock-dark-theme.scss',
     };
 

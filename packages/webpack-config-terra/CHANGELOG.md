@@ -2,8 +2,9 @@
 
 ## Unreleased
 
-* Changed
-  * Upgraded from `node-sass` to `sass (dart-sass)`
+* Breaking
+  * Upgraded from `node-sass` to `sass (dart-sass)`.
+  * Removed polyfill entries.
 
 ## 1.3.1 - (January 27, 2021)
 
@@ -14,7 +15,7 @@
 
 * Added
   * Added `browser` to `resolve.mainFields` in webpack module list.
-  
+
 * Changed
   * Passively consume @cerner/terra-aggregate-translations package.
 

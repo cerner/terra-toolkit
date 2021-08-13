@@ -10,32 +10,6 @@ The webpack-config-terra package contains the base webpack config required to bu
 
 Below is the list of polyfills, webpack loaders and plugins Terra components rely on:
 
-### Polyfills
-
-React 16 depends on the collection types ``Map`` and ``Set`` and it depends on ``requestAnimationFrame``, so Terra UI needs a polyfilled environment.
-
-* [core-js](https://github.com/zloirock/core-js) - Provides polyfills necessary for ECMAScript: promises, symbols, collections, iterators, typed arrays, many other features, ECMAScript proposals, some cross-platform WHATWG / W3C features and proposals like URL.\*
-* [regenerator-runtime](https://github.com/facebook/regenerator/tree/master/packages/regenerator-runtime) - Transformer for enabling ECMAScript 6.\*
-
-The set of polyfills included by core js an be customized by modifying the `@babel/preset-env` configuration. See [core-js documentation](https://github.com/zloirock/core-js#babelpreset-env) for more details.
-
-For example:
-
-```diff
-module.exports = (api) => {
-  api.cache(false);
-  api.assertVersion('^7.4.4');
-
-  return {
-    presets: [
--     '@babel/preset-env',
-+     ['@babel/preset-env', { useBuiltIns: 'entry', corejs: { version: 3.6, proposals: true } }],
-      '@babel/preset-react',
-    ],
-  };
-};
-```
-
 ### JavaScript Loaders
 
 * [babel-loader](https://webpack.js.org/loaders/babel-loader/) - Allows transpiling JavaScript files using [Babel](https://github.com/babel/babel) and webpack.
@@ -244,10 +218,10 @@ Minimum terra component versions that support theme context as of 12/8/2020. Any
 
 #### Hot Reloading with Webpack Dev Server
 
-Terra's webpack configuration enables hot reloading by default in development mode. Disable this behavior by passing `--env.disableHotReloading` to the cli when running tt-serve. This is useful to generate the production assets used during testing.
+Terra's webpack configuration enables hot reloading by default in development mode. Disable this behavior by passing `--env.disableHotReloading` to the cli when running webpack. This is useful to generate the production assets used during testing.
 
 ```bash
-tt-serve --env.disableHotReloading
+webpack --env.disableHotReloading
 ```
 
 #### Development vs Production
