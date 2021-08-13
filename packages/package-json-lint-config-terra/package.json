@@ -1,7 +1,6 @@
 {
   "name": "@cerner/package-json-lint-config-terra",
-  "version": "0.0.0",
-  "private": true,
+  "version": "1.0.0",
   "description": "Package Json Lint Config",
   "main": "package-json-lint.config.js",
   "publishConfig": {

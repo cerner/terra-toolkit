@@ -3,8 +3,16 @@
 ## Unreleased
 
 * Added
-  * webpack-config-terra v2 upgrade guide.
   * Added seleniumServiceUrl and port to listed parameters for terra-functional-testing.
+
+## 2.0.0 - (August 13, 2021)
+
+* Breaking
+  * Pulling in next mvb of webpack-config-terra.
+
+* Added
+  * webpack-config-terra v2 upgrade guide.
+  * Removed polyfill doc.
 
 ## 1.23.0 - (July 26, 2021)
 

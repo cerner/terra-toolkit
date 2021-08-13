@@ -116,8 +116,6 @@ const defaultWebpackConfig = (env = {}, argv = {}, options = {}) => {
   const devConfig = {
     mode: 'development',
     entry: {
-      'core-js': '@cerner/webpack-config-terra/lib/entry/core-js',
-      'regenerator-runtime': 'regenerator-runtime/runtime',
       ...aggregateThemeFile && { theme: aggregateThemeFile },
     },
     module: {
@@ -126,7 +124,7 @@ const defaultWebpackConfig = (env = {}, argv = {}, options = {}) => {
           test: /\.(jsx|js)$/,
           exclude: (modulePath) => (
             /node_modules/.test(modulePath)
-            && !/@cerner\/webpack-config-terra\/lib\/entry\/core-js/.test(modulePath)
+            && !/@cerner\/terra-polyfill\/lib\/index/.test(modulePath)
           ), // exclude everything in node modules except our core-js entry point to allow consumers the ability to customize what polyfills get pulled in.
           use: {
             loader: 'babel-loader',

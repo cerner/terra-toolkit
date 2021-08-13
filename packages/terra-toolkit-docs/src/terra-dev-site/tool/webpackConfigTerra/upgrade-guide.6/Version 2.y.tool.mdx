@@ -6,6 +6,14 @@ import { Badge } from '@cerner/webpack-config-terra/package.json?dev-site-packag
 
 ## Changes from @cerner/webpack-config-terra 1.0.0 to @cerner/webpack-config-terra 2.0.0
 
+#### Removed Polyfill entrypoints
+
+In an effort to provide more direct control to consumers we have removed the core-js and regenerator runtime polyfills from webpack-config-terra. Consumers can now decide if those polyfills are required for their sites. We now offer the [terra-polyfill](/application/cerner-terra-application-docs/polyfills) package that can be included in your application as a side effect.
+
+```js
+import '@cerner/terra-polyfill';
+```
+
 #### Removed node-sass
 
 We have removed [node-sass](https://github.com/sass/node-sass) from dependencies and switched to [sass (dart-sass)](https://github.com/sass/dart-sass).
