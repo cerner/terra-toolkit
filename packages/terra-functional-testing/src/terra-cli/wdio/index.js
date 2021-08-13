@@ -99,28 +99,6 @@ const cli = {
           return undefined;
         },
       },
-      seleniumServiceUrl: {
-        type: 'string',
-        describe: 'The address for the selenium service.',
-        default: () => {
-          if (process.env.WDIO_SELENIUM_SERVICE_URL) {
-            return process.env.WDIO_SELENIUM_SERVICE_URL;
-          }
-
-          return undefined;
-        },
-      },
-      port: {
-        type: 'number',
-        describe: 'The port mapping for the selenium service or the external selenium grid.',
-        default: () => {
-          if (process.env.WDIO_SELENIUM_SERVICE_PORT) {
-            return process.env.WDIO_SELENIUM_SERVICE_PORT;
-          }
-
-          return undefined;
-        },
-      },
       keepAliveSeleniumDockerService: {
         type: 'boolean',
         describe: 'Determines to keep the selenium docker service running upon test completion.',
@@ -143,6 +121,28 @@ const cli = {
         default: () => {
           if (process.env.SCREENSHOT_URL) {
             return process.env.SCREENSHOT_URL;
+          }
+
+          return undefined;
+        },
+      },
+      seleniumServiceUrl: {
+        type: 'string',
+        describe: 'The address for the selenium service.',
+        default: () => {
+          if (process.env.WDIO_SELENIUM_SERVICE_URL) {
+            return process.env.WDIO_SELENIUM_SERVICE_URL;
+          }
+
+          return undefined;
+        },
+      },
+      seleniumServicePort: {
+        type: 'number',
+        describe: 'The port mapping for the selenium service or the external selenium grid.',
+        default: () => {
+          if (process.env.WDIO_SELENIUM_SERVICE_PORT) {
+            return process.env.WDIO_SELENIUM_SERVICE_PORT;
           }
 
           return undefined;
