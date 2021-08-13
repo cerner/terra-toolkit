@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.10.0 - (August 13, 2021)
+
 * Changed
   * Ignored more than just the cli directory in terra-open-source-scripts to prevent transpiling
 
