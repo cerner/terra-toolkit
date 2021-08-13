@@ -36,6 +36,11 @@ Options:
       --screenshotUrl                   The url to the registry that stores the
                                         screenshots
                                                   [string] [default: (_default)]
+      --seleniumServicePort             The port mapping for the selenium
+                                        service or the external selenium grid.
+                                                  [number] [default: (_default)]
+      --seleniumServiceUrl              The address for the selenium service.
+                                                  [string] [default: (_default)]
       --site                            A file path to a static directory of
                                         assets. When defined, an express server
                                         will launch to serve the assets and

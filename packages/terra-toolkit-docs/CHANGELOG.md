@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Added
+  * Added seleniumServiceUrl and port to listed parameters for terra-functional-testing.
+
 ## 2.0.0 - (August 13, 2021)
 
 * Breaking

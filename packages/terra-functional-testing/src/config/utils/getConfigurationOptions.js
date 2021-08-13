@@ -18,6 +18,8 @@ const getConfigurationOptions = (options) => {
     gridUrl,
     keepAliveSeleniumDockerService,
     locale,
+    seleniumServicePort,
+    seleniumServiceUrl,
     site,
     spec,
     suite,
@@ -29,8 +31,8 @@ const getConfigurationOptions = (options) => {
   return {
     baseUrl: `http://${externalHost || getIpAddress()}:${externalPort || 8080}`,
     capabilities: getCapabilities(browsers, !!gridUrl),
-    hostname: gridUrl || (useSeleniumStandaloneService ? 'standalone-chrome' : 'localhost'),
-    port: gridUrl ? 80 : 4444,
+    hostname: seleniumServiceUrl || gridUrl || (useSeleniumStandaloneService ? 'standalone-chrome' : 'localhost'),
+    port: seleniumServicePort || (gridUrl ? 80 : 4444),
     launcherOptions: {
       disableSeleniumService: disableSeleniumService || useSeleniumStandaloneService || !!gridUrl,
       ignoreScreenshotMismatch,
