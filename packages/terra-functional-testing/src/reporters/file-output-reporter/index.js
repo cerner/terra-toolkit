@@ -11,12 +11,14 @@ class FileOutputReporter extends SpecReporter {
   constructor(options) {
     super({ stdout: true, ...options });
     this.runners = [];
+    this.outputDir = options.outputDir || 'wdio';
     this.resultJsonObject = {
       startDate: '',
       type: 'wdio',
       locale: '',
       formFactor: '',
       theme: '',
+      cloudRegion: '',
       output: {},
       endDate: '',
     };
@@ -36,7 +38,7 @@ class FileOutputReporter extends SpecReporter {
    * @return null;
    */
   setResultsDir() {
-    this.resultsDir = path.join(process.cwd(), 'tests', 'wdio', 'reports');
+    this.resultsDir = path.join(process.cwd(), 'tests', this.outputDir, 'reports');
   }
 
   /**
@@ -64,6 +66,7 @@ class FileOutputReporter extends SpecReporter {
       formFactor,
       locale,
       theme,
+      cloudRegion,
     } = options;
 
     const fileNameConf = ['fileOutput'];
@@ -83,6 +86,10 @@ class FileOutputReporter extends SpecReporter {
       fileNameConf.push(browserName);
     }
 
+    if (cloudRegion) {
+      fileNameConf.push(cloudRegion);
+    }
+
     if (cid) {
       fileNameConf.push(cid);
     }
@@ -99,6 +106,7 @@ class FileOutputReporter extends SpecReporter {
       formFactor,
       locale,
       theme,
+      cloudRegion,
     } = options;
 
     if (locale) {
@@ -111,6 +119,10 @@ class FileOutputReporter extends SpecReporter {
 
     if (formFactor) {
       this.resultJsonObject.formFactor = formFactor;
+    }
+
+    if (cloudRegion) {
+      this.resultJsonObject.cloudRegion = cloudRegion;
     }
   }
 
@@ -188,13 +200,19 @@ class FileOutputReporter extends SpecReporter {
           const { cid, capabilities } = runner;
           const { browserName } = capabilities;
           const { config } = global.browser;
-          const { formFactor, locale, theme } = config.launcherOptions;
+          const {
+            formFactor,
+            locale,
+            theme,
+            cloudRegion,
+          } = config.launcherOptions;
           const options = {
             browserName,
             cid,
             formFactor,
             locale,
             theme,
+            cloudRegion,
           };
 
           this.buildFileName(options);
