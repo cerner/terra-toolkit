@@ -5,8 +5,8 @@ const getOutputDir = require('./get-output-dir');
 /**
  * Cleans the output directory by removing any previous spec reports.
  */
-const cleanResults = () => {
-  const outputDir = getOutputDir();
+const cleanResults = (subOutputDir) => {
+  const outputDir = getOutputDir(subOutputDir);
 
   if (!fs.existsSync(outputDir)) {
     return;

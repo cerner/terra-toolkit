@@ -9,6 +9,7 @@ class SpecReporter extends WDIOReporter {
     super({ stdout: true, ...options });
     this.screenshotPaths = [];
     this.screenshotMap = {};
+    this.outputDir = options.outputDir;
 
     // Listen to this event when a screenshot is being captured.
     eventEmitter.on('terra-functional-testing:capture-screenshot', (latestPath) => {
@@ -165,14 +166,19 @@ class SpecReporter extends WDIOReporter {
    */
   static writeResults(runner, results) {
     const { cid } = runner;
-    const outputDir = getOutputDir();
+    const outputDir = getOutputDir(this.outputDir);
 
     // Create the output directory if it does not already exist.
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir, { recursive: true });
     }
 
-    const fileName = path.join(outputDir, `wdio-spec-results-${cid}.json`);
+    let fileName;
+    if (runner?.launcherOptions?.cloudRegion) {
+      fileName = path.join(outputDir, `wdio-spec-results-${runner.launcherOptions.cloudRegion}-${cid}.json`);
+    } else {
+      fileName = path.join(outputDir, `wdio-spec-results-${cid}.json`);
+    }
 
     fs.writeFileSync(fileName, JSON.stringify(results, null, 2));
   }

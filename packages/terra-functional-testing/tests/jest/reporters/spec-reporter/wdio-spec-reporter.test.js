@@ -154,5 +154,18 @@ describe('Spec Reporter', () => {
       expect(fs.mkdirSync).toHaveBeenCalledWith('/mock/', { recursive: true });
       expect(fs.writeFileSync).toHaveBeenCalledWith('/mock/wdio-spec-results-0-0.json', '"mock-results"');
     });
+    it('should write the test results to file with cloud region', () => {
+      const runner = { cid: '0-0', launcherOptions: { cloudRegion: 'dev' } };
+
+      jest.spyOn(fs, 'existsSync').mockImplementationOnce(() => false);
+      jest.spyOn(fs, 'mkdirSync').mockImplementationOnce(() => {});
+      jest.spyOn(fs, 'writeFileSync').mockImplementationOnce(() => []);
+
+      SpecReporter.writeResults(runner, 'mock-results');
+
+      expect(fs.existsSync).toHaveBeenCalledWith('/mock/');
+      expect(fs.mkdirSync).toHaveBeenCalledWith('/mock/', { recursive: true });
+      expect(fs.writeFileSync).toHaveBeenCalledWith('/mock/wdio-spec-results-dev-0-0.json', '"mock-results"');
+    });
   });
 });
