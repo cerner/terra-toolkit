@@ -99,7 +99,7 @@ const writeResultsToFile = (outputDir, results, options) => {
  * @param {Object} options - Additional option data to include in the output file.
  */
 const mergeResults = (options = {}) => {
-  const outputDir = getOutputDir(options.outputDir);
+  const outputDir = getOutputDir();
 
   if (!fs.existsSync(outputDir)) {
     return;
@@ -111,7 +111,7 @@ const mergeResults = (options = {}) => {
   writeResultsToFile(outputDir, mergedResults, options);
 
   // Delete the individual spec result files.
-  cleanResults(options.outputDir);
+  cleanResults();
 };
 
 module.exports = mergeResults;

@@ -138,9 +138,8 @@ exports.config = {
   /**
    * Gets executed once before all workers get launched.
    */
-  onPrepare(config = {}) {
+  onPrepare() {
     // Clean previous reporter results.
-    console.log(`\n\nonPrepare:\n${JSON.stringify(config)}\n\n`);
     cleanResults();
   },
   /**
@@ -152,8 +151,6 @@ exports.config = {
   onComplete(_exitCode, config = {}) {
     const { launcherOptions } = config;
     const { formFactor, locale, theme } = launcherOptions || {};
-
-    console.log(`\n\nonComplete:\n${JSON.stringify(config)}\n\n`);
 
     // Merge reporter results.
     mergeResults({
