@@ -3,6 +3,7 @@
 ## Unreleased
 
 * Added
+  * Update FileOutputReporter docs to include cloudRegion
   * webpack-config-terra v2 upgrade guide.
 
 ## 1.23.0 - (July 26, 2021)

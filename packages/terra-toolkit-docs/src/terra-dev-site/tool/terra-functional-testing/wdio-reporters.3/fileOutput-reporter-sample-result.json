@@ -3,6 +3,7 @@
   "locale": "en",
   "theme": "terra-default-theme",
   "formFactor": "large",
+  "cloudRegion": "dev",
   "output": [
     "------------------------------------------------------------------\n[chrome 69.0.3497.100 Linux #1-0] Spec: /Users/sn081183/Desktop/terra/terra-toolkit/packages/terra-functional-testing/tests/wdio/dispatch-custom-event-spec.js\n[chrome 69.0.3497.100 Linux #1-0] Running: chrome (v69.0.3497.100) on Linux\n[chrome 69.0.3497.100 Linux #1-0] Session ID: 28abf34875b0ae678fd50f6219b85036\n[chrome 69.0.3497.100 Linux #1-0]\n[chrome 69.0.3497.100 Linux #1-0] dispatchCustomEvent\n[chrome 69.0.3497.100 Linux #1-0]    ✓ sends a custom event that injects a string into a paragraph\n[chrome 69.0.3497.100 Linux #1-0]\n"
   ],
