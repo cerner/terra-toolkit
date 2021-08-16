@@ -4,7 +4,7 @@ Wdio File Output Reporter is a reporter that logs wdio test output to separate f
 
 - Date and time of when the tests are started and when they are finished
 
-- Locale, Form Factor, and Theme of the tests
+- Locale, Form Factor, Theme, and Cloud Region (if provided by full stack wdio configuration) of the tests
 
 - Name of the tests and whether they've succeeded or failed
 
@@ -16,8 +16,8 @@ Wdio File Output Reporter assumes mono-repo will have packages directory in the 
 
 ## Report Format
 
-- The name of the log file for non-monorepo will be **result-\<locale>-\<theme>-\<form-factor>-\<browser>-\<cid>-\<repo-name>.json**(eg: result-en-huge-chrome-0-1-terra-toolkit-boneyard.json)
+- The name of the log file for non-monorepo will be **result-\<locale>-\<theme>-\<form-factor>-\<browser>-\<cloudRegion>-\<cid>-\<repo-name>.json**(eg: result-en-huge-chrome-dev-0-1-terra-toolkit-boneyard.json)
 
-- The name of the log file for mono-repo will be **result-\<locale>-\<theme>-\<form-factor>-\<browser>-\<cid>-\<Package-name>.json**(eg: fileOutput-en-terra-default-theme-large-chrome-1-0-terra-functional-testing.json)
+- The name of the log file for mono-repo will be **result-\<locale>-\<theme>-\<form-factor>-\<browser>-\<cloudRegion>-\<cid>-\<Package-name>.json**(eg: fileOutput-en-terra-default-theme-large-chrome-dev-1-0-terra-functional-testing.json)
 
 - Example output  [a relative link](fileOutput-reporter-sample-result.json)

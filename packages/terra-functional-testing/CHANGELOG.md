@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+  * Update fileReporter to accept outputDir config option
+
 ## 2.2.0 - (August 13, 2021)
 
 * Added

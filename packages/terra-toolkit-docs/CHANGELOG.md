@@ -13,6 +13,7 @@
   * Pulling in next mvb of webpack-config-terra.
 
 * Added
+  * Update FileOutputReporter docs to include cloudRegion
   * webpack-config-terra v2 upgrade guide.
   * Removed polyfill doc.
 

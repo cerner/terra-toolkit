@@ -14,6 +14,7 @@ describe('FileOutputReporter', () => {
           formFactor: 'tiny',
           locale: 'en',
           theme: 'default',
+          cloudRegion: 'dev',
         },
       },
     };
@@ -35,6 +36,7 @@ describe('FileOutputReporter', () => {
       expect(reporter.resultJsonObject).toHaveProperty('startDate');
       expect(reporter.resultJsonObject).toHaveProperty('endDate');
       expect(reporter.resultJsonObject).toHaveProperty('type');
+      expect(reporter.resultJsonObject).toHaveProperty('cloudRegion');
       expect(typeof reporter.resultJsonObject.output).toEqual('object');
     });
 
@@ -53,6 +55,12 @@ describe('FileOutputReporter', () => {
         fs.existsSync.mockReturnValue(false);
         const reporter = new FileOutputReporter({ writeStream: {} });
         expect(reporter.resultsDir).toEqual(expect.stringContaining('tests/wdio/reports'));
+      });
+
+      it('set provided outputDir ', () => {
+        fs.existsSync.mockReturnValue(false);
+        const reporter = new FileOutputReporter({ writeStream: {}, outputDir: 'other' });
+        expect(reporter.resultsDir).toEqual(expect.stringContaining('tests/other/reports'));
       });
     });
 
@@ -138,6 +146,22 @@ describe('FileOutputReporter', () => {
 
       expect(reporter.fileName).toEqual('fileOutput-en-default-tiny-chrome-0-1');
     });
+
+    it('sets file name with locale, theme, formFactor, browser, cloudRegion, and cid', () => {
+      const reporter = new FileOutputReporter({ writeStream: {} });
+      const options = {
+        browserName: 'chrome',
+        cid: '0-1',
+        formFactor: 'tiny',
+        locale: 'en',
+        theme: 'default',
+        cloudRegion: 'dev',
+      };
+
+      reporter.buildFileName(options);
+
+      expect(reporter.fileName).toEqual('fileOutput-en-default-tiny-chrome-dev-0-1');
+    });
   });
 
   describe('updateResultObject', () => {
@@ -200,6 +224,7 @@ describe('FileOutputReporter', () => {
           locale: 'en',
           theme: 'terra-default-theme',
           formFactor: 'small',
+          cloudRegion: 'dev',
         },
       },
     };
