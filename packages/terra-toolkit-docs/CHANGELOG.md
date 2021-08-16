@@ -2,14 +2,25 @@
 
 ## Unreleased
 
+## 2.1.0 - (August 13, 2021)
+
+* Added
+  * Added seleniumServiceUrl and port to listed parameters for terra-functional-testing.
+
+## 2.0.0 - (August 13, 2021)
+
+* Breaking
+  * Pulling in next mvb of webpack-config-terra.
+
 * Added
   * Update FileOutputReporter docs to include cloudRegion
   * webpack-config-terra v2 upgrade guide.
+  * Removed polyfill doc.
 
 ## 1.23.0 - (July 26, 2021)
 
 * Changed
-  * Minor dependency version bump
+  * Minor dependency version bump.
 
 ## 1.22.0 - (July 20, 2021)
 

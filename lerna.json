@@ -1,13 +1,5 @@
 {
   "version": "independent",
-  "command": {
-    "publish": {
-      "ignoreChanges": [
-        "packages/package-json-lint/**",
-        "packages/package-json-lint-config-terra/**"
-      ]
-    }
-  },
   "packages": [
     "packages/*"
   ]

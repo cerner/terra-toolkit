@@ -5,6 +5,12 @@
 * Changed
   * Update fileReporter to accept outputDir config option
 
+## 2.2.0 - (August 13, 2021)
+
+* Added
+  * Added seleniumServiceUrl parameter for locating selenium service.
+  * Added port parameter for specifying port mapping for the selenium service or the external selenium grid.
+
 ## 2.1.0 - (July 26, 2021)
 
 * Fixed

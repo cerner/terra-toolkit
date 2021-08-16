@@ -126,6 +126,28 @@ const cli = {
           return undefined;
         },
       },
+      seleniumServicePort: {
+        type: 'number',
+        describe: 'The port mapping for the selenium service or the external selenium grid.',
+        default: () => {
+          if (process.env.WDIO_SELENIUM_SERVICE_PORT) {
+            return process.env.WDIO_SELENIUM_SERVICE_PORT;
+          }
+
+          return undefined;
+        },
+      },
+      seleniumServiceUrl: {
+        type: 'string',
+        describe: 'The address for the selenium service.',
+        default: () => {
+          if (process.env.WDIO_SELENIUM_SERVICE_URL) {
+            return process.env.WDIO_SELENIUM_SERVICE_URL;
+          }
+
+          return undefined;
+        },
+      },
       site: {
         type: 'string',
         describe: 'A file path to a static directory of assets. When defined, an express server will launch to serve the assets and disable running webpack.',

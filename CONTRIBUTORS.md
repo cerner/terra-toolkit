@@ -30,6 +30,7 @@ Cerner Corporation
 - Alex Brisimitzakis [@AlexB98]
 - Saket Bajaj [@saket2403]
 - Kayla Barnett [@kaylabarnett]
+- Nick Williams [@QuasiGnarus]
 
 [@emilyrohrbough]: https://github.com/emilyrohrbough
 [@brettjankord]: https://github.com/bjankord
@@ -61,3 +62,4 @@ Cerner Corporation
 [@AlexB98]: https://github.com/AlexB98
 [@saket2403]: https://github.com/saket2403
 [@kaylabarnett]: https://github.com/kaylabarnett
+[@QuasiGnarus]: https://github.com/QuasiGnarus
