@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Fixed
+  * Fix build due to mdx compilation issues.
+
 ## 2.1.0 - (August 13, 2021)
 
 * Added
