@@ -6,6 +6,7 @@ Object {
   "lintMessage": "The dependencies for this project do not have the minimum versions required for no terra base peer dependencies:
   terra-action-footer@^1.0.0 does not satisfy range requirement for no terra base peer dependencies: terra-action-footer@>2.5.0",
   "severity": "warning",
+  "type": "devModule",
 }
 `;
 
@@ -87,6 +88,7 @@ Object {
   terra-toggle@3.5.0 does not satisfy range requirement for no terra base peer dependencies: terra-toggle@>3.5.0
   terra-visually-hidden-text@2.4.0 does not satisfy range requirement for no terra base peer dependencies: terra-visually-hidden-text@>2.4.0",
   "severity": "error",
+  "type": "module",
 }
 `;
 

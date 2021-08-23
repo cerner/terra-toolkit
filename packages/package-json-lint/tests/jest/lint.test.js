@@ -29,12 +29,14 @@ describe('lint', () => {
         'require-no-terra-base-peer-dependency-versions': 'error',
         'require-theme-context-versions': 'error',
       },
+      type: 'module',
     });
     getConfigForFile.mockResolvedValueOnce({
       rules: {
         'require-no-terra-base-peer-dependency-versions': 'warn',
         'require-theme-context-versions': 'warn',
       },
+      type: 'module',
     });
     getPathsForPackages.mockResolvedValueOnce([
       'path1',
@@ -104,10 +106,10 @@ describe('lint', () => {
     expect(getRuleConfig).toHaveBeenNthCalledWith(3, { rule: rules['require-no-terra-base-peer-dependency-versions'], ruleInformation: 'warn' });
     expect(getRuleConfig).toHaveBeenNthCalledWith(4, { rule: rules['require-theme-context-versions'], ruleInformation: 'warn' });
     expect(rules['require-no-terra-base-peer-dependency-versions'].create).toHaveBeenCalledTimes(1);
-    expect(rules['require-no-terra-base-peer-dependency-versions'].create).toHaveBeenCalledWith({ ruleConfig: package2RuleConfig1, report: expect.anything() });
+    expect(rules['require-no-terra-base-peer-dependency-versions'].create).toHaveBeenCalledWith({ ruleConfig: package2RuleConfig1, type: 'module', report: expect.anything() });
     expect(rules['require-theme-context-versions'].create).toHaveBeenCalledTimes(2);
-    expect(rules['require-theme-context-versions'].create).toHaveBeenCalledWith({ ruleConfig: package1RuleConfig2, report: expect.anything() });
-    expect(rules['require-theme-context-versions'].create).toHaveBeenCalledWith({ ruleConfig: package2RuleConfig2, report: expect.anything() });
+    expect(rules['require-theme-context-versions'].create).toHaveBeenCalledWith({ ruleConfig: package1RuleConfig2, type: 'module', report: expect.anything() });
+    expect(rules['require-theme-context-versions'].create).toHaveBeenCalledWith({ ruleConfig: package2RuleConfig2, type: 'module', report: expect.anything() });
     expect(mockRule1.dependencies).toHaveBeenCalledTimes(1);
     expect(mockRule1.dependencies).toHaveBeenCalledWith({ b: '1.1.1' });
     expect(mockRule2.dependencies).toHaveBeenCalledTimes(1);

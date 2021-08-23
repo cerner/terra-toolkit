@@ -6,6 +6,7 @@ Object {
   "lintMessage": "The dependencies for this project do not have the minimum versions required for theming context:
   terra-action-footer@^1.0.0 does not satisfy range requirement for theming context: terra-action-footer@>=2.42.0",
   "severity": "warning",
+  "type": "module",
 }
 `;
 
@@ -86,6 +87,7 @@ Object {
   terra-time-input@<4.29.0 does not satisfy range requirement for theming context: terra-time-input@>=4.29.0
   terra-toolbar@<1.8.0 does not satisfy range requirement for theming context: terra-toolbar@>=1.8.0",
   "severity": "error",
+  "type": "module",
 }
 `;
 
