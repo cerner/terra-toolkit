@@ -21,7 +21,7 @@ const lint = ({ packageJsonData, config }) => {
     const rule = rules[ruleId];
     const ruleConfig = getRuleConfig({ rule, ruleInformation });
     if (ruleConfig.severity !== 'off') {
-      return rule.create({ ruleConfig, report: issue => issues.push(issue) });
+      return rule.create({ ruleConfig, type: config.type, report: issue => issues.push(issue) });
     }
     return undefined;
   }).filter(rule => !!rule);

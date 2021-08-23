@@ -76,9 +76,9 @@ const versionSet = [
 ];
 
 module.exports = {
-  create: ({ ruleConfig, report }) => ({
+  create: ({ ruleConfig, type, report }) => ({
     dependencies: (dependencies) => requireVersionSet({
-      versionSet, dependencies, ruleConfig, report, lintId: 'require-theme-context-versions', messageString: 'theming context',
+      versionSet, dependencies, ruleConfig, type: type || 'devModule', report, lintId: 'require-theme-context-versions', messageString: 'theming context',
     }),
   }),
 };
