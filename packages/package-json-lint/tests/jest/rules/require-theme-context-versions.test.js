@@ -6,7 +6,7 @@ describe('require-theme-context-versions', () => {
       ruleConfig: {
         severity: 'error',
       },
-      type: 'module',
+      projectType: 'module',
     }).dependencies({});
     expect(results).toMatchSnapshot();
   });
@@ -16,7 +16,7 @@ describe('require-theme-context-versions', () => {
       ruleConfig: {
         severity: 'error',
       },
-      type: 'module',
+      projectType: 'module',
     }).dependencies({
       a: '^1.0.0',
     });
@@ -29,7 +29,7 @@ describe('require-theme-context-versions', () => {
       ruleConfig: {
         severity: 'warning',
       },
-      type: 'module',
+      projectType: 'module',
       report: (issues) => {
         results = issues;
       },
@@ -45,7 +45,7 @@ describe('require-theme-context-versions', () => {
       ruleConfig: {
         severity: 'error',
       },
-      type: 'module',
+      projectType: 'module',
       report: (issues) => {
         results = issues;
       },
@@ -131,7 +131,7 @@ describe('require-theme-context-versions', () => {
       ruleConfig: {
         severity: 'error',
       },
-      type: 'module',
+      projectType: 'module',
     }).dependencies({
       '@cerner/terra-docs': '^1.0.0',
       'terra-abstract-modal': '^3.25.0',

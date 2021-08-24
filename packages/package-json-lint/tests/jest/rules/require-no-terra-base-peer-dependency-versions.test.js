@@ -6,7 +6,7 @@ describe('require-no-terra-base-peer-dependency-versions', () => {
       ruleConfig: {
         severity: 'error',
       },
-      type: 'module',
+      projectType: 'module',
     }).dependencies({});
     expect(results).toMatchSnapshot();
   });
@@ -16,7 +16,7 @@ describe('require-no-terra-base-peer-dependency-versions', () => {
       ruleConfig: {
         severity: 'error',
       },
-      type: 'module',
+      projectType: 'module',
     }).dependencies({
       a: '^1.0.0',
     });
@@ -29,7 +29,7 @@ describe('require-no-terra-base-peer-dependency-versions', () => {
       ruleConfig: {
         severity: 'warning',
       },
-      type: 'module',
+      projectType: 'module',
       report: (issues) => {
         results = issues;
       },
@@ -45,7 +45,7 @@ describe('require-no-terra-base-peer-dependency-versions', () => {
       ruleConfig: {
         severity: 'error',
       },
-      type: 'devModule',
+      projectType: 'devModule',
       report: (issues) => {
         results = issues;
       },
@@ -132,7 +132,7 @@ describe('require-no-terra-base-peer-dependency-versions', () => {
       ruleConfig: {
         severity: 'error',
       },
-      type: 'module',
+      projectType: 'module',
     }).dependencies({
       'terra-action-footer': '^2.6.0',
       'terra-action-header': '^2.9.0',
