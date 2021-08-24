@@ -5,8 +5,8 @@ Object {
   "lintId": "require-theme-context-versions",
   "lintMessage": "The dependencies for this project do not have the minimum versions required for theming context:
   terra-action-footer@^1.0.0 does not satisfy range requirement for theming context: terra-action-footer@>=2.42.0",
+  "projectType": undefined,
   "severity": "warning",
-  "type": "module",
 }
 `;
 
@@ -86,8 +86,8 @@ Object {
   terra-text@<4.31.0 does not satisfy range requirement for theming context: terra-text@>=4.31.0
   terra-time-input@<4.29.0 does not satisfy range requirement for theming context: terra-time-input@>=4.29.0
   terra-toolbar@<1.8.0 does not satisfy range requirement for theming context: terra-toolbar@>=1.8.0",
+  "projectType": undefined,
   "severity": "error",
-  "type": "module",
 }
 `;
 

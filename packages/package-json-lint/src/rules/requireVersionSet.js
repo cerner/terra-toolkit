@@ -1,7 +1,7 @@
 const semver = require('semver');
 
 module.exports = ({
-  versionSet, dependencies, ruleConfig, type, report, lintId, messageString,
+  versionSet, dependencies, ruleConfig, projectType, report, lintId, messageString,
 }) => {
   const currentProblems = versionSet.map(({ name, versionRange }) => {
     const dependencyVersion = dependencies[name];
@@ -14,7 +14,7 @@ module.exports = ({
   if (currentProblems.length) {
     const lintMessage = `The dependencies for this project do not have the minimum versions required for ${messageString}:\n  ${currentProblems.join('\n  ')}`;
     report({
-      lintId, severity: ruleConfig.severity, lintMessage, type,
+      lintId, severity: ruleConfig.severity, lintMessage, projectType,
     });
   }
 };

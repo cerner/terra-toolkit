@@ -20,8 +20,9 @@ const lint = ({ packageJsonData, config }) => {
   const rulesToRun = Object.entries(config.rules).map(([ruleId, ruleInformation]) => {
     const rule = rules[ruleId];
     const ruleConfig = getRuleConfig({ rule, ruleInformation });
+    const projectType = config.projectType || 'module';
     if (ruleConfig.severity !== 'off') {
-      return rule.create({ ruleConfig, type: config.type, report: issue => issues.push(issue) });
+      return rule.create({ ruleConfig, projectType, report: issue => issues.push(issue) });
     }
     return undefined;
   }).filter(rule => !!rule);

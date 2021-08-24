@@ -77,9 +77,9 @@ const versionSet = [
 ];
 
 module.exports = {
-  create: ({ ruleConfig, type, report }) => ({
+  create: ({ ruleConfig, projectType, report }) => ({
     dependencies: (dependencies) => requireVersionSet({
-      versionSet, dependencies, ruleConfig, type: type || 'module', report, lintId: 'require-no-terra-base-peer-dependency-versions', messageString: 'no terra base peer dependencies',
+      versionSet, dependencies, ruleConfig, projectType, report, lintId: 'require-no-terra-base-peer-dependency-versions', messageString: 'no terra base peer dependencies',
     }),
   }),
 };

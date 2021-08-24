@@ -28,7 +28,8 @@ describe('require-no-terra-base-peer-dependency-versions', () => {
     requireNoTerraBasePeerDependencyVersions.create({
       ruleConfig: {
         severity: 'warning',
-      }, // Not sending a type in this test. The type in snapshot should be `module`.
+      },
+      type: 'module',
       report: (issues) => {
         results = issues;
       },
