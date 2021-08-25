@@ -5,6 +5,9 @@
 * Fixed
   * Update permissions on binary
 
+* Changed
+  * Remove the warning for regional locales not being there as we fall back automatically
+
 ## 2.0.1 - (January 27, 2021)
 
 * Changed
