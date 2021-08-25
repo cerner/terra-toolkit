@@ -63,15 +63,6 @@ Object.keys(testFileSystems).forEach((testFS) => {
       expect(fileContent[outputFile]).toMatch(JSON.stringify(expectedOutput, null, 2));
     });
 
-    it('logs warning when regional locale translation is missing', () => {
-      const testMessages = { en: { 'Terra.test.fixtures.test': 'Test...' }, 'en-AU': {} };
-      const testLocales = ['en', 'en-AU'];
-
-      writeAggregatedTranslations(testMessages, testLocales, fileSystem, outputDir);
-      // eslint-disable-next-line no-console
-      expect(console.warn).toBeCalledWith(expect.stringContaining('en-AU translation missing for Terra.test.fixtures.test, en translation string will be used instead.'));
-    });
-
     it('throws an error if a locale was not aggregated on', () => {
       const errorRegex = /Translations aggregated for es locale, but messages were not loaded correctly./;
       expect(() => writeAggregatedTranslations({ en: {}, 'en-US': {} }, locales, fileSystem, outputDir)).toThrowError(errorRegex);
