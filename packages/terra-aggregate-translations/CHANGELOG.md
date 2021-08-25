@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.1.0 - (August 25, 2021)
+
 * Fixed
   * Update permissions on binary
 
