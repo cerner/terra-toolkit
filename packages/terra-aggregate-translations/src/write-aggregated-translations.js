@@ -20,13 +20,6 @@ const writeAggregatedTranslations = (aggregatedMessages, locales, fileSystem, ou
       if (region) {
         const baseLocaleMessages = aggregatedMessages[baseLocale];
         if (baseLocaleMessages) {
-          Object.keys(baseLocaleMessages).forEach((key) => {
-            if (messages[key] === undefined) {
-              /* eslint-disable-next-line no-console */
-              console.warn(chalk.yellow(`${locale} translation missing for ${key}, ${baseLocale} translation string will be used instead.`));
-            }
-          });
-
           // Merge base locale messages into regional locale messages, regional locale messages listed last so they will take precedence.
           mergedMessages = { ...baseLocaleMessages, ...messages };
         }
