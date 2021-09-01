@@ -34,7 +34,7 @@
   },
   "package-json-lint": {
     "extends": "./packages/package-json-lint-config-terra/package-json-lint.config.js",
-    "projectType": "module"
+    "projectType": "devModule"
   },
   "eslintConfig": {
     "extends": "./packages/eslint-config-terra/eslint.config.js",
