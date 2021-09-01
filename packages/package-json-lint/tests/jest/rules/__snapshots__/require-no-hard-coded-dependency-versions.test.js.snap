@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`require-no-hard-coded-dependency-versions when projectType is application succeeds when there are hardcoded dependencies 1`] = `undefined`;
+
+exports[`require-no-hard-coded-dependency-versions when projectType is application succeeds when there are no hardcoded dependencies 1`] = `undefined`;
+
+exports[`require-no-hard-coded-dependency-versions when projectType is devModule fails when there are hardcoded dependencies 1`] = `
+Object {
+  "lintId": "require-no-hard-coded-dependency-versions",
+  "lintMessage": "The dependencies for this project have hard-coded versions for no hard coded dependency:
+  a@1.0.0 does not satisfy requirement for no hard coded dependency",
+  "projectType": "devModule",
+  "severity": "error",
+}
+`;
+
+exports[`require-no-hard-coded-dependency-versions when projectType is devModule succeeds when there are no hardcoded dependencies 1`] = `undefined`;
+
+exports[`require-no-hard-coded-dependency-versions when projectType is module fails when there are hardcoded dependencies 1`] = `
+Object {
+  "lintId": "require-no-hard-coded-dependency-versions",
+  "lintMessage": "The dependencies for this project have hard-coded versions for no hard coded dependency:
+  a@1.0.0 does not satisfy requirement for no hard coded dependency",
+  "projectType": "module",
+  "severity": "error",
+}
+`;
+
+exports[`require-no-hard-coded-dependency-versions when projectType is module succeeds when there are no hardcoded dependencies 1`] = `undefined`;
