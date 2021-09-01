@@ -2,7 +2,7 @@ module.exports = {
   create: ({ ruleConfig, projectType, report }) => ({
     dependencies: (dependencies) => {
       if (projectType === 'module' || projectType === 'devModule') {
-        const messageString = 'no hard coded dependency version';
+        const messageString = 'no hard coded dependency';
         const currentProblems = Object.keys(dependencies).map(dependencyName => {
           const dependencyVersion = dependencies[dependencyName];
           if (!dependencyVersion.startsWith('^')) {
