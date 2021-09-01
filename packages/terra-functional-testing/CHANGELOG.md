@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+  * Updated to set screenshots using the viewport size instead of the browser's window size to maintain consistent screenshot dimensions in IE.
+
 ## 2.3.0 - (August 17, 2021)
 
 * Changed
