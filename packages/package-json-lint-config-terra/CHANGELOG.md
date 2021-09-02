@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+  * Updated `severity` to be an object with `severityType` and `allowList`.
+
 * Added
   * Added new rule `require-no-hard-coded-dependency-versions`.
 

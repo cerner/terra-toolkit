@@ -34,7 +34,10 @@
   },
   "package-json-lint": {
     "extends": "./packages/package-json-lint-config-terra/package-json-lint.config.js",
-    "projectType": "devModule"
+    "projectType": "devModule",
+    "rules": {
+      "require-no-hard-coded-dependency-versions": {"severityType": "error",  "allowList": ["eslint-plugin-react", "axe-core"] }
+    }
   },
   "eslintConfig": {
     "extends": "./packages/eslint-config-terra/eslint.config.js",

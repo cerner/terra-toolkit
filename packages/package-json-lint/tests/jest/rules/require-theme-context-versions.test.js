@@ -4,7 +4,9 @@ describe('require-theme-context-versions', () => {
   it('succeeds when there are no dependencies', () => {
     const results = requireThemeContextVersions.create({
       ruleConfig: {
-        severity: 'error',
+        severity: {
+          severityType: 'error',
+        },
       },
       projectType: 'module',
     }).dependencies({});
@@ -14,7 +16,9 @@ describe('require-theme-context-versions', () => {
   it('succeeds when there are dependencies not in the list to check', () => {
     const results = requireThemeContextVersions.create({
       ruleConfig: {
-        severity: 'error',
+        severity: {
+          severityType: 'error',
+        },
       },
       projectType: 'module',
     }).dependencies({
@@ -27,7 +31,9 @@ describe('require-theme-context-versions', () => {
     let results;
     requireThemeContextVersions.create({
       ruleConfig: {
-        severity: 'warning',
+        severity: {
+          severityType: 'warning',
+        },
       },
       projectType: 'module',
       report: (issues) => {
@@ -43,7 +49,9 @@ describe('require-theme-context-versions', () => {
     let results;
     requireThemeContextVersions.create({
       ruleConfig: {
-        severity: 'error',
+        severity: {
+          severityType: 'error',
+        },
       },
       projectType: 'module',
       report: (issues) => {
@@ -129,7 +137,9 @@ describe('require-theme-context-versions', () => {
   it('passes when all versions meet the required version', () => {
     const results = requireThemeContextVersions.create({
       ruleConfig: {
-        severity: 'error',
+        severity: {
+          severityType: 'error',
+        },
       },
       projectType: 'module',
     }).dependencies({
@@ -205,6 +215,21 @@ describe('require-theme-context-versions', () => {
       'terra-text': '^4.31.0',
       'terra-time-input': '^4.29.0',
       'terra-toolbar': '^1.8.0',
+    });
+    expect(results).toMatchSnapshot();
+  });
+
+  it('succeeds when versions do not meet the required version but package is passed in allowList', () => {
+    const results = requireThemeContextVersions.create({
+      ruleConfig: {
+        severity: {
+          severityType: 'error',
+          allowList: ['terra-action-footer'],
+        },
+      },
+      projectType: 'module',
+    }).dependencies({
+      'terra-action-footer': '^1.0.0',
     });
     expect(results).toMatchSnapshot();
   });

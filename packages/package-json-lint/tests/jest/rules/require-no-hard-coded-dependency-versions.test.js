@@ -5,7 +5,9 @@ describe('require-no-hard-coded-dependency-versions', () => {
     it('succeeds when there are hardcoded dependencies', () => {
       const results = requireNoTerraBasePeerDependencyVersions.create({
         ruleConfig: {
-          severity: 'error',
+          severity: {
+            severityType: 'error',
+          },
         },
         projectType: 'application',
       }).dependencies({
@@ -16,7 +18,9 @@ describe('require-no-hard-coded-dependency-versions', () => {
     it('succeeds when there are no hardcoded dependencies', () => {
       const results = requireNoTerraBasePeerDependencyVersions.create({
         ruleConfig: {
-          severity: 'error',
+          severity: {
+            severityType: 'error',
+          },
         },
         projectType: 'application',
       }).dependencies({
@@ -31,7 +35,9 @@ describe('require-no-hard-coded-dependency-versions', () => {
       let results;
       requireNoTerraBasePeerDependencyVersions.create({
         ruleConfig: {
-          severity: 'error',
+          severity: {
+            severityType: 'error',
+          },
         },
         projectType: 'module',
         report: (issues) => {
@@ -45,7 +51,9 @@ describe('require-no-hard-coded-dependency-versions', () => {
     it('succeeds when there are no hardcoded dependencies', () => {
       let results = requireNoTerraBasePeerDependencyVersions.create({
         ruleConfig: {
-          severity: 'error',
+          severity: {
+            severityType: 'error',
+          },
         },
         projectType: 'module',
         report: (issues) => {
@@ -63,7 +71,9 @@ describe('require-no-hard-coded-dependency-versions', () => {
       let results;
       requireNoTerraBasePeerDependencyVersions.create({
         ruleConfig: {
-          severity: 'error',
+          severity: {
+            severityType: 'error',
+          },
         },
         projectType: 'devModule',
         report: (issues) => {
@@ -77,7 +87,9 @@ describe('require-no-hard-coded-dependency-versions', () => {
     it('succeeds when there are no hardcoded dependencies', () => {
       const results = requireNoTerraBasePeerDependencyVersions.create({
         ruleConfig: {
-          severity: 'error',
+          severity: {
+            severityType: 'error',
+          },
         },
         projectType: 'devModule',
       }).dependencies({
@@ -85,5 +97,24 @@ describe('require-no-hard-coded-dependency-versions', () => {
       });
       expect(results).toMatchSnapshot();
     });
+  });
+
+  it('succeeds when hardcoded dependency is passed in the allowList', () => {
+    let results;
+    requireNoTerraBasePeerDependencyVersions.create({
+      ruleConfig: {
+        severity: {
+          severityType: 'error',
+          allowList: ['a'],
+        },
+      },
+      projectType: 'devModule',
+      report: (issues) => {
+        results = issues;
+      },
+    }).dependencies({
+      a: '1.0.0',
+    });
+    expect(results).toMatchSnapshot();
   });
 });

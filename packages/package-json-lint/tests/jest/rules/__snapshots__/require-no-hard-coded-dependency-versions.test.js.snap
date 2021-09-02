@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`require-no-hard-coded-dependency-versions succeeds when hardcoded dependency is passed in the allowList 1`] = `undefined`;
+
 exports[`require-no-hard-coded-dependency-versions when projectType is application succeeds when there are hardcoded dependencies 1`] = `undefined`;
 
 exports[`require-no-hard-coded-dependency-versions when projectType is application succeeds when there are no hardcoded dependencies 1`] = `undefined`;

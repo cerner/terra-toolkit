@@ -6,7 +6,9 @@ Object {
   "lintMessage": "The dependencies for this project do not have the minimum versions required for no terra base peer dependencies:
   terra-action-footer@^1.0.0 does not satisfy range requirement for no terra base peer dependencies: terra-action-footer@>2.5.0",
   "projectType": "module",
-  "severity": "warning",
+  "severity": Object {
+    "severityType": "warning",
+  },
 }
 `;
 
@@ -88,7 +90,9 @@ Object {
   terra-toggle@3.5.0 does not satisfy range requirement for no terra base peer dependencies: terra-toggle@>3.5.0
   terra-visually-hidden-text@2.4.0 does not satisfy range requirement for no terra base peer dependencies: terra-visually-hidden-text@>2.4.0",
   "projectType": "devModule",
-  "severity": "error",
+  "severity": Object {
+    "severityType": "error",
+  },
 }
 `;
 
@@ -97,3 +101,5 @@ exports[`require-no-terra-base-peer-dependency-versions passes when all versions
 exports[`require-no-terra-base-peer-dependency-versions succeeds when there are dependencies not in the list to check 1`] = `undefined`;
 
 exports[`require-no-terra-base-peer-dependency-versions succeeds when there are no dependencies 1`] = `undefined`;
+
+exports[`require-no-terra-base-peer-dependency-versions succeeds when versions do not meet the required version but package is passed in allowList 1`] = `undefined`;

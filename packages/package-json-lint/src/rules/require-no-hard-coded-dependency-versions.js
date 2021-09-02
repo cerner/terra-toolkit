@@ -5,7 +5,7 @@ module.exports = {
         const messageString = 'no hard coded dependency';
         const currentProblems = Object.keys(dependencies).map(dependencyName => {
           const dependencyVersion = dependencies[dependencyName];
-          if (!dependencyVersion.startsWith('^')) {
+          if (!dependencyVersion.startsWith('^') && !(ruleConfig.severity.allowList && ruleConfig.severity.allowList.includes(dependencyName))) {
             return `${dependencyName}@${dependencyVersion} does not satisfy requirement for ${messageString}`;
           }
           return undefined;
@@ -14,7 +14,7 @@ module.exports = {
         if (currentProblems.length) {
           const lintMessage = `The dependencies for this project have hard-coded versions for ${messageString}:\n  ${currentProblems.join('\n  ')}`;
           report({
-            lintId: 'require-no-hard-coded-dependency-versions', severity: ruleConfig.severity, lintMessage, projectType,
+            lintId: 'require-no-hard-coded-dependency-versions', severity: ruleConfig.severity.severityType, lintMessage, projectType,
           });
         }
       }
