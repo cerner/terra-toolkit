@@ -12,7 +12,7 @@ const TERRA_VIEWPORTS = {
     height: 768,
   },
   large: {
-    width: 1020,
+    width: 1000,
     height: 768,
   },
   huge: {
