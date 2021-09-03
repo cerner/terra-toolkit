@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 2.4.0 - (September 2, 2021)
+
+* Removed
+  * Removed sections in the V2 upgrade guide that reference large viewport size change and the need to regenerate screenshots because these changes have been reverted.
+
 ## 2.3.0 - (August 25, 2021)
 
 * Changed

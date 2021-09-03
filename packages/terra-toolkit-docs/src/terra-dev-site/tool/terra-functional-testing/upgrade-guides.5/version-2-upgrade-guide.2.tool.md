@@ -17,10 +17,6 @@ If you are using `@cerner/terra-functional-testing` along with it's `wdio.config
 
 WDIO v7 updates to fibers v5 which drops support for Node 10. Node 12 and above are recommended.
 
-### Large viewport testing size increased
-
-The large viewport testing size was increased from `1000` to `1020` to account for IE scrollbar.
-
 #### Update package.json
 
 You will need to update the `@cerner/terra-functional-testing` version in your `package.json`:
@@ -34,7 +30,3 @@ You will need to update the `@cerner/terra-functional-testing` version in your `
   }
 }
 ```
-
-#### Regenerate screenshots
-
-Screenshots for the `large` viewport tests will need to be regenerated due to the screen size increase.
