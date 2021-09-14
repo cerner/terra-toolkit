@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+  * When parsing translation files, only warn when the JSON is invalid or the base file isn't there.
+
 ## 2.1.0 - (August 25, 2021)
 
 * Fixed
