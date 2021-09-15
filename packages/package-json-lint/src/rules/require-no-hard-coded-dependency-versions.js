@@ -1,3 +1,11 @@
+const documentation = {
+  ruleName: 'require-no-hard-coded-dependency-versions',
+  severityType: ['error', 'warn'],
+  required: false,
+  default: 'error',
+  description: "This rule doesn't allow any hard-coded dependencies to be passed in the package-json. Only applies for module and devModule",
+};
+
 module.exports = {
   create: ({ ruleConfig, projectType, report }) => ({
     dependencies: (dependencies) => {
@@ -22,4 +30,5 @@ module.exports = {
       }
     },
   }),
+  documentation,
 };

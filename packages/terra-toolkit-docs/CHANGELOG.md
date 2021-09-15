@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Added
+  * Added documentation for `package-json-lint`.
+
 ## 2.4.0 - (September 2, 2021)
 
 * Removed

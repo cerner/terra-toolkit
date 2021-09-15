@@ -1,0 +1,32 @@
+import { Badge } from '@cerner/package-json-lint/package.json?dev-site-package';
+
+<Badge />
+
+# Package Json Lint
+The package provide lint rules that can be used to flag problems that are present in a package.json.
+
+
+## Installation
+
+To install the module:
+
+```shell
+npm install @cerner/package-json-lint --save-dev
+npm install @cerner/package-json-lint-config-terra --save-dev
+```
+
+## Usage
+
+### package.json
+```js
+  "package-json-lint": {
+    "extends": "./packages/package-json-lint-config-terra/package-json-lint.config.js",
+    "projectType": "devModule | module | application",
+  },
+```
+
+### npm script
+
+```js
+"lint:package-json": "npm run terra -- package-json-lint",
+```
