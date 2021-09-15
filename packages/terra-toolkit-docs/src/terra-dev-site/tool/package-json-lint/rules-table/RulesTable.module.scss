@@ -1,10 +1,8 @@
 @import '@cerner/terra-dev-site/lib/mdx/MarkdownTags.module';
-// @import './clinical-lowlight-theme/PropsTable.module';
-// @import './orion-fusion-theme/PropsTable.module';
 
 :local {
   .required {
-    color: #d53040;
+    color: #d53040 !important;
   }
 
   .props-tr {
@@ -18,11 +16,11 @@
   }
 
   .tr {
-    background-color: var(--terra-dev-site-props-table-tr-background-color, #fff);
+    background-color: #fff;
     border-top: 1px solid #c6cbd1;
   }
 
   .tr:nth-child(2n) {
-    background-color: var(--terra-dev-site-props-table-tr-alt-background-color, #f6f8fa);
+    background-color: #f6f8fa;
   }
 }

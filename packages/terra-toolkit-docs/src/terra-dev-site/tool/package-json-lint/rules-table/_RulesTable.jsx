@@ -60,7 +60,7 @@ const RulesTable = () => {
                 {row.required ? 'required' : 'optional'}
               </Cell>
               <Cell className={cx(['td', 'props-td'])}>
-                {row.default}
+                {row.defaultValue}
               </Cell>
               <Cell className={cx(['td', 'props-td'])}>
                 {row.description}

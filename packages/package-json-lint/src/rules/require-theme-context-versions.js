@@ -79,7 +79,7 @@ const documentation = {
   ruleName: 'require-theme-context-versions',
   severityType: ['error', 'warn'],
   required: false,
-  default: 'warn',
+  defaultValue: 'warn',
   description: "This rule doesn't allow to use terra packages versions that don't use terra-theme-context as a Dependency",
 };
 

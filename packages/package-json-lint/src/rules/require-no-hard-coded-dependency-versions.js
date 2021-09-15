@@ -1,8 +1,8 @@
 const documentation = {
   ruleName: 'require-no-hard-coded-dependency-versions',
   severityType: ['error', 'warn'],
-  required: false,
-  default: 'error',
+  required: true,
+  defaultValue: 'error',
   description: "This rule doesn't allow any hard-coded dependencies to be passed in the package-json. Only applies for module and devModule",
 };
 
