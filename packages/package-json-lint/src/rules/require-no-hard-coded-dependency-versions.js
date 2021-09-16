@@ -3,7 +3,7 @@ const documentation = {
   severityType: ['error', 'warn'],
   required: true,
   defaultValue: 'error',
-  description: "This rule doesn't allow any hard-coded dependencies to be passed in the package-json. Only applies for module and devModule",
+  description: "This rule doesn't allow any hard-coded dependencies to be passed in the package.json. Only applies for module and devModule.",
 };
 
 module.exports = {

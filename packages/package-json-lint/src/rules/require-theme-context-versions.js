@@ -80,7 +80,7 @@ const documentation = {
   severityType: ['error', 'warn'],
   required: false,
   defaultValue: 'warn',
-  description: "This rule doesn't allow to use terra packages versions that don't use terra-theme-context as a Dependency",
+  description: "This rule doesn't allow to use terra packages versions that don't use terra-theme-context as a Dependency.",
 };
 
 module.exports = {

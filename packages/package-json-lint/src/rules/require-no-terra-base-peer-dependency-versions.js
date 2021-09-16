@@ -81,7 +81,7 @@ const documentation = {
   severityType: ['error', 'warn'],
   required: false,
   defaultValue: 'warn',
-  description: "This rule doesn't allow to use terra packages versions that use terra-base as a peerDependency",
+  description: "This rule doesn't allow to use terra packages versions that use terra-base as a peerDependency.",
 };
 
 module.exports = {
