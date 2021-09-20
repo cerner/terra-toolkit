@@ -78,8 +78,6 @@ const versionSet = [
 
 const documentation = {
   ruleName: 'require-no-terra-base-peer-dependency-versions',
-  severityType: ['error', 'warn'],
-  required: false,
   defaultValue: 'warn',
   description: "This rule doesn't allow to use terra packages versions that use terra-base as a peerDependency.",
 };

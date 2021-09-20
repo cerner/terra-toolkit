@@ -38,9 +38,6 @@ const RulesTable = () => {
             Severity Type
           </HeaderCell>
           <HeaderCell className={cx('th')}>
-            Required
-          </HeaderCell>
-          <HeaderCell className={cx('th')}>
             Default
           </HeaderCell>
           <HeaderCell className={cx('th')}>
@@ -54,10 +51,7 @@ const RulesTable = () => {
                 {row.ruleName}
               </Cell>
               <Cell className={cx(['td', 'props-td'])}>
-                {`[${row.severityType}]`}
-              </Cell>
-              <Cell className={cx(['td', 'props-td', row.required ? ['required'] : []])}>
-                {row.required ? 'required' : 'optional'}
+                string
               </Cell>
               <Cell className={cx(['td', 'props-td'])}>
                 {row.defaultValue}
