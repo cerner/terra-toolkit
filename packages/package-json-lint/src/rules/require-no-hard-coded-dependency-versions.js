@@ -1,3 +1,5 @@
+const semver = require('semver');
+
 const documentation = {
   ruleName: 'require-no-hard-coded-dependency-versions',
   defaultValue: 'error',
@@ -7,12 +9,11 @@ const documentation = {
 module.exports = {
   create: ({ ruleConfig, projectType, report }) => ({
     dependencies: (dependencies) => {
-      const compatibleVersionRegexList = ['dev', 'latest', 'main', 'master', /(\^|<|<=|>|>=|~)\s{0,1}\d/, /^x\.|\.x\.|\.x$/, /[\d.]{0,2}\d\s{0,1}-\s{0,1}[\d.]{0,2}\d/];
       if (projectType === 'module' || projectType === 'devModule') {
         const messageString = 'require-no-hard-coded-dependency-versions';
         const currentProblems = Object.keys(dependencies).map(dependencyName => {
           const dependencyVersion = dependencies[dependencyName];
-          const isCompatibleVersion = compatibleVersionRegexList.map(versionRegex => (!!dependencyVersion.match(versionRegex))).includes(true);
+          const isCompatibleVersion = semver.clean(dependencyVersion) === null;
           if (!isCompatibleVersion && !(ruleConfig.severity.allowList && ruleConfig.severity.allowList.includes(dependencyName))) {
             return `${dependencyName}@${dependencyVersion} does not satisfy requirement for the ${messageString} rule.`;
           }
