@@ -4,7 +4,9 @@ describe('require-no-terra-base-peer-dependency-versions', () => {
   it('succeeds when there are no dependencies', () => {
     const results = requireNoTerraBasePeerDependencyVersions.create({
       ruleConfig: {
-        severity: 'error',
+        severity: {
+          severityType: 'error',
+        },
       },
       projectType: 'module',
     }).dependencies({});
@@ -14,7 +16,9 @@ describe('require-no-terra-base-peer-dependency-versions', () => {
   it('succeeds when there are dependencies not in the list to check', () => {
     const results = requireNoTerraBasePeerDependencyVersions.create({
       ruleConfig: {
-        severity: 'error',
+        severity: {
+          severityType: 'error',
+        },
       },
       projectType: 'module',
     }).dependencies({
@@ -27,7 +31,9 @@ describe('require-no-terra-base-peer-dependency-versions', () => {
     let results;
     requireNoTerraBasePeerDependencyVersions.create({
       ruleConfig: {
-        severity: 'warning',
+        severity: {
+          severityType: 'warning',
+        },
       },
       projectType: 'module',
       report: (issues) => {
@@ -43,7 +49,9 @@ describe('require-no-terra-base-peer-dependency-versions', () => {
     let results;
     requireNoTerraBasePeerDependencyVersions.create({
       ruleConfig: {
-        severity: 'error',
+        severity: {
+          severityType: 'error',
+        },
       },
       projectType: 'devModule',
       report: (issues) => {
@@ -130,7 +138,9 @@ describe('require-no-terra-base-peer-dependency-versions', () => {
   it('passes when all versions meet the required version', () => {
     const results = requireNoTerraBasePeerDependencyVersions.create({
       ruleConfig: {
-        severity: 'error',
+        severity: {
+          severityType: 'error',
+        },
       },
       projectType: 'module',
     }).dependencies({
@@ -207,6 +217,21 @@ describe('require-no-terra-base-peer-dependency-versions', () => {
       'terra-toggle-section-header': '^2.6.0',
       'terra-toggle': '^3.6.0',
       'terra-visually-hidden-text': '^2.5.0',
+    });
+    expect(results).toMatchSnapshot();
+  });
+
+  it('succeeds when versions do not meet the required version but package is passed in allowList', () => {
+    const results = requireNoTerraBasePeerDependencyVersions.create({
+      ruleConfig: {
+        severity: {
+          severityType: 'error',
+          allowList: ['terra-action-footer'],
+        },
+      },
+      projectType: 'module',
+    }).dependencies({
+      'terra-action-footer': '^1.0.0',
     });
     expect(results).toMatchSnapshot();
   });

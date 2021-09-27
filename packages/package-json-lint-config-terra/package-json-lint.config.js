@@ -1,7 +1,8 @@
 module.exports = {
   rules: {
-    'require-no-terra-base-peer-dependency-versions': 'warn',
-    'require-theme-context-versions': 'warn',
-    'require-no-unnecessary-dependencies': 'warn',
+    'require-no-hard-coded-dependency-versions': { severityType: 'error' },
+    'require-no-terra-base-peer-dependency-versions': { severityType: 'warn' },
+    'require-theme-context-versions': { severityType: 'warn' },
+    'require-no-unnecessary-dependencies': { severityType: 'warn' },
   },
 };

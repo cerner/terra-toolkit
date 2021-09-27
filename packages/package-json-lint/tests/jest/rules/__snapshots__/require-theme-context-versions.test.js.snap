@@ -6,7 +6,9 @@ Object {
   "lintMessage": "The dependencies for this project do not have the minimum versions required for theming context:
   terra-action-footer@^1.0.0 does not satisfy range requirement for theming context: terra-action-footer@>=2.42.0",
   "projectType": "module",
-  "severity": "warning",
+  "severity": Object {
+    "severityType": "warning",
+  },
 }
 `;
 
@@ -87,7 +89,9 @@ Object {
   terra-time-input@<4.29.0 does not satisfy range requirement for theming context: terra-time-input@>=4.29.0
   terra-toolbar@<1.8.0 does not satisfy range requirement for theming context: terra-toolbar@>=1.8.0",
   "projectType": "module",
-  "severity": "error",
+  "severity": Object {
+    "severityType": "error",
+  },
 }
 `;
 
@@ -96,3 +100,5 @@ exports[`require-theme-context-versions passes when all versions meet the requir
 exports[`require-theme-context-versions succeeds when there are dependencies not in the list to check 1`] = `undefined`;
 
 exports[`require-theme-context-versions succeeds when there are no dependencies 1`] = `undefined`;
+
+exports[`require-theme-context-versions succeeds when versions do not meet the required version but package is passed in allowList 1`] = `undefined`;

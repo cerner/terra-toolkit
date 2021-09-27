@@ -33,7 +33,18 @@
     "url": "https://github.com/cerner/terra-toolkit/issues"
   },
   "package-json-lint": {
-    "extends": "./packages/package-json-lint-config-terra/package-json-lint.config.js"
+    "extends": "./packages/package-json-lint-config-terra/package-json-lint.config.js",
+    "projectType": "devModule",
+    "rules": {
+      "require-no-hard-coded-dependency-versions": {
+        "severityType": "error",
+        "allowList": [
+          "eslint-plugin-react",
+          "axe-core",
+          "inquirer"
+        ]
+      }
+    }
   },
   "eslintConfig": {
     "extends": "./packages/eslint-config-terra/eslint.config.js",

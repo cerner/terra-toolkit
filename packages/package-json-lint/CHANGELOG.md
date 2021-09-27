@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Added
+  * Added new rule `require-no-hard-coded-dependency-versions`.
+
 ## 1.1.0 - (August 31, 2021)
 
 * Added

@@ -76,10 +76,17 @@ const versionSet = [
   { name: 'terra-visually-hidden-text', versionRange: '>2.4.0' },
 ];
 
+const documentation = {
+  ruleName: 'require-no-terra-base-peer-dependency-versions',
+  defaultValue: 'warn',
+  description: "This rule doesn't allow to use terra packages versions that use terra-base as a peerDependency.",
+};
+
 module.exports = {
   create: ({ ruleConfig, projectType, report }) => ({
     dependencies: (dependencies) => requireVersionSet({
       versionSet, dependencies, ruleConfig, projectType, report, lintId: 'require-no-terra-base-peer-dependency-versions', messageString: 'no terra base peer dependencies',
     }),
   }),
+  documentation,
 };

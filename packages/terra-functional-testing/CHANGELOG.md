@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Added
+  * Added hard-coded dependency `inquirer@8.1.3`. As latest i.e. v8.1.4 is using a dependency which is supported by node 14.
+
 ## 2.4.0 - (September 2, 2021)
 
 * Changed
