@@ -83,7 +83,7 @@ module.exports = {
     report,
   }) => ({
     dependencies: (dependencies) => {
-      const messageString = 'require-no-unnecessary-dependencies';
+      const messageString = 'require-no-unnecessary-dependency';
       if (projectType !== 'devModule') {
         const currentProblems = Object.keys(dependencies).map((dependency) => {
           const dependencyVersion = dependencies[dependency];
@@ -105,7 +105,7 @@ module.exports = {
       }
     },
     peerDependencies: (peerDependencies) => {
-      const messageString = 'require-no-unnecessary-dependencies';
+      const messageString = 'require-no-unnecessary-dependency';
       if (projectType !== 'devModule') {
         const currentProblems = Object.keys(peerDependencies).map((dependency) => {
           const dependencyVersion = peerDependencies[dependency];

@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Added
+  * Added new rule `require-no-unnecessary-dependency`.
+
 * Changed
   * Updated `severity` to be an object with `severityType` and `allowList`.
 
