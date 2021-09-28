@@ -32,7 +32,7 @@ describe('require-no-terra-base-peer-dependency-versions', () => {
     requireNoTerraBasePeerDependencyVersions.create({
       ruleConfig: {
         severity: {
-          severityType: 'warning',
+          severityType: 'warn',
         },
       },
       projectType: 'module',

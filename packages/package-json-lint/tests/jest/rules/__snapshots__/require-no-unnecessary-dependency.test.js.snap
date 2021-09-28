@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`require-no-unnecessary-dependency when projectType is application fails as a warning when there unnecessary dependencies/peerDependencies 1`] = `
+Array [
+  Object {
+    "lintId": "require-no-unnecessary-dependencies",
+    "lintMessage": "This project has unnecessary dependencies that violates the require-no-unnecessary-dependencies rule:
+  @cerner/webpack-config-terra@^2.0.0 does not satisfy requirement for require-no-unnecessary-dependencies rule.",
+    "projectType": "application",
+    "severity": "warn",
+  },
+  Object {
+    "lintId": "require-no-unnecessary-dependencies",
+    "lintMessage": "This project has unnecessary peerDependencies that violates the require-no-unnecessary-dependencies rule:
+  jest@^26.6.2 does not satisfy requirement for require-no-unnecessary-dependencies rule.",
+    "projectType": "application",
+    "severity": "warn",
+  },
+]
+`;
+
+exports[`require-no-unnecessary-dependency when projectType is application succeeds when there are no unnecessary dependencies/peerDependencies 1`] = `Array []`;
+
+exports[`require-no-unnecessary-dependency when projectType is application succeeds when unnecessary dependencies/peerDependencies are passed in the allowList 1`] = `Array []`;
+
+exports[`require-no-unnecessary-dependency when projectType is devModule succeeds when there no unnecessary dependencies/peerDependencies 1`] = `Array []`;
+
+exports[`require-no-unnecessary-dependency when projectType is devModule succeeds when there unnecessary dependencies/peerDependencies 1`] = `Array []`;
+
+exports[`require-no-unnecessary-dependency when projectType is module fails as a warning when there unnecessary dependencies/peerDependencies 1`] = `
+Array [
+  Object {
+    "lintId": "require-no-unnecessary-dependencies",
+    "lintMessage": "This project has unnecessary dependencies that violates the require-no-unnecessary-dependencies rule:
+  @cerner/webpack-config-terra@^2.0.0 does not satisfy requirement for require-no-unnecessary-dependencies rule.",
+    "projectType": "module",
+    "severity": "warn",
+  },
+  Object {
+    "lintId": "require-no-unnecessary-dependencies",
+    "lintMessage": "This project has unnecessary peerDependencies that violates the require-no-unnecessary-dependencies rule:
+  jest@^26.6.2 does not satisfy requirement for require-no-unnecessary-dependencies rule.",
+    "projectType": "module",
+    "severity": "warn",
+  },
+]
+`;
+
+exports[`require-no-unnecessary-dependency when projectType is module succeeds when there are no unnecessary dependencies/peerDependencies 1`] = `Array []`;

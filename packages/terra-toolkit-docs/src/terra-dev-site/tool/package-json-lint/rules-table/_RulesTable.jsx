@@ -15,12 +15,14 @@ import styles from './RulesTable.module.scss';
 const requireNoTerraBasePeerDependencyVersions = require('@cerner/package-json-lint/lib/rules/require-no-terra-base-peer-dependency-versions');
 const requireNoHardCodedDependencyVersions = require('@cerner/package-json-lint/lib/rules/require-no-hard-coded-dependency-versions');
 const requireThemeContextVersions = require('@cerner/package-json-lint/lib/rules/require-theme-context-versions');
+const requireNoUnnecessaryDependency = require('@cerner/package-json-lint/lib/rules/require-no-unnecessary-dependency');
 
 const cx = classNames.bind(styles);
 
 const rows = [
   requireNoHardCodedDependencyVersions.documentation,
   requireNoTerraBasePeerDependencyVersions.documentation,
+  requireNoUnnecessaryDependency.documentation,
   requireThemeContextVersions.documentation,
 ];
 
