@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.1.0 - (September 28, 2021)
+
 * Changed
   * Updated `severity` to be an object with `severityType` and `allowList`.
 
