@@ -4,7 +4,7 @@ exports[`require-ie10-compatible-dependency-versions fails as a warning when ver
 Object {
   "lintId": "require-ie10-compatible-dependency-versions",
   "lintMessage": "The dependencies for this project do not satisfy the requirement for require-ie10-compatible-dependency-versions:
-  redux@^5.0.0 does not satisfy IE compatibility for require-ie10-compatible-dependency-versions: redux@>=4.0.0",
+  redux@^5.0.0 does not satisfy IE10 compatibility for require-ie10-compatible-dependency-versions. **Note** Use redux@3.7.2 or lower instead.",
   "projectType": "module",
   "severity": Object {
     "severityType": "warn",
@@ -16,7 +16,7 @@ exports[`require-ie10-compatible-dependency-versions fails when versions do not 
 Object {
   "lintId": "require-ie10-compatible-dependency-versions",
   "lintMessage": "The dependencies for this project do not satisfy the requirement for require-ie10-compatible-dependency-versions:
-  uuid@7.x.x does not satisfy IE compatibility for require-ie10-compatible-dependency-versions: uuid@>=7.0.0",
+  uuid@7.x.x does not satisfy IE10 compatibility for require-ie10-compatible-dependency-versions. **Note** Use uuid@3.4.0 or lower instead.",
   "projectType": "devModule",
   "severity": Object {
     "severityType": "error",
