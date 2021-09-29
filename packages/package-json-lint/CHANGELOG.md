@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Added
+  * Added new rule `require-ie10-compatible-dependency-versions`.
+
 ## 1.2.0 - (September 28, 2021)
 
 * Added

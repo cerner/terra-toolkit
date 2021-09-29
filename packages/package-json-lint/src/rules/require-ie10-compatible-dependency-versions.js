@@ -1,0 +1,37 @@
+const semver = require('semver');
+
+const versionSet = [
+  { name: 'redux', versionRange: '>=4.0.0' },
+  { name: 'axios', versionRange: '>0.18.1' },
+  { name: 'uuid', versionRange: '>=7.0.0' },
+];
+
+const documentation = {
+  ruleName: 'require-ie10-compatible-dependency-versions',
+  defaultValue: 'warn',
+  description: "This rule doesn't allow to use dependencies versions that are not IE10 compatible",
+};
+
+module.exports = {
+  create: ({ ruleConfig, projectType, report }) => ({
+    dependencies: (dependencies) => {
+      const messageString = 'require-ie10-compatible-dependency-versions';
+      const currentProblems = versionSet.map(({ name, versionRange }) => {
+        const dependencyVersion = dependencies[name];
+        if (dependencyVersion && semver.intersects(dependencyVersion, versionRange) && !(ruleConfig.severity.allowList && ruleConfig.severity.allowList.includes(name))) {
+          return `${name}@${dependencyVersion} does not satisfy IE compatibility for ${messageString}: ${name}@${versionRange}`;
+        }
+        return undefined;
+      }).filter(problem => !!problem);
+
+      if (currentProblems.length) {
+        const lintMessage = `The dependencies for this project do not satisfy the requirement for ${messageString}:\n  ${currentProblems.join('\n  ')}`;
+        report({
+          lintId: messageString, severity: ruleConfig.severity, lintMessage, projectType,
+        });
+      }
+    },
+
+  }),
+  documentation,
+};

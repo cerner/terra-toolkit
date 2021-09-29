@@ -12,6 +12,7 @@ import Table, {
 import styles from './RulesTable.module.scss';
 
 // Rules
+const requireIe10CompatibleDependencyVersions = require('@cerner/package-json-lint/lib/rules/require-ie10-compatible-dependency-versions');
 const requireNoTerraBasePeerDependencyVersions = require('@cerner/package-json-lint/lib/rules/require-no-terra-base-peer-dependency-versions');
 const requireNoHardCodedDependencyVersions = require('@cerner/package-json-lint/lib/rules/require-no-hard-coded-dependency-versions');
 const requireThemeContextVersions = require('@cerner/package-json-lint/lib/rules/require-theme-context-versions');
@@ -19,6 +20,7 @@ const requireThemeContextVersions = require('@cerner/package-json-lint/lib/rules
 const cx = classNames.bind(styles);
 
 const rows = [
+  requireIe10CompatibleDependencyVersions.documentation,
   requireNoHardCodedDependencyVersions.documentation,
   requireNoTerraBasePeerDependencyVersions.documentation,
   requireThemeContextVersions.documentation,
