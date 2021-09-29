@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.2.0 - (September 28, 2021)
+
 * Added
   * Added new rule `require-no-unnecessary-dependency`.
 
