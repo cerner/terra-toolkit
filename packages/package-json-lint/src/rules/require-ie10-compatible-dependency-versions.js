@@ -21,7 +21,7 @@ module.exports = {
       const currentProblems = versionSet.map(({ name, versionRange }) => {
         const dependencyVersion = dependencies[name];
         if (dependencyVersion && !semver.intersects(dependencyVersion, versionRange) && !(ruleConfig.severity.allowList && ruleConfig.severity.allowList.includes(name))) {
-          const allReleasedVersions = execSync(`npm view ${name} versions`, { encoding: 'utf8', maxBuffer: 50 * 1024 * 1024 }).match(/\d.\d.\d((-[a-z A-Z]*)*)(.\d)*/g);
+          const allReleasedVersions = execSync(`npm view ${name} versions`, { encoding: 'utf8', maxBuffer: 50 * 1024 * 1024 }).match(/\d.\d.\d/g);
           const maxCompatibleVersion = maxSatisfying(allReleasedVersions, versionRange);
           return `${name}@${dependencyVersion} does not satisfy IE10 compatibility for ${messageString}. **Note** Use ${name}@${maxCompatibleVersion} or lower instead.`;
         }
