@@ -5,6 +5,11 @@
 * Added
   * Added documentation for rule `require-ie10-compatible-dependency-versions`.
 
+## 2.5.1 - (September 29, 2021)
+
+* Fixed
+  * Added reference to package-json-lint
+
 ## 2.5.0 - (September 28, 2021)
 
 * Added
