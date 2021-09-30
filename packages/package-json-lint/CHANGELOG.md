@@ -2,13 +2,13 @@
 
 ## Unreleased
 
+* Changed
+  * Moved documentation to terra-toolkit-docs.
+
 ## 1.2.0 - (September 28, 2021)
 
 * Added
   * Added new rule `require-no-hard-coded-dependency-versions`.
-
-* Changed
-  * Moved documentation to terra-toolkit-docs.
 
 ## 1.1.0 - (August 31, 2021)
 
