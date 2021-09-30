@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+## 2.5.1 - (September 29, 2021)
+
+* Fixed
+  * Added reference to package-json-lint
+
+## 2.5.0 - (September 28, 2021)
+
 * Added
   * Added documentation for `package-json-lint`.
   * Use native md table to list package-json-lint rules.
