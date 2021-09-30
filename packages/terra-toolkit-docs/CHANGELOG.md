@@ -4,6 +4,7 @@
 
 * Added
   * Added documentation for `package-json-lint`.
+  * Use native md table to list package-json-lint rules.
 
 ## 2.4.0 - (September 2, 2021)
 
