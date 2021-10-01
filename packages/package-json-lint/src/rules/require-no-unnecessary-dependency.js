@@ -70,12 +70,6 @@ const devDependencySet = [
   'yargs',
 ];
 
-const documentation = {
-  ruleName: 'require-no-unnecessary-dependency',
-  defaultValue: 'warn',
-  description: "This rule doesn't allow any unnecessary dependencies and peerDependencies to be passed in the package.json. Doesn't apply for devModule.",
-};
-
 module.exports = {
   create: ({
     ruleConfig,
@@ -127,5 +121,4 @@ module.exports = {
       }
     },
   }),
-  documentation,
 };

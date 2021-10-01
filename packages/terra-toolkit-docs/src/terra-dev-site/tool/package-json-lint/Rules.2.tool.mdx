@@ -1,9 +1,12 @@
 import { Badge } from '@cerner/package-json-lint/package.json?dev-site-package';
 
-import RulesTable from './rules-table/_RulesTable';
-
 <Badge />
 
 # Package JSON Lint Rules
 
-<RulesTable />
+| Rule Name | Severity Type | Description |
+| --- | --- |--- |
+| __require-no-hard-coded-dependency-versions__ | error | Prevents hard-coded dependencies from being specified in the package.json. Only applies for module and devModule. |
+| __require-no-terra-base-peer-dependency-versions__ | warn| Notifies when using terra packages that require terra-base as a peerDependency. |
+| __require-no-unnecessary-dependency__ | warn| Notifies when there are unnecessary dependencies and peerDependencies being passed in the package.json. Doesn't apply for devModule. |
+| __require-theme-context-versions__ | warn| Notifies when using terra packages that don't use terra-theme-context as a dependency. |

@@ -75,17 +75,10 @@ const versionSet = [
   { name: 'terra-toolbar', versionRange: '>=1.8.0' },
 ];
 
-const documentation = {
-  ruleName: 'require-theme-context-versions',
-  defaultValue: 'warn',
-  description: "This rule doesn't allow to use terra packages versions that don't use terra-theme-context as a Dependency.",
-};
-
 module.exports = {
   create: ({ ruleConfig, projectType, report }) => ({
     dependencies: (dependencies) => requireVersionSet({
       versionSet, dependencies, ruleConfig, projectType, report, lintId: 'require-theme-context-versions', messageString: 'theming context',
     }),
   }),
-  documentation,
 };
