@@ -15,17 +15,14 @@ const devDependencySet = [
   '@cerner/jest-config-terra',
   '@cerner/stylelint-config-terra',
   '@cerner/terra-aggregate-translations',
-  '@cerner/terra-application',
   '@cerner/terra-cli',
   '@cerner/terra-dev-site',
   '@cerner/terra-functional-testing',
   '@cerner/terra-open-source-scripts',
-  '@cerner/webpack-config-terra',
   '@octokit/core',
   'bufferutil',
   'chai',
   'check-installed-dependencies',
-  'commander',
   'core-js',
   'csvtojson',
   'danger',
@@ -41,10 +38,6 @@ const devDependencySet = [
   'ky',
   'lerna',
   'link-parent-bin',
-  'lodash.groupby',
-  'lodash.map',
-  'lodash.mapkeys',
-  'lodash.mapvalues',
   'memory-fs',
   'mocha',
   'nock',
@@ -58,10 +51,6 @@ const devDependencySet = [
   'strip-ansi',
   'stylelint',
   'svgo',
-  'terra-application',
-  'terra-button',
-  'terra-disclosure-manager',
-  'terra-enzyme-intl',
   'utf-8-validate',
   'webpack',
   'webpack-cli',
@@ -70,6 +59,35 @@ const devDependencySet = [
   'yargs',
 ];
 
+function findUnnecessaryDependency(rule, dependencies, dependencyType) {
+  const { ruleConfig, projectType, report } = rule;
+  const messageString = 'require-no-unnecessary-dependency';
+  if (projectType !== 'devModule') {
+    const currentProblems = Object.keys(dependencies).map((dependency) => {
+      const dependencyVersion = dependencies[dependency];
+      if (devDependencySet.includes(dependency) && !(ruleConfig.severity.allowList && ruleConfig.severity.allowList.includes(dependency))) {
+        return `${dependency}@${dependencyVersion} does not satisfy requirement for ${messageString} rule.`;
+      }
+      return undefined;
+    }).filter(problem => !!problem);
+
+    if (currentProblems.length) {
+      let lintMessage;
+      if (dependencyType === 'dependency') {
+        lintMessage = `This project has unnecessary dependencies that violates the ${messageString} rule:\n  ${currentProblems.join('\n  ')}`;
+      } else if (dependencyType === 'peer') {
+        lintMessage = `This project has unnecessary peerDependencies that violates the ${messageString} rule:\n  ${currentProblems.join('\n  ')}`;
+      }
+      report({
+        lintId: messageString,
+        severity: ruleConfig.severity.severityType,
+        lintMessage,
+        projectType,
+      });
+    }
+  }
+}
+
 module.exports = {
   create: ({
     ruleConfig,
@@ -77,48 +95,10 @@ module.exports = {
     report,
   }) => ({
     dependencies: (dependencies) => {
-      const messageString = 'require-no-unnecessary-dependency';
-      if (projectType !== 'devModule') {
-        const currentProblems = Object.keys(dependencies).map((dependency) => {
-          const dependencyVersion = dependencies[dependency];
-          if (devDependencySet.includes(dependency) && !(ruleConfig.severity.allowList && ruleConfig.severity.allowList.includes(dependency))) {
-            return `${dependency}@${dependencyVersion} does not satisfy requirement for ${messageString} rule.`;
-          }
-          return undefined;
-        }).filter(problem => !!problem);
-
-        if (currentProblems.length) {
-          const lintMessage = `This project has unnecessary dependencies that violates the ${messageString} rule:\n  ${currentProblems.join('\n  ')}`;
-          report({
-            lintId: messageString,
-            severity: ruleConfig.severity.severityType,
-            lintMessage,
-            projectType,
-          });
-        }
-      }
+      findUnnecessaryDependency({ ruleConfig, projectType, report }, dependencies, 'dependency');
     },
     peerDependencies: (peerDependencies) => {
-      const messageString = 'require-no-unnecessary-dependency';
-      if (projectType !== 'devModule') {
-        const currentProblems = Object.keys(peerDependencies).map((dependency) => {
-          const dependencyVersion = peerDependencies[dependency];
-          if (devDependencySet.includes(dependency) && !(ruleConfig.severity.allowList && ruleConfig.severity.allowList.includes(dependency))) {
-            return `${dependency}@${dependencyVersion} does not satisfy requirement for ${messageString} rule.`;
-          }
-          return undefined;
-        }).filter(problem => !!problem);
-
-        if (currentProblems.length) {
-          const lintMessage = `This project has unnecessary peerDependencies that violates the ${messageString} rule:\n  ${currentProblems.join('\n  ')}`;
-          report({
-            lintId: messageString,
-            severity: ruleConfig.severity.severityType,
-            lintMessage,
-            projectType,
-          });
-        }
-      }
+      findUnnecessaryDependency({ ruleConfig, projectType, report }, peerDependencies, 'peer');
     },
   }),
 };
