@@ -4,7 +4,7 @@ const { execSync } = require('child_process');
 
 const versionSet = [
   { name: 'redux', versionRange: '<4.0.0' },
-  { name: 'axios', versionRange: '<=0.18.1' },
+  { name: 'axios', versionRange: '<0.19.0' },
   { name: 'uuid', versionRange: '<7.0.0' },
 ];
 
