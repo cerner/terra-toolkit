@@ -12,7 +12,9 @@ Object {
   "lintMessage": "The dependencies for this project have hard-coded versions that violates the require-no-hard-coded-dependency-versions rule:
   a@1.0.0 does not satisfy requirement for the require-no-hard-coded-dependency-versions rule.",
   "projectType": "devModule",
-  "severity": "error",
+  "severity": Object {
+    "severityType": "error",
+  },
 }
 `;
 
@@ -24,7 +26,9 @@ Object {
   "lintMessage": "The dependencies for this project have hard-coded versions that violates the require-no-hard-coded-dependency-versions rule:
   a@1.0.0 does not satisfy requirement for the require-no-hard-coded-dependency-versions rule.",
   "projectType": "module",
-  "severity": "error",
+  "severity": Object {
+    "severityType": "error",
+  },
 }
 `;
 

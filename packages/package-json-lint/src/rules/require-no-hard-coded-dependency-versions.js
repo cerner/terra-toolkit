@@ -17,7 +17,7 @@ module.exports = {
         if (currentProblems.length) {
           const lintMessage = `The dependencies for this project have hard-coded versions that violates the ${messageString} rule:\n  ${currentProblems.join('\n  ')}`;
           report({
-            lintId: messageString, severity: ruleConfig.severity.severityType, lintMessage, projectType,
+            lintId: messageString, severity: ruleConfig.severity, lintMessage, projectType,
           });
         }
       }
