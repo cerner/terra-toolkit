@@ -16,7 +16,7 @@ describe('require-no-unnecessary-dependency', () => {
         },
       });
       rule.dependencies({
-        '@cerner/webpack-config-terra': '^2.0.0',
+        webpack: '^4.30.0',
       });
       rule.peerDependencies({
         jest: '^26.6.2',
@@ -50,7 +50,7 @@ describe('require-no-unnecessary-dependency', () => {
         ruleConfig: {
           severity: {
             severityType: 'warn',
-            allowList: ['@cerner/webpack-config-terra', 'jest'],
+            allowList: ['webpack', 'jest'],
           },
         },
         projectType: 'application',
@@ -59,7 +59,7 @@ describe('require-no-unnecessary-dependency', () => {
         },
       });
       rule.dependencies({
-        '@cerner/webpack-config-terra': '^2.0.0',
+        webpack: '^4.30.0',
       });
       rule.peerDependencies({
         jest: '^26.6.2',
@@ -83,7 +83,7 @@ describe('require-no-unnecessary-dependency', () => {
         },
       });
       rule.dependencies({
-        '@cerner/webpack-config-terra': '^2.0.0',
+        webpack: '^4.30.0',
       });
       rule.peerDependencies({
         jest: '^26.6.2',
@@ -128,7 +128,7 @@ describe('require-no-unnecessary-dependency', () => {
         },
       });
       rule.dependencies({
-        '@cerner/webpack-config-terra': '^2.0.0',
+        webpack: '^4.30.0',
       });
       rule.peerDependencies({
         jest: '^26.6.2',

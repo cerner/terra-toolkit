@@ -5,16 +5,20 @@ Array [
   Object {
     "lintId": "require-no-unnecessary-dependency",
     "lintMessage": "This project has unnecessary dependencies that violates the require-no-unnecessary-dependency rule:
-  @cerner/webpack-config-terra@^2.0.0 does not satisfy requirement for require-no-unnecessary-dependency rule.",
+  webpack@^4.30.0 does not satisfy requirement for require-no-unnecessary-dependency rule.",
     "projectType": "application",
-    "severity": "warn",
+    "severity": Object {
+      "severityType": "warn",
+    },
   },
   Object {
     "lintId": "require-no-unnecessary-dependency",
     "lintMessage": "This project has unnecessary peerDependencies that violates the require-no-unnecessary-dependency rule:
   jest@^26.6.2 does not satisfy requirement for require-no-unnecessary-dependency rule.",
     "projectType": "application",
-    "severity": "warn",
+    "severity": Object {
+      "severityType": "warn",
+    },
   },
 ]
 `;
@@ -32,16 +36,20 @@ Array [
   Object {
     "lintId": "require-no-unnecessary-dependency",
     "lintMessage": "This project has unnecessary dependencies that violates the require-no-unnecessary-dependency rule:
-  @cerner/webpack-config-terra@^2.0.0 does not satisfy requirement for require-no-unnecessary-dependency rule.",
+  webpack@^4.30.0 does not satisfy requirement for require-no-unnecessary-dependency rule.",
     "projectType": "module",
-    "severity": "warn",
+    "severity": Object {
+      "severityType": "warn",
+    },
   },
   Object {
     "lintId": "require-no-unnecessary-dependency",
     "lintMessage": "This project has unnecessary peerDependencies that violates the require-no-unnecessary-dependency rule:
   jest@^26.6.2 does not satisfy requirement for require-no-unnecessary-dependency rule.",
     "projectType": "module",
-    "severity": "warn",
+    "severity": Object {
+      "severityType": "warn",
+    },
   },
 ]
 `;

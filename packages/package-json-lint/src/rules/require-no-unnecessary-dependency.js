@@ -80,7 +80,7 @@ function findUnnecessaryDependency(rule, dependencies, dependencyType) {
       }
       report({
         lintId: messageString,
-        severity: ruleConfig.severity.severityType,
+        severity: ruleConfig.severity,
         lintMessage,
         projectType,
       });
