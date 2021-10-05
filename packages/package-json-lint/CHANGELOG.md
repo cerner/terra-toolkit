@@ -5,6 +5,11 @@
 * Added
   * Added new rule `require-ie10-compatible-dependency-versions`.
 
+## 1.2.1 - (September 30, 2021)
+
+* Changed
+  * Moved documentation to terra-toolkit-docs.
+
 ## 1.2.0 - (September 28, 2021)
 
 * Added

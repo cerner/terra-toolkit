@@ -1,11 +1,5 @@
 const semver = require('semver');
 
-const documentation = {
-  ruleName: 'require-no-hard-coded-dependency-versions',
-  defaultValue: 'error',
-  description: "This rule doesn't allow any hard-coded dependencies to be passed in the package.json. Only applies for module and devModule.",
-};
-
 module.exports = {
   create: ({ ruleConfig, projectType, report }) => ({
     dependencies: (dependencies) => {
@@ -29,5 +23,4 @@ module.exports = {
       }
     },
   }),
-  documentation,
 };

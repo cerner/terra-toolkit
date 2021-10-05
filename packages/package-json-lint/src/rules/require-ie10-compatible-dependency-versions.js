@@ -8,12 +8,6 @@ const versionSet = [
   { name: 'uuid', versionRange: '<7.0.0' },
 ];
 
-const documentation = {
-  ruleName: 'require-ie10-compatible-dependency-versions',
-  defaultValue: 'warn',
-  description: "This rule doesn't allow to use dependencies versions that are not IE10 compatible",
-};
-
 module.exports = {
   create: ({ ruleConfig, projectType, report }) => ({
     dependencies: (dependencies) => {
@@ -37,5 +31,4 @@ module.exports = {
     },
 
   }),
-  documentation,
 };
