@@ -1,10 +1,10 @@
-const requireNoUnnecessaryDependency = require('../../../src/rules/require-no-unnecessary-dependency');
+const requireDependenciesDeclaredAtAppropriateLevel = require('../../../src/rules/require-dependencies-declared-at-appropriate-level');
 
-describe('require-no-unnecessary-dependency', () => {
+describe('require-dependencies-declared-at-appropriate-level', () => {
   describe('when projectType is application', () => {
     it('fails as a warning when there unnecessary dependencies/peerDependencies', () => {
       const results = [];
-      const rule = requireNoUnnecessaryDependency.create({
+      const rule = requireDependenciesDeclaredAtAppropriateLevel.create({
         ruleConfig: {
           severity: {
             severityType: 'warn',
@@ -16,7 +16,7 @@ describe('require-no-unnecessary-dependency', () => {
         },
       });
       rule.dependencies({
-        webpack: '^4.30.0',
+        '@cerner/webpack-config-terra': '^2.0.0',
       });
       rule.peerDependencies({
         jest: '^26.6.2',
@@ -25,7 +25,7 @@ describe('require-no-unnecessary-dependency', () => {
     });
     it('succeeds when there are no unnecessary dependencies/peerDependencies', () => {
       const results = [];
-      const rule = requireNoUnnecessaryDependency.create({
+      const rule = requireDependenciesDeclaredAtAppropriateLevel.create({
         ruleConfig: {
           severity: {
             severityType: 'warn',
@@ -46,11 +46,11 @@ describe('require-no-unnecessary-dependency', () => {
     });
     it('succeeds when unnecessary dependencies/peerDependencies are passed in the allowList', () => {
       const results = [];
-      const rule = requireNoUnnecessaryDependency.create({
+      const rule = requireDependenciesDeclaredAtAppropriateLevel.create({
         ruleConfig: {
           severity: {
             severityType: 'warn',
-            allowList: ['webpack', 'jest'],
+            allowList: ['@cerner/webpack-config-terra', 'jest'],
           },
         },
         projectType: 'application',
@@ -59,7 +59,7 @@ describe('require-no-unnecessary-dependency', () => {
         },
       });
       rule.dependencies({
-        webpack: '^4.30.0',
+        '@cerner/webpack-config-terra': '^2.0.0',
       });
       rule.peerDependencies({
         jest: '^26.6.2',
@@ -71,7 +71,7 @@ describe('require-no-unnecessary-dependency', () => {
   describe('when projectType is module', () => {
     it('fails as a warning when there unnecessary dependencies/peerDependencies', () => {
       const results = [];
-      const rule = requireNoUnnecessaryDependency.create({
+      const rule = requireDependenciesDeclaredAtAppropriateLevel.create({
         ruleConfig: {
           severity: {
             severityType: 'warn',
@@ -92,7 +92,7 @@ describe('require-no-unnecessary-dependency', () => {
     });
     it('succeeds when there are no unnecessary dependencies/peerDependencies', () => {
       const results = [];
-      const rule = requireNoUnnecessaryDependency.create({
+      const rule = requireDependenciesDeclaredAtAppropriateLevel.create({
         ruleConfig: {
           severity: {
             severityType: 'warn',
@@ -116,7 +116,7 @@ describe('require-no-unnecessary-dependency', () => {
   describe('when projectType is devModule', () => {
     it('succeeds when there unnecessary dependencies/peerDependencies', () => {
       const results = [];
-      const rule = requireNoUnnecessaryDependency.create({
+      const rule = requireDependenciesDeclaredAtAppropriateLevel.create({
         ruleConfig: {
           severity: {
             severityType: 'warn',
@@ -128,7 +128,7 @@ describe('require-no-unnecessary-dependency', () => {
         },
       });
       rule.dependencies({
-        webpack: '^4.30.0',
+        '@cerner/webpack-config-terra': '^2.0.0',
       });
       rule.peerDependencies({
         jest: '^26.6.2',
@@ -137,7 +137,7 @@ describe('require-no-unnecessary-dependency', () => {
     });
     it('succeeds when there no unnecessary dependencies/peerDependencies', () => {
       const results = [];
-      const rule = requireNoUnnecessaryDependency.create({
+      const rule = requireDependenciesDeclaredAtAppropriateLevel.create({
         ruleConfig: {
           severity: {
             severityType: 'warn',

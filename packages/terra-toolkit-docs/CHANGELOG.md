@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Added
+  * Added documentation for new rule `require-dependencies-declared-at-appropriate-level`.
+
 ## 2.5.2 - (September 30, 2021)
 
 * Added
@@ -13,9 +16,6 @@
   * Added reference to package-json-lint
 
 ## 2.5.0 - (September 28, 2021)
-
-* Added
-  * Added documentation for new rule `require-no-unnecessary-dependency`.
 
 * Added
   * Added documentation for `package-json-lint`.

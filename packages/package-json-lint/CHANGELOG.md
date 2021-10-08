@@ -2,15 +2,15 @@
 
 ## Unreleased
 
+* Added
+  * Added new rule `require-dependencies-declared-at-appropriate-level`.
+
 ## 1.2.1 - (September 30, 2021)
 
 * Changed
   * Moved documentation to terra-toolkit-docs.
 
 ## 1.2.0 - (September 28, 2021)
-
-* Added
-  * Added new rule `require-no-unnecessary-dependency`.
 
 * Added
   * Added new rule `require-no-hard-coded-dependency-versions`.

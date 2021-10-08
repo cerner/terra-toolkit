@@ -3,7 +3,7 @@
 ## Unreleased
 
 * Added
-  * Added new rule `require-no-unnecessary-dependency`.
+  * Added new rule `require-dependencies-declared-at-appropriate-level`.
 
 ## 1.1.0 - (September 28, 2021)
 

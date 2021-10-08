@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`require-dependencies-declared-at-appropriate-level when projectType is application fails as a warning when there unnecessary dependencies/peerDependencies 1`] = `
+Array [
+  Object {
+    "lintId": "require-dependencies-declared-at-appropriate-level",
+    "lintMessage": "This project has unnecessary dependencies that violates the require-dependencies-declared-at-appropriate-level rule:
+  @cerner/webpack-config-terra@^2.0.0 does not satisfy requirement for require-dependencies-declared-at-appropriate-level rule.",
+    "projectType": "application",
+    "severity": Object {
+      "severityType": "warn",
+    },
+  },
+  Object {
+    "lintId": "require-dependencies-declared-at-appropriate-level",
+    "lintMessage": "This project has unnecessary peerDependencies that violates the require-dependencies-declared-at-appropriate-level rule:
+  jest@^26.6.2 does not satisfy requirement for require-dependencies-declared-at-appropriate-level rule.",
+    "projectType": "application",
+    "severity": Object {
+      "severityType": "warn",
+    },
+  },
+]
+`;
+
+exports[`require-dependencies-declared-at-appropriate-level when projectType is application succeeds when there are no unnecessary dependencies/peerDependencies 1`] = `Array []`;
+
+exports[`require-dependencies-declared-at-appropriate-level when projectType is application succeeds when unnecessary dependencies/peerDependencies are passed in the allowList 1`] = `Array []`;
+
+exports[`require-dependencies-declared-at-appropriate-level when projectType is devModule succeeds when there no unnecessary dependencies/peerDependencies 1`] = `Array []`;
+
+exports[`require-dependencies-declared-at-appropriate-level when projectType is devModule succeeds when there unnecessary dependencies/peerDependencies 1`] = `Array []`;
+
+exports[`require-dependencies-declared-at-appropriate-level when projectType is module fails as a warning when there unnecessary dependencies/peerDependencies 1`] = `
+Array [
+  Object {
+    "lintId": "require-dependencies-declared-at-appropriate-level",
+    "lintMessage": "This project has unnecessary peerDependencies that violates the require-dependencies-declared-at-appropriate-level rule:
+  jest@^26.6.2 does not satisfy requirement for require-dependencies-declared-at-appropriate-level rule.",
+    "projectType": "module",
+    "severity": Object {
+      "severityType": "warn",
+    },
+  },
+]
+`;
+
+exports[`require-dependencies-declared-at-appropriate-level when projectType is module succeeds when there are no unnecessary dependencies/peerDependencies 1`] = `Array []`;
