@@ -7,6 +7,7 @@ module.exports = {
     'jsx-a11y',
     'import',
     'compat',
+    'formatjs',
   ],
   env: {
     browser: true,
