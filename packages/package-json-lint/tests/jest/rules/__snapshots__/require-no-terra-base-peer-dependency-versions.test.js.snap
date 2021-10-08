@@ -7,7 +7,7 @@ Object {
   terra-action-footer@^1.0.0 does not satisfy range requirement for no terra base peer dependencies: terra-action-footer@>2.5.0",
   "projectType": "module",
   "severity": Object {
-    "severityType": "warning",
+    "severityType": "warn",
   },
 }
 `;

@@ -6,7 +6,8 @@ import { Badge } from '@cerner/package-json-lint/package.json?dev-site-package';
 
 | Rule Name | Severity Type | Description |
 | --- | --- |--- |
+| __require-dependencies-declared-at-appropriate-level__ | warn| Notifies when there are dependencies declared at an inappropriate level. For example babel compilers and webpack should be devDependencies and not regular dependencies. Doesn't apply for devModule. |
 | __require-ie10-compatible-dependency-versions__| warn | Notifies when using dependencies that are not IE10 compatible. |
 | __require-no-hard-coded-dependency-versions__ | error | Prevents hard-coded dependencies from being specified in the package.json. Only applies for module and devModule. |
-| __require-no-terra-base-peer-dependency-versions__ | warn | Notifies when using terra packages that require terra-base as a peerDependency. |
-| __require-theme-context-versions__ | warn | Notifies when using terra packages that don't use terra-theme-context as a dependency. |
+| __require-no-terra-base-peer-dependency-versions__ | warn| Notifies when using terra packages that require terra-base as a peerDependency. |
+| __require-theme-context-versions__ | warn| Notifies when using terra packages that don't use terra-theme-context as a dependency. |

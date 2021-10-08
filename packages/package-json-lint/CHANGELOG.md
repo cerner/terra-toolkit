@@ -4,6 +4,7 @@
 
 * Added
   * Added new rule `require-ie10-compatible-dependency-versions`.
+  * Added new rule `require-dependencies-declared-at-appropriate-level`.
 
 ## 1.2.1 - (September 30, 2021)
 
