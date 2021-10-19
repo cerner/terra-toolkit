@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`require-ie10-compatible-dependency-versions fails as a warning when versions do not meet the IE10 compatible version 1`] = `
+Object {
+  "lintId": "require-ie10-compatible-dependency-versions",
+  "lintMessage": "The dependencies for this project do not satisfy the requirement for require-ie10-compatible-dependency-versions:
+  redux@^5.0.0 does not satisfy IE10 compatibility for require-ie10-compatible-dependency-versions. **Note** Use redux@3.7.2 or lower instead.",
+  "projectType": "module",
+  "severity": Object {
+    "severityType": "warn",
+  },
+}
+`;
+
+exports[`require-ie10-compatible-dependency-versions fails when versions do not meet the IE10 compatible version 1`] = `
+Object {
+  "lintId": "require-ie10-compatible-dependency-versions",
+  "lintMessage": "The dependencies for this project do not satisfy the requirement for require-ie10-compatible-dependency-versions:
+  uuid@7.x.x does not satisfy IE10 compatibility for require-ie10-compatible-dependency-versions. **Note** Use uuid@3.4.0 or lower instead.",
+  "projectType": "devModule",
+  "severity": Object {
+    "severityType": "error",
+  },
+}
+`;
+
+exports[`require-ie10-compatible-dependency-versions passes when all versions meet the IE10 compatible version 1`] = `undefined`;
+
+exports[`require-ie10-compatible-dependency-versions succeeds when there are dependencies not in the list to check 1`] = `undefined`;
+
+exports[`require-ie10-compatible-dependency-versions succeeds when there are no dependencies 1`] = `undefined`;
+
+exports[`require-ie10-compatible-dependency-versions succeeds when versions do not meet the IE10 compatible version but package is passed in the allowList 1`] = `undefined`;
