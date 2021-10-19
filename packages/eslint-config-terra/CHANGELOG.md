@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+  * Add Format-js linter.
+
 ## 5.1.0 - (April 23, 2021)
 
 * Changed
