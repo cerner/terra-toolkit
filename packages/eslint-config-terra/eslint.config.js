@@ -42,8 +42,6 @@ module.exports = {
     'arrow-parens': 'off',
     // The following formatjs rules will throw warnings, will be changed to error in next MVB.
     'formatjs/blacklist-elements': 'warn',
-    'formatjs/enforce-description': 'warn',
-    'formatjs/enforce-default-message': 'warn',
     'formatjs/enforce-placeholders': 'warn',
     'formatjs/enforce-plural-rules': 'warn',
     'formatjs/no-camel-case': 'warn',
@@ -52,8 +50,12 @@ module.exports = {
     'formatjs/no-multiple-plurals': 'warn',
     'formatjs/no-offset': 'warn',
     'formatjs/enforce-id': 'warn',
-    'formatjs/no-id': 'warn',
     'formatjs/no-complex-selectors': 'warn',
+    // The following rules have been disabled for translations to work as expected.
+    'formatjs/no-id': 'off',
+    'formatjs/enforce-description': 'off',
+    'formatjs/enforce-default-message': 'off',
+
   },
   settings: {
     polyfills: [
