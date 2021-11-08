@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+  * Updated enzyme-intl jest snapshots for new changes made in react-intl
+
 ## 4.3.0 - (May 25, 2021)
 
 * Changed
