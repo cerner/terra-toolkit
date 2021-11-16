@@ -7,6 +7,7 @@ module.exports = {
     'jsx-a11y',
     'import',
     'compat',
+    'formatjs',
   ],
   env: {
     browser: true,
@@ -39,6 +40,22 @@ module.exports = {
     'react/state-in-constructor': 'off',
     'react/jsx-fragments': 'off',
     'arrow-parens': 'off',
+    // The following formatjs rules will throw warnings, will be changed to error in next MVB.
+    'formatjs/blacklist-elements': 'warn',
+    'formatjs/enforce-placeholders': 'warn',
+    'formatjs/enforce-plural-rules': 'warn',
+    'formatjs/no-camel-case': 'warn',
+    'formatjs/no-emoji': 'warn',
+    'formatjs/no-multiple-whitespaces': 'warn',
+    'formatjs/no-multiple-plurals': 'warn',
+    'formatjs/no-offset': 'warn',
+    'formatjs/enforce-id': 'warn',
+    'formatjs/no-complex-selectors': 'warn',
+    // The following rules have been disabled for translations to work as expected.
+    'formatjs/no-id': 'off',
+    'formatjs/enforce-description': 'off',
+    'formatjs/enforce-default-message': 'off',
+
   },
   settings: {
     polyfills: [
