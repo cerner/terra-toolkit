@@ -74,7 +74,7 @@
     "strip-ansi": "^6.0.0",
     "uuid": "^3.0.0",
     "webdriverio": "^7.7.3",
-    "webpack-dev-server": "^3.11.0",
+    "webpack-dev-server": "^4.6.0",
     "which": "^2.0.2"
   },
   "peerDependencies": {
