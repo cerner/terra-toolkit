@@ -1,6 +1,8 @@
 # Changelog
 
 ## Unreleased
+* Added
+  * Added devMiddleWare to support webpack-dev-server v4
 
 ## 2.5.0 - (September 28, 2021)
 
