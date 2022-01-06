@@ -217,7 +217,6 @@ describe('webpack config', () => {
     const expectedOuput = {
       hot: false,
       host: '0.0.0.0',
-      inline: false,
       devMiddleware: {
         publicPath: '',
         stats: {

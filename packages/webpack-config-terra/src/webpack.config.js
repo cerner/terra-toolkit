@@ -236,6 +236,9 @@ const defaultWebpackConfig = (env = {}, argv = {}, options = {}) => {
     devServer: {
       ...getWebpackDevServerStaticOptions(env),
       host: '0.0.0.0',
+      client: {
+        overlay: false,
+      },
       devMiddleware: {
         publicPath,
         stats: {
