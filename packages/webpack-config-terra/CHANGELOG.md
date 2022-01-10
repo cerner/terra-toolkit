@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unreleased
+
 * Added
   * Added devMiddleWare to support webpack-dev-server v4
 
