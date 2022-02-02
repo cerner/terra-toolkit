@@ -2,10 +2,14 @@
 
 ## Unreleased
 
+* Changed
+  * Updated component to support Node 14.
+
 ## 2.1.0 - (January 5, 2021)
 
 * Changed
- * Remove unused script from package.json
+  * Remove unused script from package.json
+  * Updated component to support Node 14.
 
 ## 2.0.0 - (December 7, 2020)
 
