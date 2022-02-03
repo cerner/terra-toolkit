@@ -9,7 +9,6 @@
 
 * Changed
   * Remove unused script from package.json
-  * Updated component to support Node 14.
 
 ## 2.0.0 - (December 7, 2020)
 
