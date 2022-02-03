@@ -1,6 +1,8 @@
 # Changelog
 
 ## Unreleased
+* Added
+  * Added upgrade guide for webpack-config-terra
 
 ## 2.7.0 - (November 16, 2021)
 
