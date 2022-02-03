@@ -33,6 +33,6 @@
     "lint": "eslint --ext .js,.jsx ."
   },
   "peerDependencies": {
-    "@cerner/package-json-lint": "^0.0.0"
+    "@cerner/package-json-lint": "^1.0.0"
   }
 }
