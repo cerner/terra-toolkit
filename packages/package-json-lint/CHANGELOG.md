@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+  * Updated component to support Node 14.
+  
 ## 1.3.0 - (October 12, 2021)
 
 * Added

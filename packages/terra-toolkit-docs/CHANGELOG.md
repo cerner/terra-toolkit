@@ -4,6 +4,9 @@
 * Added
   * Added upgrade guide for webpack-config-terra
 
+* Changed
+  * Updated component to support Node 14.
+
 ## 2.7.0 - (November 16, 2021)
 
 * Changed
