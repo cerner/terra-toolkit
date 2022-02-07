@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-* Added
+* Breaking
   * Added devMiddleWare to support webpack-dev-server v4
 
 * Changed
