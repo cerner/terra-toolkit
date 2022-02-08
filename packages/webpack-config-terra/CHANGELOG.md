@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.3.0 - (February 8, 2022)
+
 * Changed
   * Updated component to support Node 14.
   
