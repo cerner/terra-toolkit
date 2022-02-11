@@ -10,7 +10,7 @@ Terra's common open source scripts provided as [terra-cli](https://www.npmjs.org
 
 ## Node version support
 
-This package was developed and tested using Node 10 up to Node 14. This package has not been thoroughly tested using Node 16 or greater. No known issues have been reported in newer Node versions, so this package is set to allow Node version 10 or greater. However, consumers utilizing Node 16 or greater should use this package at their own risk.
+This package was developed and tested using Node 10 up to Node 14. Consumers using Node 16 or greater are advised to use it at their own risk since those versions are not officially supported due to lack of thorough testing.
 
 ## Versioning
 
