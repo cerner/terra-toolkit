@@ -5,7 +5,7 @@
 ## 1.9.0 - (February 11, 2022)
 
 * Changed
-  * Revert Node version to support versions greater than 14.
+  * Revert limiting upper Node version to 14.
 
 ## 1.8.0 - (February 8, 2022)
 
