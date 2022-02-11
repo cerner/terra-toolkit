@@ -47,7 +47,7 @@ Then, [define the browsers](https://github.com/amilajack/eslint-plugin-compat#ta
 
 ## Node version support
 
-This package was developed and tested using Node 10 up to Node 14. This package has not been tested by us using Node 16 or greater. We don't want to restrict consumers on Node 16 or greater from using this package. For this reason the node version in package.json is set to `>=10.13.0` to allow Node 16 and above to use the package. No known issues were reported in newer Node versions but it is recommended that consumers to fully test it if you're using Node 16 or greater and report any issue.
+This package was developed and tested using Node 10 up to Node 14. This package has not been thoroughly tested using Node 16 or greater. No known issues have been reported in newer Node versions, so this package is set to allow Node version 10 or greater. However, consumers utilizing Node 16 or greater should use this package at their own risk.
 
 ## Versioning
 
