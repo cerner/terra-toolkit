@@ -169,6 +169,10 @@ const result = foo(id, mockIntl);
 expect(result).toMatchSnapshot(); // OK, doesn't depend on real translations
 ```
 
+## Node version support
+
+This package was developed and tested using Node 10 up to Node 14. This package has not been tested by us using Node 16 or greater. We don't want to restrict consumers on Node 16 or greater from using this package. For this reason the node version in package.json is set to `>=10` to allow Node 16 and above to use the package. No known issues were reported in newer Node versions but it is recommended that consumers to fully test it if you're using Node 16 or greater and report any issue.
+
 ## LICENSE
 
 Copyright 2018 - 2020 Cerner Innovation, Inc.

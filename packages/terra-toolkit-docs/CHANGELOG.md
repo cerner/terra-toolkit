@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+  * Revert Node version to support versions greater than 14.
+
 ## 2.8.0 - (February 8, 2022)
 
 * Changed

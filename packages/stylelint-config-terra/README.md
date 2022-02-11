@@ -60,6 +60,10 @@ The following custom rules are enabled by default.
 * [terra/custom-property-pattern](https://github.com/cerner/terra-toolkit/blob/main/packages/stylelint-config-terra/src/rules/custom-property-pattern): Requires custom properties to be written in lowercase alphanumeric characters and hyphens.
 * [terra/custom-property-pseudo-selectors](https://github.com/cerner/terra-toolkit/blob/main/packages/stylelint-config-terra/src/rules/custom-property-pseudo-selectors): Requires custom properties to include all ancestor pseudo selectors in order.
 
+## Node version support
+
+This package was developed and tested using Node 10 up to Node 14. This package has not been tested by us using Node 16 or greater. We don't want to restrict consumers on Node 16 or greater from using this package. For this reason the node version in package.json is set to `>=10` to allow Node 16 and above to use the package. No known issues were reported in newer Node versions but it is recommended that consumers to fully test it if you're using Node 16 or greater and report any issue.
+
 ## Contributing
 
 Please read through our [contributing guidelines](CONTRIBUTING.md). Included are directions for issue reporting and pull requests.
