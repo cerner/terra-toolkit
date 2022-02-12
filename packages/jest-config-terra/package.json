@@ -1,6 +1,6 @@
 {
   "name": "@cerner/jest-config-terra",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "A base jest config for the terra application framework.",
   "main": "jest.config.js",
   "publishConfig": {
@@ -23,7 +23,7 @@
     "url": "https://github.com/cerner/terra-toolkit/issues"
   },
   "engines": {
-    "node": "^10.13.0 || ^12.0.0 || ^14.0.0"
+    "node": ">=10.13.0"
   },
   "homepage": "https://github.com/cerner/terra-toolkit",
   "files": [
@@ -36,7 +36,7 @@
     "jest": "jest --config ../../jest.config.js"
   },
   "dependencies": {
-    "@cerner/terra-cli": "^1.8.0",
+    "@cerner/terra-cli": "^1.9.0",
     "@jest/reporters": "^25.3.0",
     "babel-jest": "^26.6.3",
     "identity-obj-proxy": "^3.0.0",

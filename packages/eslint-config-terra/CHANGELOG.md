@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 5.4.0 - (February 11, 2022)
+
+* Changed
+  * Revert limiting upper Node version to 14.
+
 ## 5.3.0 - (February 8, 2022)
 
 * Changed
@@ -139,7 +144,7 @@
 
 * Changed
   * Update ESLint and related dependencies to ESLint v5 compatible versions
-  * Disabled the deprecated `jsx-a11y/label-has-for rule`. More info about this rule deprecation here: https://github.com/evcohen/eslint-plugin-jsx-a11y/releases/tag/v6.1.0
+  * Disabled the deprecated `jsx-a11y/label-has-for rule`. More info about this rule deprecation here: <https://github.com/evcohen/eslint-plugin-jsx-a11y/releases/tag/v6.1.0>
   * Replaced `jsx-a11y/label-has-for` rule with new `jsx-a11y/label-has-associated-control` rule
   * Disabled `react/destructuring-assignment` rule
 
@@ -147,6 +152,7 @@
 
 * Changed
   * Updated 'jsx-a11y/label-has-for' to require id or nested input for label mapping
+  
 ## 1.0.1 - (June 19, 2018)
 
 * Changed

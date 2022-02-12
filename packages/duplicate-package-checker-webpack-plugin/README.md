@@ -75,6 +75,10 @@ Packages with different major versions introduce backward incompatible changes a
 
 It is suggested that strict mode is kept enabled since this improves visibility into your bundle and can help in solving and identifying potential issues.
 
+## Node version support
+
+This package was developed and tested using Node 10 up to Node 14. Consumers using Node 16 or greater are advised to use it at their own risk since those versions are not officially supported due to lack of thorough testing.
+
 ## Resolving duplicate packages in your bundle
 
 There are multiple ways you can go about resolving duplicate packages in your bundle, the right solution mostly depends on what tools you're using and on each particular case.

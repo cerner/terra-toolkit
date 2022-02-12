@@ -5,6 +5,10 @@
 
 Linter for package.json files.
 
+## Node version support
+
+This package was developed and tested using Node 10 up to Node 14. Consumers using Node 16 or greater are advised to use it at their own risk since those versions are not officially supported due to lack of thorough testing.
+
 ## Versioning
 
 package-json-lint is considered to be stable and will follow [SemVer](http://semver.org/) for versioning.
