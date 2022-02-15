@@ -1,6 +1,6 @@
 {
   "name": "@cerner/eslint-config-terra",
-  "version": "5.2.0",
+  "version": "5.4.0",
   "description": "Terra Eslint Config",
   "main": "eslint.config.js",
   "publishConfig": {
@@ -23,7 +23,7 @@
     "url": "https://github.com/cerner/terra-toolkit/issues"
   },
   "engines": {
-    "node": "^10.13.0 || ^12.0.0 || ^14.0.0"
+    "node": ">=10.13.0"
   },
   "homepage": "https://github.com/cerner/terra-toolkit",
   "scripts": {

@@ -1,6 +1,6 @@
 {
   "name": "@cerner/package-json-lint",
-  "version": "1.3.0",
+  "version": "1.5.0",
   "description": "Package JSON linter",
   "publishConfig": {
     "access": "public"
@@ -24,7 +24,7 @@
     "url": "https://github.com/cerner/terra-toolkit/issues"
   },
   "engines": {
-    "node": "^10.0.0 || ^12.0.0 || ^14.0.0"
+    "node": ">=10"
   },
   "homepage": "https://github.com/cerner/terra-toolkit",
   "scripts": {
@@ -47,7 +47,7 @@
     "@cerner/terra-cli": "^1.0.0"
   },
   "devDependencies": {
-    "@cerner/terra-cli": "^1.7.0",
+    "@cerner/terra-cli": "^1.9.0",
     "strip-ansi": "^6.0.0",
     "yargs": "^16.1.1"
   }

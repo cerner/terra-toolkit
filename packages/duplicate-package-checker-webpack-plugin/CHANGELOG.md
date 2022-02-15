@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+## 2.3.0 - (February 11, 2022)
+
+* Changed
+  * Revert limiting upper Node version to 14.
+
+## 2.2.0 - (February 8, 2022)
+
 * Changed
   * Updated component to support Node 14.
 

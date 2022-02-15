@@ -1,6 +1,6 @@
 {
   "name": "@cerner/stylelint-config-terra",
-  "version": "4.1.0",
+  "version": "4.3.0",
   "description": "Terra Stylelint Shared Config",
   "main": "stylelint.config.js",
   "repository": {
@@ -23,7 +23,7 @@
     "linter"
   ],
   "engines": {
-    "node": "^10.13.0 || ^12.0.0 || ^14.0.0"
+    "node": ">=10"
   },
   "author": "Cerner Corporation",
   "license": "Apache-2.0",

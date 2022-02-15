@@ -8,6 +8,10 @@ Terra's common open source scripts provided as [terra-cli](https://www.npmjs.org
 * prepare-for-release - prepares a given project for release by updating versions and changelogs. Supports both single and mono repos
 * release - releases a given project to npm and tags it in git. Supports both single and mono repos
 
+## Node version support
+
+This package was developed and tested using Node 10 up to Node 14. Consumers using Node 16 or greater are advised to use it at their own risk since those versions are not officially supported due to lack of thorough testing.
+
 ## Versioning
 
 terra-cli is considered to be stable and will follow [SemVer](http://semver.org/) for versioning.
