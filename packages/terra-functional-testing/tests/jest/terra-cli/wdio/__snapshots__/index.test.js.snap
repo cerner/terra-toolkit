@@ -55,7 +55,7 @@ Options:
                                         all reference screenshots with the
                                         latest screenshots.
                                                       [boolean] [default: false]
-      --useRemoteScreenshots            A flag to download reference screenshots
+      --useRemoteReferenceScreenshots   A flag to download reference screenshots
                                         from a remote site for screenshot
                                         comparisons instead of using the local
                                         reference screenshots.

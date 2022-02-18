@@ -21,7 +21,7 @@ describe('getCapabilities', () => {
       suite: 'test-suite',
       theme: 'terra-default-theme',
       updateScreenshots: true,
-      useRemoteScreenshots: true,
+      useRemoteReferenceScreenshots: true,
       useSeleniumStandaloneService: false,
     };
 
@@ -47,7 +47,7 @@ describe('getCapabilities', () => {
         theme: options.theme,
         overrideTheme: options.theme,
         updateScreenshots: true,
-        useRemoteScreenshots: true,
+        useRemoteReferenceScreenshots: true,
         webpackConfig: defaultWebpackPath,
       },
     };
@@ -73,7 +73,7 @@ describe('getCapabilities', () => {
       suite: 'test-suite',
       theme: 'terra-default-theme',
       updateScreenshots: true,
-      useRemoteScreenshots: false,
+      useRemoteReferenceScreenshots: false,
       useSeleniumStandaloneService: true,
     };
 
@@ -99,7 +99,7 @@ describe('getCapabilities', () => {
         theme: options.theme,
         overrideTheme: options.theme,
         updateScreenshots: true,
-        useRemoteScreenshots: false,
+        useRemoteReferenceScreenshots: false,
         webpackConfig: defaultWebpackPath,
       },
     };
@@ -130,7 +130,7 @@ describe('getCapabilities', () => {
         theme: 'terra-default-theme',
         overrideTheme: undefined,
         updateScreenshots: undefined,
-        useRemoteScreenshots: undefined,
+        useRemoteReferenceScreenshots: undefined,
         webpackConfig: defaultWebpackPath,
       },
     };
