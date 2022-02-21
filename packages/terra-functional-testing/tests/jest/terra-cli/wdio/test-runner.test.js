@@ -54,6 +54,7 @@ describe('Test Runner', () => {
         suite: 'test-suite',
         theme: 'terra-default-theme',
         updateScreenshots: true,
+        useRemoteReferenceScreenshots: true,
         useSeleniumStandaloneService: true,
       };
 
@@ -220,6 +221,7 @@ describe('Test Runner', () => {
         suite: 'test-suite',
         themes: ['terra-default-theme'],
         updateScreenshots: true,
+        useRemoteReferenceScreenshots: true,
         useSeleniumStandaloneService: true,
       });
 
@@ -239,6 +241,7 @@ describe('Test Runner', () => {
         suite: 'test-suite',
         theme: 'terra-default-theme',
         updateScreenshots: true,
+        useRemoteReferenceScreenshots: true,
         useSeleniumStandaloneService: true,
       });
     });

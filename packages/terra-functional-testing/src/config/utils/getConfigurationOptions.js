@@ -25,6 +25,7 @@ const getConfigurationOptions = (options) => {
     suite,
     theme,
     updateScreenshots,
+    useRemoteReferenceScreenshots,
     useSeleniumStandaloneService,
   } = options;
 
@@ -45,6 +46,7 @@ const getConfigurationOptions = (options) => {
       ...(theme ? { theme } : { theme: getDefaultThemeName() }),
       overrideTheme: theme,
       updateScreenshots,
+      useRemoteReferenceScreenshots,
       ...fs.existsSync(defaultWebpackPath) && { webpackConfig: defaultWebpackPath },
     },
     ...spec && { spec },
