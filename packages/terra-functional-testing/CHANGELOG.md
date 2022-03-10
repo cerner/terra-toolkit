@@ -4,6 +4,9 @@
 * Added
   * Added devMiddleWare to support webpack-dev-server v4
 
+* Added
+  * Added `useRemoteReferenceScreenshots` cli option for downloading reference screenshots from a remote site for screenshot comparisons.
+
 ## 2.7.0 - (February 11, 2022)
 
 * Changed
