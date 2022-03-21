@@ -44,7 +44,9 @@ module.exports = (env = {}) => {
       path: path.join(process.cwd(), 'build'),
     },
     devServer: {
-      publicPath: '/',
+      devMiddleware: {
+        publicPath: '/',
+      },
     },
     mode: 'production',
   };
