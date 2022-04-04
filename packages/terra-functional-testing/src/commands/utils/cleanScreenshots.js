@@ -11,9 +11,9 @@ const isDirectory = filePath => (fs.existsSync(filePath) && fs.lstatSync(filePat
 async function cleanScreenshots() {
   const monoRepoPath = path.resolve(process.cwd(), 'packages');
   const isMonoRepo = fs.existsSync(monoRepoPath);
-  let patterns = [];
+  const patterns = [];
 
-  // Check whether or not it a monorepo and then get the paths to the snapshot directories.
+  // Check whether or not it is a monorepo and then get the paths to the snapshot directories.
   if (isMonoRepo) {
     const packageNames = fs.readdirSync(monoRepoPath);
 
@@ -23,23 +23,23 @@ async function cleanScreenshots() {
       patterns.push(path.resolve(monoRepoPath, packageName, 'tests', 'wdio', '**', '__snapshots__', 'latest'));
     });
   } else {
-    patterns = [
-      `${process.cwd()}/tests/wdio/**/__snapshots__/diff`,
-      `${process.cwd()}/tests/wdio/**/__snapshots__/error`,
-      `${process.cwd()}/tests/wdio/**/__snapshots__/latest`,
-    ];
+    patterns.push(path.resolve(process.cwd(), 'tests', 'wdio', '**', '__snapshots__', 'diff'));
+    patterns.push(path.resolve(process.cwd(), 'tests', 'wdio', '**', '__snapshots__', 'error'));
+    patterns.push(path.resolve(process.cwd(), 'tests', 'wdio', '**', '__snapshots__', 'latest'));
   }
 
-  // Determine the existing snapshot directories.
-  const screenshotDirectories = patterns.filter((pattern) => (
-    glob.sync(pattern).length > 0
-  ));
+  // For each of the three directory patterns, do a glob search to identify all the existing and matching screenshot directories and delete them.
+  patterns.forEach((pattern) => {
+    // Determine the existing snapshot directories.
+    const screenshotDirectories = glob.sync(pattern) || [];
 
-  // Delete the existing snapshot directories.
-  screenshotDirectories.forEach((dir) => {
-    if (isDirectory(dir)) {
-      fs.removeSync(dir);
-    }
+    // It is possible there are multiple directories containing the __snapshot__ directory due to the '**' pattern in the glob search.
+    screenshotDirectories.forEach((screenshotDirectory) => {
+      // Delete the existing snapshot directories if found.
+      if (isDirectory(screenshotDirectory)) {
+        fs.removeSync(screenshotDirectory);
+      }
+    });
   });
 
   logger.info('Cleaned wdio snapshots directories.');
