@@ -32,7 +32,7 @@ describe('cleanScreenshots', () => {
     jest.spyOn(fs, 'lstatSync').mockImplementation(() => ({ isDirectory: () => true }));
     jest.spyOn(fs, 'removeSync').mockImplementation(() => { });
 
-    cleanScreenshots();
+    cleanScreenshots(false);
 
     expect(path.resolve).toHaveBeenCalledWith(process.cwd(), 'packages');
     expect(fs.existsSync).toHaveBeenCalledWith(mockPath);
@@ -46,6 +46,34 @@ describe('cleanScreenshots', () => {
     expect(fs.removeSync).toHaveBeenNthCalledWith(3, 'latest');
   });
 
+  it('should clean reference screenshots for monorepo project', () => {
+    const mockPath = 'terra-toolkit/packages';
+    jest.spyOn(path, 'resolve').mockImplementation(() => mockPath);
+    jest.spyOn(fs, 'existsSync').mockImplementation(() => true);
+    jest.spyOn(fs, 'readdirSync').mockImplementationOnce(() => ['terra-functional-testing']);
+    jest.spyOn(glob, 'sync').mockImplementationOnce(() => ['diff']);
+    jest.spyOn(glob, 'sync').mockImplementationOnce(() => ['error']);
+    jest.spyOn(glob, 'sync').mockImplementationOnce(() => ['latest']);
+    jest.spyOn(glob, 'sync').mockImplementationOnce(() => ['reference']);
+    jest.spyOn(fs, 'lstatSync').mockImplementation(() => ({ isDirectory: () => true }));
+    jest.spyOn(fs, 'removeSync').mockImplementation(() => { });
+
+    cleanScreenshots(true);
+
+    expect(path.resolve).toHaveBeenCalledWith(process.cwd(), 'packages');
+    expect(fs.existsSync).toHaveBeenCalledWith(mockPath);
+    expect(fs.readdirSync).toHaveBeenCalledWith(mockPath);
+    expect(glob.sync).toHaveBeenCalledWith(mockPath);
+    expect(fs.lstatSync).toHaveBeenNthCalledWith(1, 'diff');
+    expect(fs.lstatSync).toHaveBeenNthCalledWith(2, 'error');
+    expect(fs.lstatSync).toHaveBeenNthCalledWith(3, 'latest');
+    expect(fs.lstatSync).toHaveBeenNthCalledWith(4, 'reference');
+    expect(fs.removeSync).toHaveBeenNthCalledWith(1, 'diff');
+    expect(fs.removeSync).toHaveBeenNthCalledWith(2, 'error');
+    expect(fs.removeSync).toHaveBeenNthCalledWith(3, 'latest');
+    expect(fs.removeSync).toHaveBeenNthCalledWith(4, 'reference');
+  });
+
   it('should clean screenshots for non-monorepo project', () => {
     const mockPath = 'terra-toolkit';
     jest.spyOn(path, 'resolve').mockImplementation(() => mockPath);
@@ -57,7 +85,7 @@ describe('cleanScreenshots', () => {
     jest.spyOn(fs, 'lstatSync').mockImplementation(() => ({ isDirectory: () => true }));
     jest.spyOn(fs, 'removeSync').mockImplementation(() => { });
 
-    cleanScreenshots();
+    cleanScreenshots(false);
 
     expect(path.resolve).toHaveBeenCalledWith(process.cwd(), 'packages');
     expect(fs.existsSync).toHaveBeenCalledWith(mockPath);
@@ -68,5 +96,32 @@ describe('cleanScreenshots', () => {
     expect(fs.removeSync).toHaveBeenNthCalledWith(1, 'diff');
     expect(fs.removeSync).toHaveBeenNthCalledWith(2, 'error');
     expect(fs.removeSync).toHaveBeenNthCalledWith(3, 'latest');
+  });
+
+  it('should clean reference screenshots for non-monorepo project', () => {
+    const mockPath = 'terra-toolkit';
+    jest.spyOn(path, 'resolve').mockImplementation(() => mockPath);
+    jest.spyOn(fs, 'existsSync').mockImplementationOnce(() => false);
+    jest.spyOn(fs, 'existsSync').mockImplementation(() => true);
+    jest.spyOn(glob, 'sync').mockImplementationOnce(() => ['diff']);
+    jest.spyOn(glob, 'sync').mockImplementationOnce(() => ['error']);
+    jest.spyOn(glob, 'sync').mockImplementationOnce(() => ['latest']);
+    jest.spyOn(glob, 'sync').mockImplementationOnce(() => ['reference']);
+    jest.spyOn(fs, 'lstatSync').mockImplementation(() => ({ isDirectory: () => true }));
+    jest.spyOn(fs, 'removeSync').mockImplementation(() => { });
+
+    cleanScreenshots(true);
+
+    expect(path.resolve).toHaveBeenCalledWith(process.cwd(), 'packages');
+    expect(fs.existsSync).toHaveBeenCalledWith(mockPath);
+    expect(glob.sync).toHaveBeenCalledWith(mockPath);
+    expect(fs.lstatSync).toHaveBeenNthCalledWith(1, 'diff');
+    expect(fs.lstatSync).toHaveBeenNthCalledWith(2, 'error');
+    expect(fs.lstatSync).toHaveBeenNthCalledWith(3, 'latest');
+    expect(fs.lstatSync).toHaveBeenNthCalledWith(4, 'reference');
+    expect(fs.removeSync).toHaveBeenNthCalledWith(1, 'diff');
+    expect(fs.removeSync).toHaveBeenNthCalledWith(2, 'error');
+    expect(fs.removeSync).toHaveBeenNthCalledWith(3, 'latest');
+    expect(fs.removeSync).toHaveBeenNthCalledWith(4, 'reference');
   });
 });

@@ -8,7 +8,11 @@ const logger = new Logger({ prefix: '[terra-functional-testing:cleanScreenshots]
 // eslint-disable-next-line global-require, import/no-dynamic-require
 const isDirectory = filePath => (fs.existsSync(filePath) && fs.lstatSync(filePath).isDirectory());
 
-async function cleanScreenshots() {
+  /**
+   * Delete the `diff`, `error`, `latest` and `reference` screenshot directories for each test run so all the screenshots are current.
+   * @param {boolean} cleanReferenceScreenshots - A flag to determine if the reference screenshots should also be deleted since they will be downloaded from the remote repository. 
+   */
+async function cleanScreenshots(cleanReferenceScreenshots) {
   const monoRepoPath = path.resolve(process.cwd(), 'packages');
   const isMonoRepo = fs.existsSync(monoRepoPath);
   const patterns = [];
@@ -21,11 +25,20 @@ async function cleanScreenshots() {
       patterns.push(path.resolve(monoRepoPath, packageName, 'tests', 'wdio', '**', '__snapshots__', 'diff'));
       patterns.push(path.resolve(monoRepoPath, packageName, 'tests', 'wdio', '**', '__snapshots__', 'error'));
       patterns.push(path.resolve(monoRepoPath, packageName, 'tests', 'wdio', '**', '__snapshots__', 'latest'));
+
+      if (cleanReferenceScreenshots) {
+        patterns.push(path.resolve(monoRepoPath, packageName, 'tests', 'wdio', '**', '__snapshots__', 'reference'));
+      }
+
     });
   } else {
     patterns.push(path.resolve(process.cwd(), 'tests', 'wdio', '**', '__snapshots__', 'diff'));
     patterns.push(path.resolve(process.cwd(), 'tests', 'wdio', '**', '__snapshots__', 'error'));
     patterns.push(path.resolve(process.cwd(), 'tests', 'wdio', '**', '__snapshots__', 'latest'));
+
+    if (cleanReferenceScreenshots) {
+      patterns.push(path.resolve(process.cwd(), 'tests', 'wdio', '**', '__snapshots__', 'reference'));
+    }
   }
 
   // For each of the three directory patterns, do a glob search to identify all the existing and matching screenshot directories and delete them.
