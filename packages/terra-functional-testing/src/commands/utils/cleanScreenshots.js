@@ -8,10 +8,10 @@ const logger = new Logger({ prefix: '[terra-functional-testing:cleanScreenshots]
 // eslint-disable-next-line global-require, import/no-dynamic-require
 const isDirectory = filePath => (fs.existsSync(filePath) && fs.lstatSync(filePath).isDirectory());
 
-  /**
-   * Delete the `diff`, `error`, `latest` and `reference` screenshot directories for each test run so all the screenshots are current.
-   * @param {boolean} cleanReferenceScreenshots - A flag to determine if the reference screenshots should also be deleted since they will be downloaded from the remote repository. 
-   */
+/**
+ * Delete the `diff`, `error`, `latest` and `reference` screenshot directories for each test run so all the screenshots are current.
+ * @param {boolean} cleanReferenceScreenshots - A flag to determine if the reference screenshots should also be deleted since they will be downloaded from the remote repository.
+ */
 async function cleanScreenshots(cleanReferenceScreenshots) {
   const monoRepoPath = path.resolve(process.cwd(), 'packages');
   const isMonoRepo = fs.existsSync(monoRepoPath);
@@ -29,7 +29,6 @@ async function cleanScreenshots(cleanReferenceScreenshots) {
       if (cleanReferenceScreenshots) {
         patterns.push(path.resolve(monoRepoPath, packageName, 'tests', 'wdio', '**', '__snapshots__', 'reference'));
       }
-
     });
   } else {
     patterns.push(path.resolve(process.cwd(), 'tests', 'wdio', '**', '__snapshots__', 'diff'));
