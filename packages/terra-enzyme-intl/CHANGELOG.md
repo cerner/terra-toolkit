@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Fixed
+  * Fixed jest test due to react-intl update.
+
 ## 4.6.0 - (February 11, 2022)
 
 * Changed

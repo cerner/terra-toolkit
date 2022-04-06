@@ -34,6 +34,7 @@ exports[`mountWithIntl using injectIntl should match the snapshot 1`] = `
     foo="bar"
     intl={
       Object {
+        "$t": [Function],
         "defaultFormats": Object {},
         "defaultLocale": "en",
         "defaultRichTextElements": undefined,
@@ -176,6 +177,7 @@ exports[`shallowWithIntl using injectIntl should match the snapshot 1`] = `
   foo="bar"
   intl={
     Object {
+      "$t": [Function],
       "defaultFormats": Object {},
       "defaultLocale": "en",
       "defaultRichTextElements": undefined,
