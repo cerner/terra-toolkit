@@ -8,7 +8,7 @@
   * Delete the `reference` screenshot directory when `useRemoteReferenceScreenshots` is true.
 
 * Fixed
-  * Fixed deleting the `diff`, `error`, and `latest` screenshot directories at the beginning of each test run.
+  * Fixed deleting the `diff`, `error`, and optionally the `latest` screenshot directories at the beginning of each test run.
 
 ## 2.7.0 - (February 11, 2022)
 
