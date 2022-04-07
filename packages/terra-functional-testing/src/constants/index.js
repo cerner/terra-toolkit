@@ -25,4 +25,10 @@ const TERRA_VIEWPORTS = {
   },
 };
 
-module.exports = { TERRA_VIEWPORTS };
+const BUILD_TYPES = {
+  master: 'master',
+  dev: 'dev',
+  pullRequest: 'pullRequest',
+}
+
+module.exports = { TERRA_VIEWPORTS, BUILD_TYPES };
