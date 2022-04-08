@@ -2,12 +2,14 @@ const path = require('path');
 const getConfigurationOptions = require('../../../../src/config/utils/getConfigurationOptions');
 const getCapabilities = require('../../../../src/config/utils/getCapabilities');
 const getIpAddress = require('../../../../src/config/utils/getIpAddress');
+const { BUILD_BRANCH } = require('../../../../src/constants/index');
 
 describe('getCapabilities', () => {
   it('should get configuration from cli options', async () => {
     const options = {
       assetServerPort: 8080,
       browsers: ['chrome'],
+      buildBranch: BUILD_BRANCH.pullRequest,
       config: '/path',
       disableSeleniumService: true,
       externalHost: 'externalHost',
@@ -36,6 +38,7 @@ describe('getCapabilities', () => {
       spec: options.spec,
       suite: options.suite,
       launcherOptions: {
+        buildBranch: BUILD_BRANCH.pullRequest,
         disableSeleniumService: true,
         formFactor: options.formFactor,
         gridUrl: options.gridUrl,
@@ -61,6 +64,7 @@ describe('getCapabilities', () => {
     const options = {
       assetServerPort: 8080,
       browsers: ['chrome'],
+      buildBranch: BUILD_BRANCH.master,
       config: '/path',
       disableSeleniumService: false,
       externalHost: 'externalHost',
@@ -88,6 +92,7 @@ describe('getCapabilities', () => {
       spec: options.spec,
       suite: options.suite,
       launcherOptions: {
+        buildBranch: BUILD_BRANCH.master,
         disableSeleniumService: true,
         formFactor: options.formFactor,
         gridUrl: undefined,
@@ -119,6 +124,7 @@ describe('getCapabilities', () => {
       hostname: 'localhost',
       port: 4444,
       launcherOptions: {
+        buildBranch: undefined,
         disableSeleniumService: false,
         formFactor: undefined,
         gridUrl: undefined,
