@@ -10,6 +10,7 @@ const getConfigurationOptions = (options) => {
   const {
     assetServerPort,
     browsers,
+    buildBranch,
     disableSeleniumService,
     ignoreScreenshotMismatch,
     externalHost,
@@ -35,6 +36,7 @@ const getConfigurationOptions = (options) => {
     hostname: seleniumServiceUrl || gridUrl || (useSeleniumStandaloneService ? 'standalone-chrome' : 'localhost'),
     port: seleniumServicePort || (gridUrl ? 80 : 4444),
     launcherOptions: {
+      buildBranch,
       disableSeleniumService: disableSeleniumService || useSeleniumStandaloneService || !!gridUrl,
       ignoreScreenshotMismatch,
       formFactor,

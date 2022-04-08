@@ -13,6 +13,8 @@ Options:
                                                   [number] [default: (_default)]
       --browsers                        A list of browsers for the test run.
                                                    [array] [default: (_default)]
+      --buildBranch                     The type of branch being built
+                                                  [string] [default: (_default)]
   -c, --config                          A file path to the test runner
                                         configuration.                  [string]
       --disableSeleniumService          A flag to disable the selenium docker
