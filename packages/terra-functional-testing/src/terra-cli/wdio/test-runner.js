@@ -103,8 +103,7 @@ class TestRunner {
       ...cliOptions
     } = options;
 
-    // Clean only the non reference screenshots.
-    cleanScreenshots();
+    cleanScreenshots(options.useRemoteReferenceScreenshots);
 
     await TestRunner.configureScreenshots(options);
 
