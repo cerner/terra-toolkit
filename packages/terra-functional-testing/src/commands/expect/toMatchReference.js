@@ -43,11 +43,11 @@ function toMatchReference(screenshot) {
     if (message.length > 0) {
       message = message.concat('\n');
     }
-    message = message.concat(`Screenshot has changed and needs to be reviewed.`);
+    message = message.concat('Screenshot has changed and needs to be reviewed.');
   }
 
   return {
-    pass: pass,
+    pass,
     message: () => message,
   };
 }
