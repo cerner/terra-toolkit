@@ -8,6 +8,9 @@
   * Delete the `reference` screenshot directory when `useRemoteReferenceScreenshots` is true.
   * Added a check of the `BUILD_BRANCH` environment variable to determine if tests should pass regardless of image mismatch.
 
+* Changed
+  * Changed how we consume `BUILD_BRANCH` environment variable to match what the expected values of it are. 
+
 * Fixed
   * Fixed deleting the `diff`, `error`, and optionally the `latest` screenshot directories at the beginning of each test run.
 
