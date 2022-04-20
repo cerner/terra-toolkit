@@ -194,7 +194,7 @@ describe('toMatchReference', () => {
   it('should pass if matches reference screenshot and buildBranch is pullRequest', () => {
     global.Terra = {
       serviceOptions: {
-        buildBranch: BUILD_BRANCH.pullRequest,
+        buildBranch: `${BUILD_BRANCH.pullRequest}-31`,
       },
     };
     const receivedScreenshot = {
@@ -213,7 +213,7 @@ describe('toMatchReference', () => {
   it('should not pass if not within mismatch tolerance, buildBranch is pullRequest, and useRemoteReferenceScreenshots is false', () => {
     global.Terra = {
       serviceOptions: {
-        buildBranch: BUILD_BRANCH.pullRequest,
+        buildBranch: `${BUILD_BRANCH.pullRequest}-31`,
         useRemoteReferenceScreenshots: false,
       },
     };
@@ -232,7 +232,7 @@ describe('toMatchReference', () => {
   it('should pass if not within mismatch tolerance but buildBranch is pullRequest and useRemoteReferenceScreenshots is true', () => {
     global.Terra = {
       serviceOptions: {
-        buildBranch: BUILD_BRANCH.pullRequest,
+        buildBranch: `${BUILD_BRANCH.pullRequest}-31`,
         useRemoteReferenceScreenshots: true,
       },
     };

@@ -38,7 +38,7 @@ function toMatchReference(screenshot) {
 
   let pass = global.Terra.serviceOptions.ignoreScreenshotMismatch || imagesMatch;
 
-  if (global.Terra.serviceOptions.useRemoteReferenceScreenshots && global.Terra.serviceOptions.buildBranch === BUILD_BRANCH.pullRequest && !pass) {
+  if (global.Terra.serviceOptions.useRemoteReferenceScreenshots && global.Terra.serviceOptions.buildBranch.includes(BUILD_BRANCH.pullRequest) && !pass) {
     pass = true;
     if (message.length > 0) {
       message = message.concat('\n');
