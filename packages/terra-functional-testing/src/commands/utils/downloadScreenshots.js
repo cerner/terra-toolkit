@@ -7,17 +7,21 @@ const { Logger } = require('@cerner/terra-cli');
 const logger = new Logger({ prefix: '[terra-functional-testing:downloadScreenshots]' });
 
 /**
- * Downloads and unzips the screenshots from provided url.
- * @param {string} screenshotUrl - The url to the repository that stores the screenshots.
+ * Downloads and unzips the screenshots from the provided configuration options.
+ * @param {Object} config - The configuration options to use when downloading screenshots
  */
-async function downloadScreenshots(screenshotUrl) {
-  if (!screenshotUrl) {
+async function downloadScreenshots(config) {
+  const { url } = config;
+
+  if (!url) {
     logger.error('A url to the screenshot registry is required to download screenshots.');
     return;
   }
 
+  logger.info(`Starting to download screenshots from ${url}.`);
+
   await new Promise((resolve, reject) => {
-    https.get(screenshotUrl)
+    https.get(url)
       .on('response', async (response) => {
         const { statusCode } = response;
 

@@ -11,14 +11,14 @@ describe('downloadScreenshots', () => {
   it('should not download screenshot when no url provided', async () => {
     jest.spyOn(https, 'get').mockImplementationOnce(() => { });
 
-    await downloadScreenshots();
+    await downloadScreenshots({});
 
     expect(https.get).not.toHaveBeenCalled();
   });
 
   it('should download screenshot with url', async () => {
-    const url = 'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-zip-file.zip';
-    await downloadScreenshots(url);
+    const config = { url: 'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-zip-file.zip' };
+    await downloadScreenshots(config);
 
     const zipPath = path.join(process.cwd(), 'terra-wdio-screenshots');
 
