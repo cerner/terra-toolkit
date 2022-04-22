@@ -6,7 +6,7 @@
   * Fixed jest test failure caused by react-intl update.
 
 * Changed
-    * Updating jest tests
+    * Updated jest tests.
 
 ## 4.6.0 - (February 11, 2022)
 
