@@ -191,7 +191,7 @@ describe('toMatchReference', () => {
     expect(result.pass).toBe(false);
   });
 
-  it('should pass if matches reference screenshot and buildBranch matchs pullRequest', () => {
+  it('should pass if matches reference screenshot and buildBranch matches pullRequest', () => {
     global.Terra = {
       serviceOptions: {
         buildBranch: `pr-31`,
@@ -210,7 +210,7 @@ describe('toMatchReference', () => {
     expect(result.pass).toBe(true);
   });
 
-  it('should not pass if not within mismatch tolerance, buildBranch matchs pullRequest, and useRemoteReferenceScreenshots is false', () => {
+  it('should not pass if not within mismatch tolerance, buildBranch matches pullRequest, and useRemoteReferenceScreenshots is false', () => {
     global.Terra = {
       serviceOptions: {
         buildBranch: `pr-31`,
@@ -229,7 +229,7 @@ describe('toMatchReference', () => {
     expect(result.message()).toEqual(expectedMessage);
   });
 
-  it('should pass if not within mismatch tolerance but buildBranch matchs pullRequest and useRemoteReferenceScreenshots is true', () => {
+  it('should pass if not within mismatch tolerance but buildBranch matches pullRequest and useRemoteReferenceScreenshots is true', () => {
     global.Terra = {
       serviceOptions: {
         buildBranch: `pr-31`,
