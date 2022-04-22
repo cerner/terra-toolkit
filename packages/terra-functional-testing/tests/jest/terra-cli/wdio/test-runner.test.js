@@ -1,12 +1,14 @@
 jest.mock('@cerner/terra-cli/lib/utils/Logger');
 jest.mock('../../../../src/commands/utils/cleanScreenshots');
 jest.mock('../../../../src/commands/utils/downloadScreenshots');
+jest.mock('../../../../src/config/utils/getRemoteScreenshotConfiguration');
 
 const fs = require('fs');
 const path = require('path');
 const Launcher = require('@wdio/cli').default;
 const TestRunner = require('../../../../src/terra-cli/wdio/test-runner');
 const getConfigurationOptions = require('../../../../src/config/utils/getConfigurationOptions');
+const getRemoteScreenshotConfiguration = require('../../../../src/config/utils/getRemoteScreenshotConfiguration');
 const cleanScreenshots = require('../../../../src/commands/utils/cleanScreenshots');
 const downloadScreenshots = require('../../../../src/commands/utils/downloadScreenshots');
 
@@ -64,44 +66,6 @@ describe('Test Runner', () => {
     });
   });
 
-  describe('configureScreenshots', () => {
-    it('should download screenshots with screenshotUrl option', async () => {
-      const options = {
-        screenshotUrl: 'url',
-      };
-
-      await TestRunner.configureScreenshots(options);
-
-      expect(downloadScreenshots).toHaveBeenCalledWith(options.screenshotUrl);
-    });
-
-    it('should download screenshots with configuration', async () => {
-      const mockConfig = {
-        config: {
-          screenshots: {
-            url: 'mock-url',
-          },
-        },
-      };
-
-      jest.mock('./mock-wdio.config.js', () => mockConfig);
-
-      const options = {
-        config: path.resolve(__dirname, './mock-wdio.config.js'),
-      };
-
-      await TestRunner.configureScreenshots(options);
-
-      expect(downloadScreenshots).toHaveBeenCalledWith(mockConfig.config.screenshots.url);
-    });
-
-    it('should not download screenshots when not configured', async () => {
-      await TestRunner.configureScreenshots({});
-
-      expect(downloadScreenshots).not.toHaveBeenCalled();
-    });
-  });
-
   describe('configPath', () => {
     it('should return a resolved path to the file', () => {
       jest.spyOn(path, 'resolve').mockImplementationOnce((configPath) => `/mock/path/${configPath}`);
@@ -143,7 +107,6 @@ describe('Test Runner', () => {
   describe('start', () => {
     it('should initiate a test runner for each theme and locale permutation', async () => {
       jest.spyOn(TestRunner, 'run').mockImplementation(() => Promise.resolve());
-      jest.spyOn(TestRunner, 'configureScreenshots').mockImplementation(() => {});
 
       const options = { config: '/path', locales: ['en', 'fr'], themes: ['terra-default-theme', 'terra-mock-theme'] };
       await TestRunner.start(options);
@@ -162,7 +125,7 @@ describe('Test Runner', () => {
         config: '/path', theme: 'terra-mock-theme', locale: 'fr',
       });
       expect(cleanScreenshots).toHaveBeenCalled();
-      expect(TestRunner.configureScreenshots).toHaveBeenCalledWith(options);
+      expect(downloadScreenshots).not.toHaveBeenCalled();
     });
 
     it('should initiate a test runner for each theme, locale, and form factor permutation', async () => {
@@ -200,6 +163,21 @@ describe('Test Runner', () => {
       expect(TestRunner.run).toHaveBeenCalledWith({
         config: '/path', theme: 'terra-mock-theme', locale: 'fr', formFactor: 'large',
       });
+    });
+
+    it('should initiate a test runner with configurations to download screenshots', async () => {
+      jest.spyOn(TestRunner, 'run').mockImplementation(() => Promise.resolve());
+
+      await TestRunner.start({
+        config: '/path',
+        locales: ['en', 'fr'],
+        themes: ['terra-default-theme', 'terra-mock-theme'],
+        formFactors: ['tiny', 'large'],
+        useRemoteReferenceScreenshots: true,
+      });
+
+      expect(getRemoteScreenshotConfiguration).toHaveBeenCalled();
+      expect(downloadScreenshots).toHaveBeenCalled();
     });
 
     it('should initiate a test runner with custom options', async () => {

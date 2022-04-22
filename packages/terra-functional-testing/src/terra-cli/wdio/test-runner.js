@@ -3,6 +3,7 @@ const path = require('path');
 const Launcher = require('@wdio/cli').default;
 const { Logger } = require('@cerner/terra-cli');
 const getConfigurationOptions = require('../../config/utils/getConfigurationOptions');
+const getRemoteScreenshotConfiguration = require('../../config/utils/getRemoteScreenshotConfiguration');
 const { cleanScreenshots, downloadScreenshots } = require('../../commands/utils');
 
 const logger = new Logger({ prefix: '[terra-functional-testing:wdio]' });
@@ -107,7 +108,10 @@ class TestRunner {
 
     cleanScreenshots(options.useRemoteReferenceScreenshots);
 
-    await TestRunner.configureScreenshots(options);
+    if (options.useRemoteReferenceScreenshots) {
+      const screenshotConfig = getRemoteScreenshotConfiguration();
+      await downloadScreenshots(screenshotConfig);
+    }
 
     /**
      * The following code loops through each permutation of theme, locale, and form factor.
@@ -134,31 +138,6 @@ class TestRunner {
           formFactorIndex += 1;
         } while (formFactorIndex < formFactors.length);
       }
-    }
-  }
-
-  static async configureScreenshots(options) {
-    const {
-      config,
-      screenshotUrl,
-    } = options;
-
-    let url = screenshotUrl;
-
-    if (!url) {
-      const configPath = TestRunner.configPath(config);
-      // eslint-disable-next-line global-require, import/no-dynamic-require
-      const wdioConfig = require(configPath);
-      const { screenshots } = wdioConfig.config;
-
-      if (screenshots) {
-        url = screenshots.url;
-      }
-    }
-
-    if (url) {
-      logger.info(`Starting to download screenshots from ${url}.`);
-      await downloadScreenshots(url);
     }
   }
 }
