@@ -28,7 +28,7 @@ const TERRA_VIEWPORTS = {
 const BUILD_BRANCH = {
   master: 'master',
   dev: 'dev',
-  pullRequest: 'pr',
+  pullRequest: /pr-\d+/g,
 };
 
 module.exports = { TERRA_VIEWPORTS, BUILD_BRANCH };
