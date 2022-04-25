@@ -1,8 +1,5 @@
 # Changelog
 
-* Fixed
-  * Fixed jest test failure caused by react-intl update.
-
 ## Unreleased
 
 * Fixed
