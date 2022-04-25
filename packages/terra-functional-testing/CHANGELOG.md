@@ -10,7 +10,7 @@
   * Added load configurations for downloading screenshots.
 
 * Changed
-  * Changed how we consume `BUILD_BRANCH` environment variable to match what the expected values of it are. 
+  * Changed how we consume `BUILD_BRANCH` environment variable to match what the expected values of it are.
 
 * Fixed
   * Fixed deleting the `diff`, `error`, and optionally the `latest` screenshot directories at the beginning of each test run.
