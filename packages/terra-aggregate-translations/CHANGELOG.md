@@ -1,6 +1,8 @@
 # Changelog
 
 ## Unreleased
+* Removed
+  * Removed intl v3 and v4 support.
 
 ## 2.4.0 - (February 11, 2022)
 
