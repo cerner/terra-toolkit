@@ -135,7 +135,9 @@ exports.config = {
     ui: 'bdd',
     timeout: 1200000,
   },
-
+  /**
+   * Defines the defaullt repository id and url used for uploading and downloading reference screenshots from a remote repository.
+   */
   screenshotsSites: {
     repositoryId: 'cerner-release-main-site',
     repositoryUrl: 'http://repo.release.cerner.corp/nexus/service/local/repositories/main-site',

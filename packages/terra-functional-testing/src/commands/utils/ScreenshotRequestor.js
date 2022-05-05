@@ -10,21 +10,17 @@ const MemoryStream = require('./MemoryStream');
 const logger = new Logger({ prefix: '[terra-functional-testing:screenshotRequestor]' });
 
 /**
- * Class to manage downloading and uploading screenshots to nexus. Consumers should call screenshotRequestor to download the existing reference screenshots, zip up the new reference screenshots, and upload it to nexus
+ * Class to manage downloading the existing reference screenshots from the remote repository, zip up the new reference screenshots, and upload it to the remote repository.
  */
 class ScreenshotRequestor {
   /**
-   * Constructor for public site. Takes the config and creates:
-   * - url - the public facing URL where the screenshots ends up
-   * - referenceScreenshotsPath - the output path from which to upload the screenshots
-   * - serviceUrl - the URL for uploading
-   * - serviceAuthHeader - the auth header for uploading
-   * @param {Object} config the config to use when constructing the publish site object
+   * Constructor for ScreenshotRequestor.
+   * @param {Object} config the config that contains information needed to download and upload screenshots from the remote repository
    * @param {string} config.referenceScreenshotsPath the path to the reference screenshots
-   * @param {string} config.serviceAuthHeader - the auth header to use when calling the service
-   * @param {string} config.serviceUrl - the url to use when calling the service
-   * @param {string} config.url - the url where the site will end up
-   * @param {string} config.zipFilePath - the path to the zip screenshot file
+   * @param {string} config.serviceAuthHeader - the auth header to use when making the download and upload requests.
+   * @param {string} config.serviceUrl - the url to use when making the download and upload requests.
+   * @param {string} config.url - the url where the screenshots will downloaded from and uploaded to.
+   * @param {string} config.zipFilePath - the path to the zipped screenshot file
    */
   constructor(config) {
     const {
@@ -67,9 +63,10 @@ class ScreenshotRequestor {
         },
       },
     );
+
     // Allow 404s because that just means the screenshots don't exists yet.
     ScreenshotRequestor.checkStatus(response, [404]);
-    logger.info('Existing screenshots deleted from remotw repository');
+    logger.info('Existing screenshots deleted from remote repository.');
   }
 
   /**
@@ -78,8 +75,6 @@ class ScreenshotRequestor {
   deleteZipReferenceScreenshots() {
     const archiveName = path.join(this.zipFilePath, 'reference.zip');
     fs.removeSync(archiveName);
-
-    logger.info('Zip file deleted');
   }
 
   /**
@@ -93,8 +88,6 @@ class ScreenshotRequestor {
     archive.pipe(writeStream);
     archive.directory(this.referenceScreenshotsPath, false);
     await archive.finalize();
-
-    logger.info('Zip file created');
   }
 
   /**
@@ -116,7 +109,7 @@ class ScreenshotRequestor {
   }
 
   /**
-   * Downloads the screenshots
+   * Downloads the screenshots and unzip it to the reference screenshot directory defined by referenceScreenshotsPath.
    */
   async downloadScreenshots() {
     const archiveUrl = `${this.serviceUrl}/reference.zip`;
@@ -175,11 +168,11 @@ class ScreenshotRequestor {
     );
     ScreenshotRequestor.checkStatus(response);
 
-    logger.info(`Screenshots uploaded to ${this.url}`);
+    logger.info(`Screenshots are uploaded to ${this.url}`);
   }
 
   /**
-   * Downloads the screenshots and unzip it.
+   * Downloads the screenshots.
    */
   async download() {
     await this.downloadScreenshots();

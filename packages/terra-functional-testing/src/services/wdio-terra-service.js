@@ -32,8 +32,8 @@ class TerraService {
 
   /**
    * Gets executed once before all workers get launched.
+   * Downloads the reference screenshots from the remote repository if useRemoteReferenceScreenshots is true.
    * @param {Object} config wdio configuration object
-   * @param {Array.<Object>} capabilities list of capabilities details
    */
   async onPrepare(config) {
     if (this.serviceOptions.useRemoteReferenceScreenshots) {
