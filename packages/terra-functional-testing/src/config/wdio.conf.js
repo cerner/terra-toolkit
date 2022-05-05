@@ -135,6 +135,11 @@ exports.config = {
     ui: 'bdd',
     timeout: 1200000,
   },
+
+  screenshotsSites: {
+    repositoryId: 'cerner-release-main-site',
+    repositoryUrl: 'http://repo.release.cerner.corp/nexus/service/local/repositories/main-site',
+  },
   /**
    * Gets executed once before all workers get launched.
    */

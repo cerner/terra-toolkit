@@ -2,11 +2,13 @@
 const expect = require('expect');
 const { accessibility, element, screenshot } = require('../commands/validates');
 const { toBeAccessible, toMatchReference } = require('../commands/expect');
+const getRemoteScreenshotConfiguration = require('../config/utils/getRemoteScreenshotConfiguration');
 const {
   describeTests,
   describeViewports,
   getViewports,
   hideInputCaret,
+  ScreenshotRequestor,
   setApplicationLocale,
   setViewport,
 } = require('../commands/utils');
@@ -26,6 +28,19 @@ class TerraService {
       ...launcherOptions,
       ...serviceOptions,
     };
+  }
+
+  /**
+   * Gets executed once before all workers get launched.
+   * @param {Object} config wdio configuration object
+   * @param {Array.<Object>} capabilities list of capabilities details
+   */
+  async onPrepare(config) {
+    if (this.serviceOptions.useRemoteReferenceScreenshots) {
+      const screenshotConfig = getRemoteScreenshotConfiguration(config.screenshotsSites, this.serviceOptions.buildBranch);
+      const screenshotRequestor = new ScreenshotRequestor(screenshotConfig.publishScreenshotConfiguration);
+      await screenshotRequestor.download();
+    }
   }
 
   /**

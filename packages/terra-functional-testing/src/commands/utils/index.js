@@ -10,6 +10,7 @@ const hideInputCaret = require('./hideInputCaret');
 const setApplicationLocale = require('./setApplicationLocale');
 const setViewport = require('./setViewport');
 const setViewportSize = require('./setViewportSize');
+const ScreenshotRequestor = require('./ScreenshotRequestor');
 
 module.exports = {
   cleanScreenshots,
@@ -24,4 +25,5 @@ module.exports = {
   setApplicationLocale,
   setViewport,
   setViewportSize,
+  ScreenshotRequestor,
 };

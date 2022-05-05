@@ -48,7 +48,7 @@ const cli = {
             return process.env.BUILD_BRANCH;
           }
 
-          return undefined;
+          return '';
         },
       },
       c: {

@@ -26,42 +26,44 @@ const getAuthHeader = (repositoryId) => {
 
 /**
  * Creates the authentication header and url configurations needed to access the remote site where screenshots are located.
- * @param {Object} config.siteRepositoryId - the identifier of the repository where the screenshots are located.
- * @param {Object} config.siteRepositoryUrl - the URL of the repository where the screenshots are located.
+ * @param {Object} screenshotsSites - The url of the site where screenshots are located.
+ * @param {string} buildBranch - The branch being built.
  * @return {Object} - returns object containing the required authentication and configurations.
  */
-const getRemoteScreenshotConfiguration = () => {
+const getRemoteScreenshotConfiguration = (screenshotsSites, buildBranch) => {
+  const branchName = buildBranch || 'master';
   const packageJson = fs.readJsonSync(path.join(process.cwd(), 'package.json'));
-  const repositoryUrl = new URL(packageJson.repository.url);
-  const defaultConfiguration = {
+  const packageRepoUrl = new URL(packageJson.repository.url);
+  const { repositoryId, repositoryUrl } = screenshotsSites;
+  const config = {
     artifactId: packageJson.name,
-    groupId: `com.cerner.${repositoryUrl.pathname.match(/[^/]+/g)[0]}`,
-    version: packageJson.version,
-    site: {
-      repositoryId: 'cerner-release-main-site',
-      repositoryUrl: 'http://repo.release.cerner.corp/nexus/service/local/repositories/main-site',
-    },
+    buildBranch: branchName,
+    groupId: `com.cerner.${packageRepoUrl.pathname.match(/[^/]+/g)[0]}`,
+    repositoryId,
+    repositoryUrl,
   };
-
-  const actualConfiguration = { ...defaultConfiguration, ...packageJson.rollOut };
 
   // Get the Nexus site. For example, if repositoryUrl is http://repo.release.cerner.corp/nexus/service/local/repositories/internal-site/
   // get "internal-site" and account for the last "/" if one exists.
-  const url = new URL(actualConfiguration.site.repositoryUrl);
+  const url = new URL(config.repositoryUrl);
   const sitePaths = url.pathname.match(/[^/]+/g);
 
   if (!sitePaths) {
-    throw new Error(`The repository url is malformed: ${actualConfiguration.site.repositoryUrl}`);
+    throw new Error(`The repository url is malformed: ${config.repositoryUrl}`);
   }
 
+  const referenceScreenshotsPath = path.join(process.cwd(), 'tests', 'wdio', '__snapshots__', 'reference');
+  const zipFilePath = path.join(process.cwd(), 'tests', 'wdio');
   const nexusSite = sitePaths[sitePaths.length - 1];
-  const outputPublicPath = `/nexus/content/sites/${nexusSite}/${actualConfiguration.groupId}/${actualConfiguration.artifactId}/${actualConfiguration.version}`;
+  const outputPublicPath = `/nexus/content/sites/${nexusSite}/${config.groupId}/${config.artifactId}/build-screenshots/${config.buildBranch}`;
 
   return {
     publishScreenshotConfiguration: {
+      referenceScreenshotsPath,
+      serviceAuthHeader: getAuthHeader(config.repositoryId),
+      serviceUrl: `${config.repositoryUrl}/content-compressed/${config.groupId}/${config.artifactId}/build-screenshots/${config.buildBranch}/`.replace(/([^:]\/)\/+/g, '$1'),
       url: `${url.origin}/${outputPublicPath}/`.replace(/([^:]\/)\/+/g, '$1'),
-      serviceAuthHeader: getAuthHeader(actualConfiguration.site.repositoryId),
-      serviceUrl: `${actualConfiguration.site.repositoryUrl}/content-compressed/${actualConfiguration.groupId}/${actualConfiguration.artifactId}/${actualConfiguration.version}/`.replace(/([^:]\/)\/+/g, '$1'),
+      zipFilePath,
     },
   };
 };
