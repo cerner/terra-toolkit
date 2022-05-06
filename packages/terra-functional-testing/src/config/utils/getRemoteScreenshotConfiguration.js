@@ -34,7 +34,7 @@ const getRemoteScreenshotConfiguration = (screenshotsSites, buildBranch) => {
   const branchName = buildBranch || 'master';
   const packageJson = fs.readJsonSync(path.join(process.cwd(), 'package.json'));
   const packageRepoUrl = new URL(packageJson.repository.url);
-  const { repositoryId, repositoryUrl } = screenshotsSites;
+  const { repositoryId, repositoryUrl } = screenshotsSites || {};
   const config = {
     artifactId: packageJson.name,
     buildBranch: branchName,
