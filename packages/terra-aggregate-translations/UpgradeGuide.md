@@ -1,6 +1,11 @@
 # Terra Aggregate Translations
 
-## Changes from version 3 to version 4
+## Changes from version 2 to version 3
+
+terra-aggregate-translations has drop the support of react-intl versions below 5. projects consuming terra-aggregate-translations version 3 should use React Intl version >= 5.
+Follow the upgrade guide of react-intl v5 to know more about the breaking changes : https://formatjs.io/docs/react-intl/upgrade-guide-5x 
+
+## Changes from version 1 to version 2
 
 ### Project Name Updated with @cerner Scope
 
