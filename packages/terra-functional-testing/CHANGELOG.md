@@ -7,6 +7,15 @@
 * Added
   * Added authentication for accessing screenshots from the remote site.
   * Added `useRemoteReferenceScreenshots` cli option for downloading reference screenshots from a remote site for screenshot comparisons.
+  * Delete the `reference` screenshot directory when `useRemoteReferenceScreenshots` is true.
+  * Added a check of the `BUILD_BRANCH` environment variable to determine if tests should pass regardless of image mismatch.
+  * Added load configurations for downloading screenshots.
+
+* Changed
+  * Changed how we consume `BUILD_BRANCH` environment variable to match what the expected values of it are.
+
+* Fixed
+  * Fixed deleting the `diff`, `error`, and optionally the `latest` screenshot directories at the beginning of each test run.
 
 ## 2.7.0 - (February 11, 2022)
 
@@ -17,7 +26,7 @@
 
 * Changed
   * Updated component to support Node 14.
-  
+
 ## 2.5.0 - (September 28, 2021)
 
 * Added
