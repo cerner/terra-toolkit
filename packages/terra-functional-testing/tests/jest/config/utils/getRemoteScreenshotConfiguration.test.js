@@ -12,6 +12,11 @@ const path = require('path');
 const yaml = require('js-yaml');
 const getRemoteScreenshotConfiguration = require('../../../../src/config/utils/getRemoteScreenshotConfiguration');
 
+const testScreenshotsSites = {
+  repositoryId: 'test-repository-id',
+  repositoryUrl: 'https://github.com/cerner/terra-toolkit.git',
+};
+
 describe('getRemoteScreenshotConfiguration', () => {
   const oldCwd = process.cwd;
   beforeEach(() => {
@@ -24,13 +29,9 @@ describe('getRemoteScreenshotConfiguration', () => {
 
     fs.readFileSync.mockReturnValue('yaml string');
     yaml.safeLoad.mockReturnValue({
-      'cerner-release-main-site': {
+      'test-repository-id': {
         username: 'username',
         password: 'password',
-      },
-      'ion-snapshot-site': {
-        username: 'ion',
-        password: 'ion',
       },
     });
   });
@@ -48,50 +49,37 @@ describe('getRemoteScreenshotConfiguration', () => {
       },
     });
 
-    const config = getRemoteScreenshotConfiguration();
+    const config = getRemoteScreenshotConfiguration(testScreenshotsSites);
     expect(config).toMatchSnapshot();
     expect(fs.readJsonSync).toHaveBeenCalledWith(path.join(process.cwd(), 'package.json'));
   });
 
-  it('loads the config from the package', () => {
+  it('loads the config for branch', () => {
     fs.readJsonSync.mockReturnValueOnce({
       name: 'terra-functional-testing',
       version: '1.0.0',
       repository: {
         url: 'https://github.com/cerner/terra-toolkit.git',
       },
-      rollOut: {
-        artifactId: 'mock-artifact-id',
-        groupId: 'mock-group-id',
-        site: {
-          repositoryId: 'release-internal-site',
-          repositoryUrl: 'http://repo.release.cerner.corp/nexus/service/local/repositories/internal-site',
-        },
-        jestConfig: 'jest.js',
-        webpackConfig: 'webpack.js',
-      },
     });
-    const config = getRemoteScreenshotConfiguration();
+    const config = getRemoteScreenshotConfiguration(testScreenshotsSites, 'dev');
     expect(config).toMatchSnapshot();
     expect(fs.readJsonSync).toHaveBeenCalledWith(path.join(process.cwd(), 'package.json'));
   });
 
   it('throws an error with a bad site', () => {
+    const testSites = {
+      repositoryId: 'test-repository-id',
+      repositoryUrl: 'http://www.badsite.com',
+    };
+
     fs.readJsonSync.mockReturnValueOnce({
       name: 'terra-functional-testing',
       version: '1.0.0',
       repository: {
         url: 'https://github.com/cerner/terra-toolkit.git',
       },
-      rollOut: {
-        artifactId: 'mock-artifact-id',
-        groupId: 'mock-group-id',
-        site: {
-          repositoryId: 'release-internal-site',
-          repositoryUrl: 'http://www.badsite.com',
-        },
-      },
     });
-    expect(() => getRemoteScreenshotConfiguration()).toThrowErrorMatchingSnapshot();
+    expect(() => getRemoteScreenshotConfiguration(testSites)).toThrowErrorMatchingSnapshot();
   });
 });
