@@ -1,16 +1,12 @@
 jest.mock('@cerner/terra-cli/lib/utils/Logger');
 jest.mock('../../../../src/commands/utils/cleanScreenshots');
-jest.mock('../../../../src/commands/utils/downloadScreenshots');
-jest.mock('../../../../src/config/utils/getRemoteScreenshotConfiguration');
 
 const fs = require('fs');
 const path = require('path');
 const Launcher = require('@wdio/cli').default;
 const TestRunner = require('../../../../src/terra-cli/wdio/test-runner');
 const getConfigurationOptions = require('../../../../src/config/utils/getConfigurationOptions');
-const getRemoteScreenshotConfiguration = require('../../../../src/config/utils/getRemoteScreenshotConfiguration');
 const cleanScreenshots = require('../../../../src/commands/utils/cleanScreenshots');
-const downloadScreenshots = require('../../../../src/commands/utils/downloadScreenshots');
 
 jest.mock('@wdio/cli', () => ({
   default: jest.fn().mockImplementation(() => ({ run: () => Promise.resolve(0) })),
@@ -125,7 +121,6 @@ describe('Test Runner', () => {
         config: '/path', theme: 'terra-mock-theme', locale: 'fr',
       });
       expect(cleanScreenshots).toHaveBeenCalled();
-      expect(downloadScreenshots).not.toHaveBeenCalled();
     });
 
     it('should initiate a test runner for each theme, locale, and form factor permutation', async () => {
@@ -163,21 +158,6 @@ describe('Test Runner', () => {
       expect(TestRunner.run).toHaveBeenCalledWith({
         config: '/path', theme: 'terra-mock-theme', locale: 'fr', formFactor: 'large',
       });
-    });
-
-    it('should initiate a test runner with configurations to download screenshots', async () => {
-      jest.spyOn(TestRunner, 'run').mockImplementation(() => Promise.resolve());
-
-      await TestRunner.start({
-        config: '/path',
-        locales: ['en', 'fr'],
-        themes: ['terra-default-theme', 'terra-mock-theme'],
-        formFactors: ['tiny', 'large'],
-        useRemoteReferenceScreenshots: true,
-      });
-
-      expect(getRemoteScreenshotConfiguration).toHaveBeenCalled();
-      expect(downloadScreenshots).toHaveBeenCalled();
     });
 
     it('should initiate a test runner with custom options', async () => {

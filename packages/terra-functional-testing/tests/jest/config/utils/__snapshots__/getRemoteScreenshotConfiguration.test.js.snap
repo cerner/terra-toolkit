@@ -1,11 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`getRemoteScreenshotConfiguration loads the config from the package 1`] = `
+exports[`getRemoteScreenshotConfiguration loads the config for branch 1`] = `
 Object {
   "publishScreenshotConfiguration": Object {
-    "serviceAuthHeader": undefined,
-    "serviceUrl": "http://repo.release.cerner.corp/nexus/service/local/repositories/internal-site/content-compressed/mock-group-id/mock-artifact-id/1.0.0/",
-    "url": "http://repo.release.cerner.corp/nexus/content/sites/internal-site/mock-group-id/mock-artifact-id/1.0.0/",
+    "referenceScreenshotsPath": "/app/tests/wdio/__snapshots__/reference",
+    "serviceAuthHeader": "Basic dXNlcm5hbWU6cGFzc3dvcmQ=",
+    "serviceUrl": "https://github.com/cerner/terra-toolkit.git/content-compressed/com.cerner.cerner/terra-functional-testing/build-screenshots/dev/",
+    "url": "https://github.com/nexus/content/sites/terra-toolkit.git/com.cerner.cerner/terra-functional-testing/build-screenshots/dev/",
+    "zipFilePath": "/app/tests/wdio",
   },
 }
 `;
@@ -13,9 +15,11 @@ Object {
 exports[`getRemoteScreenshotConfiguration loads the default config 1`] = `
 Object {
   "publishScreenshotConfiguration": Object {
+    "referenceScreenshotsPath": "/app/tests/wdio/__snapshots__/reference",
     "serviceAuthHeader": "Basic dXNlcm5hbWU6cGFzc3dvcmQ=",
-    "serviceUrl": "http://repo.release.cerner.corp/nexus/service/local/repositories/main-site/content-compressed/com.cerner.cerner/terra-functional-testing/1.0.0/",
-    "url": "http://repo.release.cerner.corp/nexus/content/sites/main-site/com.cerner.cerner/terra-functional-testing/1.0.0/",
+    "serviceUrl": "https://github.com/cerner/terra-toolkit.git/content-compressed/com.cerner.cerner/terra-functional-testing/build-screenshots/master/",
+    "url": "https://github.com/nexus/content/sites/terra-toolkit.git/com.cerner.cerner/terra-functional-testing/build-screenshots/master/",
+    "zipFilePath": "/app/tests/wdio",
   },
 }
 `;
