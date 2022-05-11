@@ -3,7 +3,6 @@ const {
   describeTests,
   describeViewports,
   dispatchCustomEvent,
-  downloadScreenshots,
   eventEmitter,
   getViewports,
   getViewportSize,
@@ -11,6 +10,7 @@ const {
   setApplicationLocale,
   setViewport,
   setViewportSize,
+  ScreenshotRequestor,
 } = require('../../../../src/commands/utils');
 
 describe('index', () => {
@@ -19,7 +19,6 @@ describe('index', () => {
     expect(describeTests).toBeDefined();
     expect(describeViewports).toBeDefined();
     expect(dispatchCustomEvent).toBeDefined();
-    expect(downloadScreenshots).toBeDefined();
     expect(eventEmitter).toBeDefined();
     expect(getViewports).toBeDefined();
     expect(getViewportSize).toBeDefined();
@@ -27,5 +26,6 @@ describe('index', () => {
     expect(setApplicationLocale).toBeDefined();
     expect(setViewport).toBeDefined();
     expect(setViewportSize).toBeDefined();
+    expect(ScreenshotRequestor).toBeDefined();
   });
 });

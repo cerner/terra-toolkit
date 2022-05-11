@@ -11,6 +11,7 @@
   * Delete the `reference` screenshot directory when `useRemoteReferenceScreenshots` is true.
   * Added a check of the `BUILD_BRANCH` environment variable to determine if tests should pass regardless of image mismatch.
   * Added load configurations for downloading screenshots.
+  * Added functions to upload and download screenshots from the remote repository.
 
 * Changed
   * Changed how we consume `BUILD_BRANCH` environment variable to match what the expected values of it are.
