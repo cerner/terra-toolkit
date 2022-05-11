@@ -4,7 +4,7 @@
 
 `terra-aggregate-translations v3` drops support for `react-intl 4` and below. Projects consuming `terra-aggregate-translations` version 3 should use `react-intl` version `>= 5`.
 
-`react-intl v5` no longer exports the `intlShape`. Consuming projects should replace the `intlShape` with `PropTypes.shape({ formatMessage: PropTypes.func })`. See [doc](https://formatjs.io/docs/intl#the-intl-object) for more information.
+`react-intl v5` no longer exports the `intlShape`. Consuming projects should replace the `intlShape` with `PropTypes.shape()` containing the functions that are utilized by the component. See [doc](https://formatjs.io/docs/intl#the-intl-object) for most complete and up to date intl shape.
 
 Follow the upgrade guide of react-intl v5 to know more about the breaking changes : https://formatjs.io/docs/react-intl/upgrade-guide-5x 
 
