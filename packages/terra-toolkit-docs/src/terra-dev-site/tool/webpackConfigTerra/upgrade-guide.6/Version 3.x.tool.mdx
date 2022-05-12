@@ -1,0 +1,24 @@
+import { Badge } from '@cerner/webpack-config-terra/package.json?dev-site-package';
+
+<Badge />
+
+# webpack-config-terra Upgrade Guide
+
+## Changes from @cerner/webpack-config-terra 2 to @cerner/webpack-config-terra 3
+
+### Updated Webpack-Dev-Server from version 3 to verison 4
+
+Webpack-dev-server has been updated to the latest version 4.x. This update will fix hot reloading issue on development mode which stopped working after upgrading Webpack to verison 5.
+
+### Breaking Changes
+Webpack-dev-server v3 will not work with webpack-config-terra  v3. The webpack-dev-server has replaced the configuration options ( listed below ) in v4, These changes will cause webpack-dev-server v3 configurations to fail with webpack-config-terra v3.
+- `inline` has been removed without replacement in webpack-dev-server v4.
+- `stats`, `index` and `publicPath` has been moved to `devMiddleware` option.
+
+Updating webpack-config-terra to v3 would require consuming projects to update webpack-dev-server to v4 in their local dependencies.
+```diff
+  "devDependencies": {
+-   "webpack-dev-server": "^3.x.x"
++   "webpack-dev-server": "^4.7.2"
+  }
+```

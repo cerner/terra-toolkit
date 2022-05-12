@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Breaking
+  * Added devMiddleWare to support webpack-dev-server v4
+
 ## 2.4.0 - (February 11, 2022)
 
 * Changed
@@ -11,7 +14,6 @@
 
 * Changed
   * Updated component to support Node 14.
-  
 ## 2.2.0 - (September 28, 2021)
 
 * Changed

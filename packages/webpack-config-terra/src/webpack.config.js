@@ -236,10 +236,15 @@ const defaultWebpackConfig = (env = {}, argv = {}, options = {}) => {
     devServer: {
       ...getWebpackDevServerStaticOptions(env),
       host: '0.0.0.0',
-      publicPath,
-      stats: {
-        colors: true,
-        children: false,
+      client: {
+        overlay: false,
+      },
+      devMiddleware: {
+        publicPath,
+        stats: {
+          colors: true,
+          children: false,
+        },
       },
     },
     devtool: 'eval-source-map',

@@ -54,6 +54,6 @@
   },
   "peerDependencies": {
     "intl": "^1.2.5",
-    "react-intl": "^2.8.0 || ^5.0.0"
+    "react-intl": "^5.8.2"
   }
 }

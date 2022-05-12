@@ -1,6 +1,9 @@
 # Changelog
 
 ## Unreleased
+* Breaking
+  * Updated webpack-dev-server to version 4
+  * Added devMiddleWare to support webpack-dev-server v4
 
 * Added
   * Added authentication for accessing screenshots from the remote site.
