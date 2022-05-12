@@ -2,8 +2,6 @@
 
 ## Unreleased
 
-## 4.6.1 - (May 12, 2022)
-
 * Fixed
   * Fixed jest test failure caused by react-intl update.
 

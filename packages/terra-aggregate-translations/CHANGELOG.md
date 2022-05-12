@@ -1,9 +1,6 @@
 # Changelog
 
 ## Unreleased
-
-## 3.0.0 - (May 12, 2022)
-
 * Breaking
   * Removed intl v3 and v4 support.
 
