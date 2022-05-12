@@ -5,7 +5,6 @@ services:
 branches:
   only:
     - main
-    - toolkit-mvb
 cache:
   directories:
     - docker_images

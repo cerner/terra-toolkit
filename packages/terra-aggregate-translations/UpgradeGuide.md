@@ -8,7 +8,7 @@
 
 Most of the changes to react-intl api's happened in version 3 and version 4. Refer to Resources section for more information about Breaking changes happened in react-intl from version 2 to version 5.
 
-## Resources
+### Resources
 - Upgrade guide for version 4 -> 5 : https://formatjs.io/docs/react-intl/upgrade-guide-5x
 - Upgrade guide for version 3 -> 4 : https://formatjs.io/docs/react-intl/upgrade-guide-4x
 - Upgrade guide for version 2 -> 3 : https://formatjs.io/docs/react-intl/upgrade-guide-3x 
