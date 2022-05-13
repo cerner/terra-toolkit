@@ -12,7 +12,7 @@ before_install:
   # Clean install on any new build
   - npm run clean
 install:
-  - travis_wait 5 npm install
+  - travis_wait 15 npm install
 before_script:
   # Load Docker Cache
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
