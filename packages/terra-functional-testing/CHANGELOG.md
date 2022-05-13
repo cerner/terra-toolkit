@@ -5,8 +5,8 @@
 ## 3.0.0 - (May 12, 2022)
 
 * Breaking
-  * Updated webpack-dev-server to version 4
-  * Added devMiddleWare to support webpack-dev-server v4
+  * Updated webpack-dev-server to version 4.
+  * Added devMiddleWare to support webpack-dev-server v4.
 
 * Added
   * Added authentication for accessing screenshots from the remote site.
