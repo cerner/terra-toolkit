@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 3.0.0 - (May 12, 2022)
+
 * Breaking
   * Added devMiddleWare to support webpack-dev-server v4
 

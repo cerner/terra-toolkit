@@ -1,6 +1,9 @@
 # Changelog
 
 ## Unreleased
+
+## 2.9.1 - (May 12, 2022)
+
 * Added
   * Added upgrade guide for terra-functional-testing
   * Added upgrade guide for webpack-config-terra
