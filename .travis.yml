@@ -5,6 +5,7 @@ services:
 branches:
   only:
     - main
+    - master-wo-mvb
 cache:
   directories:
     - docker_images
