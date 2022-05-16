@@ -23,6 +23,7 @@ function toMatchReference(screenshot) {
   // Validate the screenshot is the same size for the case when the new screenshot matches 100% but is 'n' pixel taller due to new content.
   // For example: the latest screenshot of a list has two more items than the reference screenshot so it is 60 pixels taller. That should fail.
   const imagesMatch = isNewScreenshot || screenshotWasUpdated || (isSameDimensions && isWithinMismatchTolerance);
+
   let message = '';
 
   if (!isSameDimensions) {
@@ -44,6 +45,7 @@ function toMatchReference(screenshot) {
       message = message.concat('\n');
     }
     message = message.concat('Screenshot has changed and needs to be reviewed.');
+    process.env.SCREENSHOT_MISMATCH_IND = true;
   }
 
   return {
