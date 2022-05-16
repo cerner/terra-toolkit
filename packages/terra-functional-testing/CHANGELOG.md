@@ -3,6 +3,7 @@
 ## Unreleased
 
 * Added
+  * This is a buld without MVB changes.
   * Added authentication for accessing screenshots from the remote site.
   * Added `useRemoteReferenceScreenshots` cli option for downloading reference screenshots from a remote site for screenshot comparisons.
   * Delete the `reference` screenshot directory when `useRemoteReferenceScreenshots` is true.
