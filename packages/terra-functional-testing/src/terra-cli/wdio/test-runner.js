@@ -105,6 +105,8 @@ class TestRunner {
       ...cliOptions
     } = options;
 
+    logger.info('*******useRemoteReferenceScreenshots', options.useRemoteReferenceScreenshots);
+
     cleanScreenshots();
 
     /**

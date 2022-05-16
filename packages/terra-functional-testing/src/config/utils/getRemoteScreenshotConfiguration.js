@@ -52,6 +52,7 @@ const getRemoteScreenshotConfiguration = (screenshotsSites, buildBranch) => {
     throw new Error(`The repository url is malformed: ${config.repositoryUrl}`);
   }
 
+  const latestScreenshotsPath = path.join(process.cwd(), 'tests', 'wdio', '__snapshots__', 'latest');
   const referenceScreenshotsPath = path.join(process.cwd(), 'tests', 'wdio', '__snapshots__', 'reference');
   const zipFilePath = path.join(process.cwd(), 'tests', 'wdio');
   const nexusSite = sitePaths[sitePaths.length - 1];
@@ -59,6 +60,7 @@ const getRemoteScreenshotConfiguration = (screenshotsSites, buildBranch) => {
 
   return {
     publishScreenshotConfiguration: {
+      latestScreenshotsPath,
       referenceScreenshotsPath,
       serviceAuthHeader: getAuthHeader(config.repositoryId),
       serviceUrl: `${config.repositoryUrl}/content-compressed/${config.groupId}/${config.artifactId}/build-screenshots/${config.buildBranch}/`.replace(/([^:]\/)\/+/g, '$1'),
