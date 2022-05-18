@@ -2,12 +2,6 @@
 
 ## Unreleased
 
-## 3.0.0 - (May 12, 2022)
-
-* Breaking
-  * Updated webpack-dev-server to version 4
-  * Added devMiddleWare to support webpack-dev-server v4
-
 * Added
   * Added authentication for accessing screenshots from the remote site.
   * Added `useRemoteReferenceScreenshots` cli option for downloading reference screenshots from a remote site for screenshot comparisons.

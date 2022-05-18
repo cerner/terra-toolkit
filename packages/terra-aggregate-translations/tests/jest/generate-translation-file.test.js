@@ -13,7 +13,7 @@ locales.forEach((locale) => {
         'Terra.fixtures.test': 'Test...',
       };
 
-      translationsFile = generateTranslationFile(unsortedMessages);
+      translationsFile = generateTranslationFile(locale, unsortedMessages);
     });
 
     it(`creates the compiled ${locale} translation file`, () => {
@@ -41,7 +41,7 @@ locales.forEach((locale) => {
         'Terra.fixtures.test': 'Test...',
       };
 
-      translationsFile = generateTranslationFile(unsortedMessages);
+      translationsFile = generateTranslationFile(locale, unsortedMessages, true);
     });
 
     it(`creates the compiled ${locale} translation file`, () => {

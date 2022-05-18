@@ -216,13 +216,11 @@ describe('webpack config', () => {
     //  and adds to dev server options', () => {
     const expectedOuput = {
       hot: false,
+      inline: false,
       host: '0.0.0.0',
-      devMiddleware: {
-        publicPath: '',
-        stats: {
-          children: false,
-          colors: true,
-        },
+      stats: {
+        colors: true,
+        children: false,
       },
     };
     expect(config.devServer).toEqual(expect.objectContaining(expectedOuput));

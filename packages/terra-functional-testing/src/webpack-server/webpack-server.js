@@ -114,23 +114,19 @@ class WebpackServer {
         reject();
       });
 
-      this.server = new WebpackDevServer({
+      this.server = new WebpackDevServer(compiler, {
         ...compiler.options.devServer,
         hot: false,
+        inline: false,
         liveReload: false,
         host: this.host,
         port: this.port,
-        client: {
-          overlay: false,
+        index: 'index.html',
+        stats: {
+          colors: true,
+          children: false,
         },
-        devMiddleware: {
-          index: 'index.html',
-          stats: {
-            colors: true,
-            children: false,
-          },
-        },
-      }, compiler);
+      });
 
       // Start that server.
       this.server.listen(this.port, this.host, (error) => {

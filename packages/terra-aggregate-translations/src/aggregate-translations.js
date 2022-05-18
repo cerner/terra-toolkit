@@ -2,10 +2,13 @@ const path = require('path');
 const chalk = require('chalk');
 const fse = require('fs-extra');
 const glob = require('glob');
+// eslint-disable-next-line import/no-unresolved
+const { intlShape } = require('react-intl');
 const supportedLocales = require('./config/i18nSupportedLocales');
 
 const aggregateMessages = require('./aggregate-messages');
 const writeAggregatedTranslations = require('./write-aggregated-translations');
+const writeI18nLoaders = require('./write-i18n-loaders');
 const defaultSearchPatterns = require('./config/defaultSearchPatterns');
 
 const isFile = filePath => (fse.existsSync(filePath) && !fse.lstatSync(filePath).isDirectory());
@@ -58,7 +61,7 @@ const defaults = (options = {}) => {
  */
 const aggregatedTranslations = (options) => {
   const {
-    baseDir, directories, fileSystem, locales, outputDir, excludes,
+    baseDir, directories, fileSystem, locales, outputDir, excludes, format,
   } = defaults(options);
 
   const searchPaths = [
@@ -82,8 +85,19 @@ const aggregatedTranslations = (options) => {
   const outputDirectory = path.resolve(baseDir, outputDir);
   fileSystem.mkdirpSync(outputDirectory);
 
+  /**
+   * Detecting react-intl version used. `react-intl` v3 and greater does not export the intlShape.
+   * In order to use these versions of `react-intl` consumers should utilize terra-application v2, which provides the i18n loaders.
+   */
+  const isReactIntlv5 = !intlShape;
+
   // Write aggregated translation messages to a file for each locale
-  writeAggregatedTranslations(aggregatedMessages, locales, fileSystem, outputDirectory);
+  writeAggregatedTranslations(aggregatedMessages, locales, fileSystem, outputDirectory, isReactIntlv5);
+
+  if (!isReactIntlv5) {
+    // Write intl and translations loaders for the specified locales
+    writeI18nLoaders(locales, fileSystem, outputDirectory, format);
+  }
 
   return locales;
 };

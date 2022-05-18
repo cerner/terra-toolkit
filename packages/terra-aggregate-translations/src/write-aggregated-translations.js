@@ -3,7 +3,7 @@ const chalk = require('chalk');
 const supportedLocales = require('./config/i18nSupportedLocales');
 const generateTranslationFile = require('./generate-translation-file');
 
-const writeAggregatedTranslations = (aggregatedMessages, locales, fileSystem, outputDir) => {
+const writeAggregatedTranslations = (aggregatedMessages, locales, fileSystem, outputDir, isReactIntlV5) => {
   // Create a file of aggregated translation messages for each locale
   locales.forEach((locale) => {
     if (locale in aggregatedMessages) {
@@ -24,7 +24,7 @@ const writeAggregatedTranslations = (aggregatedMessages, locales, fileSystem, ou
           mergedMessages = { ...baseLocaleMessages, ...messages };
         }
       }
-      fileSystem.writeFileSync(translationFilePath, generateTranslationFile(mergedMessages));
+      fileSystem.writeFileSync(translationFilePath, generateTranslationFile(locale, mergedMessages, isReactIntlV5));
     } else {
       throw new Error(chalk.red(`Translations aggregated for ${locale} locale, but messages were not loaded correctly. Please check that your translated modules were installed correctly.`));
     }
