@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+* Changed
+  * Changed the `useRemoteReferenceScreenshots` CLI option to honor the USE_REMOTE_REFERENCE_SCREENSHOTS env variable.
+
+* Fixed
+  * Updated the screenshot upload logic to upload screenshots from the `latest` folder instead of the `reference` folder.
+
 ## 3.0.0 - (May 12, 2022)
 
 * Breaking
