@@ -34,6 +34,7 @@ describe('ScreenshotRequestor', () => {
   describe('constructor', () => {
     it('should initialize ScreenshotRequestor', () => {
       const screenshotRequestor = new ScreenshotRequestor({
+        latestScreenshotsPath: path.join(process.cwd(), 'latest'),
         referenceScreenshotsPath: path.join(process.cwd(), 'reference'),
         serviceUrl: 'https://nexus.com/content-compressed/blah/',
         serviceAuthHeader: 'Basic adfadf',
@@ -78,6 +79,7 @@ describe('ScreenshotRequestor', () => {
       const oldCheckStatus = ScreenshotRequestor.checkStatus;
       ScreenshotRequestor.checkStatus = jest.fn();
       const screenshotRequestor = new ScreenshotRequestor({
+        latestScreenshotsPath: path.join(process.cwd(), 'latest'),
         referenceScreenshotsPath: path.join(process.cwd(), 'reference'),
         serviceUrl: 'https://nexus.com/content-compressed/blah/',
         serviceAuthHeader: 'Basic adfadf',
@@ -110,6 +112,7 @@ describe('ScreenshotRequestor', () => {
   describe('zipDirectoryToMemory', () => {
     it('zips the reference screenshots', async () => {
       const screenshotRequestor = new ScreenshotRequestor({
+        latestScreenshotsPath: path.join(process.cwd(), 'latest'),
         referenceScreenshotsPath: path.join(process.cwd(), 'reference'),
         serviceUrl: 'https://nexus.com/content-compressed/blah/',
         serviceAuthHeader: 'Basic adfadf',
@@ -117,7 +120,7 @@ describe('ScreenshotRequestor', () => {
         zipFilePath: path.join(process.cwd(), 'zip-path'),
       });
 
-      const archiveName = path.join(screenshotRequestor.zipFilePath, 'reference.zip');
+      const archiveName = path.join(screenshotRequestor.zipFilePath, 'latest.zip');
 
       const mockArchiver = {
         pipe: jest.fn(),
@@ -144,6 +147,7 @@ describe('ScreenshotRequestor', () => {
       const oldCheckStatus = ScreenshotRequestor.checkStatus;
       ScreenshotRequestor.checkStatus = jest.fn();
       const screenshotRequestor = new ScreenshotRequestor({
+        latestScreenshotsPath: path.join(process.cwd(), 'latest'),
         referenceScreenshotsPath: path.join(process.cwd(), 'reference'),
         serviceUrl: 'https://nexus.com/content-compressed/blah/',
         serviceAuthHeader: 'Basic adfadf',
@@ -199,17 +203,18 @@ describe('ScreenshotRequestor', () => {
   describe('upload', () => {
     it('deletes the existing screenshots and zips and uploads the new screenshots', async () => {
       const oldDeleteExistingScreenshots = ScreenshotRequestor.prototype.deleteExistingScreenshots;
-      const oldZipReferenceScreenshots = ScreenshotRequestor.prototype.zipReferenceScreenshots;
+      const oldZipLatestScreenshots = ScreenshotRequestor.prototype.zipLatestScreenshots;
       const oldzipDirectoryToMemory = ScreenshotRequestor.prototype.zipDirectoryToMemory;
       const oldUploadScreenshots = ScreenshotRequestor.prototype.uploadScreenshots;
-      const oldDeleteZipReferenceScreenshots = ScreenshotRequestor.prototype.deleteZipReferenceScreenshots;
+      const oldDeleteZippedLatestScreenshots = ScreenshotRequestor.prototype.deleteZippedLatestScreenshots;
       ScreenshotRequestor.checkStatus = jest.fn();
       ScreenshotRequestor.prototype.deleteExistingScreenshots = jest.fn();
-      ScreenshotRequestor.prototype.zipReferenceScreenshots = jest.fn();
+      ScreenshotRequestor.prototype.zipLatestScreenshots = jest.fn();
       ScreenshotRequestor.prototype.zipDirectoryToMemory = jest.fn();
       ScreenshotRequestor.prototype.uploadScreenshots = jest.fn();
-      ScreenshotRequestor.prototype.deleteZipReferenceScreenshots = jest.fn();
+      ScreenshotRequestor.prototype.deleteZippedLatestScreenshots = jest.fn();
       const screenshotRequestor = new ScreenshotRequestor({
+        latestScreenshotsPath: path.join(process.cwd(), 'latest'),
         referenceScreenshotsPath: path.join(process.cwd(), 'reference'),
         serviceUrl: 'https://nexus.com/content-compressed/blah/',
         serviceAuthHeader: 'Basic adfadf',
@@ -221,10 +226,10 @@ describe('ScreenshotRequestor', () => {
         length: 1000,
       };
       screenshotRequestor.deleteExistingScreenshots.mockResolvedValueOnce();
-      screenshotRequestor.zipReferenceScreenshots.mockResolvedValueOnce();
+      screenshotRequestor.zipLatestScreenshots.mockResolvedValueOnce();
       screenshotRequestor.zipDirectoryToMemory.mockResolvedValueOnce(memoryStream);
       screenshotRequestor.uploadScreenshots.mockResolvedValueOnce();
-      screenshotRequestor.deleteZipReferenceScreenshots.mockResolvedValueOnce();
+      screenshotRequestor.deleteZippedLatestScreenshots.mockResolvedValueOnce();
 
       await screenshotRequestor.upload();
 
@@ -232,10 +237,10 @@ describe('ScreenshotRequestor', () => {
       expect(screenshotRequestor.zipDirectoryToMemory).toHaveBeenCalled();
       expect(screenshotRequestor.uploadScreenshots).toHaveBeenCalledWith(memoryStream);
       ScreenshotRequestor.prototype.deleteExistingScreenshots = oldDeleteExistingScreenshots;
-      ScreenshotRequestor.prototype.zipReferenceScreenshots = oldZipReferenceScreenshots;
+      ScreenshotRequestor.prototype.zipLatestScreenshots = oldZipLatestScreenshots;
       ScreenshotRequestor.prototype.zipDirectoryToMemory = oldzipDirectoryToMemory;
       ScreenshotRequestor.prototype.uploadScreenshots = oldUploadScreenshots;
-      ScreenshotRequestor.prototype.deleteZipReferenceScreenshots = oldDeleteZipReferenceScreenshots;
+      ScreenshotRequestor.prototype.deleteZippedLatestScreenshots = oldDeleteZippedLatestScreenshots;
     });
   });
 });
