@@ -16,7 +16,8 @@ class ScreenshotRequestor {
   /**
    * Constructor for ScreenshotRequestor.
    * @param {Object} config the config that contains information needed to download and upload screenshots from the remote repository
-   * @param {string} config.referenceScreenshotsPath the path to the reference screenshots
+   * @param {string} config.latestScreenshotsPath the path to the latest screenshots. This is used for uploading.
+   * @param {string} config.referenceScreenshotsPath the path to the reference screenshots. This is used for downloading.
    * @param {string} config.serviceAuthHeader - the auth header to use when making the download and upload requests.
    * @param {string} config.serviceUrl - the url to use when making the download and upload requests.
    * @param {string} config.url - the url where the screenshots will downloaded from and uploaded to.
@@ -24,6 +25,7 @@ class ScreenshotRequestor {
    */
   constructor(config) {
     const {
+      latestScreenshotsPath,
       referenceScreenshotsPath,
       serviceAuthHeader,
       serviceUrl,
@@ -31,6 +33,7 @@ class ScreenshotRequestor {
       zipFilePath,
     } = config;
 
+    this.latestScreenshotsPath = latestScreenshotsPath;
     this.referenceScreenshotsPath = referenceScreenshotsPath;
     this.serviceAuthHeader = serviceAuthHeader;
     this.serviceUrl = serviceUrl;
@@ -70,23 +73,23 @@ class ScreenshotRequestor {
   }
 
   /**
-   * Deletes the zipped reference screenshots
+   * Deletes the zipped latest screenshots
    */
-  deleteZipReferenceScreenshots() {
-    const archiveName = path.join(this.zipFilePath, 'reference.zip');
+   deleteZippedLatestScreenshots() {
+    const archiveName = path.join(this.zipFilePath, 'latest.zip');
     fs.removeSync(archiveName);
   }
 
   /**
-   * Zips the reference screenshots.
+   * Zips the latest screenshots.
    */
-  async zipReferenceScreenshots() {
-    const archiveName = path.join(this.zipFilePath, 'reference.zip');
+  async zipLatestScreenshots() {
+    const archiveName = path.join(this.zipFilePath, 'latest.zip');
     const writeStream = fs.createWriteStream(archiveName);
     const archive = archiver('zip');
 
     archive.pipe(writeStream);
-    archive.directory(this.referenceScreenshotsPath, false);
+    archive.directory(this.latestScreenshotsPath, false);
     await archive.finalize();
   }
 
@@ -99,7 +102,9 @@ class ScreenshotRequestor {
 
     archive.pipe(memoryStream);
 
-    const archiveName = path.join(this.zipFilePath, 'reference.zip');
+    const archiveName = path.join(this.zipFilePath, 'latest.zip');
+
+    // Name the uploaded file reference.zip since the latest screenshots will now be used as the reference screenshots.
     archive.file(archiveName, { name: 'reference.zip' });
 
     await archive.finalize();
@@ -185,8 +190,8 @@ class ScreenshotRequestor {
     // Delete the existing screenshots from the remote repository because new screenshots will be uploaded.
     await this.deleteExistingScreenshots();
 
-    // Zip up the existing reference screenshots
-    await this.zipReferenceScreenshots();
+    // Zip up the existing latest screenshots
+    await this.zipLatestScreenshots();
 
     // Create a write stream to upload the zipped screenshots.
     const memoryStream = await this.zipDirectoryToMemory();
@@ -194,8 +199,8 @@ class ScreenshotRequestor {
     // Upload the screenshots to the remote repository
     await this.uploadScreenshots(memoryStream);
 
-    // The zipped screenshots can now be safely deleted.
-    this.deleteZipReferenceScreenshots();
+    // The zipped latest screenshots can now be safely deleted.
+    this.deleteZippedLatestScreenshots();
   }
 }
 

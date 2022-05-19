@@ -198,7 +198,7 @@ const cli = {
       useRemoteReferenceScreenshots: {
         type: 'boolean',
         describe: 'A flag to download reference screenshots from a remote site for screenshot comparisons instead of using the local reference screenshots.',
-        default: false,
+        default: process.env.USE_REMOTE_REFERENCE_SCREENSHOTS === 'true',
       },
       useSeleniumStandaloneService: {
         type: 'boolean',

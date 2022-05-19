@@ -4,6 +4,7 @@ exports[`ScreenshotRequestor checkStatus should throw an error when checkStatus 
 
 exports[`ScreenshotRequestor constructor should initialize ScreenshotRequestor 1`] = `
 ScreenshotRequestor {
+  "latestScreenshotsPath": "/app/latest",
   "referenceScreenshotsPath": "/app/reference",
   "serviceAuthHeader": "Basic adfadf",
   "serviceUrl": "https://nexus.com/content-compressed/blah/",
