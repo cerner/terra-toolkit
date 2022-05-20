@@ -1,7 +1,9 @@
 const WdioTerraService = require('../../../src/services/wdio-terra-service');
 const { setViewport } = require('../../../src/commands/utils');
+const getRemoteScreenshotConfiguration = require('../../../src/config/utils/getRemoteScreenshotConfiguration');
 
 jest.mock('../../../src/commands/utils');
+jest.mock('../../../src/config/utils/getRemoteScreenshotConfiguration');
 
 const mockIsExisting = jest.fn().mockImplementation(() => true);
 const element = {
@@ -144,5 +146,44 @@ describe('WDIO Terra Service', () => {
     expect(global.Terra.describeViewports).toBeDefined();
     expect(global.Terra.hideInputCaret).toBeDefined();
     expect(global.Terra.serviceOptions).toEqual(expectedServiceOptions);
+  });
+
+  it('should upload screenshots in onComplete', () => {
+    const localConfig = {
+      serviceOptions: {
+        selector: 'mock-selector',
+        useRemoteReferenceScreenshots: true,
+        buildBranch: 'dev',
+      },
+    };
+
+    const runnerConfig = {
+      screenshotsSites: {
+        repositoryId: 'mock-repositoryId',
+        repositoryUrl: 'mock-repositoryUrl',
+      },
+    };
+
+    const service = new WdioTerraService({}, {}, localConfig);
+
+    service.onComplete({}, runnerConfig);
+
+    expect(getRemoteScreenshotConfiguration).toHaveBeenCalledWith(runnerConfig.screenshotsSites, localConfig.serviceOptions.buildBranch);
+  });
+
+  it('should not upload screenshots in onComplete', () => {
+    const localConfig = {
+      serviceOptions: {
+        selector: 'mock-selector',
+        useRemoteReferenceScreenshots: false,
+        buildBranch: 'dev',
+      },
+    };
+
+    const service = new WdioTerraService({}, {}, localConfig);
+
+    service.onComplete({}, {});
+
+    expect(getRemoteScreenshotConfiguration).not.toHaveBeenCalledWith();
   });
 });
