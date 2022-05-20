@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+* Added
+  * Added Remote Screenshots Migration guide for terra-functional-testing.
+
+## 2.9.1 - (May 12, 2022)
+
+* Added
+  * Added upgrade guide for terra-functional-testing
+  * Added upgrade guide for webpack-config-terra
+
 ## 2.9.0 - (February 11, 2022)
 
 * Changed

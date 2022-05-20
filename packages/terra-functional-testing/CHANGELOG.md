@@ -2,6 +2,32 @@
 
 ## Unreleased
 
+* Changed
+  * Changed the `useRemoteReferenceScreenshots` CLI option to honor the USE_REMOTE_REFERENCE_SCREENSHOTS env variable.
+
+* Fixed
+  * Updated the screenshot upload logic to upload screenshots from the `latest` folder instead of the `reference` folder.
+
+## 3.0.0 - (May 12, 2022)
+
+* Breaking
+  * Updated webpack-dev-server to version 4
+  * Added devMiddleWare to support webpack-dev-server v4
+
+* Added
+  * Added authentication for accessing screenshots from the remote site.
+  * Added `useRemoteReferenceScreenshots` cli option for downloading reference screenshots from a remote site for screenshot comparisons.
+  * Delete the `reference` screenshot directory when `useRemoteReferenceScreenshots` is true.
+  * Added a check of the `BUILD_BRANCH` environment variable to determine if tests should pass regardless of image mismatch.
+  * Added load configurations for downloading screenshots.
+  * Added functions to upload and download screenshots from the remote repository.
+
+* Changed
+  * Changed how we consume `BUILD_BRANCH` environment variable to match what the expected values of it are.
+
+* Fixed
+  * Fixed deleting the `diff`, `error`, and optionally the `latest` screenshot directories at the beginning of each test run.
+
 ## 2.7.0 - (February 11, 2022)
 
 * Changed

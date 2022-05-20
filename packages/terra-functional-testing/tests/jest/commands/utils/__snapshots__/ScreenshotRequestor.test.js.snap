@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ScreenshotRequestor checkStatus should throw an error when checkStatus is not ok and status is not valid 1`] = `"Internal Server error"`;
+
+exports[`ScreenshotRequestor constructor should initialize ScreenshotRequestor 1`] = `
+ScreenshotRequestor {
+  "latestScreenshotsPath": "/app/latest",
+  "referenceScreenshotsPath": "/app/reference",
+  "serviceAuthHeader": "Basic adfadf",
+  "serviceUrl": "https://nexus.com/content-compressed/blah/",
+  "url": "https://nexus.com/blah/",
+  "zipFilePath": "/app/zip-path",
+}
+`;
+
+exports[`ScreenshotRequestor zipDirectoryToMemory zips the reference screenshots 1`] = `
+MemoryStream {
+  "_destroy": [MockFunction],
+  "_read": [MockFunction],
+  "_transform": [MockFunction],
+  "_undestroy": [MockFunction],
+  "_write": [MockFunction],
+  "cork": [MockFunction],
+  "destroy": [MockFunction],
+  "emit": [MockFunction],
+  "end": [MockFunction],
+  "eventNames": [MockFunction],
+  "getMaxListeners": [MockFunction],
+  "isPaused": [MockFunction],
+  "listenerCount": [MockFunction],
+  "listeners": [MockFunction],
+  "on": [MockFunction],
+  "once": [MockFunction],
+  "pause": [MockFunction],
+  "pipe": [MockFunction],
+  "prependListener": [MockFunction],
+  "prependOnceListener": [MockFunction],
+  "push": [MockFunction],
+  "rawListeners": [MockFunction],
+  "read": [MockFunction],
+  "removeAllListeners": [MockFunction],
+  "removeListener": [MockFunction],
+  "resume": [MockFunction],
+  "setDefaultEncoding": [MockFunction],
+  "setEncoding": [MockFunction],
+  "setMaxListeners": [MockFunction],
+  "uncork": [MockFunction],
+  "unpipe": [MockFunction],
+  "unshift": [MockFunction],
+  "wrap": [MockFunction],
+  "write": [MockFunction],
+}
+`;
