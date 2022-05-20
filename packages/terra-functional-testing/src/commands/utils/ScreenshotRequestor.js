@@ -75,7 +75,7 @@ class ScreenshotRequestor {
   /**
    * Deletes the zipped latest screenshots
    */
-   deleteZippedLatestScreenshots() {
+  deleteZippedLatestScreenshots() {
     const archiveName = path.join(this.zipFilePath, 'latest.zip');
     fs.removeSync(archiveName);
   }
