@@ -173,12 +173,12 @@ describe('WDIO Terra Service', () => {
     expect(getRemoteScreenshotConfiguration).toHaveBeenCalledWith(runnerConfig.screenshotsSites, localConfig.serviceOptions.buildBranch);
   });
 
-  it('should not upload screenshots in onComplete if buildBranch is not master', () => {
+  it('should not upload screenshots in onComplete if buildBranch is a pullRequest', () => {
     const localConfig = {
       serviceOptions: {
         selector: 'mock-selector',
         useRemoteReferenceScreenshots: false,
-        buildBranch: BUILD_BRANCH.dev,
+        buildBranch: 'pr-31',
         buildType: BUILD_TYPE.branchEventCause,
       },
     };

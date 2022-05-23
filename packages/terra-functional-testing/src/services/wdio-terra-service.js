@@ -144,7 +144,7 @@ class TerraService {
    */
   async onComplete(_, config) {
     try {
-      if (this.serviceOptions.useRemoteReferenceScreenshots && this.serviceOptions.buildBranch === BUILD_BRANCH.master && this.serviceOptions.buildType === BUILD_TYPE.branchEventCause) {
+      if (this.serviceOptions.useRemoteReferenceScreenshots && !this.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest) && this.serviceOptions.buildType === BUILD_TYPE.branchEventCause) {
         const screenshotConfig = getRemoteScreenshotConfiguration(config.screenshotsSites, this.serviceOptions.buildBranch);
         const screenshotRequestor = new ScreenshotRequestor(screenshotConfig.publishScreenshotConfiguration);
         await screenshotRequestor.upload();
