@@ -51,6 +51,17 @@ const cli = {
           return '';
         },
       },
+      buildType: {
+        type: 'string',
+        describe: 'The cause of branch being built',
+        default: () => {
+          if (process.env.BUILD_TYPE) {
+            return process.env.BUILD_TYPE;
+          }
+
+          return '';
+        },
+      },
       c: {
         type: 'string',
         alias: 'config',

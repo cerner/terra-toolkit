@@ -1,5 +1,5 @@
 const toMatchReference = require('../../../../src/commands/expect/toMatchReference');
-const { BUILD_BRANCH } = require('../../../../src/constants');
+const { BUILD_BRANCH, BUILD_TYPE } = require('../../../../src/constants');
 
 describe('toMatchReference', () => {
   beforeAll(() => {
@@ -233,6 +233,45 @@ describe('toMatchReference', () => {
     global.Terra = {
       serviceOptions: {
         buildBranch: 'pr-31',
+        useRemoteReferenceScreenshots: true,
+      },
+    };
+    const receivedScreenshot = {
+      isSameDimensions: false,
+      misMatchPercentage: 0.10,
+    };
+
+    const result = toMatchReference(receivedScreenshot);
+    const expectedMessage = 'Expected the screenshot to match the reference screenshot, but received a screenshot with different dimensions.\nExpected the screenshot to be within the mismatch tolerance, but received a mismatch difference of 0.1%.\nScreenshot has changed and needs to be reviewed.';
+
+    expect(result.pass).toBe(true);
+    expect(result.message()).toEqual(expectedMessage);
+  });
+
+  it('should not pass if not within mismatch tolerance, buildBranch matches master, useRemoteReferenceScreenshots is true and buildType is not defined', () => {
+    global.Terra = {
+      serviceOptions: {
+        buildBranch: BUILD_BRANCH.master,
+        useRemoteReferenceScreenshots: true,
+      },
+    };
+    const receivedScreenshot = {
+      isSameDimensions: false,
+      misMatchPercentage: 0.10,
+    };
+
+    const result = toMatchReference(receivedScreenshot);
+    const expectedMessage = 'Expected the screenshot to match the reference screenshot, but received a screenshot with different dimensions.\nExpected the screenshot to be within the mismatch tolerance, but received a mismatch difference of 0.1%.';
+
+    expect(result.pass).toBe(false);
+    expect(result.message()).toEqual(expectedMessage);
+  });
+
+  it('should pass if not within mismatch tolerance but buildBranch matches master, useRemoteReferenceScreenshots is true, and buildType is branchEventCause', () => {
+    global.Terra = {
+      serviceOptions: {
+        buildBranch: BUILD_BRANCH.master,
+        buildType: BUILD_TYPE.branchEventCause,
         useRemoteReferenceScreenshots: true,
       },
     };
