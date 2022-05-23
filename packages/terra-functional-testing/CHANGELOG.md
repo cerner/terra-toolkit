@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+  * Updated chrome version for fixing wdio translation issue.
+
 ## 3.0.0 - (May 12, 2022)
 
 * Breaking

@@ -2,7 +2,7 @@ version: "3"
 
 services:
   selenium-hub:
-    image: selenium/hub:${TERRA_SELENIUM_DOCKER_VERSION:-3.14.0-helium}
+    image: selenium/hub:${TERRA_SELENIUM_DOCKER_VERSION:-3.141.59-zirconium}
     container_name: selenium-hub
     ports:
       - "4444:4444"
@@ -13,7 +13,7 @@ services:
       retries: 5
 
   chrome:
-    image: selenium/node-chrome:${TERRA_SELENIUM_DOCKER_VERSION:-3.14.0-helium}
+    image: selenium/node-chrome:${TERRA_SELENIUM_DOCKER_VERSION:-3.141.59-zirconium}
     # Volume mounting is necessary to ensure the browser does not crash inside the docker container.
     # For more details see:
     #  https://github.com/SeleniumHQ/docker-selenium#running-the-images
@@ -28,7 +28,7 @@ services:
       - HUB_PORT=4444
 
   firefox:
-    image: selenium/node-firefox:${TERRA_SELENIUM_DOCKER_VERSION:-3.141.59-titanium}
+    image: selenium/node-firefox:${TERRA_SELENIUM_DOCKER_VERSION:-3.141.59-zirconium}
     # Volume mounting is necessary to ensure the browser does not crash inside the docker container.
     # For more details see:
     #  https://github.com/SeleniumHQ/docker-selenium#running-the-images
