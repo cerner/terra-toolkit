@@ -3,6 +3,7 @@
 exports[`getRemoteScreenshotConfiguration loads the config for branch 1`] = `
 Object {
   "publishScreenshotConfiguration": Object {
+    "latestScreenshotsPath": "/app/tests/wdio/__snapshots__/latest",
     "referenceScreenshotsPath": "/app/tests/wdio/__snapshots__/reference",
     "serviceAuthHeader": "Basic dXNlcm5hbWU6cGFzc3dvcmQ=",
     "serviceUrl": "https://github.com/cerner/terra-toolkit.git/content-compressed/com.cerner.cerner/terra-functional-testing/build-screenshots/dev/",
@@ -15,6 +16,7 @@ Object {
 exports[`getRemoteScreenshotConfiguration loads the default config 1`] = `
 Object {
   "publishScreenshotConfiguration": Object {
+    "latestScreenshotsPath": "/app/tests/wdio/__snapshots__/latest",
     "referenceScreenshotsPath": "/app/tests/wdio/__snapshots__/reference",
     "serviceAuthHeader": "Basic dXNlcm5hbWU6cGFzc3dvcmQ=",
     "serviceUrl": "https://github.com/cerner/terra-toolkit.git/content-compressed/com.cerner.cerner/terra-functional-testing/build-screenshots/master/",
