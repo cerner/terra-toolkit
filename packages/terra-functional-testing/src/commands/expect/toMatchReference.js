@@ -38,17 +38,13 @@ function toMatchReference(screenshot) {
 
   let pass = global.Terra.serviceOptions.ignoreScreenshotMismatch || imagesMatch;
 
-  if (global.Terra.serviceOptions.useRemoteReferenceScreenshots && !pass) {
-    const isPRBuild = global.Terra.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest);
-    const isPRMergeBuild = global.Terra.serviceOptions.buildBranch === BUILD_BRANCH.master && global.Terra.serviceOptions.buildType === BUILD_TYPE.branchEventCause;
-
-    if (isPRBuild || isPRMergeBuild) {
-      pass = true;
-      if (message.length > 0) {
-        message = message.concat('\n');
-      }
-      message = message.concat('Screenshot has changed and needs to be reviewed.');
+  if (global.Terra.serviceOptions.useRemoteReferenceScreenshots && !pass
+    && (global.Terra.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest) || global.Terra.serviceOptions.buildType === BUILD_TYPE.branchEventCause)) {
+    pass = true;
+    if (message.length > 0) {
+      message = message.concat('\n');
     }
+    message = message.concat('Screenshot has changed and needs to be reviewed.');
   }
 
   return {
