@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 3.1.0 - (May 27, 2022)
+
 * Changed
   * Updated chrome version for fixing wdio translation issue.
   * Changed the `useRemoteReferenceScreenshots` CLI option to honor the USE_REMOTE_REFERENCE_SCREENSHOTS env variable.
