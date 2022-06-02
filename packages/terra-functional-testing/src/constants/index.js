@@ -31,4 +31,8 @@ const BUILD_BRANCH = {
   pullRequest: /pr-\d+/g,
 };
 
-module.exports = { TERRA_VIEWPORTS, BUILD_BRANCH };
+const BUILD_TYPE = {
+  branchEventCause: 'BranchEventCause',
+};
+
+module.exports = { TERRA_VIEWPORTS, BUILD_BRANCH, BUILD_TYPE };

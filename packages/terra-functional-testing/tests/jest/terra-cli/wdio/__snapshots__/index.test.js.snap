@@ -15,6 +15,8 @@ Options:
                                                    [array] [default: (_default)]
       --buildBranch                     The type of branch being built
                                                   [string] [default: (_default)]
+      --buildType                       The cause of branch being built
+                                                  [string] [default: (_default)]
   -c, --config                          A file path to the test runner
                                         configuration.                  [string]
       --disableSeleniumService          A flag to disable the selenium docker
