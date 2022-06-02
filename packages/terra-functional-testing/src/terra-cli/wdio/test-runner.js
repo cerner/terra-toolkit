@@ -33,6 +33,8 @@ class TestRunner {
    * @param {Object} options - The test run options.
    * @param {number} options.assetServerPort - The port to run the webpack and express asset services on.
    * @param {string} options.browsers - A list of browsers for the test run.
+   * @param {string} options.buildBranch - The name of branch being built.
+   * @param {string} options.buildType - The cause of branch being built.
    * @param {string} options.config - A file path to the test runner configuration.
    * @param {boolean} options.disableSeleniumService - A flag to disable the selenium docker service.
    * @param {string} options.externalHost - The host address the testing environment is connected to.
@@ -76,6 +78,8 @@ class TestRunner {
    * @param {Object} options - The test run options.
    * @param {number} options.assetServerPort - The port to run the webpack and express asset services on.
    * @param {string} options.browsers - A list of browsers for the test run.
+   * @param {string} options.buildBranch - The name of branch being built.
+   * @param {string} options.buildType - The cause of branch being built.
    * @param {string} options.config - A file path to the test runner configuration.
    * @param {boolean} options.disableSeleniumService - A flag to disable the selenium docker service.
    * @param {string} options.externalHost - The host address the testing environment is connected to.

@@ -25,4 +25,14 @@ const TERRA_VIEWPORTS = {
   },
 };
 
-module.exports = { TERRA_VIEWPORTS };
+const BUILD_BRANCH = {
+  master: 'master',
+  dev: 'dev',
+  pullRequest: /pr-\d+/g,
+};
+
+const BUILD_TYPE = {
+  branchEventCause: 'BranchEventCause',
+};
+
+module.exports = { TERRA_VIEWPORTS, BUILD_BRANCH, BUILD_TYPE };

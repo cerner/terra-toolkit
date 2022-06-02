@@ -40,6 +40,28 @@ const cli = {
           return [];
         },
       },
+      buildBranch: {
+        type: 'string',
+        describe: 'The type of branch being built',
+        default: () => {
+          if (process.env.BUILD_BRANCH) {
+            return process.env.BUILD_BRANCH;
+          }
+
+          return '';
+        },
+      },
+      buildType: {
+        type: 'string',
+        describe: 'The cause of branch being built',
+        default: () => {
+          if (process.env.BUILD_TYPE) {
+            return process.env.BUILD_TYPE;
+          }
+
+          return '';
+        },
+      },
       c: {
         type: 'string',
         alias: 'config',

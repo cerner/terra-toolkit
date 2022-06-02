@@ -1,3 +1,4 @@
+const { BUILD_BRANCH, BUILD_TYPE } = require('../../constants');
 /**
  * An assertion method to be paired with Visual Regression Service to assert each screenshot is within
  * the mismatch tolerance and are the same size.
@@ -33,6 +34,17 @@ function toMatchReference(screenshot) {
       message = message.concat('\n');
     }
     message = message.concat(`Expected the screenshot to be within the mismatch tolerance, but received a mismatch difference of ${misMatchPercentage}%.`);
+  }
+
+  let pass = global.Terra.serviceOptions.ignoreScreenshotMismatch || imagesMatch;
+
+  if (global.Terra.serviceOptions.useRemoteReferenceScreenshots && !pass
+    && (global.Terra.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest) || global.Terra.serviceOptions.buildType === BUILD_TYPE.branchEventCause)) {
+    pass = true;
+    if (message.length > 0) {
+      message = message.concat('\n');
+    }
+    message = message.concat('Screenshot has changed and needs to be reviewed.');
   }
 
   return {

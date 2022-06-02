@@ -10,6 +10,7 @@ const {
   setApplicationLocale,
   setViewport,
 } = require('../commands/utils');
+const { BUILD_BRANCH, BUILD_TYPE } = require('../constants');
 
 class TerraService {
   /**
@@ -113,6 +114,23 @@ class TerraService {
       } catch (err) {
         // Intentionally blank. If this fails we don't want to warn because the user can't fix the issue.
       }
+    }
+  }
+
+  /**
+   * Gets executed once before all workers are shut down.
+   * Uploads the reference screenshots to the remote repository if this build was triggered from a PR merge.
+   * @param {Object} config wdio configuration object
+   */
+  async onComplete(_, config) {
+    try {
+      if (this.serviceOptions.useRemoteReferenceScreenshots && !this.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest) && this.serviceOptions.buildType === BUILD_TYPE.branchEventCause) {
+        const screenshotConfig = getRemoteScreenshotConfiguration(config.screenshotsSites, this.serviceOptions.buildBranch);
+        const screenshotRequestor = new ScreenshotRequestor(screenshotConfig.publishScreenshotConfiguration);
+        await screenshotRequestor.upload();
+      }
+    } catch (error) {
+      throw new SevereServiceError(error);
     }
   }
 }
