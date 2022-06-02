@@ -84,7 +84,9 @@ class TestRunner {
    * @param {string} options.externalHost - The host address the testing environment is connected to.
    * @param {number} options.externalPort - The port mapping from the host to the container.
    * @param {string} options.formFactors - A list of form factors for the test run.
+   * @param {object} options.gitApiUrl
    * @param {string} options.gridUrl - The remote selenium grid address.
+   * @param {string} options.issueNumber
    * @param {boolean} options.keepAliveSeleniumDockerService - Determines to keep the selenium docker service running upon test completion.
    * @param {string} options.locales - A list of language locales for the test run.
    * @param {number} options.seleniumServicePort - The port mapping for the selenium service or the external selenium grid.
