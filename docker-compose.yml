@@ -2,7 +2,7 @@ version: '3'
 
 services:
   standalone-chrome:
-    image: 'selenium/standalone-chrome:3.14.0-helium'
+    image: 'selenium/standalone-chrome:3.141.59-zirconium'
     ports:
       - '4444'
     # Necessary due to some issues with chrome in docker.  See https://github.com/SeleniumHQ/docker-selenium#running-the-images
@@ -21,7 +21,7 @@ services:
       - .:/opt/module
 
   standalone-chrome-travis:
-    image: selenium/standalone-chrome:3.14.0-helium
+    image: selenium/standalone-chrome:3.141.59-zirconium
     ports:
       - 4444:4444
     # Necessary due to some issues with chrome in docker.  See https://github.com/SeleniumHQ/docker-selenium#running-the-images

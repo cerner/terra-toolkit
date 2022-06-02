@@ -5,7 +5,10 @@
 * Added
   * Added a check of the `BUILD_TYPE` environment variable to determine if tests should pass regardless of image mismatch.
 
+## 3.1.0 - (May 27, 2022)
+
 * Changed
+  * Updated chrome version for fixing wdio translation issue.
   * Changed the `useRemoteReferenceScreenshots` CLI option to honor the USE_REMOTE_REFERENCE_SCREENSHOTS env variable.
   * Enabled a check of the `BUILD_TYPE` and `BUILD_BRANCH` environment variable to determine if screenshots should be uploaded after a run.
 
