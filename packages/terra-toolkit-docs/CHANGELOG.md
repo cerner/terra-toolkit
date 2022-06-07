@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.10.0 - (June 7, 2022)
+
 * Added
   * Added Remote Screenshots Migration guide for terra-functional-testing.
 
