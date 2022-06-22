@@ -3,7 +3,7 @@
 ## Unreleased
 
 * Added
-  * TODO: REWORD BEFORE RELEASING Added a util module for calling github's API.
+  * Added a util module for calling github's API.
 
 ## 3.2.0 - (June 7, 2022)
 
