@@ -18,7 +18,7 @@ const { Octokit } = require('octokit');
  *
  * If anything goes wrong looking up the PR, an exception will be thrown.
  */
-async function getPr(config) {
+async function getPR(config) {
   const {
     githubHostname, owner, repo, prNumber,
   } = config;
@@ -59,7 +59,7 @@ async function test() {
     repo: 'terra-core',
     prNumber: '1',
   };
-  const pr = await getPr(config);
+  const pr = await getPR(config);
   console.log(pr);
 }
 
