@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 3.3.0 - (July 5, 2022)
+
 * Added
   * Added a util module for calling github's API.
 
