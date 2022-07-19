@@ -2,11 +2,13 @@
 const expect = require('expect');
 const { accessibility, element, screenshot } = require('../commands/validates');
 const { toBeAccessible, toMatchReference } = require('../commands/expect');
+const getRemoteScreenshotConfiguration = require('../config/utils/getRemoteScreenshotConfiguration');
 const {
   describeTests,
   describeViewports,
   getViewports,
   hideInputCaret,
+  ScreenshotRequestor,
   setApplicationLocale,
   setViewport,
 } = require('../commands/utils');

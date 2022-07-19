@@ -244,8 +244,8 @@ describe('toMatchReference', () => {
     const result = toMatchReference(receivedScreenshot);
     const expectedMessage = 'Expected the screenshot to match the reference screenshot, but received a screenshot with different dimensions.\nExpected the screenshot to be within the mismatch tolerance, but received a mismatch difference of 0.1%.\nScreenshot has changed and needs to be reviewed.';
 
-    expect(result.pass).toBe(true);
     expect(result.message()).toEqual(expectedMessage);
+    expect(result.pass).toBe(true);
   });
 
   it('should not pass if not within mismatch tolerance, buildBranch matches master, useRemoteReferenceScreenshots is true and buildType is not defined', () => {

@@ -59,6 +59,11 @@ Options:
                                         all reference screenshots with the
                                         latest screenshots.
                                                       [boolean] [default: false]
+      --useRemoteReferenceScreenshots   A flag to download reference screenshots
+                                        from a remote site for screenshot
+                                        comparisons instead of using the local
+                                        reference screenshots.
+                                                      [boolean] [default: false]
       --useSeleniumStandaloneService    A flag to use the selenium standalone
                                         service instead of the selenium docker
                                         service.      [boolean] [default: false]"
