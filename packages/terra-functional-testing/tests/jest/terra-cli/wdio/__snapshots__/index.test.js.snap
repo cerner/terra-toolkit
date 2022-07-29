@@ -17,6 +17,8 @@ Options:
                                                   [string] [default: (_default)]
       --buildType                       The cause of branch being built
                                                   [string] [default: (_default)]
+      --buildUrl                        Url for CI build output
+                                                  [string] [default: (_default)]
   -c, --config                          A file path to the test runner
                                         configuration.                  [string]
       --disableSeleniumService          A flag to disable the selenium docker
@@ -30,8 +32,13 @@ Options:
                                         container.[number] [default: (_default)]
       --formFactors                     A list of form factors for the test run.
                                                    [array] [default: (_default)]
+      --gitApiUrl                       URL to use for git api.
+                                                  [string] [default: (_default)]
+      --gitToken                                  [string] [default: (_default)]
       --gridUrl                         The remote selenium grid address.
                                                   [string] [default: (_default)]
+      --issueNumber                     The pull request issue number
+                                                  [number] [default: (_default)]
       --keepAliveSeleniumDockerService  Determines to keep the selenium docker
                                         service running upon test completion.
                                                       [boolean] [default: false]

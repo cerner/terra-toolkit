@@ -1,5 +1,9 @@
 /* eslint-disable class-methods-use-this */
 const expect = require('expect');
+const fs = require('fs-extra');
+const path = require('path');
+const { URL } = require('url');
+const { Octokit } = require('@octokit/core');
 const { SevereServiceError } = require('webdriverio');
 const { accessibility, element, screenshot } = require('../commands/validates');
 const { toBeAccessible, toMatchReference } = require('../commands/expect');
@@ -144,7 +148,30 @@ class TerraService {
    */
   async onComplete(_, config) {
     try {
-      if (this.serviceOptions.useRemoteReferenceScreenshots && !this.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest) && this.serviceOptions.buildType === BUILD_TYPE.branchEventCause) {
+      if (this.serviceOptions.useRemoteReferenceScreenshots && process.env.SCREENSHOT_MISMATCH_CHECK && this.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest)) {
+        if (!this.serviceOptions.gitToken || !this.serviceOptions.gitApiUrl) {
+          throw new Error('No git token recieved');
+        }
+
+        const packageJson = fs.readJsonSync(path.join(process.cwd(), 'package.json'));
+        const repoUrl = new URL(packageJson.repository.url);
+        const repoName = repoUrl.pathname.match(/[^/]+/g);
+        const octokit = new Octokit({ baseUrl: `${this.serviceOptions.gitApiUrl}`, auth: `${this.serviceOptions.gitToken}` });
+        const message = `:warning: :bangbang: **WDIO MISMATCH** \n\nCheck that screenshot change is intended at: ${this.serviceOptions.buildUrl}`;
+
+        const commentsResult = await octokit.request(`GET /repos/${repoName[0]}/${repoName[1]}/issues/${this.serviceOptions.issueNumber}/comments`);
+        const existingComment = commentsResult.data.find((comment) => comment.body === message);
+
+        if (!existingComment) {
+          const postCommentResult = await octokit.request(`POST /repos/${repoName[0]}/${repoName[1]}/issues/${this.serviceOptions.issueNumber}/comments`, {
+            body: message,
+          });
+          if (postCommentResult.status !== 200) {
+            throw Error(`Error posting issue comment. Status code: ${postCommentResult.status}`);
+          }
+        }
+      }
+      else if (this.serviceOptions.useRemoteReferenceScreenshots && !this.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest) && this.serviceOptions.buildType === BUILD_TYPE.branchEventCause) {
         const screenshotConfig = getRemoteScreenshotConfiguration(config.screenshotsSites, this.serviceOptions.buildBranch);
         const screenshotRequestor = new ScreenshotRequestor(screenshotConfig.publishScreenshotConfiguration);
         await screenshotRequestor.upload();
