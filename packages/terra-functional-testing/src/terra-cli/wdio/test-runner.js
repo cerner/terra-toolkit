@@ -81,14 +81,16 @@ class TestRunner {
    * @param {string} options.browsers - A list of browsers for the test run.
    * @param {string} options.buildBranch - The name of branch being built.
    * @param {string} options.buildType - The cause of branch being built.
+   * @param {string} options.buildURL - Url for CI build output.
    * @param {string} options.config - A file path to the test runner configuration.
    * @param {boolean} options.disableSeleniumService - A flag to disable the selenium docker service.
    * @param {string} options.externalHost - The host address the testing environment is connected to.
    * @param {number} options.externalPort - The port mapping from the host to the container.
    * @param {string} options.formFactors - A list of form factors for the test run.
-   * @param {object} options.gitApiUrl - 
+   * @param {string} options.gitApiUrl - URL to use for git api.
+   * @param {string} options.gitToken - git token
    * @param {string} options.gridUrl - The remote selenium grid address.
-   * @param {string} options.issueNumber -
+   * @param {string} options.issueNumber - The pull request issue number
    * @param {boolean} options.keepAliveSeleniumDockerService - Determines to keep the selenium docker service running upon test completion.
    * @param {string} options.locales - A list of language locales for the test run.
    * @param {number} options.seleniumServicePort - The port mapping for the selenium service or the external selenium grid.
