@@ -4,6 +4,7 @@
 
 * Added
   * Added a util module for calling github's API.
+  * Added a logic to post to the github PR if during a PR build and there are mismatchs.
 
 ## 3.2.0 - (June 7, 2022)
 

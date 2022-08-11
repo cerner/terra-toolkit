@@ -83,11 +83,6 @@ const cli = {
         describe: 'A flag to disable the selenium docker service.',
         default: false,
       },
-      ignoreScreenshotMismatch: {
-        type: 'boolean',
-        describe: 'A flag to ignore screenshot mismatch.',
-        default: false,
-      },
       externalHost: {
         type: 'string',
         describe: 'The host address the testing environment is connected to.',
@@ -153,6 +148,11 @@ const cli = {
 
           return undefined;
         },
+      },
+      ignoreScreenshotMismatch: {
+        type: 'boolean',
+        describe: 'A flag to ignore screenshot mismatch.',
+        default: false,
       },
       issueNumber: {
         type: 'number',
