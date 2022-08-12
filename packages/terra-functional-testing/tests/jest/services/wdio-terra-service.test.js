@@ -215,7 +215,7 @@ describe('WDIO Terra Service', () => {
     expect(getRemoteScreenshotConfiguration).not.toHaveBeenCalledWith();
   });
 
-  describe.only('github comment onComplete', () => {
+  describe('github comment onComplete', () => {
     const OLD_ENV = process.env;
 
     beforeEach(() => {
@@ -287,7 +287,7 @@ describe('WDIO Terra Service', () => {
         pathname: 'cerner/repo-url',
       }));
       const requestmock = jest.fn(() => ({
-        data: [{ body: `:warning: :bangbang: **WDIO MISMATCH** \n\nIf screenshot change is intended, remote reference screenshots will be updated upon PR merge. \n\nCheck that screenshot change is intended at: ${localConfig.serviceOptions.buildUrl}` }],
+        data: [{ body: `:warning: :bangbang: **WDIO MISMATCH** \n\nCheck that screenshot change is intended at: ${localConfig.serviceOptions.buildUrl} \n\nIf screenshot change is intended, remote reference screenshots will be updated upon PR merge. \nIf screenshot change is unintended, please fix screenshot issues before PR merge to prevent them from being uploaded. \n\nNote: This comment only appears the first time a screenshot mismatch is detected on a PR build, future builds will need to be checked for unintended screenshot mismatchs.` }],
         status: 200,
       }));
       Octokit.mockImplementation(() => ({

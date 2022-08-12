@@ -23,8 +23,6 @@ Options:
                                         configuration.                  [string]
       --disableSeleniumService          A flag to disable the selenium docker
                                         service.      [boolean] [default: false]
-      --ignoreScreenshotMismatch        A flag to ignore screenshot mismatch.
-                                                      [boolean] [default: false]
       --externalHost                    The host address the testing environment
                                         is connected to.
                                                   [string] [default: (_default)]
@@ -37,6 +35,8 @@ Options:
       --gitToken                                  [string] [default: (_default)]
       --gridUrl                         The remote selenium grid address.
                                                   [string] [default: (_default)]
+      --ignoreScreenshotMismatch        A flag to ignore screenshot mismatch.
+                                                      [boolean] [default: false]
       --issueNumber                     The pull request issue number
                                                   [number] [default: (_default)]
       --keepAliveSeleniumDockerService  Determines to keep the selenium docker
