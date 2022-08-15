@@ -305,5 +305,6 @@ describe('toMatchReference', () => {
 
     expect(result.pass).toBe(true);
     expect(result.message()).toEqual(expectedMessage);
+    expect(process.env.SCREENSHOT_MISMATCH_CHECK).toBe('true');
   });
 });

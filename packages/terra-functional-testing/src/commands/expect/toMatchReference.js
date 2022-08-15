@@ -41,6 +41,7 @@ function toMatchReference(screenshot) {
   if (global.Terra.serviceOptions.useRemoteReferenceScreenshots && !pass
     && (global.Terra.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest) || global.Terra.serviceOptions.buildType === BUILD_TYPE.branchEventCause)) {
     pass = true;
+    process.env.SCREENSHOT_MISMATCH_CHECK = true;
     if (message.length > 0) {
       message = message.concat('\n');
     }

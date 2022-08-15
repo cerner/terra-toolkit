@@ -62,6 +62,17 @@ const cli = {
           return '';
         },
       },
+      buildUrl: {
+        type: 'string',
+        describe: 'Url for CI build output',
+        default: () => {
+          if (process.env.BUILD_URL) {
+            return process.env.BUILD_URL;
+          }
+
+          return undefined;
+        },
+      },
       c: {
         type: 'string',
         alias: 'config',
@@ -70,11 +81,6 @@ const cli = {
       disableSeleniumService: {
         type: 'boolean',
         describe: 'A flag to disable the selenium docker service.',
-        default: false,
-      },
-      ignoreScreenshotMismatch: {
-        type: 'boolean',
-        describe: 'A flag to ignore screenshot mismatch.',
         default: false,
       },
       externalHost: {
@@ -110,12 +116,50 @@ const cli = {
           return [];
         },
       },
+      gitApiUrl: {
+        type: 'string',
+        describe: 'URL to use for git api.',
+        default: () => {
+          if (process.env.GIT_API_URL) {
+            return process.env.GIT_API_URL;
+          }
+
+          return undefined;
+        },
+      },
+      gitToken: {
+        type: 'string',
+        describe: '',
+        default: () => {
+          if (process.env.GIT_TOKEN) {
+            return process.env.GIT_TOKEN;
+          }
+
+          return undefined;
+        },
+      },
       gridUrl: {
         type: 'string',
         describe: 'The remote selenium grid address.',
         default: () => {
           if (process.env.SELENIUM_GRID_URL) {
             return process.env.SELENIUM_GRID_URL;
+          }
+
+          return undefined;
+        },
+      },
+      ignoreScreenshotMismatch: {
+        type: 'boolean',
+        describe: 'A flag to ignore screenshot mismatch.',
+        default: false,
+      },
+      issueNumber: {
+        type: 'number',
+        describe: 'The pull request issue number',
+        default: () => {
+          if (process.env.ISSUE_NUMBER) {
+            return process.env.ISSUE_NUMBER;
           }
 
           return undefined;
