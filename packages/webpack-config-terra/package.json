@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@cerner/duplicate-package-checker-webpack-plugin": "^2.3.0",
-    "@cerner/terra-aggregate-translations": "^3.0.0",
+    "@cerner/terra-aggregate-translations": "^2.0.0",
     "@mjhenkes/postcss-rtl": "^2.0.0",
     "autoprefixer": "^10.0.0",
     "babel-loader": "^8.0.5",
