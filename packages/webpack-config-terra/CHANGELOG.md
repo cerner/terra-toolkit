@@ -2,10 +2,13 @@
 
 ## Unreleased
 
+* Changed
+  * Reverts terra-aggregate-translations to v2.
+
 ## 3.0.0 - (May 12, 2022)
 
 * Breaking
-  * Added devMiddleWare to support webpack-dev-server v4
+  * Added devMiddleWare to support webpack-dev-server v4.
 
 ## 2.4.0 - (February 11, 2022)
 
