@@ -4,7 +4,7 @@
 
 * Added
   * Added a util module and tests for calling GitHub's API.
-  * Added a logic to post to the GitHub PR if during a PR build and there are mismatches.
+  * Added logic to post to the GitHub PR if there are mismatches during a PR build.
 
 ## 3.2.0 - (June 7, 2022)
 
