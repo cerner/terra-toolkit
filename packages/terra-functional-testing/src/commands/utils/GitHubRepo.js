@@ -12,22 +12,24 @@ const { Octokit } = require('octokit');
 
 /**
  * Information about a PR.
- * @typedef {Object} Pull
+ * @typedef {Object} PullRequest
  * @property {number} number
  * @property {Object} head - The head branch
  * @property {string} head.ref
  * @property {Object} base - The base branch
  * @property {string} base.ref
+ *
+ * @see {@link https://git-scm.com/book/en/v2/Git-Internals-Git-References|Git References} to learn about refs.
  */
 
 /**
  * Create a simplified view of a PR.
  *
  * @param {object} json A PR from the ReST API.
- * @returns {Pull}
+ * @returns {PullRequest}
  */
-function filterPull(json) {
-  // If you change this, please update the Pull typedef as well.
+function filterPullRequest(json) {
+  // If you change this, please update the PullRequest typedef as well.
   return {
     number: json.number,
     head: {
@@ -102,16 +104,16 @@ class GitHubRepo {
    * Get information about a PR.
    *
    * @param {(number|string)} num The PR's number.
-   * @returns {Pull}
+   * @returns {PullRequest}
    * @throws Will throw an error if the API call doesn't return status 200 OK.
    */
-  async getPull(num) {
+  async getPullRequest(num) {
     const result = await this.octokit.request('GET /repos/{owner}/{repo}/pulls/{num}', {
       owner: this.owner,
       repo: this.repo,
       num,
     }).catch(err => GitHubRepo.errorHandler('Failed to get pull request', err));
-    return filterPull(result.data);
+    return filterPullRequest(result.data);
   }
 
   /**
