@@ -10,6 +10,7 @@ const setApplicationLocale = require('./setApplicationLocale');
 const setViewport = require('./setViewport');
 const setViewportSize = require('./setViewportSize');
 const ScreenshotRequestor = require('./ScreenshotRequestor');
+const GitHubRepo = require('./GitHubRepo');
 
 module.exports = {
   cleanScreenshots,
@@ -24,4 +25,5 @@ module.exports = {
   setViewport,
   setViewportSize,
   ScreenshotRequestor,
+  GitHubRepo,
 };
