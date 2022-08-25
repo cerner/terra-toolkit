@@ -10,7 +10,7 @@
   * Removed getRemoteScreenshotConfiguration.
 
 * Changed
-  * Changed to use getRemoteScreenshotConfiguration provided by wdio config.
+  * Changed implementations to use getRemoteScreenshotConfiguration provided by wdio config.
 
 ## 3.2.0 - (June 7, 2022)
 
