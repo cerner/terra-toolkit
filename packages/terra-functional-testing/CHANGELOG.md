@@ -7,10 +7,10 @@
   * Added a logic to post to the github PR if during a PR build and there are mismatchs.
 
 * Removed
-  * Removed getRemoteScreenshotConfiguration
+  * Removed getRemoteScreenshotConfiguration.
 
 * Changed
-  * Changed to use getRemoteScreenshotConfiguration provided by from wdio config
+  * Changed to use getRemoteScreenshotConfiguration provided by wdio config.
 
 ## 3.2.0 - (June 7, 2022)
 
