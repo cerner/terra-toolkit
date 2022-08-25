@@ -7,7 +7,6 @@ const { Octokit } = require('@octokit/core');
 const { SevereServiceError } = require('webdriverio');
 const { accessibility, element, screenshot } = require('../commands/validates');
 const { toBeAccessible, toMatchReference } = require('../commands/expect');
-const getRemoteScreenshotConfiguration = require('../config/utils/getRemoteScreenshotConfiguration');
 const {
   describeTests,
   describeViewports,
@@ -44,7 +43,7 @@ class TerraService {
   async onPrepare(config) {
     try {
       if (this.serviceOptions.useRemoteReferenceScreenshots) {
-        const screenshotConfig = getRemoteScreenshotConfiguration(config.screenshotsSites, this.serviceOptions.buildBranch);
+        const screenshotConfig = config.getRemoteScreenshotConfiguration ? config.getRemoteScreenshotConfiguration(config.screenshotsSites, this.serviceOptions.buildBranch) : {};
         const screenshotRequestor = new ScreenshotRequestor(screenshotConfig.publishScreenshotConfiguration);
         await screenshotRequestor.download();
       }
@@ -171,7 +170,7 @@ class TerraService {
           }
         }
       } else if (this.serviceOptions.useRemoteReferenceScreenshots && !this.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest) && this.serviceOptions.buildType === BUILD_TYPE.branchEventCause) {
-        const screenshotConfig = getRemoteScreenshotConfiguration(config.screenshotsSites, this.serviceOptions.buildBranch);
+        const screenshotConfig = config.getRemoteScreenshotConfiguration ? config.getRemoteScreenshotConfiguration(config.screenshotsSites, this.serviceOptions.buildBranch) : {};
         const screenshotRequestor = new ScreenshotRequestor(screenshotConfig.publishScreenshotConfiguration);
         await screenshotRequestor.upload();
       }

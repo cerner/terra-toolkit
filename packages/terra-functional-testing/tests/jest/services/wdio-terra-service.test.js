@@ -5,14 +5,12 @@ const { SevereServiceError } = require('webdriverio');
 const WdioTerraService = require('../../../src/services/wdio-terra-service');
 const { setViewport } = require('../../../src/commands/utils');
 const { BUILD_BRANCH, BUILD_TYPE } = require('../../../src/constants/index');
-const getRemoteScreenshotConfiguration = require('../../../src/config/utils/getRemoteScreenshotConfiguration');
 
 jest.mock('fs-extra');
 jest.mock('url');
 jest.mock('@octokit/core');
 
 jest.mock('../../../src/commands/utils');
-jest.mock('../../../src/config/utils/getRemoteScreenshotConfiguration');
 
 const mockIsExisting = jest.fn().mockImplementation(() => true);
 const element = {
@@ -32,6 +30,7 @@ const config = {
     theme: 'mock-theme',
     formFactor: 'huge',
   },
+  getRemoteScreenshotConfiguration: jest.fn().mockImplementation(() => {}),
 };
 
 const capabilities = { browserName: 'chrome' };
@@ -172,13 +171,14 @@ describe('WDIO Terra Service', () => {
         repositoryId: 'mock-repositoryId',
         repositoryUrl: 'mock-repositoryUrl',
       },
+      getRemoteScreenshotConfiguration: jest.fn().mockImplementation(() => {}),
     };
 
     const service = new WdioTerraService({}, {}, localConfig);
 
     service.onComplete({}, runnerConfig);
 
-    expect(getRemoteScreenshotConfiguration).toHaveBeenCalledWith(runnerConfig.screenshotsSites, localConfig.serviceOptions.buildBranch);
+    expect(runnerConfig.getRemoteScreenshotConfiguration).toHaveBeenCalledWith(runnerConfig.screenshotsSites, localConfig.serviceOptions.buildBranch);
   });
 
   it('should not upload screenshots in onComplete if buildBranch is a pullRequest', () => {
@@ -193,9 +193,9 @@ describe('WDIO Terra Service', () => {
 
     const service = new WdioTerraService({}, {}, localConfig);
 
-    service.onComplete({}, {});
+    service.onComplete({}, config);
 
-    expect(getRemoteScreenshotConfiguration).not.toHaveBeenCalledWith();
+    expect(config.getRemoteScreenshotConfiguration).not.toHaveBeenCalledWith();
   });
 
   it('should not upload screenshots in onComplete if buildType is not BranchEventCause', () => {
@@ -210,9 +210,9 @@ describe('WDIO Terra Service', () => {
 
     const service = new WdioTerraService({}, {}, localConfig);
 
-    service.onComplete({}, {});
+    service.onComplete({}, config);
 
-    expect(getRemoteScreenshotConfiguration).not.toHaveBeenCalledWith();
+    expect(config.getRemoteScreenshotConfiguration).not.toHaveBeenCalledWith();
   });
 
   describe('github comment onComplete', () => {
@@ -259,9 +259,9 @@ describe('WDIO Terra Service', () => {
 
       const service = new WdioTerraService({}, {}, localConfig);
 
-      await expect(service.onComplete({}, {})).resolves.toBe();
+      await expect(service.onComplete({}, config)).resolves.toBe();
       expect(requestmock.mock.calls.length).toBe(2);
-      expect(getRemoteScreenshotConfiguration).not.toHaveBeenCalledWith();
+      expect(config.getRemoteScreenshotConfiguration).not.toHaveBeenCalledWith();
     });
 
     it('should not post to github if comment already exists', async () => {
@@ -296,9 +296,9 @@ describe('WDIO Terra Service', () => {
 
       const service = new WdioTerraService({}, {}, localConfig);
 
-      await expect(service.onComplete({}, {})).resolves.toBe();
+      await expect(service.onComplete({}, config)).resolves.toBe();
       expect(requestmock.mock.calls.length).toBe(1);
-      expect(getRemoteScreenshotConfiguration).not.toHaveBeenCalledWith();
+      expect(config.getRemoteScreenshotConfiguration).not.toHaveBeenCalledWith();
     });
 
     it('should throw an error if posting comment returned non-200 status code', async () => {
