@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 3.0.1 - (August 30, 2022)
+
 * Changed
   * Reverts terra-aggregate-translations to v2.
 
