@@ -2,6 +2,9 @@ const jestConfig = require('./packages/jest-config-terra');
 
 module.exports = {
   ...jestConfig,
+  watchPathIgnorePatterns: [
+    './tests/jest/reports/results/terra-functional-testing.json',
+  ],
   modulePathIgnorePatterns: [
     'packages/terra-cli/tests/jest/fixtures',
     'packages/duplicate-package-checker-webpack-plugin/tests/jest',
