@@ -8,6 +8,7 @@ const { SevereServiceError } = require('webdriverio');
 const { accessibility, element, screenshot } = require('../commands/validates');
 const { toBeAccessible, toMatchReference } = require('../commands/expect');
 const {
+  createOctokit,
   describeTests,
   describeViewports,
   getViewports,
@@ -155,7 +156,8 @@ class TerraService {
         const packageJson = fs.readJsonSync(path.join(process.cwd(), 'package.json'));
         const repoUrl = new URL(packageJson.repository.url);
         const repoName = repoUrl.pathname.match(/[^/]+/g);
-        const octokit = new Octokit({ baseUrl: `${this.serviceOptions.gitApiUrl}`, auth: `${this.serviceOptions.gitToken}` });
+        // const octokit = new Octokit({ baseUrl: `${this.serviceOptions.gitApiUrl}`, auth: `${this.serviceOptions.gitToken}` });
+        const octokit = createOctokit(this.serviceOptions.gitApiUrl, this.serviceOptions.gitToken);
         const message = `:warning: :bangbang: **WDIO MISMATCH** \n\nCheck that screenshot change is intended at: ${this.serviceOptions.buildUrl} \n\nIf screenshot change is intended, remote reference screenshots will be updated upon PR merge. \nIf screenshot change is unintended, please fix screenshot issues before PR merge to prevent them from being uploaded. \n\nNote: This comment only appears the first time a screenshot mismatch is detected on a PR build, future builds will need to be checked for unintended screenshot mismatchs.`;
 
         const commentsResult = await octokit.request(`GET /repos/${repoName[0]}/${repoName[1]}/issues/${this.serviceOptions.issueNumber}/comments`);
@@ -169,8 +171,13 @@ class TerraService {
             throw Error(`Error posting issue comment. Status code: ${postCommentResult.status}`);
           }
         }
-      } else if (this.serviceOptions.useRemoteReferenceScreenshots && !this.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest) && this.serviceOptions.buildType === BUILD_TYPE.branchEventCause) {
-        const screenshotConfig = config.getRemoteScreenshotConfiguration ? config.getRemoteScreenshotConfiguration(config.screenshotsSites, this.serviceOptions.buildBranch) : {};
+      } else if (
+        this.serviceOptions.useRemoteReferenceScreenshots
+        && !this.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest)
+        && this.serviceOptions.buildType === BUILD_TYPE.branchEventCause
+        && config.getRemoteScreenshotConfiguration
+      ) {
+        const screenshotConfig = config.getRemoteScreenshotConfiguration(config.screenshotsSites, this.serviceOptions.buildBranch);
         const screenshotRequestor = new ScreenshotRequestor(screenshotConfig.publishScreenshotConfiguration);
         await screenshotRequestor.upload();
       }

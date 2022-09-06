@@ -1,20 +1,27 @@
 const fs = require('fs-extra');
 const { URL } = require('url');
-const { Octokit } = require('@octokit/core');
 const { SevereServiceError } = require('webdriverio');
 const WdioTerraService = require('../../../src/services/wdio-terra-service');
-const { setViewport } = require('../../../src/commands/utils');
+const { setViewport, createOctokit } = require('../../../src/commands/utils');
 const { BUILD_BRANCH, BUILD_TYPE } = require('../../../src/constants/index');
 
 jest.mock('fs-extra');
 jest.mock('url');
-jest.mock('@octokit/core');
-
 jest.mock('../../../src/commands/utils');
+
+URL.mockImplementation(() => ({
+  pathname: 'cerner/repo-url',
+}));
+
+fs.readJsonSync.mockReturnValue({
+  repository: {
+    url: 'git+https://github.com/cerner/repo-url',
+  },
+});
 
 const mockIsExisting = jest.fn().mockImplementation(() => true);
 const element = {
-  waitForExist: () => {},
+  waitForExist: () => { },
   isExisting: mockIsExisting,
 };
 
@@ -30,7 +37,7 @@ const config = {
     theme: 'mock-theme',
     formFactor: 'huge',
   },
-  getRemoteScreenshotConfiguration: jest.fn().mockImplementation(() => {}),
+  getRemoteScreenshotConfiguration: jest.fn().mockImplementation(() => { }),
 };
 
 const capabilities = { browserName: 'chrome' };
@@ -156,223 +163,197 @@ describe('WDIO Terra Service', () => {
     expect(global.Terra.serviceOptions).toEqual(expectedServiceOptions);
   });
 
-  it('should upload screenshots in onComplete', () => {
-    const localConfig = {
-      serviceOptions: {
-        selector: 'mock-selector',
-        useRemoteReferenceScreenshots: true,
-        buildBranch: BUILD_BRANCH.master,
-        buildType: BUILD_TYPE.branchEventCause,
-      },
-    };
+  describe('Screenshot stuff', () => {
+    it('should upload screenshots in onComplete', () => {
+      const localConfig = {
+        serviceOptions: {
+          selector: 'mock-selector',
+          useRemoteReferenceScreenshots: true,
+          buildBranch: BUILD_BRANCH.master,
+          buildType: BUILD_TYPE.branchEventCause,
+        },
+      };
 
-    const runnerConfig = {
-      screenshotsSites: {
-        repositoryId: 'mock-repositoryId',
-        repositoryUrl: 'mock-repositoryUrl',
-      },
-      getRemoteScreenshotConfiguration: jest.fn().mockImplementation(() => {}),
-    };
+      const runnerConfig = {
+        screenshotsSites: {
+          repositoryId: 'mock-repositoryId',
+          repositoryUrl: 'mock-repositoryUrl',
+        },
+        getRemoteScreenshotConfiguration: jest.fn().mockImplementation(() => (
+          {
+            getRemoteScreenshotConfiguration: jest.fn(),
+          }
+        )),
+      };
 
-    const service = new WdioTerraService({}, {}, localConfig);
+      const service = new WdioTerraService({}, {}, localConfig);
 
-    service.onComplete({}, runnerConfig);
+      service.onComplete({}, runnerConfig);
 
-    expect(runnerConfig.getRemoteScreenshotConfiguration).toHaveBeenCalledWith(runnerConfig.screenshotsSites, localConfig.serviceOptions.buildBranch);
-  });
-
-  it('should not upload screenshots in onComplete if buildBranch is a pullRequest', () => {
-    const localConfig = {
-      serviceOptions: {
-        selector: 'mock-selector',
-        useRemoteReferenceScreenshots: true,
-        buildBranch: 'pr-31',
-        buildType: BUILD_TYPE.branchEventCause,
-      },
-    };
-
-    const service = new WdioTerraService({}, {}, localConfig);
-
-    service.onComplete({}, config);
-
-    expect(config.getRemoteScreenshotConfiguration).not.toHaveBeenCalledWith();
-  });
-
-  it('should not upload screenshots in onComplete if buildType is not BranchEventCause', () => {
-    const localConfig = {
-      serviceOptions: {
-        selector: 'mock-selector',
-        useRemoteReferenceScreenshots: true,
-        buildBranch: BUILD_BRANCH.master,
-        buildType: undefined,
-      },
-    };
-
-    const service = new WdioTerraService({}, {}, localConfig);
-
-    service.onComplete({}, config);
-
-    expect(config.getRemoteScreenshotConfiguration).not.toHaveBeenCalledWith();
-  });
-
-  describe('github comment onComplete', () => {
-    const OLD_ENV = process.env;
-
-    beforeEach(() => {
-      jest.resetModules(); // Most important - it clears the cache
-      process.env = { ...OLD_ENV }; // Make a copy
+      expect(runnerConfig.getRemoteScreenshotConfiguration).toHaveBeenCalledWith(runnerConfig.screenshotsSites, localConfig.serviceOptions.buildBranch);
     });
 
-    afterAll(() => {
-      process.env = OLD_ENV; // Restore old environment
-    });
-
-    it('should post to github', async () => {
-      process.env.SCREENSHOT_MISMATCH_CHECK = true;
+    it('should not upload screenshots in onComplete if buildBranch is a pullRequest', () => {
       const localConfig = {
         serviceOptions: {
           selector: 'mock-selector',
           useRemoteReferenceScreenshots: true,
           buildBranch: 'pr-31',
           buildType: BUILD_TYPE.branchEventCause,
-          buildUrl: 'buildurl',
-          gitToken: 'token',
-          gitApiUrl: 'gitapiurl',
-          issueNumber: '101',
         },
       };
-      fs.readJsonSync.mockReturnValue({
-        repository: {
-          url: 'git+https://github.com/cerner/repo-url',
-        },
-      });
-      URL.mockImplementation(() => ({
-        pathname: 'cerner/repo-url',
-      }));
-      const requestmock = jest.fn(() => ({
-        data: [],
-        status: 200,
-      }));
-      Octokit.mockImplementation(() => ({
-        request: requestmock,
-      }));
 
       const service = new WdioTerraService({}, {}, localConfig);
 
-      await expect(service.onComplete({}, config)).resolves.toBe();
-      expect(requestmock.mock.calls.length).toBe(2);
+      service.onComplete({}, config);
+
       expect(config.getRemoteScreenshotConfiguration).not.toHaveBeenCalledWith();
     });
 
-    it('should not post to github if comment already exists', async () => {
-      process.env.SCREENSHOT_MISMATCH_CHECK = true;
+    it('should not upload screenshots in onComplete if buildType is not BranchEventCause', () => {
       const localConfig = {
         serviceOptions: {
           selector: 'mock-selector',
           useRemoteReferenceScreenshots: true,
-          buildBranch: 'pr-31',
-          buildType: BUILD_TYPE.branchEventCause,
-          buildUrl: 'buildurl',
-          gitToken: 'token',
-          gitApiUrl: 'gitapiurl',
-          issueNumber: '101',
+          buildBranch: BUILD_BRANCH.master,
+          buildType: undefined,
         },
       };
-      fs.readJsonSync.mockReturnValue({
-        repository: {
-          url: 'git+https://github.com/cerner/repo-url',
-        },
-      });
-      URL.mockImplementation(() => ({
-        pathname: 'cerner/repo-url',
-      }));
-      const requestmock = jest.fn(() => ({
-        data: [{ body: `:warning: :bangbang: **WDIO MISMATCH** \n\nCheck that screenshot change is intended at: ${localConfig.serviceOptions.buildUrl} \n\nIf screenshot change is intended, remote reference screenshots will be updated upon PR merge. \nIf screenshot change is unintended, please fix screenshot issues before PR merge to prevent them from being uploaded. \n\nNote: This comment only appears the first time a screenshot mismatch is detected on a PR build, future builds will need to be checked for unintended screenshot mismatchs.` }],
-        status: 200,
-      }));
-      Octokit.mockImplementation(() => ({
-        request: requestmock,
-      }));
 
       const service = new WdioTerraService({}, {}, localConfig);
 
-      await expect(service.onComplete({}, config)).resolves.toBe();
-      expect(requestmock.mock.calls.length).toBe(1);
+      service.onComplete({}, config);
+
       expect(config.getRemoteScreenshotConfiguration).not.toHaveBeenCalledWith();
     });
 
-    it('should throw an error if posting comment returned non-200 status code', async () => {
-      process.env.SCREENSHOT_MISMATCH_CHECK = true;
-      const localConfig = {
-        serviceOptions: {
-          selector: 'mock-selector',
-          useRemoteReferenceScreenshots: true,
-          buildBranch: 'pr-31',
-          buildType: BUILD_TYPE.branchEventCause,
-          buildUrl: 'buildurl',
-          gitToken: 'token',
-          gitApiUrl: 'gitapiurl',
-          issueNumber: '101',
-        },
-      };
-      fs.readJsonSync.mockReturnValue({
-        repository: {
-          url: 'git+https://github.com/cerner/repo-url',
-        },
+    describe('github comment onComplete', () => {
+      const OLD_ENV = process.env;
+      const octokitRequest = jest.fn();
+
+      createOctokit.mockImplementation(() => ({
+        request: octokitRequest,
+      }));
+
+      beforeEach(() => {
+        jest.resetModules(); // Most important - it clears the cache
+        process.env = { ...OLD_ENV }; // Make a copy
       });
-      URL.mockImplementation(() => ({
-        pathname: 'cerner/repo-url',
-      }));
-      const requestmock = jest.fn(() => ({
-        data: [],
-        status: 404,
-      }));
-      Octokit.mockImplementation(() => ({
-        request: requestmock,
-      }));
 
-      const service = new WdioTerraService({}, {}, localConfig);
+      afterAll(() => {
+        process.env = OLD_ENV; // Restore old environment
+      });
 
-      await expect(service.onComplete({}, {})).rejects.toThrow(SevereServiceError);
-      expect(requestmock.mock.calls.length).toBe(2);
-    });
+      it('should post to github', async () => {
+        process.env.SCREENSHOT_MISMATCH_CHECK = true;
+        const localConfig = {
+          serviceOptions: {
+            selector: 'mock-selector',
+            useRemoteReferenceScreenshots: true,
+            buildBranch: 'pr-31',
+            buildType: BUILD_TYPE.branchEventCause,
+            buildUrl: 'buildurl',
+            gitToken: 'token',
+            gitApiUrl: 'gitapiurl',
+            issueNumber: '101',
+          },
+        };
+        const service = new WdioTerraService({}, {}, localConfig);
+        octokitRequest.mockImplementation(() => ({
+          data: [],
+          status: 200,
+        }));
+        await expect(service.onComplete({}, config)).resolves.toBe();
+        expect(octokitRequest.mock.calls.length).toBe(2);
+        expect(config.getRemoteScreenshotConfiguration).not.toHaveBeenCalledWith();
+      });
 
-    it('should throw an error, if gitToken is not defined', async () => {
-      process.env.SCREENSHOT_MISMATCH_CHECK = true;
-      const localConfig = {
-        serviceOptions: {
-          selector: 'mock-selector',
-          useRemoteReferenceScreenshots: true,
-          buildBranch: 'pr-31',
-          buildType: BUILD_TYPE.branchEventCause,
-          buildUrl: 'buildurl',
-          gitApiUrl: 'gitapiurl',
-          issueNumber: '101',
-        },
-      };
+      it('should not post to github if comment already exists', async () => {
+        process.env.SCREENSHOT_MISMATCH_CHECK = true;
+        const localConfig = {
+          serviceOptions: {
+            selector: 'mock-selector',
+            useRemoteReferenceScreenshots: true,
+            buildBranch: 'pr-31',
+            buildType: BUILD_TYPE.branchEventCause,
+            buildUrl: 'buildurl',
+            gitToken: 'token',
+            gitApiUrl: 'gitapiurl',
+            issueNumber: '101',
+          },
+        };
 
-      const service = new WdioTerraService({}, {}, localConfig);
+        octokitRequest.mockImplementation(() => ({
+          data: [{ body: `:warning: :bangbang: **WDIO MISMATCH** \n\nCheck that screenshot change is intended at: ${localConfig.serviceOptions.buildUrl} \n\nIf screenshot change is intended, remote reference screenshots will be updated upon PR merge. \nIf screenshot change is unintended, please fix screenshot issues before PR merge to prevent them from being uploaded. \n\nNote: This comment only appears the first time a screenshot mismatch is detected on a PR build, future builds will need to be checked for unintended screenshot mismatchs.` }],
+          status: 200,
+        }));
+        const service = new WdioTerraService({}, {}, localConfig);
+        await expect(service.onComplete({}, config)).resolves.toBe();
+        expect(octokitRequest.mock.calls.length).toBe(1);
+        expect(config.getRemoteScreenshotConfiguration).not.toHaveBeenCalledWith();
+      });
 
-      await expect(service.onComplete({}, {})).rejects.toThrow(SevereServiceError);
-    });
+      it('should throw an error if posting comment returned non-200 status code', async () => {
+        process.env.SCREENSHOT_MISMATCH_CHECK = true;
+        const localConfig = {
+          serviceOptions: {
+            selector: 'mock-selector',
+            useRemoteReferenceScreenshots: true,
+            buildBranch: 'pr-31',
+            buildType: BUILD_TYPE.branchEventCause,
+            buildUrl: 'buildurl',
+            gitToken: 'token',
+            gitApiUrl: 'gitapiurl',
+            issueNumber: '101',
+          },
+        };
+        octokitRequest.mockImplementation(() => ({
+          data: [],
+          status: 404,
+        }));
+        const service = new WdioTerraService({}, {}, localConfig);
 
-    it('should throw an error, if gitApiUrl is not defined', async () => {
-      process.env.SCREENSHOT_MISMATCH_CHECK = true;
-      const localConfig = {
-        serviceOptions: {
-          selector: 'mock-selector',
-          useRemoteReferenceScreenshots: true,
-          buildBranch: 'pr-31',
-          buildType: BUILD_TYPE.branchEventCause,
-          buildUrl: 'buildurl',
-          gitToken: 'token',
-          issueNumber: '101',
-        },
-      };
+        await expect(service.onComplete({}, {})).rejects.toThrow(SevereServiceError);
+        expect(octokitRequest.mock.calls.length).toBe(2);
+      });
 
-      const service = new WdioTerraService({}, {}, localConfig);
+      it('should throw an error, if gitToken is not defined', async () => {
+        process.env.SCREENSHOT_MISMATCH_CHECK = true;
+        const localConfig = {
+          serviceOptions: {
+            selector: 'mock-selector',
+            useRemoteReferenceScreenshots: true,
+            buildBranch: 'pr-31',
+            buildType: BUILD_TYPE.branchEventCause,
+            buildUrl: 'buildurl',
+            gitApiUrl: 'gitapiurl',
+            issueNumber: '101',
+          },
+        };
 
-      await expect(service.onComplete({}, {})).rejects.toThrow(SevereServiceError);
+        const service = new WdioTerraService({}, {}, localConfig);
+
+        await expect(service.onComplete({}, {})).rejects.toThrow(SevereServiceError);
+      });
+
+      it('should throw an error, if gitApiUrl is not defined', async () => {
+        process.env.SCREENSHOT_MISMATCH_CHECK = true;
+        const localConfig = {
+          serviceOptions: {
+            selector: 'mock-selector',
+            useRemoteReferenceScreenshots: true,
+            buildBranch: 'pr-31',
+            buildType: BUILD_TYPE.branchEventCause,
+            buildUrl: 'buildurl',
+            gitToken: 'token',
+            issueNumber: '101',
+          },
+        };
+
+        const service = new WdioTerraService({}, {}, localConfig);
+
+        await expect(service.onComplete({}, {})).rejects.toThrow(SevereServiceError);
+      });
     });
   });
 });
