@@ -169,8 +169,13 @@ class TerraService {
             throw Error(`Error posting issue comment. Status code: ${postCommentResult.status}`);
           }
         }
-      } else if (this.serviceOptions.useRemoteReferenceScreenshots && !this.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest) && this.serviceOptions.buildType === BUILD_TYPE.branchEventCause) {
-        const screenshotConfig = config.getRemoteScreenshotConfiguration ? config.getRemoteScreenshotConfiguration(config.screenshotsSites, this.serviceOptions.buildBranch) : {};
+      } else if (
+        this.serviceOptions.useRemoteReferenceScreenshots
+        && !this.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest)
+        && this.serviceOptions.buildType === BUILD_TYPE.branchEventCause
+        && config.getRemoteScreenshotConfiguration
+      ) {
+        const screenshotConfig = config.getRemoteScreenshotConfiguration(config.screenshotsSites, this.serviceOptions.buildBranch);
         const screenshotRequestor = new ScreenshotRequestor(screenshotConfig.publishScreenshotConfiguration);
         await screenshotRequestor.upload();
       }

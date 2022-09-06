@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Fixed
+  * A latent referencing bug that was not (yet) causing a test failure because it manifested as an unhandled promise. Thus, it emitted a warning but the test still passed.
+
 ## 3.2.1 - (August 30, 2022)
 
 * Added

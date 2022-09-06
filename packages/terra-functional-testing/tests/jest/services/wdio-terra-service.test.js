@@ -14,7 +14,7 @@ jest.mock('../../../src/commands/utils');
 
 const mockIsExisting = jest.fn().mockImplementation(() => true);
 const element = {
-  waitForExist: () => {},
+  waitForExist: () => { },
   isExisting: mockIsExisting,
 };
 
@@ -30,7 +30,7 @@ const config = {
     theme: 'mock-theme',
     formFactor: 'huge',
   },
-  getRemoteScreenshotConfiguration: jest.fn().mockImplementation(() => {}),
+  getRemoteScreenshotConfiguration: jest.fn().mockImplementation(() => { }),
 };
 
 const capabilities = { browserName: 'chrome' };
@@ -171,7 +171,11 @@ describe('WDIO Terra Service', () => {
         repositoryId: 'mock-repositoryId',
         repositoryUrl: 'mock-repositoryUrl',
       },
-      getRemoteScreenshotConfiguration: jest.fn().mockImplementation(() => {}),
+      getRemoteScreenshotConfiguration: jest.fn().mockImplementation(() => (
+        {
+          publishScreenshotConfiguration: jest.fn(),
+        }
+      )),
     };
 
     const service = new WdioTerraService({}, {}, localConfig);
