@@ -64,4 +64,4 @@ lib
 !/packages/terra-cli/tests/jest/fixtures/**/lib/
 !/packages/duplicate-package-checker-webpack-plugin/tests/jest/**/node_modules/
 .idea
-packages/terra-functional-testing/src/.DS_Store
+.DS_Store
