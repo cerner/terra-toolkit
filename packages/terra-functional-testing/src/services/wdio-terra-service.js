@@ -154,7 +154,7 @@ class TerraService {
 
       if (this.serviceOptions.useRemoteReferenceScreenshots && process.env.SCREENSHOT_MISMATCH_CHECK && this.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest)) {
         // When a PR is updated, we will one time post a warning mesage to the PR if the screenshots mismatch. This
-        // gives the end-user the oppertunity to fix the mismatch before the PR is merged. See the else block below
+        // gives the end-user the opportunity to fix the mismatch before the PR is merged. See the else block below
         // for what happens when the PR is merged.
         if (!this.serviceOptions.gitToken || !this.serviceOptions.gitApiUrl) {
           throw new Error('No git token recieved');
