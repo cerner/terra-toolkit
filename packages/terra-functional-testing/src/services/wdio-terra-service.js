@@ -42,8 +42,8 @@ class TerraService {
    */
   async onPrepare(config) {
     try {
-      if (this.serviceOptions.useRemoteReferenceScreenshots) {
-        const screenshotConfig = config.getRemoteScreenshotConfiguration ? config.getRemoteScreenshotConfiguration(config.screenshotsSites, this.serviceOptions.buildBranch) : {};
+      if (this.serviceOptions.useRemoteReferenceScreenshots && config.getRemoteScreenshotConfiguration) {
+        const screenshotConfig = config.getRemoteScreenshotConfiguration(config.screenshotsSites, this.serviceOptions.buildBranch);
         const screenshotRequestor = new ScreenshotRequestor(screenshotConfig.publishScreenshotConfiguration);
         await screenshotRequestor.download();
       }
