@@ -28,7 +28,7 @@ const element = {
 const mockFindElement = jest.fn().mockImplementation(() => element);
 const TerraService = () => { };
 const serviceOptions = { formFactor: 'huge' };
-
+const mockGetRemoteScreenshotConfiguration = jest.fn(() => ({ publishScreenshotConfiguration: 1 }));
 const config = {
   serviceOptions: {
     selector: 'mock-selector',
@@ -37,7 +37,11 @@ const config = {
     theme: 'mock-theme',
     formFactor: 'huge',
   },
-  getRemoteScreenshotConfiguration: jest.fn().mockImplementation(() => { }),
+  screenshotsSites: {
+    repositoryId: 'mock-repositoryId',
+    repositoryUrl: 'mock-repositoryUrl',
+  },
+  getRemoteScreenshotConfiguration: mockGetRemoteScreenshotConfiguration,
 };
 
 const capabilities = { browserName: 'chrome' };
@@ -164,7 +168,13 @@ describe('WDIO Terra Service', () => {
   });
 
   describe('Screenshot stuff', () => {
-    it('should upload screenshots in onComplete', () => {
+    // Mocking out this method lets us test github API scenarios.
+    const octokitRequest = jest.fn();
+    createOctokit.mockImplementation(() => ({
+      request: octokitRequest,
+    }));
+
+    it('should upload screenshots in onComplete', async () => {
       const localConfig = {
         serviceOptions: {
           selector: 'mock-selector',
@@ -174,23 +184,18 @@ describe('WDIO Terra Service', () => {
         },
       };
 
-      const runnerConfig = {
-        screenshotsSites: {
-          repositoryId: 'mock-repositoryId',
-          repositoryUrl: 'mock-repositoryUrl',
+      octokitRequest.mockImplementation(() => ({
+        data: {
+          base: {
+            ref: 'the-branch-the-pr-will-merge-into',
+          },
         },
-        getRemoteScreenshotConfiguration: jest.fn().mockImplementation(() => (
-          {
-            getRemoteScreenshotConfiguration: jest.fn(),
-          }
-        )),
-      };
+        status: 200,
+      }));
 
       const service = new WdioTerraService({}, {}, localConfig);
-
-      service.onComplete({}, runnerConfig);
-
-      expect(runnerConfig.getRemoteScreenshotConfiguration).toHaveBeenCalledWith(runnerConfig.screenshotsSites, localConfig.serviceOptions.buildBranch);
+      await service.onComplete({}, config);
+      expect(config.getRemoteScreenshotConfiguration).toHaveBeenCalledWith(config.screenshotsSites, 'the-branch-the-pr-will-merge-into');
     });
 
     it('should not upload screenshots in onComplete if buildBranch is a pullRequest', () => {
@@ -207,7 +212,7 @@ describe('WDIO Terra Service', () => {
 
       service.onComplete({}, config);
 
-      expect(config.getRemoteScreenshotConfiguration).not.toHaveBeenCalledWith();
+      expect(mockGetRemoteScreenshotConfiguration).not.toHaveBeenCalledWith();
     });
 
     it('should not upload screenshots in onComplete if buildType is not BranchEventCause', () => {
@@ -224,16 +229,11 @@ describe('WDIO Terra Service', () => {
 
       service.onComplete({}, config);
 
-      expect(config.getRemoteScreenshotConfiguration).not.toHaveBeenCalledWith();
+      expect(mockGetRemoteScreenshotConfiguration).not.toHaveBeenCalledWith();
     });
 
     describe('github comment onComplete', () => {
       const OLD_ENV = process.env;
-      const octokitRequest = jest.fn();
-
-      createOctokit.mockImplementation(() => ({
-        request: octokitRequest,
-      }));
 
       beforeEach(() => {
         jest.resetModules(); // Most important - it clears the cache
@@ -265,7 +265,7 @@ describe('WDIO Terra Service', () => {
         }));
         await expect(service.onComplete({}, config)).resolves.toBe();
         expect(octokitRequest.mock.calls.length).toBe(2);
-        expect(config.getRemoteScreenshotConfiguration).not.toHaveBeenCalledWith();
+        expect(mockGetRemoteScreenshotConfiguration).not.toHaveBeenCalledWith();
       });
 
       it('should not post to github if comment already exists', async () => {
@@ -283,14 +283,24 @@ describe('WDIO Terra Service', () => {
           },
         };
 
+        const msg = [
+          ':warning: :bangbang: **WDIO MISMATCH** \n\n',
+          `Check that screenshot change is intended at: ${localConfig.serviceOptions.buildUrl} \n\n`,
+          'If screenshot change is intended, remote reference screenshots will be updated upon PR merge. \n',
+          'If screenshot change is unintended, please fix screenshot issues before PR merge to prevent them from being uploaded. \n\n',
+          'Note: This comment only appears the first time a screenshot mismatch is detected on a PR build, ',
+          'future builds will need to be checked for unintended screenshot mismatchs.',
+        ].join('');
+
         octokitRequest.mockImplementation(() => ({
-          data: [{ body: `:warning: :bangbang: **WDIO MISMATCH** \n\nCheck that screenshot change is intended at: ${localConfig.serviceOptions.buildUrl} \n\nIf screenshot change is intended, remote reference screenshots will be updated upon PR merge. \nIf screenshot change is unintended, please fix screenshot issues before PR merge to prevent them from being uploaded. \n\nNote: This comment only appears the first time a screenshot mismatch is detected on a PR build, future builds will need to be checked for unintended screenshot mismatchs.` }],
+          data: [{ body: msg }],
+          // data: [{ body: `:warning: :bangbang: **WDIO MISMATCH** \n\nCheck that screenshot change is intended at: ${localConfig.serviceOptions.buildUrl} \n\nIf screenshot change is intended, remote reference screenshots will be updated upon PR merge. \nIf screenshot change is unintended, please fix screenshot issues before PR merge to prevent them from being uploaded. \n\nNote: This comment only appears the first time a screenshot mismatch is detected on a PR build, future builds will need to be checked for unintended screenshot mismatchs.` }],
           status: 200,
         }));
         const service = new WdioTerraService({}, {}, localConfig);
         await expect(service.onComplete({}, config)).resolves.toBe();
         expect(octokitRequest.mock.calls.length).toBe(1);
-        expect(config.getRemoteScreenshotConfiguration).not.toHaveBeenCalledWith();
+        expect(mockGetRemoteScreenshotConfiguration).not.toHaveBeenCalledWith();
       });
 
       it('should throw an error if posting comment returned non-200 status code', async () => {
