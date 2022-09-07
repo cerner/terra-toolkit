@@ -153,6 +153,9 @@ class TerraService {
       const octokit = createOctokit(this.serviceOptions.gitApiUrl, this.serviceOptions.gitToken);
 
       if (this.serviceOptions.useRemoteReferenceScreenshots && process.env.SCREENSHOT_MISMATCH_CHECK && this.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest)) {
+        // When a PR is updated, we will one time post a warning mesage to the PR if the screenshots mismatch. This
+        // gives the end-user the oppertunity to fix the mismatch before the PR is merged. See the else block below
+        // for what happens when the PR is merged.
         if (!this.serviceOptions.gitToken || !this.serviceOptions.gitApiUrl) {
           throw new Error('No git token recieved');
         }
@@ -179,6 +182,9 @@ class TerraService {
           }
         }
       } else if (
+        // Branch event here means the PR has been merged. We will upload the screenshots to the base branch of the PR.
+        // The PR's base branch is the merge target of the PR, so if the PR was from my-feature to master, base branch's
+        // ref is master.
         this.serviceOptions.useRemoteReferenceScreenshots
         && !this.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest)
         && this.serviceOptions.buildType === BUILD_TYPE.branchEventCause
