@@ -1,3 +1,5 @@
+/* eslint-disable max-classes-per-file */
+/* eslint-disable no-console */
 /* eslint-disable class-methods-use-this */
 const expect = require('expect');
 const fs = require('fs-extra');
@@ -19,21 +21,16 @@ const {
 const { BUILD_BRANCH, BUILD_TYPE } = require('../constants');
 
 /**
- * Throw a SevereServiceError which stops the runner.
-* @param {string} errorMessage - The reason you're stopping the run.
-* @throws { SevereServiceError }
-*/
-const stopTheRunner = (errorMessage) => {
-  throw new SevereServiceError(errorMessage);
-};
-
-/**
- * One-liner to stop the runner with a properly formatted octokit error object.
- * @param {object} rejectionError An octokit error object that is given when a request fails. See https://github.com/octokit/request.js/#request.
+ * WDIO's SevereServiceError's constructor only takes strings, but octokit's
+ * rejected promises yield a rich error object. This class adapts the error
+ * object to the SevereServiceError constructor's needs.
  */
-const handleOctokitRequestFailure = (rejectionError) => {
-  stopTheRunner(JSON.stringify(rejectionError, null, 4));
-};
+class OctokitRequestFailureError extends SevereServiceError {
+  constructor(error) {
+    super(JSON.stringify(error, null, 4));
+    this.name = 'OctokitRequestFailureError';
+  }
+}
 
 class TerraService {
   /**
@@ -158,69 +155,97 @@ class TerraService {
   }
 
   /**
+   * Gets the base branch name (aka ref) of this pull(issue).
+   * @param {string} repoName in the form 'owner/repo'.
+   * @returns {Promise} A promise of the base branch's ref string.
+   * @throws {OctokitRequestFailureError} If the octokit request fails.
+   */
+  getPrBaseBranchRef(repoName) {
+    return createOctokit(this.serviceOptions.gitApiUrl, this.serviceOptions.gitToken)
+      .request(`GET /repos/${repoName[0]}/${repoName[1]}/pulls/${this.serviceOptions.issueNumber}/`)
+      .then(res => res.data.base.ref)
+      .catch(err => { throw new OctokitRequestFailureError(err); });
+  }
+
+  /**
+   * Get the comments of this issue.
+   * @param {string} repoName in the form 'owner/repo'.
+   * @returns {Promise} A promise of the list of comment bodies of the issue.
+   * @throws {OctokitRequestFailureError} If the octokit request fails.
+   */
+  getIssueComments(repoName) {
+    return createOctokit(this.serviceOptions.gitApiUrl, this.serviceOptions.gitToken)
+      .request(`GET /repos/${repoName[0]}/${repoName[1]}/issues/${this.serviceOptions.issueNumber}/comments`)
+      .then(res => res.data.map((comment) => comment.body))
+      .catch(err => { throw new OctokitRequestFailureError(err); });
+  }
+
+  /**
+   * Post a comment to this issue.
+   * @param {string} repoName in the form 'owner/repo'.
+   * @param {string} comment The comment you want to post.
+   * @returns {Promise} A promise of an octokit request result.
+   * @throws {OctokitRequestFailureError} If the octokit request fails.
+   */
+  postIssueComment(repoName, comment) {
+    return createOctokit(this.serviceOptions.gitApiUrl, this.serviceOptions.gitToken)
+      .request(`POST /repos/${repoName[0]}/${repoName[1]}/issues/${this.serviceOptions.issueNumber}/comments`, {
+        body: comment,
+      })
+      .catch(err => { throw new OctokitRequestFailureError(err); });
+  }
+
+  /**
    * Gets executed once before all workers are shut down.
    * Uploads the reference screenshots to the remote repository if this build was triggered from a PR merge.
    * @param {Object} config wdio configuration object
    */
   async onComplete(_, config) {
-    try {
-      const packageJson = fs.readJsonSync(path.join(process.cwd(), 'package.json'));
-      const repoUrl = new URL(packageJson.repository.url);
-      const repoName = repoUrl.pathname.match(/[^/]+/g);
-      const octokit = createOctokit(this.serviceOptions.gitApiUrl, this.serviceOptions.gitToken);
+    const packageJson = fs.readJsonSync(path.join(process.cwd(), 'package.json'));
+    const repoUrl = new URL(packageJson.repository.url);
+    const repoName = repoUrl.pathname.match(/[^/]+/g);
 
-      if (this.serviceOptions.useRemoteReferenceScreenshots && process.env.SCREENSHOT_MISMATCH_CHECK && this.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest)) {
-        // When a PR is updated, we will one time post a warning mesage to the PR if the screenshots mismatch. This
-        // gives the end-user the opportunity to fix the mismatch before the PR is merged. See the else block below
-        // for what happens when the PR is merged.
-        if (!this.serviceOptions.gitToken || !this.serviceOptions.gitApiUrl) {
-          throw new Error('No git token recieved');
-        }
-
-        const message = [
-          ':warning: :bangbang: **WDIO MISMATCH** \n\n',
-          `Check that screenshot change is intended at: ${this.serviceOptions.buildUrl} \n\n`,
-          'If screenshot change is intended, remote reference screenshots will be updated upon PR merge. \n',
-          'If screenshot change is unintended, please fix screenshot issues before PR merge to prevent them from being uploaded. \n\n',
-          'Note: This comment only appears the first time a screenshot mismatch is detected on a PR build, ',
-          'future builds will need to be checked for unintended screenshot mismatchs.',
-        ].join('');
-
-        const commentsUrl = `/repos/${repoName[0]}/${repoName[1]}/issues/${this.serviceOptions.issueNumber}/comments`;
-        const commentsResult = await octokit.request(`GET ${commentsUrl}`);
-        const existingComment = commentsResult.data.find((comment) => comment.body === message);
-
-        if (!existingComment) {
-          const postCommentResult = await octokit.request(`POST ${commentsUrl}`, {
-            body: message,
-          });
-          if (postCommentResult.status !== 200) {
-            throw Error(`Error posting issue comment. Status code: ${postCommentResult.status}`);
-          }
-        }
-      } else if (
-        // Branch event here means the PR has been merged. We will upload the screenshots to the base branch of the PR.
-        // The PR's base branch is the merge target of the PR, so if the PR was from my-feature to master, base branch's
-        // ref is master.
-        this.serviceOptions.useRemoteReferenceScreenshots
-        && !this.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest)
-        && this.serviceOptions.buildType === BUILD_TYPE.branchEventCause
-        && config.getRemoteScreenshotConfiguration
-      ) {
-        const pr = await octokit.request(`GET /repos/${repoName[0]}/${repoName[1]}/pulls/${this.serviceOptions.issueNumber}/`);
-        const prBaseBranch = pr.data.base.ref;
-        const screenshotConfig = config.getRemoteScreenshotConfiguration(config.screenshotsSites, prBaseBranch);
-        const screenshotRequestor = new ScreenshotRequestor(screenshotConfig.publishScreenshotConfiguration);
-        await screenshotRequestor.upload();
+    if (this.serviceOptions.useRemoteReferenceScreenshots && process.env.SCREENSHOT_MISMATCH_CHECK && this.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest)) {
+      // When a PR is updated, we will one time post a warning mesage to the PR if the screenshots mismatch. This
+      // gives the end-user the opportunity to fix the mismatch before the PR is merged. See the else block below
+      // for what happens when the PR is merged.
+      if (!this.serviceOptions.gitToken || !this.serviceOptions.gitApiUrl) {
+        throw new SevereServiceError('No git token recieved');
       }
-    } catch (error) {
-      throw new SevereServiceError(error);
+
+      const message = [
+        ':warning: :bangbang: **WDIO MISMATCH** \n\n',
+        `Check that screenshot change is intended at: ${this.serviceOptions.buildUrl} \n\n`,
+        'If screenshot change is intended, remote reference screenshots will be updated upon PR merge. \n',
+        'If screenshot change is unintended, please fix screenshot issues before PR merge to prevent them from being uploaded. \n\n',
+        'Note: This comment only appears the first time a screenshot mismatch is detected on a PR build, ',
+        'future builds will need to be checked for unintended screenshot mismatchs.',
+      ].join('');
+
+      const comments = await this.getIssueComments(repoName);
+      if (comments.includes(message)) {
+        console.log('The mismatch warning comment is already present on this PR.');
+      } else {
+        await this.postIssueComment(repoName, message);
+      }
+    } else if (
+      // Branch event here means the PR has been merged. We will upload the screenshots to the base branch of the PR.
+      // The PR's base branch is the merge target of the PR, so if the PR was from my-feature to master, base branch's
+      // ref is master.
+      this.serviceOptions.useRemoteReferenceScreenshots
+      && !this.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest)
+      && this.serviceOptions.buildType === BUILD_TYPE.branchEventCause
+      && config.getRemoteScreenshotConfiguration
+    ) {
+      const prBaseBranch = await this.getPrBaseBranchRef(repoName);
+      const screenshotConfig = config.getRemoteScreenshotConfiguration(config.screenshotsSites, prBaseBranch);
+      const screenshotRequestor = new ScreenshotRequestor(screenshotConfig.publishScreenshotConfiguration);
+      await screenshotRequestor.upload();
     }
   }
 }
 
 module.exports = {
-  handleOctokitRequestFailure,
-  stopTheRunner,
+  OctokitRequestFailureError,
   TerraService,
 };

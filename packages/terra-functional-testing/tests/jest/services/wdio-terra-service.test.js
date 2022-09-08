@@ -2,8 +2,7 @@ const fs = require('fs-extra');
 const { URL } = require('url');
 const { SevereServiceError } = require('webdriverio');
 const {
-  handleOctokitRequestFailure,
-  stopTheRunner,
+  OctokitRequestFailureError,
   TerraService: WdioTerraService,
 } = require('../../../src/services/wdio-terra-service');
 const { setViewport, createOctokit } = require('../../../src/commands/utils');
@@ -167,9 +166,17 @@ describe('WDIO Terra Service', () => {
 
   describe('Screenshot stuff', () => {
     // Mocking out this method lets us test github API scenarios.
-    const request = jest.fn();
+    // The result and error object structures are documented at https://github.com/octokit/request.js/#request.
+    // Note: mockRe*edValueOnce() takes priority over mockRe*edValue().
+    const octokitResult = {
+      status: 200,
+    };
+    const octokitError = {
+      status: 404,
+    };
+    const octokitRequest = jest.fn();
     createOctokit.mockImplementation(() => ({
-      request,
+      request: octokitRequest,
     }));
 
     // Adding all the stuff we need to test remote screenshot config.
@@ -182,26 +189,10 @@ describe('WDIO Terra Service', () => {
       getRemoteScreenshotConfiguration: jest.fn(() => ({ publishScreenshotConfiguration: 1 })),
     };
 
-    const octokitError = {
-      // Error object structure is documented at https://github.com/octokit/request.js/#request.
-      status: 1,
-      request: '2',
-      response: '3',
-    };
-
-    describe('stopTheRunner', () => {
-      it('throws a SevereServiceError', () => {
+    describe('OctokitRequestFailureError', () => {
+      it('is a SevereServiceError with stringified, formatted error object', () => {
         expect(() => {
-          stopTheRunner('oh no!');
-        }).toThrow(new SevereServiceError('oh no!'));
-      });
-    });
-
-    describe('handleOctokitRequestFailure', () => {
-      it('throws a SevereServiceError with stringified, formatted error object', () => {
-        expect(() => {
-          // Error object structure is documented at https://github.com/octokit/request.js/#request.
-          handleOctokitRequestFailure(octokitError);
+          throw new OctokitRequestFailureError(octokitError);
         }).toThrow(new SevereServiceError(JSON.stringify(octokitError, null, 4)));
       });
     });
@@ -215,14 +206,14 @@ describe('WDIO Terra Service', () => {
           buildType: BUILD_TYPE.branchEventCause,
         },
       };
-      request.mockImplementation(() => ({
+      octokitRequest.mockResolvedValueOnce({
+        ...octokitResult,
         data: {
           base: {
             ref: 'the-branch-the-pr-will-merge-into',
           },
         },
-        status: 200,
-      }));
+      });
       const service = new WdioTerraService({}, {}, localConfig);
       await service.onComplete({}, rsConfig);
       expect(rsConfig.getRemoteScreenshotConfiguration).toHaveBeenCalledWith(rsConfig.screenshotsSites, 'the-branch-the-pr-will-merge-into');
@@ -282,13 +273,16 @@ describe('WDIO Terra Service', () => {
             issueNumber: '101',
           },
         };
+
         const service = new WdioTerraService({}, {}, localConfig);
-        request.mockImplementation(() => ({
+
+        octokitRequest.mockResolvedValueOnce({
+          ...octokitResult,
           data: [],
-          status: 200,
-        }));
+        }).mockResolvedValueOnce(octokitResult);
+
         await service.onComplete({}, rsConfig);
-        expect(request.mock.calls.length).toBe(2);
+        expect(octokitRequest.mock.calls.length).toBe(2);
         expect(rsConfig.getRemoteScreenshotConfiguration).not.toHaveBeenCalled();
       });
 
@@ -316,13 +310,13 @@ describe('WDIO Terra Service', () => {
           'future builds will need to be checked for unintended screenshot mismatchs.',
         ].join('');
 
-        request.mockImplementation(() => ({
+        octokitRequest.mockResolvedValue({
+          ...octokitResult,
           data: [{ body: msg }],
-          status: 200,
-        }));
+        });
         const service = new WdioTerraService({}, {}, localConfig);
         await service.onComplete({}, rsConfig);
-        expect(request.mock.calls.length).toBe(1);
+        expect(octokitRequest.mock.calls.length).toBe(1);
         expect(rsConfig.getRemoteScreenshotConfiguration).not.toHaveBeenCalledWith();
       });
 
@@ -340,13 +334,15 @@ describe('WDIO Terra Service', () => {
             issueNumber: '101',
           },
         };
-        request.mockImplementation(() => ({
+
+        // Getting the comment succedes, but posting fails.
+        octokitRequest.mockResolvedValueOnce({
           data: [],
-          status: 404,
-        }));
+        }).mockRejectedValueOnce(octokitError);
         const service = new WdioTerraService({}, {}, localConfig);
-        await expect(service.onComplete({}, {})).rejects.toThrow(SevereServiceError);
-        expect(request.mock.calls.length).toBe(2);
+
+        await expect(service.onComplete({}, {})).rejects.toThrowError(new OctokitRequestFailureError(octokitError));
+        expect(octokitRequest.mock.calls.length).toBe(2);
       });
 
       it('should throw an error, if gitToken is not defined', async () => {
