@@ -18,6 +18,23 @@ const {
 } = require('../commands/utils');
 const { BUILD_BRANCH, BUILD_TYPE } = require('../constants');
 
+/**
+ * Throw a SevereServiceError which stops the runner.
+* @param {string} errorMessage - The reason you're stopping the run.
+* @throws { SevereServiceError }
+*/
+const stopTheRunner = (errorMessage) => {
+  throw new SevereServiceError(errorMessage);
+};
+
+/**
+ * One-liner to stop the runner with a properly formatted octokit error object.
+ * @param {object} rejectionError An octokit error object that is given when a request fails. See https://github.com/octokit/request.js/#request.
+ */
+const handleOctokitRequestFailure = (rejectionError) => {
+  stopTheRunner(JSON.stringify(rejectionError, null, 4));
+};
+
 class TerraService {
   /**
    * Service constructor.
@@ -202,4 +219,8 @@ class TerraService {
   }
 }
 
-module.exports = TerraService;
+module.exports = {
+  handleOctokitRequestFailure,
+  stopTheRunner,
+  TerraService,
+};

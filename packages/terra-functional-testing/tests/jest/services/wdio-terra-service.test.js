@@ -1,7 +1,11 @@
 const fs = require('fs-extra');
 const { URL } = require('url');
 const { SevereServiceError } = require('webdriverio');
-const WdioTerraService = require('../../../src/services/wdio-terra-service');
+const {
+  handleOctokitRequestFailure,
+  stopTheRunner,
+  TerraService: WdioTerraService,
+} = require('../../../src/services/wdio-terra-service');
 const { setViewport, createOctokit } = require('../../../src/commands/utils');
 const { BUILD_BRANCH, BUILD_TYPE } = require('../../../src/constants/index');
 
@@ -177,6 +181,30 @@ describe('WDIO Terra Service', () => {
       },
       getRemoteScreenshotConfiguration: jest.fn(() => ({ publishScreenshotConfiguration: 1 })),
     };
+
+    const octokitError = {
+      // Error object structure is documented at https://github.com/octokit/request.js/#request.
+      status: 1,
+      request: '2',
+      response: '3',
+    };
+
+    describe('stopTheRunner', () => {
+      it('throws a SevereServiceError', () => {
+        expect(() => {
+          stopTheRunner('oh no!');
+        }).toThrow(new SevereServiceError('oh no!'));
+      });
+    });
+
+    describe('handleOctokitRequestFailure', () => {
+      it('throws a SevereServiceError with stringified, formatted error object', () => {
+        expect(() => {
+          // Error object structure is documented at https://github.com/octokit/request.js/#request.
+          handleOctokitRequestFailure(octokitError);
+        }).toThrow(new SevereServiceError(JSON.stringify(octokitError, null, 4)));
+      });
+    });
 
     it('should upload screenshots in onComplete', async () => {
       const localConfig = {
