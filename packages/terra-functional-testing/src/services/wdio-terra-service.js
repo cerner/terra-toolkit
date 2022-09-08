@@ -47,6 +47,10 @@ class TerraService {
       ...launcherOptions,
       ...serviceOptions,
     };
+
+    const packageJson = fs.readJsonSync(path.join(process.cwd(), 'package.json'));
+    const repoUrl = new URL(packageJson.repository.url);
+    [this.repoName, this.repoOwner] = repoUrl.pathname.match(/[^/]+/g);
   }
 
   /**
@@ -55,14 +59,20 @@ class TerraService {
    * @param {Object} config wdio configuration object
    */
   async onPrepare(config) {
+    if (!this.serviceOptions.useRemoteReferenceScreenshots) {
+      return;
+    }
+
+    if (!config.getRemoteScreenshotConfiguration) {
+      throw new SevereServiceError('config is missing getRemoteScreenshotConfiguration');
+    }
+    const prBaseBranch = await this.getPrBaseBranchRef();
+    const screenshotConfig = config.getRemoteScreenshotConfiguration(config.screenshotsSites, prBaseBranch);
+    const screenshotRequestor = new ScreenshotRequestor(screenshotConfig.publishScreenshotConfiguration);
     try {
-      if (this.serviceOptions.useRemoteReferenceScreenshots) {
-        const screenshotConfig = config.getRemoteScreenshotConfiguration ? config.getRemoteScreenshotConfiguration(config.screenshotsSites, this.serviceOptions.buildBranch) : {};
-        const screenshotRequestor = new ScreenshotRequestor(screenshotConfig.publishScreenshotConfiguration);
-        await screenshotRequestor.download();
-      }
-    } catch (error) {
-      throw new SevereServiceError(error);
+      await screenshotRequestor.download();
+    } catch (err) {
+      throw new SevereServiceError(err);
     }
   }
 
@@ -155,41 +165,53 @@ class TerraService {
   }
 
   /**
+   * Create an octokit using the configured gitApiUrl and gitToken.
+   * @returns {Object} an octokit instance.
+   * @throws {SevereServiceError} if any required config is missing.
+   */
+  createOctokit() {
+    if (!this.serviceOptions.gitToken) {
+      throw new SevereServiceError('config.serviceOptions is missing gitToken');
+    }
+    if (!this.serviceOptions.gitApiUrl) {
+      throw new SevereServiceError('config.serviceOptions is missing gitApiUrl');
+    }
+    return createOctokit(this.serviceOptions.gitApiUrl, this.serviceOptions.gitToken);
+  }
+
+  /**
    * Gets the base branch name (aka ref) of this pull(issue).
-   * @param {string} repoName in the form 'owner/repo'.
    * @returns {Promise} A promise of the base branch's ref string.
    * @throws {OctokitRequestFailureError} If the octokit request fails.
    */
-  getPrBaseBranchRef(repoName) {
-    return createOctokit(this.serviceOptions.gitApiUrl, this.serviceOptions.gitToken)
-      .request(`GET /repos/${repoName[0]}/${repoName[1]}/pulls/${this.serviceOptions.issueNumber}/`)
+  getPrBaseBranchRef() {
+    return this.createOctokit()
+      .request(`GET /repos/${this.repoName}/${this.repoOwner}/pulls/${this.serviceOptions.issueNumber}/`)
       .then(res => res.data.base.ref)
       .catch(err => { throw new OctokitRequestFailureError(err); });
   }
 
   /**
    * Get the comments of this issue.
-   * @param {string} repoName in the form 'owner/repo'.
    * @returns {Promise} A promise of the list of comment bodies of the issue.
    * @throws {OctokitRequestFailureError} If the octokit request fails.
    */
-  getIssueComments(repoName) {
-    return createOctokit(this.serviceOptions.gitApiUrl, this.serviceOptions.gitToken)
-      .request(`GET /repos/${repoName[0]}/${repoName[1]}/issues/${this.serviceOptions.issueNumber}/comments`)
+  getIssueComments() {
+    return this.createOctokit()
+      .request(`GET /repos/${this.repoName}/${this.repoOwner}/issues/${this.serviceOptions.issueNumber}/comments`)
       .then(res => res.data.map((comment) => comment.body))
       .catch(err => { throw new OctokitRequestFailureError(err); });
   }
 
   /**
    * Post a comment to this issue.
-   * @param {string} repoName in the form 'owner/repo'.
    * @param {string} comment The comment you want to post.
    * @returns {Promise} A promise of an octokit request result.
    * @throws {OctokitRequestFailureError} If the octokit request fails.
    */
-  postIssueComment(repoName, comment) {
-    return createOctokit(this.serviceOptions.gitApiUrl, this.serviceOptions.gitToken)
-      .request(`POST /repos/${repoName[0]}/${repoName[1]}/issues/${this.serviceOptions.issueNumber}/comments`, {
+  postIssueComment(comment) {
+    return this.createOctokit()
+      .request(`POST /repos/${this.repoName}/${this.repoOwner}/issues/${this.serviceOptions.issueNumber}/comments`, {
         body: comment,
       })
       .catch(err => { throw new OctokitRequestFailureError(err); });
@@ -201,16 +223,19 @@ class TerraService {
    * @param {Object} config wdio configuration object
    */
   async onComplete(_, config) {
-    const packageJson = fs.readJsonSync(path.join(process.cwd(), 'package.json'));
-    const repoUrl = new URL(packageJson.repository.url);
-    const repoName = repoUrl.pathname.match(/[^/]+/g);
+    if (!this.serviceOptions.useRemoteReferenceScreenshots) {
+      return;
+    }
+    if (!this.serviceOptions.buildBranch) {
+      throw new SevereServiceError('config.serviceOptions is missing buildBranch');
+    }
 
-    if (this.serviceOptions.useRemoteReferenceScreenshots && process.env.SCREENSHOT_MISMATCH_CHECK && this.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest)) {
+    if (process.env.SCREENSHOT_MISMATCH_CHECK && this.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest)) {
       // When a PR is updated, we will one time post a warning mesage to the PR if the screenshots mismatch. This
       // gives the end-user the opportunity to fix the mismatch before the PR is merged. See the else block below
       // for what happens when the PR is merged.
-      if (!this.serviceOptions.gitToken || !this.serviceOptions.gitApiUrl) {
-        throw new SevereServiceError('No git token recieved');
+      if (!this.serviceOptions.buildUrl) {
+        throw new SevereServiceError('config.serviceOptions is missing buildUrl');
       }
 
       const message = [
@@ -221,23 +246,18 @@ class TerraService {
         'Note: This comment only appears the first time a screenshot mismatch is detected on a PR build, ',
         'future builds will need to be checked for unintended screenshot mismatchs.',
       ].join('');
-
-      const comments = await this.getIssueComments(repoName);
-      if (comments.includes(message)) {
-        console.log('The mismatch warning comment is already present on this PR.');
-      } else {
-        await this.postIssueComment(repoName, message);
+      const comments = await this.getIssueComments();
+      if (!comments.includes(message)) {
+        await this.postIssueComment(message);
       }
-    } else if (
+    } else if (!this.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest) && this.serviceOptions.buildType === BUILD_TYPE.branchEventCause) {
       // Branch event here means the PR has been merged. We will upload the screenshots to the base branch of the PR.
       // The PR's base branch is the merge target of the PR, so if the PR was from my-feature to master, base branch's
       // ref is master.
-      this.serviceOptions.useRemoteReferenceScreenshots
-      && !this.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest)
-      && this.serviceOptions.buildType === BUILD_TYPE.branchEventCause
-      && config.getRemoteScreenshotConfiguration
-    ) {
-      const prBaseBranch = await this.getPrBaseBranchRef(repoName);
+      if (!config.getRemoteScreenshotConfiguration) {
+        throw new SevereServiceError('config is missing getRemoteScreenshotConfiguration');
+      }
+      const prBaseBranch = await this.getPrBaseBranchRef();
       const screenshotConfig = config.getRemoteScreenshotConfiguration(config.screenshotsSites, prBaseBranch);
       const screenshotRequestor = new ScreenshotRequestor(screenshotConfig.publishScreenshotConfiguration);
       await screenshotRequestor.upload();
