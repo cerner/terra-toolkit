@@ -5,7 +5,7 @@ const {
   OctokitRequestFailureError,
   TerraService: WdioTerraService,
 } = require('../../../src/services/wdio-terra-service');
-const { setViewport, createOctokit } = require('../../../src/commands/utils');
+const { setViewport, createOctokit, ScreenshotRequestor } = require('../../../src/commands/utils');
 const { BUILD_BRANCH, BUILD_TYPE } = require('../../../src/constants/index');
 
 jest.mock('fs-extra');
@@ -189,6 +189,25 @@ describe('WDIO Terra Service', () => {
       getRemoteScreenshotConfiguration: jest.fn(() => ({ publishScreenshotConfiguration: 1 })),
     };
 
+    const gitApiUrl = 'https://example.com/github-api';
+    const gitToken = 'token';
+    const buildUrl = 'https://example.com/buildurl';
+
+    // Creates a sane wdio service that will upload screenshots. Mangle the service options to test
+    // various scenarios.
+    const createWdioTerraService = (additionalServiceOptions = {}) => new WdioTerraService({}, {}, {
+      serviceOptions: {
+        buildBranch: BUILD_BRANCH.master,
+        buildType: BUILD_TYPE.branchEventCause,
+        buildUrl,
+        gitApiUrl,
+        gitToken,
+        issueNumber: '101',
+        useRemoteReferenceScreenshots: true,
+        ...additionalServiceOptions,
+      },
+    });
+
     describe('OctokitRequestFailureError', () => {
       it('is a SevereServiceError with stringified, formatted error object', () => {
         expect(() => {
@@ -197,188 +216,232 @@ describe('WDIO Terra Service', () => {
       });
     });
 
-    it('should upload screenshots in onComplete', async () => {
-      const localConfig = {
-        serviceOptions: {
-          selector: 'mock-selector',
-          useRemoteReferenceScreenshots: true,
-          buildBranch: BUILD_BRANCH.master,
-          buildType: BUILD_TYPE.branchEventCause,
-        },
-      };
-      octokitRequest.mockResolvedValueOnce({
-        ...octokitResult,
-        data: {
-          base: {
-            ref: 'the-branch-the-pr-will-merge-into',
-          },
-        },
+    describe('github API calls', () => {
+      describe('createOctokit', () => {
+        it('Creates the octokit using the service options', () => {
+          const service = createWdioTerraService();
+          service.createOctokit();
+          // Note: createOctokit is the mock above, not the service instance's method.
+          expect(createOctokit)
+            .toHaveBeenCalledWith(
+              service.serviceOptions.gitApiUrl,
+              service.serviceOptions.gitToken,
+            );
+        });
+
+        it('Throws a SevereServiceError if gitApiUrl is missing', () => {
+          expect(() => {
+            createWdioTerraService({ gitApiUrl: undefined }).createOctokit();
+          }).toThrowError(new SevereServiceError('config.serviceOptions is missing gitApiUrl'));
+        });
+
+        it('Throws a SevereServiceError if gitToken is missing', () => {
+          expect(() => {
+            createWdioTerraService({ gitToken: undefined }).createOctokit();
+          })
+            .toThrowError(new SevereServiceError('config.serviceOptions is missing gitToken'));
+        });
+
+        it('Throws a SevereServiceError if issueNumber is missing', () => {
+          expect(() => {
+            createWdioTerraService({ issueNumber: undefined }).createOctokit();
+          }).toThrowError(new SevereServiceError('config.serviceOptions is missing issueNumber'));
+        });
       });
-      const service = new WdioTerraService({}, {}, localConfig);
-      await service.onComplete({}, rsConfig);
-      expect(rsConfig.getRemoteScreenshotConfiguration).toHaveBeenCalledWith(rsConfig.screenshotsSites, 'the-branch-the-pr-will-merge-into');
+
+      describe('getPrBaseBranchRef', () => {
+        it('returns the ref as a string', async () => {
+          octokitRequest.mockResolvedValue({
+            ...octokitResult,
+            data: {
+              base: {
+                ref: 'the-base-branch',
+              },
+            },
+          });
+          await expect(createWdioTerraService().getPrBaseBranchRef())
+            .resolves
+            .toBe('the-base-branch');
+          expect(octokitRequest).toHaveBeenCalledTimes(1);
+        });
+
+        it('throws a SevereServiceError if the octokit request fails', async () => {
+          octokitRequest.mockRejectedValue(octokitError);
+          await expect(createWdioTerraService().getPrBaseBranchRef())
+            .rejects
+            .toThrowError(new OctokitRequestFailureError(octokitError));
+          expect(octokitRequest).toHaveBeenCalledTimes(1);
+        });
+
+        it('throws a SevereServiceError if parsing the response fails', async () => {
+          octokitRequest.mockResolvedValue({
+            ...octokitResult,
+            data: 'will cause a problem when parsed',
+          });
+          await expect(createWdioTerraService().getPrBaseBranchRef())
+            .rejects
+            .toThrowError(SevereServiceError);
+          expect(octokitRequest).toHaveBeenCalledTimes(1);
+        });
+      });
+
+      describe('getIssueComments', () => {
+        it('returns the list of comment bodies', async () => {
+          octokitRequest.mockResolvedValue({
+            ...octokitResult,
+            data: [{ body: 'comment 1' }, { body: 'comment 2' }],
+          });
+          await expect(createWdioTerraService().getIssueComments())
+            .resolves
+            .toStrictEqual(['comment 1', 'comment 2']);
+          expect(octokitRequest).toHaveBeenCalledTimes(1);
+        });
+
+        it('throws a SevereServiceError if the octokit request fails', async () => {
+          octokitRequest.mockRejectedValue(octokitError);
+          await expect(createWdioTerraService().getIssueComments())
+            .rejects
+            .toThrowError(new OctokitRequestFailureError(octokitError));
+          expect(octokitRequest).toHaveBeenCalledTimes(1);
+        });
+
+        it('throws a SevereServiceError if parsing the response fails', async () => {
+          octokitRequest.mockResolvedValue({
+            ...octokitResult,
+            data: 'will cause a problem when parsed',
+          });
+          await expect(createWdioTerraService().getIssueComments())
+            .rejects
+            .toThrowError(SevereServiceError);
+          expect(octokitRequest).toHaveBeenCalledTimes(1);
+        });
+      });
+
+      describe('postIssueComment', () => {
+        it('posts', async () => {
+          octokitRequest.mockResolvedValue(octokitResult);
+          await expect(createWdioTerraService().postIssueComment('comment 1'))
+            .resolves
+            .toStrictEqual(octokitResult);
+          expect(octokitRequest).toHaveBeenCalledTimes(1);
+        });
+
+        it('throws a SevereServiceError if the octokit request fails', async () => {
+          octokitRequest.mockRejectedValue(octokitError);
+          await expect(createWdioTerraService().postIssueComment('comment 1'))
+            .rejects
+            .toThrowError(new OctokitRequestFailureError(octokitError));
+          expect(octokitRequest).toHaveBeenCalledTimes(1);
+        });
+      });
     });
 
-    it('should not upload screenshots in onComplete if buildBranch is a pullRequest', async () => {
-      const localConfig = {
-        serviceOptions: {
-          selector: 'mock-selector',
-          useRemoteReferenceScreenshots: true,
-          buildBranch: 'pr-31',
-          buildType: BUILD_TYPE.branchEventCause,
-        },
-      };
-      const service = new WdioTerraService({}, {}, localConfig);
-      await service.onComplete({}, rsConfig);
-      expect(rsConfig.getRemoteScreenshotConfiguration).not.toHaveBeenCalled();
+    describe('uploading screenshots', () => {
+      const screenshotRequestorUpload = jest.fn();
+      const screenshotRequestorDownload = jest.fn();
+      ScreenshotRequestor.mockImplementation(() => ({
+        upload: screenshotRequestorUpload,
+        download: screenshotRequestorDownload,
+      }));
+
+      describe('onPrepare', () => {
+        it('should download the PR\'s base branch screenshots', async () => {
+          const service = createWdioTerraService();
+          service.getPrBaseBranchRef = jest.fn().mockResolvedValue('the-branch-the-pr-will-merge-into');
+          await service.onPrepare(rsConfig);
+          expect(screenshotRequestorDownload).toHaveBeenCalled();
+        });
+
+        it('should stop the runner if getting the base branch name fails', async () => {
+          const service = createWdioTerraService();
+          service.getPrBaseBranchRef = jest.fn(() => { throw new SevereServiceError('oh no!'); });
+
+          await expect(service.onPrepare(rsConfig))
+            .rejects
+            .toThrowError(new SevereServiceError('oh no!'));
+        });
+      });
+
+      describe('onComplete', () => {
+        it('should upload screenshots', async () => {
+          const service = createWdioTerraService();
+          service.getPrBaseBranchRef = jest.fn().mockResolvedValue('the-branch-the-pr-will-merge-into');
+          await service.onComplete({}, rsConfig);
+          expect(screenshotRequestorUpload).toHaveBeenCalled();
+        });
+
+        it('should not upload screenshots if buildBranch is a pullRequest', async () => {
+          await createWdioTerraService({
+            buildBranch: 'pr-31',
+          }).onComplete({}, rsConfig);
+          expect(screenshotRequestorUpload).not.toHaveBeenCalled();
+        });
+
+        it('should not upload screenshots if buildType is not BranchEventCause', async () => {
+          await createWdioTerraService({
+            buildType: undefined,
+          }).onComplete({}, rsConfig);
+          expect(screenshotRequestorUpload).not.toHaveBeenCalled();
+        });
+      });
     });
 
-    it('should not upload screenshots in onComplete if buildType is not BranchEventCause', async () => {
-      const localConfig = {
-        serviceOptions: {
-          selector: 'mock-selector',
-          useRemoteReferenceScreenshots: true,
-          buildBranch: BUILD_BRANCH.master,
-          buildType: undefined,
-        },
-      };
-      const service = new WdioTerraService({}, {}, localConfig);
-      await service.onComplete({}, rsConfig);
-      expect(rsConfig.getRemoteScreenshotConfiguration).not.toHaveBeenCalled();
-    });
-
-    describe('github comment onComplete', () => {
+    describe('commenting once on a pr if there is a mismatch during onComplete', () => {
       const OLD_ENV = process.env;
+      const createWdioTerraServiceForCommenting = () => createWdioTerraService({
+        buildBranch: 'pr-31',
+      });
 
       beforeEach(() => {
         jest.resetModules(); // Most important - it clears the cache
         process.env = { ...OLD_ENV }; // Make a copy
+        process.env.SCREENSHOT_MISMATCH_CHECK = true;
       });
 
       afterAll(() => {
         process.env = OLD_ENV; // Restore old environment
       });
 
-      it('should post to github', async () => {
-        process.env.SCREENSHOT_MISMATCH_CHECK = true;
-        const localConfig = {
-          serviceOptions: {
-            selector: 'mock-selector',
-            useRemoteReferenceScreenshots: true,
-            buildBranch: 'pr-31',
-            buildType: BUILD_TYPE.branchEventCause,
-            buildUrl: 'buildurl',
-            gitToken: 'token',
-            gitApiUrl: 'gitapiurl',
-            issueNumber: '101',
-          },
-        };
-
-        const service = new WdioTerraService({}, {}, localConfig);
-
-        octokitRequest.mockResolvedValueOnce({
-          ...octokitResult,
-          data: [],
-        }).mockResolvedValueOnce(octokitResult);
+      it('should post to github when the comment does not exist on the PR', async () => {
+        const service = createWdioTerraServiceForCommenting();
+        service.getIssueComments = jest.fn().mockResolvedValue(['comment 1']);
+        service.postIssueComment = jest.fn().mockResolvedValue();
 
         await service.onComplete({}, rsConfig);
-        expect(octokitRequest.mock.calls.length).toBe(2);
-        expect(rsConfig.getRemoteScreenshotConfiguration).not.toHaveBeenCalled();
+        expect(service.postIssueComment).toHaveBeenCalled();
       });
 
-      it('should not post to github if comment already exists', async () => {
-        process.env.SCREENSHOT_MISMATCH_CHECK = true;
-        const localConfig = {
-          serviceOptions: {
-            selector: 'mock-selector',
-            useRemoteReferenceScreenshots: true,
-            buildBranch: 'pr-31',
-            buildType: BUILD_TYPE.branchEventCause,
-            buildUrl: 'buildurl',
-            gitToken: 'token',
-            gitApiUrl: 'gitapiurl',
-            issueNumber: '101',
-          },
-        };
+      it('should not post to github if comment already exists on the PR', async () => {
+        const service = createWdioTerraServiceForCommenting();
+        service.createMismatchWarningMessage = jest.fn(() => 'look out, a mismatch!');
+        service.getIssueComments = jest.fn().mockResolvedValue('look out, a mismatch!');
+        service.postIssueComment = jest.fn().mockResolvedValue();
 
-        const msg = [
-          ':warning: :bangbang: **WDIO MISMATCH** \n\n',
-          `Check that screenshot change is intended at: ${localConfig.serviceOptions.buildUrl} \n\n`,
-          'If screenshot change is intended, remote reference screenshots will be updated upon PR merge. \n',
-          'If screenshot change is unintended, please fix screenshot issues before PR merge to prevent them from being uploaded. \n\n',
-          'Note: This comment only appears the first time a screenshot mismatch is detected on a PR build, ',
-          'future builds will need to be checked for unintended screenshot mismatchs.',
-        ].join('');
-
-        octokitRequest.mockResolvedValue({
-          ...octokitResult,
-          data: [{ body: msg }],
-        });
-        const service = new WdioTerraService({}, {}, localConfig);
         await service.onComplete({}, rsConfig);
-        expect(octokitRequest.mock.calls.length).toBe(1);
-        expect(rsConfig.getRemoteScreenshotConfiguration).not.toHaveBeenCalledWith();
+        expect(service.getIssueComments).toHaveBeenCalled();
+        expect(service.postIssueComment).not.toHaveBeenCalled();
       });
 
-      it('should throw an error if posting comment returned non-200 status code', async () => {
-        process.env.SCREENSHOT_MISMATCH_CHECK = true;
-        const localConfig = {
-          serviceOptions: {
-            selector: 'mock-selector',
-            useRemoteReferenceScreenshots: true,
-            buildBranch: 'pr-31',
-            buildType: BUILD_TYPE.branchEventCause,
-            buildUrl: 'buildurl',
-            gitToken: 'token',
-            gitApiUrl: 'gitapiurl',
-            issueNumber: '101',
-          },
-        };
+      it('should stop the runner without posting if getting the comments fails', async () => {
+        const service = createWdioTerraServiceForCommenting();
+        service.getIssueComments = jest.fn(() => { throw new SevereServiceError('oh no!'); });
+        service.postIssueComment = jest.fn().mockResolvedValue();
 
-        // Getting the comment succedes, but posting fails.
-        octokitRequest.mockResolvedValueOnce({
-          data: [],
-        }).mockRejectedValueOnce(octokitError);
-        const service = new WdioTerraService({}, {}, localConfig);
-
-        await expect(service.onComplete({}, {})).rejects.toThrowError(new OctokitRequestFailureError(octokitError));
-        expect(octokitRequest.mock.calls.length).toBe(2);
+        await expect(service.onComplete({}, {}))
+          .rejects
+          .toThrowError(new SevereServiceError('oh no!'));
+        expect(service.getIssueComments).toHaveBeenCalled();
+        expect(service.postIssueComment).not.toHaveBeenCalled();
       });
 
-      it('should throw an error, if gitToken is not defined', async () => {
-        process.env.SCREENSHOT_MISMATCH_CHECK = true;
-        const localConfig = {
-          serviceOptions: {
-            selector: 'mock-selector',
-            useRemoteReferenceScreenshots: true,
-            buildBranch: 'pr-31',
-            buildType: BUILD_TYPE.branchEventCause,
-            buildUrl: 'buildurl',
-            gitApiUrl: 'gitapiurl',
-            issueNumber: '101',
-          },
-        };
+      it('should stop the runner if posting the comment fails', async () => {
+        const service = createWdioTerraServiceForCommenting();
+        service.getIssueComments = jest.fn().mockResolvedValue(['comment 1']);
+        service.postIssueComment = jest.fn(() => { throw new SevereServiceError('oh no!'); });
 
-        const service = new WdioTerraService({}, {}, localConfig);
-        await expect(service.onComplete({}, {})).rejects.toThrow(SevereServiceError);
-      });
-
-      it('should throw an error, if gitApiUrl is not defined', async () => {
-        process.env.SCREENSHOT_MISMATCH_CHECK = true;
-        const localConfig = {
-          serviceOptions: {
-            selector: 'mock-selector',
-            useRemoteReferenceScreenshots: true,
-            buildBranch: 'pr-31',
-            buildType: BUILD_TYPE.branchEventCause,
-            buildUrl: 'buildurl',
-            gitToken: 'token',
-            issueNumber: '101',
-          },
-        };
-
-        const service = new WdioTerraService({}, {}, localConfig);
-        await expect(service.onComplete({}, {})).rejects.toThrow(SevereServiceError);
+        await expect(service.onComplete({}, {}))
+          .rejects
+          .toThrowError(new SevereServiceError('oh no!'));
       });
     });
   });

@@ -48,9 +48,28 @@ class TerraService {
       ...serviceOptions,
     };
 
+    // Assumptions: package.json will always be there, and always have a valid repo URL.
     const packageJson = fs.readJsonSync(path.join(process.cwd(), 'package.json'));
     const repoUrl = new URL(packageJson.repository.url);
     [this.repoName, this.repoOwner] = repoUrl.pathname.match(/[^/]+/g);
+  }
+
+  /**
+   * @returns {string} The warning message for this build.
+   * @throws SevereServiceError if the service options are not set correctly.
+   */
+  createMismatchWarningMessage() {
+    if (!this.serviceOptions.buildUrl) {
+      throw new SevereServiceError('config.serviceOptions is missing buildUrl');
+    }
+    return [
+      ':warning: :bangbang: **WDIO MISMATCH** \n\n',
+      `Check that screenshot change is intended at: ${this.serviceOptions.buildUrl} \n\n`,
+      'If screenshot change is intended, remote reference screenshots will be updated upon PR merge. \n',
+      'If screenshot change is unintended, please fix screenshot issues before PR merge to prevent them from being uploaded. \n\n',
+      'Note: This comment only appears the first time a screenshot mismatch is detected on a PR build, ',
+      'future builds will need to be checked for unintended screenshot mismatchs.',
+    ].join('');
   }
 
   /**
@@ -63,10 +82,13 @@ class TerraService {
       return;
     }
 
+    const prBaseBranch = await this.getPrBaseBranchRef();
     if (!config.getRemoteScreenshotConfiguration) {
       throw new SevereServiceError('config is missing getRemoteScreenshotConfiguration');
     }
-    const prBaseBranch = await this.getPrBaseBranchRef();
+    if (!config.screenshotsSites) {
+      throw new SevereServiceError('config is missing screenshotsSites');
+    }
     const screenshotConfig = config.getRemoteScreenshotConfiguration(config.screenshotsSites, prBaseBranch);
     const screenshotRequestor = new ScreenshotRequestor(screenshotConfig.publishScreenshotConfiguration);
     try {
@@ -176,19 +198,28 @@ class TerraService {
     if (!this.serviceOptions.gitApiUrl) {
       throw new SevereServiceError('config.serviceOptions is missing gitApiUrl');
     }
+    // All of our calls to the API require an issue number.
+    if (!this.serviceOptions.issueNumber) {
+      throw new SevereServiceError('config.serviceOptions is missing issueNumber');
+    }
     return createOctokit(this.serviceOptions.gitApiUrl, this.serviceOptions.gitToken);
   }
 
   /**
    * Gets the base branch name (aka ref) of this pull(issue).
    * @returns {Promise} A promise of the base branch's ref string.
-   * @throws {OctokitRequestFailureError} If the octokit request fails.
+   * @throws {SevereServiceError} If anything goes wrong.
    */
   getPrBaseBranchRef() {
     return this.createOctokit()
       .request(`GET /repos/${this.repoName}/${this.repoOwner}/pulls/${this.serviceOptions.issueNumber}/`)
       .then(res => res.data.base.ref)
-      .catch(err => { throw new OctokitRequestFailureError(err); });
+      .catch(octokitObjectOrError => {
+        if (octokitObjectOrError instanceof Error) {
+          throw new SevereServiceError(octokitObjectOrError);
+        }
+        throw new OctokitRequestFailureError(octokitObjectOrError);
+      });
   }
 
   /**
@@ -196,11 +227,16 @@ class TerraService {
    * @returns {Promise} A promise of the list of comment bodies of the issue.
    * @throws {OctokitRequestFailureError} If the octokit request fails.
    */
-  getIssueComments() {
+  async getIssueComments() {
     return this.createOctokit()
       .request(`GET /repos/${this.repoName}/${this.repoOwner}/issues/${this.serviceOptions.issueNumber}/comments`)
       .then(res => res.data.map((comment) => comment.body))
-      .catch(err => { throw new OctokitRequestFailureError(err); });
+      .catch(octokitObjectOrError => {
+        if (octokitObjectOrError instanceof Error) {
+          throw new SevereServiceError(octokitObjectOrError);
+        }
+        throw new OctokitRequestFailureError(octokitObjectOrError);
+      });
   }
 
   /**
@@ -214,7 +250,12 @@ class TerraService {
       .request(`POST /repos/${this.repoName}/${this.repoOwner}/issues/${this.serviceOptions.issueNumber}/comments`, {
         body: comment,
       })
-      .catch(err => { throw new OctokitRequestFailureError(err); });
+      .catch(octokitObjectOrError => {
+        if (octokitObjectOrError instanceof Error) {
+          throw new SevereServiceError(octokitObjectOrError);
+        }
+        throw new OctokitRequestFailureError(octokitObjectOrError);
+      });
   }
 
   /**
@@ -226,31 +267,28 @@ class TerraService {
     if (!this.serviceOptions.useRemoteReferenceScreenshots) {
       return;
     }
+
+    // What are we doing here?
+    let remoteScreenshotScenario = 'OTHER';
     if (!this.serviceOptions.buildBranch) {
       throw new SevereServiceError('config.serviceOptions is missing buildBranch');
     }
-
     if (process.env.SCREENSHOT_MISMATCH_CHECK && this.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest)) {
+      remoteScreenshotScenario = 'PR_UPDATE';
+    } else if (!this.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest) && this.serviceOptions.buildType === BUILD_TYPE.branchEventCause) {
+      remoteScreenshotScenario = 'PR_MERGE';
+    }
+
+    if (remoteScreenshotScenario === 'PR_UPDATE') {
       // When a PR is updated, we will one time post a warning mesage to the PR if the screenshots mismatch. This
       // gives the end-user the opportunity to fix the mismatch before the PR is merged. See the else block below
       // for what happens when the PR is merged.
-      if (!this.serviceOptions.buildUrl) {
-        throw new SevereServiceError('config.serviceOptions is missing buildUrl');
-      }
-
-      const message = [
-        ':warning: :bangbang: **WDIO MISMATCH** \n\n',
-        `Check that screenshot change is intended at: ${this.serviceOptions.buildUrl} \n\n`,
-        'If screenshot change is intended, remote reference screenshots will be updated upon PR merge. \n',
-        'If screenshot change is unintended, please fix screenshot issues before PR merge to prevent them from being uploaded. \n\n',
-        'Note: This comment only appears the first time a screenshot mismatch is detected on a PR build, ',
-        'future builds will need to be checked for unintended screenshot mismatchs.',
-      ].join('');
+      const msg = this.createMismatchWarningMessage();
       const comments = await this.getIssueComments();
-      if (!comments.includes(message)) {
-        await this.postIssueComment(message);
+      if (!comments.includes(msg)) {
+        await this.postIssueComment(msg);
       }
-    } else if (!this.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest) && this.serviceOptions.buildType === BUILD_TYPE.branchEventCause) {
+    } else if (remoteScreenshotScenario === 'PR_MERGE') {
       // Branch event here means the PR has been merged. We will upload the screenshots to the base branch of the PR.
       // The PR's base branch is the merge target of the PR, so if the PR was from my-feature to master, base branch's
       // ref is master.
