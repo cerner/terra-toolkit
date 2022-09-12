@@ -6,7 +6,7 @@
   * Upon merging a PR, the updated screenshots will be posted to the remote site.
 
 * Changed
-  * The github util module was abandoned, unused, and has been replaced with an octokit wrapper meant to limit the auth strategy to use Github personal access tokens, or PATs.
+  * The github util module is replaced with an octokit wrapper to limit the auth strategy to Github PATs ( personal access tokens).
 
 ## 3.2.1 - (August 30, 2022)
 
