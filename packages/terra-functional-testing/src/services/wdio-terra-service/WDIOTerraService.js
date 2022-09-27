@@ -1,12 +1,9 @@
-/* eslint-disable class-methods-use-this */
 const expect = require('expect');
 const fs = require('fs-extra');
 const path = require('path');
-const { URL } = require('url');
-const { Octokit } = require('@octokit/core');
 const { SevereServiceError } = require('webdriverio');
-const { accessibility, element, screenshot } = require('../commands/validates');
-const { toBeAccessible, toMatchReference } = require('../commands/expect');
+const { accessibility, element, screenshot } = require('../../commands/validates');
+const { toBeAccessible, toMatchReference } = require('../../commands/expect');
 const {
   describeTests,
   describeViewports,
@@ -15,10 +12,11 @@ const {
   ScreenshotRequestor,
   setApplicationLocale,
   setViewport,
-} = require('../commands/utils');
-const { BUILD_BRANCH, BUILD_TYPE } = require('../constants');
+} = require('../../commands/utils');
+const { BUILD_BRANCH, BUILD_TYPE } = require('../../constants');
+const GithubIssue = require('./GithubIssue');
 
-class TerraService {
+class WDIOTerraService {
   /**
    * Service constructor.
    * @param {Object} _options - The options specific to this service.
@@ -33,17 +31,19 @@ class TerraService {
       ...launcherOptions,
       ...serviceOptions,
     };
+
+    this.getRemoteScreenshotConfiguration = config.getRemoteScreenshotConfiguration;
+    this.screenshotsSites = config.screenshotsSites;
   }
 
   /**
    * Gets executed once before all workers get launched.
    * Downloads the reference screenshots from the remote repository if useRemoteReferenceScreenshots is true.
-   * @param {Object} config wdio configuration object
    */
-  async onPrepare(config) {
+  async onPrepare() {
     try {
       if (this.serviceOptions.useRemoteReferenceScreenshots) {
-        const screenshotConfig = config.getRemoteScreenshotConfiguration ? config.getRemoteScreenshotConfiguration(config.screenshotsSites, this.serviceOptions.buildBranch) : {};
+        const screenshotConfig = this.getRemoteScreenshotConfiguration ? this.getRemoteScreenshotConfiguration(this.screenshotsSites, this.serviceOptions.buildBranch) : {};
         const screenshotRequestor = new ScreenshotRequestor(screenshotConfig.publishScreenshotConfiguration);
         await screenshotRequestor.download();
       }
@@ -122,6 +122,7 @@ class TerraService {
     setViewport(this.serviceOptions.formFactor || 'huge');
   }
 
+  // eslint-disable-next-line class-methods-use-this
   afterCommand(commandName, _args, _result, error) {
     if ((commandName === 'refresh' || commandName === 'url') && !error) {
       try {
@@ -141,43 +142,93 @@ class TerraService {
   }
 
   /**
-   * Gets executed once before all workers are shut down.
-   * Uploads the reference screenshots to the remote repository if this build was triggered from a PR merge.
-   * @param {Object} config wdio configuration object
+   * Post a warning about screenshot mismatches to a PR, but only once per PR.
+   *
+   * If the comment is already on the PR don't post anything.
    */
-  async onComplete(_, config) {
+  async postMismatchWarningOnce() {
+    const {
+      buildUrl,
+      gitApiUrl,
+      gitToken,
+      issueNumber,
+    } = this.serviceOptions;
+
+    // Do not try to use the URL constructor here. It will fail on urls with
+    // custom protocols like 'git+https://'.
+    const metadata = await fs.readJson(path.join(process.cwd(), 'package.json'));
+    const [, owner, repo] = metadata.repository.url.split('://')[1].split('/');
+    const issue = new GithubIssue(
+      gitApiUrl,
+      gitToken,
+      owner,
+      repo,
+      issueNumber,
+    );
+
+    const warning = [
+      ':warning: :bangbang: **WDIO MISMATCH**\n\n',
+      `Check that screenshot change is intended at: ${buildUrl}\n\n`,
+      'If screenshot change is intended, remote reference screenshots will be updated upon PR merge.\n',
+      'If screenshot change is unintended, please fix screenshot issues before PR merge to prevent them from being uploaded.\n\n',
+      'Note: This comment only appears the first time a screenshot mismatch is detected on a PR build, ',
+      'future builds will need to be checked for unintended screenshot mismatches.',
+    ].join('');
+
+    const comments = await issue.getComments();
+    if (comments.includes(warning)) {
+      return;
+    }
+
+    await issue.postComment(warning);
+  }
+
+  /**
+   * Upload screenshots to a remote repository.
+   */
+  async uploadScreenshots() {
+    const {
+      buildBranch,
+    } = this.serviceOptions;
+
+    const screenshotConfig = this.getRemoteScreenshotConfiguration(this.screenshotsSites, buildBranch);
+    const screenshotRequestor = new ScreenshotRequestor(screenshotConfig.publishScreenshotConfiguration);
+
+    await screenshotRequestor.upload();
+  }
+
+  /**
+   * Gets executed once before all workers are shut down.
+   * @throws a SevereServiceError(err); to stop the run if anything goes wrong.
+   */
+  async onComplete() {
+    const {
+      buildBranch,
+      buildType,
+      useRemoteReferenceScreenshots,
+    } = this.serviceOptions;
+
+    if (!useRemoteReferenceScreenshots) {
+      return;
+    }
+
     try {
-      if (this.serviceOptions.useRemoteReferenceScreenshots && process.env.SCREENSHOT_MISMATCH_CHECK && this.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest)) {
-        if (!this.serviceOptions.gitToken || !this.serviceOptions.gitApiUrl) {
-          throw new Error('No git token recieved');
-        }
-
-        const packageJson = fs.readJsonSync(path.join(process.cwd(), 'package.json'));
-        const repoUrl = new URL(packageJson.repository.url);
-        const repoName = repoUrl.pathname.match(/[^/]+/g);
-        const octokit = new Octokit({ baseUrl: `${this.serviceOptions.gitApiUrl}`, auth: `${this.serviceOptions.gitToken}` });
-        const message = `:warning: :bangbang: **WDIO MISMATCH** \n\nCheck that screenshot change is intended at: ${this.serviceOptions.buildUrl} \n\nIf screenshot change is intended, remote reference screenshots will be updated upon PR merge. \nIf screenshot change is unintended, please fix screenshot issues before PR merge to prevent them from being uploaded. \n\nNote: This comment only appears the first time a screenshot mismatch is detected on a PR build, future builds will need to be checked for unintended screenshot mismatchs.`;
-
-        const commentsResult = await octokit.request(`GET /repos/${repoName[0]}/${repoName[1]}/issues/${this.serviceOptions.issueNumber}/comments`);
-        const existingComment = commentsResult.data.find((comment) => comment.body === message);
-
-        if (!existingComment) {
-          const postCommentResult = await octokit.request(`POST /repos/${repoName[0]}/${repoName[1]}/issues/${this.serviceOptions.issueNumber}/comments`, {
-            body: message,
-          });
-          if (postCommentResult.status !== 200) {
-            throw Error(`Error posting issue comment. Status code: ${postCommentResult.status}`);
-          }
-        }
-      } else if (this.serviceOptions.useRemoteReferenceScreenshots && !this.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest) && this.serviceOptions.buildType === BUILD_TYPE.branchEventCause) {
-        const screenshotConfig = config.getRemoteScreenshotConfiguration ? config.getRemoteScreenshotConfiguration(config.screenshotsSites, this.serviceOptions.buildBranch) : {};
-        const screenshotRequestor = new ScreenshotRequestor(screenshotConfig.publishScreenshotConfiguration);
-        await screenshotRequestor.upload();
+      if (process.env.SCREENSHOT_MISMATCH_CHECK === 'true' && buildBranch.match(BUILD_BRANCH.pullRequest)) {
+        await this.postMismatchWarningOnce();
+      } else if (!buildBranch.match(BUILD_BRANCH.pullRequest) && buildType === BUILD_TYPE.branchEventCause) {
+        await this.uploadScreenshots();
       }
-    } catch (error) {
-      throw new SevereServiceError(error);
+    } catch (err) {
+      if (err instanceof SevereServiceError) {
+        throw err;
+      }
+      if (err instanceof Error) {
+        throw new SevereServiceError(err);
+      }
+
+      throw new SevereServiceError(JSON.stringify(err, null, 4));
     }
   }
 }
 
-module.exports = TerraService;
+module.exports = WDIOTerraService;
