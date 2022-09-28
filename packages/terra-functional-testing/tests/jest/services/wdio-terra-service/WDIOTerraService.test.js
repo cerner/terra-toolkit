@@ -9,24 +9,41 @@ const { BUILD_TYPE } = require('../../../../src/constants/index');
 
 jest.mock('../../../../src/commands/utils');
 jest.mock('fs-extra');
+const repoOwner = 'acme';
+const repoName = 'a-repo';
 fs.readJson.mockResolvedValue({
   repository: {
-    url: 'git+https://github.com/cerner/repo-url',
+    url: `git+https://github.com/${repoOwner}/${repoName}`,
   },
 });
 
 describe('WDIO Terra Service', () => {
-  describe('The global Terra object', () => {
-    const capabilities = { browserName: 'chrome' };
-    const element = {
-      waitForExist: jest.fn(),
-    };
-    const mockFindElement = jest.fn().mockImplementation(() => element);
-    const config = {
-      serviceOptions: {
-        formFactor: 'huge',
-      },
-    };
+  describe('getRepoMetadata', () => {
+    it('returns a metadata object from the parsed package.json file', async () => {
+      const metadata = await WDIOTerraService.getRepoMetadata();
+      expect(metadata.owner).toBe(repoOwner);
+      expect(metadata.name).toBe(repoName);
+    });
+  });
+
+  describe('before hook', () => {
+    let capabilities;
+    let config;
+    let element;
+    let mockFindElement;
+
+    beforeAll(() => {
+      capabilities = { browserName: 'chrome' };
+      element = {
+        waitForExist: jest.fn(),
+      };
+      mockFindElement = jest.fn().mockImplementation(() => element);
+      config = {
+        serviceOptions: {
+          formFactor: 'huge',
+        },
+      };
+    });
 
     beforeEach(() => {
       global.Terra = {};
@@ -46,7 +63,7 @@ describe('WDIO Terra Service', () => {
       global.browser = undefined;
     });
 
-    it('should be defined in the before hook', () => {
+    it('Defines the Terra global object', () => {
       const service = new WDIOTerraService({}, {}, config);
       service.before(capabilities);
 
@@ -58,7 +75,7 @@ describe('WDIO Terra Service', () => {
       expect(setViewport).toHaveBeenCalledWith(service.serviceOptions.formFactor);
     });
 
-    it('should setup the global terra axe configuration', () => {
+    it('Defines the Terra.axe object', () => {
       const service = new WDIOTerraService({}, {}, config);
       service.before(capabilities);
 
@@ -70,7 +87,7 @@ describe('WDIO Terra Service', () => {
       expect(global.Terra.axe).toEqual({ rules });
     });
 
-    it('should disable the axe color contrast rule for lowlight theme', () => {
+    it('Disables the axe color contrast rule for lowlight theme', () => {
       const service = new WDIOTerraService({}, {}, {
         launcherOptions: {
           theme: 'clinical-lowlight-theme',
@@ -86,14 +103,14 @@ describe('WDIO Terra Service', () => {
       });
     });
 
-    it('should wait for browser interaction for IE', () => {
+    it('Waits for browser interaction for IE', () => {
       const service = new WDIOTerraService();
       service.before({ browserName: 'internet explorer' });
 
       expect(mockFindElement).toHaveBeenCalledWith('body');
     });
 
-    it('should hide input caret after command', () => {
+    it('Hides the input caret after command', () => {
       const service = new WDIOTerraService();
       service.before(capabilities);
       const mockHideInputCaret = jest.fn();
@@ -104,7 +121,7 @@ describe('WDIO Terra Service', () => {
       expect(mockFindElement).toHaveBeenCalledWith('[data-terra-test-loading]');
     });
 
-    it('should define commands in beforeSession with no serviceOptions', () => {
+    it('Defines commands in beforeSession with no serviceOptions', () => {
       const service = new WDIOTerraService();
       const expectedServiceOptions = {
         selector: '[data-terra-test-content] *:first-child',
@@ -116,7 +133,7 @@ describe('WDIO Terra Service', () => {
       expect(global.Terra.serviceOptions).toEqual(expectedServiceOptions);
     });
 
-    it('should set service options with empty config', () => {
+    it('Sets service options with empty config', () => {
       const service = new WDIOTerraService();
       const expectedServiceOptions = {
         selector: '[data-terra-test-content] *:first-child',
@@ -125,7 +142,7 @@ describe('WDIO Terra Service', () => {
       expect(service.serviceOptions).toEqual(expectedServiceOptions);
     });
 
-    it('should set service options with populated config', () => {
+    it('Sets service options with populated config', () => {
       const service = new WDIOTerraService({}, {}, config);
       const expectedServiceOptions = {
         formFactor: 'huge',
@@ -134,313 +151,263 @@ describe('WDIO Terra Service', () => {
 
       expect(service.serviceOptions).toEqual(expectedServiceOptions);
     });
+  });
 
-    it('should define all commands', () => {
+  describe('beforeSession hook', () => {
+    const config = {
+      serviceOptions: {
+        formFactor: 'huge',
+      },
+    };
+
+    it('Defines all commands', () => {
       const service = new WDIOTerraService({}, {}, config);
       service.beforeSession();
-      service.before(capabilities);
 
       expect(setViewport).toBeCalled();
       expect(global.Terra.viewports).toBeDefined();
       expect(global.Terra.describeViewports).toBeDefined();
-      expect(global.Terra.hideInputCaret).toBeDefined();
+      expect(setViewport).toHaveBeenCalledWith(service.serviceOptions.formFactor);
     });
   });
 
-  describe('remote screenshots', () => {
-    describe('Downloading screenshots from a remote repo onPrepare', () => {
-      let config;
+  describe('onPrepare hook', () => {
+    let config;
+    let download;
+    let getRemoteScreenshotConfiguration;
 
-      const download = jest.spyOn(ScreenshotRequestor.prototype, 'download');
-      const getRemoteScreenshotConfiguration = jest.fn(() => ({
+    beforeAll(() => {
+      download = jest.spyOn(ScreenshotRequestor.prototype, 'download');
+      getRemoteScreenshotConfiguration = jest.fn(() => ({
         publishScreenshotConfiguration: jest.fn(),
       }));
+      jest.spyOn(GithubPr.prototype, 'getBaseBranchRef')
+        .mockResolvedValue('the-base-branch');
+    });
+
+    beforeEach(() => {
+      // Happy path config.
+      config = {
+        getRemoteScreenshotConfiguration,
+        screenshotsSites: 'screenshot sites object',
+        serviceOptions: {
+          useRemoteReferenceScreenshots: true,
+          buildBranch: 'not-a-pull-request',
+          buildType: BUILD_TYPE.branchEventCause,
+        },
+      };
+    });
+
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
+    afterAll(() => {
+      jest.restoreAllMocks();
+    });
+
+    it('Downloads screenshots.', async () => {
+      const service = new WDIOTerraService({}, {}, config);
+      await service.onPrepare();
+      expect(download).toHaveBeenCalled();
+
+      expect(getRemoteScreenshotConfiguration).toHaveBeenCalledWith('screenshot sites object', 'the-base-branch');
+    });
+
+    it('Does not download if not using remote screenshots.', async () => {
+      config.serviceOptions.useRemoteReferenceScreenshots = false;
+      const service = new WDIOTerraService({}, {}, config);
+      await service.onPrepare();
+      expect(download).not.toHaveBeenCalled();
+    });
+
+    it('Stops the service if something goes wrong while downloading', async () => {
+      download.mockRejectedValue('oh no!');
+      const service = new WDIOTerraService({}, {}, config);
+      await expect(service.onPrepare()).rejects.toThrow(SevereServiceError);
+      expect(download).toHaveBeenCalled();
+    });
+  });
+
+  describe('onComplete hook', () => {
+    let config;
+    let getRemoteScreenshotConfiguration;
+
+    beforeAll(() => {
+      jest.spyOn(GithubPr.prototype, 'getBaseBranchRef')
+        .mockResolvedValue('the-base-branch');
+
+      getRemoteScreenshotConfiguration = jest.fn(() => ({
+        publishScreenshotConfiguration: jest.fn(),
+      }));
+    });
+
+    beforeEach(() => {
+      config = {
+        getRemoteScreenshotConfiguration,
+        screenshotsSites: 'screenshot sites object',
+      };
+    });
+
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
+    afterAll(() => {
+      jest.restoreAllMocks();
+    });
+
+    describe('Posting a mismatch warning comment to the github issue', () => {
+      let postComment;
+      let getComments;
+      let buildUrl;
+      let warningMessage;
+
+      beforeAll(() => {
+        postComment = jest.spyOn(GithubIssue.prototype, 'postComment');
+        getComments = jest.spyOn(GithubIssue.prototype, 'getComments');
+        buildUrl = 'https://example.com/buildUrl';
+        warningMessage = [
+          ':warning: :bangbang: **WDIO MISMATCH**\n\n',
+          `Check that screenshot change is intended at: ${buildUrl}\n\n`,
+          'If screenshot change is intended, remote reference screenshots will be updated upon PR merge.\n',
+          'If screenshot change is unintended, please fix screenshot issues before PR merge to prevent them from being uploaded.\n\n',
+          'Note: This comment only appears the first time a screenshot mismatch is detected on a PR build, ',
+          'future builds will need to be checked for unintended screenshot mismatches.',
+        ].join('');
+      });
 
       beforeEach(() => {
-        config = {
-          getRemoteScreenshotConfiguration,
-          screenshotsSites: 'screenshot sites object',
+        // Happy path environs and config.
+        process.env.SCREENSHOT_MISMATCH_CHECK = true;
+        config.serviceOptions = {
+          useRemoteReferenceScreenshots: true,
+          buildBranch: 'pr-123',
+          buildUrl,
         };
       });
 
-      afterEach(() => {
+      afterAll(() => {
         process.env.SCREENSHOT_MISMATCH_CHECK = undefined;
-        jest.clearAllMocks();
       });
 
-      it('Downloads screenshots.', async () => {
-        config.serviceOptions = {
-          ...config.serviceOptions,
-          useRemoteReferenceScreenshots: true,
-          buildBranch: 'not-a-pull-request',
-          buildType: BUILD_TYPE.branchEventCause,
-        };
+      it('Posts a comment', async () => {
+        getComments.mockResolvedValue(['not the warning message']);
+        postComment.mockResolvedValue();
         const service = new WDIOTerraService({}, {}, config);
-        await service.onPrepare();
-        expect(download).toHaveBeenCalled();
-        expect(getRemoteScreenshotConfiguration).toHaveBeenCalledWith('screenshot sites object', 'the-base-branch');
+        await service.onComplete();
+        expect(postComment).toHaveBeenCalledWith(warningMessage);
       });
 
-      it('Does not download if not using remote screenshots.', async () => {
-        config.serviceOptions = {
-          ...config.serviceOptions,
-          // Changed from happy path.
-          useRemoteReferenceScreenshots: false,
-          buildBranch: 'not-a-pull-request',
-          buildType: BUILD_TYPE.branchEventCause,
-        };
-
+      it('Does not try to post if we are not checking for screenshot mismatches', async () => {
+        process.env.SCREENSHOT_MISMATCH_CHECK = undefined;
+        getComments.mockResolvedValue(['not the warning message']);
+        postComment.mockResolvedValue();
         const service = new WDIOTerraService({}, {}, config);
-        await service.onPrepare();
-        expect(download).not.toHaveBeenCalled();
+        await service.onComplete();
+        expect(postComment).not.toHaveBeenCalled();
       });
 
-      it('Stops the service if something goes wrong while downloading', async () => {
-        config.serviceOptions = {
-          ...config.serviceOptions,
-          useRemoteReferenceScreenshots: true,
-          buildBranch: 'not-a-pull-request',
-          buildType: BUILD_TYPE.branchEventCause,
-        };
-        download.mockRejectedValue('oh no!');
-
+      it('Does not try to post we are not using remote screenshots', async () => {
+        config.serviceOptions.useRemoteReferenceScreenshots = false;
+        getComments.mockResolvedValue(['not the warning message']);
+        postComment.mockResolvedValue();
         const service = new WDIOTerraService({}, {}, config);
-        await expect(service.onPrepare()).rejects.toThrow(SevereServiceError);
-        expect(download).toHaveBeenCalled();
+        await service.onComplete();
+        expect(postComment).not.toHaveBeenCalled();
+      });
+
+      it('Does not try to post if the branch does not match the PR pattern', async () => {
+        config.serviceOptions.buildBranch = 'not-a-pr';
+        getComments.mockResolvedValue(['not the warning message']);
+        postComment.mockResolvedValue();
+        const service = new WDIOTerraService({}, {}, config);
+        await service.onComplete();
+        expect(postComment).not.toHaveBeenCalled();
+      });
+
+      it('Does not post if the comment is found on the issue', async () => {
+        getComments.mockResolvedValue([warningMessage]);
+        postComment.mockResolvedValue();
+        const service = new WDIOTerraService({}, {}, config);
+        await service.onComplete();
+        expect(getComments).toHaveBeenCalled();
+        expect(postComment).not.toHaveBeenCalled();
+      });
+
+      it('Stops the service without posting if it fails to get the issue comments', async () => {
+        getComments.mockRejectedValue('oh no!');
+        const service = new WDIOTerraService({}, {}, config);
+        await expect(service.onComplete()).rejects.toThrow(SevereServiceError);
+        expect(getComments).toHaveBeenCalled();
+        expect(postComment).not.toHaveBeenCalled();
+      });
+
+      it('Stops the service if it fails to post the comment', async () => {
+        getComments.mockResolvedValue(['not the warning message']);
+        postComment.mockRejectedValue('oh no!');
+        const service = new WDIOTerraService({}, {}, config);
+        await expect(service.onComplete()).rejects.toThrow(SevereServiceError);
+        expect(postComment).toHaveBeenCalled();
       });
     });
 
-    describe('onComplete', () => {
-      let config;
-      jest.spyOn(WDIOTerraService, 'getRepoMetadata')
-        .mockResolvedValue({
-          owner: 'me',
-          name: 'my-repo',
-        });
+    describe('Uploading screenshots to a remote repo', () => {
+      let upload;
 
-      const getRemoteScreenshotConfiguration = jest.fn(() => ({
-        publishScreenshotConfiguration: jest.fn(),
-      }));
-
-      const upload = jest.spyOn(ScreenshotRequestor.prototype, 'upload');
-      const postComment = jest.spyOn(GithubIssue.prototype, 'postComment');
-      const getComments = jest.spyOn(GithubIssue.prototype, 'getComments');
-      jest.spyOn(GithubPr.prototype, 'getBaseBranchRef')
-        .mockResolvedValue('the-base-branch');
-      const buildUrl = 'https://example.com/buildUrl';
-      const warningMessage = [
-        ':warning: :bangbang: **WDIO MISMATCH**\n\n',
-        `Check that screenshot change is intended at: ${buildUrl}\n\n`,
-        'If screenshot change is intended, remote reference screenshots will be updated upon PR merge.\n',
-        'If screenshot change is unintended, please fix screenshot issues before PR merge to prevent them from being uploaded.\n\n',
-        'Note: This comment only appears the first time a screenshot mismatch is detected on a PR build, ',
-        'future builds will need to be checked for unintended screenshot mismatches.',
-      ].join('');
+      beforeAll(() => {
+        upload = jest.spyOn(ScreenshotRequestor.prototype, 'upload');
+      });
 
       beforeEach(() => {
-        config = {
-          getRemoteScreenshotConfiguration,
-          screenshotsSites: 'screenshot sites object',
-          serviceOptions: {
-            buildUrl,
-          },
+        config.serviceOptions = {
+          useRemoteReferenceScreenshots: true,
+          buildBranch: 'not-a-pull-request',
+          buildType: BUILD_TYPE.branchEventCause,
         };
       });
 
       afterEach(() => {
-        process.env.SCREENSHOT_MISMATCH_CHECK = undefined;
         jest.clearAllMocks();
       });
 
-      describe('Posting a mismatch warning comment to the github issue', () => {
-        it('Posts a comment', async () => {
-          process.env.SCREENSHOT_MISMATCH_CHECK = 'true';
-          config.serviceOptions = {
-            ...config.serviceOptions,
-            useRemoteReferenceScreenshots: true,
-            buildBranch: 'pr-123',
-          };
-
-          getComments.mockResolvedValue(['not the warning message']);
-          postComment.mockResolvedValue();
-
-          const service = new WDIOTerraService({}, {}, config);
-          await service.onComplete();
-          expect(postComment).toHaveBeenCalledWith(warningMessage);
-        });
-
-        it('Does not try to post if we are not checking for screenshot mismatches', async () => {
-          // Changed from happy path.
-          process.env.SCREENSHOT_MISMATCH_CHECK = undefined;
-          config.serviceOptions = {
-            ...config.serviceOptions,
-            useRemoteReferenceScreenshots: true,
-            buildBranch: 'pr-123',
-          };
-
-          getComments.mockResolvedValue(['not the warning message']);
-          postComment.mockResolvedValue();
-
-          const service = new WDIOTerraService({}, {}, config);
-          await service.onComplete();
-          expect(postComment).not.toHaveBeenCalled();
-        });
-
-        it('Does not try to post we are not using remote screenshots', async () => {
-          process.env.SCREENSHOT_MISMATCH_CHECK = 'true';
-          config.serviceOptions = {
-            ...config.serviceOptions,
-            // Changed from happy path.
-            useRemoteReferenceScreenshots: false,
-            buildBranch: 'pr-123',
-          };
-
-          getComments.mockResolvedValue(['not the warning message']);
-          postComment.mockResolvedValue();
-
-          const service = new WDIOTerraService({}, {}, config);
-          await service.onComplete();
-          expect(postComment).not.toHaveBeenCalled();
-        });
-
-        it('Does not try to post if the branch does not match the PR pattern', async () => {
-          process.env.SCREENSHOT_MISMATCH_CHECK = 'true';
-          config.serviceOptions = {
-            ...config.serviceOptions,
-            useRemoteReferenceScreenshots: true,
-            // Changed from happy path.
-            buildBranch: 'not-a-pr',
-          };
-
-          getComments.mockResolvedValue(['not the warning message']);
-          postComment.mockResolvedValue();
-
-          const service = new WDIOTerraService({}, {}, config);
-          await service.onComplete();
-          expect(postComment).not.toHaveBeenCalled();
-        });
-
-        it('Does not post if the comment is found on the issue', async () => {
-          process.env.SCREENSHOT_MISMATCH_CHECK = 'true';
-          config.serviceOptions = {
-            ...config.serviceOptions,
-            useRemoteReferenceScreenshots: true,
-            buildBranch: 'pr-123',
-            buildType: BUILD_TYPE.branchEventCause,
-          };
-
-          getComments.mockResolvedValue([warningMessage]);
-          postComment.mockResolvedValue();
-
-          const service = new WDIOTerraService({}, {}, config);
-          await service.onComplete();
-          expect(getComments).toHaveBeenCalled();
-          expect(postComment).not.toHaveBeenCalled();
-        });
-
-        it('Stops the service without posting if it fails to get the issue comments', async () => {
-          process.env.SCREENSHOT_MISMATCH_CHECK = 'true';
-          config.serviceOptions = {
-            ...config.serviceOptions,
-            useRemoteReferenceScreenshots: true,
-            buildBranch: 'pr-123',
-          };
-
-          getComments.mockRejectedValue('oh no!');
-          const service = new WDIOTerraService({}, {}, config);
-          await expect(service.onComplete()).rejects.toThrow(SevereServiceError);
-          expect(getComments).toHaveBeenCalled();
-          expect(postComment).not.toHaveBeenCalled();
-        });
-
-        it('Stops the service if it fails to post the comment', async () => {
-          process.env.SCREENSHOT_MISMATCH_CHECK = 'true';
-          config.serviceOptions = {
-            ...config.serviceOptions,
-            useRemoteReferenceScreenshots: true,
-            buildBranch: 'pr-123',
-          };
-
-          getComments.mockResolvedValue(['not the warning message']);
-          postComment.mockRejectedValue('oh no!');
-
-          const service = new WDIOTerraService({}, {}, config);
-          await expect(service.onComplete()).rejects.toThrow(SevereServiceError);
-          expect(postComment).toHaveBeenCalled();
-        });
+      afterAll(() => {
+        jest.restoreAllMocks();
       });
 
-      describe('Uploading screenshots to a remote repo', () => {
-        it('Uploads screenshots.', async () => {
-          config.serviceOptions = {
-            ...config.serviceOptions,
-            useRemoteReferenceScreenshots: true,
-            buildBranch: 'not-a-pull-request',
-            buildType: BUILD_TYPE.branchEventCause,
-          };
+      it('Uploads screenshots.', async () => {
+        const service = new WDIOTerraService({}, {}, config);
+        await service.onComplete();
+        expect(upload).toHaveBeenCalled();
+        expect(getRemoteScreenshotConfiguration).toHaveBeenCalledWith('screenshot sites object', 'the-base-branch');
+      });
 
-          const service = new WDIOTerraService({}, {}, config);
+      it('Does not upload if not using remote screenshots.', async () => {
+        config.serviceOptions.useRemoteReferenceScreenshots = false;
+        const service = new WDIOTerraService({}, {}, config);
+        await service.onComplete();
+        expect(upload).not.toHaveBeenCalled();
+      });
 
-          await service.onComplete();
-          expect(upload).toHaveBeenCalled();
-          expect(getRemoteScreenshotConfiguration).toHaveBeenCalledWith('screenshot sites object', 'the-base-branch');
-        });
+      it('Does not upload if the build branch name matches the PR pattern.', async () => {
+        config.serviceOptions.buildBranch = 'pr-123';
+        const service = new WDIOTerraService({}, {}, config);
+        await service.onComplete();
+        expect(upload).not.toHaveBeenCalled();
+      });
 
-        it('Does not upload if not using remote screenshots.', async () => {
-          config.serviceOptions = {
-            ...config.serviceOptions,
-            // Changed from happy path.
-            useRemoteReferenceScreenshots: false,
-            buildBranch: 'not-a-pull-request',
-            buildType: BUILD_TYPE.branchEventCause,
-          };
+      it('Does not upload if the build type is not a branch event.', async () => {
+        config.serviceOptions.buildType = undefined;
+        const service = new WDIOTerraService({}, {}, config);
+        await service.onComplete();
+        expect(upload).not.toHaveBeenCalled();
+      });
 
-          const service = new WDIOTerraService({}, {}, config);
-          await service.onComplete();
-          expect(upload).not.toHaveBeenCalled();
-        });
-
-        it('Does not upload if the build branch name matches the PR pattern.', async () => {
-          config.serviceOptions = {
-            ...config.serviceOptions,
-            useRemoteReferenceScreenshots: true,
-            // Changed from happy path.
-            buildBranch: 'pr-123',
-            buildType: BUILD_TYPE.branchEventCause,
-          };
-
-          const service = new WDIOTerraService({}, {}, config);
-          await service.onComplete();
-          expect(upload).not.toHaveBeenCalled();
-        });
-
-        it('Does not upload if the build type is not a branch event.', async () => {
-          config.serviceOptions = {
-            ...config.serviceOptions,
-            useRemoteReferenceScreenshots: true,
-            buildBranch: 'not-a-pull-request',
-            // Changed from happy path.
-            buildType: undefined,
-          };
-
-          const service = new WDIOTerraService({}, {}, config);
-          await service.onComplete();
-          expect(upload).not.toHaveBeenCalled();
-        });
-
-        it('Stops the service if something goes wrong while uploading', async () => {
-          config.serviceOptions = {
-            ...config.serviceOptions,
-            useRemoteReferenceScreenshots: true,
-            buildBranch: 'not-a-pull-request',
-            buildType: BUILD_TYPE.branchEventCause,
-          };
-          upload.mockRejectedValue('oh no!');
-
-          const service = new WDIOTerraService({}, {}, config);
-          await expect(service.onComplete()).rejects.toThrow(SevereServiceError);
-          expect(upload).toHaveBeenCalled();
-        });
+      it('Stops the service if something goes wrong while uploading', async () => {
+        upload.mockRejectedValue('oh no!');
+        const service = new WDIOTerraService({}, {}, config);
+        await expect(service.onComplete()).rejects.toThrow(SevereServiceError);
+        expect(upload).toHaveBeenCalled();
       });
     });
   });
