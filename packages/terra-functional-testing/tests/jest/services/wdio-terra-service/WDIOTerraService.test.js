@@ -172,6 +172,7 @@ describe('WDIO Terra Service', () => {
   });
 
   describe('onPrepare hook', () => {
+    const baseBranchRef = 'the-base-branch';
     let config;
     let download;
     let getRemoteScreenshotConfiguration;
@@ -182,7 +183,7 @@ describe('WDIO Terra Service', () => {
         publishScreenshotConfiguration: jest.fn(),
       }));
       jest.spyOn(GithubPr.prototype, 'getBaseBranchRef')
-        .mockResolvedValue('the-base-branch');
+        .mockResolvedValue(baseBranchRef);
     });
 
     beforeEach(() => {
@@ -192,7 +193,7 @@ describe('WDIO Terra Service', () => {
         screenshotsSites: 'screenshot sites object',
         serviceOptions: {
           useRemoteReferenceScreenshots: true,
-          buildBranch: 'not-a-pull-request',
+          buildBranch: 'pr-123',
           buildType: BUILD_TYPE.branchEventCause,
         },
       };
@@ -206,12 +207,20 @@ describe('WDIO Terra Service', () => {
       jest.restoreAllMocks();
     });
 
-    it('Downloads screenshots.', async () => {
+    it('Download screenshots for a PR branch from the remote repo of the PR\'s base branch.', async () => {
       const service = new WDIOTerraService({}, {}, config);
       await service.onPrepare();
       expect(download).toHaveBeenCalled();
+      expect(getRemoteScreenshotConfiguration).toHaveBeenCalledWith('screenshot sites object', baseBranchRef);
+    });
 
-      expect(getRemoteScreenshotConfiguration).toHaveBeenCalledWith('screenshot sites object', 'the-base-branch');
+    it('Download screenshots for a non-PR branch from the remote repo of the build branch.', async () => {
+      const buildBranch = 'not-a-pull-request';
+      config.serviceOptions.buildBranch = buildBranch;
+      const service = new WDIOTerraService({}, {}, config);
+      await service.onPrepare();
+      expect(download).toHaveBeenCalled();
+      expect(getRemoteScreenshotConfiguration).toHaveBeenCalledWith('screenshot sites object', buildBranch);
     });
 
     it('Does not download if not using remote screenshots.', async () => {
@@ -234,8 +243,8 @@ describe('WDIO Terra Service', () => {
     let getRemoteScreenshotConfiguration;
 
     beforeAll(() => {
-      jest.spyOn(GithubPr.prototype, 'getBaseBranchRef')
-        .mockResolvedValue('the-base-branch');
+      // jest.spyOn(GithubPr.prototype, 'getBaseBranchRef')
+      //   .mockResolvedValue('the-base-branch');
 
       getRemoteScreenshotConfiguration = jest.fn(() => ({
         publishScreenshotConfiguration: jest.fn(),
@@ -354,6 +363,7 @@ describe('WDIO Terra Service', () => {
 
     describe('Uploading screenshots to a remote repo', () => {
       let upload;
+      const buildBranch = 'not-a-pull-request';
 
       beforeAll(() => {
         upload = jest.spyOn(ScreenshotRequestor.prototype, 'upload');
@@ -362,7 +372,7 @@ describe('WDIO Terra Service', () => {
       beforeEach(() => {
         config.serviceOptions = {
           useRemoteReferenceScreenshots: true,
-          buildBranch: 'not-a-pull-request',
+          buildBranch,
           buildType: BUILD_TYPE.branchEventCause,
         };
       });
@@ -379,7 +389,7 @@ describe('WDIO Terra Service', () => {
         const service = new WDIOTerraService({}, {}, config);
         await service.onComplete();
         expect(upload).toHaveBeenCalled();
-        expect(getRemoteScreenshotConfiguration).toHaveBeenCalledWith('screenshot sites object', 'the-base-branch');
+        expect(getRemoteScreenshotConfiguration).toHaveBeenCalledWith('screenshot sites object', buildBranch);
       });
 
       it('Does not upload if not using remote screenshots.', async () => {

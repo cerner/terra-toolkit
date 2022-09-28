@@ -59,6 +59,7 @@ class WDIOTerraService {
    */
   async onPrepare() {
     const {
+      buildBranch,
       gitApiUrl,
       gitToken,
       issueNumber,
@@ -69,17 +70,25 @@ class WDIOTerraService {
       return;
     }
 
+    let screenshotConfig;
     try {
-      const metadata = await WDIOTerraService.getRepoMetadata();
-      const gp = new GithubPr(
-        gitApiUrl,
-        gitToken,
-        metadata.owner,
-        metadata.repo,
-        issueNumber,
-      );
-      const baseBranch = await gp.getBaseBranchRef();
-      const screenshotConfig = this.getRemoteScreenshotConfiguration ? this.getRemoteScreenshotConfiguration(this.screenshotsSites, baseBranch) : {};
+      if (buildBranch.match(BUILD_BRANCH.pullRequest)) {
+        // When building PR branches the reference screenshots are downloaded from the PR's base branch's remote repo.
+        const metadata = await WDIOTerraService.getRepoMetadata();
+        const gp = new GithubPr(
+          gitApiUrl,
+          gitToken,
+          metadata.owner,
+          metadata.repo,
+          issueNumber,
+        );
+
+        const baseBranch = await gp.getBaseBranchRef();
+        screenshotConfig = this.getRemoteScreenshotConfiguration(this.screenshotsSites, baseBranch);
+      } else {
+        // When building non-PR branches, download reference screenshots from the build branch's remote repo.
+        screenshotConfig = this.getRemoteScreenshotConfiguration(this.screenshotsSites, buildBranch);
+      }
       const screenshotRequestor = new ScreenshotRequestor(screenshotConfig.publishScreenshotConfiguration);
       await screenshotRequestor.download();
     } catch (error) {
@@ -218,24 +227,13 @@ class WDIOTerraService {
   /**
    * Upload screenshots to a remote repository.
    */
-  async uploadScreenshots() {
+  async uploadBuildBranchScreenshots() {
     const {
-      gitApiUrl,
-      gitToken,
-      issueNumber,
+      buildBranch,
     } = this.serviceOptions;
 
     try {
-      const metadata = WDIOTerraService.getRepoMetadata();
-      const gp = new GithubPr(
-        gitApiUrl,
-        gitToken,
-        metadata.owner,
-        metadata.repo,
-        issueNumber,
-      );
-      const baseBranch = await gp.getBaseBranchRef();
-      const screenshotConfig = this.getRemoteScreenshotConfiguration(this.screenshotsSites, baseBranch);
+      const screenshotConfig = this.getRemoteScreenshotConfiguration(this.screenshotsSites, buildBranch);
       const screenshotRequestor = new ScreenshotRequestor(screenshotConfig.publishScreenshotConfiguration);
       await screenshotRequestor.upload();
     } catch (err) {
@@ -260,9 +258,11 @@ class WDIOTerraService {
 
     try {
       if (process.env.SCREENSHOT_MISMATCH_CHECK === 'true' && buildBranch.match(BUILD_BRANCH.pullRequest)) {
+        // We found a screenshot mismatch during our build of this PR branch.
         await this.postMismatchWarningOnce();
       } else if (!buildBranch.match(BUILD_BRANCH.pullRequest) && buildType === BUILD_TYPE.branchEventCause) {
-        await this.uploadScreenshots();
+        // This non-PR branch is being merged or someone pushed code into it directly.
+        await this.uploadBuildBranchScreenshots();
       }
     } catch (err) {
       if (err instanceof SevereServiceError) {
