@@ -3,7 +3,7 @@ const { SevereServiceError } = require('webdriverio');
 
 const WDIOTerraService = require('../../../../src/services/wdio-terra-service/WDIOTerraService');
 const GithubIssue = require('../../../../src/services/wdio-terra-service/GithubIssue');
-
+const GithubPr = require('../../../../src/services/wdio-terra-service/GithubPr');
 const { setViewport, ScreenshotRequestor } = require('../../../../src/commands/utils');
 const { BUILD_TYPE } = require('../../../../src/constants/index');
 
@@ -148,11 +148,85 @@ describe('WDIO Terra Service', () => {
   });
 
   describe('remote screenshots', () => {
+    describe('Downloading screenshots from a remote repo onPrepare', () => {
+      let config;
+
+      const download = jest.spyOn(ScreenshotRequestor.prototype, 'download');
+      const getRemoteScreenshotConfiguration = jest.fn(() => ({
+        publishScreenshotConfiguration: jest.fn(),
+      }));
+
+      beforeEach(() => {
+        config = {
+          getRemoteScreenshotConfiguration,
+          screenshotsSites: 'screenshot sites object',
+        };
+      });
+
+      afterEach(() => {
+        process.env.SCREENSHOT_MISMATCH_CHECK = undefined;
+        jest.clearAllMocks();
+      });
+
+      it('Downloads screenshots.', async () => {
+        config.serviceOptions = {
+          ...config.serviceOptions,
+          useRemoteReferenceScreenshots: true,
+          buildBranch: 'not-a-pull-request',
+          buildType: BUILD_TYPE.branchEventCause,
+        };
+        const service = new WDIOTerraService({}, {}, config);
+        await service.onPrepare();
+        expect(download).toHaveBeenCalled();
+        expect(getRemoteScreenshotConfiguration).toHaveBeenCalledWith('screenshot sites object', 'the-base-branch');
+      });
+
+      it('Does not download if not using remote screenshots.', async () => {
+        config.serviceOptions = {
+          ...config.serviceOptions,
+          // Changed from happy path.
+          useRemoteReferenceScreenshots: false,
+          buildBranch: 'not-a-pull-request',
+          buildType: BUILD_TYPE.branchEventCause,
+        };
+
+        const service = new WDIOTerraService({}, {}, config);
+        await service.onPrepare();
+        expect(download).not.toHaveBeenCalled();
+      });
+
+      it('Stops the service if something goes wrong while downloading', async () => {
+        config.serviceOptions = {
+          ...config.serviceOptions,
+          useRemoteReferenceScreenshots: true,
+          buildBranch: 'not-a-pull-request',
+          buildType: BUILD_TYPE.branchEventCause,
+        };
+        download.mockRejectedValue('oh no!');
+
+        const service = new WDIOTerraService({}, {}, config);
+        await expect(service.onPrepare()).rejects.toThrow(SevereServiceError);
+        expect(download).toHaveBeenCalled();
+      });
+    });
+
     describe('onComplete', () => {
       let config;
+      jest.spyOn(WDIOTerraService, 'getRepoMetadata')
+        .mockResolvedValue({
+          owner: 'me',
+          name: 'my-repo',
+        });
+
+      const getRemoteScreenshotConfiguration = jest.fn(() => ({
+        publishScreenshotConfiguration: jest.fn(),
+      }));
+
       const upload = jest.spyOn(ScreenshotRequestor.prototype, 'upload');
       const postComment = jest.spyOn(GithubIssue.prototype, 'postComment');
       const getComments = jest.spyOn(GithubIssue.prototype, 'getComments');
+      jest.spyOn(GithubPr.prototype, 'getBaseBranchRef')
+        .mockResolvedValue('the-base-branch');
       const buildUrl = 'https://example.com/buildUrl';
       const warningMessage = [
         ':warning: :bangbang: **WDIO MISMATCH**\n\n',
@@ -165,9 +239,8 @@ describe('WDIO Terra Service', () => {
 
       beforeEach(() => {
         config = {
-          getRemoteScreenshotConfiguration: jest.fn(() => ({
-            publishScreenshotConfiguration: jest.fn(),
-          })),
+          getRemoteScreenshotConfiguration,
+          screenshotsSites: 'screenshot sites object',
           serviceOptions: {
             buildUrl,
           },
@@ -307,8 +380,10 @@ describe('WDIO Terra Service', () => {
           };
 
           const service = new WDIOTerraService({}, {}, config);
+
           await service.onComplete();
           expect(upload).toHaveBeenCalled();
+          expect(getRemoteScreenshotConfiguration).toHaveBeenCalledWith('screenshot sites object', 'the-base-branch');
         });
 
         it('Does not upload if not using remote screenshots.', async () => {

@@ -15,6 +15,7 @@ const {
 } = require('../../commands/utils');
 const { BUILD_BRANCH, BUILD_TYPE } = require('../../constants');
 const GithubIssue = require('./GithubIssue');
+const GithubPr = require('./GithubPr');
 
 class WDIOTerraService {
   /**
@@ -31,9 +32,25 @@ class WDIOTerraService {
       ...launcherOptions,
       ...serviceOptions,
     };
-
     this.getRemoteScreenshotConfiguration = config.getRemoteScreenshotConfiguration;
     this.screenshotsSites = config.screenshotsSites;
+  }
+
+  /**
+   * Parses Package.json for metadata.
+   * @returns An object of metadata.
+   */
+  static async getRepoMetadata() {
+    const metadata = await fs.readJson(path.join(process.cwd(), 'package.json'));
+
+    // Do not try to use the URL constructor here. It will fail on urls with
+    // custom protocols like 'git+https://'.
+    const [, rOwner, rName] = metadata.repository.url.split('://')[1].split('/');
+
+    return {
+      owner: rOwner,
+      name: rName,
+    };
   }
 
   /**
@@ -41,12 +58,30 @@ class WDIOTerraService {
    * Downloads the reference screenshots from the remote repository if useRemoteReferenceScreenshots is true.
    */
   async onPrepare() {
+    const {
+      gitApiUrl,
+      gitToken,
+      issueNumber,
+      useRemoteReferenceScreenshots,
+    } = this.serviceOptions;
+
+    if (!useRemoteReferenceScreenshots) {
+      return;
+    }
+
     try {
-      if (this.serviceOptions.useRemoteReferenceScreenshots) {
-        const screenshotConfig = this.getRemoteScreenshotConfiguration ? this.getRemoteScreenshotConfiguration(this.screenshotsSites, this.serviceOptions.buildBranch) : {};
-        const screenshotRequestor = new ScreenshotRequestor(screenshotConfig.publishScreenshotConfiguration);
-        await screenshotRequestor.download();
-      }
+      const metadata = await WDIOTerraService.getRepoMetadata();
+      const gp = new GithubPr(
+        gitApiUrl,
+        gitToken,
+        metadata.owner,
+        metadata.repo,
+        issueNumber,
+      );
+      const baseBranch = await gp.getBaseBranchRef();
+      const screenshotConfig = this.getRemoteScreenshotConfiguration ? this.getRemoteScreenshotConfiguration(this.screenshotsSites, baseBranch) : {};
+      const screenshotRequestor = new ScreenshotRequestor(screenshotConfig.publishScreenshotConfiguration);
+      await screenshotRequestor.download();
     } catch (error) {
       throw new SevereServiceError(error);
     }
@@ -154,15 +189,12 @@ class WDIOTerraService {
       issueNumber,
     } = this.serviceOptions;
 
-    // Do not try to use the URL constructor here. It will fail on urls with
-    // custom protocols like 'git+https://'.
-    const metadata = await fs.readJson(path.join(process.cwd(), 'package.json'));
-    const [, owner, repo] = metadata.repository.url.split('://')[1].split('/');
+    const metadata = await WDIOTerraService.getRepoMetadata();
     const issue = new GithubIssue(
       gitApiUrl,
       gitToken,
-      owner,
-      repo,
+      metadata.owner,
+      metadata.repo,
       issueNumber,
     );
 
@@ -188,13 +220,27 @@ class WDIOTerraService {
    */
   async uploadScreenshots() {
     const {
-      buildBranch,
+      gitApiUrl,
+      gitToken,
+      issueNumber,
     } = this.serviceOptions;
 
-    const screenshotConfig = this.getRemoteScreenshotConfiguration(this.screenshotsSites, buildBranch);
-    const screenshotRequestor = new ScreenshotRequestor(screenshotConfig.publishScreenshotConfiguration);
-
-    await screenshotRequestor.upload();
+    try {
+      const metadata = WDIOTerraService.getRepoMetadata();
+      const gp = new GithubPr(
+        gitApiUrl,
+        gitToken,
+        metadata.owner,
+        metadata.repo,
+        issueNumber,
+      );
+      const baseBranch = await gp.getBaseBranchRef();
+      const screenshotConfig = this.getRemoteScreenshotConfiguration(this.screenshotsSites, baseBranch);
+      const screenshotRequestor = new ScreenshotRequestor(screenshotConfig.publishScreenshotConfiguration);
+      await screenshotRequestor.upload();
+    } catch (err) {
+      throw new SevereServiceError(err);
+    }
   }
 
   /**
