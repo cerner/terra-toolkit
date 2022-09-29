@@ -312,7 +312,7 @@ describe('WDIO Terra Service', () => {
         expect(postComment).not.toHaveBeenCalled();
       });
 
-      it('Does not try to post we are not using remote screenshots', async () => {
+      it('Does not try to post if we are not using remote screenshots', async () => {
         config.serviceOptions.useRemoteReferenceScreenshots = false;
         getComments.mockResolvedValue(['not the warning message']);
         postComment.mockResolvedValue();
