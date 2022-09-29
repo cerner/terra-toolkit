@@ -265,14 +265,12 @@ class WDIOTerraService {
         await this.uploadBuildBranchScreenshots();
       }
     } catch (err) {
+      // The service will stop only if a SevereServiceError is thrown.
       if (err instanceof SevereServiceError) {
         throw err;
       }
-      if (err instanceof Error) {
-        throw new SevereServiceError(err);
-      }
 
-      throw new SevereServiceError(JSON.stringify(err, null, 4));
+      throw new SevereServiceError(err);
     }
   }
 }

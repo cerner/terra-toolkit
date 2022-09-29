@@ -2,14 +2,14 @@ const { Octokit } = require('@octokit/core');
 
 class GithubIssue {
   constructor(url, token, owner, repo, number) {
-    this.ok = new Octokit({ baseUrl: url, auth: token });
+    this.octokit = new Octokit({ baseUrl: url, auth: token });
     this.repo = repo;
     this.owner = owner;
     this.number = number;
   }
 
   requestWithThrows(route, options) {
-    return this.ok.request(route, options)
+    return this.octokit.request(route, options)
       .catch(err => { throw new Error(JSON.stringify(err, null, 4)); });
   }
 
