@@ -303,7 +303,7 @@ describe('WDIO Terra Service', () => {
         expect(postComment).toHaveBeenCalledWith(warningMessage);
       });
 
-      it('Does not try to post if we are not checking for screenshot mismatches', async () => {
+      it('Does not try to post if no mismatch has been found', async () => {
         process.env.SCREENSHOT_MISMATCH_CHECK = undefined;
         getComments.mockResolvedValue(['not the warning message']);
         postComment.mockResolvedValue();
