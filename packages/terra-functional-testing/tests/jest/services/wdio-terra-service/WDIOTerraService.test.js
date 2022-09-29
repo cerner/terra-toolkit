@@ -67,11 +67,15 @@ describe('WDIO Terra Service', () => {
       const service = new WDIOTerraService({}, {}, config);
       service.before(capabilities);
 
+      expect(global.Terra.setApplicationLocale).toBeDefined();
+      expect(global.Terra.hideInputCaret).toBeDefined();
+      expect(global.Terra.validates).toBeDefined();
+
       expect(global.Terra.validates.accessibility).toBeDefined();
       expect(global.Terra.validates.element).toBeDefined();
       expect(global.Terra.validates.screenshot).toBeDefined();
-      expect(global.Terra.hideInputCaret).toBeDefined();
-      expect(global.Terra.setApplicationLocale).toBeDefined();
+      expect(global.Terra.axe).toBeDefined();
+
       expect(setViewport).toHaveBeenCalledWith(service.serviceOptions.formFactor);
     });
 
@@ -154,20 +158,14 @@ describe('WDIO Terra Service', () => {
   });
 
   describe('beforeSession hook', () => {
-    const config = {
-      serviceOptions: {
-        formFactor: 'huge',
-      },
-    };
-
     it('Defines all commands', () => {
-      const service = new WDIOTerraService({}, {}, config);
+      const service = new WDIOTerraService();
       service.beforeSession();
 
-      expect(setViewport).toBeCalled();
-      expect(global.Terra.viewports).toBeDefined();
+      expect(global.Terra.serviceOptions).toBeDefined();
+      expect(global.Terra.describeTests).toBeDefined();
       expect(global.Terra.describeViewports).toBeDefined();
-      expect(setViewport).toHaveBeenCalledWith(service.serviceOptions.formFactor);
+      expect(global.Terra.viewports).toBeDefined();
     });
   });
 
