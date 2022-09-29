@@ -241,9 +241,6 @@ describe('WDIO Terra Service', () => {
     let getRemoteScreenshotConfiguration;
 
     beforeAll(() => {
-      // jest.spyOn(GithubPr.prototype, 'getBaseBranchRef')
-      //   .mockResolvedValue('the-base-branch');
-
       getRemoteScreenshotConfiguration = jest.fn(() => ({
         publishScreenshotConfiguration: jest.fn(),
       }));
