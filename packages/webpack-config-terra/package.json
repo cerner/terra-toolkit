@@ -52,7 +52,7 @@
     "postcss-custom-properties": "^11.0.0",
     "postcss-loader": "^4.1.0",
     "raw-loader": "^4.0.2",
-    "sass": "^1.35.2",
+    "node-sass": "^6.0.0",
     "sass-loader": "^10.1.0",
     "terser-webpack-plugin": "^4.2.1",
     "webpack-merge": "^5.4.0"
