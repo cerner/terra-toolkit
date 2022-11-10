@@ -8,13 +8,14 @@ branches:
 cache:
   directories:
     - docker_images
+  npm: false
 before_install:
   # Clean install on any new build
   - npm run clean
 install:
   # This needs to be investigated further why npm install now takes longer to finish and causes Travis to timeout and terminute the build.
   # See https://github.com/cerner/terra-toolkit/pull/744 for description of error.
-  - travis_wait 30 npm install --legacy-peer-deps
+  - travis_wait 30 npm install
 before_script:
   # Load Docker Cache
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
