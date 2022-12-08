@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 3.3.0 - (December 7, 2022)
+
 * Updated
   * Flexes the remote reference screenshot downloading location.
 
