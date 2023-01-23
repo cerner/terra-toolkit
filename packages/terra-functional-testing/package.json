@@ -95,7 +95,7 @@
     "lodash.map": "^4.6.0",
     "lodash.mapkeys": "^4.6.0",
     "lodash.mapvalues": "^4.3.2",
-    "mocha": "^8.1.1",
+    "mocha": "^10.2.0",
     "nock": "^12.0.3",
     "np": "^6.3.2",
     "sinon": "^9.0.2",
