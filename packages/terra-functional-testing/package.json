@@ -89,6 +89,7 @@
     "webpack-cli": "^3.3.12 || ^4.0.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.20.7",
     "@cerner/terra-cli": "^1.9.0",
     "chai": "^4.2.0",
     "lodash.groupby": "^4.6.0",
