@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+* Fixes
+  * Updated `mocha` to fix CVE
+  * Added `babel-cli` to fix install issue 
+
 ## 3.3.0 - (December 7, 2022)
 
 * Updated
