@@ -69,7 +69,7 @@ jobs:
           TERRA_DEV_SITE_PUBLIC_PATH: /terra-toolkit/
         run: npm run compile:prod
       - name: Release
-        run: npm run terra -- release # or should this be "npx terra release" ???
+        run: npx terra release
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:

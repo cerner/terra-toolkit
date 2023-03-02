@@ -9,7 +9,7 @@
 </h1>
 
 [![License](https://badgen.net/github/license/cerner/terra-toolkit)](https://github.com/cerner/terra-toolkit/blob/main/LICENSE)
-[![Build Status](https://badgen.net/travis/cerner/terra-toolkit)](https://travis-ci.com/cerner/terra-toolkit)
+[![Build Status](https://github.com/cerner/terra-toolkit/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/cerner/terra-toolkit/actions/workflows/ci-cd.yml)
 [![Dependencies status](https://badgen.net/david/dep/cerner/terra-toolkit)](https://david-dm.org/cerner/terra-toolkit)
 [![devDependencies status](https://badgen.net/david/dev/cerner/terra-toolkit)](https://david-dm.org/cerner/terra-toolkit?type=dev)
 [![lerna](https://badgen.net/badge/maintained%20with/lerna/cc00ff)](https://lerna.js.org/)
