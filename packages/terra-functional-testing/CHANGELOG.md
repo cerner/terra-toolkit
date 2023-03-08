@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 3.4.0 - (March 8, 2023)
+
 * Fixes
   * Updated `mocha` to fix CVE
   * Added `babel-cli` to fix install issue 
