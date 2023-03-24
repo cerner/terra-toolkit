@@ -94,7 +94,10 @@
     "test": "npm run lint && npm run jest && npm run mocha && npm run wdio",
     "wdio-site": "npm run terra -- wdio --site build --browsers chrome firefox --locales en fr --formFactors small large",
     "wdio-webpack": "npm run terra -- wdio",
-    "wdio": "rm -rf build && npm run pack && npm run wdio-site && npm run wdio-webpack"
+    "wdio-site:docker": "npm run terra -- wdio --site build --disableSeleniumService=true --browsers chrome firefox --locales en fr --formFactors small large",
+    "wdio-webpack:docker": "npm run terra -- wdio --disableSeleniumService=true",
+    "wdio": "rm -rf build && npm run pack && npm run wdio-site && npm run wdio-webpack",
+    "wdio:docker": "rm -rf build && npm run pack && npm run wdio-site:docker && npm run wdio-webpack:docker"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
