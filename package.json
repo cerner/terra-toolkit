@@ -92,6 +92,7 @@
     "start-heroku": "npm run terra -- express-server --port $PORT --site './build' ",
     "terra": "node ./packages/terra-cli/bin/terra",
     "test": "npm run lint && npm run jest && npm run mocha && npm run wdio",
+    "test:docker": "npm run lint && npm run jest && npm run mocha && npm run wdio:docker",
     "wdio-site": "npm run terra -- wdio --site build --browsers chrome firefox --locales en fr --formFactors small large",
     "wdio-webpack": "npm run terra -- wdio",
     "wdio-site:docker": "npm run terra -- wdio --site build --disableSeleniumService=true --browsers chrome firefox --locales en fr --formFactors small large",

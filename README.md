@@ -20,6 +20,7 @@ Terra Toolkit is a [Lerna](https://github.com/lerna/lerna) repository for common
 - [Package Status](#package-status)
 - [Versioning](#versioning)
 - [Contributing](#contributing)
+- [Local Development](#local-development)
 - [Local Development using Docker (Dev Containers)](#docker-local-development)
 - [LICENSE](#license)
 
@@ -51,6 +52,17 @@ Consult the component CHANGELOGs, related issues, and PRs for more information.
 ## Contributing
 
 Please read through our [contributing guidelines](CONTRIBUTING.md). Included are directions for issue reporting and pull requests.
+
+<h2 id="local-development">
+  Local Development
+</h2>
+
+1. Install docker https://www.docker.com/ to run browser tests.
+2. Install dependencies and run tests.
+```sh
+npm install
+npm run test
+```
 
 <h2 id="docker-local-development">
   Local Development using Docker (Dev Containers)
