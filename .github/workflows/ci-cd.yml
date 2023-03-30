@@ -68,10 +68,6 @@ jobs:
           git config --global user.name "github-actions[bot]"
       - name: Setup Project
         uses: ./.github/actions/setup
-      - name: Compile
-        env:
-          TERRA_DEV_SITE_PUBLIC_PATH: /terra-toolkit/
-        run: npm run compile
       - name: Build
         env:
           TERRA_DEV_SITE_PUBLIC_PATH: /terra-toolkit/
@@ -80,7 +76,7 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx terra release
+        run: npm run terra -- release
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
