@@ -1,7 +1,5 @@
 # Terra Toolkit Docs
 
-test changes
-
 [![NPM version](https://badgen.net/npm/v/@cerner/terra-toolkit-docs)](https://www.npmjs.org/package/@cerner/terra-toolkit-docs)
 [![Build Status](https://badgen.net/travis/cerner/terra-toolkit)](https://travis-ci.com/cerner/terra-toolkit)
 

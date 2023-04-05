@@ -1,7 +1,5 @@
 const babelJest = require('babel-jest');
 
-// test changes
-
 describe('babel transformer', () => {
   it('ensures the transformer is created with the correct configuration', () => {
     const customTransformer = 'customTransformer';

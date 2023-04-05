@@ -1,7 +1,5 @@
 # Webpack Config Terra
 
-test changes
-
 [![NPM version](https://badgen.net/npm/v/@cerner/eslint-config-terra)](https://www.npmjs.org/package/@cerner/webpack-config-terra)
 [![Build Status](https://badgen.net/travis/cerner/terra-toolkit)](https://travis-ci.com/cerner/terra-toolkit)
 

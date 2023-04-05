@@ -17,6 +17,7 @@
     "*.md"
   ],
   "scripts": {
+    "compile": "babel src --out-dir lib --copy-files --ignore src/terra-cli",
     "lint": "eslint --ext .js,.jsx --ignore-path ../../.eslintignore .",
     "jest": "jest --config ../../jest.config.js",
     "precompile": "rm -rf lib",
