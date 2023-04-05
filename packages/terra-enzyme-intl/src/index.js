@@ -8,6 +8,8 @@ import { createElement } from 'react';
 import { mount, shallow, render } from 'enzyme';
 import IntlWrapper from './IntlWrapper';
 
+// test changes
+
 export const mockIntl = {
   defaultLocale: 'en',
   formatDate: () => 'mock date',
