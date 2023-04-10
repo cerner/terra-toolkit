@@ -2,9 +2,13 @@
 
 ## Unreleased
 
+* Fixed
+  * Fixed WDIO failures on IE due to negative width value being passed to `browser.setViewportSize()`.
+  * Fixed `getIpAddress` helper to return `ipv4` address for host when connected to VPN.
+
 ## 3.3.1 - (March 29, 2023)
 
-* Fixes
+* Fixed
   * Updated `mocha` to fix CVE
   * Added `babel-cli` to fix install issue 
 
