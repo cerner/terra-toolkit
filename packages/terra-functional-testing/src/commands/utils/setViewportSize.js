@@ -8,8 +8,8 @@ const setViewportSize = (viewport, retryNo = 0) => {
   const windowSize = global.browser.getWindowSize();
   const viewportSize = getViewportSize();
 
-  const widthDiff = windowSize.width - viewportSize.width;
-  const heightDiff = windowSize.height - viewportSize.height;
+  const widthDiff = Math.abs(windowSize.width - viewportSize.width);
+  const heightDiff = Math.abs(windowSize.height - viewportSize.height);
 
   // change window size with indent
   global.browser.setWindowSize(width + widthDiff, height + heightDiff);
