@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 3.4.0 - (April 14, 2023)
+
 * Fixed
   * Fixed WDIO failures on IE due to negative width value being passed to `browser.setViewportSize()`.
   * Fixed `getIpAddress` helper to return `ipv4` address for host when connected to VPN.
