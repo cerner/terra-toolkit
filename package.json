@@ -84,6 +84,7 @@
     "heroku-prebuild": "npx lerna init",
     "jest": "jest",
     "lint:js": "eslint --ext .js,.jsx .",
+    "lint:js:fix": "eslint --fix --ext .js,.jsx .",
     "lint:package-json": "npm run terra -- package-json-lint",
     "lint": "npm run lint:js && npm run lint:package-json",
     "mocha": "cd packages/terra-functional-testing && npm run mocha",
