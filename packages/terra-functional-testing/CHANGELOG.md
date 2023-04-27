@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Fixed
+  * Fixed `getIpAddress` to check if `ipv4` address exists.
+
 ## 3.4.0 - (April 14, 2023)
 
 * Fixed

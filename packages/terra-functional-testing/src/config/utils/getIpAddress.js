@@ -11,7 +11,7 @@ module.exports = () => {
         IPv4 = utunItem.filter((networkItem) => networkItem.family === 'IPv4');
       }
     });
-    return (IPv4) ? IPv4[0].address : ip.address();
+    return (IPv4.length) ? IPv4[0].address : ip.address();
   }
 
   return ip.address();
