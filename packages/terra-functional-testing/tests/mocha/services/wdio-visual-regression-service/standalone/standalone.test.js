@@ -1,5 +1,5 @@
 import path from 'path';
-import uuidv4 from 'uuid/v4';
+import { v4 as uuidv4 } from 'uuid';
 import { remote, multiremote } from 'webdriverio'; // eslint-disable-line
 import { start } from 'selenium-standalone'; // eslint-disable-line
 import { assert } from 'chai';
