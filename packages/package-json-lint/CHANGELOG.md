@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-* Removed
+* Breaking Changes
   * Removed rule `require-ie10-compatible-dependency-versions`.
 
 ## 1.5.0 - (February 11, 2022)
