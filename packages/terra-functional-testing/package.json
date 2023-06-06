@@ -78,7 +78,7 @@
     "node-fetch": "^2.6.0",
     "octokit": "^1.8.0",
     "strip-ansi": "^6.0.0",
-    "uuid": "^3.0.0",
+    "uuid": "^8.3.2",
     "webdriverio": "^7.7.3",
     "webpack-dev-server": "^4.7.2",
     "which": "^2.0.2"

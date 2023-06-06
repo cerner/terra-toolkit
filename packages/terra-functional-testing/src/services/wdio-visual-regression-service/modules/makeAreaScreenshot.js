@@ -1,6 +1,6 @@
 const fsExtra = require('fs-extra');
 const path = require('path');
-const uuidv4 = require('uuid/v4');
+const { v4: uuidv4 } = require('uuid');
 const { Logger } = require('@cerner/terra-cli');
 
 const ScreenshotStrategyManager = require('../utils/ScreenshotStrategyManager');

@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+  * Updated `uuid` to `v8` for consistency across Terra repos.
+
 ## 3.5.0 - (April 27, 2023)
 
 * Fixed
