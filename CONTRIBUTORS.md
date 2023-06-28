@@ -31,6 +31,7 @@ Cerner Corporation
 - Saket Bajaj [@saket2403]
 - Kayla Barnett [@kaylabarnett]
 - Nick Williams [@QuasiGnarus]
+- Art Parkeenvincha [@artpark]
 
 [@emilyrohrbough]: https://github.com/emilyrohrbough
 [@brettjankord]: https://github.com/bjankord
@@ -63,3 +64,4 @@ Cerner Corporation
 [@saket2403]: https://github.com/saket2403
 [@kaylabarnett]: https://github.com/kaylabarnett
 [@QuasiGnarus]: https://github.com/QuasiGnarus
+[@artpark]: https://github.com/artpark

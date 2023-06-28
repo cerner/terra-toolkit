@@ -4,6 +4,7 @@
 
 * Changed
   * Updated `uuid` to `v8.2.0` for consistency across Terra repos.
+  * Updated to pull in the seleniarm 4.10 docker images.
 
 ## 3.5.0 - (April 27, 2023)
 
