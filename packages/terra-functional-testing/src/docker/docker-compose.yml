@@ -1,4 +1,4 @@
-version: "4"
+version: "3"
 services:
   selenium-hub:
     image: seleniarm/hub:4.10.0-20230615
@@ -14,6 +14,8 @@ services:
       retries: 5
   chrome:
     image: seleniarm/node-chromium:4.10.0-20230615
+    volumes:
+      - /dev/shm:/dev/shm
     shm_size: 2gb
     depends_on:
       - selenium-hub
@@ -23,6 +25,8 @@ services:
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
   firefox:
     image: seleniarm/node-firefox:4.10.0-20230615
+    volumes:
+      - /dev/shm:/dev/shm
     shm_size: 2gb
     depends_on:
       - selenium-hub
