@@ -42,12 +42,13 @@ describe('Webpack Server', () => {
         port: 'mock',
         theme: 'mock',
         gridUrl: '1.1.1.1',
+        useHttps: true,
       });
 
       expect(server.config).toEqual('config');
       expect(server.host).toEqual('0.0.0.0');
       expect(server.port).toEqual('mock');
-      expect(server.gridStatusUrl).toEqual('http://1.1.1.1:80/status');
+      expect(server.gridStatusUrl).toEqual('https://1.1.1.1:80/status');
     });
   });
 

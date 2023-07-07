@@ -50,6 +50,7 @@ class TestRunner {
    * @param {array} options.suite - Overrides specs and runs only the defined suites.
    * @param {string} options.theme - A theme for the test run.
    * @param {boolean} options.updateScreenshots - Updates all reference screenshots with the latest screenshots.
+   * @param {string} options.useHttps - A flag to turn on secure HTTP for the webpack server when a gridUrl is provided.
    * @param {boolean} options.useRemoteReferenceScreenshots - A flag to download reference screenshots from a remote site for screenshot comparisons instead of using the local reference screenshots.
    * @param {boolean} options.useSeleniumStandaloneService - A flag to use the selenium standalone service instead of the selenium docker service.
    * @returns {Promise} A promise that resolves with the test run exit code.
@@ -100,6 +101,7 @@ class TestRunner {
    * @param {array} options.suite - Overrides specs and runs only the defined suites.
    * @param {string} options.themes - A list of themes for the test run.
    * @param {boolean} options.updateScreenshots - Updates all reference screenshots with the latest screenshots.
+   * @param {string} options.useHttps - A flag to turn on secure HTTP for the webpack server when a gridUrl is provided.
    * @param {boolean} options.useRemoteReferenceScreenshots - A flag to download reference screenshots from a remote site for screenshot comparisons instead of using the local reference screenshots.
    * @param {boolean} options.useSeleniumStandaloneService - A flag to use the selenium standalone service instead of the selenium docker service.
    */
