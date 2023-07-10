@@ -66,9 +66,6 @@ Options:
                                         all reference screenshots with the
                                         latest screenshots.
                                                       [boolean] [default: false]
-      --useHttps                        A flag to turn on secure HTTP for the
-                                        webpack server when a gridUrl is
-                                        provided.     [boolean] [default: false]
       --useRemoteReferenceScreenshots   A flag to download reference screenshots
                                         from a remote site for screenshot
                                         comparisons instead of using the local

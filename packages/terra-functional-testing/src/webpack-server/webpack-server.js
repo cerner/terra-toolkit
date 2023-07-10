@@ -7,13 +7,12 @@ const logger = new Logger({ prefix: '[terra-functional-testing:webpack-server]' 
 
 class WebpackServer {
   constructor(options = {}) {
-    const { useHttps, host, port, gridUrl } = options;
+    const { host, port } = options;
 
-    const protocol = (useHttps === true) ? 'https' : 'http';
     this.config = WebpackServer.config(options);
     this.host = host || '0.0.0.0';
     this.port = port || '8080';
-    this.gridStatusUrl = gridUrl ? `${protocol}://${gridUrl}:80/status` : undefined;
+    this.gridStatusUrl = options.gridUrl ? `$http://${options.gridUrl}:80/status` : undefined;
   }
 
   /**
