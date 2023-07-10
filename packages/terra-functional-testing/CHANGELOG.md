@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Added
+  * Added `useHttps` to use a secure http connection when the `gridUrl` flag is also provided.
+
 * Changed
   * Updated `uuid` to `v8.2.0` for consistency across Terra repos.
 
