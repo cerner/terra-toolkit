@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 3.6.0 - (July 10, 2023)
+
 * Added
   * Added `useHttps` flag to use a secure http connection when the `gridUrl` flag is also provided.
 

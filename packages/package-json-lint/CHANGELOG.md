@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.0 - (July 10, 2023)
+
 * Breaking Changes
   * Removed rule `require-ie10-compatible-dependency-versions`.
 
