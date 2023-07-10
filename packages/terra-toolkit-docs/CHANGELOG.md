@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Added
+  * Added `useHttps` flag information to `terra-functional-testing` documentation.
+
 ## 2.13.0 - (April 27, 2023)
 
 * Changed
