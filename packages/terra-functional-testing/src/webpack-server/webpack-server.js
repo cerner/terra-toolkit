@@ -7,7 +7,9 @@ const logger = new Logger({ prefix: '[terra-functional-testing:webpack-server]' 
 
 class WebpackServer {
   constructor(options = {}) {
-    const { useHttps, host, port, gridUrl } = options;
+    const {
+      useHttps, host, port, gridUrl,
+    } = options;
 
     const protocol = (useHttps === true) ? 'https' : 'http';
     this.config = WebpackServer.config(options);
