@@ -31,6 +31,7 @@ const getConfigurationOptions = (options) => {
     suite,
     theme,
     updateScreenshots,
+    useHttps,
     useRemoteReferenceScreenshots,
     useSeleniumStandaloneService,
   } = options;
@@ -58,6 +59,7 @@ const getConfigurationOptions = (options) => {
       site,
       ...(theme ? { theme } : { theme: getDefaultThemeName() }),
       updateScreenshots,
+      useHttps,
       useRemoteReferenceScreenshots,
       ...fs.existsSync(defaultWebpackPath) && { webpackConfig: defaultWebpackPath },
     },
