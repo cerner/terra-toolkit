@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.14.0 - (July 10, 2023)
+
 * Added
   * Added migration guide for `terra-functional-testing@4.0.0`.
 
