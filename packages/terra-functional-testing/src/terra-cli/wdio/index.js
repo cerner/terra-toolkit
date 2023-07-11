@@ -250,6 +250,11 @@ const cli = {
         describe: 'Whether or not to automatically update all reference screenshots with the latest screenshots.',
         default: false,
       },
+      useHttps: {
+        type: 'boolean',
+        describe: 'A flag to turn on secure HTTP for the webpack server when a gridUrl is provided.',
+        default: process.env.USE_HTTPS === 'true',
+      },
       useRemoteReferenceScreenshots: {
         type: 'boolean',
         describe: 'A flag to download reference screenshots from a remote site for screenshot comparisons instead of using the local reference screenshots.',

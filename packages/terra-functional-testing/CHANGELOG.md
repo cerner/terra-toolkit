@@ -5,11 +5,13 @@
 * Breaking changes
   * Updated to pull in the seleniarm 4.10 docker images.
 
-* Changes
-  * Updated `uuid` to `v8.2.0` for consistency across Terra repos.
+## 3.6.0 - (July 10, 2023)
 
 * Added
   * Added `useHttps` to use a secure http connection when the `gridUrl` flag is also provided.
+
+* Changed
+  * Updated `uuid` to `v8.2.0` for consistency across Terra repos.
 
 ## 3.5.0 - (April 27, 2023)
 
