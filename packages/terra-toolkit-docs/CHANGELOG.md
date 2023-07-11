@@ -3,6 +3,11 @@
 ## Unreleased
 
 * Added
+  * Added migration guide for `terra-functional-testing@4.0.0`.
+
+## 2.14.0 - (July 10, 2023)
+
+* Added
   * Added `useHttps` flag information to `terra-functional-testing` documentation.
 
 ## 2.13.0 - (April 27, 2023)
