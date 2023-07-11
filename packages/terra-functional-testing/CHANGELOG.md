@@ -2,13 +2,16 @@
 
 ## Unreleased
 
+* Changed
+  * Locked `uuid` to `7.0.3` for consistency across Terra repos.
+
 ## 3.6.0 - (July 10, 2023)
 
 * Added
   * Added `useHttps` flag to use a secure http connection when the `gridUrl` flag is also provided.
 
 * Changed
-  * Updated `uuid` to `v8.2.0` for consistency across Terra repos.
+  * Updated `uuid` to `8.2.0` for consistency across Terra repos.
 
 ## 3.5.0 - (April 27, 2023)
 
