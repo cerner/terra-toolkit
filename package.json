@@ -83,7 +83,7 @@
     "heroku-postbuild": "npm install --only=dev && npm run compile:prod",
     "heroku-prebuild": "npx lerna init",
     "jest": "jest",
-    "lint:js": "eslint --ext .js,.jsx .",
+    "lint:js": "eslint --ext .js,.jsx . --max-warnings 0",
     "lint:js:fix": "eslint --fix --ext .js,.jsx .",
     "lint:package-json": "npm run terra -- package-json-lint",
     "lint": "npm run lint:js && npm run lint:package-json",
