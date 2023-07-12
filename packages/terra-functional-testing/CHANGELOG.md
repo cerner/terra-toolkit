@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 4.0.0 - (July 12, 2023)
+
 * Breaking changes
   * Updated to pull in the seleniarm 4.10 docker images.
 
