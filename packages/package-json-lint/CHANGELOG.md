@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Fixed 
+  * Fixed files being excluded from release.
+
 ## 2.0.0 - (July 10, 2023)
 
 * Breaking Changes
