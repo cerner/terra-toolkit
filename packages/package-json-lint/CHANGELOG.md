@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.1 - (July 18, 2023)
+
 * Fixed 
   * Fixed files being excluded from release.
 
