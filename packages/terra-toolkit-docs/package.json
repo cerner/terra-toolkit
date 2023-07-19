@@ -34,7 +34,7 @@
   "dependencies": {
     "@cerner/eslint-config-terra": "^5.4.0",
     "@cerner/jest-config-terra": "^1.5.0",
-    "@cerner/package-json-lint": "^1.6.0",
+    "@cerner/package-json-lint": "^2.0.0",
     "@cerner/stylelint-config-terra": "^4.3.0",
     "@cerner/terra-functional-testing": "^4.0.0",
     "@cerner/webpack-config-terra": "^3.0.1"
