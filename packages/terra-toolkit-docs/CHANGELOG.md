@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.18.0 - (July 19, 2023)
+
 * Changed
   * Updated `package-json-lint` to `2.0.0`.
 
