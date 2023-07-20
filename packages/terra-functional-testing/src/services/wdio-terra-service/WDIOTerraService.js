@@ -79,7 +79,7 @@ class WDIOTerraService {
           gitApiUrl,
           gitToken,
           metadata.owner,
-          metadata.repo,
+          metadata.name,
           issueNumber,
         );
 
@@ -203,7 +203,7 @@ class WDIOTerraService {
       gitApiUrl,
       gitToken,
       metadata.owner,
-      metadata.repo,
+      metadata.name,
       issueNumber,
     );
 
