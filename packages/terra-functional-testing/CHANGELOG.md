@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Fixed
+  * Fixed misnamed references in Nexus Screenshot logic.
+
 ## 4.0.0 - (July 12, 2023)
 
 * Breaking changes
