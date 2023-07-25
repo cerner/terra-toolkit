@@ -13,7 +13,7 @@ const repoOwner = 'acme';
 const repoName = 'a-repo';
 fs.readJson.mockResolvedValue({
   repository: {
-    url: `git+https://github.com/${repoOwner}/${repoName}`,
+    url: `git+https://github.com/${repoOwner}/${repoName}.git`,
   },
 });
 
