@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+* Changed
+  * Updated logic in Nexus screenshots to still allow screenshot downloads when not authorized.
+  * Updated logic in Nexus screenshots to consume repository names more cleanly.
+
 ## 4.1.0 - (July 21, 2023)
 
 * Fixed
