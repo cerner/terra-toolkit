@@ -117,8 +117,8 @@ class ScreenshotRequestor {
    * Downloads the screenshots and unzip it to the reference screenshot directory defined by referenceScreenshotsPath.
    */
   async downloadScreenshots() {
-    var archiveUrl;
-    var fetchOptions;
+    let archiveUrl;
+    let fetchOptions;
     if (this.serviceAuthHeader !== undefined) {
       archiveUrl = `${this.serviceUrl}/reference.zip`;
       fetchOptions = {

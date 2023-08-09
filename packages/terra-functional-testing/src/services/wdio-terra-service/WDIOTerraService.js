@@ -49,7 +49,7 @@ class WDIOTerraService {
 
     return {
       owner: rOwner,
-      name: rName.split(".git")[0],
+      name: rName.split('.git')[0],
     };
   }
 
