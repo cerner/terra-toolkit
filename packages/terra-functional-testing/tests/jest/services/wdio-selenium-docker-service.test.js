@@ -143,7 +143,7 @@ describe('WDIO Selenium Docker Service', () => {
 
       service.startSeleniumHub();
 
-      expect(mockExec).toHaveBeenCalledWith('docker-compose -f mock-compose-path up -d');
+      expect(mockExec).toHaveBeenCalledWith('docker-compose -f \"mock-compose-path\" up -d');
     });
 
     it('should start the selenium hub with the specified version', () => {
@@ -154,7 +154,7 @@ describe('WDIO Selenium Docker Service', () => {
 
       service.startSeleniumHub();
 
-      expect(mockExec).toHaveBeenCalledWith('TERRA_SELENIUM_DOCKER_VERSION=1234 docker-compose -f mock-compose-path up -d');
+      expect(mockExec).toHaveBeenCalledWith('TERRA_SELENIUM_DOCKER_VERSION=1234 docker-compose -f \"mock-compose-path\" up -d');
     });
   });
 
@@ -225,7 +225,7 @@ describe('WDIO Selenium Docker Service', () => {
 
       await service.onComplete();
 
-      expect(mockExec).toHaveBeenCalledWith('docker-compose -f mock-compose-path down');
+      expect(mockExec).toHaveBeenCalledWith('docker-compose -f \"mock-compose-path\" down');
     });
   });
 });
