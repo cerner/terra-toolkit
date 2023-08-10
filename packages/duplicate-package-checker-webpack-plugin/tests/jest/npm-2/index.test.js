@@ -1,5 +1,5 @@
-const webpack = require('webpack');
 const assert = require('assert');
+const webpack = require('webpack');
 const chalk = require('chalk');
 const config = require('./webpack.config');
 

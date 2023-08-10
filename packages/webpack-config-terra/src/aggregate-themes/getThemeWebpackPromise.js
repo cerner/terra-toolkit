@@ -1,3 +1,4 @@
+const path = require('path');
 const webpack = require('webpack');
 const MemoryFS = require('memory-fs');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -5,7 +6,6 @@ const rtl = require('@mjhenkes/postcss-rtl');
 const Autoprefixer = require('autoprefixer');
 const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin');
 const PostCSSCustomProperties = require('postcss-custom-properties');
-const path = require('path');
 const logging = require('webpack/lib/logging/runtime');
 const ThemePlugin = require('../postcss/ThemePlugin');
 

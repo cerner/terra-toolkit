@@ -1,6 +1,6 @@
+const path = require('path');
 const gm = require('gm');
 const fsExtra = require('fs-extra');
-const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const CropDimension = require('../CropDimension');
 

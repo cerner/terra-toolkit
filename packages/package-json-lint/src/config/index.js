@@ -1,5 +1,5 @@
-const { cosmiconfig } = require('cosmiconfig');
 const path = require('path');
+const { cosmiconfig } = require('cosmiconfig');
 const { Logger } = require('@cerner/terra-cli');
 
 const logger = new Logger({ prefix: '[package-json-lint:config]' });

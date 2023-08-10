@@ -1,6 +1,6 @@
 const childProcess = require('child_process');
-const fs = require('fs-extra');
 const path = require('path');
+const fs = require('fs-extra');
 const stripAnsi = require('strip-ansi');
 const { Logger } = require('@cerner/terra-cli');
 

@@ -1,6 +1,6 @@
 /* globals spyOn */
-const fse = require('fs-extra');
 const path = require('path');
+const fse = require('fs-extra');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const MemoryFileSystem = require('memory-fs');
 const writeI18nLoaders = require('../../src/write-i18n-loaders');

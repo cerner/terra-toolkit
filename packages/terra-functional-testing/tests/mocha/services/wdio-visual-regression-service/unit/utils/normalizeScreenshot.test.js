@@ -1,6 +1,6 @@
+const path = require('path');
 const { assert } = require('chai');
 const glob = require('glob');
-const path = require('path');
 const lodashGroupBy = require('lodash.groupby');
 const lodashMap = require('lodash.map');
 const lodashMapKeys = require('lodash.mapkeys');

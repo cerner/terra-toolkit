@@ -1,5 +1,5 @@
-const fs = require('fs-extra');
 const path = require('path');
+const fs = require('fs-extra');
 const SpecReporter = require('../../../../src/reporters/spec-reporter/wdio-spec-reporter');
 const testData1 = require('../../../fixtures/reporters/test-data-1.json');
 const { eventEmitter } = require('../../../../src/commands/utils');

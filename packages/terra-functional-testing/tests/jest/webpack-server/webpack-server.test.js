@@ -1,14 +1,13 @@
+const http = require('http');
+const path = require('path');
+const WebpackDevServer = require('webpack-dev-server');
+const webpack = require('webpack');
 const { Logger } = require('@cerner/terra-cli');
+const WebpackServer = require('../../../src/webpack-server/webpack-server');
 
 jest.mock('webpack');
 jest.mock('@cerner/terra-cli');
 jest.mock('webpack-dev-server');
-
-const http = require('http');
-const WebpackDevServer = require('webpack-dev-server');
-const webpack = require('webpack');
-const path = require('path');
-const WebpackServer = require('../../../src/webpack-server/webpack-server');
 
 const mockLoggerInstance = Logger.mock.instances[0];
 const mockWebpackSpy = jest.fn();
@@ -135,7 +134,7 @@ describe('Webpack Server', () => {
             }),
           },
           failed: {
-            tap: () => {},
+            tap: () => { },
           },
         },
         options: {
@@ -164,7 +163,7 @@ describe('Webpack Server', () => {
             }),
           },
           failed: {
-            tap: () => {},
+            tap: () => { },
           },
         },
         options: {
@@ -184,10 +183,10 @@ describe('Webpack Server', () => {
         watch: jest.fn(),
         hooks: {
           done: {
-            tap: () => {},
+            tap: () => { },
           },
           failed: {
-            tap: () => {},
+            tap: () => { },
           },
         },
         options: {
@@ -236,7 +235,7 @@ describe('Webpack Server', () => {
             }),
           },
           failed: {
-            tap: () => {},
+            tap: () => { },
           },
         },
         options: {
@@ -276,7 +275,7 @@ describe('Webpack Server', () => {
             }),
           },
           failed: {
-            tap: () => {},
+            tap: () => { },
           },
         },
         options: {
@@ -306,7 +305,7 @@ describe('Webpack Server', () => {
             tap: jest.fn((arg1, callback) => callback(mockStats)),
           },
           failed: {
-            tap: () => {},
+            tap: () => { },
           },
         },
         options: {
@@ -338,7 +337,7 @@ describe('Webpack Server', () => {
             }),
           },
           failed: {
-            tap: () => {},
+            tap: () => { },
           },
         },
         options: {

@@ -1,5 +1,5 @@
-const yargs = require('yargs/yargs');
 const path = require('path');
+const yargs = require('yargs/yargs');
 const fs = require('fs-extra');
 
 const Logger = require('./lib/utils/Logger');

@@ -9,8 +9,8 @@ jest.mock('@cerner/terra-cli/lib/utils/Logger', () => function mock() {
   };
 });
 
-const fetch = require('node-fetch');
 const path = require('path');
+const fetch = require('node-fetch');
 const archiver = require('archiver');
 const FormData = require('form-data');
 const MemoryStream = require('../../../../src/commands/utils/MemoryStream');

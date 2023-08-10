@@ -1,8 +1,8 @@
+const path = require('path');
 const archiver = require('archiver');
 const extract = require('extract-zip');
 const fetch = require('node-fetch');
 const fs = require('fs-extra');
-const path = require('path');
 const FormData = require('form-data');
 const { Logger } = require('@cerner/terra-cli');
 const MemoryStream = require('./MemoryStream');

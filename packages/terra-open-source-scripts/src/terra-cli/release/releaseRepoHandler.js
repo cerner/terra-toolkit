@@ -1,5 +1,5 @@
-const pacote = require('pacote');
 const path = require('path');
+const pacote = require('pacote');
 const fs = require('fs-extra');
 const spawn = require('@npmcli/promise-spawn');
 const { Logger } = require('@cerner/terra-cli');

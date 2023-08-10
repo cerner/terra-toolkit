@@ -6,8 +6,8 @@ jest.mock('@npmcli/promise-spawn');
 jest.mock('../../../../src/terra-cli/prepare-for-release/updateChangelogForPackage');
 jest.mock('../../../../src/terra-cli/prepare-for-release/logReleasingPackages');
 
-const prompts = require('prompts');
 const path = require('path');
+const prompts = require('prompts');
 const log = require('npmlog');
 const fs = require('fs-extra');
 const spawn = require('@npmcli/promise-spawn');

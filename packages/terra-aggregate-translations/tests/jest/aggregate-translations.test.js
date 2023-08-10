@@ -1,7 +1,7 @@
 /* globals spyOn */
+const path = require('path');
 const fse = require('fs-extra');
 const glob = require('glob');
-const path = require('path');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const MemoryFileSystem = require('memory-fs');
 const defaultSearchPatterns = require('../../src/config/defaultSearchPatterns');

@@ -1,5 +1,5 @@
-const ip = require('ip');
 const os = require('os');
+const ip = require('ip');
 
 module.exports = () => {
   const utun = Object.entries(os.networkInterfaces()).filter(([key]) => key.includes(('utun'))).flat();

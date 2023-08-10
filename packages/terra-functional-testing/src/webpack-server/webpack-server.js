@@ -1,7 +1,7 @@
+const http = require('http');
 const WebpackDevServer = require('webpack-dev-server');
 const webpack = require('webpack');
 const { Logger } = require('@cerner/terra-cli');
-const http = require('http');
 
 const logger = new Logger({ prefix: '[terra-functional-testing:webpack-server]' });
 
