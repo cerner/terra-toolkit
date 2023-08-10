@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Fixed
+  * Fixed when a pathname with whitespaces was passed in would prevent a docker compose.
+
 ## 4.1.0 - (July 21, 2023)
 
 * Fixed
