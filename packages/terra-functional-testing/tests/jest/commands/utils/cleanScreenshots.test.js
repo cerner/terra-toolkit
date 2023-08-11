@@ -1,6 +1,6 @@
+const path = require('path');
 const fs = require('fs-extra');
 const glob = require('glob');
-const path = require('path');
 const { cleanScreenshots } = require('../../../../src/commands/utils');
 
 jest.mock('@cerner/terra-cli/lib/utils/Logger');

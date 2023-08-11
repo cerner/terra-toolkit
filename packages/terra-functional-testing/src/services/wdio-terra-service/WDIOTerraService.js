@@ -1,6 +1,6 @@
+const path = require('path');
 const expect = require('expect');
 const fs = require('fs-extra');
-const path = require('path');
 const { SevereServiceError } = require('webdriverio');
 const { accessibility, element, screenshot } = require('../../commands/validates');
 const { toBeAccessible, toMatchReference } = require('../../commands/expect');

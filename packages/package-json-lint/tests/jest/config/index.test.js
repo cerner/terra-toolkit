@@ -1,7 +1,7 @@
 jest.mock('cosmiconfig');
 
-const { cosmiconfig } = require('cosmiconfig');
 const path = require('path');
+const { cosmiconfig } = require('cosmiconfig');
 
 const { getConfigForFile } = require('../../../src/config');
 

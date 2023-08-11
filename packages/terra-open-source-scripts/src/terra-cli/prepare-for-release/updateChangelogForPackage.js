@@ -1,5 +1,5 @@
-const fs = require('fs-extra');
 const path = require('path');
+const fs = require('fs-extra');
 
 module.exports = async (packagePath) => {
   const packageFile = path.resolve(packagePath, 'package.json');

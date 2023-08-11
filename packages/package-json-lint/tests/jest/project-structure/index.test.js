@@ -1,9 +1,9 @@
 jest.mock('fs-extra');
 jest.mock('@npmcli/promise-spawn');
 
+const path = require('path');
 const fs = require('fs-extra');
 const spawn = require('@npmcli/promise-spawn');
-const path = require('path');
 
 const { getPathsForPackages } = require('../../../src/project-structure');
 

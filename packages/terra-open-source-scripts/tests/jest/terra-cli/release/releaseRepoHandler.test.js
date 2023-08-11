@@ -4,9 +4,9 @@ jest.mock('pacote');
 jest.mock('../../../../src/terra-cli/release/setupNPM');
 jest.mock('../../../../src/terra-cli/release/setupGit');
 
+const path = require('path');
 const spawn = require('@npmcli/promise-spawn');
 const pacote = require('pacote');
-const path = require('path');
 const fs = require('fs-extra');
 
 const setupNPM = require('../../../../src/terra-cli/release/setupNPM');

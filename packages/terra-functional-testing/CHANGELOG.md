@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Fixed
+  * Fixed an issue with whitespaces in the docker-compose file path causing failures.
+
 ## 4.1.0 - (July 21, 2023)
 
 * Fixed

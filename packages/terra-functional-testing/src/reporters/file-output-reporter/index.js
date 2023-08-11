@@ -1,8 +1,8 @@
-const fs = require('fs-extra');
+const endOfLine = require('os').EOL;
 const path = require('path');
+const fs = require('fs-extra');
 const stripAnsi = require('strip-ansi');
 const SpecReporter = require('@wdio/spec-reporter').default;
-const endOfLine = require('os').EOL;
 const { Logger } = require('@cerner/terra-cli');
 
 const LOG_CONTEXT = '[terra-functional-testing:file-output-reporter]';

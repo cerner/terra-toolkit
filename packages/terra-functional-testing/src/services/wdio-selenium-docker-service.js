@@ -91,7 +91,7 @@ class SeleniumDockerService {
 
     const envVars = this.seleniumVersion ? `TERRA_SELENIUM_DOCKER_VERSION=${this.seleniumVersion} ` : '';
 
-    await exec(`${envVars}docker-compose -f ${this.getDockerComposeFilePath()} up -d`);
+    await exec(`${envVars}docker-compose -f "${this.getDockerComposeFilePath()}" up -d`);
     await this.waitForSeleniumHubReady();
 
     logger.info('Successfully started the docker selenium hub.');
@@ -126,7 +126,7 @@ class SeleniumDockerService {
     if (!this.keepAliveSeleniumDockerService && !this.disableSeleniumService) {
       logger.info('Shutting down the docker selenium hub...');
 
-      await exec(`docker-compose -f ${this.getDockerComposeFilePath()} down`);
+      await exec(`docker-compose -f "${this.getDockerComposeFilePath()}" down`);
     }
   }
 }

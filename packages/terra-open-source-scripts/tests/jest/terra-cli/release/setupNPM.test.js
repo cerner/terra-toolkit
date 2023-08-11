@@ -1,7 +1,7 @@
 jest.mock('fs-extra');
 
-const fs = require('fs-extra');
 const path = require('path');
+const fs = require('fs-extra');
 const setupNPM = require('../../../../src/terra-cli/release/setupNPM');
 
 describe('setupNPM', () => {
