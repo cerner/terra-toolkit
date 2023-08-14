@@ -1,5 +1,5 @@
-const fs = require('fs-extra');
 const path = require('path');
+const fs = require('fs-extra');
 const ignore = require('ignore');
 const spawn = require('@npmcli/promise-spawn');
 

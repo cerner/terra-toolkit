@@ -5,8 +5,8 @@ jest.mock('../../../../src/terra-cli/prepare-for-release/updateChangelogForPacka
 jest.mock('../../../../src/terra-cli/prepare-for-release/logReleasingPackages');
 
 const childProcess = require('child_process');
-const fs = require('fs-extra');
 const path = require('path');
+const fs = require('fs-extra');
 
 const updateChangelogForPackage = require('../../../../src/terra-cli/prepare-for-release/updateChangelogForPackage');
 const logReleasingPackages = require('../../../../src/terra-cli/prepare-for-release/logReleasingPackages');

@@ -1,5 +1,5 @@
-const fs = require('fs-extra');
 const path = require('path');
+const fs = require('fs-extra');
 const WDIOReporter = require('@wdio/reporter').default;
 const getOutputDir = require('./get-output-dir');
 const { eventEmitter } = require('../../commands/utils');

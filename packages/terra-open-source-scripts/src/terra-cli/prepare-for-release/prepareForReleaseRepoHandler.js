@@ -1,6 +1,6 @@
+const path = require('path');
 const prompts = require('prompts');
 const fs = require('fs-extra');
-const path = require('path');
 const log = require('npmlog');
 const spawn = require('@npmcli/promise-spawn');
 const updateChangelogForPackage = require('./updateChangelogForPackage');

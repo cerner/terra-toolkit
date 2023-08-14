@@ -1,8 +1,8 @@
+import path from 'path';
 import { assert } from 'chai';
 
 import sizeOf from 'image-size';
 import fsExtra from 'fs-extra';
-import path from 'path';
 
 import saveBase64Image from '../../../../../../src/services/wdio-visual-regression-service/utils/saveBase64Image';
 

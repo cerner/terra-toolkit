@@ -1,6 +1,6 @@
+const path = require('path');
 const fs = require('fs-extra');
 const glob = require('glob');
-const path = require('path');
 const logging = require('webpack/lib/logging/runtime');
 
 const CONFIG = 'terra-theme.config.js';

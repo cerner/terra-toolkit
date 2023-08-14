@@ -1,7 +1,7 @@
+const path = require('path');
 const Autoprefixer = require('autoprefixer');
 const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin');
 const PostCSSCustomProperties = require('postcss-custom-properties');
-const path = require('path');
 const rtl = require('@mjhenkes/postcss-rtl');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');

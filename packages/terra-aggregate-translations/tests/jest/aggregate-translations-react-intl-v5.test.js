@@ -1,7 +1,7 @@
 /* globals spyOn */
+const path = require('path');
 const fse = require('fs-extra');
 const glob = require('glob');
-const path = require('path');
 const i18nSupportedLocales = require('../../src/config/i18nSupportedLocales');
 const aggregateTranslations = require('../../src/aggregate-translations');
 

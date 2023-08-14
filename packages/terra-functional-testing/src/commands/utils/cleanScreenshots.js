@@ -1,6 +1,6 @@
+const path = require('path');
 const fs = require('fs-extra');
 const glob = require('glob');
-const path = require('path');
 const { Logger } = require('@cerner/terra-cli');
 
 const logger = new Logger({ prefix: '[terra-functional-testing:cleanScreenshots]' });

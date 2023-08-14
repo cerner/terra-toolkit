@@ -1,8 +1,8 @@
 /**
  * @jest-environment node
  */
-const stylelint = require('stylelint');
 const path = require('path');
+const stylelint = require('stylelint');
 
 const config = {
   plugins: [

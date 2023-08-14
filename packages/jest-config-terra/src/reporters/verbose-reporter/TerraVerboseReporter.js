@@ -1,8 +1,8 @@
-const VerboseReporter = require('@jest/reporters/build/verbose_reporter').default;
-const stripAnsi = require('strip-ansi');
+const endOfLine = require('os').EOL;
 const fs = require('fs');
 const path = require('path');
-const endOfLine = require('os').EOL;
+const VerboseReporter = require('@jest/reporters/build/verbose_reporter').default;
+const stripAnsi = require('strip-ansi');
 const { Logger } = require('@cerner/terra-cli');
 
 const logger = new Logger({ prefix: '[jest-config-terra:TerraVerboseReporter]' });
@@ -27,8 +27,8 @@ class TerraVerboseReporter extends VerboseReporter {
     this.ensureResultsDir();
 
     // Disable _out and _err so that we don't write out anything as part of this reporter
-    this._out = () => {}; // eslint-disable-line no-underscore-dangle
-    this._err = () => {}; // eslint-disable-line no-underscore-dangle
+    this._out = () => { }; // eslint-disable-line no-underscore-dangle
+    this._err = () => { }; // eslint-disable-line no-underscore-dangle
   }
 
   // eslint-disable-next-line class-methods-use-this
