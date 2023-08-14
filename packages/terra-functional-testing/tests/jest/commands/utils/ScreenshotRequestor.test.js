@@ -1,14 +1,20 @@
 jest.mock('node-fetch');
 jest.mock('archiver');
 jest.mock('form-data');
+jest.mock('extract-zip');
+jest.mock('fs-extra');
 jest.mock('../../../../src/commands/utils/MemoryStream');
 const mockInfo = jest.fn();
+const mockError = jest.fn();
 jest.mock('@cerner/terra-cli/lib/utils/Logger', () => function mock() {
   return {
     info: mockInfo,
+    error: mockError,
   };
 });
 
+const extract = require('extract-zip');
+const fs = require('fs-extra');
 const fetch = require('node-fetch');
 const path = require('path');
 const archiver = require('archiver');
@@ -20,6 +26,7 @@ describe('ScreenshotRequestor', () => {
   const oldCwd = process.cwd;
   beforeEach(() => {
     mockInfo.mockClear();
+    jest.resetModules();
   });
 
   beforeAll(() => {
@@ -139,6 +146,160 @@ describe('ScreenshotRequestor', () => {
       expect(mockArchiver.file).toHaveBeenCalledWith(archiveName, { name: 'reference.zip' });
       expect(mockArchiver.finalize).toHaveBeenCalled();
       expect(mockInfo).toHaveBeenCalledWith('Memory stream created');
+    });
+  });
+
+  describe('downloadScreenshots', () => {
+    it('downloads the screenshots', async () => {
+      const mockPipe = jest.fn();
+      fetch.mockResolvedValueOnce({
+        ok: true,
+        status: 200,
+        body: {
+          pipe: mockPipe,
+        }
+      });
+      
+      extract.mockResolvedValueOnce();
+
+      const mockCreateWriteStream = jest.fn();
+      const mockRemoveSync = jest.fn();
+      const mockOnFinish = jest.fn();
+      const mockWriteStream = {
+        on: mockOnFinish.mockImplementation( (event, handler) => {
+          handler();
+        }),
+      };
+      fs.removeSync = mockRemoveSync;
+      fs.createWriteStream = mockCreateWriteStream.mockImplementation( () => {
+        return mockWriteStream;
+      });
+      
+      const oldCheckStatus = ScreenshotRequestor.checkStatus;
+      ScreenshotRequestor.checkStatus = jest.fn();
+      const screenshotRequestor = new ScreenshotRequestor({
+        latestScreenshotsPath: path.join(process.cwd(), 'latest'),
+        referenceScreenshotsPath: path.join(process.cwd(), 'reference'),
+        serviceUrl: 'https://nexus.com/content-compressed/blah/',
+        serviceAuthHeader: 'Basic adfadf',
+        url: 'https://nexus.com/blah/',
+        zipFilePath: path.join(process.cwd(), 'zip-path'),
+      });
+
+
+      await expect(screenshotRequestor.downloadScreenshots()).resolves.toBe();
+      expect(fetch).toHaveBeenCalledWith(
+        `${screenshotRequestor.serviceUrl}/reference.zip`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: screenshotRequestor.serviceAuthHeader,
+          },
+        },
+      );
+      expect(ScreenshotRequestor.checkStatus).toHaveBeenCalled();
+      ScreenshotRequestor.checkStatus = oldCheckStatus;
+      expect(mockCreateWriteStream).toHaveBeenCalledWith('terra-wdio-screenshots.zip');
+      expect(mockPipe).toHaveBeenCalledWith(mockWriteStream);
+      expect(mockOnFinish).toBeCalledWith('finish', expect.any(Function));
+      expect(extract).toHaveBeenCalledWith('terra-wdio-screenshots.zip', { dir: screenshotRequestor.referenceScreenshotsPath });
+      expect(mockRemoveSync).toHaveBeenCalledWith('terra-wdio-screenshots.zip');
+      expect(mockInfo).toHaveBeenCalledWith(`Screenshots downloaded from ${screenshotRequestor.url}`);
+    });
+
+    it('calls out an errors', async () => {
+      fetch.mockResolvedValueOnce({
+        ok: true,
+        status: 200,
+      });
+
+      const mockCreateWriteStream = jest.fn();
+      const mockRemoveSync = jest.fn();
+      const mockThrowError = new TypeError("UNKNOWN ERROR");
+      fs.removeSync = mockRemoveSync;
+      fs.createWriteStream = mockCreateWriteStream.mockImplementation( () => {
+        throw mockThrowError;
+      });
+      
+      const oldCheckStatus = ScreenshotRequestor.checkStatus;
+      ScreenshotRequestor.checkStatus = jest.fn();
+      const screenshotRequestor = new ScreenshotRequestor({
+        latestScreenshotsPath: path.join(process.cwd(), 'latest'),
+        referenceScreenshotsPath: path.join(process.cwd(), 'reference'),
+        serviceUrl: 'https://nexus.com/content-compressed/blah/',
+        serviceAuthHeader: 'Basic adfadf',
+        url: 'https://nexus.com/blah/',
+        zipFilePath: path.join(process.cwd(), 'zip-path'),
+      });
+
+      await expect(screenshotRequestor.downloadScreenshots()).rejects.toBe();
+      expect(fetch).toHaveBeenCalledWith(
+        `${screenshotRequestor.serviceUrl}/reference.zip`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: screenshotRequestor.serviceAuthHeader,
+          },
+        },
+      );
+      expect(ScreenshotRequestor.checkStatus).toHaveBeenCalled();
+      ScreenshotRequestor.checkStatus = oldCheckStatus;
+      expect(mockCreateWriteStream).toHaveBeenCalledWith('terra-wdio-screenshots.zip');
+      expect(mockRemoveSync).toHaveBeenCalledWith('terra-wdio-screenshots.zip');
+      expect(mockError).toHaveBeenCalledWith(`Error occurred while extracting screenshots. ${mockThrowError}`);
+    });
+
+    it('will return early if no screenshots exist', async () => {
+      fetch.mockResolvedValueOnce({
+        ok: true,
+        status: 404,
+      });
+      
+      const screenshotRequestor = new ScreenshotRequestor({
+        latestScreenshotsPath: path.join(process.cwd(), 'latest'),
+        referenceScreenshotsPath: path.join(process.cwd(), 'reference'),
+        serviceUrl: 'https://nexus.com/content-compressed/blah/',
+        serviceAuthHeader: 'Basic adfadf',
+        url: 'https://nexus.com/blah/',
+        zipFilePath: path.join(process.cwd(), 'zip-path'),
+      });
+
+      await screenshotRequestor.downloadScreenshots();
+      expect(fetch).toHaveBeenCalledWith(
+        `${screenshotRequestor.serviceUrl}/reference.zip`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: screenshotRequestor.serviceAuthHeader,
+          },
+        },
+      );
+      expect(mockInfo).toHaveBeenCalledWith(`No screenshots downloaded from ${screenshotRequestor.url}. Either the URL is invalid or no screenshots were previously uploaded.`);
+    });
+
+    it('will call fetch with the public url if serviceAuthHeader is undefined', async () => {
+      fetch.mockResolvedValueOnce({
+        ok: true,
+        status: 404,
+      });
+      
+      const screenshotRequestor = new ScreenshotRequestor({
+        latestScreenshotsPath: path.join(process.cwd(), 'latest'),
+        referenceScreenshotsPath: path.join(process.cwd(), 'reference'),
+        serviceUrl: 'https://nexus.com/content-compressed/blah/',
+        serviceAuthHeader: undefined,
+        url: 'https://nexus.com/blah/',
+        zipFilePath: path.join(process.cwd(), 'zip-path'),
+      });
+
+      await screenshotRequestor.downloadScreenshots();
+      expect(fetch).toHaveBeenCalledWith(
+        `${screenshotRequestor.url}/reference.zip`,
+        {
+          method: 'GET',
+        },
+      );
+      expect(mockInfo).toHaveBeenCalledWith(`No screenshots downloaded from ${screenshotRequestor.url}. Either the URL is invalid or no screenshots were previously uploaded.`);
     });
   });
 
