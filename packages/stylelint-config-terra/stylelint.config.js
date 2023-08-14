@@ -36,7 +36,8 @@ module.exports = {
           'rem', // "rem" is only partially supported by IE 10
           'viewport-units', // is only partially supported by IE 10,11
           'word-break', // "word-break" is only partially supported by Android Browser 4.3.4-4.4.4
-          'wordwrap', // is only partially supported by IE 10,11, Edge 17
+          'wordwrap', // is only partially supported by IE 10,11, Edge 17,
+          'css-filters' // "Not supported by IE10,11",
         ],
         severity: 'warning',
       },
