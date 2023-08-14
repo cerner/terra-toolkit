@@ -149,7 +149,7 @@ describe('ScreenshotRequestor', () => {
     });
   });
 
-  describe('downloadScreenshots', () => {
+  describe('function downloadScreenshots', () => {
     it('downloads the screenshots', async () => {
       const mockPipe = jest.fn();
       fetch.mockResolvedValueOnce({
@@ -162,18 +162,13 @@ describe('ScreenshotRequestor', () => {
       
       extract.mockResolvedValueOnce();
 
-      const mockCreateWriteStream = jest.fn();
-      const mockRemoveSync = jest.fn();
       const mockOnFinish = jest.fn();
       const mockWriteStream = {
-        on: mockOnFinish.mockImplementation( (event, handler) => {
+        on: mockOnFinish.mockImplementationOnce( (event, handler) => {
           handler();
         }),
       };
-      fs.removeSync = mockRemoveSync;
-      fs.createWriteStream = mockCreateWriteStream.mockImplementation( () => {
-        return mockWriteStream;
-      });
+      fs.createWriteStream.mockReturnValueOnce(mockWriteStream);
       
       const oldCheckStatus = ScreenshotRequestor.checkStatus;
       ScreenshotRequestor.checkStatus = jest.fn();
@@ -199,11 +194,11 @@ describe('ScreenshotRequestor', () => {
       );
       expect(ScreenshotRequestor.checkStatus).toHaveBeenCalled();
       ScreenshotRequestor.checkStatus = oldCheckStatus;
-      expect(mockCreateWriteStream).toHaveBeenCalledWith('terra-wdio-screenshots.zip');
+      expect(fs.createWriteStream).toHaveBeenCalledWith('terra-wdio-screenshots.zip');
       expect(mockPipe).toHaveBeenCalledWith(mockWriteStream);
       expect(mockOnFinish).toBeCalledWith('finish', expect.any(Function));
       expect(extract).toHaveBeenCalledWith('terra-wdio-screenshots.zip', { dir: screenshotRequestor.referenceScreenshotsPath });
-      expect(mockRemoveSync).toHaveBeenCalledWith('terra-wdio-screenshots.zip');
+      expect(fs.removeSync).toHaveBeenCalledWith('terra-wdio-screenshots.zip');
       expect(mockInfo).toHaveBeenCalledWith(`Screenshots downloaded from ${screenshotRequestor.url}`);
     });
 
@@ -213,11 +208,8 @@ describe('ScreenshotRequestor', () => {
         status: 200,
       });
 
-      const mockCreateWriteStream = jest.fn();
-      const mockRemoveSync = jest.fn();
       const mockThrowError = new TypeError("UNKNOWN ERROR");
-      fs.removeSync = mockRemoveSync;
-      fs.createWriteStream = mockCreateWriteStream.mockImplementation( () => {
+      fs.createWriteStream.mockImplementationOnce( () => {
         throw mockThrowError;
       });
       
@@ -244,8 +236,8 @@ describe('ScreenshotRequestor', () => {
       );
       expect(ScreenshotRequestor.checkStatus).toHaveBeenCalled();
       ScreenshotRequestor.checkStatus = oldCheckStatus;
-      expect(mockCreateWriteStream).toHaveBeenCalledWith('terra-wdio-screenshots.zip');
-      expect(mockRemoveSync).toHaveBeenCalledWith('terra-wdio-screenshots.zip');
+      expect(fs.createWriteStream).toHaveBeenCalledWith('terra-wdio-screenshots.zip');
+      expect(fs.removeSync).toHaveBeenCalledWith('terra-wdio-screenshots.zip');
       expect(mockError).toHaveBeenCalledWith(`Error occurred while extracting screenshots. ${mockThrowError}`);
     });
 
