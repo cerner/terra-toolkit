@@ -1,5 +1,7 @@
 module.exports = {
-  extends: 'stylelint-config-sass-guidelines',
+  extends: [
+    'stylelint-config-sass-guidelines',
+  ],
   plugins: [
     'stylelint-no-unsupported-browser-features',
     './lib/rules/custom-property-no-duplicate-declaration/custom-property-no-duplicate-declaration',
@@ -19,6 +21,7 @@ module.exports = {
       },
     ],
     'declaration-property-unit-allowed-list': [{ 'line-height': [] }, { severity: 'warning' }],
+    'scss/no-global-function-names': false,
     'terra/custom-property-name': true,
     'terra/custom-property-no-duplicate-declaration': true,
     'terra/custom-property-pattern': true,
@@ -27,6 +30,14 @@ module.exports = {
     'plugin/no-unsupported-browser-features': [
       true,
       {
+        browsers: ['> 1%', 'iOS >= 12',
+          'last 2 and_chr versions',
+          'last 2 android versions',
+          'last 2 chrome versions',
+          'last 2 edge versions',
+          'last 2 firefox versions',
+          'ie >= 11',
+          'last 2 safari versions'],
         ignore: [
           'calc', // "calc" is only partially supported by Android Browser 4.4.3-4.4.4
           'css-gradients', // is only partially supported by Safari 12,11.1, iOS Safari 10.0-10.2,10.3,11.0-11.2,11.3-11.4,12.0-12.1
@@ -37,10 +48,16 @@ module.exports = {
           'viewport-units', // is only partially supported by IE 10,11
           'word-break', // "word-break" is only partially supported by Android Browser 4.3.4-4.4.4
           'wordwrap', // is only partially supported by IE 10,11, Edge 17,
-          'css-filters' // "Not supported by IE10,11",
+          'css-filters', // "Not supported by IE10,11",
         ],
         severity: 'warning',
       },
     ],
   },
+  // overrides: [
+  //   {
+  //     files: ['*.scss'],
+  //     customSyntax: require('postcss-scss'), // eslint-disable-line global-require
+  //   },
+  // ],
 };

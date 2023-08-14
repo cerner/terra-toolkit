@@ -132,11 +132,13 @@
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
     "react-intl": "^5.10.6",
-    "rimraf": "^4.4.1",
-    "stylelint": "^15.0.0",
+    "stylelint": "^15.2.0",
     "utf-8-validate": "^5.0.2",
     "webpack": "^5.28.0",
     "webpack-cli": "^4.6.0",
     "webpack-dev-server": "^4.7.2"
+  },
+  "peerDependencies": {
+    "rimraf": "^4.4.1"
   }
 }
