@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Breaking Change
+  * Dropped support for IE10.
+
 ## 3.2.0 - (January 5, 2021)
 
 * Changed

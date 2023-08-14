@@ -54,10 +54,4 @@ module.exports = {
       },
     ],
   },
-  // overrides: [
-  //   {
-  //     files: ['*.scss'],
-  //     customSyntax: require('postcss-scss'), // eslint-disable-line global-require
-  //   },
-  // ],
 };
