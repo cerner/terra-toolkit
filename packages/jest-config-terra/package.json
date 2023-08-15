@@ -26,25 +26,34 @@
     "node": ">=10.13.0"
   },
   "homepage": "https://github.com/cerner/terra-toolkit",
-  "files": [
-    "lib",
-    "jest.config.js"
-  ],
   "scripts": {
+    "clean": "npm run clean:node_modules && npm run clean:lib",
+    "clean:lib": "rm -rf lib",
+    "clean:node_modules": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
+    "clean:install": "npm run clean && time npm install",
     "compile": "babel src --out-dir lib --copy-files --ignore src",
     "lint": "eslint --ext .js,.jsx .",
-    "jest": "jest --config ../../jest.config.js"
+    "lint:js:fix": "eslint --ext .js,.jsx . --fix",
+    "jest": "jest --config ./jest.local.config.js"
   },
   "dependencies": {
+    "@cerner/eslint-config-terra": "^5.4.0",
     "@cerner/terra-cli": "^1.9.0",
-    "@jest/reporters": "^25.3.0",
+    "@jest/reporters": "^26.6.2",
     "babel-jest": "^26.6.3",
+    "eslint": "^7.32.0",
     "identity-obj-proxy": "^3.0.0",
+    "jest": "^26.6.3",
     "jest-environment-jsdom": "^26.6.2",
     "jest-mock": "^26.6.2",
     "strip-ansi": "^6.0.0"
   },
-  "peerDependencies": {
+  "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.1",
     "jest": "^26.6.3"
+  },
+  "jest":{
+
   }
 }
