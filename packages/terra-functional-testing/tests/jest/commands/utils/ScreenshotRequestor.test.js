@@ -13,9 +13,9 @@ jest.mock('@cerner/terra-cli/lib/utils/Logger', () => function mock() {
   };
 });
 
+const path = require('path');
 const extract = require('extract-zip');
 const fs = require('fs-extra');
-const path = require('path');
 const fetch = require('node-fetch');
 const archiver = require('archiver');
 const FormData = require('form-data');
@@ -157,19 +157,19 @@ describe('ScreenshotRequestor', () => {
         status: 200,
         body: {
           pipe: mockPipe,
-        }
+        },
       });
-      
+
       extract.mockResolvedValueOnce();
 
       const mockOnFinish = jest.fn();
       const mockWriteStream = {
-        on: mockOnFinish.mockImplementationOnce( (event, handler) => {
+        on: mockOnFinish.mockImplementationOnce((event, handler) => {
           handler();
         }),
       };
       fs.createWriteStream.mockReturnValueOnce(mockWriteStream);
-      
+
       const oldCheckStatus = ScreenshotRequestor.checkStatus;
       ScreenshotRequestor.checkStatus = jest.fn();
       const screenshotRequestor = new ScreenshotRequestor({
@@ -180,7 +180,6 @@ describe('ScreenshotRequestor', () => {
         url: 'https://nexus.com/blah/',
         zipFilePath: path.join(process.cwd(), 'zip-path'),
       });
-
 
       await expect(screenshotRequestor.downloadScreenshots()).resolves.toBe();
       expect(fetch).toHaveBeenCalledWith(
@@ -208,11 +207,11 @@ describe('ScreenshotRequestor', () => {
         status: 200,
       });
 
-      const mockThrowError = new TypeError("UNKNOWN ERROR");
-      fs.createWriteStream.mockImplementationOnce( () => {
+      const mockThrowError = new TypeError('UNKNOWN ERROR');
+      fs.createWriteStream.mockImplementationOnce(() => {
         throw mockThrowError;
       });
-      
+
       const oldCheckStatus = ScreenshotRequestor.checkStatus;
       ScreenshotRequestor.checkStatus = jest.fn();
       const screenshotRequestor = new ScreenshotRequestor({
@@ -246,7 +245,7 @@ describe('ScreenshotRequestor', () => {
         ok: true,
         status: 404,
       });
-      
+
       const screenshotRequestor = new ScreenshotRequestor({
         latestScreenshotsPath: path.join(process.cwd(), 'latest'),
         referenceScreenshotsPath: path.join(process.cwd(), 'reference'),
@@ -274,7 +273,7 @@ describe('ScreenshotRequestor', () => {
         ok: true,
         status: 404,
       });
-      
+
       const screenshotRequestor = new ScreenshotRequestor({
         latestScreenshotsPath: path.join(process.cwd(), 'latest'),
         referenceScreenshotsPath: path.join(process.cwd(), 'reference'),
