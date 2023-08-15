@@ -27,6 +27,13 @@
   },
   "homepage": "https://github.com/cerner/terra-toolkit",
   "scripts": {
-    "lint": "eslint --ext .js,.jsx ."
+    "clean": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
+    "clean:install": "npm run clean && time npm install",
+    "lint": "eslint --ext .js,.jsx .",
+    "lint:js:fix": "eslint --ext .js,.jsx . --fix"
+  },
+  "devDependencies": {
+    "@cerner/eslint-config-terra": "^5.4.0",
+    "eslint": "^7.32.0"
   }
 }
