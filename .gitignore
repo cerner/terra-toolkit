@@ -59,6 +59,7 @@ errorScreenshots
 **/aggregated-translations/*.*
 generated-themes
 # package-lock.json
+packages/**/package-lock.json
 lib
 !/packages/terra-cli/tests/jest/fixtures/*/node_modules/
 !/packages/terra-cli/tests/jest/fixtures/**/lib/
