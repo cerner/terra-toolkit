@@ -1,8 +1,5 @@
 *.log
-target
-reports
-tests/**/__snapshots__/
-aggregated-translations
-dev-site-config
-screenshots
-errorScreenshots
+.eslintrc.js
+jest.config.js
+# src
+tests

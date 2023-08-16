@@ -30,15 +30,28 @@
   },
   "homepage": "https://github.com/cerner/terra-toolkit",
   "scripts": {
+    "clean": "npm run clean:node_modules && npm run clean:lib",
+    "clean:lib": "rm -rf lib",
+    "clean:node_modules": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
+    "clean:install": "npm run clean && time npm install",
     "compile": "babel src --out-dir lib --copy-files --ignore src/utils",
-    "jest": "jest --config ../../jest.config.js",
+    "jest": "jest",
     "lint": "eslint --ext .js,.jsx .",
-    "test": "npm run jest"
+    "lint:js:fix": "eslint --ext .js,.jsx . --fix",
+    "postinstall": "npm run compile"
   },
   "dependencies": {
     "fs-extra": "^9.0.1",
     "lockfile": "^1.0.4",
     "npmlog": "^4.1.2",
     "yargs": "^16.1.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.1",
+    "@cerner/eslint-config-terra": "^5.4.0",
+    "@cerner/jest-config-terra": "^1.5.0",
+    "eslint": "^7.32.0",
+    "jest": "26.6.3"
   }
 }
