@@ -1,3 +1,11 @@
 const jestConfig = require('@cerner/jest-config-terra');
 
-module.exports = jestConfig;
+module.exports = {
+  ...jestConfig,
+  snapshotSerializers: [
+    'enzyme-to-json/serializer',
+  ],
+  setupFiles: [
+    './jest.enzymeSetup.js',
+  ],
+};

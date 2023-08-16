@@ -34,11 +34,6 @@
   "files": [
     "lib"
   ],
-  "peerDependencies": {
-    "enzyme": "3.x",
-    "react": "16.x",
-    "react-intl": ">= 5.10.6"
-  },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
     "@babel/core": "^7.11.1",
@@ -61,7 +56,11 @@
     "postinstall": "npm run compile"
   },
   "dependencies": {
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.10.0",
+    "enzyme-to-json": "^3.3.5",
     "prop-types": "^15.7.2",
-    "react": "^18.2.0"
+    "react": "^16.8.5",
+    "react-dom": "^16.8.5"
   }
 }
