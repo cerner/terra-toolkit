@@ -40,17 +40,28 @@
     "react-intl": ">= 5.10.6"
   },
   "devDependencies": {
-    "react-intl": "^5.10.6"
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.1",
+    "@cerner/eslint-config-terra": "^5.4.0",
+    "@cerner/jest-config-terra": "^1.5.0",
+    "eslint": "^7.32.0",
+    "jest": "^26.6.3",
+    "react-intl": "^5.25.1"
   },
   "scripts": {
-    "clean:install": "npm run clean && npm install",
+    "clean": "npm run clean:node_modules && npm run clean:lib",
+    "clean:lib": "rm -rf lib",
+    "clean:node_modules": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
+    "clean:install": "npm run clean && time npm install",
     "compile": "babel --root-mode upward src --out-dir lib --copy-files",
-    "jest": "jest --config ../../jest.config.js",
+    "jest": "jest",
     "lint": "eslint --ext .js,.jsx . --ignore-path ../../.eslintignore",
+    "lint:js:fix": "eslint --ext .js,.jsx . --ignore-path ../../.eslintignore --fix",
     "precompile": "rm -rf lib",
-    "test": "npm run lint && npm run jest"
+    "postinstall": "npm run compile"
   },
   "dependencies": {
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.7.2",
+    "react": "^18.2.0"
   }
 }
