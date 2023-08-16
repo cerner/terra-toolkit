@@ -33,14 +33,15 @@
   "homepage": "https://github.com/cerner/terra-toolkit",
   "scripts": {
     "clean": "npm run clean:node_modules && npm run clean:lib",
+    "clean:install": "npm run clean && time npm install",
     "clean:lib": "rm -rf lib",
     "clean:node_modules": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
-    "clean:install": "npm run clean && time npm install",
     "compile": "babel src --out-dir lib --copy-files --ignore src",
     "jest": "jest",
-    "lint": "eslint --ext .js,.jsx .",
+    "lint": "eslint --ext .js,.jsx --ignore-path ../../.eslintignore .",
     "lint:js:fix": "eslint --ext .js,.jsx . --fix",
-    "postinstall": "npm run compile"
+    "postinstall": "npm run compile",
+    "test": "npm run jest"
   },
   "dependencies": {
     "find-up": "^4.0.0",

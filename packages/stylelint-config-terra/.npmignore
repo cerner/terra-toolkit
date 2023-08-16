@@ -2,4 +2,3 @@
 .eslintrc.js
 jest.config.js
 tests
-src

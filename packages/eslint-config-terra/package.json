@@ -29,7 +29,7 @@
   "scripts": {
     "clean": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
     "clean:install": "npm run clean && time npm install",
-    "lint": "eslint --ext .js,.jsx .",
+    "lint": "eslint --ext .js,.jsx --ignore-path ../../.eslintignore .",
     "lint:js:fix": "eslint --ext .js,.jsx . --fix"
   },
   "dependencies": {
@@ -41,6 +41,6 @@
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "eslint": "^7.19.0"
+    "eslint": "^7.32.0"
   }
 }

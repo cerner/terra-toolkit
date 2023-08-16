@@ -32,7 +32,9 @@
   "scripts": {
     "clean": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
     "clean:install": "npm run clean && time npm install",
-    "lint": "eslint --ext .js,.jsx .",
+    "clean:lib": "rm -rf lib",
+    "clean:node_modules": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
+    "lint": "eslint --ext .js,.jsx --ignore-path ../../.eslintignore .",
     "lint:js:fix": "eslint --ext .js,.jsx . --fix"
   },
   "devDependencies": {

@@ -32,7 +32,7 @@
     "clean:node_modules": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
     "clean:install": "npm run clean && time npm install",
     "compile": "babel --root-mode upward src --out-dir lib --copy-files",
-    "lint": "eslint --ext .js,.jsx .",
+    "lint": "eslint --ext .js,.jsx --ignore-path ../../.eslintignore .",
     "lint:js:fix": "eslint --ext .js,.jsx . --fix",
     "precompile": "rm -rf lib",
     "postinstall": "npm run compile"

@@ -36,9 +36,10 @@
     "clean:install": "npm run clean && time npm install",
     "compile": "babel src --out-dir lib --copy-files --ignore src/utils",
     "jest": "jest",
-    "lint": "eslint --ext .js,.jsx .",
+    "lint": "eslint --ext .js,.jsx --ignore-path ../../.eslintignore .",
     "lint:js:fix": "eslint --ext .js,.jsx . --fix",
-    "postinstall": "npm run compile"
+    "postinstall": "npm run compile",
+    "test": "npm run jest"
   },
   "dependencies": {
     "fs-extra": "^9.0.1",

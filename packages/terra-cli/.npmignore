@@ -1,5 +1,4 @@
 *.log
 .eslintrc.js
 jest.config.js
-# src
 tests
