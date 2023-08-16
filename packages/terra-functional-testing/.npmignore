@@ -1,5 +1,3 @@
 *.log
-target
-reports
-src
+.eslintrc.js
 tests
