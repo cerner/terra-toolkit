@@ -31,9 +31,6 @@
   "bugs": {
     "url": "https://github.com/cerner/terra-toolkit/issues"
   },
-  "files": [
-    "lib"
-  ],
   "devDependencies": {
     "@cerner/eslint-config-terra": "^5.4.0",
     "@cerner/jest-config-terra": "^1.5.0",
