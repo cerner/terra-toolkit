@@ -37,7 +37,6 @@
     "jest": "jest --config ./jest.local.config.js"
   },
   "dependencies": {
-    "@cerner/eslint-config-terra": "^5.4.0",
     "@cerner/terra-cli": "^1.9.0",
     "@jest/reporters": "^26.6.2",
     "babel-jest": "^26.6.3",
@@ -51,6 +50,7 @@
   "devDependencies": {
     "@babel/cli": "^7.10.5",
     "@babel/core": "^7.11.1",
+    "@cerner/eslint-config-terra": "^5.4.0",
     "jest": "^26.6.3"
   },
   "jest":{
