@@ -84,7 +84,6 @@
     "strip-ansi": "^6.0.0",
     "uuid": "7.0.3",
     "webdriverio": "^7.7.3",
-    "webpack": "^5.88.2",
     "webpack-dev-server": "^4.7.2",
     "which": "^2.0.2"
   },
