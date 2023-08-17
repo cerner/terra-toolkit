@@ -38,8 +38,8 @@
     "postinstall": "npm run compile"
   },
   "dependencies": {
-    "@cerner/eslint-config-terra": "^5.4.0",
-    "@cerner/jest-config-terra": "^1.5.0",
+    "@cerner/eslint-config-terra": "file:../eslint-config-terra",
+    "@cerner/jest-config-terra": "file:../jest-config-terra",
     "@cerner/package-json-lint": "^2.0.0",
     "@cerner/stylelint-config-terra": "^4.3.0",
     "@cerner/terra-functional-testing": "^4.1.0",
