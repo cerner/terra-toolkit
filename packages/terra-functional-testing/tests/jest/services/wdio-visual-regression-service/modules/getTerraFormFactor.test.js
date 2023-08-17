@@ -1,4 +1,4 @@
-import getTerraFormFactor from '../../../../../src/services/wdio-visual-regression-service/modules/getTerraFormFactor';
+const getTerraFormFactor = require('../../../../../src/services/wdio-visual-regression-service/modules/getTerraFormFactor');
 
 describe('getTerraFormFactor', () => {
   it('should return the small viewport', () => {

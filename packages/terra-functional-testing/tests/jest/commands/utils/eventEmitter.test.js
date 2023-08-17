@@ -1,5 +1,5 @@
-import eventEmitter from '../../../../src/commands/utils/eventEmitter'; // eslint-disable-line import/no-duplicates
-import eventEmitter2 from '../../../../src/commands/utils/eventEmitter'; // eslint-disable-line import/no-duplicates
+const eventEmitter = require('../../../../src/commands/utils/eventEmitter'); // eslint-disable-line import/no-duplicates
+const eventEmitter2  = require('../../../../src/commands/utils/eventEmitter'); // eslint-disable-line import/no-duplicates
 
 describe('EventEmitter', () => {
   afterEach(() => {

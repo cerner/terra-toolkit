@@ -1,6 +1,6 @@
-import fs from 'fs';
-import path from 'path';
-import FileOutputReporter from '../../../../src/reporters/file-output-reporter';
+const fs = require('fs');
+const path  = require( 'path');
+const FileOutputReporter  = require( '../../../../src/reporters/file-output-reporter');
 
 jest.mock('fs');
 

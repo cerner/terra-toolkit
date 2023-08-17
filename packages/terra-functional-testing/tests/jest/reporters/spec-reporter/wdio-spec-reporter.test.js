@@ -70,6 +70,7 @@ describe('Spec Reporter', () => {
   });
 
   describe('formatResults', () => {
+    //TODO: fix for local package development
     it('should format the suite results', () => {
       const mockRunner = { capabilities: {}, specs: ['/mock/spec'] };
 
@@ -130,6 +131,7 @@ describe('Spec Reporter', () => {
       expect(packageName).toEqual('terra-test');
     });
 
+    //TODO: fix for local package development
     it('should return the running directories name if it can not find package.json', () => {
       jest.spyOn(fs, 'existsSync').mockImplementationOnce(() => false);
 

@@ -1,10 +1,10 @@
-import path from 'path';
-import fs from 'fs-extra';
-import resemble from '@mirzazeyrek/node-resemble-js';
+const path = require('path');
+const fs = require('fs-extra');
+const resemble = require('@mirzazeyrek/node-resemble-js');
 
-import BaseCompare from '../../../../../src/services/wdio-visual-regression-service/methods/BaseCompare';
-import LocalCompare from '../../../../../src/services/wdio-visual-regression-service/methods/LocalCompare';
-import eventEmitter from '../../../../../src/commands/utils/eventEmitter';
+const BaseCompare = require('../../../../../src/services/wdio-visual-regression-service/methods/BaseCompare');
+const LocalCompare = require('../../../../../src/services/wdio-visual-regression-service/methods/LocalCompare');
+const eventEmitter = require('../../../../../src/commands/utils/eventEmitter');
 
 const dirTmp = path.resolve(__dirname, '..', '..', '..', '..', 'tmp');
 const dirFixture = path.resolve(__dirname, '..', '..', '..', '..', 'fixtures');

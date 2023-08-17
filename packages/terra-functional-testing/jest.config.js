@@ -5,12 +5,8 @@ module.exports = {
   watchPathIgnorePatterns: [
     './tests/jest/reports/results/terra-functional-testing.json',
   ],
-  // testEnvironment: '@cerner/jest-config-terra/lib/JestEnvironmentJsdomTerra.js',
+  testEnvironment: '@cerner/jest-config-terra/lib/JestEnvironmentJsdomTerra.js',
   transform: {
-    '^.+\\.(js|jsx)$': '@cerner/jest-config-terra/lib/jestBabelTransform',
+    '^.+\\.(js|jsx)$': 'babel-jest',
   },
-  snapshotSerializers: [
-    'enzyme-to-json/serializer',
-  ],
 };
-
