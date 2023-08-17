@@ -1,5 +1,6 @@
 Cerner Corporation
 
+- Kenny Kim [@kenk2]
 - Emily Rohrbough [@emilyrohrbough]
 - Brett Jankord [@brettjankord]
 - Mike Hemesath [@mikehemsath]
@@ -33,6 +34,7 @@ Cerner Corporation
 - Nick Williams [@QuasiGnarus]
 - Art Parkeenvincha [@artpark]
 
+[@kenk2]: https://github.com/kenk2
 [@emilyrohrbough]: https://github.com/emilyrohrbough
 [@brettjankord]: https://github.com/bjankord
 [@mikehemsath]: https://github.com/mhemesath
