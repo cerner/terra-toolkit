@@ -117,15 +117,25 @@ class ScreenshotRequestor {
    * Downloads the screenshots and unzip it to the reference screenshot directory defined by referenceScreenshotsPath.
    */
   async downloadScreenshots() {
-    const archiveUrl = `${this.serviceUrl}/reference.zip`;
-    const response = await fetch(
-      archiveUrl,
-      {
+    let archiveUrl;
+    let fetchOptions;
+    if (this.serviceAuthHeader !== undefined) {
+      archiveUrl = `${this.serviceUrl}/reference.zip`;
+      fetchOptions = {
         method: 'GET',
         headers: {
           Authorization: this.serviceAuthHeader,
         },
-      },
+      };
+    } else {
+      archiveUrl = `${this.url}/reference.zip`;
+      fetchOptions = {
+        method: 'GET',
+      };
+    }
+    const response = await fetch(
+      archiveUrl,
+      fetchOptions,
     );
 
     if (response.status === 404) {

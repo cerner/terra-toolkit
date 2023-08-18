@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+* Changed
+  * Updated logic in Nexus screenshots to still allow screenshot downloads when not authorized.
+  * Updated logic in Nexus screenshots to consume repository names more cleanly.
+
 * Fixed
   * Fixed an issue with whitespaces in the docker-compose file path causing failures.
 
