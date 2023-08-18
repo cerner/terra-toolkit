@@ -131,7 +131,7 @@
     "postcss": "^8.2.1",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
-    "react-intl": "^2.9.0",
+    "react-intl": "^5.25.1",
     "stylelint": "^13.0.0",
     "utf-8-validate": "^5.0.2",
     "webpack": "^5.28.0",
