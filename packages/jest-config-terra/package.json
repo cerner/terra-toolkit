@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "@cerner/terra-cli": "^1.9.0",
+    "@jest/reporters": "^25.5.1",
     "babel-jest": "^26.6.3",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.6.3",
@@ -51,7 +52,6 @@
     "@babel/cli": "^7.10.5",
     "@babel/core": "^7.11.1",
     "@cerner/eslint-config-terra": "^5.4.0",
-    "@jest/reporters": "^25.5.1",
     "eslint": "^7.32.0",
     "jest": "^26.6.3"
   }

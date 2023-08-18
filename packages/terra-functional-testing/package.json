@@ -50,6 +50,7 @@
   "homepage": "https://github.com/cerner/terra-toolkit#readme",
   "dependencies": {
     "@babel/runtime": "^7.11.2",
+    "@cerner/terra-cli": "^1.0.0",
     "@mirzazeyrek/node-resemble-js": "^1.2.1",
     "@octokit/core": "^3.6.0",
     "@wdio/cli": "^7.7.3",
@@ -82,13 +83,12 @@
     "node-fetch": "^2.6.0",
     "octokit": "^1.8.0",
     "strip-ansi": "^6.0.0",
-    "uuid": "7.0.3",
+    "uuid": "^7.0.3",
     "webdriverio": "^7.7.3",
     "webpack-dev-server": "^4.7.2",
     "which": "^2.0.2"
   },
   "peerDependencies": {
-    "@cerner/terra-cli": "^1.0.0",
     "webpack": "^4.43.0 || ^5.0.0",
     "webpack-cli": "^3.3.12 || ^4.0.0"
   },

@@ -1,7 +1,6 @@
 const getDefaultThemeName = require('../../../../src/config/utils/getDefaultThemeName');
 
 describe('getDefaultThemeName', () => {
-  
   afterEach(() => {
     jest.resetModules();
   });
@@ -14,7 +13,7 @@ describe('getDefaultThemeName', () => {
     expect(defaultThemeName).toEqual('terra-default-theme');
   });
 
-  //TODO: fix for local package development
+  // TODO: fix for local package development
   it('returns the default specified in the config file', () => {
     jest.mock('../../../../../../terra-theme.config', () => ({ theme: 'mock-theme' }));
 

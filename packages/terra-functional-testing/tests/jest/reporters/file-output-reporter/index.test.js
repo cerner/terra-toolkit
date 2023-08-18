@@ -1,6 +1,6 @@
 const fs = require('fs');
-const path  = require( 'path');
-const FileOutputReporter  = require( '../../../../src/reporters/file-output-reporter');
+const path = require('path');
+const FileOutputReporter = require('../../../../src/reporters/file-output-reporter');
 
 jest.mock('fs');
 

@@ -16,7 +16,7 @@ describe('index', () => {
     expect(helpOutput).toMatchSnapshot();
   });
 
-  //TODO: fix for local package development
+  // TODO: fix for local package development
   it('declares the wdio terra-cli command with proper command level help', async () => {
     const parser = yargs.command(command).scriptName('terra').help();
     const helpOutput = await new Promise((resolve) => {
