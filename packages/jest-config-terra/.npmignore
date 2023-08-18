@@ -1,0 +1,4 @@
+*.log
+.eslintrc.js
+jest.local.config.js
+tests

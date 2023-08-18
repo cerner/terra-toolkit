@@ -26,9 +26,15 @@
     "url": "https://github.com/cerner/terra-toolkit/issues"
   },
   "scripts": {
-    "compile": "babel src --out-dir lib --copy-files --ignore src",
-    "jest": "jest --config ../../jest.config.js",
-    "lint": "eslint --ext .js,.jsx .",
+    "clean": "npm run clean:node_modules && npm run clean:lib",
+    "clean:install": "npm run clean && time npm install",
+    "clean:lib": "rm -rf lib",
+    "clean:node_modules": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
+    "compile": "babel src --out-dir lib --copy-files --ignore src --no-comments",
+    "jest": "jest",
+    "lint": "eslint --ext .js,.jsx --ignore-path ../../.eslintignore .",
+    "lint:js:fix": "eslint --ext .js,.jsx . --fix",
+    "postinstall": "npm run compile",
     "test": "npm run jest"
   },
   "dependencies": {
@@ -41,7 +47,12 @@
     "webpack": "^4.30.0 || ^5.0.0"
   },
   "homepage": "https://github.com/cerner/terra-toolkit",
-  "files": [
-    "lib"
-  ]
+  "devDependencies": {
+    "@babel/cli": "^7.22.10",
+    "@babel/core": "^7.22.10",
+    "@cerner/eslint-config-terra": "^5.4.0",
+    "@cerner/jest-config-terra": "^1.5.0",
+    "eslint": "^7.32.0",
+    "jest": "^26.6.3"
+  }
 }

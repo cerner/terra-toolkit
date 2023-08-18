@@ -1,5 +1,5 @@
 *.log
-target
-reports
+.eslintrc.js
+jest.config.js
 src
 tests

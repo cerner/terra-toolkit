@@ -1,6 +1,5 @@
-import path from 'path';
-
-import BaseCompare from '../../../../../src/services/wdio-visual-regression-service/methods/BaseCompare';
+const path = require('path');
+const BaseCompare = require('../../../../../src/services/wdio-visual-regression-service/methods/BaseCompare');
 
 const dirTmp = path.resolve(__dirname, '..', '..', '..', '..', 'tmp');
 

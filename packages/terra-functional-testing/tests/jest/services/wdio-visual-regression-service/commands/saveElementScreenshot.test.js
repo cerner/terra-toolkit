@@ -1,6 +1,6 @@
-import saveElementScreenshot from '../../../../../src/services/wdio-visual-regression-service/commands/saveElementScreenshot';
-import makeElementScreenshot from '../../../../../src/services/wdio-visual-regression-service/modules/makeElementScreenshot';
-import saveBase64Image from '../../../../../src/services/wdio-visual-regression-service/utils/saveBase64Image';
+const saveElementScreenshot = require('../../../../../src/services/wdio-visual-regression-service/commands/saveElementScreenshot');
+const makeElementScreenshot = require('../../../../../src/services/wdio-visual-regression-service/modules/makeElementScreenshot');
+const saveBase64Image = require('../../../../../src/services/wdio-visual-regression-service/utils/saveBase64Image');
 
 jest.mock('../../../../../src/services/wdio-visual-regression-service/modules/makeElementScreenshot');
 jest.mock('../../../../../src/services/wdio-visual-regression-service/utils/saveBase64Image');

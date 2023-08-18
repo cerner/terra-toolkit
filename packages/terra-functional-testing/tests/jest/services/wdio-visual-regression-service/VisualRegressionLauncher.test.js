@@ -1,7 +1,7 @@
-import fse from 'fs-extra';
-import VisualRegressionLauncher from '../../../../src/services/wdio-visual-regression-service/VisualRegressionLauncher';
-import LocalCompare from '../../../../src/services/wdio-visual-regression-service/methods/LocalCompare';
-import getTerraFormFactor from '../../../../src/services/wdio-visual-regression-service/modules/getTerraFormFactor';
+const fse = require('fs-extra');
+const VisualRegressionLauncher = require('../../../../src/services/wdio-visual-regression-service/VisualRegressionLauncher');
+const LocalCompare = require('../../../../src/services/wdio-visual-regression-service/methods/LocalCompare');
+const getTerraFormFactor = require('../../../../src/services/wdio-visual-regression-service/modules/getTerraFormFactor');
 
 jest.mock('../../../../src/services/wdio-visual-regression-service/modules/getTerraFormFactor');
 jest.mock('fs-extra');

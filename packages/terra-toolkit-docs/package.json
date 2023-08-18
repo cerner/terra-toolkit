@@ -27,9 +27,15 @@
   },
   "homepage": "https://github.com/cerner/terra-toolkit",
   "scripts": {
+    "clean": "npm run clean:node_modules && npm run clean:lib",
+    "clean:lib": "rm -rf lib",
+    "clean:node_modules": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
+    "clean:install": "npm run clean && time npm install",
     "compile": "babel --root-mode upward src --out-dir lib --copy-files",
-    "lint": "eslint --ext .js,.jsx .",
-    "precompile": "rm -rf lib"
+    "lint": "eslint --ext .js,.jsx --ignore-path ../../.eslintignore .",
+    "lint:js:fix": "eslint --ext .js,.jsx . --fix",
+    "precompile": "rm -rf lib",
+    "postinstall": "npm run compile"
   },
   "dependencies": {
     "@cerner/eslint-config-terra": "^5.4.0",
@@ -38,5 +44,11 @@
     "@cerner/stylelint-config-terra": "^4.3.0",
     "@cerner/terra-functional-testing": "^4.1.0",
     "@cerner/webpack-config-terra": "^3.0.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.1",
+    "@cerner/eslint-config-terra": "^1.5.0",
+    "eslint": "^7.32.0"
   }
 }

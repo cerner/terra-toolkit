@@ -1,4 +1,4 @@
 *.log
-node_modules
-src
+.eslintrc.js
+jest.config.js
 tests

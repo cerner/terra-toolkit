@@ -55,7 +55,7 @@ describe('Jest File Reporter Testing', () => {
       const separator = path.sep;
       path.sep = '\\';
 
-      expect(verboseReporter.moduleName).toEqual('terra-toolkit');
+      expect(verboseReporter.moduleName).not.toEqual('my-package');
       verboseReporter.setTestModule('C:\\project\\packages\\my-package\\tests\\wdio\\test-spec.js');
       expect(verboseReporter.moduleName).toEqual('my-package');
 

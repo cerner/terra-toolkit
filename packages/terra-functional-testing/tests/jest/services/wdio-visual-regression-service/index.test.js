@@ -1,4 +1,4 @@
-import defaultLauncher from '../../../../src/services/wdio-visual-regression-service/index';
+const defaultLauncher = require('../../../../src/services/wdio-visual-regression-service/index');
 
 describe('index', () => {
   it('should export the launcher by default', () => {

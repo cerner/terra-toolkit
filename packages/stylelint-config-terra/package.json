@@ -31,14 +31,17 @@
     "url": "https://github.com/cerner/terra-toolkit/issues"
   },
   "homepage": "https://github.com/cerner/terra-toolkit",
-  "files": [
-    "lib",
-    "stylelint.config.js"
-  ],
   "scripts": {
+    "clean": "npm run clean:node_modules && npm run clean:lib",
+    "clean:install": "npm run clean && time npm install",
+    "clean:lib": "rm -rf lib",
+    "clean:node_modules": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
     "compile": "babel src --out-dir lib --copy-files --ignore src",
-    "lint": "eslint --ext .js,.jsx .",
-    "jest": "jest --config ../../jest.config.js"
+    "jest": "jest",
+    "lint": "eslint --ext .js,.jsx --ignore-path ../../.eslintignore .",
+    "lint:js:fix": "eslint --ext .js,.jsx . --fix",
+    "postinstall": "npm run compile",
+    "test": "npm run jest"
   },
   "dependencies": {
     "find-up": "^4.0.0",
@@ -47,6 +50,14 @@
     "stylelint-no-unsupported-browser-features": "^4.1.0",
     "stylelint-order": "^4.1.0",
     "stylelint-scss": "^3.11.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.1",
+    "@cerner/eslint-config-terra": "^5.4.0",
+    "@cerner/jest-config-terra": "^1.5.0",
+    "eslint": "^7.32.0",
+    "jest": "^26.6.3"
   },
   "peerDependencies": {
     "stylelint": "^13.0.0"
