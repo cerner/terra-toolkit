@@ -57,7 +57,6 @@ for (const JSONfile of allPackageJSON) {
     delete oldJSON.engines;
   }
 
-
   if (oldJSON.author) {
     newJSON.author = oldJSON.author;
     delete oldJSON.author;
