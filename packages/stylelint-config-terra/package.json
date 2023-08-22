@@ -23,7 +23,8 @@
     "linter"
   ],
   "engines": {
-    "node": ">=10"
+    "node": "10 || 12 || 14",
+    "npm": "6 || 9"
   },
   "author": "Cerner Corporation",
   "license": "Apache-2.0",

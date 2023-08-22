@@ -22,7 +22,8 @@
     "url": "https://github.com/cerner/terra-toolkit/issues"
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": "^10.13.0 || 12 || 14",
+    "npm": "6 || 9"
   },
   "homepage": "https://github.com/cerner/terra-toolkit",
   "scripts": {
