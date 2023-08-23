@@ -41,8 +41,7 @@
     "@cerner/jest-config-terra": "^1.7.0",
     "enzyme-adapter-react-16": "^1.10.0",
     "enzyme-to-json": "^3.3.5",
-    "eslint": "^7.32.0",
-    "jest": "^26.6.3"
+    "eslint": "^7.32.0"
   },
   "scripts": {
     "clean": "npm run clean:node_modules && npm run clean:lib",

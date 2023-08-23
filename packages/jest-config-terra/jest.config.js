@@ -3,6 +3,7 @@ const path = require('path');
 module.exports = {
   // Set a custom testEnvironment to allow us to compartmentalize setup.
   testEnvironment: '@cerner/jest-config-terra/lib/JestEnvironmentJsdomTerra.js',
+  testRunner: 'jest-jasmine2',
   clearMocks: true,
   collectCoverage: true,
   coverageDirectory: 'tests/jest/reports/coverage',
