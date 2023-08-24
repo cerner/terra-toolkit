@@ -1,6 +1,6 @@
 {
   "name": "@cerner/terra-enzyme-intl",
-  "version": "4.6.1",
+  "version": "4.7.0",
   "description": "Enzyme helpers for fortifying tests that depend on react-intl by decoupling the need for actual translations.",
   "main": "lib/index.js",
   "publishConfig": {
@@ -37,8 +37,8 @@
     "@babel/core": "^7.11.1",
     "@babel/preset-env": "^7.22.10",
     "@babel/preset-react": "^7.22.5",
-    "@cerner/eslint-config-terra": "^5.4.0",
-    "@cerner/jest-config-terra": "^1.5.0",
+    "@cerner/eslint-config-terra": "^5.5.0",
+    "@cerner/jest-config-terra": "^1.6.0",
     "enzyme-adapter-react-16": "^1.10.0",
     "enzyme-to-json": "^3.3.5",
     "eslint": "^7.32.0",
