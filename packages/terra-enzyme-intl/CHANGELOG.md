@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+  *  Updated dependencies to the appropriate dev or peer dependency sections so only the necessary dependencies get installed in production.
+
 ## 4.6.1 - (May 12, 2022)
 
 * Fixed
