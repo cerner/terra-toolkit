@@ -1,6 +1,6 @@
 {
   "name": "@cerner/browserslist-config-terra",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "description": "Terra Browserslist Shared Config",
   "main": "browserslist.config.js",
   "publishConfig": {
@@ -35,7 +35,7 @@
     "lint:js:fix": "eslint --ext .js,.jsx . --fix"
   },
   "devDependencies": {
-    "@cerner/eslint-config-terra": "^5.4.0",
+    "@cerner/eslint-config-terra": "^5.5.0",
     "eslint": "^7.32.0"
   }
 }

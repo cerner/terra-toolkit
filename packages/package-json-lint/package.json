@@ -1,6 +1,6 @@
 {
   "name": "@cerner/package-json-lint",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "Package JSON linter",
   "publishConfig": {
     "access": "public"
@@ -52,9 +52,9 @@
   "devDependencies": {
     "@babel/cli": "^7.10.5",
     "@babel/core": "^7.11.1",
-    "@cerner/eslint-config-terra": "^5.4.0",
-    "@cerner/jest-config-terra": "^1.5.0",
-    "@cerner/terra-cli": "^1.9.0",
+    "@cerner/eslint-config-terra": "^5.5.0",
+    "@cerner/jest-config-terra": "^1.6.0",
+    "@cerner/terra-cli": "^1.10.0",
     "eslint": "^7.32.0",
     "jest": "^26.6.3",
     "strip-ansi": "^6.0.0",

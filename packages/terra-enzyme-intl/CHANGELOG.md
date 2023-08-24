@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 4.7.0 - (August 24, 2023)
+
 * Changed
   *  Updated dependencies to the appropriate dev or peer dependency sections so only the necessary dependencies get installed in production.
 
