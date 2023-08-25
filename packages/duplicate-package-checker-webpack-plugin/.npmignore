@@ -1,3 +1,4 @@
 *.log
 .eslintrc.js
+src
 tests

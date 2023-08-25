@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Fixed
+  * Fixed install failures by removing unnecessary `postinstall` step.
+
 ## 3.1.0 - (August 24, 2023)
 
 * Changed
