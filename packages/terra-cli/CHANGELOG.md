@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.10.1 - (August 25, 2023)
+
 * Fixed
   * Removed unnecessary `postinstall` step when installing.
   * Optimized package size by exlucding unnecessary files when publishing.
