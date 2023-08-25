@@ -36,7 +36,6 @@
     "lint": "eslint --ext .js,.jsx --ignore-path ../../.eslintignore .",
     "lint:js:fix": "eslint --ext .js,.jsx . --fix",
     "jest": "jest --config ./jest.local.config.js",
-    "postinstall": "npm run compile",
     "test": "npm run jest"
   },
   "dependencies": {
