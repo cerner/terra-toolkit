@@ -1,4 +1,6 @@
 *.log
 .eslintrc.js
 jest.config.js
+terra-theme.config.js
+src
 tests

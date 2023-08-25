@@ -30,10 +30,6 @@
   "bugs": {
     "url": "https://github.com/cerner/terra-toolkit/issues"
   },
-  "files": [
-    "bin",
-    "lib"
-  ],
   "bin": {
     "tt-aggregate-translations": "bin/aggregate-translations-cli.js"
   },
@@ -47,7 +43,6 @@
     "jest": "jest",
     "lint": "eslint --ext .js,.jsx . --ignore-path ../../.eslintignore",
     "lint:js:fix": "eslint --ext .js,.jsx . --fix --ignore-path ../../.eslintignore",
-    "postinstall": "npm run compile",
     "test": "npm run lint && npm run jest"
   },
   "dependencies": {

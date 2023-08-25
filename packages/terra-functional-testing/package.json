@@ -10,13 +10,6 @@
     "node": "12 || 14",
     "npm": "6 || 9"
   },
-  "files": [
-    "bin",
-    "lib",
-    "NOTICE",
-    "LICENSE",
-    "*.md"
-  ],
   "scripts": {
     "clean": "npm run clean:node_modules && npm run clean:lib",
     "clean:lib": "rm -rf lib",
@@ -27,7 +20,6 @@
     "lint:js:fix": "eslint --ext .js,.jsx --ignore-path ../../.eslintignore . --fix",
     "jest": "jest",
     "premocha": "rm -rf tests/tmp",
-    "postinstall": "npm run compile",
     "mocha": "MOCHA=true mocha --require @babel/register tests/mocha/**/unit/**/*.test.js",
     "test": "npm run jest && npm run mocha"
   },

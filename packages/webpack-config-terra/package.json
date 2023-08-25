@@ -6,9 +6,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "files": [
-    "lib"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cerner/terra-toolkit.git",
@@ -38,8 +35,7 @@
     "compile": "babel src --out-dir lib --copy-files --ignore src/utils",
     "jest": "jest",
     "lint": "eslint --ext .js,.jsx . --ignore-path ../../.eslintignore",
-    "lint:js:fix": "eslint --ext .js,.jsx . --ignore-path ../../.eslintignore --fix",
-    "postinstall": "npm run compile"
+    "lint:js:fix": "eslint --ext .js,.jsx . --ignore-path ../../.eslintignore --fix"
   },
   "dependencies": {
     "@cerner/duplicate-package-checker-webpack-plugin": "^2.4.0",

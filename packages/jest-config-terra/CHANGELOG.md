@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+* Fixed
+  * Removed unnecessary `postinstall` step when installing.
+  * Optimized package size by exlucding unnecessary files when publishing.
+
 ## 1.6.0 - (August 24, 2023)
 
 * Changed
