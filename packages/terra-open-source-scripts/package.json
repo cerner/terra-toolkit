@@ -36,7 +36,6 @@
     "lint": "eslint --ext .js,.jsx . --ignore-path ../../.eslintignore --fix",
     "lint:js:fix": "eslint --ext .js,.jsx . --ignore-path ../../.eslintignore --fix",
     "precompile": "rm -rf lib",
-    
     "test": "npm run jest"
   },
   "dependencies": {
