@@ -1,6 +1,6 @@
 {
   "name": "@cerner/terra-toolkit-docs",
-  "version": "2.20.0",
+  "version": "2.21.0",
   "description": "Contains documentation for packages in the terra-toolkit monorepo",
   "main": "index.js",
   "publishConfig": {
@@ -40,11 +40,11 @@
   },
   "dependencies": {
     "@cerner/eslint-config-terra": "^5.5.0",
-    "@cerner/jest-config-terra": "^1.6.0",
-    "@cerner/package-json-lint": "^2.1.0",
-    "@cerner/stylelint-config-terra": "^4.4.0",
-    "@cerner/terra-functional-testing": "^4.2.0",
-    "@cerner/webpack-config-terra": "3.0.0"
+    "@cerner/jest-config-terra": "^1.6.1",
+    "@cerner/package-json-lint": "^2.1.1",
+    "@cerner/stylelint-config-terra": "^4.4.1",
+    "@cerner/terra-functional-testing": "^4.2.1",
+    "@cerner/webpack-config-terra": "^3.1.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 4.2.1 - (August 25, 2023)
+
 * Fixed
   * Fixed install failures by removing unnecessary `postinstall` step.
 

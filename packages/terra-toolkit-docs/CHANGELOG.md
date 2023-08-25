@@ -2,8 +2,10 @@
 
 ## Unreleased
 
+## 2.21.0 - (August 25, 2023)
+
 * Changed
-  * Locked `webpack-config-terra` to `3.0.0` as `3.1.0` had installation issues.
+  * Minor dependency version bump.
 
 ## 2.20.0 - (August 24, 2023)
 
