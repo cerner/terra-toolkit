@@ -33,8 +33,7 @@
     "compile": "babel src --out-dir lib --copy-files --ignore src",
     "jest": "jest",
     "lint": "eslint --ext .js,.jsx --ignore-path ../../.eslintignore .",
-    "lint:js:fix": "eslint --ext .js,.jsx . --fix",
-    "postinstall": "npm run compile"
+    "lint:js:fix": "eslint --ext .js,.jsx . --fix"
   },
   "dependencies": {
     "@npmcli/promise-spawn": "^1.2.0",
@@ -52,9 +51,8 @@
   "devDependencies": {
     "@babel/cli": "^7.10.5",
     "@babel/core": "^7.11.1",
-    "@cerner/eslint-config-terra": "^5.5.0",
     "@cerner/jest-config-terra": "^1.6.1",
-    "@cerner/terra-cli": "^1.10.1",
+    "@cerner/terra-cli": "1",
     "eslint": "^7.32.0",
     "jest": "^26.6.3",
     "strip-ansi": "^6.0.0",

@@ -39,9 +39,8 @@
     "postinstall": "npm run compile"
   },
   "dependencies": {
-    "@cerner/eslint-config-terra": "^5.5.0",
     "@cerner/jest-config-terra": "^1.6.1",
-    "@cerner/package-json-lint": "^2.1.1",
+    "@cerner/package-json-lint": "2.0.0",
     "@cerner/stylelint-config-terra": "^4.4.1",
     "@cerner/terra-functional-testing": "^4.2.1",
     "@cerner/webpack-config-terra": "^3.1.1"
@@ -49,7 +48,6 @@
   "devDependencies": {
     "@babel/cli": "^7.10.5",
     "@babel/core": "^7.11.1",
-    "@cerner/eslint-config-terra": "^1.5.0",
     "eslint": "^7.32.0"
   }
 }
