@@ -1,6 +1,6 @@
 {
   "name": "@cerner/jest-config-terra",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "description": "A base jest config for the terra application framework.",
   "main": "jest.config.js",
   "publishConfig": {
@@ -39,7 +39,7 @@
     "test": "npm run jest"
   },
   "dependencies": {
-    "@cerner/terra-cli": "^1.10.1",
+    "@cerner/terra-cli": "^1.10.2",
     "@jest/reporters": "^25.5.1",
     "babel-jest": "^26.6.3",
     "identity-obj-proxy": "^3.0.0",
