@@ -1,6 +1,6 @@
 {
   "name": "@cerner/terra-aggregate-translations",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "description": "The terra-aggregate-translations pre-build tool assists with creating the translation, intl loader and translation loader files that are configured for the specified locales. This tool is offered as a CLI script and as a setup function.",
   "publishConfig": {
     "access": "public"
@@ -55,8 +55,8 @@
   "devDependencies": {
     "@babel/cli": "^7.10.5",
     "@babel/core": "^7.11.1",
-    "@cerner/eslint-config-terra": "^5.5.0",
-    "@cerner/jest-config-terra": "^1.6.1",
+    "@cerner/eslint-config-terra": "^5.5.1",
+    "@cerner/jest-config-terra": "^1.6.2",
     "eslint": "^7.32.0",
     "jest": "26.6.3"
   },

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 5.5.1 - (August 30, 2023)
+
  * Fixed
   * Moved `eslint` from dependencies to the correct peerDependencies section to fix npm 6 install errors. 
 
