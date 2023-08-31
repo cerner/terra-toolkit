@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Fixed
+  * Removed unnecessary `postinstall` step when installing which was causing installation failures.
+  
 ## 2.1.2 - (August 30, 2023)
 
 * Changed

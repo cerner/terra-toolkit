@@ -53,9 +53,9 @@
   "devDependencies": {
     "@babel/cli": "^7.10.5",
     "@babel/core": "^7.11.1",
-    "@cerner/eslint-config-terra": "^5.5.1",
-    "@cerner/jest-config-terra": "^1.6.2",
-    "@cerner/terra-cli": "^1.10.2",
+    "@cerner/eslint-config-terra": "5",
+    "@cerner/jest-config-terra": "1",
+    "@cerner/terra-cli": "1",
     "eslint": "^7.32.0",
     "jest": "^26.6.3",
     "yargs": "^16.1.1"
