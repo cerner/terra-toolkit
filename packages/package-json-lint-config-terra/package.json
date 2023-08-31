@@ -39,6 +39,7 @@
     "lint:js:fix": "eslint --ext .js,.jsx . --fix"
   },
   "devDependencies": {
+    "@cerner/eslint-config-terra": "5",
     "eslint": "^7.32.0"
   },
   "peerDependencies": {

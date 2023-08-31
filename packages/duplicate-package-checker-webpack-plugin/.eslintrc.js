@@ -1,5 +1,5 @@
 module.exports = {
-  extends: '../eslint-config-terra',
+  extends: '@cerner/terra',
   root: true,
   parserOptions: {
     requireConfigFile: false,
