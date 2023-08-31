@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 4.3.0 - (August 31, 2023)
+
 * Changed
   * Locked `uuid` to `3.4.0` for consistency across Terra packages.
   
