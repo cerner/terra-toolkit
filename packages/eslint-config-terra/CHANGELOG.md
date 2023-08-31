@@ -3,7 +3,7 @@
 ## Unreleased
 
 * Changed
-  * Locked `eslint-plugin-formatjs` to `2.19.1` as it has a peerDependency of `eslint@7` and no longer conflicts with `eslint-config-terra`.
+  * Locked `eslint-plugin-formatjs` to `2.19.1` so that the version of its peerDependency `eslint@7` matches that in `eslint-config-terra`.
 
 ## 5.5.1 - (August 30, 2023)
 
