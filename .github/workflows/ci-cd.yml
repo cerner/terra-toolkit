@@ -26,6 +26,7 @@ jobs:
           # https://github.com/danger/danger-js/issues/557#issuecomment-664851950
           DANGER_DISABLE_TRANSPILATION: true
   lint:
+    needs: [build]
     name: Linting Project
     runs-on: ubuntu-latest
     steps:
@@ -36,6 +37,7 @@ jobs:
       - name: Linting Project
         run: npm run lint
   test:
+    needs: [build]
     name: Testing Project
     runs-on: ubuntu-latest
     steps:
@@ -46,6 +48,7 @@ jobs:
       - name: Run Jest Tests
         run: npm run jest
   wdio:
+    needs: [build]
     runs-on: ubuntu-latest
 
     steps:
@@ -57,6 +60,7 @@ jobs:
         run: npm run wdio
 
   mocha:
+    needs: [build]
     runs-on: ubuntu-latest
 
     steps:
