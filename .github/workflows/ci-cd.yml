@@ -14,6 +14,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout Project
+        uses: actions/checkout@v3
       - name: Setup Project
         uses: ./.github/actions/setup
       - if: github.event_name == 'pull_request'
@@ -27,6 +29,8 @@ jobs:
     name: Linting Project
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Project
+        uses: actions/checkout@v3
       - name: Setup Project
         uses: ./.github/actions/setup
       - name: Linting Project
@@ -35,6 +39,8 @@ jobs:
     name: Testing Project
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Project
+        uses: actions/checkout@v3
       - name: Setup Project
         uses: ./.github/actions/setup
       - name: Run Jest Tests
@@ -43,6 +49,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout Project
+        uses: actions/checkout@v3
       - name: Setup Project
         uses: ./.github/actions/setup
       - name: Run WDIO Tests
@@ -52,6 +60,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout Project
+        uses: actions/checkout@v3
       - name: Setup Project
         uses: ./.github/actions/setup
       - name: Run Mocha Tests
@@ -67,6 +77,8 @@ jobs:
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
+      - name: Checkout Project
+        uses: actions/checkout@v3
       - name: Setup Project
         uses: ./.github/actions/setup
       - name: Build
