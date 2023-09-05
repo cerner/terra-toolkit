@@ -14,9 +14,6 @@ runs:
     - name: Check Node & NPM versions
       shell: bash
       run: node -v && npm -v
-    - name: Clean Environment
-      shell: bash
-      run: npm run clean
     - name: Install Dependencies
       shell: bash
       run: npm install
