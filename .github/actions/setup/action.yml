@@ -8,9 +8,6 @@ runs:
       with:
         node-version: 14.x
         cache: 'npm'
-    - name: Setup NPM v9
       run: npm install -g npm@9
-    - name: Check Node & NPM versions
       run: node -v && npm -v
-    - name: Install Dependencies
       run: npm install
