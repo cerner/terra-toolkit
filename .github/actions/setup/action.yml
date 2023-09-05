@@ -8,6 +8,7 @@ runs:
       with:
         node-version: 14.x
         cache: 'npm'
-      run: npm install -g npm@9
-      run: node -v && npm -v
-      run: npm install
+      run: |
+        npm install -g npm@9
+        node -v && npm -v
+        npm install
