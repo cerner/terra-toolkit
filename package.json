@@ -81,7 +81,7 @@
     "clean:lib": "rm -rf packages/**/lib",
     "clean:root": "npm run clean --ws && echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
     "compile:prod": "rm -rf ./build; NODE_ENV=production webpack --mode=production --config webpack.dev-site.config.js",
-    "compile": "npm run clean:lib && npm run compile --ws",
+    "compile": "npm run clean:lib && npm run compile --ws --yes --if-present",
     "danger": "danger ci",
     "heroku-postbuild": "npm install --only=dev && npm run compile:prod",
     "heroku-prebuild": "npx lerna init",
