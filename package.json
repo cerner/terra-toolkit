@@ -4,7 +4,7 @@
   "version": "5.25.0",
   "description": "Utilities to help when developing terra modules.",
   "engines": {
-    "node": "10 || 12|| 14",
+    "node": "10 || 12 || 14",
     "npm": "6 || 9"
   },
   "repository": {
@@ -76,12 +76,12 @@
     ]
   },
   "scripts": {
-    "clean": "npm run clean:root && npm run clean:lib",
+    "clean": "npm run clean:lib && npm run clean:root",
     "clean:install": "rm package-lock.json; npm run clean && time npm install",
     "clean:lib": "rm -rf packages/**/lib",
-    "clean:root": "npm run clean --ws && echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
+    "clean:root": "$(lerna clean --yes || true) && echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
     "compile:prod": "rm -rf ./build; NODE_ENV=production webpack --mode=production --config webpack.dev-site.config.js",
-    "compile": "npm run clean:lib && npm run compile --ws --yes --if-present",
+    "compile": "npm run clean:lib && lerna run compile",
     "danger": "danger ci",
     "heroku-postbuild": "npm install --only=dev && npm run compile:prod",
     "heroku-prebuild": "npx lerna init",
@@ -129,6 +129,7 @@
     "eslint": "^7.19.0",
     "html-webpack-plugin": "^4.3.0",
     "jest": "^26.0.1",
+    "lerna": "^6.4.1",
     "memory-fs": "^0.5.0",
     "postcss": "^8.2.1",
     "react": "^16.8.5",
