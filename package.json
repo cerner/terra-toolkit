@@ -12,7 +12,7 @@
     "url": "git+https://github.com/cerner/terra-toolkit"
   },
   "workspaces": [
-    "./packages/*"
+    "packages/*"
   ],
   "keywords": [
     "Cerner",
