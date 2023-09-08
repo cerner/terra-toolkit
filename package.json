@@ -5,7 +5,7 @@
   "description": "Utilities to help when developing terra modules.",
   "engines": {
     "node": "10 || 12 || 14",
-    "npm": "6 || 9"
+    "npm": "9"
   },
   "repository": {
     "type": "git",
