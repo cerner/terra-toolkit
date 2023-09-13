@@ -4,13 +4,16 @@
   "version": "5.25.0",
   "description": "Utilities to help when developing terra modules.",
   "engines": {
-    "node": "10 || 12|| 14",
-    "npm": "6 || 9"
+    "node": "10 || 12 || 14",
+    "npm": "9"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cerner/terra-toolkit"
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "keywords": [
     "Cerner",
     "Terra",
@@ -73,13 +76,12 @@
     ]
   },
   "scripts": {
-    "bootstrap:hoist": "lerna bootstrap --hoist --force-local",
     "clean": "npm run clean:root && npm run clean:lib",
     "clean:install": "rm package-lock.json; npm run clean && time npm install",
     "clean:lib": "rm -rf packages/**/lib",
     "clean:root": "$(lerna clean --yes || true) && echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
     "compile:prod": "rm -rf ./build; NODE_ENV=production webpack --mode=production --config webpack.dev-site.config.js",
-    "compile": "npm run clean:lib && lerna run compile --parallel",
+    "compile": "npm run clean:lib && lerna run compile",
     "danger": "danger ci",
     "heroku-postbuild": "npm install --only=dev && npm run compile:prod",
     "heroku-prebuild": "npx lerna init",
@@ -90,7 +92,7 @@
     "lint": "npm run lint:js && npm run lint:package-json",
     "mocha": "cd packages/terra-functional-testing && npm run mocha",
     "pack": "webpack --mode=production",
-    "postinstall": "npm run bootstrap:hoist && npm run compile",
+    "postinstall": "npm run compile",
     "prepare-for-release": "npm run terra -- prepare-for-release",
     "start": "webpack serve --config webpack.dev-site.config.js",
     "start-heroku": "npm run terra -- express-server --port $PORT --site './build' ",
