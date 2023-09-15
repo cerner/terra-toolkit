@@ -1,9 +1,7 @@
 const endOfLine = require('os').EOL;
 const fs = require('fs');
 const path = require('path');
-const reporters = require('@jest/reporters');
-
-const { VerboseReporter } = reporters;
+const { VerboseReporter } = require('@jest/reporters');
 
 const stripAnsi = require('strip-ansi');
 const { Logger } = require('@cerner/terra-cli');
