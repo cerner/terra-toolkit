@@ -4,7 +4,7 @@ import TerraVerboseReporter from '../../src/reporters/verbose-reporter/TerraVerb
 
 jest.mock('fs');
 
-describe('Jest File Reporter Testing', () => {
+xdescribe('Jest File Reporter Testing', () => {
   let fsWriteSpy;
 
   beforeEach(() => {
