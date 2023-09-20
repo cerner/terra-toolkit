@@ -8,7 +8,7 @@ describe('Jest File Reporter Testing', () => {
   let fsWriteSpy;
 
   beforeEach(() => {
-    console.log("test"); // eslint-disable-line no-console
+    console.log("test")
     fsWriteSpy = jest.spyOn(fs, 'writeFileSync');
   });
 
