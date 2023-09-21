@@ -7,10 +7,10 @@ module.exports = {
   clearMocks: true,
   collectCoverage: true,
   coverageDirectory: 'tests/jest/reports/coverage',
-  collectCoverageFrom: [
-    '**/src/**/*.js(x)?',
-    '**/reporters/**/*.js',
-  ],
+  // collectCoverageFrom: [
+  //   '**/src/**/*.js(x)?',
+  //   '**/reporters/**/*.js',
+  // ],
   coveragePathIgnorePatterns: [
     '/src/terra-dev-site',
   ],
