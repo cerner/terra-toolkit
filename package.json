@@ -128,7 +128,7 @@
     "enzyme-to-json": "^3.3.5",
     "eslint": "^7.19.0",
     "html-webpack-plugin": "^4.3.0",
-    "jest": "^26.0.1",
+    "jest": "27",
     "lerna": "^6.4.1",
     "memory-fs": "^0.5.0",
     "postcss": "^8.2.1",

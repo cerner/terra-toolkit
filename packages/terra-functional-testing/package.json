@@ -43,7 +43,6 @@
   "homepage": "https://github.com/cerner/terra-toolkit#readme",
   "dependencies": {
     "@babel/runtime": "^7.11.2",
-    "@cerner/terra-cli": "^1.11.0",
     "@mirzazeyrek/node-resemble-js": "^1.2.1",
     "@octokit/core": "^3.6.0",
     "@wdio/cli": "^7.7.3",
@@ -82,10 +81,12 @@
     "which": "^2.0.2"
   },
   "peerDependencies": {
+    "@cerner/terra-cli": "^1.11.0",
     "webpack": "^4.43.0 || ^5.0.0",
     "webpack-cli": "^3.3.12 || ^4.0.0"
   },
   "devDependencies": {
+    "@cerner/terra-cli": "^1.11.0",
     "@babel/cli": "^7.10.5",
     "@babel/core": "^7.11.1",
     "@babel/helpers": "^7.10.4",
@@ -99,11 +100,9 @@
     "@cerner/eslint-config-terra": "^5.6.0",
     "@cerner/jest-config-terra": "^1.7.0",
     "@octokit/core": "^3.1.2",
-    "babel-jest": "^26.6.3",
     "chai": "^4.2.0",
     "eslint": "^7.19.0",
     "html-webpack-plugin": "^4.3.0",
-    "jest": "^26.6.3",
     "lodash.groupby": "^4.6.0",
     "lodash.map": "^4.6.0",
     "lodash.mapkeys": "^4.6.0",

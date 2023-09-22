@@ -1,4 +1,4 @@
-const babelJest = require('babel-jest');
+const babelJest = require('babel-jest').default;
 
 /**
  * Jest uses babel.config.js to compile during the test runs. To correctly resolve babel's config root

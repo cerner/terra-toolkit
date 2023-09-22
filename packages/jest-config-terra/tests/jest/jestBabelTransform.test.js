@@ -1,4 +1,4 @@
-const babelJest = require('babel-jest');
+const babelJest = require('babel-jest').default;
 
 describe('babel transformer', () => {
   it('ensures the transformer is created with the correct configuration', () => {

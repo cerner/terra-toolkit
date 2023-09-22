@@ -1,0 +1,8 @@
+# Jest Config Terra Upgrade Guide
+
+## Changes from 1.0 to 2.0
+
+`jest-config-terra` now uses Jest 27. Consumers will need to make the following updates in order to consume `jest-config-terra@2.0.0`:
+
+- Update Jest and related Jest packages (i.e. `babel-jest`, `jest-mock`, etc.) to v27.
+- Tests utilizing fake timers may fail and need to be updated per the [Jest docs](https://jestjs.io/docs/timer-mocks#enable-fake-timers).
