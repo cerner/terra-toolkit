@@ -1,6 +1,6 @@
 {
   "name": "@cerner/terra-functional-testing",
-  "version": "4.3.0",
+  "version": "4.4.0",
   "main": "lib/index.js",
   "description": "A functional testing utility for applications built using Terra.",
   "publishConfig": {
@@ -86,7 +86,6 @@
     "webpack-cli": "^3.3.12 || ^4.0.0"
   },
   "devDependencies": {
-    "@cerner/terra-cli": "^1.11.0",
     "@babel/cli": "^7.10.5",
     "@babel/core": "^7.11.1",
     "@babel/helpers": "^7.10.4",
@@ -98,7 +97,8 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.10.5",
     "@cerner/eslint-config-terra": "^5.6.0",
-    "@cerner/jest-config-terra": "^1.7.0",
+    "@cerner/jest-config-terra": "^2.0.0",
+    "@cerner/terra-cli": "^1.12.0",
     "@octokit/core": "^3.1.2",
     "chai": "^4.2.0",
     "eslint": "^7.19.0",
