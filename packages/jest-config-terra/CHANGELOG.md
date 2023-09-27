@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.0 - (September 26, 2023)
+
 * Breaking changes
   * Updated to use Jest 27.
   * Dropped support for Jest 26.
