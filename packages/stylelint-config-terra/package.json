@@ -44,9 +44,12 @@
     "test": "npm run jest"
   },
   "dependencies": {
+    "@cerner/browserslist-config-terra": "3.2.0",
     "find-up": "^4.0.0",
+    "postcss-scss": "^4.0.6",
     "postcss-value-parser": "^4.0.0",
-    "stylelint-config-sass-guidelines": "^7.1.0",
+    "stylelint-config-sass-guidelines": "10.0.0",
+    "stylelint-config-standard-scss": "^11.0.0",
     "stylelint-no-unsupported-browser-features": "^4.1.0",
     "stylelint-order": "^4.1.0",
     "stylelint-scss": "^3.11.0"
@@ -59,6 +62,7 @@
     "eslint": "^7.32.0"
   },
   "peerDependencies": {
-    "stylelint": "^13.0.0"
+    "postscss": "8.3.11",
+    "stylelint": "^15.2.0"
   }
 }

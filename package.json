@@ -135,11 +135,14 @@
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
     "react-intl": "^2.9.0",
-    "stylelint": "^13.0.0",
+    "stylelint": "^15.2.0",
     "terra-application": "^1.54.1",
     "utf-8-validate": "^5.0.2",
     "webpack": "^5.28.0",
     "webpack-cli": "^4.6.0",
     "webpack-dev-server": "^4.7.2"
+  },
+  "peerDependencies": {
+    "rimraf": "^4.4.1"
   }
 }

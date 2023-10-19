@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Breaking Change
+  * Upgraded Stylelint from 13 to 15.
+
 ## 4.6.0 - (September 26, 2023)
 
 * Changed

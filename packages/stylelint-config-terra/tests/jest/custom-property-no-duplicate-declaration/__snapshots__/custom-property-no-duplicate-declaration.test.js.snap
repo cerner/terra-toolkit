@@ -4,6 +4,8 @@ exports[`custom-property-no-duplicate-declaration does error with nested duplica
 Array [
   Object {
     "column": 11,
+    "endColumn": 42,
+    "endLine": 1,
     "line": 1,
     "rule": "terra/custom-property-no-duplicate-declaration",
     "severity": "error",
@@ -16,6 +18,8 @@ exports[`custom-property-no-duplicate-declaration does error with reversed sibli
 Array [
   Object {
     "column": 11,
+    "endColumn": 42,
+    "endLine": 1,
     "line": 1,
     "rule": "terra/custom-property-no-duplicate-declaration",
     "severity": "error",
@@ -28,6 +32,8 @@ exports[`custom-property-no-duplicate-declaration does error with sibling duplic
 Array [
   Object {
     "column": 49,
+    "endColumn": 80,
+    "endLine": 1,
     "line": 1,
     "rule": "terra/custom-property-no-duplicate-declaration",
     "severity": "error",
