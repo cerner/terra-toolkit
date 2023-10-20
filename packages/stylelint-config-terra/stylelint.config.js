@@ -1,7 +1,7 @@
 const browserslist = require('@cerner/browserslist-config-terra');
 
 module.exports = {
-  extends: ['stylelint-config-sass-guidelines', 'stylelint-config-standard-scss'],
+  extends: 'stylelint-config-sass-guidelines',
   plugins: [
     'stylelint-no-unsupported-browser-features',
     './lib/rules/custom-property-no-duplicate-declaration/custom-property-no-duplicate-declaration',
@@ -21,7 +21,7 @@ module.exports = {
       },
     ],
     'declaration-property-unit-allowed-list': [{ 'line-height': [] }, { severity: 'warning' }],
-    'scss/no-global-function-names': false,
+    'scss/no-global-function-names': null,
     'terra/custom-property-name': true,
     'terra/custom-property-no-duplicate-declaration': true,
     'terra/custom-property-pattern': true,
