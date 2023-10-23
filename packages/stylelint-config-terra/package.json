@@ -11,6 +11,14 @@
   "publishConfig": {
     "access": "public"
   },
+  "files": [
+    "CHANGELOG.md",
+    "README.md",
+    "LICENSE",
+    "NOTICE",
+    "lib",
+    "stylelint.config.js"
+  ],
   "keywords": [
     "stylelint",
     "stylelint-config",

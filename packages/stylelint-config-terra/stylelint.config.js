@@ -12,7 +12,6 @@ module.exports = {
   ],
   rules: {
     'max-nesting-depth': 3,
-    'no-extra-semicolons': [true, { severity: 'warning' }],
     'scss/at-mixin-pattern': '^[a-z]+([a-z0-9-]+[a-z0-9]+)?$',
     'custom-property-pattern': [
       '[a-z]+([a-z0-9-]+[a-z0-9]+)?$',
@@ -35,13 +34,13 @@ module.exports = {
           'calc', // "calc" is only partially supported by Android Browser 4.4.3-4.4.4
           'css-gradients', // is only partially supported by Safari 12,11.1, iOS Safari 10.0-10.2,10.3,11.0-11.2,11.3-11.4,12.0-12.1
           'cursor', // "css3-cursors" is not supported by iOS Safari 10.0-10.2,10.3,11.0-11.2,11.3-11.4, Android Browser 4.4.3-4.4.4
-          'flexbox', // "flexbox" is only partially supported by IE 10,11
-          'outline', // "outline" is only partially supported by IE 10,11
-          'rem', // "rem" is only partially supported by IE 10
-          'viewport-units', // is only partially supported by IE 10,11
+          'flexbox', // "flexbox" is only partially supported by IE 11
+          'outline', // "outline" is only partially supported by IE 11
+          'rem',
+          'viewport-units', // is only partially supported by IE 11
           'word-break', // "word-break" is only partially supported by Android Browser 4.3.4-4.4.4
-          'wordwrap', // is only partially supported by IE 10,11, Edge 17
-          'css-filters', // "Not supported by IE10,11",
+          'wordwrap', // is only partially supported by IE 11, Edge 17
+          'css-filters', // "Not supported by IE 11",
         ],
         severity: 'warning',
       },
