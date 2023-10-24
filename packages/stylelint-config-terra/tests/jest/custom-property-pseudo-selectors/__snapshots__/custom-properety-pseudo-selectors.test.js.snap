@@ -4,6 +4,8 @@ exports[`custom-property-pseudo-selectors does error with a custom properties th
 Array [
   Object {
     "column": 27,
+    "endColumn": 63,
+    "endLine": 1,
     "line": 1,
     "rule": "terra/custom-property-pseudo-selectors",
     "severity": "error",
@@ -16,6 +18,8 @@ exports[`custom-property-pseudo-selectors does error with a custom properties th
 Array [
   Object {
     "column": 15,
+    "endColumn": 39,
+    "endLine": 1,
     "line": 1,
     "rule": "terra/custom-property-pseudo-selectors",
     "severity": "error",
@@ -28,6 +32,8 @@ exports[`custom-property-pseudo-selectors does error with a custom properties th
 Array [
   Object {
     "column": 15,
+    "endColumn": 39,
+    "endLine": 1,
     "line": 1,
     "rule": "terra/custom-property-pseudo-selectors",
     "severity": "error",

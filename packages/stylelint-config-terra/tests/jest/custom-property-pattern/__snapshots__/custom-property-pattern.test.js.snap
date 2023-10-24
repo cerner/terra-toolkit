@@ -4,6 +4,8 @@ exports[`custom-property-pattern does error with custom property with underscore
 Array [
   Object {
     "column": 9,
+    "endColumn": 44,
+    "endLine": 1,
     "line": 1,
     "rule": "terra/custom-property-pattern",
     "severity": "error",
@@ -16,6 +18,8 @@ exports[`custom-property-pattern does error with custom property with uppercase 
 Array [
   Object {
     "column": 9,
+    "endColumn": 33,
+    "endLine": 1,
     "line": 1,
     "rule": "terra/custom-property-pattern",
     "severity": "error",

@@ -4,6 +4,8 @@ exports[`custom-property-name does error with a mismatched name 1`] = `
 Array [
   Object {
     "column": 9,
+    "endColumn": 47,
+    "endLine": 1,
     "line": 1,
     "rule": "terra/custom-property-name",
     "severity": "error",
@@ -16,6 +18,8 @@ exports[`custom-property-name does error with a mismatched name with hyphen 1`] 
 Array [
   Object {
     "column": 9,
+    "endColumn": 49,
+    "endLine": 1,
     "line": 1,
     "rule": "terra/custom-property-name",
     "severity": "error",
