@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 5.0.0 - (October 26, 2023)
+
 * Breaking Change
   * Upgraded Stylelint from 13 to 15.
 
