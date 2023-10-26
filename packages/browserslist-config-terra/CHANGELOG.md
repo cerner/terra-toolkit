@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 4.0.0 - (October 26, 2023)
+
 * Breaking Change
   * Dropped support for IE10.
 
