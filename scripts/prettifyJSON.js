@@ -33,14 +33,14 @@ getAllPackageJSONRecursively(targetDir);
 
 // Update JSON files
 
-for (const JSONfile of allPackageJSON) {
-  const oldJSON = JSON.parse(fs.readFileSync(JSONfile));
-  const newJSON = {};
+allPackageJSON.map((JSONfile)=>{
+    const oldJSON = JSON.parse(fs.readFileSync(JSONfile));
+    let newJSON = {};
 
-  if (oldJSON.name) {
-    newJSON.name = oldJSON.name;
-    delete oldJSON.name;
-  }
+    if (oldJSON.name) {
+      newJSON.name = oldJSON.name;
+      delete oldJSON.name;
+    }
 
   if (oldJSON.version) {
     newJSON.version = oldJSON.version;
@@ -104,9 +104,11 @@ for (const JSONfile of allPackageJSON) {
     delete oldJSON.keywords;
   }
 
-  if (oldJSON.browserslist) {
-    newJSON.browserslist = oldJSON.browserslist;
-    delete oldJSON.browserslist;
+  if (oldJSON.workspaces) {
+    newJSON.workspaces = oldJSON.workspaces;
+    // alphabetize the list
+    newJSON.workspaces.sort(Intl.Collator().compare);
+    delete oldJSON.workspaces;
   }
 
   if (oldJSON.files) {
@@ -119,6 +121,11 @@ for (const JSONfile of allPackageJSON) {
   if (oldJSON.bin) {
     newJSON.bin = oldJSON.bin;
     delete oldJSON.bin;
+  }
+
+  if (oldJSON.browserslist) {
+    newJSON.browserslist = oldJSON.browserslist;
+    delete oldJSON.browserslist;
   }
 
   if (oldJSON.eslintConfig) {
@@ -136,33 +143,38 @@ for (const JSONfile of allPackageJSON) {
     delete oldJSON.stylelint;
   }
 
+  const tempJSON = {};
+
   if (oldJSON.dependencies) {
-    newJSON.dependencies = oldJSON.dependencies;
+    tempJSON.dependencies = oldJSON.dependencies;
     delete oldJSON.dependencies;
   }
 
-  if (oldJSON.devDependencies) {
-    newJSON.devDependencies = oldJSON.devDependencies;
-    delete oldJSON.devDependencies;
-  }
-
   if (oldJSON.peerDependencies) {
-    newJSON.peerDependencies = oldJSON.peerDependencies;
+    tempJSON.peerDependencies = oldJSON.peerDependencies;
     delete oldJSON.peerDependencies;
   }
 
+  if (oldJSON.devDependencies) {
+    tempJSON.devDependencies = oldJSON.devDependencies;
+    delete oldJSON.devDependencies;
+  }
+
   if (oldJSON.scripts) {
-    newJSON.scripts = oldJSON.scripts;
+    tempJSON.scripts = oldJSON.scripts;
     delete oldJSON.scripts;
   }
 
-  // add any remaining tags to here so they can be manually added to the appropriate location
+  // Remaining tags are added at the end
   if (Object.keys(oldJSON).length > 0) {
-    newJSON.otherTags = oldJSON;
+    newJSON = {...newJSON, ...oldJSON};
   }
+
+  // Add dependencies & scripts at the end
+  newJSON = {...newJSON, ...tempJSON};
 
   fs.writeFileSync(JSONfile, JSON.stringify(newJSON, null, 2));
   fs.appendFileSync(JSONfile, '\n');
-}
+  });
 
 process.exit(0);
