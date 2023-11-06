@@ -43,16 +43,6 @@ module.exports = (oldJSON) => {
     delete oldJSON.homepage;
   }
 
-  if (oldJSON.private) {
-    newJSON.private = oldJSON.private;
-    delete oldJSON.private;
-  }
-
-  if (oldJSON.publishConfig) {
-    newJSON.publishConfig = oldJSON.publishConfig;
-    delete oldJSON.publishConfig;
-  }
-
   if (oldJSON.license) {
     newJSON.license = oldJSON.license;
     delete oldJSON.license;
@@ -63,6 +53,16 @@ module.exports = (oldJSON) => {
     // alphabetize the list
     newJSON.keywords.sort(Intl.Collator().compare);
     delete oldJSON.keywords;
+  }
+
+  if (oldJSON.private) {
+    newJSON.private = oldJSON.private;
+    delete oldJSON.private;
+  }
+
+  if (oldJSON.publishConfig) {
+    newJSON.publishConfig = oldJSON.publishConfig;
+    delete oldJSON.publishConfig;
   }
 
   if (oldJSON.workspaces) {

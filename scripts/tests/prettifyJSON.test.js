@@ -55,10 +55,10 @@ describe.only('prettifyJSON script', () => {
       'repository',
       'bugs',
       'homepage',
-      'private',
-      'publishConfig',
       'license',
       'keywords',
+      'private',
+      'publishConfig',
       'workspaces',
       'engines',
       'main',
@@ -141,7 +141,7 @@ describe.only('prettifyJSON script', () => {
   });
 
   it('alphabetizes workspaces', () => {
-      fsReadFileMock.mockReturnValueOnce({ workspaces: ['JJJ', 'ZZZ', 'III', 'AAA', 'CCC'] });
+    fsReadFileMock.mockReturnValueOnce({ workspaces: ['JJJ', 'ZZZ', 'III', 'AAA', 'CCC'] });
 
     const JSON = fs.readFileSync();
     const newJSON = prettifyJSON(JSON);
