@@ -1,8 +1,8 @@
-/* eslint-disable consistent-return */
 /* eslint-disable array-callback-return  */
-/* eslint-disable no-restricted-syntax  */
+/* eslint-disable consistent-return */
 /* eslint-disable no-console  */
-const fs = require('fs');
+/* eslint-disable no-param-reassign  */
+/* eslint-disable no-restricted-syntax  */
 
 module.exports = (oldJSON) => {
 //  const oldJSON = JSON.parse(fs.readFileSync(JSONfile));
@@ -137,12 +137,11 @@ module.exports = (oldJSON) => {
   }
 
   // Remaining tags are added at the end
-  if (Object.keys(oldJSON).length ) {
-
-    const orderedKeys = Object.keys(oldJSON).sort().reduce((obj,key)=>{
+  if (Object.keys(oldJSON).length) {
+    const orderedKeys = Object.keys(oldJSON).sort().reduce((obj, key) => {
       obj[key] = oldJSON[key];
       return obj;
-    },{})
+    }, {});
 
     newJSON = { ...newJSON, ...orderedKeys };
   }
@@ -150,7 +149,6 @@ module.exports = (oldJSON) => {
   // Add dependencies & scripts at the end
   newJSON = { ...newJSON, ...tempJSON };
 
-
-return newJSON;
+  return newJSON;
 };
 

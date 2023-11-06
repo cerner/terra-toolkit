@@ -30,12 +30,13 @@ const getAllPackageJSONRecursively = (directory) => {
   }
 };
 
-allPackageJSON.map((JSONfile)=>{
-    const oldJSON = JSON.parse(fs.readFileSync(JSONfile));
-    const newJSON = prettifyJSON(oldJSON);
-    fs.writeFileSync(JSONfile, JSON.stringify(newJSON, null, 2));
-    fs.appendFileSync(JSONfile, '\n');
+getAllPackageJSONRecursively(targetDir);
+
+allPackageJSON.map((JSONfile) => {
+  const oldJSON = JSON.parse(fs.readFileSync(JSONfile));
+  const newJSON = prettifyJSON(oldJSON);
+  fs.writeFileSync(JSONfile, JSON.stringify(newJSON, null, 2));
+  fs.appendFileSync(JSONfile, '\n');
 });
 
 process.exit(0);
-

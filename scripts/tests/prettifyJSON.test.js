@@ -2,208 +2,180 @@ const fs = require('fs');
 const prettifyJSON = require('../prettifyJSON/prettifyJSON');
 
 let fsReadFileMock;
-    
-describe.only('prettifyJSON script',()=>{
-    beforeAll(()=>{
-         fsReadFileMock = jest.spyOn(fs,'readFileSync')
-//        .mockReturnValue(     {
-//            "name":"test",
-       
-//        });
-        jest.spyOn(fs,'writeFileSync').mockImplementation();;
-        jest.spyOn(fs,'appendFileSync').mockImplementation();;
-    })
-it('orders the input JSON keys',()=>{
-    
-    fsReadFileMock.mockReturnValueOnce(     {
-        "description":{},
-        "devDependencies":{},
-        "name":"test",
-        
-       
-        publishConfig:{},
-        peerDependencies:{},
-        browserslist:{},
-        description:{},
-        repository:{},
-        bugs:{},
-        engines:{},
-        scripts:{},
-        main:{},
-        dependencies:{},
-        author:{},
-        license:{},
-        workspaces:[],
-        name:{},
-        version:{},
-        stylelint:{},
-        files:[],
-        "package-json-lint":{},
-        bin:{},
-        devDependencies:{},
-        homepage:{},
-        private:{},
-        keywords:[],
-    
 
-        eslintConfig:{},
-  
-    });
-    
-    const JSON = fs.readFileSync()
-    
+describe.only('prettifyJSON script', () => {
+  beforeAll(() => {
+    fsReadFileMock = jest.spyOn(fs, 'readFileSync');
+
+    jest.spyOn(fs, 'writeFileSync').mockImplementation();
+    jest.spyOn(fs, 'appendFileSync').mockImplementation();
+  });
+  afterAll(() => {
+    jest.mockRestore();
+  });
+
+  it('orders the input JSON keys', () => {
+    fsReadFileMock.mockReturnValueOnce(
+      {
+        publishConfig: {},
+        peerDependencies: {},
+        browserslist: {},
+        description: {},
+        repository: {},
+        bugs: {},
+        engines: {},
+        scripts: {},
+        main: {},
+        dependencies: {},
+        author: {},
+        license: {},
+        workspaces: [],
+        name: {},
+        version: {},
+        stylelint: {},
+        files: [],
+        'package-json-lint': {},
+        bin: {},
+        devDependencies: {},
+        homepage: {},
+        private: {},
+        keywords: [],
+        eslintConfig: {},
+      },
+    );
+
+    const JSON = fs.readFileSync();
     const newJSON = prettifyJSON(JSON);
-    
-    const keys = Object.keys((newJSON))
-    
-    
-    const expectedArray =  [        "name",
-    "version",
-    "description",
-    "author",
-    "main",
-    "repository",
-    "bugs",
-    "homepage",
-    'private',
-    "publishConfig",
-    "license",
-    "keywords",
-    "workspaces",
-    "engines",
-    "files",
-    "bin",
-    "browserslist",
-    "eslintConfig",
-    "package-json-lint",
-    "stylelint",
-    "dependencies",
-    "peerDependencies",
-    "devDependencies",
-    "scripts"]
-    
-    
-    expect(keys).toStrictEqual(expectedArray)
-    expect(keys).not.toStrictEqual(["name", "devDependencies", "description",])
-})
-    it('puts dependencies, devDependencies, peerDependencies & scripts at the end',()=>{
+    const keys = Object.keys((newJSON));
+    const expectedArray = [
+      'name',
+      'version',
+      'description',
+      'author',
+      'main',
+      'repository',
+      'bugs',
+      'homepage',
+      'private',
+      'publishConfig',
+      'license',
+      'keywords',
+      'workspaces',
+      'engines',
+      'files',
+      'bin',
+      'browserslist',
+      'eslintConfig',
+      'package-json-lint',
+      'stylelint',
+      'dependencies',
+      'peerDependencies',
+      'devDependencies',
+      'scripts',
+    ];
 
-        fsReadFileMock.mockReturnValueOnce(     {
-            name:{},
-            "keyA":{},
-            "otherKey":{},
-            "key6":{},
-            peerDependencies:{},
-            "key1":{},
-            "devDependencies":{},
-            "key2":{},
-            "key3":{},
-            "scripts":{},
-            "key4":{},
-            dependencies:{},
-            "key5":{},
-            
-        });
-        
-        const JSON = fs.readFileSync()
+    expect(keys).toStrictEqual(expectedArray);
+    expect(keys).not.toStrictEqual(['name', 'devDependencies', 'description']);
+  });
 
-        const newJSON = prettifyJSON(JSON);
+  it('puts dependencies, devDependencies, peerDependencies & scripts at the end', () => {
+    fsReadFileMock.mockReturnValueOnce(
+      {
+        name: {},
+        keyA: {},
+        otherKey: {},
+        key6: {},
+        peerDependencies: {},
+        key1: {},
+        devDependencies: {},
+        key2: {},
+        key3: {},
+        scripts: {},
+        key4: {},
+        dependencies: {},
+        key5: {},
+      },
+    );
 
-        const keys = Object.keys((newJSON))
+    const JSON = fs.readFileSync();
+    const newJSON = prettifyJSON(JSON);
+    const keys = Object.keys((newJSON));
 
-        expect(keys.slice(-4)).toStrictEqual(["dependencies", "peerDependencies" ,"devDependencies", "scripts"])
-        expect(keys.slice(-4)).not.toStrictEqual(["devDependencies", "scripts" ,"peerDependencies", "dependencies"])
-    })
-    it('adds other keys before dependencies',()=>{
+    expect(keys.slice(-4)).toStrictEqual(['dependencies', 'peerDependencies', 'devDependencies', 'scripts']);
+    expect(keys.slice(-4)).not.toStrictEqual(['devDependencies', 'scripts', 'peerDependencies', 'dependencies']);
+  });
 
-        fsReadFileMock.mockReturnValueOnce(     {
-            "description":{},
-            "otherKey":{},
-            "devDependencies":{},
-            "name":"test",
-        });
+  it('adds other keys before dependencies', () => {
+    fsReadFileMock.mockReturnValueOnce(
+      {
+        description: {},
+        otherKey: {},
+        devDependencies: {},
+        name: 'test',
+      },
+    );
 
-        const JSON = fs.readFileSync()
+    const JSON = fs.readFileSync();
+    const newJSON = prettifyJSON(JSON);
+    const keys = Object.keys((newJSON));
 
-        const newJSON = prettifyJSON(JSON);
+    expect(keys).toStrictEqual(['name', 'description', 'otherKey', 'devDependencies']);
+  });
 
-        const keys = Object.keys((newJSON))
+  it('alphabetizes keywords', () => {
+    fsReadFileMock.mockReturnValueOnce({ files: ['JJJ', 'ZZZ', 'III', 'AAA', 'CCC'] });
 
-        expect(keys).toStrictEqual(["name", "description", "otherKey", "devDependencies"])
-    })
-    it('alphabetizes keywords',()=>{
+    const JSON = fs.readFileSync();
+    const newJSON = prettifyJSON(JSON);
 
-        fsReadFileMock.mockReturnValueOnce(     {
-            "keywords":["JJJ", "ZZZ","III","AAA",
-                        "CCC",],
-         
-        });
+    expect(newJSON.workspaces).toStrictEqual(['AAA', 'CCC', 'III', 'JJJ', 'ZZZ']);
+  });
 
-        const JSON = fs.readFileSync()
+  it('alphabetizes files', () => {
+    fsReadFileMock.mockReturnValueOnce({ files: ['JJJ', 'ZZZ', 'III', 'AAA', 'CCC'] });
 
-        const newJSON = prettifyJSON(JSON);
+    const JSON = fs.readFileSync();
+    const newJSON = prettifyJSON(JSON);
 
-        expect(newJSON.keywords).toStrictEqual(["AAA", "CCC","III","JJJ",
-                                                "ZZZ",])
-    })
-    it('alphabetizes files',()=>{
+    expect(newJSON.files).toStrictEqual(['AAA', 'CCC', 'III', 'JJJ', 'ZZZ']);
+  });
 
-        fsReadFileMock.mockReturnValueOnce(     {
-            "files":["JJJ", "ZZZ","III","AAA",
-                        "CCC",],
+  it('alphabetizes workspaces', () => {
+    fsReadFileMock.mockReturnValueOnce({ files: ['JJJ', 'ZZZ', 'III', 'AAA', 'CCC'] });
 
-        });
+    const JSON = fs.readFileSync();
+    const newJSON = prettifyJSON(JSON);
 
-        const JSON = fs.readFileSync()
+    expect(newJSON.workspaces).toStrictEqual(['AAA', 'CCC', 'III', 'JJJ', 'ZZZ']);
+  });
 
-        const newJSON = prettifyJSON(JSON);
+  it('alphabetizes remaining keys', () => {
+    fsReadFileMock.mockReturnValueOnce(
+      {
+        key6: {},
+        key4: {},
+        key2: {},
+        otherKey: {},
+        key5: {},
+        key3: {},
+        key1: {},
+        keyA: {},
+      },
+    );
 
-        expect(newJSON.files).toStrictEqual(["AAA", "CCC","III","JJJ",
-                                                "ZZZ",])
-    })
-    it('alphabetizes workspaces',()=>{
+    const JSON = fs.readFileSync();
+    const newJSON = prettifyJSON(JSON);
+    const keys = Object.keys((newJSON));
 
-        fsReadFileMock.mockReturnValueOnce(     {
-            "workspaces":["JJJ", "ZZZ","III","AAA",
-                        "CCC",],
-
-        });
-
-        const JSON = fs.readFileSync()
-
-        const newJSON = prettifyJSON(JSON);
-
-        expect(newJSON.workspaces).toStrictEqual(["AAA", "CCC","III","JJJ",
-                                                "ZZZ",])
-    })
-    it('alphabetizes remaining keys',()=>{
-
-        fsReadFileMock.mockReturnValueOnce(     {
-            "key6":{},
-            "key4":{},
-            "key2":{},
-            "otherKey":{},
-            "key5":{},
-            "key3":{},
-            "key1":{},
-            "keyA":{},
-        });
-
-        const JSON = fs.readFileSync()
-
-        const newJSON = prettifyJSON(JSON);
-
-        const keys = Object.keys((newJSON))
-
-        expect(keys).toStrictEqual([
-        "key1",
-        "key2",
-        "key3",
-        "key4",
-            "key5",
-            "key6",
-            "keyA",
-        "otherKey"
-            ])
-    })
-})
+    expect(keys).toStrictEqual([
+      'key1',
+      'key2',
+      'key3',
+      'key4',
+      'key5',
+      'key6',
+      'keyA',
+      'otherKey',
+    ]);
+  });
+});
