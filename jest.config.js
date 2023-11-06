@@ -2,6 +2,8 @@ const jestConfig = require('./packages/jest-config-terra');
 
 module.exports = {
   ...jestConfig,
+  testMatch:jestConfig.testMatch.concat([
+    '**/tests/(*.)(spec|test).js?(x)',]),
   watchPathIgnorePatterns: [
     './tests/jest/reports/results/terra-functional-testing.json',
   ],
