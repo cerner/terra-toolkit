@@ -52,7 +52,6 @@ describe.only('prettifyJSON script', () => {
       'version',
       'description',
       'author',
-      'main',
       'repository',
       'bugs',
       'homepage',
@@ -62,6 +61,7 @@ describe.only('prettifyJSON script', () => {
       'keywords',
       'workspaces',
       'engines',
+      'main',
       'files',
       'bin',
       'browserslist',
@@ -123,12 +123,12 @@ describe.only('prettifyJSON script', () => {
   });
 
   it('alphabetizes keywords', () => {
-    fsReadFileMock.mockReturnValueOnce({ files: ['JJJ', 'ZZZ', 'III', 'AAA', 'CCC'] });
+    fsReadFileMock.mockReturnValueOnce({ keywords: ['JJJ', 'ZZZ', 'III', 'AAA', 'CCC'] });
 
     const JSON = fs.readFileSync();
     const newJSON = prettifyJSON(JSON);
 
-    expect(newJSON.workspaces).toStrictEqual(['AAA', 'CCC', 'III', 'JJJ', 'ZZZ']);
+    expect(newJSON.keywords).toStrictEqual(['AAA', 'CCC', 'III', 'JJJ', 'ZZZ']);
   });
 
   it('alphabetizes files', () => {
@@ -141,7 +141,7 @@ describe.only('prettifyJSON script', () => {
   });
 
   it('alphabetizes workspaces', () => {
-    fsReadFileMock.mockReturnValueOnce({ files: ['JJJ', 'ZZZ', 'III', 'AAA', 'CCC'] });
+      fsReadFileMock.mockReturnValueOnce({ workspaces: ['JJJ', 'ZZZ', 'III', 'AAA', 'CCC'] });
 
     const JSON = fs.readFileSync();
     const newJSON = prettifyJSON(JSON);

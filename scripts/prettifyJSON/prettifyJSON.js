@@ -23,19 +23,9 @@ module.exports = (oldJSON) => {
     delete oldJSON.description;
   }
 
-  if (oldJSON.engines) {
-    newJSON.engines = oldJSON.engines;
-    delete oldJSON.engines;
-  }
-
   if (oldJSON.author) {
     newJSON.author = oldJSON.author;
     delete oldJSON.author;
-  }
-
-  if (oldJSON.main) {
-    newJSON.main = oldJSON.main;
-    delete oldJSON.main;
   }
 
   if (oldJSON.repository) {
@@ -80,6 +70,16 @@ module.exports = (oldJSON) => {
     // alphabetize the list
     newJSON.workspaces.sort(Intl.Collator().compare);
     delete oldJSON.workspaces;
+  }
+
+  if (oldJSON.engines) {
+    newJSON.engines = oldJSON.engines;
+    delete oldJSON.engines;
+  }
+
+  if (oldJSON.main) {
+    newJSON.main = oldJSON.main;
+    delete oldJSON.main;
   }
 
   if (oldJSON.files) {
