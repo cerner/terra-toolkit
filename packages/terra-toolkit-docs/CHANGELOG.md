@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changes
+  * Minor corrections in the upgrade guide for `stylelint-config-terra`.
+
 ## 2.24.0 - (October 26, 2023)
 
 * Changed

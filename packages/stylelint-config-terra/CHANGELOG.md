@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+* Fixes
+  * Fixed unresolved peer dependency
+  * Corrected version of `browserslist-config-terra`. It should now pull in v4.
+
 ## 5.0.0 - (October 26, 2023)
 
 * Breaking Change
