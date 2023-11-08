@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changes
+  * Minor update to default dependency bump message.
+
 ## 1.15.0 - (September 26, 2023)
 
 * Changed
