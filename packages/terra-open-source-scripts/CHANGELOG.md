@@ -3,7 +3,7 @@
 ## Unreleased
 
 * Changes
-  * Grammar update to default dependency bump message.
+  * Minor update to default dependency bump message.
 
 ## 1.15.0 - (September 26, 2023)
 
