@@ -23,7 +23,7 @@ module.exports = async (packagePath) => {
   // Default message
   let releaseContent = [
     '* Changed',
-    '  * Minor dependency version bump',
+    '  * Minor dependency version bump.',
     '',
     '',
   ].join('\n');
