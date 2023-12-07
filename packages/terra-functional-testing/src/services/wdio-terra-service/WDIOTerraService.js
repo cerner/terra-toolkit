@@ -64,6 +64,10 @@ class WDIOTerraService {
       gitToken,
       issueNumber,
       useRemoteReferenceScreenshots,
+      locale,
+      theme,
+      formFactor,
+      browser,
     } = this.serviceOptions;
 
     if (!useRemoteReferenceScreenshots) {
@@ -90,7 +94,7 @@ class WDIOTerraService {
         screenshotConfig = this.getRemoteScreenshotConfiguration(this.screenshotsSites, buildBranch);
       }
       const screenshotRequestor = new ScreenshotRequestor(screenshotConfig.publishScreenshotConfiguration);
-      await screenshotRequestor.download();
+      await screenshotRequestor.download(locale, theme, formFactor, browser);
     } catch (error) {
       throw new SevereServiceError(error);
     }
@@ -230,12 +234,16 @@ class WDIOTerraService {
   async uploadBuildBranchScreenshots() {
     const {
       buildBranch,
+      locale,
+      theme,
+      formFactor,
+      browser,
     } = this.serviceOptions;
 
     try {
       const screenshotConfig = this.getRemoteScreenshotConfiguration(this.screenshotsSites, buildBranch);
       const screenshotRequestor = new ScreenshotRequestor(screenshotConfig.publishScreenshotConfiguration);
-      await screenshotRequestor.upload();
+      await screenshotRequestor.upload(locale, theme, formFactor, browser);
     } catch (err) {
       throw new SevereServiceError(err);
     }
