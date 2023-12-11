@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+  * Allow consumers to set maxInstances while executing wdio scripts.
+
 ## 4.4.0 - (September 26, 2023)
 
 * Changed
