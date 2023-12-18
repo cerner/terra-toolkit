@@ -70,6 +70,7 @@ class ScreenshotRequestor {
 
     // Allow 404s because that just means the screenshots don't exists yet.
     ScreenshotRequestor.checkStatus(response, [404]);
+    logger.info('Existing screenshots deleted from remote repository.');
   }
 
   /**
