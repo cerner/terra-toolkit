@@ -2,6 +2,7 @@ const path = require('path');
 const expect = require('expect');
 const fs = require('fs-extra');
 const { SevereServiceError } = require('webdriverio');
+const getOutputDir = require('../../reporters/spec-reporter/get-output-dir');
 const { accessibility, element, screenshot } = require('../../commands/validates');
 const { toBeAccessible, toMatchReference } = require('../../commands/expect');
 const {
@@ -215,9 +216,7 @@ class WDIOTerraService {
       ':warning: :bangbang: **WDIO MISMATCH**\n\n',
       `Check that screenshot change is intended at: ${buildUrl}\n\n`,
       'If screenshot change is intended, remote reference screenshots will be updated upon PR merge.\n',
-      'If screenshot change is unintended, please fix screenshot issues before PR merge to prevent them from being uploaded.\n\n',
-      'Note: This comment only appears the first time a screenshot mismatch is detected on a PR build, ',
-      'future builds will need to be checked for unintended screenshot mismatches.',
+      'If screenshot change is unintended, please fix screenshot issues before PR merge to prevent them from being uploaded.',
     ].join('');
 
     const comments = await issue.getComments();
@@ -264,13 +263,21 @@ class WDIOTerraService {
       return;
     }
 
+    const fileName = path.join(getOutputDir(), `ignored-mismatch.json`);
+
     try {
-      if (process.env.SCREENSHOT_MISMATCH_CHECK === 'true' && buildBranch.match(BUILD_BRANCH.pullRequest)) {
+      if (fs.existsSync(fileName) && buildBranch.match(BUILD_BRANCH.pullRequest)) {
         // We found a screenshot mismatch during our build of this PR branch.
         await this.postMismatchWarningOnce();
+        // Remove mismatch flag file after running
+        fs.removeSync(fileName);
       } else if (!buildBranch.match(BUILD_BRANCH.pullRequest) && buildType === BUILD_TYPE.branchEventCause) {
         // This non-PR branch is being merged or someone pushed code into it directly.
         await this.uploadBuildBranchScreenshots();
+        // Remove mismatch flag file after running if it exists
+        if(fs.existsSync(fileName)) {
+          fs.removeSync(fileName);
+        }
       }
     } catch (err) {
       // The service will stop only if a SevereServiceError is thrown.

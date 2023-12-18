@@ -22,7 +22,7 @@ const screenshot = (testName, options = {}) => {
 
   const screenshotResult = global.browser.checkElement(selector || global.Terra.serviceOptions.selector, wrappedOptions);
 
-  global.expect(screenshotResult).toMatchReference();
+  global.expect(screenshotResult).toMatchReference(testName);
 };
 
 module.exports = screenshot;
