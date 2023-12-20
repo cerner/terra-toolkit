@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs-extra');
+
 const mockInfo = jest.fn();
 jest.mock('@cerner/terra-cli/lib/utils/Logger', () => function mock() {
   return {
@@ -329,7 +330,7 @@ describe('toMatchReference', () => {
 
     const result = toMatchReference(receivedScreenshot, 'TestName');
     const expectedMessage = 'Expected the screenshot to match the reference screenshot, but received a screenshot with different dimensions.\nExpected the screenshot to be within the mismatch tolerance, but received a mismatch difference of 0.1%.';
-    
+
     expect(result.pass).toBe(true);
     expect(result.message()).toEqual(expectedMessage);
     expect(mockInfo).toHaveBeenCalledWith('Test: \'TestName\' has a mismatch difference of 0.1% and needs to be reviewed.');
@@ -353,7 +354,7 @@ describe('toMatchReference', () => {
 
     const result = toMatchReference(receivedScreenshot, 'TestName');
     const expectedMessage = 'Expected the screenshot to match the reference screenshot, but received a screenshot with different dimensions.\nExpected the screenshot to be within the mismatch tolerance, but received a mismatch difference of 0.1%.';
-    
+
     expect(result.pass).toBe(true);
     expect(fs.existsSync).toHaveBeenCalledTimes(1);
     expect(fs.mkdirSync).toHaveBeenCalledWith('/mock/', { recursive: true });
@@ -374,18 +375,18 @@ describe('toMatchReference', () => {
       isSameDimensions: false,
       misMatchPercentage: 0.10,
     };
-    jest.spyOn(fs, 'existsSync').mockImplementation((pathName) => (pathName === '/mock/') ? true : false);
+    jest.spyOn(fs, 'existsSync').mockImplementation((pathName) => (pathName === '/mock/'));
     jest.spyOn(fs, 'writeFileSync').mockImplementationOnce(() => false);
 
     const result = toMatchReference(receivedScreenshot, 'TestName');
     const expectedMessage = 'Expected the screenshot to match the reference screenshot, but received a screenshot with different dimensions.\nExpected the screenshot to be within the mismatch tolerance, but received a mismatch difference of 0.1%.';
-    
+
     expect(result.pass).toBe(true);
     expect(fs.existsSync).toHaveBeenCalledTimes(2);
     expect(fs.existsSync.mock.calls).toEqual([
-      ['/mock/'], // First call
-      [path.join('/mock/', 'ignored-mismatch.json')]  // Second call
-    ])
+      ['/mock/'],
+      [path.join('/mock/', 'ignored-mismatch.json')],
+    ]);
     expect(fs.writeFileSync).toHaveBeenCalledWith(path.join('/mock/', 'ignored-mismatch.json'), JSON.stringify({ screenshotMismatched: true }, null, 2));
     expect(result.message()).toEqual(expectedMessage);
     expect(mockInfo).toHaveBeenCalledWith('Test: \'TestName\' has a mismatch difference of 0.1% and needs to be reviewed.');

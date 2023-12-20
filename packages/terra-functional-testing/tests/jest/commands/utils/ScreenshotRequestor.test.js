@@ -397,8 +397,8 @@ describe('ScreenshotRequestor', () => {
       expect(ScreenshotRequestor.makeReferenceName).toHaveBeenCalledWith('locale', 'theme', 'formFactor', 'browser');
       expect(screenshotRequestor.deleteExistingScreenshots).toHaveBeenCalledWith(referenceName);
       expect(screenshotRequestor.zipDirectoryToMemory).toHaveBeenCalled();
-      expect(screenshotRequestor.uploadScreenshots).toHaveBeenCalledWith(memoryStream, referenceName) ;
-      expect(screenshotRequestor.deleteZippedLatestScreenshots).toHaveBeenCalled() ;
+      expect(screenshotRequestor.uploadScreenshots).toHaveBeenCalledWith(memoryStream, referenceName);
+      expect(screenshotRequestor.deleteZippedLatestScreenshots).toHaveBeenCalled();
       ScreenshotRequestor.makeReferenceName = oldMakeReferenceName;
       ScreenshotRequestor.prototype.deleteExistingScreenshots = oldDeleteExistingScreenshots;
       ScreenshotRequestor.prototype.zipLatestScreenshots = oldZipLatestScreenshots;
