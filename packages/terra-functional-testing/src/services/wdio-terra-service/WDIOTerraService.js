@@ -263,7 +263,7 @@ class WDIOTerraService {
       return;
     }
 
-    const fileName = path.join(getOutputDir(), `ignored-mismatch.json`);
+    const fileName = path.join(getOutputDir(), 'ignored-mismatch.json');
 
     try {
       if (fs.existsSync(fileName) && buildBranch.match(BUILD_BRANCH.pullRequest)) {
@@ -275,7 +275,7 @@ class WDIOTerraService {
         // This non-PR branch is being merged or someone pushed code into it directly.
         await this.uploadBuildBranchScreenshots();
         // Remove mismatch flag file after running if it exists
-        if(fs.existsSync(fileName)) {
+        if (fs.existsSync(fileName)) {
           fs.removeSync(fileName);
         }
       }

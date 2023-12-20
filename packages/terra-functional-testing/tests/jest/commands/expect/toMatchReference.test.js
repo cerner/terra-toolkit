@@ -1,13 +1,32 @@
+const path = require('path');
+const fs = require('fs-extra');
+const mockInfo = jest.fn();
+jest.mock('@cerner/terra-cli/lib/utils/Logger', () => function mock() {
+  return {
+    info: mockInfo,
+  };
+});
+jest.mock('../../../../src/reporters/spec-reporter/get-output-dir', () => (
+  jest.fn().mockImplementation(() => ('/mock/'))
+));
+
 const toMatchReference = require('../../../../src/commands/expect/toMatchReference');
 const { BUILD_BRANCH, BUILD_TYPE } = require('../../../../src/constants');
 
 describe('toMatchReference', () => {
   beforeAll(() => {
+    mockInfo.mockClear();
+    jest.resetModules();
     global.Terra = {
       serviceOptions: {
         ignoreScreenshotMismatch: false,
       },
     };
+  });
+
+  afterEach(() => {
+    // Restore all fs mocks.
+    jest.restoreAllMocks();
   });
 
   it('should pass if matches reference screenshot', () => {
@@ -240,12 +259,16 @@ describe('toMatchReference', () => {
       isSameDimensions: false,
       misMatchPercentage: 0.10,
     };
+    jest.spyOn(fs, 'existsSync').mockImplementation(() => true);
+    jest.spyOn(fs, 'existsSync').mockImplementation(() => true);
 
-    const result = toMatchReference(receivedScreenshot);
-    const expectedMessage = 'Expected the screenshot to match the reference screenshot, but received a screenshot with different dimensions.\nExpected the screenshot to be within the mismatch tolerance, but received a mismatch difference of 0.1%.\nScreenshot has changed and needs to be reviewed.';
+    const result = toMatchReference(receivedScreenshot, 'TestName');
+    const expectedMessage = 'Expected the screenshot to match the reference screenshot, but received a screenshot with different dimensions.\nExpected the screenshot to be within the mismatch tolerance, but received a mismatch difference of 0.1%.';
 
     expect(result.pass).toBe(true);
+    expect(fs.existsSync).toHaveBeenCalledTimes(2);
     expect(result.message()).toEqual(expectedMessage);
+    expect(mockInfo).toHaveBeenCalledWith('Test: \'TestName\' has a mismatch difference of 0.1% and needs to be reviewed.');
   });
 
   it('should not pass if not within mismatch tolerance, buildBranch matches master, useRemoteReferenceScreenshots is true and buildType is not defined', () => {
@@ -279,12 +302,15 @@ describe('toMatchReference', () => {
       isSameDimensions: false,
       misMatchPercentage: 0.10,
     };
+    jest.spyOn(fs, 'existsSync').mockImplementation(() => true);
 
-    const result = toMatchReference(receivedScreenshot);
-    const expectedMessage = 'Expected the screenshot to match the reference screenshot, but received a screenshot with different dimensions.\nExpected the screenshot to be within the mismatch tolerance, but received a mismatch difference of 0.1%.\nScreenshot has changed and needs to be reviewed.';
+    const result = toMatchReference(receivedScreenshot, 'TestName');
+    const expectedMessage = 'Expected the screenshot to match the reference screenshot, but received a screenshot with different dimensions.\nExpected the screenshot to be within the mismatch tolerance, but received a mismatch difference of 0.1%.';
 
     expect(result.pass).toBe(true);
+    expect(fs.existsSync).toHaveBeenCalledTimes(2);
     expect(result.message()).toEqual(expectedMessage);
+    expect(mockInfo).toHaveBeenCalledWith('Test: \'TestName\' has a mismatch difference of 0.1% and needs to be reviewed.');
   });
 
   it('should pass if not within mismatch tolerance but buildBranch matches master, useRemoteReferenceScreenshots is true, and buildType is branchEventCause', () => {
@@ -299,12 +325,69 @@ describe('toMatchReference', () => {
       isSameDimensions: false,
       misMatchPercentage: 0.10,
     };
+    jest.spyOn(fs, 'existsSync').mockImplementation(() => true);
 
-    const result = toMatchReference(receivedScreenshot);
-    const expectedMessage = 'Expected the screenshot to match the reference screenshot, but received a screenshot with different dimensions.\nExpected the screenshot to be within the mismatch tolerance, but received a mismatch difference of 0.1%.\nScreenshot has changed and needs to be reviewed.';
-
+    const result = toMatchReference(receivedScreenshot, 'TestName');
+    const expectedMessage = 'Expected the screenshot to match the reference screenshot, but received a screenshot with different dimensions.\nExpected the screenshot to be within the mismatch tolerance, but received a mismatch difference of 0.1%.';
+    
     expect(result.pass).toBe(true);
     expect(result.message()).toEqual(expectedMessage);
-    expect(process.env.SCREENSHOT_MISMATCH_CHECK).toBe('true');
+    expect(mockInfo).toHaveBeenCalledWith('Test: \'TestName\' has a mismatch difference of 0.1% and needs to be reviewed.');
+  });
+
+  it('should create the output directory and ignored-mismatch file if useRemoteReferenceScreenshots is true, a mismatch happened, and it is a pull request', () => {
+    global.Terra = {
+      serviceOptions: {
+        buildBranch: BUILD_BRANCH.master,
+        buildType: BUILD_TYPE.branchEventCause,
+        useRemoteReferenceScreenshots: true,
+      },
+    };
+    const receivedScreenshot = {
+      isSameDimensions: false,
+      misMatchPercentage: 0.10,
+    };
+    jest.spyOn(fs, 'existsSync').mockImplementationOnce(() => false);
+    jest.spyOn(fs, 'mkdirSync').mockImplementationOnce(() => false);
+    jest.spyOn(fs, 'writeFileSync').mockImplementationOnce(() => false);
+
+    const result = toMatchReference(receivedScreenshot, 'TestName');
+    const expectedMessage = 'Expected the screenshot to match the reference screenshot, but received a screenshot with different dimensions.\nExpected the screenshot to be within the mismatch tolerance, but received a mismatch difference of 0.1%.';
+    
+    expect(result.pass).toBe(true);
+    expect(fs.existsSync).toHaveBeenCalledTimes(1);
+    expect(fs.mkdirSync).toHaveBeenCalledWith('/mock/', { recursive: true });
+    expect(fs.writeFileSync).toHaveBeenCalledWith(path.join('/mock/', 'ignored-mismatch.json'), JSON.stringify({ screenshotMismatched: true }, null, 2));
+    expect(result.message()).toEqual(expectedMessage);
+    expect(mockInfo).toHaveBeenCalledWith('Test: \'TestName\' has a mismatch difference of 0.1% and needs to be reviewed.');
+  });
+
+  it('should just create the ignored-mismatch file if output directory already exists but file does not', () => {
+    global.Terra = {
+      serviceOptions: {
+        buildBranch: BUILD_BRANCH.master,
+        buildType: BUILD_TYPE.branchEventCause,
+        useRemoteReferenceScreenshots: true,
+      },
+    };
+    const receivedScreenshot = {
+      isSameDimensions: false,
+      misMatchPercentage: 0.10,
+    };
+    jest.spyOn(fs, 'existsSync').mockImplementation((pathName) => (pathName === '/mock/') ? true : false);
+    jest.spyOn(fs, 'writeFileSync').mockImplementationOnce(() => false);
+
+    const result = toMatchReference(receivedScreenshot, 'TestName');
+    const expectedMessage = 'Expected the screenshot to match the reference screenshot, but received a screenshot with different dimensions.\nExpected the screenshot to be within the mismatch tolerance, but received a mismatch difference of 0.1%.';
+    
+    expect(result.pass).toBe(true);
+    expect(fs.existsSync).toHaveBeenCalledTimes(2);
+    expect(fs.existsSync.mock.calls).toEqual([
+      ['/mock/'], // First call
+      [path.join('/mock/', 'ignored-mismatch.json')]  // Second call
+    ])
+    expect(fs.writeFileSync).toHaveBeenCalledWith(path.join('/mock/', 'ignored-mismatch.json'), JSON.stringify({ screenshotMismatched: true }, null, 2));
+    expect(result.message()).toEqual(expectedMessage);
+    expect(mockInfo).toHaveBeenCalledWith('Test: \'TestName\' has a mismatch difference of 0.1% and needs to be reviewed.');
   });
 });

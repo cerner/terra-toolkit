@@ -3,6 +3,7 @@ const fs = require('fs-extra');
 const { Logger } = require('@cerner/terra-cli');
 const getOutputDir = require('../../reporters/spec-reporter/get-output-dir');
 const { BUILD_BRANCH, BUILD_TYPE } = require('../../constants');
+
 const logger = new Logger({ prefix: '[terra-functional-testing:toMatchReference]' });
 /**
  * An assertion method to be paired with Visual Regression Service to assert each screenshot is within
@@ -47,17 +48,17 @@ function toMatchReference(screenshot, testName) {
     && (global.Terra.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest) || global.Terra.serviceOptions.buildType === BUILD_TYPE.branchEventCause)) {
     pass = true;
     const outputDir = getOutputDir();
-    const fileName = path.join(outputDir, `ignored-mismatch.json`);
+    const fileName = path.join(outputDir, 'ignored-mismatch.json');
     // Create the output directory if it does not already exist.
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir, { recursive: true });
       // Since  output directory didn't exist file couldnt so just go ahead and make the file
-      fs.writeFileSync(fileName, JSON.stringify({ screenshotMismatched: true}, null, 2));
-    } else if(!fs.existsSync(fileName)) {
+      fs.writeFileSync(fileName, JSON.stringify({ screenshotMismatched: true }, null, 2));
+    } else if (!fs.existsSync(fileName)) {
       // If output directory exists but mismatch file has not been created create one
-      fs.writeFileSync(fileName, JSON.stringify({ screenshotMismatched: true}, null, 2));
+      fs.writeFileSync(fileName, JSON.stringify({ screenshotMismatched: true }, null, 2));
     }
-    
+
     logger.info(`Test: '${testName}' has a mismatch difference of ${misMatchPercentage}% and needs to be reviewed.`);
   }
 

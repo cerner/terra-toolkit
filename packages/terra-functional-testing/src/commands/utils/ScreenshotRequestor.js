@@ -89,11 +89,15 @@ class ScreenshotRequestor {
    * @param {string} formFactor - the formFactor to use when downloading
    * @param {string} browser - the browser to use when uploading
    */
-  makeReferenceName(locale, theme, formFactor, browser) {
-    const referenceName = [theme, locale, browser, formFactor].filter(function(str) {
-      if(str !== '' || str != undefined) { return str}
-    })
-    .join("-");
+  static makeReferenceName(locale, theme, formFactor, browser) {
+    const referenceName = [theme, locale, browser, formFactor].filter(
+      (str) => {
+        if (str !== '' || str !== undefined) {
+          return str;
+        }
+        return false;
+      },
+    ).join('-');
     return referenceName;
   }
 
@@ -213,7 +217,7 @@ class ScreenshotRequestor {
    * @param {string} browser - the browser to use when uploading
    */
   async download(locale, theme, formFactor, browser) {
-    const referenceName = this.makeReferenceName(locale, theme, formFactor, browser);
+    const referenceName = ScreenshotRequestor.makeReferenceName(locale, theme, formFactor, browser);
     await this.downloadScreenshots(referenceName);
   }
 
@@ -225,7 +229,7 @@ class ScreenshotRequestor {
    * @param {string} browser - the browser to use when uploading
    */
   async upload(locale, theme, formFactor, browser) {
-    const referenceName = this.makeReferenceName(locale, theme, formFactor, browser);
+    const referenceName = ScreenshotRequestor.makeReferenceName(locale, theme, formFactor, browser);
     // Delete the existing screenshots from the remote repository because new screenshots will be uploaded.
     await this.deleteExistingScreenshots(referenceName);
 

@@ -99,10 +99,10 @@ describe('ScreenshotRequestor', () => {
         status: 200,
       });
 
-      await screenshotRequestor.deleteExistingScreenshots();
+      await screenshotRequestor.deleteExistingScreenshots('mock');
 
       expect(fetch).toHaveBeenCalledWith(
-        screenshotRequestor.serviceUrl,
+        `${screenshotRequestor.serviceUrl}mock/`,
         {
           method: 'DELETE',
           headers: {
@@ -181,9 +181,9 @@ describe('ScreenshotRequestor', () => {
         zipFilePath: path.join(process.cwd(), 'zip-path'),
       });
 
-      await expect(screenshotRequestor.downloadScreenshots()).resolves.toBe();
+      await expect(screenshotRequestor.downloadScreenshots('mock')).resolves.toBe();
       expect(fetch).toHaveBeenCalledWith(
-        `${screenshotRequestor.serviceUrl}/reference.zip`,
+        `${screenshotRequestor.serviceUrl}mock/reference.zip`,
         {
           method: 'GET',
           headers: {
@@ -198,7 +198,7 @@ describe('ScreenshotRequestor', () => {
       expect(mockOnFinish).toBeCalledWith('finish', expect.any(Function));
       expect(extract).toHaveBeenCalledWith('terra-wdio-screenshots.zip', { dir: screenshotRequestor.referenceScreenshotsPath });
       expect(fs.removeSync).toHaveBeenCalledWith('terra-wdio-screenshots.zip');
-      expect(mockInfo).toHaveBeenCalledWith(`Screenshots downloaded from ${screenshotRequestor.url}`);
+      expect(mockInfo).toHaveBeenCalledWith(`Screenshots downloaded from ${screenshotRequestor.url}mock`);
     });
 
     it('calls out an errors', async () => {
@@ -223,9 +223,9 @@ describe('ScreenshotRequestor', () => {
         zipFilePath: path.join(process.cwd(), 'zip-path'),
       });
 
-      await expect(screenshotRequestor.downloadScreenshots()).rejects.toBe();
+      await expect(screenshotRequestor.downloadScreenshots('mock')).rejects.toBe();
       expect(fetch).toHaveBeenCalledWith(
-        `${screenshotRequestor.serviceUrl}/reference.zip`,
+        `${screenshotRequestor.serviceUrl}mock/reference.zip`,
         {
           method: 'GET',
           headers: {
@@ -255,9 +255,9 @@ describe('ScreenshotRequestor', () => {
         zipFilePath: path.join(process.cwd(), 'zip-path'),
       });
 
-      await screenshotRequestor.downloadScreenshots();
+      await screenshotRequestor.downloadScreenshots('mock');
       expect(fetch).toHaveBeenCalledWith(
-        `${screenshotRequestor.serviceUrl}/reference.zip`,
+        `${screenshotRequestor.serviceUrl}mock/reference.zip`,
         {
           method: 'GET',
           headers: {
@@ -265,7 +265,7 @@ describe('ScreenshotRequestor', () => {
           },
         },
       );
-      expect(mockInfo).toHaveBeenCalledWith(`No screenshots downloaded from ${screenshotRequestor.url}. Either the URL is invalid or no screenshots were previously uploaded.`);
+      expect(mockInfo).toHaveBeenCalledWith(`No screenshots downloaded from ${screenshotRequestor.url}mock. Either the URL is invalid or no screenshots were previously uploaded.`);
     });
 
     it('will call fetch with the public url if serviceAuthHeader is undefined', async () => {
@@ -283,14 +283,14 @@ describe('ScreenshotRequestor', () => {
         zipFilePath: path.join(process.cwd(), 'zip-path'),
       });
 
-      await screenshotRequestor.downloadScreenshots();
+      await screenshotRequestor.downloadScreenshots('mock');
       expect(fetch).toHaveBeenCalledWith(
-        `${screenshotRequestor.url}/reference.zip`,
+        `${screenshotRequestor.url}mock/reference.zip`,
         {
           method: 'GET',
         },
       );
-      expect(mockInfo).toHaveBeenCalledWith(`No screenshots downloaded from ${screenshotRequestor.url}. Either the URL is invalid or no screenshots were previously uploaded.`);
+      expect(mockInfo).toHaveBeenCalledWith(`No screenshots downloaded from ${screenshotRequestor.url}mock. Either the URL is invalid or no screenshots were previously uploaded.`);
     });
   });
 
@@ -315,13 +315,13 @@ describe('ScreenshotRequestor', () => {
       const memoryStream = {
         length: 1000,
       };
-      await screenshotRequestor.uploadScreenshots(memoryStream);
+      await screenshotRequestor.uploadScreenshots(memoryStream, 'mock');
 
       expect(FormData).toHaveBeenCalled();
       const mockFormDataInstance = FormData.mock.instances[0];
       expect(mockFormDataInstance.append).toHaveBeenCalledWith('file', memoryStream, { filename: 'reference.zip', knownLength: 1000 });
       expect(fetch).toHaveBeenCalledWith(
-        screenshotRequestor.serviceUrl,
+        `${screenshotRequestor.serviceUrl}mock/`,
         {
           method: 'PUT',
           headers: {
@@ -332,34 +332,41 @@ describe('ScreenshotRequestor', () => {
       );
       expect(ScreenshotRequestor.checkStatus).toHaveBeenCalled();
       ScreenshotRequestor.checkStatus = oldCheckStatus;
-      expect(mockInfo).toHaveBeenCalledWith(`Screenshots are uploaded to ${screenshotRequestor.url}`);
+      expect(mockInfo).toHaveBeenCalledWith(`Screenshots are uploaded to ${screenshotRequestor.url}mock`);
     });
   });
 
   describe('download', () => {
     it('calls downloadScreenshots', async () => {
       const oldDownloadScreenshots = ScreenshotRequestor.prototype.downloadScreenshots;
+      const oldMakeReferenceName = ScreenshotRequestor.makeReferenceName;
       ScreenshotRequestor.prototype.downloadScreenshots = jest.fn();
+      ScreenshotRequestor.makeReferenceName = jest.fn();
 
       const screenshotRequestor = new ScreenshotRequestor({});
 
+      const referenceName = 'locale-theme-formFactor-browser';
+      ScreenshotRequestor.makeReferenceName.mockImplementationOnce(() => referenceName);
       screenshotRequestor.downloadScreenshots.mockResolvedValueOnce();
 
-      await screenshotRequestor.download();
+      await screenshotRequestor.download('locale', 'theme', 'formFactor', 'browser');
 
-      expect(screenshotRequestor.downloadScreenshots).toHaveBeenCalled();
+      expect(ScreenshotRequestor.makeReferenceName).toHaveBeenCalledWith('locale', 'theme', 'formFactor', 'browser');
+      expect(screenshotRequestor.downloadScreenshots).toHaveBeenCalledWith(referenceName);
       ScreenshotRequestor.prototype.downloadScreenshots = oldDownloadScreenshots;
+      ScreenshotRequestor.makeReferenceName = oldMakeReferenceName;
     });
   });
 
   describe('upload', () => {
     it('deletes the existing screenshots and zips and uploads the new screenshots', async () => {
+      const oldMakeReferenceName = ScreenshotRequestor.makeReferenceName;
       const oldDeleteExistingScreenshots = ScreenshotRequestor.prototype.deleteExistingScreenshots;
       const oldZipLatestScreenshots = ScreenshotRequestor.prototype.zipLatestScreenshots;
       const oldzipDirectoryToMemory = ScreenshotRequestor.prototype.zipDirectoryToMemory;
       const oldUploadScreenshots = ScreenshotRequestor.prototype.uploadScreenshots;
       const oldDeleteZippedLatestScreenshots = ScreenshotRequestor.prototype.deleteZippedLatestScreenshots;
-      ScreenshotRequestor.checkStatus = jest.fn();
+      ScreenshotRequestor.makeReferenceName = jest.fn();
       ScreenshotRequestor.prototype.deleteExistingScreenshots = jest.fn();
       ScreenshotRequestor.prototype.zipLatestScreenshots = jest.fn();
       ScreenshotRequestor.prototype.zipDirectoryToMemory = jest.fn();
@@ -377,22 +384,41 @@ describe('ScreenshotRequestor', () => {
       const memoryStream = {
         length: 1000,
       };
+      const referenceName = 'locale-theme-formFactor-browser';
+      ScreenshotRequestor.makeReferenceName.mockImplementationOnce(() => referenceName);
       screenshotRequestor.deleteExistingScreenshots.mockResolvedValueOnce();
       screenshotRequestor.zipLatestScreenshots.mockResolvedValueOnce();
       screenshotRequestor.zipDirectoryToMemory.mockResolvedValueOnce(memoryStream);
       screenshotRequestor.uploadScreenshots.mockResolvedValueOnce();
       screenshotRequestor.deleteZippedLatestScreenshots.mockResolvedValueOnce();
 
-      await screenshotRequestor.upload();
+      await screenshotRequestor.upload('locale', 'theme', 'formFactor', 'browser');
 
-      expect(screenshotRequestor.deleteExistingScreenshots).toHaveBeenCalled();
+      expect(ScreenshotRequestor.makeReferenceName).toHaveBeenCalledWith('locale', 'theme', 'formFactor', 'browser');
+      expect(screenshotRequestor.deleteExistingScreenshots).toHaveBeenCalledWith(referenceName);
       expect(screenshotRequestor.zipDirectoryToMemory).toHaveBeenCalled();
-      expect(screenshotRequestor.uploadScreenshots).toHaveBeenCalledWith(memoryStream);
+      expect(screenshotRequestor.uploadScreenshots).toHaveBeenCalledWith(memoryStream, referenceName) ;
+      expect(screenshotRequestor.deleteZippedLatestScreenshots).toHaveBeenCalled() ;
+      ScreenshotRequestor.makeReferenceName = oldMakeReferenceName;
       ScreenshotRequestor.prototype.deleteExistingScreenshots = oldDeleteExistingScreenshots;
       ScreenshotRequestor.prototype.zipLatestScreenshots = oldZipLatestScreenshots;
       ScreenshotRequestor.prototype.zipDirectoryToMemory = oldzipDirectoryToMemory;
       ScreenshotRequestor.prototype.uploadScreenshots = oldUploadScreenshots;
       ScreenshotRequestor.prototype.deleteZippedLatestScreenshots = oldDeleteZippedLatestScreenshots;
+    });
+  });
+
+  describe('makeReferenceName', () => {
+    it('should return a joined string of arguments', () => {
+      expect(ScreenshotRequestor.makeReferenceName('locale', 'theme', 'formFactor', 'browser')).toEqual('theme-locale-browser-formFactor');
+    });
+
+    it('should should skip undefined arguments', () => {
+      expect(ScreenshotRequestor.makeReferenceName('locale', undefined, undefined, 'browser')).toEqual('locale-browser');
+    });
+
+    it('should return empty if no arguments are given', () => {
+      expect(ScreenshotRequestor.makeReferenceName()).toEqual('');
     });
   });
 });
