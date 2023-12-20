@@ -7,6 +7,11 @@
   * Updated PR comment logic in Nexus screenshots.
   * Updated Nexus mismatch warning to display testname and to be outputted via Logger
 
+## 4.5.0 - (December 11, 2023)
+
+* Changed
+  * Allow consumers to set maxInstances while executing wdio scripts.
+
 ## 4.4.0 - (September 26, 2023)
 
 * Changed

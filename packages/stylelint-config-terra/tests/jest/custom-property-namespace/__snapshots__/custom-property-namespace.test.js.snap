@@ -4,6 +4,8 @@ exports[`custom-property-namespace does error with no custom namespace 1`] = `
 Array [
   Object {
     "column": 9,
+    "endColumn": 33,
+    "endLine": 1,
     "line": 1,
     "rule": "terra/custom-property-namespace",
     "severity": "error",
@@ -16,6 +18,8 @@ exports[`custom-property-namespace does error with no default namespace 1`] = `
 Array [
   Object {
     "column": 9,
+    "endColumn": 34,
+    "endLine": 1,
     "line": 1,
     "rule": "terra/custom-property-namespace",
     "severity": "error",

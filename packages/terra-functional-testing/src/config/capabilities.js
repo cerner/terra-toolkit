@@ -1,11 +1,12 @@
 /**
  * This file contains the capability configurations for each supported browser.
  */
+const getMaxInstances = require('./utils/getMaxInstances');
 
 module.exports = {
   chrome: {
     browserName: 'chrome',
-    maxInstances: 1,
+    maxInstances: getMaxInstances(),
     'goog:chromeOptions': {
       /**
        * Run in headless mode because Chrome 69+ cannot be resized to the tiny viewport due to a omnibox size change
@@ -19,7 +20,7 @@ module.exports = {
   },
   firefox: {
     browserName: 'firefox',
-    maxInstances: 1,
+    maxInstances: getMaxInstances(),
     'moz:firefoxOptions': {
       prefs: {
         'dom.disable_beforeunload': false,
@@ -28,7 +29,7 @@ module.exports = {
   },
   ie: {
     browserName: 'internet explorer',
-    maxInstances: 1,
+    maxInstances: getMaxInstances(),
     'se:ieOptions': {
       javascriptEnabled: true,
       locationContextEnabled: true,

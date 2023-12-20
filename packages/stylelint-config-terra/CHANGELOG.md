@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+## 5.0.1 - (November 8, 2023)
+
+* Fixes
+  * Fixed unresolved peer dependency
+  * Corrected version of `browserslist-config-terra`. It should now pull in v4.
+
+## 5.0.0 - (October 26, 2023)
+
+* Breaking Change
+  * Upgraded Stylelint from 13 to 15.
+
 ## 4.6.0 - (September 26, 2023)
 
 * Changed
