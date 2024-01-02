@@ -90,14 +90,7 @@ class ScreenshotRequestor {
    * @param {string} browser - the browser to use when uploading
    */
   static makeReferenceName(locale, theme, formFactor, browser) {
-    const referenceName = [theme, locale, browser, formFactor].filter(
-      (str) => {
-        if (str !== '' || str !== undefined) {
-          return str;
-        }
-        return false;
-      },
-    ).join('-');
+    const referenceName = [theme, locale, browser, formFactor].filter((str) => str).join('-');
     return referenceName;
   }
 

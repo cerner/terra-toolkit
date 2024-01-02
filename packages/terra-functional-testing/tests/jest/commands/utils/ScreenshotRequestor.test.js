@@ -413,8 +413,8 @@ describe('ScreenshotRequestor', () => {
       expect(ScreenshotRequestor.makeReferenceName('locale', 'theme', 'formFactor', 'browser')).toEqual('theme-locale-browser-formFactor');
     });
 
-    it('should should skip undefined arguments', () => {
-      expect(ScreenshotRequestor.makeReferenceName('locale', undefined, undefined, 'browser')).toEqual('locale-browser');
+    it('should should skip falsy arguments', () => {
+      expect(ScreenshotRequestor.makeReferenceName('', 'locale', undefined, 'browser', null)).toEqual('locale-browser');
     });
 
     it('should return empty if no arguments are given', () => {
