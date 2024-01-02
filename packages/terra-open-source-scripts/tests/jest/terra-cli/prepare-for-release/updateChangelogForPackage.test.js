@@ -1,8 +1,9 @@
-jest.mock('fs-extra');
-
 const path = require('path');
 const fs = require('fs-extra');
+
 const updateChangelogForPackage = require('../../../../src/terra-cli/prepare-for-release/updateChangelogForPackage');
+
+jest.mock('fs-extra');
 
 describe('updateChangelogForPackage', () => {
   const mockLocaleString = jest.fn();
@@ -78,7 +79,7 @@ describe('updateChangelogForPackage', () => {
 ## 1.2.0 - (November 1, 2020)
 
 * Changed
-  * Minor dependency version bump
+  * Minor dependency version bump.
 
 ## 1.1.0 - (October 20, 2020)
 

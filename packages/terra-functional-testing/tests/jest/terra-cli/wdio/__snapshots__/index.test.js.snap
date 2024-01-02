@@ -44,6 +44,9 @@ Options:
                                                       [boolean] [default: false]
       --locales                         A list of language locales for the test
                                         run.       [array] [default: (_default)]
+      --maxInstances                    The number of tests running
+                                        concurrently.
+                                                  [number] [default: (_default)]
       --screenshotUrl                   The url to the registry that stores the
                                         screenshots
                                                   [string] [default: (_default)]

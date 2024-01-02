@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 1.16.0 - (November 8, 2023)
+
+* Changes
+  * Minor update to default dependency bump message.
+
 ## 1.15.0 - (September 26, 2023)
 
 * Changed

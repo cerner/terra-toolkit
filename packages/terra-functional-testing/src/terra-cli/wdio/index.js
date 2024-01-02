@@ -181,6 +181,17 @@ const cli = {
           return ['en'];
         },
       },
+      maxInstances: {
+        type: 'number',
+        describe: 'The number of tests running concurrently.',
+        default: () => {
+          if (process.env.MAX_INSTANCES) {
+            return [process.env.MAX_INSTANCES];
+          }
+
+          return 1;
+        },
+      },
       screenshotUrl: {
         type: 'string',
         describe: 'The url to the registry that stores the screenshots',
