@@ -266,19 +266,35 @@ class WDIOTerraService {
     const fileName = path.join(getOutputDir(), 'ignored-mismatch.json');
 
     try {
-      if (fs.existsSync(fileName) && buildBranch.match(BUILD_BRANCH.pullRequest)) {
-        // We found a screenshot mismatch during our build of this PR branch.
-        await this.postMismatchWarningOnce();
-        // Remove mismatch flag file after running
-        fs.removeSync(fileName);
-      } else if (!buildBranch.match(BUILD_BRANCH.pullRequest) && buildType === BUILD_TYPE.branchEventCause) {
-        // This non-PR branch is being merged or someone pushed code into it directly.
-        await this.uploadBuildBranchScreenshots();
-        // Remove mismatch flag file after running if it exists
-        if (fs.existsSync(fileName)) {
-          fs.removeSync(fileName);
+      // Check if the file exists in the current directory.
+      fs.access(fileName, fs.constants.F_OK, async (error) => {
+        try {
+          if (!error && buildBranch.match(BUILD_BRANCH.pullRequest)) {
+            // We found a screenshot mismatch during our build of this PR branch.
+            await this.postMismatchWarningOnce();
+            // Remove mismatch flag file after running
+            fs.unlink(fileName, (err) => {
+              if (err) throw err;
+            });
+          } else if (!buildBranch.match(BUILD_BRANCH.pullRequest) && buildType === BUILD_TYPE.branchEventCause) {
+            // This non-PR branch is being merged or someone pushed code into it directly.
+            await this.uploadBuildBranchScreenshots();
+            // Remove mismatch flag file after running if it exists
+            if (!error) {
+              fs.unlink(fileName, (err) => {
+                if (err) throw err;
+              });
+            }
+          }
+        } catch (err) {
+          // The service will stop only if a SevereServiceError is thrown.
+          if (err instanceof SevereServiceError) {
+            throw err;
+          }
+    
+          throw new SevereServiceError(err);
         }
-      }
+      });
     } catch (err) {
       // The service will stop only if a SevereServiceError is thrown.
       if (err instanceof SevereServiceError) {
