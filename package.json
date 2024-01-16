@@ -77,7 +77,7 @@
   },
   "scripts": {
     "clean": "npm run clean:root && npm run clean:lib",
-    "clean:install": "rm package-lock.json; npm run clean && time npm install",
+    "clean:install": "npm run clean && time npm install",
     "clean:lib": "rm -rf packages/**/lib",
     "clean:root": "$(lerna clean --yes || true) && echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
     "compile:prod": "rm -rf ./build; NODE_ENV=production webpack --mode=production --config webpack.dev-site.config.js",

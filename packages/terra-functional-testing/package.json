@@ -50,7 +50,6 @@
     "@wdio/mocha-framework": "^7.7.3",
     "@wdio/reporter": "^7.7.3",
     "@wdio/spec-reporter": "^7.7.3",
-    "@wdio/sync": "^7.7.3",
     "archiver": "^4.0.1",
     "axe-core": "4.0.2",
     "chalk": "^4.1.0",
