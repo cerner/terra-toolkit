@@ -291,7 +291,7 @@ class WDIOTerraService {
           if (err instanceof SevereServiceError) {
             throw err;
           }
-    
+
           throw new SevereServiceError(err);
         }
       });
