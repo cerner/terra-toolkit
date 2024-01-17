@@ -3,9 +3,9 @@
 ## Unreleased
 
 * Changed
-  * Updated upload and download logic in Nexus screenshots based on current locale, theme, browser, and formFactor
+  * Updated upload and download logic in Nexus screenshots based on current locale, theme, browser, and formFactor.
   * Updated PR comment logic in Nexus screenshots.
-  * Updated Nexus mismatch warning to display testname and to be outputted via Logger
+  * Updated Nexus mismatch warning to display testname and to be outputted via Logger.
 
 ## 4.5.0 - (December 11, 2023)
 
