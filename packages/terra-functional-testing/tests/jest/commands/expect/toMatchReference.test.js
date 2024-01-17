@@ -260,8 +260,7 @@ describe('toMatchReference', () => {
       isSameDimensions: false,
       misMatchPercentage: 0.10,
     };
-    jest.spyOn(fs, 'existsSync').mockImplementation(() => true);
-    jest.spyOn(fs, 'existsSync').mockImplementation(() => true);
+    jest.spyOn(fs, 'existsSync').mockReturnValue(true);
 
     const result = toMatchReference(receivedScreenshot, 'TestName');
     const expectedMessage = 'Expected the screenshot to match the reference screenshot, but received a screenshot with different dimensions.\nExpected the screenshot to be within the mismatch tolerance, but received a mismatch difference of 0.1%.';
@@ -303,7 +302,7 @@ describe('toMatchReference', () => {
       isSameDimensions: false,
       misMatchPercentage: 0.10,
     };
-    jest.spyOn(fs, 'existsSync').mockImplementation(() => true);
+    jest.spyOn(fs, 'existsSync').mockReturnValue(true);
 
     const result = toMatchReference(receivedScreenshot, 'TestName');
     const expectedMessage = 'Expected the screenshot to match the reference screenshot, but received a screenshot with different dimensions.\nExpected the screenshot to be within the mismatch tolerance, but received a mismatch difference of 0.1%.';
@@ -326,7 +325,7 @@ describe('toMatchReference', () => {
       isSameDimensions: false,
       misMatchPercentage: 0.10,
     };
-    jest.spyOn(fs, 'existsSync').mockImplementation(() => true);
+    jest.spyOn(fs, 'existsSync').mockReturnValue(true);
 
     const result = toMatchReference(receivedScreenshot, 'TestName');
     const expectedMessage = 'Expected the screenshot to match the reference screenshot, but received a screenshot with different dimensions.\nExpected the screenshot to be within the mismatch tolerance, but received a mismatch difference of 0.1%.';
@@ -348,9 +347,9 @@ describe('toMatchReference', () => {
       isSameDimensions: false,
       misMatchPercentage: 0.10,
     };
-    jest.spyOn(fs, 'existsSync').mockImplementationOnce(() => false);
-    jest.spyOn(fs, 'mkdirSync').mockImplementationOnce(() => false);
-    jest.spyOn(fs, 'writeFileSync').mockImplementationOnce(() => false);
+    jest.spyOn(fs, 'existsSync').mockReturnValueOnce(false);
+    jest.spyOn(fs, 'mkdirSync').mockReturnValueOnce(false);
+    jest.spyOn(fs, 'writeFileSync').mockReturnValueOnce(false);
 
     const result = toMatchReference(receivedScreenshot, 'TestName');
     const expectedMessage = 'Expected the screenshot to match the reference screenshot, but received a screenshot with different dimensions.\nExpected the screenshot to be within the mismatch tolerance, but received a mismatch difference of 0.1%.';
@@ -376,7 +375,7 @@ describe('toMatchReference', () => {
       misMatchPercentage: 0.10,
     };
     jest.spyOn(fs, 'existsSync').mockImplementation((pathName) => (pathName === '/mock/'));
-    jest.spyOn(fs, 'writeFileSync').mockImplementationOnce(() => false);
+    jest.spyOn(fs, 'writeFileSync').mockReturnValueOnce(false);
 
     const result = toMatchReference(receivedScreenshot, 'TestName');
     const expectedMessage = 'Expected the screenshot to match the reference screenshot, but received a screenshot with different dimensions.\nExpected the screenshot to be within the mismatch tolerance, but received a mismatch difference of 0.1%.';

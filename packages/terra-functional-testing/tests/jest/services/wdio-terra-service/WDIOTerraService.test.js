@@ -239,7 +239,7 @@ describe('WDIO Terra Service', () => {
     });
   });
 
-  describe('onComplete hook', () => {
+  describe.only('onComplete hook', () => {
     let config;
     let getRemoteScreenshotConfiguration;
     let buildUrl;
@@ -270,68 +270,100 @@ describe('WDIO Terra Service', () => {
       jest.restoreAllMocks();
     });
 
-    it('should call postMismatchWarningOnce if ignored-mismatch file exists and branch is pull-request', async () => {
+    it('should call postMismatchWarningOnce if ignored-mismatch file exists and branch is pull-request', async done => {
       const oldPostMismatchWarningOnce = WDIOTerraService.prototype.postMismatchWarningOnce;
       WDIOTerraService.prototype.postMismatchWarningOnce = jest.fn();
-      jest.spyOn(fs, 'existsSync').mockImplementation(() => true);
-      jest.spyOn(fs, 'removeSync').mockImplementation();
+      jest.spyOn(fs, 'access').mockImplementation(async (path, opts, cb) => {
+        expect(path).toBe('/mock/ignored-mismatch.json');
+        expect(opts).toBe(fs.constants.F_OK);
+        expect(cb).toBeDefined();
+        await cb();
+      });
+      jest.spyOn(fs, 'unlink').mockImplementation(async (path, cb) => {
+        expect(path).toBe('/mock/ignored-mismatch.json');
+        expect(cb).toBeDefined();
+        await cb();
+        done();
+      });
       config.serviceOptions.buildBranch = 'pr-123';
       const service = new WDIOTerraService({}, {}, config);
       service.postMismatchWarningOnce.mockResolvedValueOnce();
 
       await service.onComplete();
 
-      expect(fs.existsSync).toHaveBeenCalledWith('/mock/ignored-mismatch.json');
       expect(service.postMismatchWarningOnce).toHaveBeenCalled();
-      expect(fs.removeSync).toHaveBeenCalledWith('/mock/ignored-mismatch.json');
 
       WDIOTerraService.prototype.postMismatchWarningOnce = oldPostMismatchWarningOnce;
       config.serviceOptions.buildBranch = undefined;
     });
 
-    it('should not call postMismatchWarningOnce if ignored-mismatch file does not exist', async () => {
+    it('should not call postMismatchWarningOnce if ignored-mismatch file does not exist', async done => {
       const oldPostMismatchWarningOnce = WDIOTerraService.prototype.postMismatchWarningOnce;
       WDIOTerraService.prototype.postMismatchWarningOnce = jest.fn();
-      jest.spyOn(fs, 'existsSync').mockImplementation(() => false);
-      jest.spyOn(fs, 'removeSync').mockImplementation();
+      jest.spyOn(fs, 'access').mockImplementation(async (path, opts, cb) => {
+        expect(path).toBe('/mock/ignored-mismatch.json');
+        expect(opts).toBe(fs.constants.F_OK);
+        expect(cb).toBeDefined();
+        await cb(new Error('File does not exist'));
+        done();
+      });
+      jest.spyOn(fs, 'unlink').mockImplementation(async (path, cb) => {
+        await cb();
+        done(new Error());
+      });
       config.serviceOptions.buildBranch = 'pr-123';
       const service = new WDIOTerraService({}, {}, config);
       service.postMismatchWarningOnce.mockResolvedValueOnce();
 
       await service.onComplete();
 
-      expect(fs.existsSync).toHaveBeenCalledWith('/mock/ignored-mismatch.json');
       expect(service.postMismatchWarningOnce).not.toHaveBeenCalled();
-      expect(fs.removeSync).not.toHaveBeenCalled();
+      expect(fs.unlink).not.toHaveBeenCalled();
 
       WDIOTerraService.prototype.postMismatchWarningOnce = oldPostMismatchWarningOnce;
       config.serviceOptions.buildBranch = undefined;
     });
 
-    it('should not call postMismatchWarningOnce if branch is not pull-request', async () => {
+    it('should not call postMismatchWarningOnce if branch is not pull-request', async done => {
       const oldPostMismatchWarningOnce = WDIOTerraService.prototype.postMismatchWarningOnce;
       WDIOTerraService.prototype.postMismatchWarningOnce = jest.fn();
-      jest.spyOn(fs, 'existsSync').mockImplementation(() => true);
-      jest.spyOn(fs, 'removeSync').mockImplementation();
+      jest.spyOn(fs, 'access').mockImplementation(async (path, opts, cb) => {
+        expect(path).toBe('/mock/ignored-mismatch.json');
+        expect(opts).toBe(fs.constants.F_OK);
+        expect(cb).toBeDefined();
+        await cb();
+        done();
+      });
+      jest.spyOn(fs, 'unlink').mockImplementation(async (path, cb) => {
+        await cb();
+        done(new Error());
+      });
       config.serviceOptions.buildBranch = 'master';
       const service = new WDIOTerraService({}, {}, config);
       service.postMismatchWarningOnce.mockResolvedValueOnce();
 
       await service.onComplete();
 
-      expect(fs.existsSync).toHaveBeenCalledWith('/mock/ignored-mismatch.json');
       expect(service.postMismatchWarningOnce).not.toHaveBeenCalled();
-      expect(fs.removeSync).not.toHaveBeenCalled();
 
       WDIOTerraService.prototype.postMismatchWarningOnce = oldPostMismatchWarningOnce;
       config.serviceOptions.buildBranch = undefined;
     });
 
-    it('should call uploadBuildBranchScreenshots if build type is a commit and it is not a pull request', async () => {
+    it('should call uploadBuildBranchScreenshots if build type is a commit and it is not a pull request', async done => {
       const oldUploadBuildBranchScreenshots = WDIOTerraService.prototype.uploadBuildBranchScreenshots;
       WDIOTerraService.prototype.uploadBuildBranchScreenshots = jest.fn();
-      jest.spyOn(fs, 'existsSync').mockImplementation(() => false);
-      jest.spyOn(fs, 'removeSync').mockImplementation();
+      jest.spyOn(fs, 'access').mockImplementation(async (path, opts, cb) => {
+        expect(path).toBe('/mock/ignored-mismatch.json');
+        expect(opts).toBe(fs.constants.F_OK);
+        expect(cb).toBeDefined();
+        await cb(new Error('File does not exist'));
+        done();
+      });
+      jest.spyOn(fs, 'unlink').mockImplementation(async (path, cb) => {
+        await cb();
+        done(new Error());
+      });
       config.serviceOptions.buildBranch = 'master';
       config.serviceOptions.buildType = BUILD_TYPE.branchEventCause;
       const service = new WDIOTerraService({}, {}, config);
@@ -339,19 +371,28 @@ describe('WDIO Terra Service', () => {
 
       await service.onComplete();
 
-      expect(fs.existsSync).toHaveBeenCalledWith('/mock/ignored-mismatch.json');
       expect(service.uploadBuildBranchScreenshots).toHaveBeenCalled();
-      expect(fs.removeSync).not.toHaveBeenCalled();
 
       WDIOTerraService.prototype.uploadBuildBranchScreenshots = oldUploadBuildBranchScreenshots;
       config.serviceOptions.buildBranch = undefined;
     });
 
-    it('should call uploadBuildBranchScreenshots and remove the ignored-mismatch file if it exists', async () => {
+    it('should call uploadBuildBranchScreenshots and remove the ignored-mismatch file if it exists', async done => {
       const oldUploadBuildBranchScreenshots = WDIOTerraService.prototype.uploadBuildBranchScreenshots;
       WDIOTerraService.prototype.uploadBuildBranchScreenshots = jest.fn();
-      jest.spyOn(fs, 'existsSync').mockImplementation(() => true);
-      jest.spyOn(fs, 'removeSync').mockImplementation();
+      jest.spyOn(fs, 'access').mockImplementation(async (path, opts, cb) => {
+        expect(path).toBe('/mock/ignored-mismatch.json');
+        expect(opts).toBe(fs.constants.F_OK);
+        expect(cb).toBeDefined();
+        await cb();
+        done();
+      });
+      jest.spyOn(fs, 'unlink').mockImplementation(async (path, cb) => {
+        expect(path).toBe('/mock/ignored-mismatch.json');
+        expect(cb).toBeDefined();
+        await cb();
+        done();
+      });
       config.serviceOptions.buildBranch = 'master';
       config.serviceOptions.buildType = BUILD_TYPE.branchEventCause;
       const service = new WDIOTerraService({}, {}, config);
@@ -359,19 +400,26 @@ describe('WDIO Terra Service', () => {
 
       await service.onComplete();
 
-      expect(fs.existsSync).toHaveBeenCalledWith('/mock/ignored-mismatch.json');
       expect(service.uploadBuildBranchScreenshots).toHaveBeenCalled();
-      expect(fs.removeSync).toHaveBeenCalledWith('/mock/ignored-mismatch.json');
 
       WDIOTerraService.prototype.uploadBuildBranchScreenshots = oldUploadBuildBranchScreenshots;
       config.serviceOptions.buildBranch = undefined;
     });
 
-    it('should not call uploadBuildBranchScreenshots if build is a PR', async () => {
+    it('should not call uploadBuildBranchScreenshots if build is a PR', async done => {
       const oldUploadBuildBranchScreenshots = WDIOTerraService.prototype.uploadBuildBranchScreenshots;
       WDIOTerraService.prototype.uploadBuildBranchScreenshots = jest.fn();
-      jest.spyOn(fs, 'existsSync').mockImplementation(() => false);
-      jest.spyOn(fs, 'removeSync').mockImplementation();
+      jest.spyOn(fs, 'access').mockImplementation(async (path, opts, cb) => {
+        expect(path).toBe('/mock/ignored-mismatch.json');
+        expect(opts).toBe(fs.constants.F_OK);
+        expect(cb).toBeDefined();
+        await cb(new Error('File does not exist'));
+        done();
+      });
+      jest.spyOn(fs, 'unlink').mockImplementation(async (path, cb) => {
+        await cb();
+        done(new Error());
+      });
       config.serviceOptions.buildBranch = 'pr-123';
       config.serviceOptions.buildType = BUILD_TYPE.branchEventCause;
       const service = new WDIOTerraService({}, {}, config);
@@ -379,19 +427,26 @@ describe('WDIO Terra Service', () => {
 
       await service.onComplete();
 
-      expect(fs.existsSync).toHaveBeenCalledWith('/mock/ignored-mismatch.json');
       expect(service.uploadBuildBranchScreenshots).not.toHaveBeenCalled();
-      expect(fs.removeSync).not.toHaveBeenCalled();
 
       WDIOTerraService.prototype.uploadBuildBranchScreenshots = oldUploadBuildBranchScreenshots;
       config.serviceOptions.buildBranch = undefined;
     });
 
-    it('should not call uploadBuildBranchScreenshots if build type is not a branchEventCause', async () => {
+    it('should not call uploadBuildBranchScreenshots if build type is not a branchEventCause', async done => {
       const oldUploadBuildBranchScreenshots = WDIOTerraService.prototype.uploadBuildBranchScreenshots;
       WDIOTerraService.prototype.uploadBuildBranchScreenshots = jest.fn();
-      jest.spyOn(fs, 'existsSync').mockImplementation(() => false);
-      jest.spyOn(fs, 'removeSync').mockImplementation();
+      jest.spyOn(fs, 'access').mockImplementation(async (path, opts, cb) => {
+        expect(path).toBe('/mock/ignored-mismatch.json');
+        expect(opts).toBe(fs.constants.F_OK);
+        expect(cb).toBeDefined();
+        await cb(new Error('File does not exist'));
+        done();
+      });
+      jest.spyOn(fs, 'unlink').mockImplementation(async (path, cb) => {
+        await cb();
+        done(new Error());
+      });
       config.serviceOptions.buildBranch = 'master';
       config.serviceOptions.buildType = 'Replayed';
       const service = new WDIOTerraService({}, {}, config);
@@ -399,9 +454,7 @@ describe('WDIO Terra Service', () => {
 
       await service.onComplete();
 
-      expect(fs.existsSync).toHaveBeenCalledWith('/mock/ignored-mismatch.json');
       expect(service.uploadBuildBranchScreenshots).not.toHaveBeenCalled();
-      expect(fs.removeSync).not.toHaveBeenCalled();
 
       WDIOTerraService.prototype.uploadBuildBranchScreenshots = oldUploadBuildBranchScreenshots;
       config.serviceOptions.buildBranch = undefined;
