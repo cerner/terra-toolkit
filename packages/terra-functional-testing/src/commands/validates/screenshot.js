@@ -9,7 +9,7 @@
  * @param {Object} [options.mismatchTolerance] - the mismatch tolerance for the screenshot comparison.
  * @param {string} [options.selector=global.Terra.serviceOptions.selector] - the element selector to use for
  */
-const screenshot = (testName, options = {}) => {
+const screenshot = async (testName, options = {}) => {
   if (!testName || typeof testName !== 'string' || testName.length === 0) {
     throw new Error('[terra-functional-testing:screenshot] Terra.validate.screenshot requires a unique test name as the first argument.');
   }
@@ -20,7 +20,7 @@ const screenshot = (testName, options = {}) => {
     name: testName,
   };
 
-  const screenshotResult = global.browser.checkElement(selector || global.Terra.serviceOptions.selector, wrappedOptions);
+  const screenshotResult = await global.browser.checkElement(selector || global.Terra.serviceOptions.selector, wrappedOptions);
 
   global.expect(screenshotResult).toMatchReference();
 };

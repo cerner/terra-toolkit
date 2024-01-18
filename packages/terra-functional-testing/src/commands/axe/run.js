@@ -6,9 +6,9 @@ const injectAxe = require('./inject');
  * @param {Object} options - The axe options.
  * @param {array} options.rules - The rule overrides.
  */
-const runAxe = (options = {}) => {
+const runAxe = async (options = {}) => {
   // eslint-disable-next-line prefer-arrow-callback
-  const isAxeUnavailable = browser.execute(function getAxeStatus() { return window.axe === undefined; });
+  const isAxeUnavailable = await browser.execute(function getAxeStatus() { return window.axe === undefined; });
 
   // Inject axe-core onto the page if it has not already been initialized.
   if (isAxeUnavailable) {
@@ -21,7 +21,7 @@ const runAxe = (options = {}) => {
       { ...Terra.axe.rules[rule], id: rule }
     ));
 
-    injectAxe({ rules: globalRuleArray });
+    await injectAxe({ rules: globalRuleArray });
   }
 
   // Merge the global rules and option overrides together.
