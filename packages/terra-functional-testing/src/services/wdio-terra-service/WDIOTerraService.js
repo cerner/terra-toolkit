@@ -121,7 +121,7 @@ class WDIOTerraService {
    * Service hook executed prior to test execution.
    * Initializes the Terra Service's custom commands.
    */
-  before(capabilities) {
+  async before(capabilities) {
     // Set Jest's expect module as the global assertion framework.
     global.expect = expect;
     global.expect.extend({ toBeAccessible, toMatchReference });
@@ -156,25 +156,26 @@ class WDIOTerraService {
 
     // IE driver takes longer to be ready for browser interactions.
     if (capabilities.browserName === 'internet explorer') {
-      global.browser.$('body').waitForExist({
+      await global.browser.$('body').waitForExist({
         timeout: global.browser.config.waitforTimeout,
         interval: 100,
       });
     }
 
     // Set the viewport size before the spec begins.
-    setViewport(this.serviceOptions.formFactor || 'huge');
+    await setViewport(this.serviceOptions.formFactor || 'huge');
   }
 
   // eslint-disable-next-line class-methods-use-this
-  afterCommand(commandName, _args, _result, error) {
+  async afterCommand(commandName, _args, _result, error) {
     if ((commandName === 'refresh' || commandName === 'url') && !error) {
       try {
         // This is only meant as a convenience so failure is not particularly concerning.
-        global.Terra.hideInputCaret('body');
+        await global.Terra.hideInputCaret('body');
 
-        if (global.browser.$('[data-terra-test-loading]').isExisting()) {
-          global.browser.$('[data-terra-test-content]').waitForExist({
+        const selectorExists = await global.browser.$('[data-terra-test-loading]').isExisting();
+        if (selectorExists) {
+          await global.browser.$('[data-terra-test-content]').waitForExist({
             timeout: global.browser.config.waitforTimeout + 2000,
             interval: 100,
           });

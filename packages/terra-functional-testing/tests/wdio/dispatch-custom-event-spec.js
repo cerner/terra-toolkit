@@ -18,7 +18,7 @@ describe('dispatchCustomEvent', () => {
     });
 
     const injectedString = 'mock';
-    dispatchCustomEvent({
+    await dispatchCustomEvent({
       name: 'mockCustomEvent',
       metaData: { injectedString },
     });

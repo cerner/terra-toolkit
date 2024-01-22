@@ -8,7 +8,7 @@ const logger = new Logger({ prefix: '[terra-functional-testing:setViewport]' });
  * Sets the dimensions of the current window to the viewport size.
  * @param {string} viewport - The viewport name.
  */
-const setViewport = (viewport) => {
+const setViewport = async (viewport) => {
   if (!viewport || !TERRA_VIEWPORTS[viewport]) {
     logger.error(`Unsupported viewport supplied to setViewport. "${viewport}" is not a Terra supported viewport.`);
     return;
@@ -16,7 +16,7 @@ const setViewport = (viewport) => {
 
   const terraViewport = TERRA_VIEWPORTS[viewport];
 
-  setViewportSize(terraViewport);
+  await setViewportSize(terraViewport);
 };
 
 module.exports = setViewport;

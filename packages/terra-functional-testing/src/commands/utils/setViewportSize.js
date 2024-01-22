@@ -2,23 +2,23 @@ const getViewportSize = require('./getViewportSize');
 
 const MAX_RETRIES = 5;
 
-const setViewportSize = (viewport, retryNo = 0) => {
+const setViewportSize = async (viewport, retryNo = 0) => {
   const { width, height } = viewport;
 
-  const windowSize = global.browser.getWindowSize();
-  const viewportSize = getViewportSize();
+  const windowSize = await global.browser.getWindowSize();
+  const viewportSize = await getViewportSize();
 
   const widthDiff = Math.abs(windowSize.width - viewportSize.width);
   const heightDiff = Math.abs(windowSize.height - viewportSize.height);
 
   // change window size with indent
-  global.browser.setWindowSize(width + widthDiff, height + heightDiff);
+  await global.browser.setWindowSize(width + widthDiff, height + heightDiff);
 
-  const newViewportSize = getViewportSize();
+  const newViewportSize = await getViewportSize();
 
   // if viewport size is not equal to the desired size, execute process again
   if (retryNo < MAX_RETRIES && (newViewportSize.width !== width || newViewportSize.height !== height)) {
-    setViewportSize(viewport, retryNo + 1);
+    await setViewportSize(viewport, retryNo + 1);
   }
 };
 

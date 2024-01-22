@@ -11,7 +11,7 @@ const describeViewports = require('./describeViewports');
  * @param {string} options.themes - The themes that the block of tests only execute in.
  * @param {function} - The block of tests to execute based on the defined form factor, locale, and theme.
  */
-const describeTests = (title, options = {}, fn) => {
+const describeTests = async (title, options = {}, fn) => {
   let { formFactor, locale, theme } = global.Terra.serviceOptions;
   const { formFactors, locales, themes } = options;
 
@@ -31,7 +31,7 @@ const describeTests = (title, options = {}, fn) => {
     return;
   }
 
-  describeViewports(title, formFactors || ['huge'], fn);
+  await describeViewports(title, formFactors || ['huge'], fn);
 };
 
 module.exports = describeTests;

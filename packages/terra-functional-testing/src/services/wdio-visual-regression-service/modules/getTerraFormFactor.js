@@ -6,9 +6,9 @@ const { getViewportSize } = require('../../../commands/utils');
  *
  * @returns {String} - Terra form factor the current viewport falls under.
  */
-function getTerraFormFactor() {
+async function getTerraFormFactor() {
   const viewports = Object.entries(TERRA_VIEWPORTS);
-  const currentWidth = getViewportSize().width;
+  const currentWidth = (await getViewportSize()).width;
 
   for (let index = 0; index < viewports.length; index += 1) {
     const [formFactor, size] = viewports[index];
