@@ -2,6 +2,7 @@ const path = require('path');
 const expect = require('expect');
 const fs = require('fs-extra');
 const { SevereServiceError } = require('webdriverio');
+const getOutputDir = require('../../reporters/spec-reporter/get-output-dir');
 const { accessibility, element, screenshot } = require('../../commands/validates');
 const { toBeAccessible, toMatchReference } = require('../../commands/expect');
 const {
@@ -64,6 +65,10 @@ class WDIOTerraService {
       gitToken,
       issueNumber,
       useRemoteReferenceScreenshots,
+      locale,
+      theme,
+      formFactor,
+      browser,
     } = this.serviceOptions;
 
     if (!useRemoteReferenceScreenshots) {
@@ -90,7 +95,7 @@ class WDIOTerraService {
         screenshotConfig = this.getRemoteScreenshotConfiguration(this.screenshotsSites, buildBranch);
       }
       const screenshotRequestor = new ScreenshotRequestor(screenshotConfig.publishScreenshotConfiguration);
-      await screenshotRequestor.download();
+      await screenshotRequestor.download(locale, theme, formFactor, browser);
     } catch (error) {
       throw new SevereServiceError(error);
     }
@@ -211,9 +216,7 @@ class WDIOTerraService {
       ':warning: :bangbang: **WDIO MISMATCH**\n\n',
       `Check that screenshot change is intended at: ${buildUrl}\n\n`,
       'If screenshot change is intended, remote reference screenshots will be updated upon PR merge.\n',
-      'If screenshot change is unintended, please fix screenshot issues before PR merge to prevent them from being uploaded.\n\n',
-      'Note: This comment only appears the first time a screenshot mismatch is detected on a PR build, ',
-      'future builds will need to be checked for unintended screenshot mismatches.',
+      'If screenshot change is unintended, please fix screenshot issues before PR merge to prevent them from being uploaded.',
     ].join('');
 
     const comments = await issue.getComments();
@@ -230,12 +233,16 @@ class WDIOTerraService {
   async uploadBuildBranchScreenshots() {
     const {
       buildBranch,
+      locale,
+      theme,
+      formFactor,
+      browser,
     } = this.serviceOptions;
 
     try {
       const screenshotConfig = this.getRemoteScreenshotConfiguration(this.screenshotsSites, buildBranch);
       const screenshotRequestor = new ScreenshotRequestor(screenshotConfig.publishScreenshotConfiguration);
-      await screenshotRequestor.upload();
+      await screenshotRequestor.upload(locale, theme, formFactor, browser);
     } catch (err) {
       throw new SevereServiceError(err);
     }
@@ -256,14 +263,38 @@ class WDIOTerraService {
       return;
     }
 
+    const fileName = path.join(getOutputDir(), 'ignored-mismatch.json');
+
     try {
-      if (process.env.SCREENSHOT_MISMATCH_CHECK === 'true' && buildBranch.match(BUILD_BRANCH.pullRequest)) {
-        // We found a screenshot mismatch during our build of this PR branch.
-        await this.postMismatchWarningOnce();
-      } else if (!buildBranch.match(BUILD_BRANCH.pullRequest) && buildType === BUILD_TYPE.branchEventCause) {
-        // This non-PR branch is being merged or someone pushed code into it directly.
-        await this.uploadBuildBranchScreenshots();
-      }
+      // Check if the file exists in the current directory.
+      fs.access(fileName, fs.constants.F_OK, async (error) => {
+        try {
+          if (!error && buildBranch.match(BUILD_BRANCH.pullRequest)) {
+            // We found a screenshot mismatch during our build of this PR branch.
+            await this.postMismatchWarningOnce();
+            // Remove mismatch flag file after running
+            fs.unlink(fileName, (err) => {
+              if (err) throw err;
+            });
+          } else if (!buildBranch.match(BUILD_BRANCH.pullRequest) && buildType === BUILD_TYPE.branchEventCause) {
+            // This non-PR branch is being merged or someone pushed code into it directly.
+            await this.uploadBuildBranchScreenshots();
+            // Remove mismatch flag file after running if it exists
+            if (!error) {
+              fs.unlink(fileName, (err) => {
+                if (err) throw err;
+              });
+            }
+          }
+        } catch (err) {
+          // The service will stop only if a SevereServiceError is thrown.
+          if (err instanceof SevereServiceError) {
+            throw err;
+          }
+
+          throw new SevereServiceError(err);
+        }
+      });
     } catch (err) {
       // The service will stop only if a SevereServiceError is thrown.
       if (err instanceof SevereServiceError) {

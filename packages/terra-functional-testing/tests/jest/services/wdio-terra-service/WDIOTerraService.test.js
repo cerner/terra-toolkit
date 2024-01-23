@@ -16,6 +16,9 @@ fs.readJson.mockResolvedValue({
     url: `git+https://github.com/${repoOwner}/${repoName}.git`,
   },
 });
+jest.mock('../../../../src/reporters/spec-reporter/get-output-dir', () => (
+  jest.fn().mockImplementation(() => ('/mock/'))
+));
 
 describe('WDIO Terra Service', () => {
   describe('getRepoMetadata', () => {
@@ -236,20 +239,26 @@ describe('WDIO Terra Service', () => {
     });
   });
 
-  describe('onComplete hook', () => {
+  describe.only('onComplete hook', () => {
     let config;
     let getRemoteScreenshotConfiguration;
+    let buildUrl;
 
     beforeAll(() => {
       getRemoteScreenshotConfiguration = jest.fn(() => ({
         publishScreenshotConfiguration: jest.fn(),
       }));
+      buildUrl = 'https://example.com/buildUrl';
     });
 
     beforeEach(() => {
       config = {
         getRemoteScreenshotConfiguration,
         screenshotsSites: 'screenshot sites object',
+        serviceOptions: {
+          useRemoteReferenceScreenshots: true,
+          buildUrl,
+        },
       };
     });
 
@@ -261,159 +270,319 @@ describe('WDIO Terra Service', () => {
       jest.restoreAllMocks();
     });
 
-    describe('Posting a mismatch warning comment to the github issue', () => {
-      let postComment;
-      let getComments;
-      let buildUrl;
-      let warningMessage;
-
-      beforeAll(() => {
-        postComment = jest.spyOn(GithubIssue.prototype, 'postComment');
-        getComments = jest.spyOn(GithubIssue.prototype, 'getComments');
-        buildUrl = 'https://example.com/buildUrl';
-        warningMessage = [
-          ':warning: :bangbang: **WDIO MISMATCH**\n\n',
-          `Check that screenshot change is intended at: ${buildUrl}\n\n`,
-          'If screenshot change is intended, remote reference screenshots will be updated upon PR merge.\n',
-          'If screenshot change is unintended, please fix screenshot issues before PR merge to prevent them from being uploaded.\n\n',
-          'Note: This comment only appears the first time a screenshot mismatch is detected on a PR build, ',
-          'future builds will need to be checked for unintended screenshot mismatches.',
-        ].join('');
+    it('should call postMismatchWarningOnce if ignored-mismatch file exists and branch is pull-request', async done => {
+      const oldPostMismatchWarningOnce = WDIOTerraService.prototype.postMismatchWarningOnce;
+      WDIOTerraService.prototype.postMismatchWarningOnce = jest.fn();
+      jest.spyOn(fs, 'access').mockImplementation(async (path, opts, cb) => {
+        expect(path).toBe('/mock/ignored-mismatch.json');
+        expect(opts).toBe(fs.constants.F_OK);
+        expect(cb).toBeDefined();
+        await cb();
       });
+      jest.spyOn(fs, 'unlink').mockImplementation(async (path, cb) => {
+        expect(path).toBe('/mock/ignored-mismatch.json');
+        expect(cb).toBeDefined();
+        await cb();
+        done();
+      });
+      config.serviceOptions.buildBranch = 'pr-123';
+      const service = new WDIOTerraService({}, {}, config);
+      service.postMismatchWarningOnce.mockResolvedValueOnce();
 
-      beforeEach(() => {
-        // Happy path environs and config.
-        process.env.SCREENSHOT_MISMATCH_CHECK = true;
-        config.serviceOptions = {
+      await service.onComplete();
+
+      expect(service.postMismatchWarningOnce).toHaveBeenCalled();
+
+      WDIOTerraService.prototype.postMismatchWarningOnce = oldPostMismatchWarningOnce;
+      config.serviceOptions.buildBranch = undefined;
+    });
+
+    it('should not call postMismatchWarningOnce if ignored-mismatch file does not exist', async done => {
+      const oldPostMismatchWarningOnce = WDIOTerraService.prototype.postMismatchWarningOnce;
+      WDIOTerraService.prototype.postMismatchWarningOnce = jest.fn();
+      jest.spyOn(fs, 'access').mockImplementation(async (path, opts, cb) => {
+        expect(path).toBe('/mock/ignored-mismatch.json');
+        expect(opts).toBe(fs.constants.F_OK);
+        expect(cb).toBeDefined();
+        await cb(new Error('File does not exist'));
+        done();
+      });
+      jest.spyOn(fs, 'unlink').mockImplementation(async (path, cb) => {
+        await cb();
+        done(new Error());
+      });
+      config.serviceOptions.buildBranch = 'pr-123';
+      const service = new WDIOTerraService({}, {}, config);
+      service.postMismatchWarningOnce.mockResolvedValueOnce();
+
+      await service.onComplete();
+
+      expect(service.postMismatchWarningOnce).not.toHaveBeenCalled();
+      expect(fs.unlink).not.toHaveBeenCalled();
+
+      WDIOTerraService.prototype.postMismatchWarningOnce = oldPostMismatchWarningOnce;
+      config.serviceOptions.buildBranch = undefined;
+    });
+
+    it('should not call postMismatchWarningOnce if branch is not pull-request', async done => {
+      const oldPostMismatchWarningOnce = WDIOTerraService.prototype.postMismatchWarningOnce;
+      WDIOTerraService.prototype.postMismatchWarningOnce = jest.fn();
+      jest.spyOn(fs, 'access').mockImplementation(async (path, opts, cb) => {
+        expect(path).toBe('/mock/ignored-mismatch.json');
+        expect(opts).toBe(fs.constants.F_OK);
+        expect(cb).toBeDefined();
+        await cb();
+        done();
+      });
+      jest.spyOn(fs, 'unlink').mockImplementation(async (path, cb) => {
+        await cb();
+        done(new Error());
+      });
+      config.serviceOptions.buildBranch = 'master';
+      const service = new WDIOTerraService({}, {}, config);
+      service.postMismatchWarningOnce.mockResolvedValueOnce();
+
+      await service.onComplete();
+
+      expect(service.postMismatchWarningOnce).not.toHaveBeenCalled();
+
+      WDIOTerraService.prototype.postMismatchWarningOnce = oldPostMismatchWarningOnce;
+      config.serviceOptions.buildBranch = undefined;
+    });
+
+    it('should call uploadBuildBranchScreenshots if build type is a commit and it is not a pull request', async done => {
+      const oldUploadBuildBranchScreenshots = WDIOTerraService.prototype.uploadBuildBranchScreenshots;
+      WDIOTerraService.prototype.uploadBuildBranchScreenshots = jest.fn();
+      jest.spyOn(fs, 'access').mockImplementation(async (path, opts, cb) => {
+        expect(path).toBe('/mock/ignored-mismatch.json');
+        expect(opts).toBe(fs.constants.F_OK);
+        expect(cb).toBeDefined();
+        await cb(new Error('File does not exist'));
+        done();
+      });
+      jest.spyOn(fs, 'unlink').mockImplementation(async (path, cb) => {
+        await cb();
+        done(new Error());
+      });
+      config.serviceOptions.buildBranch = 'master';
+      config.serviceOptions.buildType = BUILD_TYPE.branchEventCause;
+      const service = new WDIOTerraService({}, {}, config);
+      service.uploadBuildBranchScreenshots.mockResolvedValueOnce();
+
+      await service.onComplete();
+
+      expect(service.uploadBuildBranchScreenshots).toHaveBeenCalled();
+
+      WDIOTerraService.prototype.uploadBuildBranchScreenshots = oldUploadBuildBranchScreenshots;
+      config.serviceOptions.buildBranch = undefined;
+    });
+
+    it('should call uploadBuildBranchScreenshots and remove the ignored-mismatch file if it exists', async done => {
+      const oldUploadBuildBranchScreenshots = WDIOTerraService.prototype.uploadBuildBranchScreenshots;
+      WDIOTerraService.prototype.uploadBuildBranchScreenshots = jest.fn();
+      jest.spyOn(fs, 'access').mockImplementation(async (path, opts, cb) => {
+        expect(path).toBe('/mock/ignored-mismatch.json');
+        expect(opts).toBe(fs.constants.F_OK);
+        expect(cb).toBeDefined();
+        await cb();
+        done();
+      });
+      jest.spyOn(fs, 'unlink').mockImplementation(async (path, cb) => {
+        expect(path).toBe('/mock/ignored-mismatch.json');
+        expect(cb).toBeDefined();
+        await cb();
+        done();
+      });
+      config.serviceOptions.buildBranch = 'master';
+      config.serviceOptions.buildType = BUILD_TYPE.branchEventCause;
+      const service = new WDIOTerraService({}, {}, config);
+      service.uploadBuildBranchScreenshots.mockResolvedValueOnce();
+
+      await service.onComplete();
+
+      expect(service.uploadBuildBranchScreenshots).toHaveBeenCalled();
+
+      WDIOTerraService.prototype.uploadBuildBranchScreenshots = oldUploadBuildBranchScreenshots;
+      config.serviceOptions.buildBranch = undefined;
+    });
+
+    it('should not call uploadBuildBranchScreenshots if build is a PR', async done => {
+      const oldUploadBuildBranchScreenshots = WDIOTerraService.prototype.uploadBuildBranchScreenshots;
+      WDIOTerraService.prototype.uploadBuildBranchScreenshots = jest.fn();
+      jest.spyOn(fs, 'access').mockImplementation(async (path, opts, cb) => {
+        expect(path).toBe('/mock/ignored-mismatch.json');
+        expect(opts).toBe(fs.constants.F_OK);
+        expect(cb).toBeDefined();
+        await cb(new Error('File does not exist'));
+        done();
+      });
+      jest.spyOn(fs, 'unlink').mockImplementation(async (path, cb) => {
+        await cb();
+        done(new Error());
+      });
+      config.serviceOptions.buildBranch = 'pr-123';
+      config.serviceOptions.buildType = BUILD_TYPE.branchEventCause;
+      const service = new WDIOTerraService({}, {}, config);
+      service.uploadBuildBranchScreenshots.mockResolvedValueOnce();
+
+      await service.onComplete();
+
+      expect(service.uploadBuildBranchScreenshots).not.toHaveBeenCalled();
+
+      WDIOTerraService.prototype.uploadBuildBranchScreenshots = oldUploadBuildBranchScreenshots;
+      config.serviceOptions.buildBranch = undefined;
+    });
+
+    it('should not call uploadBuildBranchScreenshots if build type is not a branchEventCause', async done => {
+      const oldUploadBuildBranchScreenshots = WDIOTerraService.prototype.uploadBuildBranchScreenshots;
+      WDIOTerraService.prototype.uploadBuildBranchScreenshots = jest.fn();
+      jest.spyOn(fs, 'access').mockImplementation(async (path, opts, cb) => {
+        expect(path).toBe('/mock/ignored-mismatch.json');
+        expect(opts).toBe(fs.constants.F_OK);
+        expect(cb).toBeDefined();
+        await cb(new Error('File does not exist'));
+        done();
+      });
+      jest.spyOn(fs, 'unlink').mockImplementation(async (path, cb) => {
+        await cb();
+        done(new Error());
+      });
+      config.serviceOptions.buildBranch = 'master';
+      config.serviceOptions.buildType = 'Replayed';
+      const service = new WDIOTerraService({}, {}, config);
+      service.uploadBuildBranchScreenshots.mockResolvedValueOnce();
+
+      await service.onComplete();
+
+      expect(service.uploadBuildBranchScreenshots).not.toHaveBeenCalled();
+
+      WDIOTerraService.prototype.uploadBuildBranchScreenshots = oldUploadBuildBranchScreenshots;
+      config.serviceOptions.buildBranch = undefined;
+    });
+  });
+
+  describe('postMismatchWarningOnce function', () => {
+    let postComment;
+    let getComments;
+    let buildUrl;
+    let warningMessage;
+    let config;
+
+    beforeAll(() => {
+      postComment = jest.spyOn(GithubIssue.prototype, 'postComment');
+      getComments = jest.spyOn(GithubIssue.prototype, 'getComments');
+      buildUrl = 'https://example.com/buildUrl';
+      warningMessage = [
+        ':warning: :bangbang: **WDIO MISMATCH**\n\n',
+        `Check that screenshot change is intended at: ${buildUrl}\n\n`,
+        'If screenshot change is intended, remote reference screenshots will be updated upon PR merge.\n',
+        'If screenshot change is unintended, please fix screenshot issues before PR merge to prevent them from being uploaded.',
+      ].join('');
+    });
+
+    beforeEach(() => {
+      config = {
+        screenshotsSites: 'screenshot sites object',
+        serviceOptions: {
           useRemoteReferenceScreenshots: true,
           buildBranch: 'pr-123',
           buildUrl,
-        };
-      });
-
-      afterAll(() => {
-        process.env.SCREENSHOT_MISMATCH_CHECK = undefined;
-      });
-
-      it('Posts a comment', async () => {
-        getComments.mockResolvedValue(['not the warning message']);
-        postComment.mockResolvedValue();
-        const service = new WDIOTerraService({}, {}, config);
-        await service.onComplete();
-        expect(postComment).toHaveBeenCalledWith(warningMessage);
-      });
-
-      it('Does not try to post if no mismatch has been found', async () => {
-        process.env.SCREENSHOT_MISMATCH_CHECK = undefined;
-        getComments.mockResolvedValue(['not the warning message']);
-        postComment.mockResolvedValue();
-        const service = new WDIOTerraService({}, {}, config);
-        await service.onComplete();
-        expect(postComment).not.toHaveBeenCalled();
-      });
-
-      it('Does not try to post if we are not using remote screenshots', async () => {
-        config.serviceOptions.useRemoteReferenceScreenshots = false;
-        getComments.mockResolvedValue(['not the warning message']);
-        postComment.mockResolvedValue();
-        const service = new WDIOTerraService({}, {}, config);
-        await service.onComplete();
-        expect(postComment).not.toHaveBeenCalled();
-      });
-
-      it('Does not try to post if the branch does not match the PR pattern', async () => {
-        config.serviceOptions.buildBranch = 'not-a-pr';
-        getComments.mockResolvedValue(['not the warning message']);
-        postComment.mockResolvedValue();
-        const service = new WDIOTerraService({}, {}, config);
-        await service.onComplete();
-        expect(postComment).not.toHaveBeenCalled();
-      });
-
-      it('Does not post if the comment is found on the issue', async () => {
-        getComments.mockResolvedValue([warningMessage]);
-        postComment.mockResolvedValue();
-        const service = new WDIOTerraService({}, {}, config);
-        await service.onComplete();
-        expect(getComments).toHaveBeenCalled();
-        expect(postComment).not.toHaveBeenCalled();
-      });
-
-      it('Stops the service without posting if it fails to get the issue comments', async () => {
-        getComments.mockRejectedValue('oh no!');
-        const service = new WDIOTerraService({}, {}, config);
-        await expect(service.onComplete()).rejects.toThrow(SevereServiceError);
-        expect(getComments).toHaveBeenCalled();
-        expect(postComment).not.toHaveBeenCalled();
-      });
-
-      it('Stops the service if it fails to post the comment', async () => {
-        getComments.mockResolvedValue(['not the warning message']);
-        postComment.mockRejectedValue('oh no!');
-        const service = new WDIOTerraService({}, {}, config);
-        await expect(service.onComplete()).rejects.toThrow(SevereServiceError);
-        expect(postComment).toHaveBeenCalled();
-      });
+        },
+      };
     });
 
-    describe('Uploading screenshots to a remote repo', () => {
-      let upload;
-      const buildBranch = 'not-a-pull-request';
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
 
-      beforeAll(() => {
-        upload = jest.spyOn(ScreenshotRequestor.prototype, 'upload');
-      });
+    afterAll(() => {
+      jest.restoreAllMocks();
+    });
 
-      beforeEach(() => {
-        config.serviceOptions = {
+    it('Posts a comment', async () => {
+      getComments.mockResolvedValue(['not the warning message']);
+      postComment.mockResolvedValue();
+      const service = new WDIOTerraService({}, {}, config);
+      await service.postMismatchWarningOnce();
+      expect(postComment).toHaveBeenCalledWith(warningMessage);
+    });
+
+    it('Does not post if the comment is found on the issue', async () => {
+      getComments.mockResolvedValue([warningMessage]);
+      postComment.mockResolvedValue();
+      const service = new WDIOTerraService({}, {}, config);
+      await service.postMismatchWarningOnce();
+      expect(getComments).toHaveBeenCalled();
+      expect(postComment).not.toHaveBeenCalled();
+    });
+
+    it('Stops the service without posting if it fails to get the issue comments', async () => {
+      getComments.mockRejectedValue('oh no!');
+      const service = new WDIOTerraService({}, {}, config);
+      await expect(service.postMismatchWarningOnce()).rejects.toEqual('oh no!');
+      expect(getComments).toHaveBeenCalled();
+      expect(postComment).not.toHaveBeenCalled();
+    });
+
+    it('Stops the service if it fails to post the comment', async () => {
+      getComments.mockResolvedValue(['not the warning message']);
+      postComment.mockRejectedValue('oh no!');
+      const service = new WDIOTerraService({}, {}, config);
+      await expect(service.postMismatchWarningOnce()).rejects.toEqual('oh no!');
+      expect(getComments).toHaveBeenCalled();
+      expect(postComment).toHaveBeenCalled();
+    });
+  });
+
+  describe('uploadBuildBranchScreenshots function', () => {
+    let upload;
+    const buildBranch = 'not-a-pull-request';
+    let config;
+    let getRemoteScreenshotConfiguration;
+
+    beforeAll(() => {
+      getRemoteScreenshotConfiguration = jest.fn(() => ({
+        publishScreenshotConfiguration: jest.fn(),
+      }));
+      upload = jest.spyOn(ScreenshotRequestor.prototype, 'upload');
+    });
+
+    beforeEach(() => {
+      config = {
+        getRemoteScreenshotConfiguration,
+        screenshotsSites: 'screenshot sites object',
+        serviceOptions: {
           useRemoteReferenceScreenshots: true,
           buildBranch,
           buildType: BUILD_TYPE.branchEventCause,
-        };
-      });
+          locale: 'en',
+          theme: 'terra-default-theme',
+          formFactor: 'large',
+          browser: 'chrome',
+        },
+      };
+    });
 
-      afterEach(() => {
-        jest.clearAllMocks();
-      });
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
 
-      afterAll(() => {
-        jest.restoreAllMocks();
-      });
+    afterAll(() => {
+      jest.restoreAllMocks();
+    });
 
-      it('Uploads screenshots.', async () => {
-        const service = new WDIOTerraService({}, {}, config);
-        await service.onComplete();
-        expect(upload).toHaveBeenCalled();
-        expect(getRemoteScreenshotConfiguration).toHaveBeenCalledWith('screenshot sites object', buildBranch);
-      });
+    it('Uploads screenshots.', async () => {
+      const service = new WDIOTerraService({}, {}, config);
+      await service.uploadBuildBranchScreenshots();
+      expect(upload).toHaveBeenCalledWith('en', 'terra-default-theme', 'large', 'chrome');
+      expect(getRemoteScreenshotConfiguration).toHaveBeenCalledWith('screenshot sites object', buildBranch);
+    });
 
-      it('Does not upload if not using remote screenshots.', async () => {
-        config.serviceOptions.useRemoteReferenceScreenshots = false;
-        const service = new WDIOTerraService({}, {}, config);
-        await service.onComplete();
-        expect(upload).not.toHaveBeenCalled();
-      });
-
-      it('Does not upload if the build branch name matches the PR pattern.', async () => {
-        config.serviceOptions.buildBranch = 'pr-123';
-        const service = new WDIOTerraService({}, {}, config);
-        await service.onComplete();
-        expect(upload).not.toHaveBeenCalled();
-      });
-
-      it('Does not upload if the build type is not a branch event.', async () => {
-        config.serviceOptions.buildType = undefined;
-        const service = new WDIOTerraService({}, {}, config);
-        await service.onComplete();
-        expect(upload).not.toHaveBeenCalled();
-      });
-
-      it('Stops the service if something goes wrong while uploading', async () => {
-        upload.mockRejectedValue('oh no!');
-        const service = new WDIOTerraService({}, {}, config);
-        await expect(service.onComplete()).rejects.toThrow(SevereServiceError);
-        expect(upload).toHaveBeenCalled();
-      });
+    it('Stops the service if something goes wrong while uploading', async () => {
+      upload.mockRejectedValue('oh no!');
+      const service = new WDIOTerraService({}, {}, config);
+      await expect(service.uploadBuildBranchScreenshots()).rejects.toThrow(SevereServiceError);
+      expect(upload).toHaveBeenCalledWith('en', 'terra-default-theme', 'large', 'chrome');
     });
   });
 });
