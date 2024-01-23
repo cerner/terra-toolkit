@@ -1,4 +1,10 @@
+const path = require('path');
+const fs = require('fs-extra');
+const { Logger } = require('@cerner/terra-cli');
+const getOutputDir = require('../../reporters/spec-reporter/get-output-dir');
 const { BUILD_BRANCH, BUILD_TYPE } = require('../../constants');
+
+const logger = new Logger({ prefix: '[terra-functional-testing:toMatchReference]' });
 /**
  * An assertion method to be paired with Visual Regression Service to assert each screenshot is within
  * the mismatch tolerance and are the same size.
@@ -11,7 +17,7 @@ const { BUILD_BRANCH, BUILD_TYPE } = require('../../constants');
  * @param {boolean} screenshot.screenshotWasUpdated - If the reference screenshot was updated with the latest captured screenshot.
  * @returns {Object} - An object that indicates if the assertion passed or failed with a message.
  */
-function toMatchReference(screenshot) {
+function toMatchReference(screenshot, testName) {
   const {
     isNewScreenshot,
     isSameDimensions,
@@ -41,11 +47,19 @@ function toMatchReference(screenshot) {
   if (global.Terra.serviceOptions.useRemoteReferenceScreenshots && !pass
     && (global.Terra.serviceOptions.buildBranch.match(BUILD_BRANCH.pullRequest) || global.Terra.serviceOptions.buildType === BUILD_TYPE.branchEventCause)) {
     pass = true;
-    process.env.SCREENSHOT_MISMATCH_CHECK = true;
-    if (message.length > 0) {
-      message = message.concat('\n');
+    const outputDir = getOutputDir();
+    const fileName = path.join(outputDir, 'ignored-mismatch.json');
+    // Create the output directory if it does not already exist.
+    if (!fs.existsSync(outputDir)) {
+      fs.mkdirSync(outputDir, { recursive: true });
+      // Since  output directory didn't exist file couldnt so just go ahead and make the file
+      fs.writeFileSync(fileName, JSON.stringify({ screenshotMismatched: true }, null, 2));
+    } else if (!fs.existsSync(fileName)) {
+      // If output directory exists but mismatch file has not been created create one
+      fs.writeFileSync(fileName, JSON.stringify({ screenshotMismatched: true }, null, 2));
     }
-    message = message.concat('Screenshot has changed and needs to be reviewed.');
+
+    logger.info(`Test: '${testName}' has a mismatch difference of ${misMatchPercentage}% and needs to be reviewed.`);
   }
 
   return {
