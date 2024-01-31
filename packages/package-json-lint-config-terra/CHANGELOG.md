@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Breaking Changes
+  * `package-json-lint` peer dependency has been upgraded to v2.
+
 ## 1.7.0 - (August 31, 2023)
 
 * Changed
