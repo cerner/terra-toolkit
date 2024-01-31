@@ -31,10 +31,18 @@ npm install @cerner/package-json-lint-config-terra --save-dev
 "lint:package-json": "npm run terra -- package-json-lint",
 ```
 
-## Upgrade Guide
+## Upgrade Guide for package-json-lint
 
 ### Upgrading to version 2
 
 Package JSON Lint v2 mainly removes rules for IE10 support since it is no longer supported. 
 If you have IE10 based dependencies in your project, please upgrade or remove them. 
 Otherwise, no additional action is needed to upgrade to v2.
+
+
+## Upgrade Guide for package-json-lint-config-terra
+
+### Upgrading to version 2
+
+`package-json-lint-config-terra@2` now requires `package-json-lint@2` as a peer dependency.
+Make sure the correct version is used to prevent any peer dependency conflicts.
