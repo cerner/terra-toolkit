@@ -1,6 +1,6 @@
 {
   "name": "@cerner/stylelint-config-terra",
-  "version": "5.0.1",
+  "version": "5.1.0",
   "description": "Terra Stylelint Shared Config",
   "main": "stylelint.config.js",
   "repository": {

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 5.1.0 - (February 5, 2024)
+
 * Changes
   * Removed unused dependencies that were causing peer dependencies conflicts.
 
