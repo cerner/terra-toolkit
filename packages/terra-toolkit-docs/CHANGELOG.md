@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.27.0 - (February 5, 2024)
+
 * Changed
   * Added upgrade guide for `package-json-lint-config-terra@2`.
 
