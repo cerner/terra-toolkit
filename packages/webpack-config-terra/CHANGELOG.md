@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Added
+  * Explicitly added `fibers@5` since it's a transient dependency of `sass-loader@10`.
+
 ## 3.3.0 - (September 26, 2023)
 
 * Changed
