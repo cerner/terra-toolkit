@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 4.6.0 - (February 5, 2024)
+
 * Changed
   * Updated upload and download logic in Nexus screenshots based on current locale, theme, browser, and formFactor.
   * Updated PR comment logic in Nexus screenshots.

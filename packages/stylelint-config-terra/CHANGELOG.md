@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 5.1.0 - (February 5, 2024)
+
+* Changes
+  * Removed unused dependencies that were causing peer dependencies conflicts.
+
 ## 5.0.1 - (November 8, 2023)
 
 * Fixes

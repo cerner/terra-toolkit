@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 2.27.0 - (February 5, 2024)
+
+* Changed
+  * Added upgrade guide for `package-json-lint-config-terra@2`.
+
 ## 2.26.0 - (December 11, 2023)
 
 * Changed
@@ -15,12 +20,12 @@
 ## 2.24.0 - (October 26, 2023)
 
 * Changed
-  * Updated upgrade guide for `stylelint-config-terra`.
+  * Updated upgrade guide for `stylelint-config-terra@5`.
 
 ## 2.23.0 - (September 26, 2023)
 
 * Added
-  * Added upgrade guide for `jest-config-terra@2.0.0`.
+  * Added upgrade guide for `jest-config-terra@2`.
 
 ## 2.22.0 - (August 31, 2023)
 

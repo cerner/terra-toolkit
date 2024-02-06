@@ -1,6 +1,6 @@
 {
   "name": "@cerner/package-json-lint-config-terra",
-  "version": "1.7.0",
+  "version": "2.0.0",
   "description": "Package Json Lint Config",
   "main": "package-json-lint.config.js",
   "publishConfig": {
@@ -39,10 +39,9 @@
     "lint:js:fix": "eslint --ext .js,.jsx . --fix"
   },
   "devDependencies": {
-    "@cerner/eslint-config-terra": "^5.6.0",
-    "eslint": "^7.32.0"
+    "@cerner/eslint-config-terra": "^5.6.0"
   },
   "peerDependencies": {
-    "@cerner/package-json-lint": "^1.0.0"
+    "@cerner/package-json-lint": "2"
   }
 }

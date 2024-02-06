@@ -1,6 +1,6 @@
 {
   "name": "@cerner/stylelint-config-terra",
-  "version": "5.0.1",
+  "version": "5.1.0",
   "description": "Terra Stylelint Shared Config",
   "main": "stylelint.config.js",
   "repository": {
@@ -57,9 +57,7 @@
     "postcss-scss": "4",
     "postcss-value-parser": "4",
     "stylelint-config-sass-guidelines": "10",
-    "stylelint-no-unsupported-browser-features": "4",
-    "stylelint-order": "4",
-    "stylelint-scss": "^3"
+    "stylelint-no-unsupported-browser-features": "4"
   },
   "devDependencies": {
     "@babel/cli": "7",
