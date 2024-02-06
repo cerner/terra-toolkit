@@ -61,17 +61,16 @@
     "webpack-merge": "^5.4.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.5",
-    "@babel/core": "^7.11.1",
     "@cerner/eslint-config-terra": "^5.6.0",
     "@cerner/jest-config-terra": "^2.0.0",
     "eslint": "^7.32.0"
   },
   "peerDependencies": {
-    "@babel/cli": "^7.4.4",
-    "@babel/core": "^7.4.4",
-    "postcss": "^8.0.0",
-    "webpack": "^4.30.0 || ^5.0.0",
-    "webpack-cli": "^3.3.2 || ^4.0.0"
+    "@babel/cli": "7",
+    "@babel/core": "7",
+    "fibers": "5",
+    "postcss": "8",
+    "webpack": "4 || 5",
+    "webpack-cli": "3 || 4"
   }
 }
