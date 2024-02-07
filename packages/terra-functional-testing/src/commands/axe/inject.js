@@ -8,6 +8,7 @@ const injectAxe = async (options) => {
   // eslint-disable-next-line global-require
   const { source } = require('axe-core/axe.min');
 
+  // TODO: Figure out why this function no longer works indirectly after removing @wdio/sync
   await browser.execute(`${source}\n ${options ? `axe.configure(${JSON.stringify(options)})` : ''}`);
 };
 

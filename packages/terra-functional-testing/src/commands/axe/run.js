@@ -1,4 +1,5 @@
 /* global browser, axe, Terra */
+const { source } = require('axe-core/axe.min');
 const injectAxe = require('./inject');
 
 /**
@@ -7,11 +8,20 @@ const injectAxe = require('./inject');
  * @param {array} options.rules - The rule overrides.
  */
 const runAxe = async (options = {}) => {
+  /**
+   * Converts the global rule overrides into an array.
+   * The axe.configure API requires the rules to be an array of objects. The axe.run API requires
+   * the rules to be an object keyed by the rule ID.
+   */
   const globalRuleArray = Object.keys(Terra.axe.rules).map((rule) => (
     { ...Terra.axe.rules[rule], id: rule }
   ));
 
-  await injectAxe({ rules: globalRuleArray });
+  /** For some reason, we can't use injectAxe() to run in a different scope
+   * than the scope it runs in after the async changes.
+   * Thus we have to execute it here.
+   */
+  await browser.execute(`${source}\n ${options ? `axe.configure(${JSON.stringify({ rules: globalRuleArray })})` : ''}`);
 
   // Merge the global rules and option overrides together.
   const rules = { ...Terra.axe.rules, ...options.rules };
