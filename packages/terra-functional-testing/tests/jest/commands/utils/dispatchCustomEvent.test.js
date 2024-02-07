@@ -1,13 +1,13 @@
 const { dispatchCustomEvent } = require('../../../../src/commands/utils');
 
 describe('dispatchCustomEvent', () => {
-  it('executes a specified function via browser.execute', () => {
+  it('executes a specified function via browser.execute', async () => {
     const mockFn = jest.fn();
     global.browser = {
       execute: mockFn,
     };
 
-    dispatchCustomEvent({ name: 'mock' });
+    await dispatchCustomEvent({ name: 'mock' });
     expect(mockFn).toBeCalled();
   });
 
@@ -17,6 +17,8 @@ describe('dispatchCustomEvent', () => {
       execute: () => { throw mockError; },
     };
 
-    expect(() => dispatchCustomEvent({ name: 'mock' })).toThrow(`dispatchCustomEvent failed: ${mockError}`);
+    expect(async () => {
+      await dispatchCustomEvent({ name: 'mock' });
+    }).rejects.toThrow(`dispatchCustomEvent failed: ${mockError}`);
   });
 });

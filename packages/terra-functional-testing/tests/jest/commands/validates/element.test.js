@@ -4,39 +4,39 @@ jest.mock('../../../../src/commands/validates/accessibility');
 jest.mock('../../../../src/commands/validates/screenshot');
 
 describe('element', () => {
-  it('should run element with default options', () => {
-    element('test-name');
+  it('should run element with default options', async () => {
+    await element('test-name');
 
     expect(accessibility).toHaveBeenCalledWith({ rules: undefined });
     expect(screenshot).toHaveBeenCalledWith('test-name', { mismatchTolerance: undefined, selector: undefined });
   });
 
-  it('should throw error when no test name is provided', () => {
+  it('should throw error when no test name is provided', async () => {
     try {
-      element();
+      await element();
     } catch (error) {
       expect(error.message).toEqual('[terra-functional-testing:element] Terra.validate.element requires a unique test name as the first argument.');
     }
   });
 
-  it('should throw error when an empty test name is provided', () => {
+  it('should throw error when an empty test name is provided', async () => {
     try {
-      element('');
+      await element('');
     } catch (error) {
       expect(error.message).toEqual('[terra-functional-testing:element] Terra.validate.element requires a unique test name as the first argument.');
     }
   });
 
-  it('should throw error when a non-empty test name is provided', () => {
+  it('should throw error when a non-empty test name is provided', async () => {
     try {
-      element({});
+      await element({});
     } catch (error) {
       expect(error.message).toEqual('[terra-functional-testing:element] Terra.validate.element requires a unique test name as the first argument.');
     }
   });
 
-  it('should run element with full options', () => {
-    element('test-name', {
+  it('should run element with full options', async () => {
+    await element('test-name', {
       rules: { 'mock-rule': { enabled: false } },
       selector: 'mock-selector',
       mismatchTolerance: 10,

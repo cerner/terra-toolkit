@@ -7,22 +7,11 @@ const injectAxe = require('./inject');
  * @param {array} options.rules - The rule overrides.
  */
 const runAxe = async (options = {}) => {
-  // eslint-disable-next-line prefer-arrow-callback
-  const isAxeUnavailable = await browser.execute(function getAxeStatus() { return window.axe === undefined; });
+  const globalRuleArray = Object.keys(Terra.axe.rules).map((rule) => (
+    { ...Terra.axe.rules[rule], id: rule }
+  ));
 
-  // Inject axe-core onto the page if it has not already been initialized.
-  if (isAxeUnavailable) {
-    /**
-     * Converts the global rule overrides into an array.
-     * The axe.configure API requires the rules to be an array of objects. The axe.run API requires
-     * the rules to be an object keyed by the rule ID.
-     */
-    const globalRuleArray = Object.keys(Terra.axe.rules).map((rule) => (
-      { ...Terra.axe.rules[rule], id: rule }
-    ));
-
-    await injectAxe({ rules: globalRuleArray });
-  }
+  await injectAxe({ rules: globalRuleArray });
 
   // Merge the global rules and option overrides together.
   const rules = { ...Terra.axe.rules, ...options.rules };

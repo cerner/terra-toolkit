@@ -4,7 +4,7 @@ const runAxe = require('../../../../src/commands/axe/run');
 jest.mock('../../../../src/commands/axe/inject');
 
 describe('Run Axe', () => {
-  it('should inject axe if not already available', () => {
+  it('should inject axe if not already available', async () => {
     const mockAxeRun = jest.fn().mockImplementation((_document, _opts, func) => {
       func(jest.fn(), jest.fn());
     });
@@ -25,14 +25,14 @@ describe('Run Axe', () => {
 
     global.Terra = { axe: { rules: { 'scrollable-region-focusable': { enabled: false } } } };
 
-    runAxe();
+    await runAxe();
 
     const expectedRules = { rules: [{ enabled: false, id: 'scrollable-region-focusable' }] };
 
     expect(injectAxe).toHaveBeenCalledWith(expectedRules);
   });
 
-  it('should run axe on the document', () => {
+  it('should run axe on the document', async () => {
     const mockAxeRun = jest.fn().mockImplementation((_document, opts, func) => {
       func(jest.fn(), jest.fn());
     });
@@ -52,12 +52,12 @@ describe('Run Axe', () => {
       run: mockAxeRun,
     };
 
-    runAxe();
+    await runAxe();
 
     expect(mockAxeRun).toHaveBeenCalled();
   });
 
-  it('should run axe with the service options', () => {
+  it('should run axe with the service options', async () => {
     const mockExecuteAsync = jest.fn().mockImplementation((func, opts) => {
       const { rules } = opts;
 
@@ -72,12 +72,12 @@ describe('Run Axe', () => {
 
     global.Terra = { axe: { rules: { 'mock-rule': { enabled: true } } } };
 
-    runAxe();
+    await runAxe();
 
     expect.assertions(1);
   });
 
-  it('should run axe with the options provided', () => {
+  it('should run axe with the options provided', async () => {
     const mockExecuteAsync = jest.fn().mockImplementation((func, opts) => {
       const { rules } = opts;
 
@@ -97,12 +97,12 @@ describe('Run Axe', () => {
 
     global.Terra = { axe: { rules: { 'scrollable-region-focusable': { enabled: false } } } };
 
-    runAxe({ rules: { 'mock-rule': { enabled: true } } });
+    await runAxe({ rules: { 'mock-rule': { enabled: true } } });
 
     expect.assertions(1);
   });
 
-  it('should run axe with merged rules from the service and from options provided', () => {
+  it('should run axe with merged rules from the service and from options provided', async () => {
     const mockExecuteAsync = jest.fn().mockImplementation((func, opts) => {
       const { rules } = opts;
 
@@ -122,7 +122,7 @@ describe('Run Axe', () => {
 
     global.Terra = { axe: { rules: { 'mock-rule-1': { enabled: true } } } };
 
-    runAxe({ rules: { 'mock-rule-2': { enabled: true } } });
+    await runAxe({ rules: { 'mock-rule-2': { enabled: true } } });
 
     expect.assertions(1);
   });
