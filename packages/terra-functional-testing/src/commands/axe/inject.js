@@ -3,13 +3,11 @@
 /**
  * Injects axe-core into the browser.
  * @param {Object} options - The axe configuration options.
- */
-const injectAxe = async (options) => {
+*/
+const injectAxe = async () => {
   // eslint-disable-next-line global-require
   const { source } = require('axe-core/axe.min');
-
-  // TODO: Figure out why this function no longer works indirectly after removing @wdio/sync
-  await browser.execute(`${source}\n ${options ? `axe.configure(${JSON.stringify(options)})` : ''}`);
+  await browser.execute(source);
 };
 
 module.exports = injectAxe;
