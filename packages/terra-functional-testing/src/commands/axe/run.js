@@ -1,14 +1,11 @@
 /* global browser, axe, Terra */
-const injectAxe = require('./inject');
-
+const { source } = require('axe-core/axe.min');
 /**
  * Executes axe on the browser.
  * @param {Object} options - The axe options.
  * @param {array} options.rules - The rule overrides.
- */
+*/
 const runAxe = async (options = {}) => {
-  await injectAxe();
-
   const axeOptions = {
     rules: {
       ...Terra.axe.rules,
@@ -16,6 +13,8 @@ const runAxe = async (options = {}) => {
     },
     runOnly: ['wcag2a', 'wcag2aa', 'wcag21aa', 'section508'],
   };
+
+  await browser.execute(source);
 
   // eslint-disable-next-line prefer-arrow-callback, func-names
   const results = await browser.executeAsync(function (opts, done) {
