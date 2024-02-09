@@ -42,6 +42,7 @@
   },
   "homepage": "https://github.com/cerner/terra-toolkit#readme",
   "dependencies": {
+    "@axe-core/webdriverio": "^4.8.4",
     "@babel/runtime": "^7.11.2",
     "@mirzazeyrek/node-resemble-js": "^1.2.1",
     "@octokit/core": "^3.6.0",
@@ -51,7 +52,6 @@
     "@wdio/reporter": "^7.7.3",
     "@wdio/spec-reporter": "^7.7.3",
     "archiver": "^4.0.1",
-    "axe-core": "4.0.2",
     "chalk": "^4.1.0",
     "expect": "^26.4.2",
     "express": "^4.17.1",

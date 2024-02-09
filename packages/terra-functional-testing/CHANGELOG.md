@@ -4,6 +4,7 @@
 
 * Breaking changes
   * Removed `@wdio/sync` to prepare for Node LTS upgrades. Tests will no longer run in sync mode and will require all tests to run asynchonous functions with `async-await` in test suites. See upgrade guide for how to transition.
+  * Support for testing `<iframe>` components is dropped.
 
 ## 4.6.0 - (February 5, 2024)
 

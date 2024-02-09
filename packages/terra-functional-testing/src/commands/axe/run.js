@@ -1,31 +1,32 @@
-/* global browser, axe, Terra */
-const { source } = require('axe-core/axe.min');
+/* global browser, Terra */
+const { AxeBuilder } = require('@axe-core/webdriverio');
 /**
  * Executes axe on the browser.
  * @param {Object} options - The axe options.
  * @param {array} options.rules - The rule overrides.
 */
 const runAxe = async (options = {}) => {
-  const axeOptions = {
-    rules: {
-      ...Terra.axe.rules,
-      ...options.rules,
+  const rules = Object.entries({
+    ...Terra.axe.rules,
+    ...options.rules,
+  });
+
+  const enabledRules = rules.filter(rule => rule[1].enabled).map(rule => rule[0]);
+  const disabledRules = rules.filter(rule => rule[1].enabled === false).map(rule => rule[0]);
+
+  const axe = new AxeBuilder({ client: browser })
+    .withRules(enabledRules)
+    .disableRules(disabledRules)
+    .withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'section508'])
+    .setLegacyMode(true);
+
+  const results = await axe.analyze();
+
+  return {
+    result: {
+      violations: results.violations,
     },
-    runOnly: ['wcag2a', 'wcag2aa', 'wcag21aa', 'section508'],
   };
-
-  await browser.execute(source);
-
-  // eslint-disable-next-line prefer-arrow-callback, func-names
-  const results = await browser.executeAsync(function (opts, done) {
-    // eslint-disable-next-line prefer-arrow-callback, func-names
-    axe.run(document, opts, function (error, result) {
-      // eslint-disable-next-line object-shorthand
-      done({ error: error, result: result }); // IE 10 does not support object short hand. This line must explicity define the key and value of the object.
-    });
-  }, axeOptions);
-
-  return results;
 };
 
 module.exports = runAxe;

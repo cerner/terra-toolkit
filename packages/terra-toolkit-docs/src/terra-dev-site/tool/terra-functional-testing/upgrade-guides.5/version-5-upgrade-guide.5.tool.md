@@ -6,6 +6,8 @@ The upgrade from v4 to v5 removes `@wdio/async`
 
 In order to prepare for upgrading the Terra ecosystem to be compatible with Node +18, `@wdio/sync` is being removed as a dependency from `@cerner/terra-functional-testing`. As `fibers` is being deprecated from Node +16 and `@wdio/sync` is being deprecated from Node +16, this move is necessary to bring the Terra ecosystem with the latest Node version. Due to `@wdio/sync` being removed, all tests are now run asynchronously and tests will need to be re-written in order to ensure they run asynchronously. A short introduction to changing your tests to run asynchronously can be seen here: [From Sync to Async](https://webdriver.io/docs/async-migration/)
 
+Support for testing `<iframe>` components via `terra-functional-testing` is now dropped. We are now utilizing WDIO's official axe-core drivers which drops support for testing iframes. All consumers of `terra-embedded-content-consumer` are encouraged to adopt custom testing strategies for the component.
+
 ## Terra-specific API Changes
 
 `@cerner/terra-functional-testing` provides wrapper functions for accessibility testing. Previously these functions were run synchronously but now need to be executed asynchronously. The following wrapper functions now need to be specified with `await` before execution:
