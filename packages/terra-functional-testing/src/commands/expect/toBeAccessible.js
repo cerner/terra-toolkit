@@ -7,10 +7,10 @@ const { runAxe } = require('../axe');
  * @param {Object} options - Optional axe configuration overrides.
  * @returns {Object} - An object that indicates if the assertion passed or failed with a message.
  */
-function toBeAccessible(_, options = {}) {
+async function toBeAccessible(_, options = {}) {
   const { axe } = Terra;
   const { rules } = axe;
-  const { result } = runAxe(options);
+  const { result } = await runAxe(options);
   const { violations } = result;
 
   const errors = [];

@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Changed
+  * Added upgrade guide for `terra-functional-testing@5`. 
+
 ## 2.27.0 - (February 5, 2024)
 
 * Changed

@@ -34,7 +34,7 @@ class VisualRegressionLauncher {
       desiredCapabilities: capabilities,
     };
 
-    browser.addCommand('checkElement', this.wrapCommand(browser, makeElementScreenshot));
+    await browser.addCommand('checkElement', this.wrapCommand(browser, makeElementScreenshot));
   }
 
   /**
@@ -68,7 +68,7 @@ class VisualRegressionLauncher {
    * @param {Object} results - results object
    * @param {boolean} results.passed - indicates if the test passed.
    */
-  afterTest({ parent, title }, _, { passed }) {
+  async afterTest({ parent, title }, _, { passed }) {
     if (!passed) {
       const { config } = browser;
       const { formFactor } = config.launcherOptions;
@@ -88,7 +88,7 @@ class VisualRegressionLauncher {
       const { errorPath } = this.compare.getScreenshotPaths(screenshotContextCleaned);
 
       fse.ensureFileSync(errorPath);
-      browser.saveScreenshot(errorPath);
+      await browser.saveScreenshot(errorPath);
     }
 
     this.currentTest = null;

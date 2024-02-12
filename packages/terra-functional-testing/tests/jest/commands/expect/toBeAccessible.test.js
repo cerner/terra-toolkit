@@ -4,7 +4,7 @@ const toBeAccessible = require('../../../../src/commands/expect/toBeAccessible')
 jest.mock('../../../../src/commands/axe/run');
 
 describe('toBeAccessible', () => {
-  it('should pass if no accessibility violations are found', () => {
+  it('should pass if no accessibility violations are found', async () => {
     runAxe.mockImplementationOnce(() => ({
       result: {
         violations: [],
@@ -17,36 +17,36 @@ describe('toBeAccessible', () => {
       },
     };
 
-    const result = toBeAccessible();
+    const result = await toBeAccessible();
 
     expect(result.pass).toBe(true);
   });
 
-  it('should not pass if accessibility violations are found', () => {
+  it('should not pass if accessibility violations are found', async () => {
     runAxe.mockImplementationOnce(() => ({
       result: {
         violations: [{ id: 'Mock Violation 1' }],
       },
     }));
 
-    const result = toBeAccessible();
+    const result = await toBeAccessible();
 
     expect(result.pass).toBe(false);
   });
 
-  it('should return a message function that indicates the reason for the assertion failure', () => {
+  it('should return a message function that indicates the reason for the assertion failure', async () => {
     runAxe.mockImplementationOnce(() => ({
       result: {
         violations: [{ id: 'mock-violation' }],
       },
     }));
 
-    const result = toBeAccessible();
+    const result = await toBeAccessible();
 
     expect(result.message()).toMatchSnapshot();
   });
 
-  it('should return a message function that filterers out rules set to warn', () => {
+  it('should return a message function that filterers out rules set to warn', async () => {
     runAxe.mockImplementationOnce(() => ({
       result: {
         violations: [{ id: 'mock-violation-1' }, { id: 'mock-violation-2' }],
@@ -63,7 +63,7 @@ describe('toBeAccessible', () => {
       },
     };
 
-    const result = toBeAccessible();
+    const result = await toBeAccessible();
 
     expect(result.message()).toMatchSnapshot();
   });

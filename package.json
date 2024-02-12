@@ -44,7 +44,6 @@
         "severityType": "error",
         "allowList": [
           "eslint-plugin-react",
-          "axe-core",
           "inquirer"
         ]
       }

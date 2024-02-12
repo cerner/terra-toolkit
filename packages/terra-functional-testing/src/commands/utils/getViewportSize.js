@@ -2,9 +2,9 @@
  * Gets the viewport size of the current browser window.
  * @return {Object} - viewport width and height of the current browser window.
  */
-const getViewportSize = () => {
+const getViewportSize = async () => {
   // eslint-disable-next-line prefer-arrow-callback
-  const resolution = global.browser.execute(function getResolution() {
+  const resolution = await global.browser.execute(function getResolution() {
     return {
       screenWidth: Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
       screenHeight: Math.max(document.documentElement.clientHeight, window.innerHeight || 0),

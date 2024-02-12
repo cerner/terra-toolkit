@@ -17,8 +17,8 @@ global.browser = {
 };
 
 describe('setViewportSize', () => {
-  it('should set specified viewport size', () => {
-    setViewportSize({ width: 1000, height: 768 }, 5);
+  it('should set specified viewport size', async () => {
+    await setViewportSize({ width: 1000, height: 768 }, 5);
 
     expect(getViewportSize).toHaveBeenCalledTimes(2);
     expect(mockSetWindowSize).toHaveBeenCalled();

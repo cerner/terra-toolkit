@@ -22,18 +22,18 @@ const describeViewports = (title, viewports, fn) => {
     }
 
     global.describe(`[${viewport}]`, () => {
-      global.before(() => {
+      global.before(async () => {
         // Store the original browser window size so it can be restored after the test has run.
-        previousViewportSize = getViewportSize();
+        previousViewportSize = await getViewportSize();
 
-        setViewport(viewport);
+        await setViewport(viewport);
       });
 
       global.describe(title, fn);
 
-      global.after(() => {
+      global.after(async () => {
         // Restore the browser window to the original size.
-        setViewportSize(previousViewportSize);
+        await setViewportSize(previousViewportSize);
       });
     });
   });
