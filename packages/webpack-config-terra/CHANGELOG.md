@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 3.4.0 - (February 27, 2024)
+
 * Added
   * Explicitly added `fibers@5` since it's a transient dependency of `sass-loader@10`.
 
