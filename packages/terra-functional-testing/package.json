@@ -73,7 +73,7 @@
     "lodash.isundefined": "^3.0.1",
     "lodash.pickby": "^4.6.0",
     "node-fetch": "^2.6.0",
-    "octokit": "^1.8.0",
+    "octokit": "^3.1.2",
     "strip-ansi": "^6.0.0",
     "uuid": "3.4.0",
     "webdriverio": "^7.7.3",
