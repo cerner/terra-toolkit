@@ -8,10 +8,7 @@ module.exports = (api) => {
       '@babel/preset-react',
     ],
     plugins: [
-      '@babel/plugin-syntax-async-generators',
-      '@babel/transform-regenerator',
       '@babel/transform-runtime',
-      '@babel/plugin-proposal-object-rest-spread',
     ],
   };
 };
