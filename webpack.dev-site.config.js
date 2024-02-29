@@ -1,7 +1,7 @@
-/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable import/no-extraneous-dependencies, import/no-unresolved */
 const { merge } = require('webpack-merge');
-const { TerraDevSite } = require('@cerner/terra-dev-site');
 
+const { TerraDevSite } = require('@cerner/terra-dev-site');
 const WebpackConfigTerra = require('@cerner/webpack-config-terra');
 
 const coreConfig = (env = {}) => ({
