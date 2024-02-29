@@ -95,7 +95,7 @@
     "@octokit/core": "3",
     "bufferutil": "4",
     "commander": "5",
-    "danger": "^11",
+    "danger": "11",
     "enzyme": "3",
     "enzyme-adapter-react-16": "1",
     "enzyme-to-json": "3",
