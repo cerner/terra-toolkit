@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Added
+  * Added documentation for the `--disable-server` flag in terra-functional-testing.
+
 ## 2.28.0 - (February 27, 2024)
 
 * Changed
