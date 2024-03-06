@@ -85,6 +85,7 @@ class TestRunner {
    * @param {string} options.buildURL - Url for CI build output.
    * @param {string} options.config - A file path to the test runner configuration.
    * @param {boolean} options.disableSeleniumService - A flag to disable the selenium docker service.
+   * @param {boolean} options.disableServer - A flag to disable the builtin webpack service.
    * @param {string} options.externalHost - The host address the testing environment is connected to.
    * @param {number} options.externalPort - The port mapping from the host to the container.
    * @param {string} options.formFactors - A list of form factors for the test run.
