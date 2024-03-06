@@ -57,6 +57,16 @@ describe('WDIO Asset Server Service', () => {
       expect(WebpackServer).toHaveBeenCalledTimes(1);
     });
 
+    it('does not start a server if the --disable-server flag is provided', async () => {
+      const service = new AssetService({}, {}, { launcherOptions: { disableServer: true } });
+
+      await service.onPrepare();
+
+      expect(WebpackServer).toHaveBeenCalledTimes(0);
+      expect(ExpressServer).toHaveBeenCalledTimes(0);
+      expect(service.server).toBeUndefined();
+    });
+
     it('should throw a SevereServiceError if the server fails to start', async () => {
       const service = new AssetService({}, {}, { launcherOptions: { webpackConfig: 'webpack.config.js' } });
 
