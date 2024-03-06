@@ -24,6 +24,26 @@ Example:
 }
 ```
 
+### disable-server
+
+This will disable the internal webpack and express server and instead will try to connect to an existing server.
+This is useful for local development where a single dev-server can be used for local browser tesing and running wdio tests.
+By default, the test runner will connect to `0.0.0.0:8080`. The port and url can be configured with the `--external-host` and `--external-port` flags. 
+
+Type: `boolean`
+
+Required: `false`
+
+Default: `false`
+
+Example:
+
+```js
+"scripts": {
+  "test:wdio": "terra wdio --disable-server"
+}
+```
+
 ### site
 
 A relative path to a directory of static assets. If provided, an express server will be launched to serve the directory assets.
