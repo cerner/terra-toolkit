@@ -93,7 +93,7 @@ npm run test
       For example:
        ```sh
        "scripts": {
-        "wdio-fusion": "terra wdio --disableSeleniumService=true --themes orion-fusion-theme",
+        "wdio-fusion": "terra wdio --disable-selenium-service=true --themes orion-fusion-theme",
         }
        ```
 7. To terminate a dev container:
@@ -116,7 +116,7 @@ npm run test
 
 ## LICENSE
 
-Copyright 2017 - 2020 Cerner Innovation, Inc.
+Copyright 2017 - present Cerner Innovation, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 

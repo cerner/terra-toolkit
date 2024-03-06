@@ -23,6 +23,8 @@ Options:
                                         configuration.                  [string]
       --disableSeleniumService          A flag to disable the selenium docker
                                         service.      [boolean] [default: false]
+      --disableServer                   A flag to disable the builtin webpack
+                                        service.      [boolean] [default: false]
       --externalHost                    The host address the testing environment
                                         is connected to.
                                                   [string] [default: (_default)]

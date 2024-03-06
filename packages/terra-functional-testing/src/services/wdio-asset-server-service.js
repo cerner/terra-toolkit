@@ -24,8 +24,7 @@ class AssetServerService {
     const { webpackConfig, site } = this.options;
 
     try {
-
-      if(this.options.disableServer) {
+      if (this.options.disableServer) {
         logger.info(`Internal asset server disabled; Connecting to server on 0.0.0.0:${this.options.port}`);
         return;
       }
