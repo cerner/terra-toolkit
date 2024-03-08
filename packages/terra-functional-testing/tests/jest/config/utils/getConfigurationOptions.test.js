@@ -34,9 +34,9 @@ describe('getCapabilities', () => {
 
     const defaultWebpackPath = path.resolve(process.cwd(), 'webpack.config.js');
     const capabilities = getCapabilities(options.browsers, !!options.gridUrl);
-
+    const url = `http://${options.externalHost}:${options.externalPort}`;
     const expectedConfig = {
-      baseUrl: `http://${options.externalHost}:${options.externalPort}`,
+      baseUrl: url,
       capabilities,
       hostname: options.gridUrl,
       port: 80,
@@ -47,6 +47,7 @@ describe('getCapabilities', () => {
         buildType: BUILD_TYPE.branchEventCause,
         buildUrl: 'www.buildurl.com',
         disableSeleniumService: true,
+        disableServer: undefined,
         formFactor: options.formFactor,
         gitApiUrl: 'www.gitapiurl.com',
         gitToken: '12345',
@@ -59,6 +60,8 @@ describe('getCapabilities', () => {
         site: options.site,
         theme: options.theme,
         overrideTheme: options.theme,
+        url,
+        useHttps: undefined,
         updateScreenshots: true,
         useRemoteReferenceScreenshots: true,
         webpackConfig: defaultWebpackPath,
@@ -111,6 +114,7 @@ describe('getCapabilities', () => {
         buildType: BUILD_TYPE.branchEventCause,
         buildUrl: 'www.buildurl.com',
         disableSeleniumService: true,
+        disableServer: undefined,
         formFactor: options.formFactor,
         gitApiUrl: 'www.gitapiurl.com',
         gitToken: '12345',
@@ -124,6 +128,8 @@ describe('getCapabilities', () => {
         theme: options.theme,
         overrideTheme: options.theme,
         updateScreenshots: true,
+        url: 'http://externalHost:3000',
+        useHttps: undefined,
         useRemoteReferenceScreenshots: false,
         webpackConfig: defaultWebpackPath,
       },
@@ -137,9 +143,9 @@ describe('getCapabilities', () => {
   it('should get configuration with empty options', async () => {
     const defaultWebpackPath = path.resolve(process.cwd(), 'webpack.config.js');
     const capabilities = getCapabilities(undefined, !!undefined);
-
+    const url = `http://${getIpAddress()}:8080`;
     const expectedConfig = {
-      baseUrl: `http://${getIpAddress()}:8080`,
+      baseUrl: url,
       capabilities,
       hostname: 'localhost',
       port: 4444,
@@ -148,6 +154,7 @@ describe('getCapabilities', () => {
         buildType: undefined,
         buildUrl: undefined,
         disableSeleniumService: false,
+        disableServer: undefined,
         formFactor: undefined,
         gitApiUrl: undefined,
         gitToken: undefined,
@@ -156,11 +163,13 @@ describe('getCapabilities', () => {
         issueNumber: undefined,
         keepAliveSeleniumDockerService: undefined,
         locale: undefined,
+        overrideTheme: undefined,
         port: undefined,
         site: undefined,
         theme: 'terra-default-theme',
-        overrideTheme: undefined,
         updateScreenshots: undefined,
+        url,
+        useHttps: undefined,
         useRemoteReferenceScreenshots: undefined,
         webpackConfig: defaultWebpackPath,
       },
