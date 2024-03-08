@@ -1,8 +1,25 @@
 {
   "name": "@cerner/terra-functional-testing",
-  "version": "4.7.0",
-  "main": "lib/index.js",
+  "version": "4.6.0",
   "description": "A functional testing utility for applications built using Terra.",
+  "author": "Cerner Corporation",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cerner/terra-toolkit",
+    "directory": "packages/terra-functional-testing"
+  },
+  "bugs": {
+    "url": "https://github.com/cerner/terra-toolkit/issues"
+  },
+  "homepage": "https://github.com/cerner/terra-toolkit#readme",
+  "license": "Apache-2.0",
+  "keywords": [
+    "Cerner",
+    "Terra",
+    "Terra Toolkit",
+    "terra-functional-testing",
+    "terra-toolkit"
+  ],
   "publishConfig": {
     "access": "public"
   },
@@ -10,37 +27,7 @@
     "node": "12 || 14",
     "npm": "6 || 9"
   },
-  "scripts": {
-    "clean": "npm run clean:node_modules && npm run clean:lib",
-    "clean:lib": "rm -rf lib",
-    "clean:node_modules": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
-    "clean:install": "npm run clean && time npm install",
-    "compile": "babel --root-mode upward src --out-dir lib --copy-files --ignore src/terra-cli",
-    "lint": "eslint --ext .js,.jsx --ignore-path ../../.eslintignore .",
-    "lint:js:fix": "eslint --ext .js,.jsx --ignore-path ../../.eslintignore . --fix",
-    "jest": "jest",
-    "premocha": "rm -rf tests/tmp",
-    "mocha": "MOCHA=true mocha --require @babel/register tests/mocha/**/unit/**/*.test.js",
-    "test": "npm run jest && npm run mocha"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cerner/terra-toolkit",
-    "directory": "packages/terra-functional-testing"
-  },
-  "keywords": [
-    "Cerner",
-    "Terra",
-    "Terra Toolkit",
-    "terra-toolkit",
-    "terra-functional-testing"
-  ],
-  "author": "Cerner Corporation",
-  "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/cerner/terra-toolkit/issues"
-  },
-  "homepage": "https://github.com/cerner/terra-toolkit#readme",
+  "main": "lib/index.js",
   "dependencies": {
     "@babel/runtime": "^7.11.2",
     "@mirzazeyrek/node-resemble-js": "^1.2.1",
@@ -113,5 +100,18 @@
     "np": "^6.3.2",
     "sinon": "^9.0.2",
     "yargs": "^16.1.1"
+  },
+  "scripts": {
+    "clean": "npm run clean:node_modules && npm run clean:lib",
+    "clean:lib": "rm -rf lib",
+    "clean:node_modules": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
+    "clean:install": "npm run clean && time npm install",
+    "compile": "babel --root-mode upward src --out-dir lib --copy-files --ignore src/terra-cli",
+    "lint": "eslint --ext .js,.jsx --ignore-path ../../.eslintignore .",
+    "lint:js:fix": "eslint --ext .js,.jsx --ignore-path ../../.eslintignore . --fix",
+    "jest": "jest",
+    "premocha": "rm -rf tests/tmp",
+    "mocha": "MOCHA=true mocha --require @babel/register tests/mocha/**/unit/**/*.test.js",
+    "test": "npm run jest && npm run mocha"
   }
 }

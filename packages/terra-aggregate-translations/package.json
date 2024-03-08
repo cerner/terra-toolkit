@@ -2,6 +2,27 @@
   "name": "@cerner/terra-aggregate-translations",
   "version": "3.3.0",
   "description": "The terra-aggregate-translations pre-build tool assists with creating the translation, intl loader and translation loader files that are configured for the specified locales. This tool is offered as a CLI script and as a setup function.",
+  "author": "Cerner Corporation",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cerner/terra-toolkit.git",
+    "directory": "packages/terra-aggregate-translations"
+  },
+  "bugs": {
+    "url": "https://github.com/cerner/terra-toolkit/issues"
+  },
+  "homepage": "https://github.com/cerner/terra-toolkit/packages/terra-aggregate-translations#readme",
+  "license": "Apache-2.0",
+  "keywords": [
+    "Cerner",
+    "i18n",
+    "intl",
+    "react",
+    "react-intl",
+    "Terra",
+    "terra-aggregate-translations",
+    "translations"
+  ],
   "publishConfig": {
     "access": "public"
   },
@@ -9,31 +30,28 @@
     "node": "10|| 12 || 14",
     "npm": "6 || 9"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cerner/terra-toolkit.git",
-    "directory": "packages/terra-aggregate-translations"
-  },
-  "keywords": [
-    "Cerner",
-    "Terra",
-    "terra-aggregate-translations",
-    "translations",
-    "react",
-    "react-intl",
-    "i18n",
-    "intl"
-  ],
-  "author": "Cerner Corporation",
-  "license": "Apache-2.0",
-  "homepage": "https://github.com/cerner/terra-toolkit/packages/terra-aggregate-translations#readme",
-  "bugs": {
-    "url": "https://github.com/cerner/terra-toolkit/issues"
-  },
+  "main": "lib/aggregate-translations.js",
   "bin": {
     "tt-aggregate-translations": "bin/aggregate-translations-cli.js"
   },
-  "main": "lib/aggregate-translations.js",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "commander": "^3.0.1",
+    "fs-extra": "^8.0.1",
+    "glob": "^7.1.1",
+    "lodash.startcase": "^4.4.0"
+  },
+  "peerDependencies": {
+    "intl": "^1.2.5",
+    "react-intl": "^5.8.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.1",
+    "@cerner/eslint-config-terra": "^5.6.0",
+    "@cerner/jest-config-terra": "^2.0.0",
+    "eslint": "^7.32.0"
+  },
   "scripts": {
     "clean": "npm run clean:node_modules && npm run clean:lib",
     "clean:lib": "rm -rf lib",
@@ -44,23 +62,5 @@
     "lint": "eslint --ext .js,.jsx . --ignore-path ../../.eslintignore",
     "lint:js:fix": "eslint --ext .js,.jsx . --fix --ignore-path ../../.eslintignore",
     "test": "npm run lint && npm run jest"
-  },
-  "dependencies": {
-    "chalk": "^2.4.2",
-    "commander": "^3.0.1",
-    "fs-extra": "^8.0.1",
-    "glob": "^7.1.1",
-    "lodash.startcase": "^4.4.0"
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.10.5",
-    "@babel/core": "^7.11.1",
-    "@cerner/eslint-config-terra": "^5.6.0",
-    "@cerner/jest-config-terra": "^2.0.0",
-    "eslint": "^7.32.0"
-  },
-  "peerDependencies": {
-    "intl": "^1.2.5",
-    "react-intl": "^5.8.2"
   }
 }

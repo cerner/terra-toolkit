@@ -2,37 +2,31 @@
   "name": "@cerner/eslint-config-terra",
   "version": "5.6.0",
   "description": "Terra Eslint Config",
-  "main": "eslint.config.js",
-  "publishConfig": {
-    "access": "public"
-  },
+  "author": "Cerner Corporation",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cerner/terra-toolkit.git",
     "directory": "packages/eslint-config-terra"
   },
-  "keywords": [
-    "eslint",
-    "eslint-config",
-    "Cerner",
-    "Terra"
-  ],
-  "author": "Cerner Corporation",
-  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/cerner/terra-toolkit/issues"
+  },
+  "homepage": "https://github.com/cerner/terra-toolkit",
+  "license": "Apache-2.0",
+  "keywords": [
+    "Cerner",
+    "eslint",
+    "eslint-config",
+    "Terra"
+  ],
+  "publishConfig": {
+    "access": "public"
   },
   "engines": {
     "node": "^10.13.0 || 12 || 14",
     "npm": "6 || 9"
   },
-  "homepage": "https://github.com/cerner/terra-toolkit",
-  "scripts": {
-    "clean": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
-    "clean:install": "npm run clean && time npm install",
-    "lint": "eslint --ext .js,.jsx --ignore-path ../../.eslintignore .",
-    "lint:js:fix": "eslint --ext .js,.jsx . --fix"
-  },
+  "main": "eslint.config.js",
   "dependencies": {
     "@babel/eslint-parser": "7",
     "eslint-config-airbnb": "18",
@@ -45,5 +39,11 @@
   },
   "peerDependencies": {
     "eslint": "7"
+  },
+  "scripts": {
+    "clean": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
+    "clean:install": "npm run clean && time npm install",
+    "lint": "eslint --ext .js,.jsx --ignore-path ../../.eslintignore .",
+    "lint:js:fix": "eslint --ext .js,.jsx . --fix"
   }
 }

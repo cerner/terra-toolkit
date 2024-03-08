@@ -2,30 +2,34 @@
   "name": "@cerner/browserslist-config-terra",
   "version": "4.0.0",
   "description": "Terra Browserslist Shared Config",
-  "main": "browserslist.config.js",
-  "publishConfig": {
-    "access": "public"
-  },
+  "author": "Cerner Corporation",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cerner/terra-toolkit.git",
     "directory": "packages/browserslist-config-terra"
   },
-  "keywords": [
-    "browserslist",
-    "browserslist-config",
-    "Cerner",
-    "Terra",
-    "autoprefixer",
-    "stylelint",
-    "eslint"
-  ],
-  "author": "Cerner Corporation",
-  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/cerner/terra-toolkit/issues"
   },
   "homepage": "https://github.com/cerner/terra-toolkit",
+  "license": "Apache-2.0",
+  "keywords": [
+    "autoprefixer",
+    "browserslist",
+    "browserslist-config",
+    "Cerner",
+    "eslint",
+    "stylelint",
+    "Terra"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "browserslist.config.js",
+  "devDependencies": {
+    "@cerner/eslint-config-terra": "^5.6.0",
+    "eslint": "^7.32.0"
+  },
   "scripts": {
     "clean": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
     "clean:install": "npm run clean && time npm install",
@@ -33,9 +37,5 @@
     "clean:node_modules": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
     "lint": "eslint --ext .js,.jsx --ignore-path ../../.eslintignore .",
     "lint:js:fix": "eslint --ext .js,.jsx . --fix"
-  },
-  "devDependencies": {
-    "@cerner/eslint-config-terra": "^5.6.0",
-    "eslint": "^7.32.0"
   }
 }

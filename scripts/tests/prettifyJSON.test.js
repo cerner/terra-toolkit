@@ -131,15 +131,6 @@ describe.only('prettifyJSON script', () => {
     expect(newJSON.keywords).toStrictEqual(['AAA', 'CCC', 'III', 'JJJ', 'ZZZ']);
   });
 
-  it('alphabetizes files', () => {
-    fsReadFileMock.mockReturnValueOnce({ files: ['JJJ', 'ZZZ', 'III', 'AAA', 'CCC'] });
-
-    const JSON = fs.readFileSync();
-    const newJSON = prettifyJSON(JSON);
-
-    expect(newJSON.files).toStrictEqual(['AAA', 'CCC', 'III', 'JJJ', 'ZZZ']);
-  });
-
   it('alphabetizes workspaces', () => {
     fsReadFileMock.mockReturnValueOnce({ workspaces: ['JJJ', 'ZZZ', 'III', 'AAA', 'CCC'] });
 

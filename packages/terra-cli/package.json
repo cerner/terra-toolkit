@@ -2,44 +2,33 @@
   "name": "@cerner/terra-cli",
   "version": "1.12.0",
   "description": "Terra Cli",
-  "main": "index.js",
-  "bin": {
-    "terra": "./bin/terra"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
+  "author": "Cerner Corporation",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cerner/terra-toolkit.git",
     "directory": "packages/terra-cli"
   },
-  "keywords": [
-    "cli",
-    "terra-cli",
-    "Cerner",
-    "Terra"
-  ],
-  "author": "Cerner Corporation",
-  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/cerner/terra-toolkit/issues"
+  },
+  "homepage": "https://github.com/cerner/terra-toolkit",
+  "license": "Apache-2.0",
+  "keywords": [
+    "Cerner",
+    "cli",
+    "Terra",
+    "terra-cli"
+  ],
+  "publishConfig": {
+    "access": "public"
   },
   "engines": {
     "node": "^10.13.0 || 12 || 14",
     "npm": "6 || 9"
   },
-  "homepage": "https://github.com/cerner/terra-toolkit",
-  "scripts": {
-    "clean": "npm run clean:node_modules && npm run clean:lib",
-    "clean:lib": "rm -rf lib",
-    "clean:node_modules": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
-    "clean:install": "npm run clean && time npm install",
-    "compile": "babel src --out-dir lib --copy-files --ignore src/utils",
-    "jest": "jest",
-    "lint": "eslint --ext .js,.jsx --ignore-path ../../.eslintignore .",
-    "lint:js:fix": "eslint --ext .js,.jsx . --fix",
-    "test": "npm run jest"
+  "main": "index.js",
+  "bin": {
+    "terra": "./bin/terra"
   },
   "dependencies": {
     "fs-extra": "^9.0.1",
@@ -53,5 +42,16 @@
     "@cerner/eslint-config-terra": "^5.6.0",
     "@cerner/jest-config-terra": "^2.0.0",
     "eslint": "^7.32.0"
+  },
+  "scripts": {
+    "clean": "npm run clean:node_modules && npm run clean:lib",
+    "clean:lib": "rm -rf lib",
+    "clean:node_modules": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
+    "clean:install": "npm run clean && time npm install",
+    "compile": "babel src --out-dir lib --copy-files --ignore src/utils",
+    "jest": "jest",
+    "lint": "eslint --ext .js,.jsx --ignore-path ../../.eslintignore .",
+    "lint:js:fix": "eslint --ext .js,.jsx . --fix",
+    "test": "npm run jest"
   }
 }

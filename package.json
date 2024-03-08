@@ -1,19 +1,16 @@
 {
   "name": "terra-toolkit",
-  "private": true,
   "version": "5.25.0",
   "description": "Utilities to help when developing terra modules.",
-  "engines": {
-    "node": "10 || 12 || 14",
-    "npm": "9"
-  },
+  "author": "Cerner Corporation",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cerner/terra-toolkit"
   },
-  "workspaces": [
-    "packages/*"
-  ],
+  "bugs": {
+    "url": "https://github.com/cerner/terra-toolkit/issues"
+  },
+  "license": "Apache-2.0",
   "keywords": [
     "Cerner",
     "Terra",
@@ -21,14 +18,17 @@
     "terra-toolkit",
     "UI"
   ],
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "engines": {
+    "node": "10 || 12 || 14",
+    "npm": "9"
+  },
   "browserslist": [
     "extends @cerner/browserslist-config-terra"
   ],
-  "author": "Cerner Corporation",
-  "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/cerner/terra-toolkit/issues"
-  },
   "package-json-lint": {
     "extends": "./packages/package-json-lint-config-terra/package-json-lint.config.js",
     "projectType": "devModule",
@@ -42,37 +42,6 @@
         ]
       }
     }
-  },
-  "scripts": {
-    "clean": "npm run clean:root && npm run clean:lib",
-    "clean:install": "npm run clean && time npm install",
-    "clean:lib": "rm -rf packages/**/lib",
-    "clean:root": "$(lerna clean --yes || true) && echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
-    "compile:prod": "rm -rf ./build; NODE_ENV=production webpack --mode=production --config webpack.dev-site.config.js",
-    "compile": "npm run clean:lib && lerna run compile",
-    "danger": "danger ci",
-    "heroku-postbuild": "npm install --only=dev && npm run compile:prod",
-    "heroku-prebuild": "npx lerna init",
-    "jest": "jest",
-    "lint:js": "eslint --ext .js,.jsx . --max-warnings 0",
-    "lint:js:fix": "eslint --fix --ext .js,.jsx .",
-    "lint:package-json": "npm run terra -- package-json-lint",
-    "lint": "npm run lint:js && npm run lint:package-json",
-    "mocha": "cd packages/terra-functional-testing && npm run mocha",
-    "pack": "webpack --mode=production",
-    "postinstall": "npm run compile",
-    "prepare-for-release": "npm run terra -- prepare-for-release",
-    "start": "webpack serve --config webpack.dev-site.config.js",
-    "start-heroku": "npm run terra -- express-server --port $PORT --site './build' ",
-    "terra": "node ./packages/terra-cli/bin/terra",
-    "test": "npm run lint && npm run jest && npm run mocha && npm run wdio",
-    "test:docker": "npm run lint && npm run jest && npm run mocha && npm run wdio:docker",
-    "wdio-site": "npm run terra -- wdio --site build --browsers chrome firefox --locales en fr --formFactors small large",
-    "wdio-webpack": "npm run terra -- wdio",
-    "wdio-site:docker": "npm run terra -- wdio --site build --disableSeleniumService=true --browsers chrome firefox --locales en fr --formFactors small large",
-    "wdio-webpack:docker": "npm run terra -- wdio --disableSeleniumService=true",
-    "wdio": "rm -rf build && npm run pack && npm run wdio-site && npm run wdio-webpack",
-    "wdio:docker": "rm -rf build && npm run pack && npm run wdio-site:docker && npm run wdio-webpack:docker"
   },
   "devDependencies": {
     "@babel/cli": "7",
@@ -108,5 +77,36 @@
     "webpack": "5",
     "webpack-cli": "4",
     "webpack-dev-server": "4"
+  },
+  "scripts": {
+    "clean": "npm run clean:root && npm run clean:lib",
+    "clean:install": "npm run clean && time npm install",
+    "clean:lib": "rm -rf packages/**/lib",
+    "clean:root": "$(lerna clean --yes || true) && echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
+    "compile:prod": "rm -rf ./build; NODE_ENV=production webpack --mode=production --config webpack.dev-site.config.js",
+    "compile": "npm run clean:lib && lerna run compile",
+    "danger": "danger ci",
+    "heroku-postbuild": "npm install --only=dev && npm run compile:prod",
+    "heroku-prebuild": "npx lerna init",
+    "jest": "jest",
+    "lint:js": "eslint --ext .js,.jsx . --max-warnings 0",
+    "lint:js:fix": "eslint --fix --ext .js,.jsx .",
+    "lint:package-json": "npm run terra -- package-json-lint",
+    "lint": "npm run lint:js && npm run lint:package-json",
+    "mocha": "cd packages/terra-functional-testing && npm run mocha",
+    "pack": "webpack --mode=production",
+    "postinstall": "npm run compile",
+    "prepare-for-release": "npm run terra -- prepare-for-release",
+    "start": "webpack serve --config webpack.dev-site.config.js",
+    "start-heroku": "npm run terra -- express-server --port $PORT --site './build' ",
+    "terra": "node ./packages/terra-cli/bin/terra",
+    "test": "npm run lint && npm run jest && npm run mocha && npm run wdio",
+    "test:docker": "npm run lint && npm run jest && npm run mocha && npm run wdio:docker",
+    "wdio-site": "npm run terra -- wdio --site build --browsers chrome firefox --locales en fr --formFactors small large",
+    "wdio-webpack": "npm run terra -- wdio",
+    "wdio-site:docker": "npm run terra -- wdio --site build --disableSeleniumService=true --browsers chrome firefox --locales en fr --formFactors small large",
+    "wdio-webpack:docker": "npm run terra -- wdio --disableSeleniumService=true",
+    "wdio": "rm -rf build && npm run pack && npm run wdio-site && npm run wdio-webpack",
+    "wdio:docker": "rm -rf build && npm run pack && npm run wdio-site:docker && npm run wdio-webpack:docker"
   }
 }
