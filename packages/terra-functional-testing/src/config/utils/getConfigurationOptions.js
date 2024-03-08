@@ -37,8 +37,9 @@ const getConfigurationOptions = (options) => {
     useSeleniumStandaloneService,
   } = options;
 
+  const url = `http://${externalHost || getIpAddress()}:${externalPort || 8080}`;
   return {
-    baseUrl: `http://${externalHost || getIpAddress()}:${externalPort || 8080}`,
+    baseUrl: url,
     capabilities: getCapabilities(browsers, !!gridUrl),
     hostname: seleniumServiceUrl || gridUrl || (useSeleniumStandaloneService ? 'standalone-chrome' : 'localhost'),
     port: seleniumServicePort || (gridUrl ? 80 : 4444),
@@ -60,6 +61,7 @@ const getConfigurationOptions = (options) => {
       port: assetServerPort,
       site,
       updateScreenshots,
+      url,
       useHttps,
       useRemoteReferenceScreenshots,
       ...(theme ? { theme } : { theme: getDefaultThemeName() }),

@@ -25,7 +25,7 @@ class AssetServerService {
 
     try {
       if (this.options.disableServer) {
-        logger.info(`Internal asset server disabled; Connecting to server on 0.0.0.0:${this.options.port}`);
+        logger.info(`Internal asset server disabled; Connecting to server on ${this.options.url}`);
         return;
       }
 
