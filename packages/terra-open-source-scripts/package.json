@@ -2,42 +2,30 @@
   "name": "@cerner/terra-open-source-scripts",
   "version": "1.16.0",
   "description": "Terra package with various scripts for open source development",
-  "main": "index.js",
-  "publishConfig": {
-    "access": "public"
-  },
+  "author": "Cerner Corporation",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cerner/terra-toolkit.git",
     "directory": "packages/terra-open-source-scripts"
   },
-  "keywords": [
-    "terra-open-source-scripts",
-    "Cerner",
-    "Terra"
-  ],
-  "author": "Cerner Corporation",
-  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/cerner/terra-toolkit/issues"
+  },
+  "homepage": "https://github.com/cerner/terra-toolkit",
+  "license": "Apache-2.0",
+  "keywords": [
+    "Cerner",
+    "Terra",
+    "terra-open-source-scripts"
+  ],
+  "publishConfig": {
+    "access": "public"
   },
   "engines": {
     "node": "^10.13.0 || 12 || 14",
     "npm": "6 || 9"
   },
-  "homepage": "https://github.com/cerner/terra-toolkit",
-  "scripts": {
-    "clean": "npm run clean:node_modules && npm run clean:lib",
-    "clean:lib": "rm -rf lib",
-    "clean:node_modules": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
-    "clean:install": "npm run clean && time npm install",
-    "compile": "babel --root-mode upward src --out-dir lib --copy-files",
-    "jest": "jest",
-    "lint": "eslint --ext .js,.jsx . --ignore-path ../../.eslintignore --fix",
-    "lint:js:fix": "eslint --ext .js,.jsx . --ignore-path ../../.eslintignore --fix",
-    "precompile": "rm -rf lib",
-    "test": "npm run jest"
-  },
+  "main": "index.js",
   "dependencies": {
     "@npmcli/promise-spawn": "^1.2.0",
     "express": "^4.17.1",
@@ -58,5 +46,17 @@
     "@cerner/terra-cli": "^1.12.0",
     "eslint": "^7.32.0",
     "yargs": "^16.1.1"
+  },
+  "scripts": {
+    "clean": "npm run clean:node_modules && npm run clean:lib",
+    "clean:lib": "rm -rf lib",
+    "clean:node_modules": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
+    "clean:install": "npm run clean && time npm install",
+    "compile": "babel --root-mode upward src --out-dir lib --copy-files",
+    "jest": "jest",
+    "lint": "eslint --ext .js,.jsx . --ignore-path ../../.eslintignore --fix",
+    "lint:js:fix": "eslint --ext .js,.jsx . --ignore-path ../../.eslintignore --fix",
+    "precompile": "rm -rf lib",
+    "test": "npm run jest"
   }
 }

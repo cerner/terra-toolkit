@@ -2,42 +2,31 @@
   "name": "@cerner/terra-toolkit-docs",
   "version": "2.28.0",
   "description": "Contains documentation for packages in the terra-toolkit monorepo",
-  "main": "index.js",
-  "publishConfig": {
-    "access": "public"
-  },
+  "author": "Cerner Corporation",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cerner/terra-toolkit.git",
     "directory": "packages/terra-toolkit-docs"
   },
-  "keywords": [
-    "eslint",
-    "eslint-config",
-    "Cerner",
-    "Terra"
-  ],
-  "author": "Cerner Corporation",
-  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/cerner/terra-toolkit/issues"
+  },
+  "homepage": "https://github.com/cerner/terra-toolkit",
+  "license": "Apache-2.0",
+  "keywords": [
+    "Cerner",
+    "eslint",
+    "eslint-config",
+    "Terra"
+  ],
+  "publishConfig": {
+    "access": "public"
   },
   "engines": {
     "node": "^10.13.0 || 12 || 14",
     "npm": "6 || 9"
   },
-  "homepage": "https://github.com/cerner/terra-toolkit",
-  "scripts": {
-    "clean": "npm run clean:node_modules && npm run clean:lib",
-    "clean:lib": "rm -rf lib",
-    "clean:node_modules": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
-    "clean:install": "npm run clean && time npm install",
-    "compile": "babel --root-mode upward src --out-dir lib --copy-files",
-    "lint": "eslint --ext .js,.jsx --ignore-path ../../.eslintignore .",
-    "lint:js:fix": "eslint --ext .js,.jsx . --fix",
-    "precompile": "rm -rf lib",
-    "postinstall": "npm run compile"
-  },
+  "main": "index.js",
   "dependencies": {
     "@cerner/jest-config-terra": "^2.0.0",
     "@cerner/package-json-lint": "^2.2.0",
@@ -50,5 +39,16 @@
     "@babel/core": "^7.11.1",
     "@cerner/eslint-config-terra": "^5.6.0",
     "eslint": "^7.32.0"
+  },
+  "scripts": {
+    "clean": "npm run clean:node_modules && npm run clean:lib",
+    "clean:lib": "rm -rf lib",
+    "clean:node_modules": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
+    "clean:install": "npm run clean && time npm install",
+    "compile": "babel --root-mode upward src --out-dir lib --copy-files",
+    "lint": "eslint --ext .js,.jsx --ignore-path ../../.eslintignore .",
+    "lint:js:fix": "eslint --ext .js,.jsx . --fix",
+    "precompile": "rm -rf lib",
+    "postinstall": "npm run compile"
   }
 }

@@ -2,7 +2,28 @@
   "name": "@cerner/terra-enzyme-intl",
   "version": "4.9.0",
   "description": "Enzyme helpers for fortifying tests that depend on react-intl by decoupling the need for actual translations.",
-  "main": "lib/index.js",
+  "author": "Cerner Corporation",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cerner/terra-toolkit.git",
+    "directory": "packages/terra-enzyme-intl"
+  },
+  "bugs": {
+    "url": "https://github.com/cerner/terra-toolkit/issues"
+  },
+  "homepage": "https://github.com/cerner/terra-toolkit/packages/terra-enzyme-intl#readme",
+  "license": "Apache-2.0",
+  "keywords": [
+    "Cerner",
+    "enzyme",
+    "i18n",
+    "intl",
+    "jest",
+    "react",
+    "react-intl",
+    "Terra",
+    "terra-enzyme-intl"
+  ],
   "publishConfig": {
     "access": "public"
   },
@@ -10,27 +31,15 @@
     "node": "10 || 12 || 14",
     "npm": "6 || 9"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cerner/terra-toolkit.git",
-    "directory": "packages/terra-enzyme-intl"
+  "main": "lib/index.js",
+  "dependencies": {
+    "prop-types": "^15.7.2",
+    "react-intl": "^5.25.1"
   },
-  "keywords": [
-    "Cerner",
-    "Terra",
-    "terra-enzyme-intl",
-    "jest",
-    "enzyme",
-    "react",
-    "react-intl",
-    "i18n",
-    "intl"
-  ],
-  "author": "Cerner Corporation",
-  "license": "Apache-2.0",
-  "homepage": "https://github.com/cerner/terra-toolkit/packages/terra-enzyme-intl#readme",
-  "bugs": {
-    "url": "https://github.com/cerner/terra-toolkit/issues"
+  "peerDependencies": {
+    "enzyme": "^3.9.0",
+    "react": "^16.8.5",
+    "react-dom": "^16.8.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
@@ -54,14 +63,5 @@
     "lint:js:fix": "eslint --ext .js,.jsx . --ignore-path ../../.eslintignore --fix",
     "precompile": "rm -rf lib",
     "postinstall": "npm run compile"
-  },
-  "dependencies": {
-    "prop-types": "^15.7.2",
-    "react-intl": "^5.25.1"
-  },
-  "peerDependencies": {
-    "enzyme": "^3.9.0",
-    "react": "^16.8.5",
-    "react-dom": "^16.8.5"
   }
 }
