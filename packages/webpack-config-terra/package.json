@@ -2,41 +2,31 @@
   "name": "@cerner/webpack-config-terra",
   "version": "3.4.0",
   "description": "Terra Webpack Config",
-  "main": "lib/webpack.config.js",
-  "publishConfig": {
-    "access": "public"
-  },
+  "author": "Cerner Corporation",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cerner/terra-toolkit.git",
     "directory": "packages/webpack-config-terra"
   },
-  "keywords": [
-    "webpack",
-    "webpack-config",
-    "Cerner",
-    "Terra"
-  ],
-  "author": "Cerner Corporation",
-  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/cerner/terra-toolkit/issues"
+  },
+  "homepage": "https://github.com/cerner/terra-toolkit",
+  "license": "Apache-2.0",
+  "keywords": [
+    "Cerner",
+    "Terra",
+    "webpack",
+    "webpack-config"
+  ],
+  "publishConfig": {
+    "access": "public"
   },
   "engines": {
     "node": "^10.13.0 || 12 || 14",
     "npm": "6 || 9"
   },
-  "homepage": "https://github.com/cerner/terra-toolkit",
-  "scripts": {
-    "clean": "npm run clean:node_modules && npm run clean:lib",
-    "clean:lib": "rm -rf lib",
-    "clean:node_modules": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
-    "clean:install": "npm run clean && time npm install",
-    "compile": "babel src --out-dir lib --copy-files --ignore src/utils",
-    "jest": "jest",
-    "lint": "eslint --ext .js,.jsx . --ignore-path ../../.eslintignore",
-    "lint:js:fix": "eslint --ext .js,.jsx . --ignore-path ../../.eslintignore --fix"
-  },
+  "main": "lib/webpack.config.js",
   "dependencies": {
     "@cerner/duplicate-package-checker-webpack-plugin": "^2.6.0",
     "@cerner/terra-aggregate-translations": "^2.0.0",
@@ -60,11 +50,6 @@
     "terser-webpack-plugin": "^4.2.1",
     "webpack-merge": "^5.4.0"
   },
-  "devDependencies": {
-    "@cerner/eslint-config-terra": "^5.6.0",
-    "@cerner/jest-config-terra": "^2.0.0",
-    "eslint": "^7.32.0"
-  },
   "peerDependencies": {
     "@babel/cli": "7",
     "@babel/core": "7",
@@ -72,5 +57,20 @@
     "postcss": "8",
     "webpack": "4 || 5",
     "webpack-cli": "3 || 4"
+  },
+  "devDependencies": {
+    "@cerner/eslint-config-terra": "^5.6.0",
+    "@cerner/jest-config-terra": "^2.0.0",
+    "eslint": "^7.32.0"
+  },
+  "scripts": {
+    "clean": "npm run clean:node_modules && npm run clean:lib",
+    "clean:lib": "rm -rf lib",
+    "clean:node_modules": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
+    "clean:install": "npm run clean && time npm install",
+    "compile": "babel src --out-dir lib --copy-files --ignore src/utils",
+    "jest": "jest",
+    "lint": "eslint --ext .js,.jsx . --ignore-path ../../.eslintignore",
+    "lint:js:fix": "eslint --ext .js,.jsx . --ignore-path ../../.eslintignore --fix"
   }
 }

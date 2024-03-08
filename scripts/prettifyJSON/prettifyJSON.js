@@ -84,8 +84,6 @@ module.exports = (oldJSON) => {
 
   if (oldJSON.files) {
     newJSON.files = oldJSON.files;
-    // alphabetize the list
-    newJSON.files.sort(Intl.Collator().compare);
     delete oldJSON.files;
   }
 

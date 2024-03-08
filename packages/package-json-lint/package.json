@@ -2,38 +2,28 @@
   "name": "@cerner/package-json-lint",
   "version": "2.2.0",
   "description": "Package JSON linter",
-  "publishConfig": {
-    "access": "public"
-  },
+  "author": "Cerner Corporation",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cerner/terra-toolkit.git",
     "directory": "packages/package-json-lint"
   },
-  "keywords": [
-    "lint",
-    "package-json-lint",
-    "Cerner"
-  ],
-  "author": "Cerner Corporation",
-  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/cerner/terra-toolkit/issues"
+  },
+  "homepage": "https://github.com/cerner/terra-toolkit",
+  "license": "Apache-2.0",
+  "keywords": [
+    "Cerner",
+    "lint",
+    "package-json-lint"
+  ],
+  "publishConfig": {
+    "access": "public"
   },
   "engines": {
     "node": "10 || 12 || 14",
     "npm": "6 || 9"
-  },
-  "homepage": "https://github.com/cerner/terra-toolkit",
-  "scripts": {
-    "clean": "npm run clean:node_modules && npm run clean:lib",
-    "clean:install": "npm run clean && time npm install",
-    "clean:lib": "rm -rf lib",
-    "clean:node_modules": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
-    "compile": "babel src --out-dir lib --copy-files --ignore src",
-    "jest": "jest",
-    "lint": "eslint --ext .js,.jsx --ignore-path ../../.eslintignore .",
-    "lint:js:fix": "eslint --ext .js,.jsx . --fix"
   },
   "dependencies": {
     "@npmcli/promise-spawn": "^1.2.0",
@@ -57,5 +47,15 @@
     "eslint": "^7.32.0",
     "strip-ansi": "^6.0.0",
     "yargs": "^16.1.1"
+  },
+  "scripts": {
+    "clean": "npm run clean:node_modules && npm run clean:lib",
+    "clean:install": "npm run clean && time npm install",
+    "clean:lib": "rm -rf lib",
+    "clean:node_modules": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
+    "compile": "babel src --out-dir lib --copy-files --ignore src",
+    "jest": "jest",
+    "lint": "eslint --ext .js,.jsx --ignore-path ../../.eslintignore .",
+    "lint:js:fix": "eslint --ext .js,.jsx . --fix"
   }
 }
