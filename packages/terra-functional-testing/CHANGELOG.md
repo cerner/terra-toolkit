@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Added
+  * Added the `--disable-server` flag to disable the internal server so that the wdio test runner can connect to an external server (such as another webpack dev server).
+
 ## 4.6.0 - (February 5, 2024)
 
 * Changed

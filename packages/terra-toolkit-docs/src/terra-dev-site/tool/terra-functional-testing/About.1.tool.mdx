@@ -18,7 +18,7 @@ We strongly recommend using [nvm](https://github.com/nvm-sh/nvm) for installing 
 
 Install @cerner/terra-functional-testing and @cerner/terra-cli as development dependencies with npm:
 
-```
+```bash
 npm install --save-dev @cerner/terra-functional-testing @cerner/terra-cli
 ```
 
@@ -35,32 +35,35 @@ package.json
 
 ### Options
 
-| Option                           | Type    | Default                                          | Description                                                                                                                               |
-|----------------------------------|---------|--------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
-| --assetServerPort                | number  | 8080                                             | The port to run the webpack and express asset services on.                                                                                |
-| --browsers                       | array   |                                                  | A list of browsers for the test run.                                                                                                      |
-| --config, -c                     | string  |                                                  | A file path to the test runner configuration.                                                                                             |
-| --disableSeleniumService         | boolean | false                                            | A flag to disable the selenium docker service.                                                                                            |
-| --ignoreScreenshotMismatch       | boolean | false                                            | A flag to ignore screenshot mismatch.                                                                                                     |
-| --externalHost                   | string  |                                                  | The host address the testing environment is connected to.                                                                                 |
-| --externalPort                   | number  |                                                  | The port mapping from the host to the container.                                                                                          |
-| --formFactors                    | array   |                                                  | A list of form factors for the test run. One of tiny, small, medium, large, huge, or enormous                                             |
-| --gridUrl                        | string  |                                                  | The remote selenium grid address.                                                                                                         |
-| --locales                        | array   | en                                               | A list of language locales for the test run.                                                                                              |
-| --seleniumServicePort            | number  | 4444                                             | The port mapping for the selenium service or the external selenium grid.                                                                  |
-| --seleniumServiceUrl             | string  | localhost                                        | The address for the selenium service.                                                                                                     |
-| --site                           | string  |                                                  | A file path to a static directory of assets. When defined, an express server will launch to serve the assets and disable running webpack. |
-| --spec                           | array   |                                                  | A list of spec file paths.                                                                                                                |
-| --suite                          | array   |                                                  | Overrides specs and runs only the defined suites.                                                                                         |
-| --themes                         | array   | theme specified in terra-theme.config.js file    | A list of themes for the test run.                                                                                                        |
-| --updateScreenshots, -u          | boolean | false                                            | Updates all reference screenshots with the latest screenshots.                                                                            |
-| --useHttps                       | boolean | false                                            | A flag to turn on secure HTTP for the webpack server when a gridUrl is provided.                                                          |
+|            Option            |  Type   |                    Default                    |                                                                  Description                                                                   |
+| ---------------------------- | ------- | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| --asset-server-port          | number  | 8080                                          | The port to run the webpack and express asset services on.                                                                                     |
+| --browsers                   | array   |                                               | A list of browsers for the test run.                                                                                                           |
+| --config, -c                 | string  |                                               | A file path to the test runner configuration.                                                                                                  |
+| --disable-server             | boolean | false                                         | A flag to disable the internal webpack or express server. An external server must be running in order for the test runner to run successfully. |
+| --disable-selenium-service   | boolean | false                                         | A flag to disable the selenium docker service.                                                                                                 |
+| --ignore-screenshot-mismatch | boolean | false                                         | A flag to ignore screenshot mismatch.                                                                                                          |
+| --external-host              | string  |                                               | The host address the testing environment is connected to.                                                                                      |
+| --external-port              | number  |                                               | The port mapping from the host to the container.                                                                                               |
+| --form-factors               | array   |                                               | A list of form factors for the test run. One of tiny, small, medium, large, huge, or enormous                                                  |
+| --grid-url                   | string  |                                               | The remote selenium grid address.                                                                                                              |
+| --locales                    | array   | en                                            | A list of language locales for the test run.                                                                                                   |
+| --selenium-service-port      | number  | 4444                                          | The port mapping for the selenium service or the external selenium grid.                                                                       |
+| --selenium-service-url       | string  | localhost                                     | The address for the selenium service.                                                                                                          |
+| --site                       | string  |                                               | A file path to a static directory of assets. When defined, an express server will launch to serve the assets and disable running webpack.      |
+| --spec                       | array   |                                               | A list of spec file paths.                                                                                                                     |
+| --suite                      | array   |                                               | Overrides specs and runs only the defined suites.                                                                                              |
+| --themes                     | array   | theme specified in terra-theme.config.js file | A list of themes for the test run.                                                                                                             |
+| --update-screenshots, -u     | boolean | false                                         | Updates all reference screenshots with the latest screenshots.                                                                                 |
+| --use-https                  | boolean | false                                         | A flag to turn on secure HTTP for the webpack server when a gridUrl is provided.                                                               |
+
+Note: the arguments can also be passed as camelCase e.g. `--updateScreenshots`.
 
 The following example will run the test suite a total of four times. Once for each permutation of the specified locales and form factors.
 
 ```json
 "scripts": {
-  "test:wdio": "terra wdio --locales en fr --formFactors tiny huge"
+  "test:wdio": "terra wdio --locales en fr --form-factors tiny huge"
 }
 ```
 
@@ -98,7 +101,7 @@ To run against a remote selenium grid:
 
 ```json
 "scripts": {
-  "test:wdio": "terra wdio --gridUrl grid.test.example.com"
+  "test:wdio": "terra wdio --grid-url grid.test.example.com"
 }
 ```
 
@@ -125,7 +128,7 @@ To specify a list of form factors use the cli option:
 
 ```json
 "scripts": {
-  "test:wdio": "terra wdio --formFactors tiny small enormous"
+  "test:wdio": "terra wdio --form-factors tiny small enormous"
 }
 ```
 

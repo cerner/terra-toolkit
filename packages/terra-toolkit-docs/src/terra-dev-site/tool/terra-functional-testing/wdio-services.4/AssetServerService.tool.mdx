@@ -6,7 +6,7 @@ The asset server service initializes an asset server to serve compiled assets to
 
 The assert server options are configured via the [test runner CLI options](../about#options). The webpack-dev-server will be provided the locale and theme options via the test runner and will pass those through to webpack.
 
-### assetServerPort
+### asset-server-port
 
 The port the service will be hosted on.
 
@@ -20,7 +20,27 @@ Example:
 
 ```js
 "scripts": {
-  "test:wdio": "terra wdio --assetServerPort 8081"
+  "test:wdio": "terra wdio --asset-server-port 8081"
+}
+```
+
+### disable-server
+
+This will disable the internal webpack and express server and instead will try to connect to an existing server.
+This is useful for local development where a single dev-server can be used for local browser tesing and running wdio tests.
+By default, the test runner will connect to `0.0.0.0:8080`. The port and url can be configured with the `--external-host` and `--external-port` flags. 
+
+Type: `boolean`
+
+Required: `false`
+
+Default: `false`
+
+Example:
+
+```js
+"scripts": {
+  "test:wdio": "terra wdio --disable-server"
 }
 ```
 

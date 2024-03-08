@@ -23,13 +23,17 @@ class AssetServerService {
   async onPrepare() {
     const { webpackConfig, site } = this.options;
 
-    if (!webpackConfig && !site) {
-      logger.warn('No webpack configuration provided.');
-
-      return;
-    }
-
     try {
+      if (this.options.disableServer) {
+        logger.info(`Internal asset server disabled; Connecting to server on 0.0.0.0:${this.options.port}`);
+        return;
+      }
+
+      if (!webpackConfig && !site) {
+        logger.warn('No webpack configuration provided.');
+        return;
+      }
+
       if (site) {
         this.server = new ExpressServer(this.options);
       } else {

@@ -83,6 +83,11 @@ const cli = {
         describe: 'A flag to disable the selenium docker service.',
         default: false,
       },
+      disableServer: {
+        type: 'boolean',
+        describe: 'A flag to disable the builtin webpack service.',
+        default: false,
+      },
       externalHost: {
         type: 'string',
         describe: 'The host address the testing environment is connected to.',
