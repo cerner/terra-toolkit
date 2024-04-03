@@ -1,6 +1,6 @@
 {
   "name": "@cerner/terra-functional-testing",
-  "version": "4.7.0",
+  "version": "4.8.0",
   "description": "A functional testing utility for applications built using Terra.",
   "author": "Cerner Corporation",
   "repository": {
