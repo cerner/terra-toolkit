@@ -65,6 +65,16 @@ module.exports = (oldJSON) => {
     delete oldJSON.publishConfig;
   }
 
+  if (oldJSON.rollOut) {
+    newJSON.rollOut = oldJSON.rollOut;
+    delete oldJSON.rollOut;
+  }
+
+  if (oldJSON.associated_engine) {
+    newJSON.associated_engine = oldJSON.associated_engine;
+    delete oldJSON.associated_engine;
+  }
+
   if (oldJSON.workspaces) {
     newJSON.workspaces = oldJSON.workspaces;
     // alphabetize the list
