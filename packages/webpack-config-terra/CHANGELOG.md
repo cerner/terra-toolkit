@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+* Breaking Changes
+  * Upgraded to `terra-aggregate-translations@3`. `terra-aggregate-translations@3` now requires `react-intl@5` as a peerDependency.
+  * Dropped support for `webpack@4` and `webpack-cli@3`.
+
 ## 3.4.0 - (February 27, 2024)
 
 * Added
