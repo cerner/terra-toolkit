@@ -29,7 +29,7 @@
   "main": "lib/webpack.config.js",
   "dependencies": {
     "@cerner/duplicate-package-checker-webpack-plugin": "^2.6.0",
-    "@cerner/terra-aggregate-translations": "3",
+    "@cerner/terra-aggregate-translations": "^3.0.0",
     "@mjhenkes/postcss-rtl": "^2.0.0",
     "autoprefixer": "^10.0.0",
     "babel-loader": "^8.0.5",
@@ -55,8 +55,8 @@
     "@babel/core": "7",
     "fibers": "5",
     "postcss": "8",
-    "webpack": "4 || 5",
-    "webpack-cli": "3 || 4"
+    "webpack": "5",
+    "webpack-cli": "4"
   },
   "devDependencies": {
     "@cerner/eslint-config-terra": "^5.6.0",
