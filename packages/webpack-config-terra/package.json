@@ -23,7 +23,7 @@
     "access": "public"
   },
   "engines": {
-    "node": "^10.13.0 || 12 || 14",
+    "node": "14",
     "npm": "6 || 9"
   },
   "main": "lib/webpack.config.js",
@@ -60,8 +60,7 @@
   },
   "devDependencies": {
     "@cerner/eslint-config-terra": "^5.6.0",
-    "@cerner/jest-config-terra": "^2.0.0",
-    "eslint": "^7.32.0"
+    "@cerner/jest-config-terra": "^2.0.0"
   },
   "scripts": {
     "clean": "npm run clean:node_modules && npm run clean:lib",

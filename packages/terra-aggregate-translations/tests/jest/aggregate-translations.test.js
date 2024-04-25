@@ -106,19 +106,7 @@ describe('aggregate-translations', () => {
     expect(writtenFilePaths.length).toEqual(numSupportedLocales);
   });
 
-  it('aggregates on the specified locales', () => {
-    const translationsFiles = [
-      expect.stringContaining(`aggregated-translations${path.sep}en.js`),
-    ];
-
-    const supportedLocales = aggregateTranslations({ locales: ['en'] });
-
-    expect(writtenFilePaths).toEqual(expect.arrayContaining(translationsFiles));
-    expect(writtenFilePaths.length).toEqual(1);
-    expect(supportedLocales).toEqual(['en']);
-  });
-
-  it('always aggregates on en locale even if not specified', () => {
+  it('always aggregates on all locales even if a list is specified', () => {
     const translationsFiles = [
       `${process.cwd()}${path.sep}aggregated-translations${path.sep}en.js`,
       `${process.cwd()}${path.sep}aggregated-translations${path.sep}es.js`,
@@ -127,8 +115,8 @@ describe('aggregate-translations', () => {
     const supportedLocales = aggregateTranslations({ locales: ['es'] });
 
     expect(writtenFilePaths).toEqual(expect.arrayContaining(translationsFiles));
-    expect(writtenFilePaths.length).toEqual(2);
-    expect(supportedLocales).toEqual(['es', 'en']);
+    expect(writtenFilePaths.length).toEqual(i18nSupportedLocales.length);
+    expect(supportedLocales).toEqual(i18nSupportedLocales);
   });
 
   it('writes to the default output directory', () => {

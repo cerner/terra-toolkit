@@ -31,7 +31,7 @@ const defaults = (options = {}) => {
     baseDir: options.baseDir || config.baseDir || process.cwd(),
     directories: options.directories || config.directories || [],
     fileSystem: options.outputFileSystem || config.outputFileSystem || fse,
-    locales: options.locales || config.locales || supportedLocales,
+    locales: supportedLocales,
     outputDir: options.outputDir || './aggregated-translations',
     excludes: options.excludes || config.excludes || [],
     format: options.format || 'es5',
