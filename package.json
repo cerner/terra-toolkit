@@ -63,7 +63,6 @@
     "enzyme": "3",
     "enzyme-adapter-react-16": "1",
     "eslint": "7",
-    "fibers": "5",
     "html-webpack-plugin": "4",
     "jest": "27",
     "lerna": "6",
