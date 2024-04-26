@@ -72,7 +72,7 @@
     "react-dom": "16",
     "react-intl": "5",
     "stylelint": "15",
-    "terra-application": "1",
+    "terra-application": "2",
     "utf-8-validate": "5",
     "webpack": "5",
     "webpack-cli": "4",
