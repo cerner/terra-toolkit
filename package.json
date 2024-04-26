@@ -51,11 +51,8 @@
   "devDependencies": {
     "@babel/cli": "7",
     "@babel/core": "7",
-    "@babel/helpers": "7",
-    "@babel/plugin-transform-runtime": "7",
     "@babel/preset-env": "7",
     "@babel/preset-react": "7",
-    "@babel/register": "7",
     "@cerner/browserslist-config-terra": "4",
     "@cerner/terra-dev-site": "8",
     "@cerner/webpack-config-terra": "3",
