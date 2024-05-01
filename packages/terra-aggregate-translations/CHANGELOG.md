@@ -4,7 +4,7 @@
 
 * Breaking Changes
   * Dropped support for overriding supported locales list with a custom list due to breaking changes in `react-intl@5` & webpack limitations. Terra will now only support a fixed list of locales.
-  * Dropped suport for Node 10 & 12. Node 14 is the minimum required version moving forward.
+  * Dropped suport for Node 10 & 12. Node 14 is now the minimum required version required.
 
 ## 3.3.0 - (September 26, 2023)
 
