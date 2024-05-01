@@ -23,7 +23,7 @@
     "packages/*"
   ],
   "engines": {
-    "node": "10 || 12 || 14",
+    "node": "14",
     "npm": "9"
   },
   "browserslist": [
@@ -43,37 +43,28 @@
       }
     }
   },
+  "peerDependencies": {
+    "react": "16",
+    "react-dom": "16",
+    "react-intl": "5"
+  },
   "devDependencies": {
     "@babel/cli": "7",
     "@babel/core": "7",
-    "@babel/helpers": "7",
-    "@babel/plugin-transform-runtime": "7",
     "@babel/preset-env": "7",
     "@babel/preset-react": "7",
-    "@babel/register": "7",
     "@cerner/browserslist-config-terra": "4",
-    "@cerner/terra-dev-site": "7",
+    "@cerner/terra-dev-site": "8",
     "@cerner/webpack-config-terra": "3",
-    "@octokit/core": "3",
-    "bufferutil": "4",
-    "commander": "5",
     "danger": "11",
     "enzyme": "3",
     "enzyme-adapter-react-16": "1",
-    "enzyme-to-json": "3",
     "eslint": "7",
-    "fibers": "5",
     "html-webpack-plugin": "4",
     "jest": "27",
     "lerna": "6",
-    "memory-fs": "^0.5.0",
     "postcss": "8",
-    "react": "16",
-    "react-dom": "16",
-    "react-intl": "2",
     "stylelint": "15",
-    "terra-application": "1",
-    "utf-8-validate": "5",
     "webpack": "5",
     "webpack-cli": "4",
     "webpack-dev-server": "4"
