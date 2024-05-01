@@ -11,6 +11,7 @@ packages/**/package-lock.json
 
 # generated folders
 aggregated-translations
+build
 generated-themes
 lib
 node_modules

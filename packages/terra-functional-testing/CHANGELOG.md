@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 4.8.0 - (April 3, 2024)
+
+* Changed
+  * Updated to support Docker Compose V2.
+
 ## 4.7.0 - (March 8, 2024)
 
 * Added
