@@ -8,7 +8,7 @@
   * Dropped support for overriding supported locales list with a custom list due to breaking changes in `react-intl@5` & webpack limitations. Terra will now only support a fixed list of locales.
   * Dropped suport for Node 10 & 12. Node 14 is now the minimum required version required.
 
-*Note: While these changes are typically breaking changes, terra-aggregate-translations v3.4 will be the first 3.x version utilized in projects. Therefore, these changes are passive in nature.*
+*Note: While these changes are typically breaking changes, terra-aggregate-translations v3.4 is the first 3.x version that is ready to be deployed in production. Therefore, these changes are passive in nature.*
 
 ## 3.3.0 - (September 26, 2023)
 
