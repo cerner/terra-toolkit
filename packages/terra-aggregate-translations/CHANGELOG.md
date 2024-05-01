@@ -2,20 +2,24 @@
 
 ## Unreleased
 
+* Breaking Changes
+  * Dropped support for overriding supported locales list with a custom list due to breaking changes in `react-intl@5` & webpack limitations. Terra will now only support a fixed list of locales.
+  * Dropped suport for Node 10 & 12. Node 14 is now the minimum required version required.
+
 ## 3.3.0 - (September 26, 2023)
 
 * Changed
-  * Minor dependency version bump
+  * Minor dependency version bump.
 
 ## 3.2.0 - (August 31, 2023)
 
 * Changed
-  * Minor dependency version bump
+  * Minor dependency version bump.
 
 ## 3.1.2 - (August 30, 2023)
 
 * Changed
-  * Minor dependency version bump
+  * Minor dependency version bump.
 
 ## 3.1.1 - (August 25, 2023)
 
@@ -26,12 +30,14 @@
 ## 3.1.0 - (August 24, 2023)
 
 * Changed
-  * Minor dependency version bump
+  * Minor dependency version bump.
 
 ## 3.0.0 - (May 12, 2022)
 
-* Breaking
-  * Removed intl v3 and v4 support.
+* Breaking Changes
+  * Removed react-intl v3 and v4 support.
+
+---
 
 ## 2.4.0 - (February 11, 2022)
 

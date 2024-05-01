@@ -23,13 +23,13 @@
     "access": "public"
   },
   "engines": {
-    "node": "^10.13.0 || 12 || 14",
+    "node": "14",
     "npm": "6 || 9"
   },
   "main": "lib/webpack.config.js",
   "dependencies": {
     "@cerner/duplicate-package-checker-webpack-plugin": "^2.6.0",
-    "@cerner/terra-aggregate-translations": "^2.0.0",
+    "@cerner/terra-aggregate-translations": "^3.0.0",
     "@mjhenkes/postcss-rtl": "^2.0.0",
     "autoprefixer": "^10.0.0",
     "babel-loader": "^8.0.5",
@@ -55,13 +55,12 @@
     "@babel/core": "7",
     "fibers": "5",
     "postcss": "8",
-    "webpack": "4 || 5",
-    "webpack-cli": "3 || 4"
+    "webpack": "5",
+    "webpack-cli": "4"
   },
   "devDependencies": {
     "@cerner/eslint-config-terra": "^5.6.0",
-    "@cerner/jest-config-terra": "^2.0.0",
-    "eslint": "^7.32.0"
+    "@cerner/jest-config-terra": "^2.0.0"
   },
   "scripts": {
     "clean": "npm run clean:node_modules && npm run clean:lib",

@@ -27,7 +27,7 @@
     "access": "public"
   },
   "engines": {
-    "node": "10|| 12 || 14",
+    "node": "14",
     "npm": "6 || 9"
   },
   "main": "lib/aggregate-translations.js",
