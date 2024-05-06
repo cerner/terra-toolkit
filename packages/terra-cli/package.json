@@ -1,6 +1,6 @@
 {
   "name": "@cerner/terra-cli",
-  "version": "1.12.1",
+  "version": "1.12.0",
   "description": "Terra Cli",
   "author": "Cerner Corporation",
   "repository": {
@@ -47,8 +47,8 @@
   "devDependencies": {
     "@babel/cli": "7",
     "@babel/core": "7",
-    "@cerner/eslint-config-terra": "^5.6.1",
-    "@cerner/jest-config-terra": "^3.0.0-alpha.0"
+    "@cerner/eslint-config-terra": "^5.6.0",
+    "@cerner/jest-config-terra": "^2.0.0"
   },
   "scripts": {
     "clean": "npm run clean:node_modules && npm run clean:lib",

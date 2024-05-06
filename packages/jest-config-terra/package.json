@@ -1,6 +1,6 @@
 {
   "name": "@cerner/jest-config-terra",
-  "version": "3.0.0-alpha.0",
+  "version": "2.0.0",
   "description": "A base jest config for the terra application framework.",
   "author": "Cerner Corporation",
   "repository": {

@@ -1,6 +1,6 @@
 {
   "name": "@cerner/terra-functional-testing",
-  "version": "4.8.1",
+  "version": "4.8.0",
   "description": "A functional testing utility for applications built using Terra.",
   "author": "Cerner Corporation",
   "repository": {
@@ -90,9 +90,9 @@
     "@babel/preset-env": "7",
     "@babel/preset-react": "7",
     "@babel/register": "7",
-    "@cerner/eslint-config-terra": "^5.6.1",
-    "@cerner/jest-config-terra": "^3.0.0-alpha.0",
-    "@cerner/terra-cli": "^1.12.1",
+    "@cerner/eslint-config-terra": "^5.6.0",
+    "@cerner/jest-config-terra": "^2.0.0",
+    "@cerner/terra-cli": "^1.12.0",
     "@octokit/core": "3",
     "chai": "4",
     "eslint": "7",

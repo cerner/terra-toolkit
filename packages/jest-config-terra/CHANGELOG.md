@@ -2,8 +2,6 @@
 
 ## Unreleased
 
-## 3.0.0-alpha.0 - (May 6, 2024)
-
 * Breaking Changes
   * Updated to use Jest 29.
   * Dropped support for Node 10 and 12 as Jest 29 requires Node 14 at minimum.
