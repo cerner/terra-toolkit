@@ -2,11 +2,19 @@
 
 ## Unreleased
 
+* Breaking Changes
+  * Updated to use Jest 29.
+  * Dropped support for Node 10 and 12 as Jest 29 requires Node 14 at minimum.
+
+---
+
 ## 2.0.0 - (September 26, 2023)
 
 * Breaking changes
   * Updated to use Jest 27.
   * Dropped support for Jest 26.
+
+---
 
 ## 1.7.0 - (August 31, 2023)
 
