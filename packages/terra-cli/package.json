@@ -48,7 +48,7 @@
     "@babel/cli": "7",
     "@babel/core": "7",
     "@cerner/eslint-config-terra": "^5.6.0",
-    "@cerner/jest-config-terra": "^2.0.0"
+    "@cerner/jest-config-terra": "^3.0.0"
   },
   "scripts": {
     "clean": "npm run clean:node_modules && npm run clean:lib",
