@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 5.6.1 - (May 6, 2024)
+
+* Changed
+  * Minor dependency version bump.
+
 ## 5.6.0 - (August 31, 2023)
 
 * Changed

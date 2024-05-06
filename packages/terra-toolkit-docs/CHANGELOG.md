@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.32.0 - (May 6, 2024)
+
 * Added
   * Added upgrade guide for `jest-config-terra@3`.
 
