@@ -1,4 +1,4 @@
-const {TestEnvironment} = require('jest-environment-jsdom');
+const { TestEnvironment } = require('jest-environment-jsdom');
 const JestMock = require('jest-mock');
 
 /**
@@ -17,6 +17,6 @@ class TerraJsdomEnvironment extends TestEnvironment {
     const htmlTag = this.dom.window.document.getElementsByTagName('html')[0];
     htmlTag.setAttribute('dir', 'ltr');
   }
-  }
+}
 
-  module.exports = TerraJsdomEnvironment;
+module.exports = TerraJsdomEnvironment;
