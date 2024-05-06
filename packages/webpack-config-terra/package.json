@@ -38,7 +38,7 @@
     "@cerner/duplicate-package-checker-webpack-plugin": "^2.6.0",
     "@cerner/terra-aggregate-translations": "^3.4.0",
     "@mjhenkes/postcss-rtl": "2",
-    "autoprefixer": "^10.0.0",
+    "autoprefixer": "10",
     "babel-loader": "8",
     "clean-webpack-plugin": "3",
     "css-loader": "5",
@@ -53,7 +53,7 @@
     "postcss-loader": "4",
     "raw-loader": "4",
     "sass": "1",
-    "sass-loader": "^10.1.0",
+    "sass-loader": "10",
     "terser-webpack-plugin": "4",
     "webpack-merge": "5"
   },
