@@ -32,25 +32,32 @@
     "npm": "6 || 9"
   },
   "main": "lib/index.js",
+  "files": [
+    "lib",
+    "src",
+    "CHANGELOG.md",
+    "README.md",
+    "LICENSE",
+    "NOTICE"
+  ],
   "dependencies": {
-    "prop-types": "^15.7.2",
-    "react-intl": "^5.25.1"
+    "prop-types": "15",
+    "react-intl": "5"
   },
   "peerDependencies": {
-    "enzyme": "^3.9.0",
-    "react": "^16.8.5",
-    "react-dom": "^16.8.5"
+    "enzyme": "3",
+    "react": "16",
+    "react-dom": "16"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.5",
-    "@babel/core": "^7.11.1",
-    "@babel/preset-env": "^7.22.10",
-    "@babel/preset-react": "^7.22.5",
+    "@babel/cli": "7",
+    "@babel/core": "7",
+    "@babel/preset-env": "7",
+    "@babel/preset-react": "7",
     "@cerner/eslint-config-terra": "^5.6.0",
     "@cerner/jest-config-terra": "^2.0.0",
-    "enzyme-adapter-react-16": "^1.10.0",
-    "enzyme-to-json": "^3.3.5",
-    "eslint": "^7.32.0"
+    "enzyme-adapter-react-16": "1",
+    "enzyme-to-json": "3"
   },
   "scripts": {
     "clean": "npm run clean:node_modules && npm run clean:lib",

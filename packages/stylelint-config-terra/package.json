@@ -33,12 +33,12 @@
   },
   "main": "stylelint.config.js",
   "files": [
+    "stylelint.config.js",
+    "lib",
     "CHANGELOG.md",
     "README.md",
     "LICENSE",
-    "NOTICE",
-    "lib",
-    "stylelint.config.js"
+    "NOTICE"
   ],
   "dependencies": {
     "@cerner/browserslist-config-terra": "4",

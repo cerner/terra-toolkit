@@ -31,26 +31,33 @@
     "npm": "6 || 9"
   },
   "main": "lib/aggregate-translations.js",
+  "files": [
+    "bin",
+    "lib",
+    "CHANGELOG.md",
+    "README.md",
+    "LICENSE",
+    "NOTICE"
+  ],
   "bin": {
     "tt-aggregate-translations": "bin/aggregate-translations-cli.js"
   },
   "dependencies": {
-    "chalk": "^2.4.2",
-    "commander": "^3.0.1",
-    "fs-extra": "^8.0.1",
-    "glob": "^7.1.1",
-    "lodash.startcase": "^4.4.0"
+    "chalk": "2",
+    "commander": "3",
+    "fs-extra": "8",
+    "glob": "7",
+    "lodash.startcase": "4"
   },
   "peerDependencies": {
-    "intl": "^1.2.5",
-    "react-intl": "^5.8.2"
+    "intl": "1",
+    "react-intl": "5"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.5",
-    "@babel/core": "^7.11.1",
+    "@babel/cli": "7",
+    "@babel/core": "7",
     "@cerner/eslint-config-terra": "^5.6.0",
-    "@cerner/jest-config-terra": "^2.0.0",
-    "eslint": "^7.32.0"
+    "@cerner/jest-config-terra": "^2.0.0"
   },
   "scripts": {
     "clean": "npm run clean:node_modules && npm run clean:lib",
