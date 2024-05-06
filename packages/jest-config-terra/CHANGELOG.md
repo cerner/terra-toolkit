@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-## 3.0.0-alpha.0 - (May 6, 2024)
+## 3.0.0 - (May 6, 2024)
 
 * Breaking Changes
   * Updated to use Jest 29.
