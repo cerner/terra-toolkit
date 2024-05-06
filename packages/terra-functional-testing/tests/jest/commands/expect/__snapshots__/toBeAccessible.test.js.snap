@@ -3,7 +3,7 @@
 exports[`toBeAccessible should return a message function that filterers out rules set to warn 1`] = `
 "expected no accessibility violations but received [
   {
-    \\"id\\": \\"mock-violation-2\\"
+    "id": "mock-violation-2"
   }
 ]"
 `;
@@ -11,7 +11,7 @@ exports[`toBeAccessible should return a message function that filterers out rule
 exports[`toBeAccessible should return a message function that indicates the reason for the assertion failure 1`] = `
 "expected no accessibility violations but received [
   {
-    \\"id\\": \\"mock-violation\\"
+    "id": "mock-violation"
   }
 ]"
 `;

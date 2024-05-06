@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`custom-property-namespace does error with no custom namespace 1`] = `
-Array [
-  Object {
+[
+  {
     "column": 9,
     "endColumn": 33,
     "endLine": 1,
@@ -15,8 +15,8 @@ Array [
 `;
 
 exports[`custom-property-namespace does error with no default namespace 1`] = `
-Array [
-  Object {
+[
+  {
     "column": 9,
     "endColumn": 34,
     "endLine": 1,

@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Spec Reporter formatResults should format the suite results 1`] = `
-Object {
-  "capabilities": Object {
+{
+  "capabilities": {
     "browserName": undefined,
     "platform": undefined,
     "version": undefined,
@@ -11,21 +11,21 @@ Object {
   "packageName": "terra-toolkit",
   "spec": "/mock/spec",
   "start": undefined,
-  "suites": Array [
-    Object {
+  "suites": [
+    {
       "duration": undefined,
       "end": "2020-10-27T01:14:33.644Z",
       "fullTitle": "Example Describe 1",
       "start": "2020-10-27T01:14:33.430Z",
-      "suites": Array [
-        Object {
+      "suites": [
+        {
           "duration": undefined,
           "end": "2020-10-27T01:14:33.643Z",
           "fullTitle": "Example Describe 1 Example Describe 2",
           "start": "2020-10-27T01:14:33.430Z",
-          "suites": Array [],
-          "tests": Array [
-            Object {
+          "suites": [],
+          "tests": [
+            {
               "duration": undefined,
               "end": "2020-10-27T01:14:33.532Z",
               "error": undefined,
@@ -35,7 +35,7 @@ Object {
               "state": "passed",
               "title": "example it 1",
             },
-            Object {
+            {
               "duration": undefined,
               "end": "2020-10-27T01:14:33.585Z",
               "error": undefined,
@@ -45,7 +45,7 @@ Object {
               "state": "passed",
               "title": "example it 2",
             },
-            Object {
+            {
               "duration": undefined,
               "end": "2020-10-27T01:14:33.643Z",
               "error": undefined,
@@ -59,46 +59,46 @@ Object {
           "title": "Example Describe 2",
         },
       ],
-      "tests": Array [],
+      "tests": [],
       "title": "Example Describe 1",
     },
   ],
-  "tests": Array [],
+  "tests": [],
 }
 `;
 
 exports[`Spec Reporter formatTests should format the test results 1`] = `
-Array [
-  Object {
+[
+  {
     "duration": undefined,
     "end": "2020-10-27T01:14:33.532Z",
     "error": undefined,
     "fullTitle": "Example Describe 1 Example Describe 2 example it 1",
-    "screenshots": Array [
+    "screenshots": [
       "path/screenshot1.png",
     ],
     "start": "2020-10-27T01:14:33.431Z",
     "state": "passed",
     "title": "example it 1",
   },
-  Object {
+  {
     "duration": undefined,
     "end": "2020-10-27T01:14:33.585Z",
     "error": undefined,
     "fullTitle": "Example Describe 1 Example Describe 2 example it 2",
-    "screenshots": Array [
+    "screenshots": [
       "path/screenshot2.png",
     ],
     "start": "2020-10-27T01:14:33.532Z",
     "state": "passed",
     "title": "example it 2",
   },
-  Object {
+  {
     "duration": undefined,
     "end": "2020-10-27T01:14:33.643Z",
     "error": undefined,
     "fullTitle": "Example Describe 1 Example Describe 2 example it 3",
-    "screenshots": Array [
+    "screenshots": [
       "path/screenshot3.png",
     ],
     "start": "2020-10-27T01:14:33.586Z",

@@ -1,19 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`require-theme-context-versions fails as a warning when versions do not meet the required version 1`] = `
-Object {
+{
   "lintId": "require-theme-context-versions",
   "lintMessage": "The dependencies for this project do not have the minimum versions required for theming context:
   terra-action-footer@^1.0.0 does not satisfy range requirement for theming context: terra-action-footer@>=2.42.0",
   "projectType": "module",
-  "severity": Object {
+  "severity": {
     "severityType": "warning",
   },
 }
 `;
 
 exports[`require-theme-context-versions fails when versions do not meet the required version 1`] = `
-Object {
+{
   "lintId": "require-theme-context-versions",
   "lintMessage": "The dependencies for this project do not have the minimum versions required for theming context:
   @cerner/terra-docs@<1.0.0 does not satisfy range requirement for theming context: @cerner/terra-docs@>=1.0.0
@@ -89,7 +89,7 @@ Object {
   terra-time-input@<4.29.0 does not satisfy range requirement for theming context: terra-time-input@>=4.29.0
   terra-toolbar@<1.8.0 does not satisfy range requirement for theming context: terra-toolbar@>=1.8.0",
   "projectType": "module",
-  "severity": Object {
+  "severity": {
     "severityType": "error",
   },
 }

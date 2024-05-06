@@ -33,9 +33,9 @@ exports[`mountWithIntl using injectIntl should match the snapshot 1`] = `
   <Component
     foo="bar"
     intl={
-      Object {
+      {
         "$t": [Function],
-        "defaultFormats": Object {},
+        "defaultFormats": {},
         "defaultLocale": "en",
         "defaultRichTextElements": undefined,
         "fallbackOnEmptyString": true,
@@ -52,8 +52,8 @@ exports[`mountWithIntl using injectIntl should match the snapshot 1`] = `
         "formatRelativeTime": [Function],
         "formatTime": [Function],
         "formatTimeToParts": [Function],
-        "formats": Object {},
-        "formatters": Object {
+        "formats": {},
+        "formatters": {
           "getDateTimeFormat": [Function],
           "getDisplayNames": [Function],
           "getListFormat": [Function],
@@ -177,9 +177,9 @@ exports[`shallowWithIntl using injectIntl should match the snapshot 1`] = `
 <Component
   foo="bar"
   intl={
-    Object {
+    {
       "$t": [Function],
-      "defaultFormats": Object {},
+      "defaultFormats": {},
       "defaultLocale": "en",
       "defaultRichTextElements": undefined,
       "fallbackOnEmptyString": true,
@@ -196,8 +196,8 @@ exports[`shallowWithIntl using injectIntl should match the snapshot 1`] = `
       "formatRelativeTime": [Function],
       "formatTime": [Function],
       "formatTimeToParts": [Function],
-      "formats": Object {},
-      "formatters": Object {
+      "formats": {},
+      "formatters": {
         "getDateTimeFormat": [Function],
         "getDisplayNames": [Function],
         "getListFormat": [Function],

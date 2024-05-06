@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`custom-property-pattern does error with custom property with underscores 1`] = `
-Array [
-  Object {
+[
+  {
     "column": 9,
     "endColumn": 44,
     "endLine": 1,
@@ -15,8 +15,8 @@ Array [
 `;
 
 exports[`custom-property-pattern does error with custom property with uppercase characters 1`] = `
-Array [
-  Object {
+[
+  {
     "column": 9,
     "endColumn": 33,
     "endLine": 1,

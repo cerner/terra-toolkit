@@ -3,18 +3,13 @@ const fs = require('fs-extra');
 const glob = require('glob');
 const { cleanScreenshots } = require('../../../../src/commands/utils');
 
-jest.mock('@cerner/terra-cli/lib/utils/Logger');
-jest.mock('fs-extra');
-jest.mock('glob');
-jest.mock('path');
-
 describe('cleanScreenshots', () => {
-  afterEach(() => {
+  afterAll(() => {
     jest.restoreAllMocks();
   });
 
   it('should not clean directories when they dont exist', () => {
-    jest.spyOn(fs, 'removeSync').mockImplementationOnce(() => { });
+    jest.spyOn(fs, 'removeSync');
 
     cleanScreenshots();
 

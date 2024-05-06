@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`config getConfigForFile returns an extended config with 3 transitive extends 1`] = `
-Object {
-  "rules": Object {
+{
+  "rules": {
     "a": 1,
     "b": 2,
     "c": 3,
@@ -12,8 +12,8 @@ Object {
 `;
 
 exports[`config getConfigForFile returns an extended config with multiple extenions 1`] = `
-Object {
-  "rules": Object {
+{
+  "rules": {
     "a": 1,
     "b": 2,
     "c": 3,
@@ -26,8 +26,8 @@ Object {
 `;
 
 exports[`config getConfigForFile returns an extended config with multiple extenions and no override 1`] = `
-Object {
-  "rules": Object {
+{
+  "rules": {
     "a": 1,
     "b": 2,
     "c": 3,
@@ -40,8 +40,8 @@ Object {
 `;
 
 exports[`config getConfigForFile returns an extended config with no transitive extend 1`] = `
-Object {
-  "rules": Object {
+{
+  "rules": {
     "a": 1,
     "b": 2,
     "c": 3,

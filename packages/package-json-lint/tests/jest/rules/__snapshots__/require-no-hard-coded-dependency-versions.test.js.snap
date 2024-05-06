@@ -7,12 +7,12 @@ exports[`require-no-hard-coded-dependency-versions when projectType is applicati
 exports[`require-no-hard-coded-dependency-versions when projectType is application succeeds when there are no hardcoded dependencies 1`] = `undefined`;
 
 exports[`require-no-hard-coded-dependency-versions when projectType is devModule fails when there are hardcoded dependencies 1`] = `
-Object {
+{
   "lintId": "require-no-hard-coded-dependency-versions",
   "lintMessage": "The dependencies for this project have hard-coded versions that violates the require-no-hard-coded-dependency-versions rule:
   a@1.0.0 does not satisfy requirement for the require-no-hard-coded-dependency-versions rule.",
   "projectType": "devModule",
-  "severity": Object {
+  "severity": {
     "severityType": "error",
   },
 }
@@ -21,12 +21,12 @@ Object {
 exports[`require-no-hard-coded-dependency-versions when projectType is devModule succeeds when there are no hardcoded dependencies 1`] = `undefined`;
 
 exports[`require-no-hard-coded-dependency-versions when projectType is module fails when there are hardcoded dependencies 1`] = `
-Object {
+{
   "lintId": "require-no-hard-coded-dependency-versions",
   "lintMessage": "The dependencies for this project have hard-coded versions that violates the require-no-hard-coded-dependency-versions rule:
   a@1.0.0 does not satisfy requirement for the require-no-hard-coded-dependency-versions rule.",
   "projectType": "module",
-  "severity": Object {
+  "severity": {
     "severityType": "error",
   },
 }

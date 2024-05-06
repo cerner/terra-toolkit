@@ -1,8 +1,23 @@
 # Jest Config Terra Upgrade Guide
 
-## Changes from 1.0 to 2.0
+## Upgrading from v2 to v3
 
-`jest-config-terra` now uses Jest 27. Consumers will need to make the following updates in order to consume `jest-config-terra@2.0.0`:
+jest-config-terra v3 utilizes Jest 29. The following updates will be needed in order to consume `jest-config-terra@3`:
+
+- Update to Node 14.
+- Regenerate all Jest snapshots.
+
+If there are any additional test failures, please refer to the Jest upgrade guides to see what additional changes may be needed:
+- [Jest 27 to 28 upgrade guide](https://jest-archive-august-2023.netlify.app/docs/28.x/upgrading-to-jest28/)
+- [Jest 28 to 29 upgrade guide](https://jestjs.io/docs/upgrading-to-jest29)
+
+Note: If upgrading from `jest-config-terra@1`, then it may be helpful to interatively upgrade to 2 than 3.
+
+## Upgrading from v1 to v2
+
+`jest-config-terra` uses Jest 27 in v2. The following updates will be needed in order to consume `jest-config-terra@2`:
 
 - Update Jest and related Jest packages (i.e. `babel-jest`, `jest-mock`, etc.) to v27.
 - Tests utilizing fake timers may fail and need to be updated per the [Jest docs](https://jestjs.io/docs/timer-mocks#enable-fake-timers).
+
+Refer to the [Jest 27 upgrade guide](https://jestjs.io/blog/2021/05/25/jest-27) for any additional changes.
