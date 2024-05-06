@@ -32,6 +32,9 @@
     "NOTICE",
     "LICENSE"
   ],
+  "devDependencies": {
+    "@cerner/eslint-config-terra": "^5.6.0"
+  },
   "scripts": {
     "clean": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
     "clean:install": "npm run clean && time npm install",
