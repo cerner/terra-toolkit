@@ -92,6 +92,11 @@ module.exports = (oldJSON) => {
     delete oldJSON.main;
   }
 
+  if (oldJSON.exports) {
+    newJSON.exports = oldJSON.exports;
+    delete oldJSON.exports;
+  }
+
   if (oldJSON.files) {
     newJSON.files = oldJSON.files;
     delete oldJSON.files;

@@ -41,6 +41,7 @@ describe.only('prettifyJSON script', () => {
         private: {},
         keywords: [],
         eslintConfig: {},
+        exports: {},
       },
     );
 
@@ -62,6 +63,7 @@ describe.only('prettifyJSON script', () => {
       'workspaces',
       'engines',
       'main',
+      'exports',
       'files',
       'bin',
       'browserslist',

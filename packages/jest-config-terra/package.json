@@ -38,18 +38,18 @@
     "@cerner/terra-cli": "^1.12.0",
     "@jest/reporters": "27",
     "babel-jest": "29",
-    "identity-obj-proxy": "^3.0.0",
+    "identity-obj-proxy": "3",
     "jest-environment-jsdom": "29",
     "jest-jasmine2": "29",
     "jest-mock": "29",
-    "strip-ansi": "^6.0.0"
+    "strip-ansi": "6"
   },
   "peerDependencies": {
     "jest": "29"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.5",
-    "@babel/core": "^7.11.1",
+    "@babel/cli": "7",
+    "@babel/core": "7",
     "@cerner/eslint-config-terra": "^5.6.0"
   },
   "scripts": {

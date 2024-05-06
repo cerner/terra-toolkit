@@ -27,6 +27,12 @@
     "npm": "6 || 9"
   },
   "main": "eslint.config.js",
+  "files": [
+    "eslint.config.js",
+    "CHANGELOG.md",
+    "NOTICE",
+    "LICENSE"
+  ],
   "dependencies": {
     "@babel/eslint-parser": "7",
     "eslint-config-airbnb": "18",
