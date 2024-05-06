@@ -1,5 +1,0 @@
-*.log
-.eslintrc.js
-jest.config.js
-jest.enzymeSetup.js
-tests
