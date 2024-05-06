@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`custom-property-name does error with a mismatched name 1`] = `
-Array [
-  Object {
+[
+  {
     "column": 9,
     "endColumn": 47,
     "endLine": 1,
@@ -15,8 +15,8 @@ Array [
 `;
 
 exports[`custom-property-name does error with a mismatched name with hyphen 1`] = `
-Array [
-  Object {
+[
+  {
     "column": 9,
     "endColumn": 49,
     "endLine": 1,

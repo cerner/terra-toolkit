@@ -1,19 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`require-no-terra-base-peer-dependency-versions fails as a warning when versions do not meet the required version 1`] = `
-Object {
+{
   "lintId": "require-no-terra-base-peer-dependency-versions",
   "lintMessage": "The dependencies for this project do not have the minimum versions required for no terra base peer dependencies:
   terra-action-footer@^1.0.0 does not satisfy range requirement for no terra base peer dependencies: terra-action-footer@>2.5.0",
   "projectType": "module",
-  "severity": Object {
+  "severity": {
     "severityType": "warn",
   },
 }
 `;
 
 exports[`require-no-terra-base-peer-dependency-versions fails when versions do not meet the required version 1`] = `
-Object {
+{
   "lintId": "require-no-terra-base-peer-dependency-versions",
   "lintMessage": "The dependencies for this project do not have the minimum versions required for no terra base peer dependencies:
   terra-action-footer@2.5.0 does not satisfy range requirement for no terra base peer dependencies: terra-action-footer@>2.5.0
@@ -90,7 +90,7 @@ Object {
   terra-toggle@3.5.0 does not satisfy range requirement for no terra base peer dependencies: terra-toggle@>3.5.0
   terra-visually-hidden-text@2.4.0 does not satisfy range requirement for no terra base peer dependencies: terra-visually-hidden-text@>2.4.0",
   "projectType": "devModule",
-  "severity": Object {
+  "severity": {
     "severityType": "error",
   },
 }

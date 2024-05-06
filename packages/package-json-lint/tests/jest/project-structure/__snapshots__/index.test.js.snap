@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`getPathsForPackages returns a list of paths for packages that are not ignored for a monorepo 1`] = `
-Array [
+[
   "/Users/x/ecosystem/terra-toolkit/package.json",
   "/Users/x/ecosystem/terra-toolkit/packages/browserslist-config-terra/package.json",
   "/Users/x/ecosystem/terra-toolkit/packages/duplicate-package-checker-webpack-plugin/package.json",

@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`custom-property-no-duplicate-declaration does error with nested duplicate custom properties 1`] = `
-Array [
-  Object {
+[
+  {
     "column": 11,
     "endColumn": 42,
     "endLine": 1,
@@ -15,8 +15,8 @@ Array [
 `;
 
 exports[`custom-property-no-duplicate-declaration does error with reversed sibling duplicate custom properties 1`] = `
-Array [
-  Object {
+[
+  {
     "column": 11,
     "endColumn": 42,
     "endLine": 1,
@@ -29,8 +29,8 @@ Array [
 `;
 
 exports[`custom-property-no-duplicate-declaration does error with sibling duplicate custom properties 1`] = `
-Array [
-  Object {
+[
+  {
     "column": 49,
     "endColumn": 80,
     "endLine": 1,

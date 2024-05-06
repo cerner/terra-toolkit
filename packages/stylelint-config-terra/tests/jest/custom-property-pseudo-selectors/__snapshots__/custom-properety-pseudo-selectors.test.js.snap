@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`custom-property-pseudo-selectors does error with a custom properties that declares pseudo selectors in the wrong order 1`] = `
-Array [
-  Object {
+[
+  {
     "column": 27,
     "endColumn": 63,
     "endLine": 1,
@@ -15,8 +15,8 @@ Array [
 `;
 
 exports[`custom-property-pseudo-selectors does error with a custom properties that does not include the ancestor pseudo selectors 1`] = `
-Array [
-  Object {
+[
+  {
     "column": 15,
     "endColumn": 39,
     "endLine": 1,
@@ -29,8 +29,8 @@ Array [
 `;
 
 exports[`custom-property-pseudo-selectors does error with a custom properties that does not include the pseudo selector 1`] = `
-Array [
-  Object {
+[
+  {
     "column": 15,
     "endColumn": 39,
     "endLine": 1,
