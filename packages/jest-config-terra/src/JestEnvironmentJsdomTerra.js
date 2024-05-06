@@ -1,10 +1,11 @@
-const JsdomEnvironment = require('jest-environment-jsdom');
+const {TestEnvironment} = require('jest-environment-jsdom');
 const JestMock = require('jest-mock');
 
 /**
  * The TerraJsdomEnvironment extends the JsdomEnvironment to mock a couple of extra functions and set the dir attribute.
  */
-class TerraJsdomEnvironment extends JsdomEnvironment {
+
+class TerraJsdomEnvironment extends TestEnvironment {
   constructor(config, context) {
     super(config, context);
 
@@ -16,6 +17,6 @@ class TerraJsdomEnvironment extends JsdomEnvironment {
     const htmlTag = this.dom.window.document.getElementsByTagName('html')[0];
     htmlTag.setAttribute('dir', 'ltr');
   }
-}
+  }
 
-module.exports = TerraJsdomEnvironment;
+  module.exports = TerraJsdomEnvironment;
