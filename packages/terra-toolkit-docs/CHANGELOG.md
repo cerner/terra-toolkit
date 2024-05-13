@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## 2.32.1 - (May 13, 2024)
+
+* Fixed
+  * Added missing folder to files list.
+  * Added webpack-config-terra v3 support for compatibility in v3 environments.
+
 ## 2.32.0 - (May 6, 2024)
 
 * Added
