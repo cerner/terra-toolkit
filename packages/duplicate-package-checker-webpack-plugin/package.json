@@ -33,14 +33,14 @@
     "NOTICE",
     "LICENSE"
   ],
+  "peerDependencies": {
+    "webpack": "4 || 5"
+  },
   "dependencies": {
     "chalk": "4",
     "find-root": "1",
     "lodash.groupby": "4",
     "semver": "7"
-  },
-  "peerDependencies": {
-    "webpack": "4 || 5"
   },
   "devDependencies": {
     "@babel/cli": "7",

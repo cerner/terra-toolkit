@@ -42,16 +42,16 @@
   "bin": {
     "tt-aggregate-translations": "bin/aggregate-translations-cli.js"
   },
+  "peerDependencies": {
+    "intl": "1",
+    "react-intl": "5"
+  },
   "dependencies": {
     "chalk": "2",
     "commander": "3",
     "fs-extra": "8",
     "glob": "7",
     "lodash.startcase": "4"
-  },
-  "peerDependencies": {
-    "intl": "1",
-    "react-intl": "5"
   },
   "devDependencies": {
     "@babel/cli": "7",

@@ -40,6 +40,9 @@
     "LICENSE",
     "NOTICE"
   ],
+  "peerDependencies": {
+    "stylelint": "15"
+  },
   "dependencies": {
     "@cerner/browserslist-config-terra": "4",
     "find-up": "4",
@@ -47,9 +50,6 @@
     "postcss-value-parser": "4",
     "stylelint-config-sass-guidelines": "10",
     "stylelint-no-unsupported-browser-features": "4"
-  },
-  "peerDependencies": {
-    "stylelint": "15"
   },
   "devDependencies": {
     "@babel/cli": "7",

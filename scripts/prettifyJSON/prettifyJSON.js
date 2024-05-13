@@ -129,14 +129,14 @@ module.exports = (oldJSON) => {
 
   const tempJSON = {};
 
-  if (oldJSON.dependencies) {
-    tempJSON.dependencies = oldJSON.dependencies;
-    delete oldJSON.dependencies;
-  }
-
   if (oldJSON.peerDependencies) {
     tempJSON.peerDependencies = oldJSON.peerDependencies;
     delete oldJSON.peerDependencies;
+  }
+
+  if (oldJSON.dependencies) {
+    tempJSON.dependencies = oldJSON.dependencies;
+    delete oldJSON.dependencies;
   }
 
   if (oldJSON.devDependencies) {

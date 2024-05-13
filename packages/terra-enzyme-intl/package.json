@@ -40,14 +40,14 @@
     "LICENSE",
     "NOTICE"
   ],
-  "dependencies": {
-    "prop-types": "15",
-    "react-intl": "5"
-  },
   "peerDependencies": {
     "enzyme": "3",
     "react": "16",
     "react-dom": "16"
+  },
+  "dependencies": {
+    "prop-types": "15",
+    "react-intl": "5"
   },
   "devDependencies": {
     "@babel/cli": "7",

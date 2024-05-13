@@ -33,6 +33,9 @@
     "LICENSE",
     "NOTICE"
   ],
+  "peerDependencies": {
+    "@cerner/terra-cli": "^1.0.0"
+  },
   "dependencies": {
     "@npmcli/promise-spawn": "1",
     "express": "4",
@@ -41,9 +44,6 @@
     "pacote": "11",
     "prompts": "2",
     "strip-ansi": "6"
-  },
-  "peerDependencies": {
-    "@cerner/terra-cli": "^1.0.0"
   },
   "devDependencies": {
     "@babel/cli": "7",
