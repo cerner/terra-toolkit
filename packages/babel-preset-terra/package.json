@@ -13,17 +13,24 @@
   },
   "homepage": "https://github.com/cerner/terra-toolkit",
   "keywords": [
+    "Babel",
+    "Babel preset",
     "Terra"
   ],
   "publishConfig": {
     "access": "public"
   },
-  "main": "browserslist.config.js",
+  "main": "babel.config.js",
   "files": [
+    "babel.config.js",
     "CHANGELOG.md",
     "NOTICE",
     "LICENSE"
   ],
+  "dependencies": {
+    "@babel/preset-env": "7",
+    "@babel/preset-react": "7"
+  },
   "scripts": {
     "clean": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
     "clean:install": "npm run clean && time npm install",
