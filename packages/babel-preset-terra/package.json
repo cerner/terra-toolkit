@@ -1,0 +1,33 @@
+{
+  "name": "@cerner/babel-preset-terra",
+  "version": "1.0.0",
+  "description": "A base babel preset for the Terra application framework.",
+  "author": "Cerner Corporation",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cerner/terra-toolkit.git",
+    "directory": "packages/babel-preset-terra"
+  },
+  "bugs": {
+    "url": "https://github.com/cerner/terra-toolkit/issues"
+  },
+  "homepage": "https://github.com/cerner/terra-toolkit",
+  "keywords": [
+    "Terra"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "browserslist.config.js",
+  "files": [
+    "CHANGELOG.md",
+    "NOTICE",
+    "LICENSE"
+  ],
+  "scripts": {
+    "clean": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'",
+    "clean:install": "npm run clean && time npm install",
+    "clean:lib": "rm -rf lib",
+    "clean:node_modules": "echo 'removing ./node_modules' && rm -rf node_modules && echo 'removed ./node_modules'"
+  }
+}
