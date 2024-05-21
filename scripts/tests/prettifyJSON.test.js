@@ -70,8 +70,8 @@ describe.only('prettifyJSON script', () => {
       'eslintConfig',
       'package-json-lint',
       'stylelint',
-      'dependencies',
       'peerDependencies',
+      'dependencies',
       'devDependencies',
       'scripts',
     ];
@@ -103,7 +103,7 @@ describe.only('prettifyJSON script', () => {
     const newJSON = prettifyJSON(JSON);
     const keys = Object.keys((newJSON));
 
-    expect(keys.slice(-4)).toStrictEqual(['dependencies', 'peerDependencies', 'devDependencies', 'scripts']);
+    expect(keys.slice(-4)).toStrictEqual(['peerDependencies', 'dependencies', 'devDependencies', 'scripts']);
     expect(keys.slice(-4)).not.toStrictEqual(['devDependencies', 'scripts', 'peerDependencies', 'dependencies']);
   });
 
